@@ -416,3 +416,25 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .option { font: inherit; color: var(--ink); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); text-decoration: none; font-weight: 500; }
 .option:hover { border-color: var(--ink); }
 .option.toutes { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* Et moi ? */
+.moi-saisie { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: flex-end; margin-top: 24px; padding: 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.moi-saisie label, .moi-saisie fieldset { display: grid; gap: 6px; border: 0; padding: 0; margin: 0; }
+.moi-saisie fieldset { grid-template-columns: auto auto; }
+.moi-saisie span, .moi-saisie legend { font-size: 14px; font-weight: 600; color: var(--muted); padding: 0; }
+.moi-saisie legend { margin-bottom: 6px; }
+.moi-saisie input { height: 44px; width: 180px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--paper); font: 600 18px var(--text); color: var(--ink); }
+.moi-saisie .puce { height: 44px; }
+.moi-qui { margin: 24px 0 0; max-width: 75ch; }
+.moi-cartes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.moi-carte { padding: 20px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); }
+.moi-carte h3 { margin: 0 0 12px; font-family: var(--display); font-size: 22px; }
+.moi-carte dl { margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.moi-carte dt { font-size: 14px; color: var(--muted); }
+.moi-carte dd { margin: 2px 0 4px; font-family: var(--display); font-weight: 650; font-size: 30px; line-height: 1.1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.moi-carte dd em { font: 600 13px var(--text); font-style: normal; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--besoin) 12%, var(--card)); color: var(--besoin); }
+.moi-carte small { color: var(--muted); font-size: 13px; }
+.moi-options th, .moi-options td { text-align: right; }
+.moi-options th:first-child { text-align: left; }
+.moi-options td.ecart { color: var(--muted); font-size: 14px; text-align: left; padding-left: 0; }
+@media (max-width: 700px) { .moi-cartes, .moi-carte dl { grid-template-columns: 1fr; } .moi-saisie input { width: 100%; } }

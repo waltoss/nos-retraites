@@ -73,6 +73,29 @@ export interface DetailPortrait {
 	scenario: { carriere: Carriere; compte: CompteCarriere; pension: Pension };
 }
 
+/** Ce que l'utilisateur dit de lui : rien d'autre ne sert à trouver les carrières qui lui ressemblent. */
+export interface ProfilMoi {
+	anneeNaissance: number;
+	sexe: "F" | "H";
+	/** Salaire brut mensuel de l'année de référence, ramené à un temps plein. */
+	salaireMensuel: number;
+}
+
+/** Premier quartile, médiane et troisième quartile. */
+export type Fourchette = [bas: number, mediane: number, haut: number];
+
+export interface ResultatMoi {
+	/** Carrières simulées retenues. */
+	effectif: number;
+	/** Bornes des salaires mensuels et des années de naissance retenus. */
+	salaires: [min: number, max: number];
+	generations: [min: number, max: number];
+	reference: { age: Fourchette; pension: Fourchette };
+	scenario: { age: Fourchette; pension: Fourchette };
+	/** Écart moyen, personne par personne, entre le scénario et la loi actuelle ; l'âge en trimestres entiers. */
+	ecart: { age: number; pension: number };
+}
+
 export type Requete =
 	| { type: "init"; taille: number }
 	| { type: "run"; id: number; scenario: ScenarioMoteur; annee: number }
@@ -95,7 +118,8 @@ export type Requete =
 			scenario: ScenarioMoteur;
 			individu: number;
 	  }
-	| { type: "projection"; id: number; scenario: ScenarioMoteur };
+	| { type: "projection"; id: number; scenario: ScenarioMoteur }
+	| { type: "moi"; id: number; scenario: ScenarioMoteur; profil: ProfilMoi };
 
 export type Reponse =
 	| { type: "ready" }
@@ -120,6 +144,7 @@ export type Reponse =
 			total: number;
 	  }
 	| { type: "portrait"; id: number; detail: DetailPortrait }
+	| { type: "moi"; id: number; resultat: ResultatMoi | null }
 	| {
 			type: "projection";
 			id: number;
@@ -356,6 +381,76 @@ function detail(sc: Scene, i: number) {
 	};
 }
 
+const quartiles = (valeurs: number[]): Fourchette => {
+	const tri = [...valeurs].sort((x, y) => x - y);
+	const q = (p: number) => tri[Math.round(p * (tri.length - 1))] ?? 0;
+	return [q(0.25), q(0.5), q(0.75)];
+};
+const MIN_RESSEMBLANTS = 40;
+
+/** Les carrières simulées qui ressemblent à l'utilisateur, et ce qu'elles deviennent dans le scénario. */
+function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
+	const reference = scene(DROIT);
+	const courant = scene(s);
+	const candidats: { i: number; salaire: number; distance: number }[] = [];
+	reference.monde.population.forEach((individu, i) => {
+		const c = individu.carriere;
+		if (c.sexe !== profil.sexe) return;
+		if (Math.abs(c.anneeNaissance - profil.anneeNaissance) > 2) return;
+		const a = c.annees[B.anneeReference - (c.annees[0]?.annee ?? 0)];
+		if (!a || a.salaireBrut <= 0) return;
+		const mois = moisParEtat(a).emploi;
+		if (mois < 6) return;
+		const salaire = a.salaireBrut / (a.quotite ?? 1) / mois;
+		candidats.push({
+			i,
+			salaire,
+			distance: Math.abs(Math.log(salaire / profil.salaireMensuel)),
+		});
+	});
+	if (candidats.length < MIN_RESSEMBLANTS) return null;
+	candidats.sort((x, y) => x.distance - y.distance);
+	// À 10 % près du salaire indiqué, ou les plus proches s'ils sont trop peu nombreux.
+	const proches = candidats.filter((c) => c.distance < Math.log(1.1));
+	const retenus =
+		proches.length >= MIN_RESSEMBLANTS
+			? proches
+			: candidats.slice(0, MIN_RESSEMBLANTS);
+	const lire = (sc: Scene) => {
+		const pensions = retenus.map(
+			(c) => sc.preparation.pensions[c.i] as Pension,
+		);
+		return {
+			age: quartiles(pensions.map((p) => p.liquidation.age)),
+			pension: quartiles(pensions.map((p) => p.mensuelleBrute)),
+		};
+	};
+	const ecarts = retenus.map((c) => {
+		const r = reference.preparation.pensions[c.i] as Pension;
+		const p = courant.preparation.pensions[c.i] as Pension;
+		return {
+			age: p.liquidation.age - r.liquidation.age,
+			pension: p.mensuelleBrute - r.mensuelleBrute,
+		};
+	});
+	const generations = retenus.map(
+		(c) =>
+			(reference.monde.population[c.i] as Individu).carriere.anneeNaissance,
+	);
+	const salaires = retenus.map((c) => c.salaire);
+	return {
+		effectif: retenus.length,
+		salaires: [Math.min(...salaires), Math.max(...salaires)],
+		generations: [Math.min(...generations), Math.max(...generations)],
+		reference: lire(reference),
+		scenario: lire(courant),
+		ecart: {
+			age: Math.round(ecarts.reduce((t, e) => t + e.age, 0) / ecarts.length),
+			pension: ecarts.reduce((t, e) => t + e.pension, 0) / ecarts.length,
+		},
+	};
+}
+
 const envoyer = (r: Reponse) => self.postMessage(r);
 
 self.onmessage = (e: MessageEvent<Requete>) => {
@@ -419,6 +514,9 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				},
 				anneeEffet: ANNEE_EFFET,
 			});
+			break;
+		case "moi":
+			envoyer({ type: "moi", id: m.id, resultat: moi(m.scenario, m.profil) });
 			break;
 		case "portrait":
 			envoyer({

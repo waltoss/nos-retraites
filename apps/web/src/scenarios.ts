@@ -70,10 +70,15 @@ export const SCENARIOS: ScenarioType[] = [
 		reglages: { chomage: 80, seniors: 80, interruptions: 50 },
 	},
 	{
-		id: "demographie",
-		titre: "Miser sur la démographie",
+		id: "familles-immigration",
+		titre: "Miser sur les naissances et l'immigration",
 		texte:
-			"Aucune règle ne change. La natalité remonte à 1,70 enfant par femme et le solde migratoire à 230 000 personnes par an.",
-		reglages: { natalite: 170, immigration: 230 },
+			"L'âge ne bouge pas. Plus de places de crèche, un congé parental mieux payé, des aides aux familles, et un solde migratoire de 230 000 personnes par an. Le coût de ces politiques n'est pas compté.",
+		reglages: {
+			creches: 30,
+			congeParental: 1,
+			aidesFamilles: 5,
+			immigration: 230,
+		},
 	},
 ];

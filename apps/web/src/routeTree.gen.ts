@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CarrieresRouteImport } from './routes/carrieres'
 import { Route as DecisionsRouteImport } from './routes/decisions'
 import { Route as ModeleRouteImport } from './routes/modele'
+import { Route as MoiRouteImport } from './routes/moi'
 import { Route as ScenariosRouteImport } from './routes/scenarios'
 import { Route as SimulerRouteImport } from './routes/simuler'
 
@@ -36,6 +37,11 @@ const ModeleRoute = ModeleRouteImport.update({
   path: '/modele',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MoiRoute = MoiRouteImport.update({
+  id: '/moi',
+  path: '/moi',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScenariosRoute = ScenariosRouteImport.update({
   id: '/scenarios',
   path: '/scenarios',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/carrieres': typeof CarrieresRoute
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
+  '/moi': typeof MoiRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/carrieres': typeof CarrieresRoute
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
+  '/moi': typeof MoiRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
@@ -69,21 +77,36 @@ export interface FileRoutesById {
   '/carrieres': typeof CarrieresRoute
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
+  '/moi': typeof MoiRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/carrieres' | '/decisions' | '/modele' | '/scenarios' | '/simuler'
+    | '/'
+    | '/carrieres'
+    | '/decisions'
+    | '/modele'
+    | '/moi'
+    | '/scenarios'
+    | '/simuler'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/carrieres' | '/decisions' | '/modele' | '/scenarios' | '/simuler'
+  to:
+    | '/'
+    | '/carrieres'
+    | '/decisions'
+    | '/modele'
+    | '/moi'
+    | '/scenarios'
+    | '/simuler'
   id:
     | '__root__'
     | '/'
     | '/carrieres'
     | '/decisions'
     | '/modele'
+    | '/moi'
     | '/scenarios'
     | '/simuler'
   fileRoutesById: FileRoutesById
@@ -93,6 +116,7 @@ export interface RootRouteChildren {
   CarrieresRoute: typeof CarrieresRoute
   DecisionsRoute: typeof DecisionsRoute
   ModeleRoute: typeof ModeleRoute
+  MoiRoute: typeof MoiRoute
   ScenariosRoute: typeof ScenariosRoute
   SimulerRoute: typeof SimulerRoute
 }
@@ -127,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModeleRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/moi': {
+      id: '/moi'
+      path: '/moi'
+      fullPath: '/moi'
+      preLoaderRoute: typeof MoiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scenarios': {
       id: '/scenarios'
       path: '/scenarios'
@@ -149,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   CarrieresRoute: CarrieresRoute,
   DecisionsRoute: DecisionsRoute,
   ModeleRoute: ModeleRoute,
+  MoiRoute: MoiRoute,
   ScenariosRoute: ScenariosRoute,
   SimulerRoute: SimulerRoute,
 }
