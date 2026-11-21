@@ -1,12 +1,17 @@
 import type { Baremes } from "./baremes/types.ts";
 import { buildCompte, type CompteCarriere } from "./compte.ts";
 import { generateCarriere } from "./generateur/carriere.ts";
+import { generateCarriereFonctionPublique } from "./generateur/fonctionPublique.ts";
 import {
 	appliquerFacteurs,
 	type Facteurs,
 	HYPOTHESES,
 	type Hypotheses,
 } from "./generateur/hypotheses.ts";
+import {
+	HYPOTHESES_PUBLIQUES,
+	type HypothesesPubliques,
+} from "./generateur/hypothesesPubliques.ts";
 import {
 	appliquerRegles,
 	computeCotisations,
@@ -76,6 +81,45 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 				scenario.ponderation.champ,
 			)
 		: population;
+}
+
+/** Taille et graine de la population de fonctionnaires simulée à côté de celle du privé. */
+export const SCENARIO_PUBLIC = {
+	taille: 9840,
+	graine: 2027,
+	generations: GENERATIONS_REFERENCE,
+} as const;
+
+/**
+ * Population synthétique des fonctionnaires de l'État, des collectivités et des hôpitaux.
+ * Les poids viennent du champ de la fonction publique, année par année, dans la projection.
+ */
+export function generatePopulationPublique(
+	b: Baremes,
+	h: HypothesesPubliques = HYPOTHESES_PUBLIQUES,
+	scenario: {
+		taille: number;
+		graine: number;
+		generations: readonly [number, number];
+	} = SCENARIO_PUBLIC,
+): Individu[] {
+	const [debut, fin] = scenario.generations;
+	const nbGenerations = fin - debut + 1;
+	const population: Individu[] = [];
+	for (let id = 0; id < scenario.taille; id++) {
+		const rng = createRng(graineIndividu(scenario.graine, id));
+		population.push({
+			id,
+			poids: 1,
+			carriere: generateCarriereFonctionPublique(
+				debut + (id % nbGenerations),
+				rng,
+				h,
+				b,
+			),
+		});
+	}
+	return population;
 }
 
 /** Comptes de carrière de la population : indépendants des règles du scénario, à calculer une seule fois. */

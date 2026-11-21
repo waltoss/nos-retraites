@@ -2,229 +2,229 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2012",
-		"modele": 62.36,
+		"modele": 62.28,
 		"observe": 62.4
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2012",
-		"modele": 62.24,
+		"modele": 61.98,
 		"observe": 62
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2014",
-		"modele": 62.35,
+		"modele": 62.27,
 		"observe": 62.6
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2014",
-		"modele": 62.09,
+		"modele": 61.91,
 		"observe": 62.2
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2016",
-		"modele": 62.72,
+		"modele": 62.66,
 		"observe": 63.1
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2016",
-		"modele": 62.44,
+		"modele": 62.35,
 		"observe": 62.6
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2018",
-		"modele": 63.06,
+		"modele": 63.01,
 		"observe": 63.2
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2018",
-		"modele": 62.79,
+		"modele": 62.69,
 		"observe": 62.8
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2020",
-		"modele": 63.52,
+		"modele": 63.49,
 		"observe": 63.3
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2020",
-		"modele": 63.01,
+		"modele": 62.89,
 		"observe": 63
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2022",
-		"modele": 63.67,
+		"modele": 63.64,
 		"observe": 63.4
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2022",
-		"modele": 63.28,
+		"modele": 63.19,
 		"observe": 63.3
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2024",
-		"modele": 63.99,
+		"modele": 63.94,
 		"observe": 63.7
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2024",
-		"modele": 63.7,
+		"modele": 63.56,
 		"observe": 63.5
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, fin 2019",
-		"modele": 750.9,
+		"modele": 742.7,
 		"observe": 642.7
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2019",
-		"modele": 313.1,
+		"modele": 312.1,
 		"observe": 348.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2024",
-		"modele": 332.8,
+		"modele": 330.9,
 		"observe": 362.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, fin 2019",
-		"modele": 922.1,
+		"modele": 904.5,
 		"observe": 859.5
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2019",
-		"modele": 625.4,
+		"modele": 620.7,
 		"observe": 768
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2024",
-		"modele": 627.9,
+		"modele": 622,
 		"observe": 758.7
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2010-2013",
-		"modele": 743,
+		"modele": 727.8,
 		"observe": 675.6
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2016-2019",
-		"modele": 809.8,
+		"modele": 803.2,
 		"observe": 719.4
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, 2019-2023",
-		"modele": 384.7,
+		"modele": 381.5,
 		"observe": 343.5
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, 2010-2013",
-		"modele": 890.7,
+		"modele": 883,
 		"observe": 881.8
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, 2016-2019",
-		"modele": 971.4,
+		"modele": 969.7,
 		"observe": 944.8
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, 2019-2023",
-		"modele": 575.3,
+		"modele": 577.7,
 		"observe": 645.3
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "ensemble, 2015-2019",
-		"modele": 28.63,
+		"modele": 28.56,
 		"observe": 21.92
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "femmes, 2022-2024",
-		"modele": 29.45,
+		"modele": 29.36,
 		"observe": 24.13
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "hommes, 2022-2024",
-		"modele": 8.532,
+		"modele": 8.503,
 		"observe": 10.9
 	},
 	{
 		"groupe": "Coefficient de proratisation au régime général, génération 1953",
 		"nom": "femmes",
-		"modele": 0.7277,
+		"modele": 0.7276,
 		"observe": 0.73
 	},
 	{
 		"groupe": "Coefficient de proratisation au régime général, génération 1953",
 		"nom": "hommes",
-		"modele": 0.7068,
+		"modele": 0.7074,
 		"observe": 0.72
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2012-2015",
-		"modele": 546.4,
+		"modele": 520.8,
 		"observe": 525.5
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2016-2019",
-		"modele": 512.7,
+		"modele": 506.5,
 		"observe": 572.7
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2020-2024",
-		"modele": 561.3,
+		"modele": 561,
 		"observe": 624.9
 	},
 	{
 		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
 		"nom": "2020",
-		"modele": 18.42,
+		"modele": 18.38,
 		"observe": 18.87
 	},
 	{
 		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
 		"nom": "2020",
-		"modele": 11.41,
+		"modele": 11.46,
 		"observe": 12.01
 	},
 	{
 		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
 		"nom": "2024",
-		"modele": 19.2,
+		"modele": 19.15,
 		"observe": 20.06
 	},
 	{
 		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
 		"nom": "2024",
-		"modele": 12.09,
+		"modele": 12.14,
 		"observe": 12.8
 	},
 	{
@@ -292,5 +292,305 @@
 		"nom": "ni en emploi ni à la retraite à 61 ans",
 		"modele": 24.82,
 		"observe": 24.3
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, femmes, 2012",
+		"modele": 1881,
+		"observe": 1845
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, femmes, 2018",
+		"modele": 1961,
+		"observe": 1914
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, femmes, 2024",
+		"modele": 2288,
+		"observe": 2196
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, femmes, 2013-2015",
+		"modele": 1889,
+		"observe": 1946
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, femmes, 2018-2020",
+		"modele": 2032,
+		"observe": 2017
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, femmes, 2022-2024",
+		"modele": 2345,
+		"observe": 2209
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, hommes, 2012",
+		"modele": 2061,
+		"observe": 2168
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, hommes, 2018",
+		"modele": 2155,
+		"observe": 2230
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "État, hommes, 2024",
+		"modele": 2487,
+		"observe": 2539
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, hommes, 2013-2015",
+		"modele": 2191,
+		"observe": 2200
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, hommes, 2018-2020",
+		"modele": 2203,
+		"observe": 2269
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "État, hommes, 2022-2024",
+		"modele": 2393,
+		"observe": 2485
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2012",
+		"modele": 1084,
+		"observe": 1215
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2018",
+		"modele": 1150,
+		"observe": 1259
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2024",
+		"modele": 1333,
+		"observe": 1426
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2013-2015",
+		"modele": 1086,
+		"observe": 1260
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2018-2020",
+		"modele": 1221,
+		"observe": 1276
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, femmes, 2022-2024",
+		"modele": 1251,
+		"observe": 1334
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2012",
+		"modele": 1200,
+		"observe": 1370
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2018",
+		"modele": 1232,
+		"observe": 1399
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2024",
+		"modele": 1430,
+		"observe": 1573
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2013-2015",
+		"modele": 1272,
+		"observe": 1342
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2018-2020",
+		"modele": 1181,
+		"observe": 1373
+	},
+	{
+		"groupe": "Fonction publique : pension moyenne des nouveaux retraités, en euros par mois",
+		"nom": "CNRACL, hommes, 2022-2024",
+		"modele": 1488,
+		"observe": 1428
+	},
+	{
+		"groupe": "Fonction publique : durées des nouveaux retraités, en trimestres",
+		"nom": "État, services",
+		"modele": 145.2,
+		"observe": 140.8
+	},
+	{
+		"groupe": "Fonction publique : durées des nouveaux retraités, en trimestres",
+		"nom": "État, tous régimes",
+		"modele": 170.1,
+		"observe": 174.3
+	},
+	{
+		"groupe": "Fonction publique : indice moyen des nouveaux retraités, en points",
+		"nom": "État",
+		"modele": 745.3,
+		"observe": 726
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "État, sédentaires, 2014",
+		"modele": 63.86,
+		"observe": 62.3
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "État, catégories actives, 2014",
+		"modele": 58.25,
+		"observe": 58.2
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "État, sédentaires, 2024",
+		"modele": 63.72,
+		"observe": 64.2
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "État, catégories actives, 2024",
+		"modele": 60.06,
+		"observe": 60.4
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "État, avec décote",
+		"modele": 15.75,
+		"observe": 18.67
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "État, avec surcote",
+		"modele": 36.98,
+		"observe": 36.67
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "État, au minimum garanti",
+		"modele": 3.484,
+		"observe": 4.031
+	},
+	{
+		"groupe": "Fonction publique : durées des nouveaux retraités, en trimestres",
+		"nom": "CNRACL, services",
+		"modele": 106.8,
+		"observe": 101.9
+	},
+	{
+		"groupe": "Fonction publique : durées des nouveaux retraités, en trimestres",
+		"nom": "CNRACL, tous régimes",
+		"modele": 170.9,
+		"observe": 176.5
+	},
+	{
+		"groupe": "Fonction publique : indice moyen des nouveaux retraités, en points",
+		"nom": "CNRACL",
+		"modele": 536.4,
+		"observe": 484
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "CNRACL, sédentaires, 2014",
+		"modele": 62.33,
+		"observe": 62.8
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "CNRACL, catégories actives, 2014",
+		"modele": 59.04,
+		"observe": 58.5
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "CNRACL, sédentaires, 2024",
+		"modele": 63.74,
+		"observe": 63.8
+	},
+	{
+		"groupe": "Fonction publique : âge moyen de départ, en années",
+		"nom": "CNRACL, catégories actives, 2024",
+		"modele": 60.64,
+		"observe": 60.9
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "CNRACL, avec décote",
+		"modele": 13.23,
+		"observe": 9.667
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "CNRACL, avec surcote",
+		"modele": 25.62,
+		"observe": 23.33
+	},
+	{
+		"groupe": "Fonction publique : conditions de départ, en % des départs de 2022 à 2024",
+		"nom": "CNRACL, au minimum garanti",
+		"modele": 17.8,
+		"observe": 24.71
+	},
+	{
+		"groupe": "Fonction publique : rémunération des agents en poste en 2024, en euros par mois",
+		"nom": "État, traitement",
+		"modele": 2979,
+		"observe": 2962
+	},
+	{
+		"groupe": "Fonction publique : rémunération des agents en poste en 2024, en euros par mois",
+		"nom": "État, primes",
+		"modele": 1062,
+		"observe": 1063
+	},
+	{
+		"groupe": "Fonction publique : rémunération des agents en poste en 2024, en euros par mois",
+		"nom": "CNRACL, traitement",
+		"modele": 2460,
+		"observe": 2321
+	},
+	{
+		"groupe": "Fonction publique : rémunération des agents en poste en 2024, en euros par mois",
+		"nom": "CNRACL, primes",
+		"modele": 806.1,
+		"observe": 751.3
+	},
+	{
+		"groupe": "Fonction publique : pensions de droit direct versées en 2024, en milliards d'euros",
+		"nom": "État",
+		"modele": 45.92,
+		"observe": 49.44
+	},
+	{
+		"groupe": "Fonction publique : pensions de droit direct versées en 2024, en milliards d'euros",
+		"nom": "CNRACL",
+		"modele": 23.08,
+		"observe": 26.43
 	}
 ]

@@ -5,6 +5,7 @@ import {
 	buildComptes,
 	type Carriere,
 	CHAMP_PRIVE,
+	CHAMP_PUBLIC,
 	type CompteCarriere,
 	compareScenarios,
 	computePensions,
@@ -12,12 +13,14 @@ import {
 	type EcartDecile,
 	type Facteurs,
 	generatePopulation,
+	generatePopulationPublique,
 	type Individu,
 	moisParEtat,
 	type Pension,
 	type Preparation,
 	type Projection,
 	photographier,
+	poidsDeLAnnee,
 	prepareProjection,
 	projeter,
 	pyramidesProjetees,
@@ -37,12 +40,32 @@ export type ResultatLeger = Omit<
 	pensions: Omit<Resultat["pensions"], "valeurs">;
 	/** L'équation du système entier, tous régimes, l'année photographiée. */
 	systeme: AnneeSysteme;
+	fonctionPublique: FaitsFonctionPublique;
 	/**
 	 * Écart de solde du système entier face à la loi actuelle, cumulé jusqu'à la fin
 	 * de la projection, en euros de l'année de référence et sans intérêts.
 	 */
 	cumulEquilibre: number;
 };
+
+/** Les fonctionnaires civils de l'État, des collectivités et des hôpitaux, l'année photographiée. */
+export interface FaitsFonctionPublique {
+	cotisants: number;
+	retraites: number;
+	/** Pensions versées dans l'année, en euros. */
+	pensions: number;
+	/** Pension mensuelle moyenne des retraités. */
+	pensionMoyenne: number;
+	ageMoyenDepart: number;
+	/**
+	 * Première pension mensuelle de ceux qui partent autour de cette année-là (cinq années groupées),
+	 * selon que leurs primes pèsent moins ou plus que le seuil, en part du traitement.
+	 */
+	nouveaux: { peuDePrimes: number; beaucoupDePrimes: number };
+}
+
+/** Part du traitement à partir de laquelle un fonctionnaire a « beaucoup de primes ». */
+export const SEUIL_PRIMES = 0.3;
 
 export type TrancheAge = "seniors" | "actifs" | "jeunes";
 
@@ -171,6 +194,8 @@ interface Scene {
 	monde: Monde;
 	preparation: Preparation;
 	projection: Projection | null;
+	/** Les fonctionnaires du même scénario, préparés à la demande. */
+	fonctionPublique: { preparation: Preparation; projection: Projection } | null;
 	systeme: AnneeSysteme[] | null;
 }
 
@@ -223,6 +248,7 @@ function scene(s: ScenarioMoteur): Scene {
 				pensionsReference: sansFacteur ? pensionsReference : undefined,
 			}),
 			projection: null,
+			fonctionPublique: null,
 			systeme: null,
 		};
 		if (scenes.size >= 4) {
@@ -241,6 +267,39 @@ function trajectoires(sc: Scene): Projection {
 	return sc.projection;
 }
 
+let mondePublic: (Monde & { pensions: Pension[] }) | null = null;
+
+/** Les fonctionnaires dans un scénario : même population pour tous, les facteurs d'emploi ne les touchent pas. */
+function fonctionPublique(sc: Scene) {
+	if (!sc.fonctionPublique) {
+		if (!mondePublic) {
+			const population = generatePopulationPublique(B);
+			const comptes = buildComptes(population, B);
+			mondePublic = {
+				population,
+				comptes,
+				pensions: computePensions(population, B, {}, comptes),
+			};
+		}
+		const preparation = prepareProjection(
+			mondePublic.population,
+			B,
+			sc.scenario.regles,
+			{
+				debut: B.anneeReference,
+				fin: FIN_PROJECTION,
+				pyramides: pyramidesProjetees(sc.scenario.demographie),
+				champ: CHAMP_PUBLIC,
+				anneeEffet: ANNEE_EFFET,
+				comptes: mondePublic.comptes,
+				pensionsReference: mondePublic.pensions,
+			},
+		);
+		sc.fonctionPublique = { preparation, projection: projeter(preparation) };
+	}
+	return sc.fonctionPublique;
+}
+
 /** Le scénario étendu au système entier, année par année. */
 function systeme(sc: Scene): AnneeSysteme[] {
 	if (!sc.systeme) {
@@ -256,6 +315,10 @@ function systeme(sc: Scene): AnneeSysteme[] {
 			trajectoires(sc),
 			undefined,
 			trajectoires(universel),
+			{
+				reference: fonctionPublique(scene(DROIT)).projection,
+				scenario: fonctionPublique(sc).projection,
+			},
 		);
 	}
 	return sc.systeme;
@@ -267,6 +330,41 @@ function cumulEquilibre(sc: Scene): number {
 		(t, a, i) => t + a.solde - (reference[i]?.solde ?? a.solde),
 		0,
 	);
+}
+
+function faitsFonctionPublique(
+	sc: Scene,
+	annee: number,
+): FaitsFonctionPublique {
+	const { preparation, projection } = fonctionPublique(sc);
+	const a = projection.annees.find((x) => x.annee === annee);
+	const poids = poidsDeLAnnee(preparation, annee);
+	const groupes = { peu: { n: 0, s: 0 }, beaucoup: { n: 0, s: 0 } };
+	preparation.population.forEach((individu, k) => {
+		const p = preparation.pensions[k] as Pension;
+		if (Math.abs(p.liquidation.annee - annee) > 2) return;
+		const c = individu.carriere;
+		const derniere =
+			c.annees[p.liquidation.annee - 1 - (c.annees[0]?.annee ?? 0)];
+		if (!derniere || derniere.primes === undefined) return;
+		const part = derniere.primes / (derniere.salaireBrut - derniere.primes);
+		const g = part >= SEUIL_PRIMES ? groupes.beaucoup : groupes.peu;
+		g.n += poids[k] as number;
+		g.s += (poids[k] as number) * p.mensuelleBrute;
+	});
+	return {
+		cotisants: a?.cotisants ?? 0,
+		retraites: a?.retraites ?? 0,
+		pensions: a?.pensions ?? 0,
+		pensionMoyenne: a?.pensionMoyenne ?? 0,
+		ageMoyenDepart: a?.ageMoyenDepart ?? 0,
+		nouveaux: {
+			peuDePrimes: groupes.peu.n ? groupes.peu.s / groupes.peu.n : 0,
+			beaucoupDePrimes: groupes.beaucoup.n
+				? groupes.beaucoup.s / groupes.beaucoup.n
+				: 0,
+		},
+	};
 }
 
 function leger(r: Resultat, sc: Scene): ResultatLeger {
@@ -284,6 +382,7 @@ function leger(r: Resultat, sc: Scene): ResultatLeger {
 			histogramme: cotisations.histogramme,
 		},
 		pensions: { resume: pensions.resume, histogramme: pensions.histogramme },
+		fonctionPublique: faitsFonctionPublique(sc, r.anneeReference),
 		systeme: systeme(sc).find(
 			(a) => a.annee === r.anneeReference,
 		) as AnneeSysteme,

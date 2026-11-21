@@ -14,13 +14,25 @@ import {
 	type ComportementDepart,
 	HYPOTHESES,
 } from "./generateur/hypotheses.ts";
+import { HYPOTHESES_PUBLIQUES } from "./generateur/hypothesesPubliques.ts";
 import { computeAgircArrco } from "./regimes/agircArrco.ts";
 import {
 	computeCnav,
 	trimestresManquants,
 	trimestresMda,
 } from "./regimes/cnav.ts";
-import type { AgeTrimestres, Carriere, Pension } from "./types.ts";
+import {
+	computeFonctionPublique,
+	type GenerationFonctionnaire,
+	trimestresEnfantsFonctionPublique,
+} from "./regimes/fonctionPublique.ts";
+import type {
+	AgeTrimestres,
+	Carriere,
+	DetailAgircArrco,
+	DetailCnav,
+	Pension,
+} from "./types.ts";
 
 /** Règles d'un scénario. Tout champ absent garde la valeur du droit en vigueur. */
 export interface ReglesScenario {
@@ -63,6 +75,15 @@ export interface ReglesScenario {
 	 * N'a d'effet que dans une projection.
 	 */
 	revalorisationReelle?: number;
+	/** Fonctionnaires : nombre de meilleures années de traitement retenues ; absent, les six derniers mois. */
+	anneesTraitement?: number;
+	/** Fonctionnaires : vrai, les primes entrent dans la base de la pension. */
+	primesComptees?: boolean;
+	/**
+	 * Fonctionnaires : part conservée de l'avance des catégories actives sur l'âge légal
+	 * (1 = droit en vigueur, 0 = même âge que les sédentaires).
+	 */
+	avanceCategoriesActives?: number;
 }
 
 /**
@@ -93,6 +114,12 @@ export function reglesUniverselles(r: ReglesScenario): ReglesScenario {
 export function appliquerRegles(b: Baremes, r: ReglesScenario = {}): Baremes {
 	const m = b.cnav.minimumContributif;
 	const k = r.minimumContributif;
+	const fp = b.fonctionPublique;
+	// Les trimestres pour enfants des fonctionnaires suivent ceux du régime général, en proportion.
+	const enfants =
+		b.cnav.mdaParEnfant > 0
+			? (r.mdaParEnfant ?? b.cnav.mdaParEnfant) / b.cnav.mdaParEnfant
+			: 1;
 	return {
 		...b,
 		cnav: {
@@ -124,6 +151,29 @@ export function appliquerRegles(b: Baremes, r: ReglesScenario = {}): Baremes {
 			cotisation: {
 				...b.agircArrco.cotisation,
 				tauxAppel: r.tauxAppel ?? b.agircArrco.cotisation.tauxAppel,
+			},
+		},
+		fonctionPublique: fp && {
+			...fp,
+			surcoteParTrimestre: r.surcoteParTrimestre ?? fp.surcoteParTrimestre,
+			// La décote des fonctionnaires bouge dans la même proportion que celle du régime général.
+			decote: (annee) => {
+				const d = fp.decote(annee);
+				return {
+					taux:
+						(d.taux * (r.decoteParTrimestre ?? b.cnav.decoteParTrimestre)) /
+						b.cnav.decoteParTrimestre,
+					plafond: d.plafond,
+				};
+			},
+			droitsFamiliaux: {
+				...fp.droitsFamiliaux,
+				bonificationAvant: Math.round(
+					fp.droitsFamiliaux.bonificationAvant * enfants,
+				),
+				mdaDepuis: Math.round(fp.droitsFamiliaux.mdaDepuis * enfants),
+				majorationTroisEnfants:
+					r.majorationTroisEnfants ?? fp.droitsFamiliaux.majorationTroisEnfants,
 			},
 		},
 	};
@@ -252,6 +302,9 @@ export interface Depart {
 	motif?: "carriereLongue" | "inaptitude";
 }
 
+/** Âge avant la fin duquel il faut avoir cotisé pour la plus tardive des portes de carrière longue. */
+const AGE_DEBUT_PRECOCE = 21;
+
 /** Tirages indépendants tirés du tirage unique de l'individu. */
 const tirage = (u: number, k: number) => (u * [1, 7919, 104729][k]!) % 1;
 
@@ -267,24 +320,28 @@ export function decideLiquidation(
 	g: BaremeGeneration,
 	b: Baremes,
 	comportement?: ComportementDepart,
+	/** Trimestres accordés au titre des enfants à une année de départ donnée ; absent, ceux du régime général. */
+	trimestresEnfants: (annee: number) => number = (annee) =>
+		trimestresMda(carriere, b.cnav, annee),
 ): Depart {
 	// Carrière longue : départ avant l'âge légal dès que la durée cotisée est atteinte.
 	const longue = b.cnav.carriereLongue;
 	const debut = longue?.trimestresDebut;
+	const reputesA = (age: AgeTrimestres) => {
+		const annee = carriere.anneeNaissance + Math.floor(age / 4);
+		return (
+			cumulJusqua(compte, age).trimestresReputes +
+			(longue && annee >= longue.majorationsEnfantsDepuis
+				? Math.min(
+						longue.plafondsReputes.majorationsEnfants,
+						trimestresEnfants(annee),
+					)
+				: 0)
+		);
+	};
 	if (longue && debut !== undefined && g.carriereLongue) {
 		let anticipe = g.ageLegal;
-		const reputes = (age: AgeTrimestres) => {
-			const annee = carriere.anneeNaissance + Math.floor(age / 4);
-			return (
-				cumulJusqua(compte, age).trimestresReputes +
-				(annee >= longue.majorationsEnfantsDepuis
-					? Math.min(
-							longue.plafondsReputes.majorationsEnfants,
-							trimestresMda(carriere, b.cnav, annee),
-						)
-					: 0)
-			);
-		};
+		const reputes = reputesA;
 		for (const borne of g.carriereLongue) {
 			if (borne.age >= anticipe) continue;
 			if (trimestresCotisesAvant(compte, borne.debutAvant) < debut) continue;
@@ -305,7 +362,7 @@ export function decideLiquidation(
 			cumul.trimestresCotises +
 				cumul.trimestresAssimiles +
 				cumul.trimestresAutresRegimes +
-				trimestresMda(carriere, b.cnav, annee),
+				trimestresEnfants(annee),
 			age,
 			g,
 		);
@@ -333,9 +390,17 @@ export function decideLiquidation(
 		return { age: g.ageLegal, motif: "inaptitude" };
 	let age = g.ageLegal;
 	while (age < g.ageTauxPleinAutomatique && manquants(age) > seuilDecote) age++;
+	// Qui a commencé tôt et réunit la durée cotisée ne prolonge pas : il part dès le taux plein, que
+	// ce soit avant l'âge légal ou à cet âge. Sans cela, la même personne partirait plus tard quand
+	// un scénario avance l'âge légal et rend son départ anticipé sans objet.
+	const debutPrecoce =
+		longue !== undefined &&
+		debut !== undefined &&
+		trimestresCotisesAvant(compte, AGE_DEBUT_PRECOCE) >= debut;
 	if (
 		comportement &&
 		u !== undefined &&
+		!(debutPrecoce && reputesA(age) >= g.dureeRequise) &&
 		manquants(age) === 0 &&
 		tirage(u, 1) > 1 - comportement.partSurcote
 	) {
@@ -367,6 +432,8 @@ export function computePension(
 	b: Baremes,
 	options: OptionsPension = {},
 ): Pension {
+	if (carriere.fonctionPublique && b.fonctionPublique)
+		return computePensionFonctionPublique(carriere, b, options);
 	const compte = options.compte ?? buildCompte(carriere, b);
 	let g = reglesGeneration(carriere.anneeNaissance, b, options.regles);
 	const depart: Depart =
@@ -431,6 +498,157 @@ export function computePension(
 		cnav,
 		agircArrco,
 		mensuelleBrute: (cnav.pensionAnnuelle + agircArrco.pensionAnnuelle) / 12,
+	};
+}
+
+const PREMIERES_ACTIVES = new WeakMap<ReglesScenario, Map<string, number>>();
+
+/**
+ * Règles d'une génération de fonctionnaires dans un scénario. L'âge légal et la durée requise
+ * bougent du même écart que dans le privé ; les catégories actives gardent leur avance, sauf
+ * si le scénario la réduit, d'un pas par génération à partir de la première concernée.
+ * Un agent de catégorie active qui n'a pas la durée de services exigée part comme un sédentaire.
+ */
+export function reglesGenerationFonctionPublique(
+	carriere: Carriere,
+	compte: CompteCarriere,
+	b: Baremes,
+	regles: ReglesScenario = {},
+): GenerationFonctionnaire {
+	const fp = b.fonctionPublique;
+	const statut = carriere.fonctionPublique;
+	if (!fp || !statut) throw new Error("Carrière hors de la fonction publique");
+	const naissance = carriere.anneeNaissance;
+	const lire = (
+		categorie: "sedentaire" | "actif" | "superActif",
+		g: number,
+	) => {
+		const table = fp.parGeneration[categorie];
+		const annees = Object.keys(table).map(Number);
+		const borne = Math.max(
+			Math.min(...annees),
+			Math.min(Math.max(...annees), g),
+		);
+		return table[borne] as (typeof table)[number];
+	};
+	const sedentaire = lire("sedentaire", naissance);
+	let categorie = statut.categorie;
+	if (
+		categorie !== "sedentaire" &&
+		cumulJusqua(compte, lire(categorie, naissance).ageLegal).trimestresCotises <
+			fp.servicesActifs[categorie]
+	)
+		categorie = "sedentaire";
+	const droit = lire(categorie, naissance);
+	const prive = baremeGeneration(b.cnav, naissance);
+	const vise = reglesGeneration(naissance, b, regles);
+	const ecartAge = vise.ageLegal - prive.ageLegal;
+	const ecartDuree = vise.dureeRequise - prive.dureeRequise;
+	// Réduction de l'avance des catégories actives, en trimestres.
+	let reduction = 0;
+	const conservee = regles.avanceCategoriesActives;
+	if (categorie !== "sedentaire" && conservee !== undefined && conservee < 1) {
+		const cible = Math.round(
+			(1 - Math.max(0, conservee)) * (sedentaire.ageLegal - droit.ageLegal),
+		);
+		if (regles.anneeEffet === undefined) reduction = cible;
+		else {
+			let connues = PREMIERES_ACTIVES.get(regles);
+			if (!connues) {
+				connues = new Map();
+				PREMIERES_ACTIVES.set(regles, connues);
+			}
+			let premiere = connues.get(categorie);
+			if (premiere === undefined) {
+				premiere = regles.anneeEffet - 70;
+				while (
+					premiere + lire(categorie, premiere).ageLegal / 4 <
+					regles.anneeEffet
+				)
+					premiere++;
+				connues.set(categorie, premiere);
+			}
+			reduction = Math.max(
+				0,
+				Math.min(cible, (naissance - premiere + 1) * (regles.rythme ?? 1)),
+			);
+		}
+	}
+	const ageLegal = droit.ageLegal + ecartAge + reduction;
+	return {
+		ageLegal,
+		dureeRequise: droit.dureeRequise + ecartDuree,
+		ageTauxPleinAutomatique: Math.max(
+			droit.ageAnnulationDecote + reduction,
+			ageLegal,
+		),
+		carriereLongue:
+			categorie === "sedentaire" ? vise.carriereLongue : undefined,
+		ageSurcote: sedentaire.ageLegal + ecartAge,
+		anneeOuverture: naissance + Math.floor(droit.ageLegal / 4),
+	};
+}
+
+const CNAV_VIDE: DetailCnav = {
+	salaireAnnuelMoyen: 0,
+	trimestresValides: 0,
+	trimestresCotises: 0,
+	trimestresAutresRegimes: 0,
+	trimestresMda: 0,
+	dureeRequise: 0,
+	tauxLiquidation: 0,
+	trimestresDecote: 0,
+	trimestresSurcote: 0,
+	proratisation: 0,
+	majorationEnfants: 0,
+	minimumContributifApplique: false,
+	pensionAnnuelle: 0,
+};
+const AGIRC_ARRCO_VIDE: DetailAgircArrco = {
+	points: 0,
+	coefficientAnticipation: 1,
+	majorationEnfants: 0,
+	pensionAnnuelle: 0,
+};
+
+/** Pension d'une carrière de fonctionnaire : la seule pension de son régime de la fonction publique. */
+function computePensionFonctionPublique(
+	carriere: Carriere,
+	b: Baremes,
+	options: OptionsPension,
+): Pension {
+	const fp = b.fonctionPublique;
+	if (!fp) throw new Error("Barème de la fonction publique absent");
+	const compte = options.compte ?? buildCompte(carriere, b);
+	const regles = options.regles ?? {};
+	const g = reglesGenerationFonctionPublique(carriere, compte, b, regles);
+	const age =
+		options.ageLiquidation ??
+		decideLiquidation(
+			carriere,
+			compte,
+			g,
+			b,
+			options.comportement ??
+				HYPOTHESES_PUBLIQUES.depart[carriere.fonctionPublique?.regime ?? "sre"],
+			(annee) =>
+				trimestresEnfantsFonctionPublique(carriere, fp, annee).dureeAssurance,
+		).age;
+	const detail = computeFonctionPublique(
+		carriere,
+		compte,
+		cumulJusqua(compte, age),
+		age,
+		g,
+		fp,
+		regles,
+	);
+	return {
+		liquidation: { age, annee: carriere.anneeNaissance + Math.floor(age / 4) },
+		cnav: { ...CNAV_VIDE, dureeRequise: g.dureeRequise },
+		agircArrco: AGIRC_ARRCO_VIDE,
+		fonctionPublique: detail,
+		mensuelleBrute: (detail.pensionAnnuelle + detail.rafp) / 12,
 	};
 }
 

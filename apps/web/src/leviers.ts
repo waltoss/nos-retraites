@@ -22,6 +22,9 @@ export type LevierId =
 	| "majorationEnfants"
 	| "cotisationBase"
 	| "tauxAppel"
+	| "traitementFonctionnaires"
+	| "primesFonctionnaires"
+	| "categoriesActives"
 	| "chomage"
 	| "seniors"
 	| "interruptions"
@@ -64,6 +67,7 @@ export type GroupeId =
 	| "calcul"
 	| "famille"
 	| "financement"
+	| "fonctionPublique"
 	| "emploi"
 	| "population"
 	| "politiquesFamiliales";
@@ -80,6 +84,12 @@ export const GROUPES: {
 	{ id: "calcul", label: "Calcul de la pension", icone: "pension" },
 	{ id: "famille", label: "Droits liés aux enfants", icone: "famille" },
 	{ id: "financement", label: "Cotisations", icone: "cotisant" },
+	{
+		id: "fonctionPublique",
+		label: "Fonction publique",
+		icone: "tableau",
+		note: "Ces réglages ne touchent que les fonctionnaires de l'État, des collectivités et des hôpitaux, hors militaires : environ 3,7 millions d'agents en poste et 3 millions de retraités. Leur effet se lit dans le solde tous régimes et dans l'encadré « Les fonctionnaires ». Les autres leviers d'âge, de durée et de revalorisation s'appliquent déjà à eux.",
+	},
 	{
 		id: "emploi",
 		label: "Emploi et carrières",
@@ -286,6 +296,48 @@ export const LEVIERS: Levier[] = [
 		affiche: pourcent,
 		termes: ["cotisation"],
 		aide: "À 127 %, on cotise 1,27 € pour 1 € qui donne des points. Le monter fait payer plus sans donner plus de droits.",
+	},
+	{
+		id: "traitementFonctionnaires",
+		groupe: "fonctionPublique",
+		label: "Traitement retenu pour la pension",
+		min: 0,
+		max: 25,
+		pas: 5,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0 ? "les 6 derniers mois" : `les ${v} meilleures années`,
+		termes: ["pension"],
+		aide: "La pension d'un fonctionnaire se calcule sur son traitement des six derniers mois, celle d'un salarié du privé sur ses 25 meilleures années. Retenir plus d'années baisse la pension de ceux dont le traitement a beaucoup monté en fin de carrière.",
+	},
+	{
+		id: "primesFonctionnaires",
+		groupe: "fonctionPublique",
+		label: "Primes des fonctionnaires",
+		min: 0,
+		max: 1,
+		pas: 1,
+		defaut: 0,
+		affiche: (v) => (v === 0 ? "hors du calcul" : "comptées dans la pension"),
+		termes: ["pension"],
+		aide: "Aujourd'hui les primes ne comptent presque pas pour la retraite : un quart de la rémunération en moyenne, un cinquième pour les enseignants, un tiers ou plus pour d'autres métiers. Les compter relève les pensions, surtout là où les primes sont fortes. Le modèle garde le taux de 75 % et ne dit rien des cotisations en plus qu'il faudrait prélever.",
+	},
+	{
+		id: "categoriesActives",
+		groupe: "fonctionPublique",
+		label: "Départ anticipé des catégories actives",
+		min: 0,
+		max: 100,
+		pas: 25,
+		defaut: 100,
+		affiche: (v) =>
+			v === 100
+				? "inchangé"
+				: v === 0
+					? "supprimé"
+					: `avance réduite de ${100 - v} %`,
+		termes: ["retraites", "pension"],
+		aide: "Policiers, surveillants de prison, aides-soignants ou pompiers peuvent partir cinq ou dix ans avant les autres après une durée de services minimale. Réduire cette avance s'applique peu à peu, génération après génération.",
 	},
 	{
 		id: "chomage",
@@ -519,6 +571,11 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 	if (r.cotisationBase !== undefined)
 		regles.cotisationBase = r.cotisationBase / 100;
 	if (r.tauxAppel !== undefined) regles.tauxAppel = r.tauxAppel / 100;
+	if (r.traitementFonctionnaires)
+		regles.anneesTraitement = r.traitementFonctionnaires;
+	if (r.primesFonctionnaires) regles.primesComptees = true;
+	if (r.categoriesActives !== undefined)
+		regles.avanceCategoriesActives = r.categoriesActives / 100;
 	if (r.chomage !== undefined) facteurs.chomage = r.chomage / 100;
 	if (r.seniors !== undefined) facteurs.sortiesSeniors = r.seniors / 100;
 	if (r.interruptions !== undefined)
@@ -602,6 +659,21 @@ export const DECISIONS: Decision[] = [
 		levier: "tauxAppel",
 		valeur: 135,
 		label: "Taux d'appel de la complémentaire à 135 %",
+	},
+	{
+		levier: "traitementFonctionnaires",
+		valeur: 25,
+		label: "Pension des fonctionnaires sur les 25 meilleures années",
+	},
+	{
+		levier: "primesFonctionnaires",
+		valeur: 1,
+		label: "Primes des fonctionnaires comptées dans la pension",
+	},
+	{
+		levier: "categoriesActives",
+		valeur: 0,
+		label: "Départ anticipé des catégories actives supprimé",
 	},
 	{ levier: "chomage", valeur: 80, label: "Risque de chômage réduit de 20 %" },
 	{

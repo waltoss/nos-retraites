@@ -23,7 +23,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Cohorte** : effectif réel d'une génération par sexe, suivi d'année en année par la démographie.
 - **Poids** : nombre de personnes réelles qu'un individu représente : la population de son âge et de son sexe dans le champ, partagée entre les individus simulés de cette cellule.
 - **Pyramide** : population réelle par sexe et âge une année donnée, d'après l'Insee.
-- **Champ** : partie de la population réelle que la population simulée représente (aujourd'hui les salariés du privé), définie par une part à chaque âge.
+- **Champ** : partie de la population réelle qu'une population simulée représente (les salariés du privé, les fonctionnaires civils), définie par une part à chaque âge ou à chaque génération.
 - **Population synthétique** : ensemble des individus simulés, construit à partir d'agrégats publics et non de données personnelles.
 - **Carrière** : suite annuelle des états, salaires et événements d'un individu, de l'entrée dans la vie active à la liquidation.
 - **État** : situation d'un individu sur une année : emploi cotisant, chômage, maladie ou maternité, inactivité, retraite. Chaque état dit combien on cotise et combien on valide.
@@ -36,13 +36,23 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 ## Les règles
 
 - **Régime** : ensemble de règles de cotisation et de calcul de pension propre à une population (un module du moteur).
-- **Bloc résiduel** : ce qui manque au privé simulé pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario, les régimes alignés sur le régime général suivent toutes ses règles, les autres seulement les règles communes à tous.
+- **Bloc résiduel** : ce qui manque au privé et aux fonctionnaires simulés pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario, les régimes alignés sur le régime général suivent toutes ses règles, les autres seulement les règles communes à tous.
 - **Règle commune** : règle d'un scénario qui vaut pour tous les régimes (âge légal, durée requise, décote et surcote, droits familiaux, revalorisation), par opposition aux règles propres au privé (meilleures années, taux plein, minimum contributif, valeur du point, taux de cotisation).
 - **Régime aligné** : régime de base qui applique les règles de calcul du régime général (indépendants, salariés agricoles).
 - **Cadrage** : totaux publiés du système entier, année par année, sur lesquels le bloc résiduel est calé (projections du COR).
 - **Barème** : table versionnée des paramètres légaux par génération ou par année (âge légal, durée requise, taux).
 - **Âge légal** : âge minimal d'ouverture des droits à la retraite.
 - **Âge du taux plein automatique** : âge à partir duquel la décote ne s'applique plus, quelle que soit la durée validée.
+- **Fonctionnaire** : agent titulaire de l'État, d'une collectivité ou d'un hôpital, qui relève d'un régime de la fonction publique et non du régime général.
+- **Versant** : l'une des trois parties de la fonction publique (État, territoriale, hospitalière) ; l'État a son régime, les deux autres partagent la CNRACL.
+- **Traitement** : part de la rémunération d'un fonctionnaire fixée par son indice ; seule base de sa pension.
+- **Indice** : nombre de points attaché à l'échelon d'un fonctionnaire ; multiplié par la valeur du point d'indice, il donne le traitement.
+- **Prime** : part de la rémunération d'un fonctionnaire hors traitement, qui n'entre pas dans le calcul de sa pension.
+- **Durée de services** : trimestres passés comme fonctionnaire, qui fixent la proratisation de la pension de la fonction publique.
+- **Bonification** : trimestres ajoutés à la durée de services sans avoir été travaillés (enfants nés avant 2004, certains métiers).
+- **Catégorie active** : emplois de fonctionnaires à risque ou fatigue particuliers (policiers, aides-soignants, pompiers) qui ouvrent un départ avant l'âge légal après une durée de services minimale.
+- **Sédentaire** : fonctionnaire qui n'est pas en catégorie active et part à l'âge légal commun.
+- **Minimum garanti** : plancher de la pension d'un fonctionnaire, fonction de sa durée de services ; l'équivalent du minimum contributif.
 - **Liquidation** : moment où un individu fait calculer et verser sa pension ; elle clôt sa carrière.
 - **Montée en charge** : application progressive d'un nouvel âge légal ou d'une nouvelle durée requise, d'un pas par génération à partir de la première concernée.
 - **Carrière longue** : départ anticipé avant l'âge légal, ouvert à ceux qui ont commencé à cotiser jeunes et réunissent la durée cotisée.
@@ -96,6 +106,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **AVPF** : assurance vieillesse des parents au foyer, qui valide des trimestres et porte un salaire au SMIC au compte d'un parent sans activité.
 - **CADES** : Caisse d'amortissement de la dette sociale, qui porte et rembourse les déficits passés de la Sécurité sociale.
 - **CNAV** : Caisse nationale d'assurance vieillesse, régime de base des salariés du privé (« régime général »).
+- **CNRACL** : Caisse nationale de retraites des agents des collectivités locales, régime des fonctionnaires territoriaux et hospitaliers.
 - **COR** : Conseil d'orientation des retraites, auteur des projections officielles annuelles.
 - **CRDS** : contribution au remboursement de la dette sociale, impôt affecté à la CADES.
 - **CSG** : contribution sociale généralisée, impôt sur les revenus affecté à la protection sociale.
@@ -108,7 +119,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **MICO** : minimum contributif, plancher de pension de base pour une carrière complète à bas salaires.
 - **PASS** : plafond annuel de la Sécurité sociale, limite du salaire pris en compte par le régime de base.
 - **PIB** : produit intérieur brut.
+- **RAFP** : retraite additionnelle de la fonction publique, régime par points assis sur les primes dans la limite de 20 % du traitement.
 - **RMPT** : rémunération moyenne par tête de l'ensemble de l'économie, référence des carrières types du COR.
 - **SAM** : salaire annuel moyen, moyenne des meilleures années de salaire plafonnées et revalorisées, base du calcul CNAV.
 - **SMIC** : salaire minimum interprofessionnel de croissance.
+- **SRE** : Service des retraites de l'État, régime des fonctionnaires de l'État et des militaires.
 - **TZCLD** : Territoires zéro chômeur de longue durée, dispositif d'embauche en CDI de chômeurs de longue durée.

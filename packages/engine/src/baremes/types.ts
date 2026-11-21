@@ -128,10 +128,71 @@ export interface BaremeAgircArrco {
 	majorationTroisEnfants: number;
 }
 
+/** Âges et durée d'une génération de fonctionnaires, en trimestres. */
+export interface GenerationFonctionPublique {
+	ageLegal: number;
+	dureeRequise: number;
+	ageAnnulationDecote: number;
+}
+
+/** Régimes des fonctionnaires (SRE et CNRACL), dont les règles de calcul sont les mêmes. */
+export interface BaremeFonctionPublique {
+	/** Taux appliqué au traitement pour une durée de services complète. */
+	tauxPlein: number;
+	/** Taux maximal quand des bonifications s'ajoutent aux services. */
+	tauxMaximalAvecBonifications: number;
+	surcoteParTrimestre: number;
+	/** Part de pension perdue par trimestre manquant et nombre maximal de trimestres, selon l'année d'atteinte de l'âge d'ouverture. */
+	decote(annee: number): { taux: number; plafond: number };
+	/** Trimestres de services exigés pour partir au titre d'une catégorie active. */
+	servicesActifs: { actif: number; superActif: number };
+	parGeneration: Readonly<
+		Record<
+			"sedentaire" | "actif" | "superActif",
+			Readonly<Record<number, GenerationFonctionPublique>>
+		>
+	>;
+	/** Valeur annuelle du point d'indice, en euros. */
+	valeurPoint: SerieAnnuelle;
+	minimumGaranti: {
+		/** Montant annuel pour 40 ans de services, en euros de l'année de référence. */
+		annuel: number;
+		partA15Ans: number;
+		parAnDe15A30: number;
+		parAnDe30A40: number;
+		/** Première année de départ où il faut une pension sans décote pour y avoir droit. */
+		conditionDepuis: number;
+	};
+	droitsFamiliaux: {
+		/** Année de naissance de l'enfant à partir de laquelle la bonification laisse place à une majoration de durée d'assurance. */
+		anneeBascule: number;
+		bonificationAvant: number;
+		mdaDepuis: number;
+		bonificationDepuis: { anneeDEffet: number; trimestres: number };
+		majorationTroisEnfants: number;
+		majorationParEnfantSupplementaire: number;
+	};
+	/** Taux de l'année de référence, en part du traitement. */
+	tauxCotisation: { agent: number; employeur: { sre: number; cnracl: number } };
+	rafp: {
+		premiereAnnee: number;
+		/** Part du traitement au-delà de laquelle les primes ne cotisent plus. */
+		plafondAssiette: number;
+		taux: number;
+		valeurAcquisition: SerieAnnuelle;
+		valeurService: number;
+		/** En dessous de ce nombre de points, la prestation est un capital et non une rente. */
+		seuilCapital: number;
+		/** Coefficient selon l'âge de départ, à partir de 62 ans. */
+		majorationSelonAge: ReadonlyArray<number>;
+	};
+}
+
 export interface Baremes {
 	anneeReference: number;
 	cnav: BaremeCnav;
 	agircArrco: BaremeAgircArrco;
+	fonctionPublique?: BaremeFonctionPublique;
 }
 
 const BORNES = new WeakMap<object, { min: number; max: number }>();

@@ -229,7 +229,12 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 ];
 
 const LIMITES = [
-	"Seuls les salariés du privé sont simulés. Ni fonctionnaires, ni indépendants, ni régimes spéciaux.",
+	"Les salariés du privé et les fonctionnaires civils (État, collectivités, hôpitaux) sont simulés. Ni militaires, ni indépendants, ni régimes spéciaux, ni contractuels du public.",
+	"Les fonctionnaires sont une seconde population, plus petite et plus simple que celle du privé : un emploi continu de l'entrée au départ, sans temps partiel, sans invalidité, sans sortie vers le privé. Leur traitement suit l'âge, l'ancienneté et un rang ; les primes sont une part du traitement propre à chacun, constante dans le temps. Ces carrières sont réglées à la main sur les statistiques des deux régimes, pas par un calage automatique.",
+	"La part de chaque génération qui devient fonctionnaire est réglée sur les cotisants et les retraités de 2012 à 2025. Pour les générations nées après 2000 elle reste celle des dernières observées : si l'État et les collectivités recrutent davantage de contractuels, il y aura moins de fonctionnaires que dans le modèle.",
+	"Jusqu'en 2026 les traitements suivent la valeur du point d'indice, plus 0,4 % par an pour le relèvement des grilles. Ensuite ils sont supposés suivre les salaires du privé.",
+	"Compter les primes dans la pension des fonctionnaires garde le taux de 75 % et les cotisations d'aujourd'hui : c'est une borne haute de ce que coûterait la mesure, pas une réforme équilibrée. La retraite additionnelle sur les primes est calculée pour chacun mais reste hors du solde, comme dans les comptes du COR.",
+	"Les cotisations des fonctionnaires restent dans le bloc des autres régimes : le nombre de postes ne dépend pas de l'âge de départ. Un fonctionnaire qui a aussi travaillé dans le privé est compté dans les deux populations, avec dans chacune la seule pension de ce régime.",
 	"Les effectifs par âge de fin 2024 sont appliqués à 2026. Avant 24 ans le modèle manque d'apprentis et d'emplois étudiants, et les plus de 96 ans sont absents.",
 	"À âge égal, les pensions élevées vivent plus longtemps : le modèle reprend les tables de mortalité de l'Insee par niveau de vie, en réduisant l'écart de 40 % parce qu'une pension n'est pas un niveau de vie. Le classement se fait sur la pension de chacun, pas sur les revenus du ménage.",
 	"Trois personnes sur dix passent une partie de leur carrière dans un autre régime. Ces années comptent pour leur durée, mais leur pension de fonctionnaire ou d'indépendant n'est pas calculée : elle est dans le bloc des autres régimes.",
@@ -243,7 +248,7 @@ const LIMITES = [
 	"Pas de pensions de réversion.",
 	"La population suit les projections de l'Insee de 2026. Natalité et solde migratoire se règlent entre ses variantes basse et haute, par interpolation ; leurs effets sont supposés s'additionner. Les arrivants reçoivent la carrière des personnes de leur âge. Les salaires suivent l'hypothèse du COR : +0,7 % par an au-dessus des prix.",
 	"Dans la projection, la part des retraités qui relève du privé suit la génération : les futurs retraités gardent la part des jeunes retraités d'aujourd'hui. C'est encore trop peu, voir la comparaison avec le COR plus haut.",
-	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR. Dans un scénario, les règles communes à tous (âge, durée, décote, droits familiaux, revalorisation) s'appliquent aux autres régimes comme au privé. Les règles propres au régime général (meilleures années, taux plein, minimum contributif, cotisation) ne s'appliquent qu'aux régimes qui lui sont alignés, pas à la fonction publique ni aux régimes spéciaux. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde retombe près des variantes du COR en 2070, un peu en dessous en 2050.",
+	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR, et ce qui n'est ni le privé ni les fonctionnaires civils forme un bloc. Dans un scénario, les règles communes à tous (âge, durée, décote, droits familiaux, revalorisation) s'appliquent à ce bloc comme au privé. Les règles propres au régime général (meilleures années, taux plein, minimum contributif, cotisation) ne s'appliquent qu'aux régimes qui lui sont alignés, pas à la fonction publique ni aux régimes spéciaux. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde retombe près des variantes du COR en 2070, un peu en dessous en 2050.",
 	"Un nouvel âge légal ou une nouvelle durée s'appliquent par étapes de trois mois par génération, à partir de celle qui atteint son âge légal en 2028. C'est le rythme de la réforme de 2023 ; il se règle.",
 	"Les départs pour carrière longue suivent les règles de la Cnav de septembre 2026. Dans un scénario, ils gardent leur avance sur l'âge légal : c'est une hypothèse, aucune loi ne le dit.",
 	"Qui part quand il a le choix ? Le modèle tire au sort : 45 % de ceux qui n'ont ni emploi ni durée suffisante à l'âge légal partent pour inaptitude ou invalidité, un cinquième des autres accepte une décote, et six sur dix de ceux qui ont le taux plein en emploi continuent un peu. Ces parts sont réglées sur les départs de 2021 à 2023 au régime général, et ne changent pas quand les règles changent.",
@@ -294,6 +299,8 @@ const deuxDecimales = (x: number) =>
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2,
 	});
+const JAUNE =
+	"Direction du budget, rapport sur les pensions de retraite de la fonction publique annexé au projet de loi de finances pour 2027.";
 const EACR =
 	"Drees, enquête annuelle auprès des caisses de retraite, données ouvertes de mai 2026.";
 
@@ -355,6 +362,59 @@ const BACKTEST: Record<
 		source: EACR,
 		format: deuxDecimales,
 	},
+	"Fonction publique : pension moyenne des retraités, en euros par mois": {
+		texte:
+			"Fonctionnaires civils de l'État et agents des collectivités et des hôpitaux (CNRACL), pour tous les retraités en fin d'année, hors majorations pour enfants, en euros de l'année. Les effectifs sont réglés, les pensions ne le sont qu'à la main, par le niveau des traitements.",
+		source: EACR,
+		format: (x) => euros(x),
+	},
+	"Fonction publique : pension moyenne des nouveaux retraités, en euros par mois":
+		{
+			texte:
+				"Pour ceux qui partent dans l'année, trois années groupées : la population simulée de fonctionnaires est petite.",
+			source: EACR,
+			format: (x) => euros(x),
+		},
+	"Fonction publique : durées des nouveaux retraités, en trimestres": {
+		texte:
+			"Durée de services dans la fonction publique, et durée d'assurance tous régimes, qui fixe la décote. Les agents des collectivités et des hôpitaux entrent tard : ils n'y font que 25 ans en moyenne.",
+		source: JAUNE,
+		format: (x) => entier(x),
+	},
+	"Fonction publique : indice moyen des nouveaux retraités, en points": {
+		texte:
+			"L'indice de fin de carrière fixe le traitement qui sert de base à la pension. Le modèle est trop haut à la CNRACL : il y compense des pensions qui resteraient sinon trop basses.",
+		source: JAUNE,
+		format: (x) => entier(x),
+	},
+	"Fonction publique : âge moyen de départ, en années": {
+		texte:
+			"Sédentaires d'un côté, catégories actives de l'autre (policiers, aides-soignants, pompiers). En 2014 les sédentaires de l'État partaient plus tôt que dans le modèle.",
+		source: JAUNE,
+		format: (x) => decimal(x),
+	},
+	"Fonction publique : conditions de départ, en % des départs de 2022 à 2024": {
+		texte:
+			"Part des nouveaux retraités avec une décote, avec une surcote, ou dont la pension est relevée au minimum garanti.",
+		source: `${JAUNE} ${EACR}`,
+		format: (x) => entier(x),
+		enPoints: true,
+	},
+	"Fonction publique : rémunération des agents en poste en 2024, en euros par mois":
+		{
+			texte:
+				"Traitement et primes des fonctionnaires en équivalent temps plein. Ces chiffres servent au réglage.",
+			source:
+				"Insee Première n° 2100 à 2102, salaires dans la fonction publique en 2024.",
+			format: (x) => euros(x),
+		},
+	"Fonction publique : pensions de droit direct versées en 2024, en milliards d'euros":
+		{
+			texte:
+				"Nombre de retraités multiplié par leur pension moyenne. Le modèle est en dessous, surtout à la CNRACL.",
+			source: EACR,
+			format: (x) => decimal(x),
+		},
 	"Situation avant la retraite en 2023, en % de la classe d'âge": {
 		texte:
 			"Ce que font les gens juste avant l'âge légal décide de ce que rapporte son relèvement. L'emploi après 55 ans a beaucoup monté depuis 2010 : le modèle suit cette hausse et la suppose acquise ensuite. L'enquête couvre toute la population, le modèle les seuls salariés du privé.",

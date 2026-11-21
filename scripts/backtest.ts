@@ -31,6 +31,8 @@ import {
 	SURVIE_SELON_PENSION,
 } from "../packages/engine/src/index.ts";
 
+import { BACKTEST_PUBLIC } from "./backtest-public.ts";
+
 export interface LigneBacktest {
 	groupe: string;
 	nom: string;
@@ -412,6 +414,9 @@ for (const age of [55, 57, 59, 61]) {
 		observe: observe.chomage + observe.inactiviteHorsRetraite,
 	});
 }
+
+// La fonction publique a son propre backtest, sur sa propre population.
+lignes.push(...BACKTEST_PUBLIC);
 
 export const BACKTEST = lignes;
 if (import.meta.main) {

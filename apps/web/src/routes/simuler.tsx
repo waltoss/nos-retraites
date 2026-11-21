@@ -61,12 +61,13 @@ function Simuler() {
 								reglages={reglages}
 							/>
 							<p className="reserve">
-								Les cases du haut ne portent que sur les salariés du privé, ceux
-								que le modèle simule : régime général et Agirc-Arrco, pensions
-								de droit direct. Le total tous régimes vient des projections du
-								Conseil d'orientation des retraites ; dans un scénario, les
-								autres régimes suivent les règles communes à tous (âge, durée,
-								revalorisation), pas celles qui sont propres au privé.
+								Les cases du haut ne portent que sur les salariés du privé :
+								régime général et Agirc-Arrco, pensions de droit direct. Le
+								total tous régimes vient des projections du Conseil
+								d'orientation des retraites. Dans un scénario, les
+								fonctionnaires civils suivent leurs propres règles, simulées à
+								part ; les autres régimes suivent les règles communes à tous
+								(âge, durée, revalorisation).
 							</p>
 						</section>
 
@@ -94,6 +95,60 @@ function Simuler() {
 								<TableSexe reference={reference} courant={courant} />
 							</section>
 						</div>
+
+						<section className="bloc">
+							<h2>Les fonctionnaires en {annee}</h2>
+							<p className="sub">
+								Agents de l'État, des collectivités et des hôpitaux, hors
+								militaires. Leur pension se calcule sur le traitement des six
+								derniers mois, sans les primes. Ils sont simulés à part et ne
+								figurent pas dans les distributions ci-dessus.
+							</p>
+							<div className="faits">
+								<Fait
+									valeur={euros(courant.fonctionPublique.pensionMoyenne)}
+									ecart={ecart(
+										courant.fonctionPublique.pensionMoyenne,
+										reference.fonctionPublique.pensionMoyenne,
+										euros,
+										5,
+									)}
+									legende="pension moyenne des fonctionnaires retraités, par mois"
+								/>
+								<Fait
+									valeur={euros(courant.fonctionPublique.nouveaux.peuDePrimes)}
+									ecart={ecart(
+										courant.fonctionPublique.nouveaux.peuDePrimes,
+										reference.fonctionPublique.nouveaux.peuDePrimes,
+										euros,
+										5,
+									)}
+									legende="première pension de ceux qui ont peu de primes, les enseignants surtout"
+								/>
+								<Fait
+									valeur={euros(
+										courant.fonctionPublique.nouveaux.beaucoupDePrimes,
+									)}
+									ecart={ecart(
+										courant.fonctionPublique.nouveaux.beaucoupDePrimes,
+										reference.fonctionPublique.nouveaux.beaucoupDePrimes,
+										euros,
+										5,
+									)}
+									legende="première pension de ceux dont les primes dépassent 30 % du traitement"
+								/>
+								<Fait
+									valeur={`${decimal(courant.fonctionPublique.ageMoyenDepart)} ans`}
+									ecart={ecart(
+										courant.fonctionPublique.ageMoyenDepart,
+										reference.fonctionPublique.ageMoyenDepart,
+										annees,
+										0.05,
+									)}
+									legende="âge moyen de ceux qui partent cette année-là"
+								/>
+							</div>
+						</section>
 
 						<section className="bloc">
 							<h2>Les retraités de {annee}</h2>
@@ -150,9 +205,10 @@ function Simuler() {
 					<p>
 						<strong>Des ordres de grandeur, pas une prévision.</strong> Les
 						carrières sont inventées, réglées sur les salaires et les durées
-						publiés. Seuls les salariés du privé sont simulés. La natalité et le
-						solde migratoire se règlent entre les variantes basse et haute de
-						l'Insee.
+						publiés. Les salariés du privé et les fonctionnaires civils sont
+						simulés, les autres régimes suivent les projections officielles. La
+						natalité et le solde migratoire se règlent entre les variantes basse
+						et haute de l'Insee.
 					</p>
 				</aside>
 			</div>

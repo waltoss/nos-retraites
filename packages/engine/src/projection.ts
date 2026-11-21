@@ -8,6 +8,7 @@ import {
 	reglesGeneration,
 } from "./liquidation.ts";
 import type { Champ, Pyramide } from "./ponderation.ts";
+import { cotisationsFonctionPublique } from "./regimes/fonctionPublique.ts";
 import {
 	type GroupeSexe,
 	MAX_COTISATION,
@@ -110,8 +111,8 @@ export interface Preparation {
 	vingtiemes: Uint8Array;
 }
 
-const cle = (individu: Individu) =>
-	`${individu.carriere.sexe}${individu.carriere.anneeNaissance}`;
+const cleDe = (champ: Champ) => (individu: Individu) =>
+	`${individu.carriere.sexe}${individu.carriere.anneeNaissance}${champ.cellule?.(individu.carriere) ?? ""}`;
 
 /**
  * Prépare un scénario : calcule la pension de chacun avec les règles qui lui reviennent.
@@ -125,6 +126,7 @@ export function prepareProjection(
 	options: OptionsProjection,
 ): Preparation {
 	const { anneeEffet } = options;
+	const cle = cleDe(options.champ);
 	const inchange = Object.keys(reglesVisees).length === 0;
 	// L'âge légal et la durée requise montent en charge par génération depuis l'année d'effet.
 	const regles: ReglesScenario = inchange
@@ -195,6 +197,8 @@ export function prepareProjection(
 /** Ce qu'il faut savoir d'un individu une année donnée : son poids et, s'il est retraité, sa pension. */
 function lecteur(prep: Preparation, annee: number) {
 	const { options, b, regles } = prep;
+	const cle = cleDe(options.champ);
+	const fp = b.fonctionPublique;
 	const anneesConnues = Object.keys(options.pyramides).map(Number);
 	const pyramide = options.pyramides[
 		Math.max(
@@ -240,7 +244,7 @@ function lecteur(prep: Preparation, annee: number) {
 				];
 				return (
 					((reels ?? 0) *
-						options.champ.part(age, c.sexe, annee) *
+						options.champ.part(age, c.sexe, annee, c) *
 						chance(k, age)) /
 					(survies.get(cle(individu)) ?? 1)
 				);
@@ -249,7 +253,7 @@ function lecteur(prep: Preparation, annee: number) {
 				Math.min(age, pyramide.femmes.length - 1)
 			];
 			return (
-				((reels ?? 0) * options.champ.part(age, c.sexe, annee)) /
+				((reels ?? 0) * options.champ.part(age, c.sexe, annee, c)) /
 				(prep.simules.get(cle(individu)) ?? 1)
 			);
 		},
@@ -279,7 +283,8 @@ function lecteur(prep: Preparation, annee: number) {
 			return (
 				indexation *
 				(p.cnav.pensionAnnuelle +
-					p.agircArrco.pensionAnnuelle * pointApplique * service)
+					p.agircArrco.pensionAnnuelle * pointApplique * service +
+					(p.fonctionPublique?.pensionAnnuelle ?? 0))
 			);
 		},
 		/** Salaire de l'année, 0 hors emploi. */
@@ -288,7 +293,24 @@ function lecteur(prep: Preparation, annee: number) {
 			const premiere = c.annees[0]?.annee ?? annee + 1;
 			return c.annees[annee - premiere]?.salaireBrut ?? 0;
 		},
-		cotisation(salaire: number): { base: number; complementaire: number } {
+		/** Cotisations de l'année ; pour un fonctionnaire, celles de son régime sur son traitement. */
+		cotisation(
+			salaire: number,
+			k: number,
+		): { base: number; complementaire: number } {
+			const c = (prep.population[k] as Individu).carriere;
+			if (c.fonctionPublique && fp) {
+				const premiere = c.annees[0]?.annee ?? annee + 1;
+				const primes = c.annees[annee - premiere]?.primes ?? 0;
+				return {
+					base: cotisationsFonctionPublique(
+						salaire - primes,
+						c.fonctionPublique.regime,
+						fp,
+					),
+					complementaire: 0,
+				};
+			}
 			return detailCotisations(
 				salaire,
 				annee >= options.anneeEffet ? prep.be : b,
@@ -344,7 +366,7 @@ export function projeter(prep: Preparation): Projection {
 			if (salaire > 0) {
 				ligne.cotisants += poids;
 				ligne.salaires += poids * salaire;
-				const cotisation = lit.cotisation(salaire);
+				const cotisation = lit.cotisation(salaire, k);
 				ligne.cotisations +=
 					poids * (cotisation.base + cotisation.complementaire);
 				ligne.cotisationsBase += poids * cotisation.base;
@@ -467,7 +489,7 @@ export function photographier(prep: Preparation, annee: number): Resultat {
 		}
 		const salaire = lit.salaire(k);
 		if (salaire > 0) {
-			const cotisation = lit.cotisation(salaire);
+			const cotisation = lit.cotisation(salaire, k);
 			cotisations.push(cotisation.base + cotisation.complementaire);
 			poidsCotisations.push(w);
 		} else autres += w;

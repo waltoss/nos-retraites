@@ -1,7 +1,13 @@
+import fp from "./fonctionPublique.data.json" with { type: "json" };
 import data from "./france.data.json" with { type: "json" };
 import micoPasse from "./minimumContributif.data.json" with { type: "json" };
 import moyens from "./tauxMoyens.data.json" with { type: "json" };
-import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
+import {
+	type BaremeFonctionPublique,
+	type Baremes,
+	type SerieAnnuelle,
+	valeur,
+} from "./types.ts";
 
 /**
  * Barèmes français, générés par scripts/build-baremes.ts à partir de data/baremes.
@@ -151,5 +157,38 @@ export const BAREMES_FRANCE: Baremes = {
 				)
 			] as number,
 		majorationTroisEnfants: a.majorationTroisEnfants,
+	},
+	// Généré par scripts/build-fonction-publique.ts.
+	fonctionPublique: {
+		tauxPlein: fp.tauxPlein,
+		tauxMaximalAvecBonifications: fp.tauxMaximalAvecBonifications,
+		surcoteParTrimestre: fp.surcoteParTrimestre,
+		decote: (annee) => {
+			const table = fp.decote as Record<
+				string,
+				{ taux: number; plafond: number }
+			>;
+			const premiere = Math.min(...Object.keys(table).map(Number));
+			// Avant la première année, la décote n'existait pas dans la fonction publique.
+			if (annee < premiere) return { taux: 0, plafond: 0 };
+			return (
+				table[annee] ?? {
+					taux: fp.decoteParTrimestre,
+					plafond: fp.decoteTrimestresMax,
+				}
+			);
+		},
+		servicesActifs: fp.servicesActifs,
+		parGeneration:
+			fp.parGeneration as unknown as BaremeFonctionPublique["parGeneration"],
+		valeurPoint: serie(fp.valeurPoint),
+		minimumGaranti: fp.minimumGaranti,
+		droitsFamiliaux: fp.droitsFamiliaux,
+		tauxCotisation: fp.tauxCotisation,
+		rafp: {
+			...fp.rafp,
+			valeurAcquisition: serie(fp.rafp.valeurAcquisition),
+			valeurService: fp.rafp.valeurService ?? 0,
+		},
 	},
 };

@@ -30,6 +30,11 @@ export interface AnneeCarriere {
 	 * elle compte pour la durée tous régimes, sans salaire porté au compte ni points.
 	 */
 	autreRegime?: boolean;
+	/**
+	 * Primes de l'année, comprises dans le salaire brut. Leur présence marque une année de fonctionnaire :
+	 * le reste du salaire est le traitement, seule base de la pension de la fonction publique.
+	 */
+	primes?: number;
 	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
 	avpf?: boolean;
 }
@@ -47,6 +52,17 @@ export interface Carriere {
 	 * (inaptitude, départ avec décote, poursuite d'activité). Absent, il part dès le taux plein.
 	 */
 	tirageDepart?: number;
+	/** Présent, la carrière relève de la fonction publique : les années sans primes sont celles d'un autre régime. */
+	fonctionPublique?: StatutFonctionnaire;
+}
+
+export type RegimeFonctionPublique = "sre" | "cnracl";
+export type CategorieFonctionnaire = "sedentaire" | "actif" | "superActif";
+
+export interface StatutFonctionnaire {
+	/** SRE pour l'État, CNRACL pour les collectivités et les hôpitaux. */
+	regime: RegimeFonctionPublique;
+	categorie: CategorieFonctionnaire;
 }
 
 export interface Individu {
@@ -92,10 +108,33 @@ export interface DetailAgircArrco {
 	pensionAnnuelle: number;
 }
 
+export interface DetailFonctionPublique {
+	/** Traitement annuel de référence, en euros de l'année de référence : celui des six derniers mois, ou la moyenne des meilleures années d'un scénario. */
+	traitementDeReference: number;
+	/** Durée de services, en trimestres. */
+	services: number;
+	bonifications: number;
+	/** Durée d'assurance tous régimes, qui fixe la décote et la surcote. */
+	trimestresValides: number;
+	dureeRequise: number;
+	/** Taux appliqué au traitement de référence, proratisation comprise, avant décote et surcote. */
+	tauxLiquidation: number;
+	trimestresDecote: number;
+	trimestresSurcote: number;
+	majorationEnfants: number;
+	minimumGarantiApplique: boolean;
+	/** Rente annuelle de la retraite additionnelle sur les primes ; nulle quand les points sont versés en capital. */
+	rafp: number;
+	/** Pension annuelle brute du régime, hors retraite additionnelle, en euros de l'année de référence. */
+	pensionAnnuelle: number;
+}
+
 export interface Pension {
 	liquidation: Liquidation;
 	cnav: DetailCnav;
 	agircArrco: DetailAgircArrco;
+	/** Présent pour une carrière de fonctionnaire ; les deux autres détails sont alors vides. */
+	fonctionPublique?: DetailFonctionPublique;
 	/** Pension mensuelle brute totale, en euros de l'année de référence. */
 	mensuelleBrute: number;
 }

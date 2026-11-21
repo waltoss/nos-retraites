@@ -253,8 +253,9 @@ function Decisions() {
 					sur l'emploi ne changent les carrières qu'à partir de 2028 : leur
 					effet sur les pensions est donc lent. Les cotisations en plus ne
 					changent aucune pension ici, et le modèle ne dit rien de leur effet
-					sur les salaires ou l'emploi. Les totaux portent sur les salariés du
-					privé.
+					sur les salaires ou l'emploi. Les colonnes d'âge, de pensions et de
+					cotisations portent sur les salariés du privé : une décision sur la
+					fonction publique ne s'y voit pas, seulement dans le solde.
 				</p>
 			</aside>
 		</main>

@@ -63,6 +63,17 @@ export const SCENARIOS: ScenarioType[] = [
 		reglages: { ageLegal: 260, revalorisation: -5, cotisationBase: 0.5 },
 	},
 	{
+		id: "public-prive",
+		titre: "Rapprocher le public du privé",
+		texte:
+			"La pension des fonctionnaires se calcule sur leurs 25 meilleures années, primes comprises, et les catégories actives perdent leur départ anticipé. Rien ne change pour le privé.",
+		reglages: {
+			traitementFonctionnaires: 25,
+			primesFonctionnaires: 1,
+			categoriesActives: 0,
+		},
+	},
+	{
 		id: "emploi",
 		titre: "Miser sur l'emploi",
 		texte:

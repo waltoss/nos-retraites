@@ -300,9 +300,9 @@ function Home() {
 					<strong>Des ordres de grandeur, pas une prévision.</strong> Les
 					pensions sont calculées avec les vraies règles de 2026, sur des
 					carrières inventées, réglées pour ressembler aux salaires et aux
-					durées de carrière publiés. Seuls les salariés du privé sont simulés ;
-					le reste du système suit les projections du Conseil d'orientation des
-					retraites.
+					durées de carrière publiés. Les salariés du privé et les
+					fonctionnaires civils sont simulés ; le reste du système suit les
+					projections du Conseil d'orientation des retraites.
 				</p>
 			</aside>
 		</main>

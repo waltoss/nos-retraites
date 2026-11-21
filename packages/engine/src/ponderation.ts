@@ -1,4 +1,4 @@
-import type { Individu, Sexe } from "./types.ts";
+import type { Carriere, Individu, Sexe } from "./types.ts";
 
 /** Population réelle par sexe et âge révolu, une année donnée. Le dernier âge regroupe les plus âgés. */
 export interface Pyramide {
@@ -15,7 +15,12 @@ export interface Pyramide {
 export interface Champ {
 	nom: string;
 	/** L'année compte quand la part suit la génération plutôt que l'âge ; absente, c'est l'année de la pyramide de référence. */
-	part(age: number, sexe: Sexe, annee?: number): number;
+	part(age: number, sexe: Sexe, annee?: number, carriere?: Carriere): number;
+	/**
+	 * Ce qui, en plus de l'âge et du sexe, distingue les cellules entre lesquelles la population
+	 * réelle est partagée (le régime d'un fonctionnaire) ; absent, rien.
+	 */
+	cellule?(carriere: Carriere): string;
 }
 
 /**
@@ -28,10 +33,11 @@ export function ponderer(
 	pyramide: Pyramide,
 	champ: Champ,
 ): Individu[] {
-	const cle = (age: number, sexe: Sexe) => `${sexe}${age}`;
+	const cle = (age: number, c: Carriere) =>
+		`${c.sexe}${age}${champ.cellule?.(c) ?? ""}`;
 	const simules = new Map<string, number>();
 	for (const i of population) {
-		const k = cle(pyramide.annee - i.carriere.anneeNaissance, i.carriere.sexe);
+		const k = cle(pyramide.annee - i.carriere.anneeNaissance, i.carriere);
 		simules.set(k, (simules.get(k) ?? 0) + 1);
 	}
 	return population.map((i) => {
@@ -39,7 +45,10 @@ export function ponderer(
 		const age = pyramide.annee - i.carriere.anneeNaissance;
 		const ages = sexe === "F" ? pyramide.femmes : pyramide.hommes;
 		const reels = ages[Math.max(0, Math.min(ages.length - 1, age))] ?? 0;
-		const n = simules.get(cle(age, sexe)) ?? 1;
-		return { ...i, poids: (reels * champ.part(age, sexe)) / n };
+		const n = simules.get(cle(age, i.carriere)) ?? 1;
+		return {
+			...i,
+			poids: (reels * champ.part(age, sexe, undefined, i.carriere)) / n,
+		};
 	});
 }

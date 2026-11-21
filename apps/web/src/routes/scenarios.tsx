@@ -283,11 +283,12 @@ function Scenarios() {
 			<aside className="note">
 				<Icon name="attention" />
 				<p>
-					<strong>Des ordres de grandeur, pas des chiffrages.</strong> Seuls les
-					salariés du privé sont simulés ; les autres régimes suivent les règles
-					communes à tous, comme l'âge légal ou la revalorisation. Le modèle ne
-					dit rien de l'effet d'une hausse de cotisations sur l'emploi, ni de ce
-					que coûteraient les politiques qui feraient reculer le chômage.
+					<strong>Des ordres de grandeur, pas des chiffrages.</strong> Les
+					salariés du privé et les fonctionnaires civils sont simulés ; les
+					autres régimes suivent les règles communes à tous, comme l'âge légal
+					ou la revalorisation. Le modèle ne dit rien de l'effet d'une hausse de
+					cotisations sur l'emploi, ni de ce que coûteraient les politiques qui
+					feraient reculer le chômage.
 				</p>
 			</aside>
 		</main>

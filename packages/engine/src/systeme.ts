@@ -55,12 +55,17 @@ export interface AnneeSysteme {
  * - les cotisations des autres régimes suivent aussi cette projection : une hausse du taux du privé
  *   ne s'y applique pas.
  * Les autres ressources, dont les versements de l'État, et le PIB suivent la masse des salaires du privé.
+ *
+ * Avec `fonctionPublique`, les pensions des fonctionnaires civils de l'État, des collectivités et des
+ * hôpitaux sont celles de leur propre projection. Leurs cotisations restent dans le bloc résiduel :
+ * le nombre de postes ne dépend pas de l'âge de départ, et un départ plus tardif retarde une embauche.
  */
 export function computeSysteme(
 	reference: Projection,
 	scenario: Projection,
 	cadrage: Cadrage = CADRAGE_COR,
 	universel: Projection = scenario,
+	fonctionPublique?: { reference: Projection; scenario: Projection },
 ): AnneeSysteme[] {
 	const resultat: AnneeSysteme[] = [];
 	scenario.annees.forEach((s, i) => {
@@ -69,7 +74,15 @@ export function computeSysteme(
 		const c = cadrage.annees[s.annee];
 		if (!r || !c) return;
 		const rapport = (x: number, y: number) => (y > 0 ? x / y : 1);
-		const residuelDepenses = Math.max(0, c.depenses - r.pensions);
+		// Les fonctionnaires simulés sortent du bloc résiduel : leurs pensions bougent comme le moteur les calcule.
+		const publicReference =
+			fonctionPublique?.reference.annees[i]?.pensions ?? 0;
+		const publicScenario =
+			fonctionPublique?.scenario.annees[i]?.pensions ?? publicReference;
+		const residuelDepenses = Math.max(
+			0,
+			c.depenses - r.pensions - publicReference,
+		);
 		// Sans la répartition par groupe de régimes, tout le bloc suit les règles communes.
 		const residuelAlignes = Math.min(
 			residuelDepenses,
@@ -78,6 +91,7 @@ export function computeSysteme(
 		const depenses =
 			c.depenses +
 			(s.pensions - r.pensions) +
+			(publicScenario - publicReference) +
 			residuelAlignes * (rapport(s.pensionsBase, r.pensionsBase) - 1) +
 			(residuelDepenses - residuelAlignes) *
 				(rapport(u.pensionsBase, r.pensionsBase) - 1);

@@ -1,0 +1,1065 @@
+{
+	"source": "data/references/fonction-publique.json (SRE, CNRACL, RAFP, jaune « Pensions » du PLF 2027, barèmes IPP)",
+	"date": "2026-11-21",
+	"anneeReference": 2026,
+	"tauxPlein": 0.75,
+	"tauxMaximalAvecBonifications": 0.8,
+	"surcoteParTrimestre": 0.0125,
+	"decote": {
+		"2006": {
+			"taux": 0.00125,
+			"plafond": 6
+		},
+		"2007": {
+			"taux": 0.0025,
+			"plafond": 7
+		},
+		"2008": {
+			"taux": 0.00375,
+			"plafond": 8
+		},
+		"2009": {
+			"taux": 0.005,
+			"plafond": 9
+		},
+		"2010": {
+			"taux": 0.00625,
+			"plafond": 10
+		},
+		"2011": {
+			"taux": 0.0075,
+			"plafond": 11
+		},
+		"2012": {
+			"taux": 0.00875,
+			"plafond": 12
+		},
+		"2013": {
+			"taux": 0.01,
+			"plafond": 13
+		},
+		"2014": {
+			"taux": 0.01125,
+			"plafond": 14
+		},
+		"2015": {
+			"taux": 0.0125,
+			"plafond": 15
+		},
+		"2016": {
+			"taux": 0.0125,
+			"plafond": 16
+		},
+		"2017": {
+			"taux": 0.0125,
+			"plafond": 17
+		},
+		"2018": {
+			"taux": 0.0125,
+			"plafond": 18
+		},
+		"2019": {
+			"taux": 0.0125,
+			"plafond": 19
+		},
+		"2020": {
+			"taux": 0.0125,
+			"plafond": 20
+		}
+	},
+	"decoteParTrimestre": 0.0125,
+	"decoteTrimestresMax": 20,
+	"servicesActifs": {
+		"actif": 68,
+		"superActif": 108
+	},
+	"parGeneration": {
+		"sedentaire": {
+			"1930": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1931": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1932": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1933": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1934": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1935": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1936": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1937": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1938": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1939": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1940": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1941": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1942": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1943": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 248
+			},
+			"1944": {
+				"ageLegal": 240,
+				"dureeRequise": 152,
+				"ageAnnulationDecote": 248
+			},
+			"1945": {
+				"ageLegal": 240,
+				"dureeRequise": 154,
+				"ageAnnulationDecote": 248
+			},
+			"1946": {
+				"ageLegal": 240,
+				"dureeRequise": 156,
+				"ageAnnulationDecote": 248
+			},
+			"1947": {
+				"ageLegal": 240,
+				"dureeRequise": 158,
+				"ageAnnulationDecote": 248
+			},
+			"1948": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageAnnulationDecote": 248
+			},
+			"1949": {
+				"ageLegal": 240,
+				"dureeRequise": 161,
+				"ageAnnulationDecote": 248
+			},
+			"1950": {
+				"ageLegal": 240,
+				"dureeRequise": 162,
+				"ageAnnulationDecote": 248
+			},
+			"1951": {
+				"ageLegal": 242,
+				"dureeRequise": 163,
+				"ageAnnulationDecote": 251
+			},
+			"1952": {
+				"ageLegal": 243,
+				"dureeRequise": 164,
+				"ageAnnulationDecote": 256
+			},
+			"1953": {
+				"ageLegal": 245,
+				"dureeRequise": 165,
+				"ageAnnulationDecote": 259
+			},
+			"1954": {
+				"ageLegal": 247,
+				"dureeRequise": 165,
+				"ageAnnulationDecote": 263
+			},
+			"1955": {
+				"ageLegal": 248,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 265
+			},
+			"1956": {
+				"ageLegal": 248,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 266
+			},
+			"1957": {
+				"ageLegal": 248,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 267
+			},
+			"1958": {
+				"ageLegal": 248,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 268
+			},
+			"1959": {
+				"ageLegal": 248,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 268
+			},
+			"1960": {
+				"ageLegal": 248,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 268
+			},
+			"1961": {
+				"ageLegal": 248,
+				"dureeRequise": 168,
+				"ageAnnulationDecote": 268
+			},
+			"1962": {
+				"ageLegal": 250,
+				"dureeRequise": 169,
+				"ageAnnulationDecote": 268
+			},
+			"1963": {
+				"ageLegal": 251,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 268
+			},
+			"1964": {
+				"ageLegal": 251,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 268
+			},
+			"1965": {
+				"ageLegal": 252,
+				"dureeRequise": 171,
+				"ageAnnulationDecote": 268
+			},
+			"1966": {
+				"ageLegal": 253,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1967": {
+				"ageLegal": 254,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1968": {
+				"ageLegal": 255,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1969": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1970": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1971": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1972": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1973": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1974": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1975": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1976": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1977": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1978": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1979": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1980": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1981": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1982": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1983": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1984": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			},
+			"1985": {
+				"ageLegal": 256,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 268
+			}
+		},
+		"actif": {
+			"1930": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1931": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1932": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1933": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1934": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1935": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1936": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1937": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1938": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1939": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1940": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1941": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1942": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1943": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1944": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1945": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1946": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1947": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1948": {
+				"ageLegal": 220,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 228
+			},
+			"1949": {
+				"ageLegal": 220,
+				"dureeRequise": 152,
+				"ageAnnulationDecote": 228
+			},
+			"1950": {
+				"ageLegal": 220,
+				"dureeRequise": 154,
+				"ageAnnulationDecote": 228
+			},
+			"1951": {
+				"ageLegal": 220,
+				"dureeRequise": 156,
+				"ageAnnulationDecote": 228
+			},
+			"1952": {
+				"ageLegal": 220,
+				"dureeRequise": 158,
+				"ageAnnulationDecote": 228
+			},
+			"1953": {
+				"ageLegal": 220,
+				"dureeRequise": 160,
+				"ageAnnulationDecote": 228
+			},
+			"1954": {
+				"ageLegal": 220,
+				"dureeRequise": 161,
+				"ageAnnulationDecote": 228
+			},
+			"1955": {
+				"ageLegal": 220,
+				"dureeRequise": 162,
+				"ageAnnulationDecote": 228
+			},
+			"1956": {
+				"ageLegal": 222,
+				"dureeRequise": 163,
+				"ageAnnulationDecote": 231
+			},
+			"1957": {
+				"ageLegal": 223,
+				"dureeRequise": 164,
+				"ageAnnulationDecote": 236
+			},
+			"1958": {
+				"ageLegal": 225,
+				"dureeRequise": 165,
+				"ageAnnulationDecote": 239
+			},
+			"1959": {
+				"ageLegal": 227,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 243
+			},
+			"1960": {
+				"ageLegal": 228,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 245
+			},
+			"1961": {
+				"ageLegal": 228,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 246
+			},
+			"1962": {
+				"ageLegal": 228,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 247
+			},
+			"1963": {
+				"ageLegal": 228,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 248
+			},
+			"1964": {
+				"ageLegal": 228,
+				"dureeRequise": 168,
+				"ageAnnulationDecote": 248
+			},
+			"1965": {
+				"ageLegal": 228,
+				"dureeRequise": 168,
+				"ageAnnulationDecote": 248
+			},
+			"1966": {
+				"ageLegal": 228,
+				"dureeRequise": 169,
+				"ageAnnulationDecote": 248
+			},
+			"1967": {
+				"ageLegal": 230,
+				"dureeRequise": 169,
+				"ageAnnulationDecote": 248
+			},
+			"1968": {
+				"ageLegal": 231,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 248
+			},
+			"1969": {
+				"ageLegal": 231,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 248
+			},
+			"1970": {
+				"ageLegal": 232,
+				"dureeRequise": 171,
+				"ageAnnulationDecote": 248
+			},
+			"1971": {
+				"ageLegal": 233,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1972": {
+				"ageLegal": 234,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1973": {
+				"ageLegal": 235,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1974": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1975": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1976": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1977": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1978": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1979": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1980": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1981": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1982": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1983": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1984": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			},
+			"1985": {
+				"ageLegal": 236,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 248
+			}
+		},
+		"superActif": {
+			"1930": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1931": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1932": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1933": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1934": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1935": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1936": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1937": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1938": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1939": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1940": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1941": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1942": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1943": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1944": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1945": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1946": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1947": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1948": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1949": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1950": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1951": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1952": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1953": {
+				"ageLegal": 200,
+				"dureeRequise": 150,
+				"ageAnnulationDecote": 208
+			},
+			"1954": {
+				"ageLegal": 200,
+				"dureeRequise": 152,
+				"ageAnnulationDecote": 208
+			},
+			"1955": {
+				"ageLegal": 200,
+				"dureeRequise": 154,
+				"ageAnnulationDecote": 208
+			},
+			"1956": {
+				"ageLegal": 200,
+				"dureeRequise": 156,
+				"ageAnnulationDecote": 208
+			},
+			"1957": {
+				"ageLegal": 200,
+				"dureeRequise": 158,
+				"ageAnnulationDecote": 208
+			},
+			"1958": {
+				"ageLegal": 200,
+				"dureeRequise": 160,
+				"ageAnnulationDecote": 208
+			},
+			"1959": {
+				"ageLegal": 200,
+				"dureeRequise": 161,
+				"ageAnnulationDecote": 208
+			},
+			"1960": {
+				"ageLegal": 200,
+				"dureeRequise": 162,
+				"ageAnnulationDecote": 208
+			},
+			"1961": {
+				"ageLegal": 202,
+				"dureeRequise": 163,
+				"ageAnnulationDecote": 211
+			},
+			"1962": {
+				"ageLegal": 203,
+				"dureeRequise": 164,
+				"ageAnnulationDecote": 216
+			},
+			"1963": {
+				"ageLegal": 205,
+				"dureeRequise": 165,
+				"ageAnnulationDecote": 219
+			},
+			"1964": {
+				"ageLegal": 207,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 223
+			},
+			"1965": {
+				"ageLegal": 208,
+				"dureeRequise": 166,
+				"ageAnnulationDecote": 225
+			},
+			"1966": {
+				"ageLegal": 208,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 226
+			},
+			"1967": {
+				"ageLegal": 208,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 227
+			},
+			"1968": {
+				"ageLegal": 208,
+				"dureeRequise": 167,
+				"ageAnnulationDecote": 228
+			},
+			"1969": {
+				"ageLegal": 208,
+				"dureeRequise": 168,
+				"ageAnnulationDecote": 228
+			},
+			"1970": {
+				"ageLegal": 208,
+				"dureeRequise": 168,
+				"ageAnnulationDecote": 228
+			},
+			"1971": {
+				"ageLegal": 208,
+				"dureeRequise": 169,
+				"ageAnnulationDecote": 228
+			},
+			"1972": {
+				"ageLegal": 210,
+				"dureeRequise": 169,
+				"ageAnnulationDecote": 228
+			},
+			"1973": {
+				"ageLegal": 211,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 228
+			},
+			"1974": {
+				"ageLegal": 211,
+				"dureeRequise": 170,
+				"ageAnnulationDecote": 228
+			},
+			"1975": {
+				"ageLegal": 212,
+				"dureeRequise": 171,
+				"ageAnnulationDecote": 228
+			},
+			"1976": {
+				"ageLegal": 213,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1977": {
+				"ageLegal": 214,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1978": {
+				"ageLegal": 215,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1979": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1980": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1981": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1982": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1983": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1984": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			},
+			"1985": {
+				"ageLegal": 216,
+				"dureeRequise": 172,
+				"ageAnnulationDecote": 228
+			}
+		}
+	},
+	"valeurPoint": {
+		"1960": 3.6664,
+		"1961": 4.6558,
+		"1962": 5.5873,
+		"1963": 6.194,
+		"1964": 6.5538,
+		"1965": 6.816,
+		"1966": 7.0889,
+		"1967": 7.3907,
+		"1968": 8.1636,
+		"1969": 8.5722,
+		"1970": 9.1896,
+		"1971": 9.9671,
+		"1972": 10.6608,
+		"1973": 11.9368,
+		"1974": 13.8393,
+		"1975": 15.2068,
+		"1976": 16.7984,
+		"1977": 18.6369,
+		"1978": 20.6965,
+		"1979": 23.2287,
+		"1980": 26.1496,
+		"1981": 30.0172,
+		"1982": 33.39318333333333,
+		"1983": 36.42104545454545,
+		"1984": 38.5544,
+		"1985": 40.2892,
+		"1986": 40.2892,
+		"1987": 40.73285291566368,
+		"1988": 41.9585,
+		"1989": 42.8824,
+		"1990": 44.1691,
+		"1991": 44.8322,
+		"1992": 46.0244,
+		"1993": 46.8186,
+		"1994": 47.9025,
+		"1995": 49.1557,
+		"1996": 49.1557,
+		"1997": 49.648,
+		"1998": 50.2929,
+		"1999": 50.9469,
+		"2000": 51.2015,
+		"2001": 51.8174,
+		"2002": 52.4933,
+		"2003": 52.4933,
+		"2004": 52.7558,
+		"2005": 53.711,
+		"2006": 53.9795,
+		"2007": 54.4113,
+		"2008": 54.8475,
+		"2009": 55.2871,
+		"2010": 55.5635,
+		"2011": 55.5635,
+		"2012": 55.5635,
+		"2013": 55.5635,
+		"2014": 55.5635,
+		"2015": 55.5635,
+		"2016": 55.8969,
+		"2017": 56.2323,
+		"2018": 56.2323,
+		"2019": 56.2323,
+		"2020": 56.2323,
+		"2021": 56.2323,
+		"2022": 58.2004,
+		"2023": 59.0734,
+		"2024": 59.0734,
+		"2025": 59.0734,
+		"2026": 59.0734
+	},
+	"minimumGaranti": {
+		"annuel": 16396.19,
+		"partA15Ans": 0.575,
+		"parAnDe15A30": 0.025,
+		"parAnDe30A40": 0.005,
+		"conditionDepuis": 2011
+	},
+	"droitsFamiliaux": {
+		"anneeBascule": 2004,
+		"bonificationAvant": 4,
+		"mdaDepuis": 2,
+		"bonificationDepuis": {
+			"anneeDEffet": 2027,
+			"trimestres": 1
+		},
+		"majorationTroisEnfants": 0.1,
+		"majorationParEnfantSupplementaire": 0.05
+	},
+	"tauxCotisation": {
+		"agent": 0.111,
+		"employeur": {
+			"sre": 0.8228,
+			"cnracl": 0.3765
+		}
+	},
+	"rafp": {
+		"premiereAnnee": 2005,
+		"plafondAssiette": 0.2,
+		"taux": 0.1,
+		"valeurAcquisition": {
+			"2005": 1,
+			"2006": 1.017,
+			"2007": 1.03022,
+			"2008": 1.03537,
+			"2009": 1.04572,
+			"2010": 1.05095,
+			"2011": 1.0562,
+			"2012": 1.0742,
+			"2013": 1.085,
+			"2014": 1.09585,
+			"2015": 1.1452,
+			"2016": 1.1967,
+			"2017": 1.2003,
+			"2018": 1.2123,
+			"2019": 1.2317,
+			"2020": 1.2452,
+			"2021": 1.2502,
+			"2022": 1.274,
+			"2023": 1.3466,
+			"2024": 1.4112,
+			"2025": 1.4394,
+			"2026": 1.4596
+		},
+		"valeurService": 0.05671,
+		"seuilCapital": 5125,
+		"majorationSelonAge": [
+			1,
+			1.04,
+			1.08,
+			1.12,
+			1.17,
+			1.22,
+			1.28,
+			1.33,
+			1.4,
+			1.47,
+			1.54,
+			1.62,
+			1.71,
+			1.8
+		]
+	}
+}

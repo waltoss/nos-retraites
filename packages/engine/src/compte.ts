@@ -1,4 +1,5 @@
 import { type Baremes, valeur } from "./baremes/types.ts";
+import { buildCompteFonctionPublique } from "./regimes/fonctionPublique.ts";
 import { type AgeTrimestres, type Carriere, moisParEtat } from "./types.ts";
 
 /**
@@ -27,10 +28,14 @@ export interface CompteCarriere {
 	trimestresReputes: Uint8Array;
 	/** Salaire plafonné au PASS puis revalorisé vers l'année de référence. */
 	salairesRevalorises: Float64Array;
+	/** Carrière de fonctionnaire : primes de chaque année, revalorisées comme les traitements. */
+	primesRevalorisees?: Float64Array;
 	points: Float64Array;
 }
 
 export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
+	if (carriere.fonctionPublique && b.fonctionPublique)
+		return buildCompteFonctionPublique(carriere, b);
 	const n = carriere.annees.length;
 	const compte: CompteCarriere = {
 		ageDebut:

@@ -1,0 +1,218 @@
+{
+	"note": "Paramètres libres du générateur de carrières de fonctionnaires. Réglés à la main sur data/references/fonction-publique.json (durées de services, indices et pensions à la liquidation, parts des catégories actives) ; voir scripts/backtest-public.ts.",
+	"partRegime": {
+		"sre": 0.45,
+		"cnracl": 0.55
+	},
+	"partFemmes": {
+		"sre": 0.6,
+		"cnracl": 0.65
+	},
+	"debutVieActive": {
+		"sre": {
+			"moyenne": 22,
+			"ecartType": 3.5,
+			"min": 16
+		},
+		"cnracl": {
+			"moyenne": 20.5,
+			"ecartType": 3.5,
+			"min": 16
+		}
+	},
+	"entree": {
+		"sre": {
+			"min": 21,
+			"delaiMoyen": 6.5,
+			"max": 50
+		},
+		"cnracl": {
+			"min": 22,
+			"delaiMoyen": 17,
+			"max": 57
+		}
+	},
+	"partValideeAvantEntree": 0.9,
+	"traitement": {
+		"anneeDeNiveau": 2024,
+		"niveau": {
+			"sre": 39600,
+			"cnracl": 31600
+		},
+		"sigma": {
+			"sre": 0.24,
+			"cnracl": 0.24
+		},
+		"profil": {
+			"sre": [
+				[
+					22,
+					0.62
+				],
+				[
+					27,
+					0.68
+				],
+				[
+					35,
+					0.8
+				],
+				[
+					45,
+					0.92
+				],
+				[
+					55,
+					1
+				],
+				[
+					62,
+					1.08
+				]
+			],
+			"cnracl": [
+				[
+					22,
+					0.85
+				],
+				[
+					35,
+					0.93
+				],
+				[
+					45,
+					0.98
+				],
+				[
+					55,
+					1
+				],
+				[
+					62,
+					1.02
+				]
+			]
+		},
+		"ecartFemmes": {
+			"sre": [
+				[
+					1940,
+					0.84
+				],
+				[
+					1990,
+					0.97
+				]
+			],
+			"cnracl": [
+				[
+					1940,
+					0.86
+				],
+				[
+					1990,
+					0.95
+				]
+			]
+		},
+		"glissementDesGrilles": 0.004,
+		"partAnciennete": {
+			"sre": 0.5,
+			"cnracl": 0.9
+		},
+		"ageEntreeDeReference": 24
+	},
+	"enseignants": {
+		"part": 0.51,
+		"traitement": 1.11,
+		"autres": 0.885
+	},
+	"primes": {
+		"enseignants": 0.244,
+		"autresSre": 0.509,
+		"cnracl": 0.324,
+		"dispersion": 0.4
+	},
+	"categories": {
+		"sre": {
+			"actif": [
+				[
+					1940,
+					0.3
+				],
+				[
+					1955,
+					0.25
+				],
+				[
+					1965,
+					0.12
+				],
+				[
+					1985,
+					0.01
+				]
+			],
+			"superActif": [
+				[
+					1940,
+					0.05
+				],
+				[
+					1965,
+					0.07
+				],
+				[
+					1990,
+					0.07
+				]
+			]
+		},
+		"cnracl": {
+			"actif": [
+				[
+					1940,
+					0.3
+				],
+				[
+					1960,
+					0.22
+				],
+				[
+					1967,
+					0.18
+				],
+				[
+					1990,
+					0.1
+				]
+			],
+			"superActif": [
+				[
+					1940,
+					0
+				],
+				[
+					1990,
+					0
+				]
+			]
+		}
+	},
+	"depart": {
+		"sre": {
+			"partInaptitude": 0,
+			"partDecote": 0.17,
+			"trimestresDecoteMax": 12,
+			"partSurcote": 0.7,
+			"trimestresSurcote": 9
+		},
+		"cnracl": {
+			"partInaptitude": 0,
+			"partDecote": 0.06,
+			"trimestresDecoteMax": 12,
+			"partSurcote": 0.6,
+			"trimestresSurcote": 9
+		}
+	}
+}
