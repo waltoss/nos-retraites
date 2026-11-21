@@ -1,0 +1,19 @@
+{
+  "name": "nos-retraites",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev": "bun --filter web dev",
+    "build": "bun --filter web build",
+    "test": "bun test packages",
+    "typecheck": "bun --filter '*' typecheck",
+    "check": "biome check packages apps/web/src scripts",
+    "compare": "bun scripts/compare-drees.ts"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.5",
+    "@types/bun": "latest",
+    "typescript": "^6.0.2"
+  }
+}
