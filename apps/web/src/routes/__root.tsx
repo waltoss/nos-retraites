@@ -4,7 +4,9 @@ import {
 	Link,
 	Outlet,
 	Scripts,
+	useLocation,
 } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import "@fontsource-variable/figtree";
 import "@fontsource-variable/fraunces";
 import { Icon, type IconName } from "../components/Icons";
@@ -83,6 +85,17 @@ const PAGES: {
 
 function Entete() {
 	const { modifies, remplacer } = useScenario();
+	// Sur téléphone la navigation défile : la page ouverte doit rester visible.
+	const nav = useRef<HTMLElement>(null);
+	const { pathname } = useLocation();
+	// biome-ignore lint/correctness/useExhaustiveDependencies: recentre à chaque changement de page
+	useEffect(() => {
+		const n = nav.current;
+		const actif = n?.querySelector<HTMLElement>(".actif");
+		if (!n || !actif) return;
+		n.scrollLeft =
+			actif.offsetLeft - n.offsetLeft - (n.clientWidth - actif.offsetWidth) / 2;
+	}, [pathname]);
 	return (
 		<header className="top">
 			<Link to="/" search={(s) => s} className="mark">
@@ -99,7 +112,7 @@ function Entete() {
 					nos-retraites<span>.app</span>
 				</b>
 			</Link>
-			<nav aria-label="Pages">
+			<nav aria-label="Pages" ref={nav}>
 				{PAGES.map((p) => (
 					<Link
 						key={p.to}

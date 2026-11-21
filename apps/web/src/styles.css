@@ -277,15 +277,28 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 
 @media (max-width: 1100px) {
 	.atelier { grid-template-columns: 1fr; }
-	.panneau { position: static; max-height: none; }
+	/* Sur une colonne, le panneau ne défile plus tout seul : sinon il retient le geste et la page reste bloquée. */
+	.panneau { position: static; max-height: none; overflow: visible; overflow: clip; overscroll-behavior: auto; }
 	.faits, .etapes { grid-template-columns: repeat(2, 1fr); }
 	.suites { grid-template-columns: repeat(2, 1fr); }
 	.portraits { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
 	.top { padding: 12px 14px; }
-	.top nav { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; }
-	.top nav a { padding: 8px 12px; white-space: nowrap; }
+	.top nav { order: 3; width: auto; flex: 1 0 100%; min-width: 0; margin: 0 -14px; padding: 0 14px; scroll-padding: 0 14px; overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 32px), transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 14px, #000 calc(100% - 32px), transparent 100%); }
+	.top nav::-webkit-scrollbar { display: none; }
+	.top nav::after { content: ""; flex: none; width: 18px; }
+	.top nav a { padding: 8px 12px; white-space: nowrap; min-height: 40px; }
+	.bandeau { padding: 8px 14px; font-size: 13px; line-height: 1.4; text-wrap: pretty; }
+	.lien { min-height: 40px; }
+	.comparaison .table { font-size: 14px; }
+	/* Sources : le lien passe sous la valeur plutôt que d'être écrasé dans une troisième colonne. */
+	.sources, .sources tbody { display: block; }
+	.sources tr { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border-bottom: 1px solid var(--line); }
+	.sources tr:last-child { border-bottom: 0; }
+	.sources tr > * { border-bottom: 0; }
+	.sources td.num { text-align: right; }
+	.sources td:last-child { grid-column: 1 / -1; padding-top: 0; font-size: 13px; overflow-wrap: anywhere; }
 	.atelier { padding: 0 14px 40px; }
 	.equation, .duo, .suites { grid-template-columns: 1fr; }
 	.faits, .etapes { grid-template-columns: 1fr; }
@@ -439,3 +452,18 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .moi-options td.ecart { color: var(--muted); font-size: 14px; text-align: left; padding-left: 0; }
 @media (max-width: 700px) { .moi-cartes, .moi-carte dl { grid-template-columns: 1fr; } .moi-saisie input { width: 100%; } }
 .scenario-type header p.cout { margin-top: 10px; padding: 8px 10px; border-radius: 8px; background: color-mix(in srgb, var(--besoin) 7%, var(--paper)); color: var(--ink); font-size: 13px; }
+
+/* Passe mobile */
+.levier-corps input[type="range"], .control input[type="range"] { touch-action: pan-y; }
+.comparaison .table td { white-space: nowrap; }
+.defile > .table.large { min-width: 620px; }
+@media (pointer: coarse) {
+	.levier-corps { gap: 8px; }
+	.levier-corps input[type="range"] { height: 40px; }
+	.mini { width: 40px; height: 40px; }
+	.panneau summary { padding: 16px 18px; }
+}
+@media (max-width: 360px) {
+	.levier-tete { flex-wrap: wrap; }
+	.levier-tete output { margin-left: auto; }
+}

@@ -599,7 +599,7 @@ function Modele() {
 					Ces valeurs ont été lues dans les textes et barèmes publics. Le lien
 					mène à la source.
 				</p>
-				<table className="table">
+				<table className="table sources">
 					<tbody>
 						{PARAMETRES.map((p) => {
 							const s = sources[p.source];
@@ -642,34 +642,36 @@ function Modele() {
 					natalité et l'accueil des jeunes enfants sont déjà parmi les plus
 					élevés d'Europe : la transposition est une hypothèse, pas un résultat.
 				</p>
-				<table className="table">
-					<thead>
-						<tr>
-							<th />
-							<th>Basse</th>
-							<th>Centrale</th>
-							<th>Haute</th>
-							<th>Ce que disent les études</th>
-						</tr>
-					</thead>
-					<tbody>
-						{politiques.familles.map((f) => {
-							const texte = FAMILLES_POLITIQUES[f.id];
-							return (
-								<tr key={f.id}>
-									<th>
-										{texte?.nom}
-										<small>enfants par femme, {texte?.unite}</small>
-									</th>
-									<td className="num">{enfants(f.effet.bas)}</td>
-									<td className="num">{enfants(f.effet.central)}</td>
-									<td className="num">{enfants(f.effet.haut)}</td>
-									<td>{texte?.nature}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
+				<div className="defile">
+					<table className="table large">
+						<thead>
+							<tr>
+								<th />
+								<th>Basse</th>
+								<th>Centrale</th>
+								<th>Haute</th>
+								<th>Ce que disent les études</th>
+							</tr>
+						</thead>
+						<tbody>
+							{politiques.familles.map((f) => {
+								const texte = FAMILLES_POLITIQUES[f.id];
+								return (
+									<tr key={f.id}>
+										<th>
+											{texte?.nom}
+											<small>enfants par femme, {texte?.unite}</small>
+										</th>
+										<td className="num">{enfants(f.effet.bas)}</td>
+										<td className="num">{enfants(f.effet.central)}</td>
+										<td className="num">{enfants(f.effet.haut)}</td>
+										<td>{texte?.nature}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				</div>
 				<p className="reserve">
 					Le coût de ces politiques est affiché à côté de leur effet, sans être
 					déduit du solde des retraites : 13 000 euros par an et par place
