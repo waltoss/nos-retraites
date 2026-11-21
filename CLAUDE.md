@@ -39,7 +39,7 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 
 ## Commandes
 
-`bun test packages`, `bun run dev`, `bun run build`, `bun run check`, `bun scripts/build-baremes.ts` (régénère `france.data.json` depuis `data/baremes`), `bun scripts/compare-drees.ts` (photographie du scénario de référence).
+`bun test packages`, `bun run dev`, `bun run build`, `bun run check`, `bun run --cwd apps/web deploy` (mise en production sur nos-retraites.app avec la CLI `cf`, config dans `apps/web/cloudflare.config.ts`), `bun scripts/build-baremes.ts` (régénère `france.data.json` depuis `data/baremes`), `bun scripts/compare-drees.ts` (photographie du scénario de référence).
 
 ## État
 

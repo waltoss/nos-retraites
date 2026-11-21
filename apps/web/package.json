@@ -10,7 +10,7 @@
     "generate-routes": "vite build",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "bun run build && wrangler deploy",
+    "deploy": "cf deploy",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -23,11 +23,12 @@
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.26.0",
+    "@cloudflare/vite-plugin": "^2.0.0-rc.0",
     "@types/node": "^22.10.2",
     "@types/react": "^19.2.0",
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^6.0.1",
+    "cf": "^1.0.0-rc.2",
     "typescript": "^6.0.2",
     "vite": "^8.0.0",
     "wrangler": "^4.70.0"
