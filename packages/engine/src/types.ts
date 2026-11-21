@@ -15,6 +15,10 @@ export interface AnneeCarriere {
 	etat: Etat;
 	/** Salaire brut annuel en euros courants ; 0 hors emploi. */
 	salaireBrut: number;
+	/** Quotité de travail quand elle est inférieure à un temps plein. */
+	quotite?: number;
+	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
+	avpf?: boolean;
 }
 
 export interface Carriere {

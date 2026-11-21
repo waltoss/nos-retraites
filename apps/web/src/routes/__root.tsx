@@ -94,6 +94,14 @@ function Racine() {
 	return (
 		<ScenarioProvider>
 			<Entete />
+			<p className="bandeau">
+				<strong>Version de travail.</strong> Les règles de calcul sont celles de
+				la loi, mais la population simulée reste approximative : fiez-vous aux
+				écarts entre scénarios plus qu'aux montants.{" "}
+				<Link to="/modele" search={(s) => s}>
+					Ce que le modèle sait faire
+				</Link>
+			</p>
 			<Outlet />
 			<footer className="pied">
 				<p>

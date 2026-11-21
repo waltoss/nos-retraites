@@ -1,6 +1,14 @@
 import { type Baremes, valeur } from "./baremes/types.ts";
 import type { AgeTrimestres, Carriere } from "./types.ts";
 
+/**
+ * Heures annuelles du salaire forfaitaire de l'AVPF (169 heures par mois).
+ * Source : barèmes IPP, « Assurance vieillesse des parents au foyer »,
+ * https://www.ipp.eu/baremes-ipp/prestations-sociales/prestations_sociales.solidarite_insertion.minimum_vieillesse.avpf/table
+ * (consulté le 2026-11-21). Simplification : SMIC de l'année et non du 1er juillet précédent.
+ */
+const HEURES_AVPF = 169 * 12;
+
 /** Droits acquis année par année, calculés une fois par carrière. */
 export interface CompteCarriere {
 	ageDebut: number;
@@ -45,6 +53,12 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 				carriere.cadre,
 			);
 			compte.points[i] = derniersPoints;
+		} else if (a.avpf) {
+			// AVPF : la Caf cotise sur un salaire forfaitaire de 169 heures de SMIC par mois. Pas de points.
+			compte.trimestresAssimiles[i] = 4;
+			compte.salairesRevalorises[i] =
+				Math.min(HEURES_AVPF * valeur(b.cnav.smicHoraire, a.annee), pass) *
+				valeur(b.cnav.coefficientsRevalorisation, a.annee);
 		} else if (a.etat === "chomage" || a.etat === "maladieMaternite") {
 			// Période assimilée : 4 trimestres validés, points attribués sur la base du dernier salaire.
 			compte.trimestresAssimiles[i] = 4;

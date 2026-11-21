@@ -28,6 +28,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Événement** : fait daté qui modifie une carrière (naissance d'un enfant, interruption, migration, liquidation).
 - **Générateur de carrières** : composant qui fait avancer chaque individu d'une année par des probabilités de transition entre états.
 - **Graine** : valeur qui fixe les tirages aléatoires, identique entre scénarios pour que l'écart vienne de la réforme.
+- **Carrière partielle** : carrière dont une partie seulement se déroule dans le système français (arrivée tardive, départ à l'étranger).
 - **Portrait** : carrière d'un individu présentée à l'utilisateur pour illustrer une partie d'une distribution.
 
 ## Les règles
@@ -69,7 +70,8 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Délai d'effet** : temps entre la mise en place d'une politique et son effet sur l'équation.
 - **Scénario** : jeu complet de valeurs de leviers et de financement, encodable dans une URL.
 - **Scénario de référence** : scénario du droit en vigueur, auquel tous les autres sont comparés.
-- **Calage** : ajustement des niveaux de l'année de base sur les données observées.
+- **Calage** : ajustement des hypothèses du générateur pour que salaires et durées de carrière simulés reproduisent les données observées.
+- **Cas type** : carrière type publiée par le COR avec son taux de remplacement, utilisée pour vérifier les règles de calcul.
 - **Backtest** : simulation partant d'une année passée avec les données observées de l'époque, comparée au présent.
 - **Recoupement** : comparaison des projections avec celles d'un organisme tiers, sans en faire une cible.
 
@@ -77,6 +79,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 
 - **AOD** : âge d'ouverture des droits, synonyme d'âge légal.
 - **Agirc-Arrco** : régime complémentaire obligatoire, par points, des salariés du privé.
+- **AVPF** : assurance vieillesse des parents au foyer, qui valide des trimestres et porte un salaire au SMIC au compte d'un parent sans activité.
 - **CADES** : Caisse d'amortissement de la dette sociale, qui porte et rembourse les déficits passés de la Sécurité sociale.
 - **CNAV** : Caisse nationale d'assurance vieillesse, régime de base des salariés du privé (« régime général »).
 - **COR** : Conseil d'orientation des retraites, auteur des projections officielles annuelles.
@@ -91,6 +94,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **MICO** : minimum contributif, plancher de pension de base pour une carrière complète à bas salaires.
 - **PASS** : plafond annuel de la Sécurité sociale, limite du salaire pris en compte par le régime de base.
 - **PIB** : produit intérieur brut.
+- **RMPT** : rémunération moyenne par tête de l'ensemble de l'économie, référence des carrières types du COR.
 - **SAM** : salaire annuel moyen, moyenne des meilleures années de salaire plafonnées et revalorisées, base du calcul CNAV.
 - **SMIC** : salaire minimum interprofessionnel de croissance.
 - **TZCLD** : Territoires zéro chômeur de longue durée, dispositif d'embauche en CDI de chômeurs de longue durée.

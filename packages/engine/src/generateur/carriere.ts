@@ -48,6 +48,7 @@ export function generateCarriere(
 			Math.max(
 				h.ageEntree.min,
 				h.ageEntree.moyenne +
+					interpole(h.decalageEntree, anneeNaissance) +
 					h.ageEntree.effetRang * rang +
 					h.ageEntree.ecartType * rng.normal(),
 			),
@@ -70,6 +71,23 @@ export function generateCarriere(
 	}
 	const tempsPartiel =
 		sexe === "F" && nbEnfants > 0 && rng.next() < h.tempsPartielMeres.part;
+	const droitAvpf = rng.next() < h.avpf.part;
+	const sansRetour = rng.next() < h.interruptionNaissance.partDefinitive;
+	const pInterruption =
+		h.interruptionNaissance.probabilite *
+		Math.max(0, 1 + h.tendanceInterruption * (anneeNaissance - 1953));
+	// Carrière partielle : une fenêtre de présence tirée au hasard dans la vie active.
+	const partielle = rng.next() < h.carrierePartielle.part[sexe];
+	const dureePresence = Math.round(
+		h.carrierePartielle.dureeMin +
+			rng.next() *
+				(h.carrierePartielle.dureeMax - h.carrierePartielle.dureeMin),
+	);
+	const debutPresence = Math.round(
+		ageEntree + rng.next() * Math.max(0, 62 - dureePresence - ageEntree),
+	);
+	const present = (age: number) =>
+		!partielle || (age >= debutPresence && age < debutPresence + dureePresence);
 
 	// Le risque de sortie de l'emploi décroît avec le rang de salaire.
 	const risque = h.risqueRang ** -rang;
@@ -85,6 +103,13 @@ export function generateCarriere(
 		const sorties = senior ? h.seniors.multiplicateurSorties : 1;
 		const retours = senior ? 1 / h.seniors.diviseurRetours : 1;
 		const naissance = sexe === "F" && enfants.includes(annee);
+
+		if (!present(age)) {
+			annees.push({ annee, etat: "inactivite", salaireBrut: 0 });
+			if (naissance) rng.next();
+			etat = "emploi";
+			continue;
+		}
 
 		if (age > ageEntree) {
 			if (etat === "emploi") {
@@ -107,7 +132,9 @@ export function generateCarriere(
 				else if (u < pEmploi + h.depuisMaladie.inactivite) etat = "inactivite";
 			} else if (etat === "inactivite") {
 				const p = interruptionFamiliale
-					? h.interruptionNaissance.retourAnnuel
+					? sansRetour
+						? 0
+						: h.interruptionNaissance.retourAnnuel
 					: h.depuisInactivite.emploi * retours;
 				if (u < p) {
 					etat = "emploi";
@@ -117,10 +144,7 @@ export function generateCarriere(
 		}
 		// Une naissance : congé maternité l'année même, puis interruption possible.
 		if (naissance) {
-			if (
-				rng.next() <
-				h.interruptionNaissance.probabilite * Math.min(2, risque)
-			) {
+			if (rng.next() < pInterruption * Math.min(2, risque)) {
 				etat = "inactivite";
 				interruptionFamiliale = true;
 			} else if (etat === "emploi") {
@@ -135,12 +159,14 @@ export function generateCarriere(
 		}
 
 		let salaireBrut = 0;
+		let quotiteAnnee = 1;
 		if (etat === "emploi") {
 			const jeuneEnfant = enfants.some((n) => annee >= n && annee - n < 12);
 			const quotite =
 				tempsPartiel && jeuneEnfant ? h.tempsPartielMeres.quotite : 1;
 			const niveau =
 				interpole(h.profilSalaire, age) *
+				h.niveauSalaire *
 				Math.exp(
 					h.sigmaPermanent * rang +
 						h.penteRang * rang * (Math.min(age, 55) - 30) +
@@ -155,8 +181,20 @@ export function generateCarriere(
 					? brut
 					: smicAnnuel *
 						(1 + h.etalementSmic * Math.min(1, Math.abs(choc) / 2))) * quotite;
+			quotiteAnnee = quotite;
 		}
-		annees.push({ annee, etat, salaireBrut });
+		// AVPF : mère au foyer avec un enfant de moins de 3 ans, ou de moins de 21 ans à partir de 3 enfants.
+		let avpf = false;
+		if (interruptionFamiliale && etat === "inactivite" && droitAvpf) {
+			const nes = enfants.filter((n) => n <= annee);
+			const benjamin = annee - Math.max(...nes);
+			avpf =
+				annee >= 1972 && (benjamin < 3 || (nes.length >= 3 && benjamin < 21));
+		}
+		const ligne: AnneeCarriere = { annee, etat, salaireBrut };
+		if (avpf) ligne.avpf = true;
+		if (quotiteAnnee < 1) ligne.quotite = quotiteAnnee;
+		annees.push(ligne);
 	}
 
 	return { anneeNaissance, sexe, enfants, cadre: rang > h.seuilCadre, annees };

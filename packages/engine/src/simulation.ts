@@ -4,7 +4,7 @@ import { generateCarriere } from "./generateur/carriere.ts";
 import {
 	appliquerFacteurs,
 	type Facteurs,
-	HYPOTHESES_TRANCHE_0,
+	HYPOTHESES,
 	type Hypotheses,
 } from "./generateur/hypotheses.ts";
 import {
@@ -40,7 +40,7 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 	const [debut, fin] = scenario.generations;
 	const nbGenerations = fin - debut + 1;
 	const h = appliquerFacteurs(
-		scenario.hypotheses ?? HYPOTHESES_TRANCHE_0,
+		scenario.hypotheses ?? HYPOTHESES,
 		scenario.facteurs,
 	);
 	const population: Individu[] = [];

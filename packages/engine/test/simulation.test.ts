@@ -6,7 +6,7 @@ import {
 	createRng,
 	generateCarriere,
 	generatePopulation,
-	HYPOTHESES_TRANCHE_0,
+	HYPOTHESES,
 	runSimulation,
 } from "../src/index.ts";
 import { BAREMES_FICTIFS as B } from "./fixture.ts";
@@ -15,8 +15,8 @@ const SCENARIO: Scenario = { taille: 4000, graine: 7, generations: [1955, 2003] 
 
 describe("générateur", () => {
 	test("même graine, même carrière", () => {
-		const a = generateCarriere(1960, createRng(42), HYPOTHESES_TRANCHE_0, B);
-		const b = generateCarriere(1960, createRng(42), HYPOTHESES_TRANCHE_0, B);
+		const a = generateCarriere(1960, createRng(42), HYPOTHESES, B);
+		const b = generateCarriere(1960, createRng(42), HYPOTHESES, B);
 		expect(a).toEqual(b);
 	});
 

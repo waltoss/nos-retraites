@@ -1,12 +1,12 @@
 import {
 	BAREMES_FRANCE as B,
 	baremeGeneration,
-	HYPOTHESES_TRANCHE_0 as H,
+	HYPOTHESES as H,
 } from "@nos-retraites/engine";
 import { createFileRoute } from "@tanstack/react-router";
+import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, entier, euros } from "../format";
-import { useScenario } from "../scenario";
 import sources from "../sources.json";
 
 export const Route = createFileRoute("/modele")({ component: Modele });
@@ -16,7 +16,7 @@ const ETAPES: { icone: IconName; titre: string; texte: string }[] = [
 		icone: "population",
 		titre: "Inventer des vies",
 		texte:
-			"20 000 personnes nées de 1955 à 2003. Chaque année, un tirage décide si chacune travaille, perd son emploi, s'arrête ou reprend. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
+			"20 000 personnes nées de 1955 à 2003. Chaque année, un tirage décide si chacune travaille, perd son emploi, s'arrête ou reprend. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
 	},
 	{
 		icone: "carriere",
@@ -170,11 +170,11 @@ const pc = (x: number) =>
 const HYPOTHESES: { nom: string; valeur: string }[] = [
 	{
 		nom: "Âge d'entrée dans la vie active",
-		valeur: `${decimal(H.ageEntree.moyenne)} ans en moyenne, entre ${H.ageEntree.min} et ${H.ageEntree.max}`,
+		valeur: `${decimal(H.ageEntree.moyenne)} ans en moyenne depuis la génération 1975, ${decimal(H.ageEntree.moyenne + (H.decalageEntree[0]?.[1] ?? 0))} ans pour la génération 1953`,
 	},
 	{
 		nom: "Salaire d'une personne médiane à 40 ans",
-		valeur: `${pc(H.profilSalaire.find(([age]) => age === 40)?.[1] ?? 0)} du plafond`,
+		valeur: `${pc((H.profilSalaire.find(([age]) => age === 40)?.[1] ?? 0) * H.niveauSalaire)} du plafond`,
 	},
 	{
 		nom: "Dispersion des salaires",
@@ -198,7 +198,15 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 	},
 	{
 		nom: "Mères qui s'arrêtent après une naissance",
-		valeur: `${pc(H.interruptionNaissance.probabilite)}, puis ${pc(H.interruptionNaissance.retourAnnuel)} de retours par an`,
+		valeur: `${pc(H.interruptionNaissance.probabilite)} par naissance pour la génération 1953, puis ${pc(H.interruptionNaissance.retourAnnuel)} de retours par an ; ${pc(H.interruptionNaissance.partDefinitive)} ne reprennent jamais`,
+	},
+	{
+		nom: "Carrières partielles en France",
+		valeur: `${pc(H.carrierePartielle.part.F)} des femmes et ${pc(H.carrierePartielle.part.H)} des hommes, présents de ${H.carrierePartielle.dureeMin} à ${entier(H.carrierePartielle.dureeMax)} ans`,
+	},
+	{
+		nom: "Mères au foyer dont les années sont validées",
+		valeur: `${pc(H.avpf.part)}, tant que le dernier enfant a moins de 3 ans`,
 	},
 	{
 		nom: "Mères à temps partiel",
@@ -219,53 +227,116 @@ const LIMITES = [
 	"Personne ne part avec une décote ni ne reste pour une surcote : ces deux réglages existent dans le moteur mais n'auraient aucun effet ici, ils ne sont donc pas proposés.",
 	"Pas de départs anticipés pour carrière longue, invalidité ou pénibilité.",
 	"Le chômage est toujours indemnisé, donc toujours validé. Les fins de droits n'existent pas.",
+	"Les années de parent au foyer sont validées sans condition de ressources, sur une règle simplifiée.",
+	"Le réglage porte sur une seule génération, née en 1953. Les générations suivantes sont supposées lui ressembler, à l'âge d'entrée et aux arrêts pour enfant près.",
 	"Chacun est né un 1er janvier. Les générations coupées en cours d'année (1961, 1965) prennent la règle de leur plus longue période.",
 	"Avant 1999, tout le monde est supposé cotiser à la caisse UNIRS, aux taux minimaux.",
 	"Montants bruts. Ni CSG, ni impôt.",
 ];
 
-/** Drees, EIR 2020, génération 1953, pension de droit direct brute, tous régimes, en euros de 2020. */
-const DREES = {
-	annee: 2020,
-	d1: 403,
-	mediane: 1403,
-	d9: 2723,
-	femmes: 1133,
-	hommes: 1676,
+const mesure = (nom: string) => {
+	const m = calage.find((x) => x.nom === nom);
+	return m ?? { nom, modele: 0, cible: 0, cale: false };
 };
+const somme = (...noms: string[]) =>
+	noms
+		.map(mesure)
+		.reduce(
+			(t, m) => ({ modele: t.modele + m.modele, cible: t.cible + m.cible }),
+			{ modele: 0, cible: 0 },
+		);
+
+interface Ligne {
+	nom: string;
+	modele: number;
+	cible: number;
+}
+interface Comparaison {
+	titre: string;
+	texte: string;
+	source: string;
+	/** Écrit une valeur ; l'écart est donné en pourcentage, ou en points pour les parts. */
+	format: (x: number) => string;
+	enPoints?: boolean;
+	lignes: Ligne[];
+}
+
+const sexes = [
+	["femmes", "Femmes"],
+	["hommes", "Hommes"],
+] as const;
+
+const COMPARAISONS: Comparaison[] = [
+	{
+		titre: "Salaires de 2025",
+		texte:
+			"Salaire à temps plein des personnes en emploi, en multiples du SMIC. Ces chiffres servent à régler le modèle : l'accord est voulu.",
+		source:
+			"Insee Première n° 2132, salaires nets du secteur privé en équivalent temps plein, 2025.",
+		format: (x) => `${decimal(x)} SMIC`,
+		lignes: sexes.flatMap(([cle, nom]) => [
+			{ ...mesure(`${cle} salaire d1 (SMIC)`), nom: `${nom}, 1er décile` },
+			{ ...mesure(`${cle} salaire d5Mediane (SMIC)`), nom: `${nom}, médiane` },
+			{ ...mesure(`${cle} salaire d9 (SMIC)`), nom: `${nom}, 9e décile` },
+		]),
+	},
+	{
+		titre: "Durées de carrière, génération 1953",
+		texte:
+			"Années cotisées par le travail, années validées en comptant chômage, maladie et enfants. Ces chiffres servent aussi à régler le modèle.",
+		source: "Drees, échantillon interrégimes de retraités 2020, tous régimes.",
+		format: (x) => `${decimal(x)} ans`,
+		lignes: sexes.flatMap(([cle, nom]) => [
+			{
+				...mesure(`${cle} durée cotisée moyenne (ans)`),
+				nom: `${nom}, durée cotisée moyenne`,
+			},
+			{
+				...mesure(`${cle} durée validée moyenne (ans)`),
+				nom: `${nom}, durée validée moyenne`,
+			},
+		]),
+	},
+	{
+		titre: "Carrières courtes et complètes, génération 1953",
+		texte: "Part des retraités de chaque sexe. Sert au réglage.",
+		source: "Drees, échantillon interrégimes de retraités 2020, tous régimes.",
+		format: (x) => `${entier(x)} %`,
+		enPoints: true,
+		lignes: sexes.flatMap(([cle, nom]) => [
+			{
+				...somme(
+					`${cle} durée cotisée moinsDe10ans (%)`,
+					`${cle} durée cotisée de10a20ans (%)`,
+				),
+				nom: `${nom}, moins de 20 ans cotisés`,
+			},
+			{
+				...mesure(`${cle} carrière complète (%)`),
+				nom: `${nom}, carrière complète`,
+			},
+		]),
+	},
+	{
+		titre: "Pensions, génération 1953",
+		texte:
+			"Pension mensuelle brute. Ces chiffres ne servent pas au réglage : c'est la vérification. La Drees compte tous les régimes, fonctionnaires et indépendants compris ; le modèle ne connaît que les salariés du privé, dont la pension moyenne est plus basse d'environ 8 %.",
+		source: `Drees, échantillon interrégimes de retraités 2020, pensions de droit direct, portées en euros de ${A} avec le coefficient de revalorisation de la Cnav.`,
+		format: (x) => euros(x),
+		lignes: [
+			{
+				...mesure("ensemble pension D1"),
+				nom: "1er décile, les plus petites pensions",
+			},
+			{ ...mesure("ensemble pension médiane"), nom: "Médiane" },
+			{ ...mesure("ensemble pension D9"), nom: "9e décile, les plus hautes" },
+			{ ...mesure("femmes pension médiane"), nom: "Médiane des femmes" },
+			{ ...mesure("hommes pension médiane"), nom: "Médiane des hommes" },
+		],
+	},
+];
 
 function Modele() {
-	const { reference } = useScenario();
-	const coefficient = B.cnav.coefficientsRevalorisation[DREES.annee] ?? 1;
-	const lignes = reference
-		? [
-				{
-					nom: "Pension médiane",
-					drees: DREES.mediane,
-					simule: reference.pensions.resume.mediane,
-				},
-				{
-					nom: "1er décile, les plus petites pensions",
-					drees: DREES.d1,
-					simule: reference.pensions.resume.deciles[0] ?? 0,
-				},
-				{
-					nom: "9e décile, les plus hautes",
-					drees: DREES.d9,
-					simule: reference.pensions.resume.deciles[8] ?? 0,
-				},
-				{
-					nom: "Pension médiane des femmes",
-					drees: DREES.femmes,
-					simule: reference.parSexe.F.pensionMediane,
-				},
-				{
-					nom: "Pension médiane des hommes",
-					drees: DREES.hommes,
-					simule: reference.parSexe.H.pensionMediane,
-				},
-			]
-		: [];
 	return (
 		<main className="wrap large">
 			<div className="titre-page">
@@ -293,50 +364,60 @@ function Modele() {
 			<section className="bloc">
 				<h2>Face aux chiffres publics</h2>
 				<p className="sub">
-					La Drees publie la distribution des pensions de la génération 1953,
-					tous régimes confondus. Le modèle simule les retraités du privé nés de
-					1955 à 1964. Les deux ne recouvrent pas la même population, mais
-					l'écart dit où le modèle se trompe.
+					Le modèle est réglé sur les salaires et les durées de carrière
+					publiés. Les pensions qu'il en déduit sont ensuite confrontées à
+					celles que la Drees observe. Les lignes surlignées s'écartent de plus
+					de 10 %, ou de plus de 5 points pour les parts.
 				</p>
-				{reference ? (
-					<table className="table">
-						<thead>
-							<tr>
-								<th />
-								<th>Drees, en euros de {A}</th>
-								<th>Modèle</th>
-								<th>Écart</th>
-							</tr>
-						</thead>
-						<tbody>
-							{lignes.map((l) => {
-								const cible = l.drees * coefficient;
-								const e = (l.simule / cible - 1) * 100;
-								return (
-									<tr key={l.nom} className={Math.abs(e) > 10 ? "change" : ""}>
-										<th>{l.nom}</th>
-										<td className="num">{euros(cible)}</td>
-										<td className="num">{euros(l.simule)}</td>
-										<td className="num">
-											{e > 0 ? "+" : "−"}
-											{entier(Math.abs(e))} %
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				) : (
-					<div className="histo attente" style={{ height: 220 }} />
-				)}
-				<p className="reserve">
-					Source : Drees, échantillon interrégimes de retraités 2020, pensions
-					de droit direct brutes, converties en euros de {A} avec le coefficient
-					de revalorisation de la Cnav ({coefficient.toLocaleString("fr-FR")}).
-					Les lignes surlignées s'écartent de plus de 10 %. Le bas de la
-					distribution est faux : le modèle ne produit pas de carrières très
-					courtes, et il sous-estime l'écart entre femmes et hommes.
-				</p>
+				{COMPARAISONS.map((c) => (
+					<div key={c.titre} className="comparaison">
+						<h3>{c.titre}</h3>
+						<p className="reserve">{c.texte}</p>
+						<table className="table">
+							<thead>
+								<tr>
+									<th />
+									<th>Observé</th>
+									<th>Modèle</th>
+									<th>Écart</th>
+								</tr>
+							</thead>
+							<tbody>
+								{c.lignes.map((l) => {
+									const e = c.enPoints
+										? l.modele - l.cible
+										: (l.modele / l.cible - 1) * 100;
+									const fort = Math.abs(e) > (c.enPoints ? 5 : 10);
+									return (
+										<tr key={l.nom} className={fort ? "change" : ""}>
+											<th>{l.nom}</th>
+											<td className="num">{c.format(l.cible)}</td>
+											<td className="num">{c.format(l.modele)}</td>
+											<td className="num">
+												{e >= 0 ? "+" : "−"}
+												{entier(Math.abs(e))} {c.enPoints ? "pt" : "%"}
+											</td>
+										</tr>
+									);
+								})}
+							</tbody>
+						</table>
+						<p className="reserve">Source : {c.source}</p>
+					</div>
+				))}
+				<div className="comparaison">
+					<h3>Règles de calcul</h3>
+					<p className="reserve">
+						Le Conseil d'orientation des retraites publie le taux de
+						remplacement de carrières types. Pour la génération 1964, le moteur
+						retrouve à moins de 2 % ceux du cadre et du non-cadre à carrière
+						continue. Il s'en écarte sur les carrières interrompues : 12 % de
+						trop après du chômage, 8 % de moins après un arrêt pour enfant.
+					</p>
+					<p className="reserve">
+						Source : COR, rapport annuel de juin 2026, tableau 3.3.
+					</p>
+				</div>
 			</section>
 
 			<section className="bloc">
@@ -379,11 +460,12 @@ function Modele() {
 			</section>
 
 			<section className="bloc">
-				<h2>Ce qui est posé à la main</h2>
+				<h2>Ce qui est ajusté</h2>
 				<p className="sub">
-					Ces chiffres ne viennent d'aucune statistique. Ils ont été choisis
-					pour que les carrières soient plausibles, et devront être calés sur
-					les données de l'Insee et de la Drees.
+					Aucune statistique ne donne ces chiffres directement. Un programme les
+					ajuste jusqu'à ce que les salaires et les durées de carrière simulés
+					ressemblent aux chiffres publiés ci-dessus. D'autres valeurs
+					donneraient peut-être un accord aussi bon.
 				</p>
 				<table className="table">
 					<tbody>

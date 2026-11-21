@@ -1,9 +1,12 @@
+import donnees from "./hypotheses.data.json" with { type: "json" };
+
 /**
  * Hypothèses du générateur de carrières.
  *
  * Ce ne sont PAS des paramètres légaux ni des statistiques publiées : ce sont les
- * paramètres libres du modèle, posés à la main pour la tranche 0 et destinés à être
- * calés sur les données publiques (Drees, INSEE) puis par le backtest 2010-2025.
+ * paramètres libres du modèle. Une partie est ajustée par `scripts/calage.ts` sur les
+ * durées de carrière et les pensions de la génération 1953 (Drees, EIR 2020) ; le reste
+ * est posé à la main.
  */
 export interface Hypotheses {
 	/** Part de femmes dans une génération. */
@@ -16,8 +19,24 @@ export interface Hypotheses {
 		min: number;
 		max: number;
 	};
+	/**
+	 * Décalage de l'âge d'entrée selon la génération, en années, par rapport aux générations récentes :
+	 * points (année de naissance, décalage). Les générations anciennes ont commencé plus tôt.
+	 */
+	decalageEntree: ReadonlyArray<readonly [generation: number, annees: number]>;
+	/**
+	 * Carrières partielles : individus présents dans le système une partie seulement de leur vie active
+	 * (arrivée tardive en France, départ à l'étranger, activité non déclarée).
+	 */
+	carrierePartielle: {
+		part: { F: number; H: number };
+		dureeMin: number;
+		dureeMax: number;
+	};
 	/** Salaire à temps plein, en part du PASS, pour un individu médian : points (âge, part du PASS). */
 	profilSalaire: ReadonlyArray<readonly [age: number, partDuPass: number]>;
+	/** Multiplicateur d'ensemble du profil de salaire. */
+	niveauSalaire: number;
 	/** Dispersion du niveau permanent de salaire (écart-type du logarithme). */
 	sigmaPermanent: number;
 	/** Dispersion des chocs annuels de salaire (écart-type du logarithme). */
@@ -39,8 +58,23 @@ export interface Hypotheses {
 	depuisChomage: { emploi: number; inactivite: number };
 	depuisMaladie: { emploi: number; inactivite: number };
 	depuisInactivite: { emploi: number };
-	/** Probabilité qu'une mère interrompe son activité l'année d'une naissance, et son retour annuel ensuite. */
-	interruptionNaissance: { probabilite: number; retourAnnuel: number };
+	/**
+	 * Probabilité qu'une mère interrompe son activité l'année d'une naissance, son retour annuel ensuite,
+	 * et la part des interruptions qui sont définitives.
+	 */
+	interruptionNaissance: {
+		probabilite: number;
+		retourAnnuel: number;
+		partDefinitive: number;
+	};
+	/**
+	 * Part des mères au foyer qui remplissent la condition de ressources de l'AVPF.
+	 * Simplification : le droit est ouvert tant que le plus jeune enfant a moins de 3 ans,
+	 * ou moins de 21 ans dans une famille de 3 enfants ou plus.
+	 */
+	avpf: { part: number };
+	/** Pente de la probabilité d'interruption par génération après 1953 (par an, relative), bornée à zéro. */
+	tendanceInterruption: number;
 	/** Part des mères en emploi qui travaillent à temps partiel tant qu'un enfant a moins de 12 ans, et leur quotité. */
 	tempsPartielMeres: { part: number; quotite: number };
 	/** Après cet âge, les sorties de l'emploi sont multipliées et les retours divisés. */
@@ -55,43 +89,8 @@ export interface Hypotheses {
 	heuresAnnuelles: number;
 }
 
-export const HYPOTHESES_TRANCHE_0: Hypotheses = {
-	partFemmes: 0.5,
-	ageEntree: {
-		moyenne: 20.5,
-		ecartType: 2.2,
-		effetRang: 1.6,
-		min: 16,
-		max: 28,
-	},
-	profilSalaire: [
-		[16, 0.36],
-		[22, 0.46],
-		[30, 0.6],
-		[40, 0.72],
-		[50, 0.78],
-		[60, 0.78],
-		[70, 0.76],
-	],
-	sigmaPermanent: 0.42,
-	sigmaTransitoire: 0.08,
-	penteRang: 0.006,
-	ecartSalaireFemmes: 0.86,
-	seuilCadre: 0.9,
-	repartitionEnfants: [0.13, 0.19, 0.39, 0.2, 0.09],
-	agePremierEnfant: { moyenne: 26, ecartType: 4 },
-	ecartEntreEnfants: 3,
-	depuisEmploi: { chomage: 0.045, maladie: 0.008, inactivite: 0.008 },
-	risqueRang: 1.6,
-	depuisChomage: { emploi: 0.5, inactivite: 0.1 },
-	depuisMaladie: { emploi: 0.6, inactivite: 0.1 },
-	depuisInactivite: { emploi: 0.12 },
-	interruptionNaissance: { probabilite: 0.3, retourAnnuel: 0.22 },
-	tempsPartielMeres: { part: 0.3, quotite: 0.7 },
-	seniors: { age: 55, multiplicateurSorties: 1.8, diviseurRetours: 2.5 },
-	etalementSmic: 0.2,
-	heuresAnnuelles: 1820,
-};
+/** Valeurs calées par `scripts/calage.ts`, qui réécrit `hypotheses.data.json`. */
+export const HYPOTHESES: Hypotheses = donnees as unknown as Hypotheses;
 
 /**
  * Facteurs d'un scénario : multiplicateurs appliqués aux hypothèses du générateur.

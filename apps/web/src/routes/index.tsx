@@ -57,10 +57,6 @@ function Home() {
 					src="/photos/generations.jpg"
 					alt="Dans un parc, un grand-père accompagne un enfant qui apprend à faire du vélo"
 				/>
-				<div className="pill">
-					Version de travail. Le modèle n'est pas encore calé sur les chiffres
-					officiels.
-				</div>
 				<h1>
 					Ceux qui travaillent paient la pension de ceux qui ont travaillé.
 				</h1>
@@ -193,9 +189,10 @@ function Home() {
 				<Icon name="attention" />
 				<p>
 					<strong>Ce n'est pas encore une prévision.</strong> Les pensions sont
-					calculées avec les vraies règles de 2026, mais sur des carrières
-					inventées qui ne sont pas encore calées sur les statistiques
-					publiques. Seuls les salariés du privé sont simulés.
+					calculées avec les vraies règles de 2026, sur des carrières inventées,
+					réglées pour ressembler aux salaires et aux durées de carrière
+					publiés. Seuls les salariés du privé sont simulés, et la population ne
+					vieillit pas d'une année sur l'autre.
 				</p>
 			</aside>
 		</main>

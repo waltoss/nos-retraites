@@ -131,10 +131,10 @@ function Simuler() {
 					<Icon name="attention" />
 					<p>
 						<strong>Ce n'est pas encore une prévision.</strong> Les carrières
-						sont inventées et pas encore calées sur les statistiques publiques.
-						La natalité et l'immigration ne sont pas simulées : elles demandent
-						de suivre la population année après année, ce que le modèle ne fait
-						pas encore.
+						sont inventées, réglées sur les salaires et les durées publiés. La
+						natalité et l'immigration ne sont pas simulées : elles demandent de
+						suivre la population année après année, ce que le modèle ne fait pas
+						encore.
 					</p>
 				</aside>
 			</div>

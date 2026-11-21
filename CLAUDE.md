@@ -43,8 +43,8 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 
 ## État
 
-Fait : règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, générateur naïf, pages Accueil, Simuler (15 leviers), Décisions, Carrières, Modèle. Les leviers sont définis une seule fois dans `apps/web/src/leviers.ts`.
-Reste : cas types du COR (il manque le salaire moyen par tête), calage du générateur (`generateur/hypotheses.ts` est posé à la main), poids par cohorte, démographie (natalité, immigration), comportements de départ (décote, surcote).
-Critères : cas types COR à ±2 % ; médiane et déciles extrêmes des pensions à ±10 % de la Drees (échec actuel sur le 1er décile), sinon repli sur un modèle par cellules.
+Fait : règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, AVPF simplifiée, générateur calé (`bun scripts/calage.ts --ajuste --ecrit` réécrit `generateur/hypotheses.data.json` et `apps/web/src/calage.json`), pages Accueil, Simuler (15 leviers), Décisions, Carrières, Modèle. Les leviers sont définis une seule fois dans `apps/web/src/leviers.ts`.
+Calage : salaires sur l'Insee 2025, durées sur la Drees (génération 1953) ; les pensions ne sont jamais ciblées, elles vérifient. Écarts actuels : D1 +19 %, médiane -10 %, D9 -15 % (cible tous régimes, modèle privé seul ; critère du projet : ±10 %). Cas types COR (génération 1964) : carrières continues à ±2 % ; carrières interrompues hors tolérance (+12 % chômage, -8 % enfant).
+Reste : bloc résiduel des autres régimes, chômage non indemnisé, carrières longues, poids par cohorte, démographie (natalité, immigration), comportements de départ (décote, surcote).
 
 `proto/` contient des maquettes jetables à données fictives.

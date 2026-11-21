@@ -280,3 +280,8 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 	.fiche { padding: 16px; }
 	.calcul td { white-space: normal; }
 }
+
+.bandeau { margin: 0; padding: 8px 24px; font-size: 14px; text-align: center; color: var(--ink, #1D1B18); background: #F1E9DA; border-bottom: 1px solid rgba(29, 27, 24, 0.08); }
+.bandeau a { color: inherit; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.comparaison { margin-top: 28px; }
+.comparaison h3 { font-family: var(--display); font-size: 20px; margin: 0 0 4px; }

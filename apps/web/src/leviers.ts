@@ -1,6 +1,6 @@
 import {
 	type Facteurs,
-	HYPOTHESES_TRANCHE_0,
+	HYPOTHESES,
 	type ReglesScenario,
 } from "@nos-retraites/engine";
 import type { IconName } from "./components/Icons";
@@ -88,7 +88,7 @@ export interface Levier {
 const pourcent = (v: number) => `${v.toLocaleString("fr-FR")} %`;
 const signe = (v: number) =>
 	`${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toLocaleString("fr-FR")}`;
-const ECART_FEMMES = Math.round(HYPOTHESES_TRANCHE_0.ecartSalaireFemmes * 100);
+const ECART_FEMMES = Math.round(HYPOTHESES.ecartSalaireFemmes * 100);
 
 export const LEVIERS: Levier[] = [
 	{

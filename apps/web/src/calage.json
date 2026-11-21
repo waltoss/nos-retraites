@@ -1,0 +1,344 @@
+[
+	{
+		"nom": "femmes pension D1",
+		"modele": 405.2,
+		"cible": 365.5,
+		"cale": false
+	},
+	{
+		"nom": "femmes pension Q1",
+		"modele": 920.6,
+		"cible": 818.6,
+		"cale": false
+	},
+	{
+		"nom": "femmes pension médiane",
+		"modele": 1252,
+		"cible": 1306,
+		"cale": false
+	},
+	{
+		"nom": "femmes pension Q3",
+		"modele": 1838,
+		"cible": 1999,
+		"cale": false
+	},
+	{
+		"nom": "femmes pension D9",
+		"modele": 2378,
+		"cible": 2675,
+		"cale": false
+	},
+	{
+		"nom": "femmes pension moyenne",
+		"modele": 1389,
+		"cible": 1463,
+		"cale": false
+	},
+	{
+		"nom": "femmes durée cotisée moinsDe10ans (%)",
+		"modele": 12.87,
+		"cible": 12.3,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée cotisée de10a20ans (%)",
+		"modele": 12.69,
+		"cible": 11.7,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée cotisée de20a30ans (%)",
+		"modele": 12.76,
+		"cible": 15.5,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée cotisée de30a40ans (%)",
+		"modele": 37.81,
+		"cible": 29.9,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée cotisée 40ansOuPlus (%)",
+		"modele": 23.86,
+		"cible": 30.5,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée moinsDe10ans (%)",
+		"modele": 2.793,
+		"cible": 1.9,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée de10a20ans (%)",
+		"modele": 9.635,
+		"cible": 6.3,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée de20a30ans (%)",
+		"modele": 8.494,
+		"cible": 8.7,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée de30a40ans (%)",
+		"modele": 12.91,
+		"cible": 17,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée 40ansOuPlus (%)",
+		"modele": 66.17,
+		"cible": 66.1,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée cotisée moyenne (ans)",
+		"modele": 29.18,
+		"cible": 30,
+		"cale": true
+	},
+	{
+		"nom": "femmes durée validée moyenne (ans)",
+		"modele": 38.21,
+		"cible": 39,
+		"cale": true
+	},
+	{
+		"nom": "femmes carrière complète (%)",
+		"modele": 63,
+		"cible": 57.3,
+		"cale": true
+	},
+	{
+		"nom": "femmes âge moyen de départ (ans)",
+		"modele": 63.26,
+		"cible": 61.8,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension D1",
+		"modele": 923.4,
+		"cible": 747.1,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension Q1",
+		"modele": 1232,
+		"cible": 1356,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension médiane",
+		"modele": 1758,
+		"cible": 1932,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension Q3",
+		"modele": 2337,
+		"cible": 2678,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension D9",
+		"modele": 2860,
+		"cible": 3628,
+		"cale": false
+	},
+	{
+		"nom": "hommes pension moyenne",
+		"modele": 1836,
+		"cible": 2140,
+		"cale": false
+	},
+	{
+		"nom": "hommes durée cotisée moinsDe10ans (%)",
+		"modele": 2.998,
+		"cible": 4.3,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée cotisée de10a20ans (%)",
+		"modele": 3.857,
+		"cible": 4.4,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée cotisée de20a30ans (%)",
+		"modele": 7.056,
+		"cible": 7.6,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée cotisée de30a40ans (%)",
+		"modele": 26.93,
+		"cible": 26.7,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée cotisée 40ansOuPlus (%)",
+		"modele": 59.16,
+		"cible": 57,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée moinsDe10ans (%)",
+		"modele": 2.695,
+		"cible": 1.7,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée de10a20ans (%)",
+		"modele": 3.638,
+		"cible": 2.3,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée de20a30ans (%)",
+		"modele": 5.995,
+		"cible": 3.7,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée de30a40ans (%)",
+		"modele": 11.6,
+		"cible": 14.3,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée 40ansOuPlus (%)",
+		"modele": 76.07,
+		"cible": 78,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée cotisée moyenne (ans)",
+		"modele": 37.27,
+		"cible": 37,
+		"cale": true
+	},
+	{
+		"nom": "hommes durée validée moyenne (ans)",
+		"modele": 38.92,
+		"cible": 41,
+		"cale": true
+	},
+	{
+		"nom": "hommes carrière complète (%)",
+		"modele": 72.58,
+		"cible": 70,
+		"cale": true
+	},
+	{
+		"nom": "hommes âge moyen de départ (ans)",
+		"modele": 62.96,
+		"cible": 61,
+		"cale": false
+	},
+	{
+		"nom": "ensemble pension D1",
+		"modele": 551.2,
+		"cible": 464.7,
+		"cale": false
+	},
+	{
+		"nom": "ensemble pension médiane",
+		"modele": 1456,
+		"cible": 1618,
+		"cale": false
+	},
+	{
+		"nom": "ensemble pension D9",
+		"modele": 2654,
+		"cible": 3140,
+		"cale": false
+	},
+	{
+		"nom": "femmes salaire d1 (SMIC)",
+		"modele": 1.063,
+		"cible": 1.056,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d2 (SMIC)",
+		"modele": 1.126,
+		"cible": 1.164,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d3 (SMIC)",
+		"modele": 1.196,
+		"cible": 1.262,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d5Mediane (SMIC)",
+		"modele": 1.481,
+		"cible": 1.492,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d7 (SMIC)",
+		"modele": 1.885,
+		"cible": 1.868,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d8 (SMIC)",
+		"modele": 2.216,
+		"cible": 2.196,
+		"cale": true
+	},
+	{
+		"nom": "femmes salaire d9 (SMIC)",
+		"modele": 2.752,
+		"cible": 2.825,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d1 (SMIC)",
+		"modele": 1.08,
+		"cible": 1.076,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d2 (SMIC)",
+		"modele": 1.17,
+		"cible": 1.221,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d3 (SMIC)",
+		"modele": 1.31,
+		"cible": 1.344,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d5Mediane (SMIC)",
+		"modele": 1.692,
+		"cible": 1.633,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d7 (SMIC)",
+		"modele": 2.168,
+		"cible": 2.099,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d8 (SMIC)",
+		"modele": 2.536,
+		"cible": 2.51,
+		"cale": true
+	},
+	{
+		"nom": "hommes salaire d9 (SMIC)",
+		"modele": 3.178,
+		"cible": 3.322,
+		"cale": true
+	}
+]
