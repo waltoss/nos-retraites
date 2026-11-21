@@ -240,7 +240,10 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .frise-plafond span { position: absolute; right: 0; bottom: 2px; font-size: 11px; color: var(--muted); }
 .frise-barres { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 2px; }
 .frise-col { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; }
-.frise-col i { display: block; width: 100%; border-radius: 2px 2px 0 0; }
+.frise-pile { width: 100%; height: 100%; display: flex; flex-direction: column-reverse; gap: 1px; }
+.frise-pile i { display: block; width: 100%; border-radius: 2px; flex: none; }
+.frise-col.vise i { filter: brightness(0.8); }
+.frise-barres { touch-action: pan-y; cursor: crosshair; }
 .frise-col b, .legende b { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
 .frise-col b { position: absolute; left: 50%; top: 4px; transform: translateX(-50%); }
 .frise-depart { position: absolute; top: -6px; bottom: 0; border-left: 2px solid var(--ink); }
