@@ -3,6 +3,9 @@
  * face à ce qui a été observé de 2010 à 2024. Rien ici ne sert à régler le modèle.
  * Écrit apps/web/src/backtest.json.
  */
+import complementaireHistorique from "../data/references/complementaire-historique.json" with {
+	type: "json",
+};
 import historique from "../data/references/historique.json" with {
 	type: "json",
 };
@@ -29,6 +32,7 @@ import {
 	projeter,
 	SCENARIO_REFERENCE,
 	SURVIE_SELON_PENSION,
+	valeur,
 } from "../packages/engine/src/index.ts";
 
 import { BACKTEST_PUBLIC } from "./backtest-public.ts";
@@ -188,6 +192,24 @@ const moyennePonderee = (
 	}
 	return total / poids;
 };
+/**
+ * La valeur du point a moins monté que les prix : une pension complémentaire versée une année
+ * passée valait, en euros de 2026, plus que les mêmes points à la valeur de 2026.
+ */
+const valeursDeService = {
+	...(complementaireHistorique.rendements.arrco
+		.valeurServiceMoyenneAnnuelle as Serie),
+	...(complementaireHistorique.rendements.agircArrco
+		.valeurServiceMoyenneAnnuelle as Serie),
+};
+const pointDeLAnnee = (annee: number) =>
+	(lire(valeursDeService, annee) * enEurosDeReference(annee)) /
+	B.agircArrco.valeurDeServiceDuPoint;
+const pointDeLaPeriode = (debut: number, fin: number) => {
+	let total = 0;
+	for (let a = debut; a <= fin; a++) total += pointDeLAnnee(a);
+	return total / (fin - debut + 1);
+};
 for (const [sexe, cle] of SEXES) {
 	lignes.push({
 		groupe: "Pension moyenne des retraités, euros de 2026 par mois",
@@ -201,11 +223,78 @@ for (const [sexe, cle] of SEXES) {
 		lignes.push({
 			groupe: "Pension moyenne des retraités, euros de 2026 par mois",
 			nom: `${cle}, Agirc-Arrco, fin ${annee}`,
-			modele: moyennePonderee(stock(annee), sexe, complementaire),
+			modele:
+				moyennePonderee(stock(annee), sexe, complementaire) *
+				pointDeLAnnee(annee),
 			observe:
 				lire(e.agircArrco.pensionMoyenne[cle] as Serie, annee) *
 				enEurosDeReference(annee),
 		});
+}
+
+// 2 bis. La complémentaire en deux morceaux, fin 2018, dernière année où l'Arrco et l'Agirc sont
+// publiées à part : les points Arrco de tous, les points Agirc de ceux qui en ont (les cadres).
+// Montants par an, en euros de 2018, majorations pour enfants comprises comme dans la source.
+{
+	const publie = complementaireHistorique.pensionsParStatut;
+	const enEurosDe2018 =
+		lire(valeursDeService, 2018) / B.agircArrco.valeurDeServiceDuPoint;
+	for (const [sexe, cle] of SEXES) {
+		const t = { n: 0, arrco: 0, nAgirc: 0, agirc: 0 };
+		for (const x of stock(2018)) {
+			const c = x.individu.carriere;
+			if (c.sexe !== sexe || x.pension.agircArrco.pensionAnnuelle <= 0)
+				continue;
+			// Part des points acquis à l'Arrco : recalculée année par année sur les années d'emploi.
+			let arrco = 0;
+			let total = 0;
+			for (const a of c.annees) {
+				if (a.annee >= x.pension.liquidation.annee) break;
+				const mois = moisParEtat(a).emploi;
+				if (mois === 0 || a.salaireBrut <= 0 || a.autreRegime) continue;
+				const pass = valeur(B.cnav.pass, a.annee);
+				const plein = (a.salaireBrut * 12) / mois;
+				const points =
+					(B.agircArrco.pointsAnnee(a.annee, plein, pass, c.cadre) * mois) / 12;
+				total += points;
+				arrco += c.cadre
+					? Math.min(
+							points,
+							(B.agircArrco.pointsAnnee(
+								a.annee,
+								Math.min(plein, pass),
+								pass,
+								false,
+							) *
+								mois) /
+								12,
+						)
+					: points;
+			}
+			const part = total > 0 ? arrco / total : 1;
+			const pension = x.pension.agircArrco.pensionAnnuelle * enEurosDe2018;
+			t.n += x.individu.poids;
+			t.arrco += x.individu.poids * pension * part;
+			if (part < 0.999) {
+				t.nAgirc += x.individu.poids;
+				t.agirc += x.individu.poids * pension * (1 - part);
+			}
+		}
+		const groupe =
+			"Pension complémentaire par régime, fin 2018, en euros de 2018 par an";
+		lignes.push({
+			groupe,
+			nom: `${cle}, Arrco, tous les retraités`,
+			modele: t.arrco / t.n,
+			observe: lire(publie.arrco.pensionAnnuelleMoyenne[cle] as Serie, 2018),
+		});
+		lignes.push({
+			groupe,
+			nom: `${cle}, Agirc, ceux qui en ont`,
+			modele: t.agirc / t.nAgirc,
+			observe: lire(publie.agirc.pensionAnnuelleMoyenne[cle] as Serie, 2018),
+		});
+	}
 }
 
 // 3. Pension moyenne de ceux qui partent dans l'année.
@@ -239,7 +328,9 @@ for (const [sexe, cle] of SEXES) {
 	lignes.push({
 		groupe: "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		nom: `${cle}, Agirc-Arrco, 2019-2023`,
-		modele: moyennePonderee(partants(2019, 2023), sexe, complementaire),
+		modele:
+			moyennePonderee(partants(2019, 2023), sexe, complementaire) *
+			pointDeLaPeriode(2019, 2023),
 		observe: moyenneObservee(
 			e.agircArrco.pensionMoyenneNouveaux[cle] as Serie,
 			2019,

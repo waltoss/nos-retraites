@@ -21,8 +21,10 @@ import projections from "../data/references/projections.json" with {
 import {
 	BAREMES_FRANCE as B,
 	buildComptes,
+	computePensions,
 	GENERATIONS_PONDEREES,
 	generatePopulation,
+	type Pension,
 	ponderer,
 	runSimulation,
 	SCENARIO_REFERENCE,
@@ -282,6 +284,21 @@ const ponderee = ponderer(
 	},
 );
 const t = runSimulation(ponderee, B, {}, buildComptes(ponderee, B));
+// Base et complémentaire à part : la complémentaire se compare sur le même champ, pas la base.
+const pensions = computePensions(ponderee, B, {}, buildComptes(ponderee, B));
+const masse = (f: (p: Pension) => number) =>
+	ponderee.reduce((total, individu, k) => {
+		const p = pensions[k] as Pension;
+		return p.liquidation.annee <= ANNEE ? total + individu.poids * f(p) : total;
+	}, 0);
+// Les montants publiés sont de fin 2024 : ramenés en euros de l'année de référence avec les prix du COR.
+const prix = projections.hypothesesEconomiquesCOR.prix.indice as {
+	anneeDebut: number;
+	valeurs: number[];
+};
+const enEuros =
+	(prix.valeurs[ANNEE - prix.anneeDebut] as number) /
+	(prix.valeurs[2024 - prix.anneeDebut] as number);
 const rg = reference.regimeGeneral.retraitesDroitDirect.totaux.ensemble;
 const aa = reference.agircArrco.retraitesDroitDirect.totaux.ensemble;
 const m = reference.massesFinancieres;
@@ -311,15 +328,24 @@ const recoupement = [
 			"Cotisations 2025 du régime général (indépendants compris) et de l'Agirc-Arrco",
 	},
 	{
-		nom: "Pensions versées",
+		nom: "Pensions complémentaires versées",
 		unite: "milliards",
-		modele: t.masses.pensions / 1e9,
+		modele: masse((p) => p.agircArrco.pensionAnnuelle) / 1e9,
 		cible:
-			(rg.effectifs * rg.avantagePrincipalDroitDirectMoyenM1 * 12 +
-				aa.effectifs * aa.avantagePrincipalDroitDirectMoyenM1 * 12) /
+			(aa.effectifs * aa.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
 			1e9,
 		source:
-			"Drees, effectifs × pension moyenne de droit direct fin 2024, régime général et Agirc-Arrco",
+			"Drees, effectifs × pension moyenne de droit direct de l'Agirc-Arrco fin 2024, en euros de 2026",
+	},
+	{
+		nom: "Pensions de base versées",
+		unite: "milliards",
+		modele: masse((p) => p.cnav.pensionAnnuelle) / 1e9,
+		cible:
+			(rg.effectifs * rg.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
+			1e9,
+		source:
+			"Drees, effectifs × pension moyenne de droit direct du régime général fin 2024, en euros de 2026, anciens indépendants compris",
 	},
 ].map((l) => ({
 	...l,

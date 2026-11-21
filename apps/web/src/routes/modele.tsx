@@ -460,6 +460,13 @@ const BACKTEST: Record<
 		source: EACR,
 		format: (x) => euros(x),
 	},
+	"Pension complémentaire par régime, fin 2018, en euros de 2018 par an": {
+		texte:
+			"Jusqu'en 2018 la complémentaire avait deux étages : l'Arrco pour tous, l'Agirc en plus pour les cadres. Le modèle est trop bas d'environ 10 % sur l'Arrco, pour les femmes comme pour les hommes, et nettement plus sur l'Agirc des hommes. À l'inverse, il donne trop de points Agirc aux femmes cadres : il les prend parmi les mieux payées, alors que beaucoup de femmes qui ont des droits Agirc gagnaient à peine plus que le plafond. La cause du manque sur l'Arrco n'est pas trouvée.",
+		source:
+			"Agirc-Arrco, Chiffr'Agirc-Arrco 2018, pensions de droit direct par régime.",
+		format: (x) => euros(x),
+	},
 	"Pension moyenne des nouveaux retraités, euros de 2026 par mois": {
 		texte: "Par régime, pour ceux qui partent dans l'année.",
 		source: EACR,
@@ -592,9 +599,9 @@ const COMPARAISONS: Comparaison[] = [
 	{
 		titre: "Effectifs et masses en 2026",
 		texte:
-			"Chaque personne simulée représente les personnes réelles de son âge et de son sexe qui relèvent du privé. La part du privé à chaque âge est réglée sur les cotisants et les retraités de l'Agirc-Arrco : l'accord sur les effectifs est donc voulu. Les masses, elles, sont une vérification.",
+			"Chaque personne simulée représente les personnes réelles de son âge et de son sexe qui relèvent du privé. La part du privé à chaque âge est réglée sur les cotisants et les retraités de l'Agirc-Arrco : l'accord sur les effectifs est donc voulu. Les masses, elles, sont une vérification. La complémentaire est trop basse : voir plus bas le détail par régime. Pour la base, la comparaison n'est pas à champ égal : le régime général verse une pension à 14,7 millions de personnes, dont environ deux millions n'ont pas de complémentaire du privé (anciens indépendants, contractuels du public, carrières très courtes) et ne sont pas simulées.",
 		source:
-			"Insee, pyramide des âges au 1er janvier 2026 ; Agirc-Arrco et Drees pour les effectifs de fin 2024 ; comptes 2025 du régime général et de l'Agirc-Arrco. Les cotisations publiées incluent les indépendants, les pensions publiées datent de 2024.",
+			"Insee, pyramide des âges au 1er janvier 2026 ; Agirc-Arrco et Drees pour les effectifs de fin 2024 ; comptes 2025 du régime général et de l'Agirc-Arrco. Les cotisations publiées incluent les indépendants ; les pensions publiées sont celles de fin 2024, ramenées en euros de 2026.",
 		format: (x) => decimal(x),
 		lignes: recoupement.map((l) => ({
 			nom: `${l.nom}, en ${l.unite}`,

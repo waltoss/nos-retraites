@@ -21,10 +21,17 @@
 		"source": "Cotisations 2025 du régime général (indépendants compris) et de l'Agirc-Arrco"
 	},
 	{
-		"nom": "Pensions versées",
+		"nom": "Pensions complémentaires versées",
 		"unite": "milliards",
-		"modele": 200.9,
-		"cible": 220.7,
-		"source": "Drees, effectifs × pension moyenne de droit direct fin 2024, régime général et Agirc-Arrco"
+		"modele": 72.26,
+		"cible": 85.61,
+		"source": "Drees, effectifs × pension moyenne de droit direct de l'Agirc-Arrco fin 2024, en euros de 2026"
+	},
+	{
+		"nom": "Pensions de base versées",
+		"unite": "milliards",
+		"modele": 128.6,
+		"cible": 141.4,
+		"source": "Drees, effectifs × pension moyenne de droit direct du régime général fin 2024, en euros de 2026, anciens indépendants compris"
 	}
 ]

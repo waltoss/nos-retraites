@@ -92,13 +92,13 @@
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2019",
-		"modele": 311.9,
+		"modele": 321.4,
 		"observe": 348.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2024",
-		"modele": 331.5,
+		"modele": 331.7,
 		"observe": 362.1
 	},
 	{
@@ -110,14 +110,38 @@
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2019",
-		"modele": 622.8,
+		"modele": 641.7,
 		"observe": 768
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2024",
-		"modele": 620.7,
+		"modele": 621.2,
 		"observe": 758.7
+	},
+	{
+		"groupe": "Pension complémentaire par régime, fin 2018, en euros de 2018 par an",
+		"nom": "femmes, Arrco, tous les retraités",
+		"modele": 2688,
+		"observe": 2976
+	},
+	{
+		"groupe": "Pension complémentaire par régime, fin 2018, en euros de 2018 par an",
+		"nom": "femmes, Agirc, ceux qui en ont",
+		"modele": 5756,
+		"observe": 4099
+	},
+	{
+		"groupe": "Pension complémentaire par régime, fin 2018, en euros de 2018 par an",
+		"nom": "hommes, Arrco, tous les retraités",
+		"modele": 4285,
+		"observe": 4792
+	},
+	{
+		"groupe": "Pension complémentaire par régime, fin 2018, en euros de 2018 par an",
+		"nom": "hommes, Agirc, ceux qui en ont",
+		"modele": 7980,
+		"observe": 10010
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
@@ -134,7 +158,7 @@
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, 2019-2023",
-		"modele": 384.9,
+		"modele": 386.5,
 		"observe": 343.5
 	},
 	{
@@ -152,7 +176,7 @@
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, 2019-2023",
-		"modele": 579,
+		"modele": 581.4,
 		"observe": 645.3
 	},
 	{
