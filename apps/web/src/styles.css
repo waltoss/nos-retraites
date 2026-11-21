@@ -502,3 +502,5 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 	.control.choix { padding-bottom: 10px; }
 }
 @media (max-width: 560px) { .personnes { grid-template-columns: 1fr; } .personne dl { grid-template-columns: 1fr 1fr; } }
+.moi-saisie fieldset.statut { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
+.moi-saisie fieldset.statut legend { width: 100%; }

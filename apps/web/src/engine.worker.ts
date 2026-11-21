@@ -24,9 +24,11 @@ import {
 	prepareProjection,
 	projeter,
 	pyramidesProjetees,
+	type RegimeFonctionPublique,
 	type Resultat,
 	reglesUniverselles,
 	SCENARIO_REFERENCE,
+	type StatutFonctionnaire,
 	SURVIE_SELON_PENSION,
 	valeur,
 } from "@nos-retraites/engine";
@@ -69,7 +71,12 @@ export const SEUIL_PRIMES = 0.3;
 
 export type TrancheAge = "seniors" | "actifs" | "jeunes";
 
+/** Laquelle des deux populations simulées on regarde. */
+export type ChampSimule = "prive" | "public";
+
 export interface FiltrePortraits {
+	/** Absent, les salariés du privé. */
+	champ?: ChampSimule;
 	sexe: "F" | "H" | "tous";
 	niveau: "tous" | "bas" | "milieu" | "haut" | "touches";
 	ages: TrancheAge;
@@ -90,10 +97,13 @@ export interface ResumePortrait {
 	/** Salaire moyen à temps plein sur la carrière, en part du plafond. */
 	niveauSalaire: number;
 	anneesEmploi: number;
+	/** Pour un fonctionnaire : son régime, sa catégorie et le poids de ses primes dans son traitement. */
+	fonctionPublique?: StatutFonctionnaire & { partPrimes: number };
 }
 
 export interface DetailPortrait {
 	id: number;
+	champ: ChampSimule;
 	reference: { carriere: Carriere; compte: CompteCarriere; pension: Pension };
 	scenario: { carriere: Carriere; compte: CompteCarriere; pension: Pension };
 }
@@ -102,8 +112,10 @@ export interface DetailPortrait {
 export interface ProfilMoi {
 	anneeNaissance: number;
 	sexe: "F" | "H";
-	/** Salaire brut mensuel de l'année de référence, ramené à un temps plein. */
+	/** Salaire brut mensuel de l'année de référence, ramené à un temps plein ; primes comprises pour un fonctionnaire. */
 	salaireMensuel: number;
+	/** Présent pour un fonctionnaire : son régime. */
+	regime?: RegimeFonctionPublique;
 }
 
 /** Premier quartile, médiane et troisième quartile. */
@@ -142,6 +154,7 @@ export type Requete =
 			id: number;
 			scenario: ScenarioMoteur;
 			individu: number;
+			champ?: ChampSimule;
 	  }
 	| { type: "projection"; id: number; scenario: ScenarioMoteur }
 	| { type: "moi"; id: number; scenario: ScenarioMoteur; profil: ProfilMoi };
@@ -415,23 +428,59 @@ const TRANCHES: Record<TrancheAge, [min: number, max: number]> = {
 	jeunes: [20, 39],
 };
 
+/** La population d'un champ dans un scénario : ses carrières, ses pensions, ses poids l'année de référence. */
+function vue(sc: Scene, champ: ChampSimule = "prive") {
+	if (champ === "public") {
+		const f = fonctionPublique(sc);
+		const m = mondePublic as Monde;
+		return {
+			population: m.population,
+			comptes: m.comptes,
+			pensions: f.preparation.pensions,
+			poids: poidsDeLAnnee(
+				f.preparation,
+				B.anneeReference,
+			) as ArrayLike<number>,
+		};
+	}
+	return {
+		population: sc.monde.population,
+		comptes: sc.monde.comptes,
+		pensions: sc.preparation.pensions,
+		poids: sc.monde.population.map((i) => i.poids) as ArrayLike<number>,
+	};
+}
+
+/** Part des primes dans le traitement, la dernière année en poste avant le départ. */
+function partPrimes(c: Carriere, anneeDepart: number): number {
+	for (let k = c.annees.length - 1; k >= 0; k--) {
+		const a = c.annees[k];
+		if (a && a.annee < anneeDepart && a.primes !== undefined)
+			return a.primes / Math.max(1, a.salaireBrut - a.primes);
+	}
+	return 0;
+}
+
 function portraits(
 	s: ScenarioMoteur,
 	filtre: FiltrePortraits,
 	nombre: number,
 ): { portraits: ResumePortrait[]; total: number } {
-	const reference = scene(DROIT);
-	const courant = scene(s);
+	const reference = vue(scene(DROIT), filtre.champ);
+	const courant = vue(scene(s), filtre.champ);
 	const [ageMin, ageMax] = TRANCHES[filtre.ages];
 	const tous: ResumePortrait[] = [];
-	for (let i = 0; i < reference.monde.population.length; i++) {
-		const individu = reference.monde.population[i] as Individu;
+	for (let i = 0; i < reference.population.length; i++) {
+		const individu = reference.population[i] as Individu;
 		const c = individu.carriere;
 		const age = B.anneeReference - c.anneeNaissance;
-		if (age < ageMin || age > ageMax || individu.poids === 0) continue;
+		const poids = reference.poids[i] as number;
+		if (age < ageMin || age > ageMax || poids === 0) continue;
 		if (filtre.sexe !== "tous" && c.sexe !== filtre.sexe) continue;
-		const r = reference.preparation.pensions[i] as Pension;
-		const p = courant.preparation.pensions[i] as Pension;
+		const r = reference.pensions[i] as Pension;
+		const p = courant.pensions[i] as Pension;
+		// Un fonctionnaire qui n'a pas encore pris son poste n'a rien à montrer.
+		if (c.fonctionPublique && r.mensuelleBrute === 0) continue;
 		tous.push({
 			id: i,
 			sexe: c.sexe,
@@ -440,9 +489,17 @@ function portraits(
 			cadre: c.cadre,
 			reference: { mensuelle: r.mensuelleBrute, age: r.liquidation.age },
 			scenario: { mensuelle: p.mensuelleBrute, age: p.liquidation.age },
-			poids: individu.poids,
+			poids,
 			represente: null,
 			...profil(c, r.liquidation.annee),
+			...(c.fonctionPublique
+				? {
+						fonctionPublique: {
+							...c.fonctionPublique,
+							partPrimes: partPrimes(c, r.liquidation.annee),
+						},
+					}
+				: {}),
 		});
 	}
 	tous.sort((x, y) => x.reference.mensuelle - y.reference.mensuelle);
@@ -490,11 +547,12 @@ function portraits(
 	};
 }
 
-function detail(sc: Scene, i: number) {
+function detail(sc: Scene, i: number, champ?: ChampSimule) {
+	const v = vue(sc, champ);
 	return {
-		carriere: (sc.monde.population[i] as Individu).carriere,
-		compte: sc.monde.comptes[i] as CompteCarriere,
-		pension: sc.preparation.pensions[i] as Pension,
+		carriere: (v.population[i] as Individu).carriere,
+		compte: v.comptes[i] as CompteCarriere,
+		pension: v.pensions[i] as Pension,
 	};
 }
 
@@ -507,13 +565,18 @@ const MIN_RESSEMBLANTS = 40;
 
 /** Les carrières simulées qui ressemblent à l'utilisateur, et ce qu'elles deviennent dans le scénario. */
 function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
-	const reference = scene(DROIT);
-	const courant = scene(s);
+	const champ: ChampSimule = profil.regime ? "public" : "prive";
+	const reference = vue(scene(DROIT), champ);
+	const courant = vue(scene(s), champ);
+	// Les fonctionnaires simulés sont moins nombreux : on élargit un peu la génération.
+	const ecartMax = profil.regime ? 3 : 2;
+	const minimum = profil.regime ? 25 : MIN_RESSEMBLANTS;
 	const candidats: { i: number; salaire: number; distance: number }[] = [];
-	reference.monde.population.forEach((individu, i) => {
+	reference.population.forEach((individu, i) => {
 		const c = individu.carriere;
 		if (c.sexe !== profil.sexe) return;
-		if (Math.abs(c.anneeNaissance - profil.anneeNaissance) > 2) return;
+		if (profil.regime && c.fonctionPublique?.regime !== profil.regime) return;
+		if (Math.abs(c.anneeNaissance - profil.anneeNaissance) > ecartMax) return;
 		const a = c.annees[B.anneeReference - (c.annees[0]?.annee ?? 0)];
 		if (!a || a.salaireBrut <= 0) return;
 		const mois = moisParEtat(a).emploi;
@@ -525,34 +588,29 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 			distance: Math.abs(Math.log(salaire / profil.salaireMensuel)),
 		});
 	});
-	if (candidats.length < MIN_RESSEMBLANTS) return null;
+	if (candidats.length < minimum) return null;
 	candidats.sort((x, y) => x.distance - y.distance);
 	// À 10 % près du salaire indiqué, ou les plus proches s'ils sont trop peu nombreux.
 	const proches = candidats.filter((c) => c.distance < Math.log(1.1));
 	const retenus =
-		proches.length >= MIN_RESSEMBLANTS
-			? proches
-			: candidats.slice(0, MIN_RESSEMBLANTS);
-	const lire = (sc: Scene) => {
-		const pensions = retenus.map(
-			(c) => sc.preparation.pensions[c.i] as Pension,
-		);
+		proches.length >= minimum ? proches : candidats.slice(0, minimum);
+	const lire = (sc: { pensions: Pension[] }) => {
+		const pensions = retenus.map((c) => sc.pensions[c.i] as Pension);
 		return {
 			age: quartiles(pensions.map((p) => p.liquidation.age)),
 			pension: quartiles(pensions.map((p) => p.mensuelleBrute)),
 		};
 	};
 	const ecarts = retenus.map((c) => {
-		const r = reference.preparation.pensions[c.i] as Pension;
-		const p = courant.preparation.pensions[c.i] as Pension;
+		const r = reference.pensions[c.i] as Pension;
+		const p = courant.pensions[c.i] as Pension;
 		return {
 			age: p.liquidation.age - r.liquidation.age,
 			pension: p.mensuelleBrute - r.mensuelleBrute,
 		};
 	});
 	const generations = retenus.map(
-		(c) =>
-			(reference.monde.population[c.i] as Individu).carriere.anneeNaissance,
+		(c) => (reference.population[c.i] as Individu).carriere.anneeNaissance,
 	);
 	const salaires = retenus.map((c) => c.salaire);
 	return {
@@ -641,8 +699,9 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				id: m.id,
 				detail: {
 					id: m.individu,
-					reference: detail(scene(DROIT), m.individu),
-					scenario: detail(scene(m.scenario), m.individu),
+					champ: m.champ ?? "prive",
+					reference: detail(scene(DROIT), m.individu, m.champ),
+					scenario: detail(scene(m.scenario), m.individu, m.champ),
 				},
 			});
 			break;

@@ -18,11 +18,19 @@ const mois = (trimestres: number) =>
 const ecartEuros = (n: number) =>
 	Math.abs(n) < 5 ? "pareil" : `${n > 0 ? "+" : "−"}${euros(Math.abs(n))}`;
 
+type Statut = "prive" | "sre" | "cnracl";
+const STATUTS: { id: Statut; label: string }[] = [
+	{ id: "prive", label: "Salarié du privé" },
+	{ id: "sre", label: "Fonctionnaire de l'État" },
+	{ id: "cnracl", label: "Fonctionnaire territorial ou hospitalier" },
+];
+
 function Moi() {
 	const { pret, demander, scenario, modifies } = useScenario();
 	// Rien de ce qui est saisi ici ne part dans l'adresse de la page ni hors du navigateur.
 	const [naissance, setNaissance] = useState("");
 	const [sexe, setSexe] = useState<"F" | "H" | null>(null);
+	const [statut, setStatut] = useState<Statut>("prive");
 	const [salaire, setSalaire] = useState("");
 	const [resultat, setResultat] = useState<ResultatMoi | null | "aucun">(null);
 	const [options, setOptions] = useState<Record<string, ResultatMoi>>({});
@@ -46,6 +54,7 @@ function Moi() {
 			anneeNaissance: annee,
 			sexe,
 			salaireMensuel: brut,
+			...(statut === "prive" ? {} : { regime: statut }),
 		};
 		setOptions({});
 		const t = setTimeout(async () => {
@@ -68,14 +77,14 @@ function Moi() {
 			actif = false;
 			clearTimeout(t);
 		};
-	}, [pret, complet, annee, sexe, brut, demander, scenario]);
+	}, [pret, complet, annee, sexe, brut, statut, demander, scenario]);
 
 	return (
 		<main className="wrap">
 			<div className="titre-page">
 				<h1>Et moi ?</h1>
 				<p className="sub">
-					Trois informations suffisent pour retrouver, parmi les 30 000
+					Quatre informations suffisent pour retrouver, parmi les 40 000
 					carrières simulées, celles qui ressemblent à la vôtre, et voir ce que
 					chaque option leur fait. Ce que vous saisissez reste dans votre
 					navigateur.
@@ -83,6 +92,20 @@ function Moi() {
 			</div>
 
 			<form className="moi-saisie" onSubmit={(e) => e.preventDefault()}>
+				<fieldset className="statut">
+					<legend>Vous êtes</legend>
+					{STATUTS.map((x) => (
+						<button
+							type="button"
+							key={x.id}
+							className={statut === x.id ? "puce actif" : "puce"}
+							aria-pressed={statut === x.id}
+							onClick={() => setStatut(x.id)}
+						>
+							{x.label}
+						</button>
+					))}
+				</fieldset>
 				<label>
 					<span>Année de naissance</span>
 					<input
@@ -110,7 +133,11 @@ function Moi() {
 					))}
 				</fieldset>
 				<label>
-					<span>Salaire brut par mois, à temps plein</span>
+					<span>
+						{statut === "prive"
+							? "Salaire brut par mois, à temps plein"
+							: "Rémunération brute par mois, primes comprises"}
+					</span>
 					<input
 						type="text"
 						inputMode="decimal"
@@ -124,9 +151,9 @@ function Moi() {
 			{!complet && (
 				<p className="reserve">
 					Pour une personne née entre {NAISSANCE_MIN} et {NAISSANCE_MAX},
-					salariée du privé en 2026. Le sexe compte parce que les carrières des
-					femmes et des hommes ne se ressemblent pas encore : interruptions,
-					temps partiel, salaires.
+					salariée du privé ou fonctionnaire en poste en 2026. Le sexe compte
+					parce que les carrières des femmes et des hommes ne se ressemblent pas
+					encore : interruptions, temps partiel, salaires.
 				</p>
 			)}
 			{complet && resultat === null && (
@@ -142,12 +169,18 @@ function Moi() {
 				<>
 					<p className="moi-qui">
 						{resultat.effectif} carrières simulées vous ressemblent :{" "}
-						{sexe === "F" ? "des femmes nées" : "des hommes nés"} entre{" "}
+						{sexe === "F" ? "des femmes nées" : "des hommes nés"}
+						{statut === "prive" ? "" : ", fonctionnaires,"} entre{" "}
 						{resultat.generations[0]} et {resultat.generations[1]}, avec un
 						salaire entre {euros(resultat.salaires[0])} et{" "}
 						{euros(resultat.salaires[1])} brut par mois en 2026. Elles n'auront
-						pas toutes la même suite : chômage, enfants, promotions. D'où les
-						fourchettes.
+						pas toutes la même suite
+						{statut === "prive"
+							? " : chômage, enfants, promotions"
+							: " : âge d'entrée, enfants, part des primes"}
+						. D'où les fourchettes.
+						{statut !== "prive" &&
+							" Il s'agit de la seule pension de fonctionnaire, retraite additionnelle sur les primes comprise : les années passées avant dans le privé donnent une autre pension, qui n'est pas comptée ici. Les carrières simulées de fonctionnaires sont peu nombreuses, les fourchettes sont donc larges."}
 					</p>
 					<div className="moi-cartes">
 						<Carte titre="Avec la loi actuelle" r={resultat.reference} />
@@ -207,8 +240,9 @@ function Moi() {
 					<strong>Ce n'est pas votre relevé de carrière.</strong> Le site ne
 					connaît ni vos trimestres ni vos points. Pour une estimation
 					personnelle, le simulateur officiel M@rel est sur info-retraite.fr.
-					Les montants sont bruts, en euros de 2026, pour le régime général et
-					la complémentaire des salariés du privé.
+					Les montants sont bruts, en euros de 2026 : régime général et
+					complémentaire pour un salarié du privé, pension de l'État ou de la
+					CNRACL pour un fonctionnaire.
 				</p>
 			</aside>
 		</main>

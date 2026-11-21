@@ -10,6 +10,7 @@ import { Avatar } from "../components/Avatar";
 import { Frise } from "../components/Frise";
 import { Icon } from "../components/Icons";
 import type {
+	ChampSimule,
 	DetailPortrait,
 	FiltrePortraits,
 	ResumePortrait,
@@ -26,6 +27,46 @@ import { persona } from "../personas";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/carrieres")({ component: Carrieres });
+
+const CHAMPS: { id: ChampSimule; label: string }[] = [
+	{ id: "prive", label: "Salariés du privé" },
+	{ id: "public", label: "Fonctionnaires" },
+];
+/** Habillage d'un portrait : pour un fonctionnaire, le métier se déduit de sa catégorie et de ses primes. */
+function habillage(p: ResumePortrait): {
+	prenom: string;
+	metier: string | null;
+} {
+	const qui = persona(p);
+	const f = p.fonctionPublique;
+	if (!f) return qui;
+	const femme = p.sexe === "F";
+	const metier =
+		f.categorie === "superActif"
+			? femme
+				? "policière"
+				: "policier"
+			: f.regime === "cnracl"
+				? f.categorie === "actif"
+					? femme
+						? "aide-soignante à l'hôpital"
+						: "aide-soignant à l'hôpital"
+					: femme
+						? "agente d'une collectivité"
+						: "agent d'une collectivité"
+				: f.categorie === "actif"
+					? femme
+						? "institutrice ou douanière"
+						: "instituteur ou douanier"
+					: f.partPrimes < 0.3
+						? femme
+							? "professeure"
+							: "professeur"
+						: femme
+							? "agente d'un ministère"
+							: "agent d'un ministère";
+	return { prenom: qui.prenom, metier };
+}
 
 const SEXES: { id: FiltrePortraits["sexe"]; label: string }[] = [
 	{ id: "tous", label: "Tout le monde" },
@@ -50,6 +91,7 @@ const pluriel = (n: number, mot: string) => `${n} ${mot}${n > 1 ? "s" : ""}`;
 function Carrieres() {
 	const { pret, demander, scenario, modifies } = useScenario();
 	const [filtre, setFiltre] = useState<FiltrePortraits>({
+		champ: "prive",
 		sexe: "tous",
 		niveau: "tous",
 		ages: "seniors",
@@ -81,13 +123,18 @@ function Carrieres() {
 	useEffect(() => {
 		if (!pret || choisi === null) return;
 		let actif = true;
-		demander({ type: "portrait", scenario, individu: choisi }).then((r) => {
+		demander({
+			type: "portrait",
+			scenario,
+			individu: choisi,
+			champ: filtre.champ,
+		}).then((r) => {
 			if (actif) setDetail(r.detail);
 		});
 		return () => {
 			actif = false;
 		};
-	}, [pret, demander, scenario, choisi]);
+	}, [pret, demander, scenario, choisi, filtre.champ]);
 
 	return (
 		<main className="wrap large">
@@ -105,6 +152,23 @@ function Carrieres() {
 			</div>
 
 			<div className="filtres">
+				<fieldset>
+					<legend>Statut</legend>
+					{CHAMPS.map((c) => (
+						<button
+							type="button"
+							key={c.id}
+							className={filtre.champ === c.id ? "puce actif" : "puce"}
+							onClick={() => {
+								setChoisi(null);
+								setDetail(null);
+								setFiltre({ ...filtre, champ: c.id });
+							}}
+						>
+							{c.label}
+						</button>
+					))}
+				</fieldset>
 				<fieldset>
 					<legend>Qui</legend>
 					{SEXES.map((s) => (
@@ -166,11 +230,11 @@ function Carrieres() {
 								/>
 								<span className="qui">
 									<span className="nom">
-										{persona(p).prenom},{" "}
+										{habillage(p).prenom},{" "}
 										{BAREMES_FRANCE.anneeReference - p.anneeNaissance} ans
 									</span>
 									<small>
-										{persona(p).metier ?? "a peu travaillé en France"}
+										{habillage(p).metier ?? "a peu travaillé en France"}
 									</small>
 									{p.represente !== null && (
 										<small
@@ -221,7 +285,10 @@ function Carrieres() {
 							pension à la plus grande. Sous chaque métier, le nombre de
 							personnes dans une situation voisine ; sous la pension, l'âge de
 							départ. Chacune tient lieu d'une part égale des{" "}
-							{personnes(liste.total)} de salariés et anciens salariés du privé{" "}
+							{personnes(liste.total)}{" "}
+							{filtre.champ === "public"
+								? "de fonctionnaires et anciens fonctionnaires"
+								: "de salariés et anciens salariés du privé"}{" "}
 							{AGES.find((a) => a.id === filtre.ages)?.texte}. Pour ceux qui ne
 							sont pas encore partis, c'est la pension qu'ils auront, en euros
 							de 2026. Les prénoms et les métiers sont des exemples : le modèle
@@ -231,7 +298,9 @@ function Carrieres() {
 				</div>
 
 				<div className="fiche">
-					{detail && detail.id === choisi ? (
+					{detail &&
+					detail.id === choisi &&
+					detail.champ === (filtre.champ ?? "prive") ? (
 						<Fiche
 							detail={detail}
 							resume={liste?.portraits.find((p) => p.id === choisi)}
@@ -250,6 +319,18 @@ const duree = (mois: number) =>
 	mois >= 12 ? pluriel(Math.round(mois / 12), "an") : `${mois} mois`;
 
 function recit(c: Carriere, ageDepart: number): string {
+	if (c.fonctionPublique) {
+		const entree = c.annees.find((a) => a.primes !== undefined);
+		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;
+		const avantEntree = c.annees.filter(
+			(a) => a.autreRegime && a.annee < (entree?.annee ?? 0),
+		).length;
+		const categorie =
+			c.fonctionPublique.categorie === "sedentaire" || ageEntree > 40
+				? ""
+				: " Son emploi est classé en catégorie active : départ possible plus tôt.";
+		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Entrée" : "Entré"} dans la fonction publique à ${ageEntree} ans${avantEntree > 0 ? `, après ${pluriel(avantEntree, "an")} dans un autre régime` : ""}, puis en poste sans interruption jusqu'au départ.${categorie}`;
+	}
 	const avant = c.annees.filter(
 		(a) => a.annee - c.anneeNaissance < Math.floor(ageDepart / 4),
 	);
@@ -388,6 +469,105 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 	},
 ];
 
+const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
+	{
+		titre: "Le départ",
+		lignes: [
+			{
+				nom: "Âge de départ",
+				valeur: (p) => ageEnClair(p.liquidation.age),
+			},
+			{
+				nom: "Trimestres de services",
+				aide: "dans la fonction publique",
+				valeur: (p) => entier(p.fonctionPublique?.services ?? 0),
+			},
+			{
+				nom: "Bonifications",
+				aide: "pour enfants",
+				valeur: (p) => entier(p.fonctionPublique?.bonifications ?? 0),
+			},
+			{
+				nom: "Durée tous régimes sur durée requise",
+				aide: "avec les années passées ailleurs",
+				valeur: (p) =>
+					`${entier(p.fonctionPublique?.trimestresValides ?? 0)} sur ${entier(p.fonctionPublique?.dureeRequise ?? 0)}`,
+			},
+		],
+	},
+	{
+		titre: "La pension de fonctionnaire",
+		lignes: [
+			{
+				nom: "Traitement de référence",
+				aide: "par mois, sans les primes sauf si votre scénario les compte",
+				valeur: (p) =>
+					euros((p.fonctionPublique?.traitementDeReference ?? 0) / 12),
+			},
+			{
+				nom: "Taux",
+				aide: "75 % × services et bonifications sur durée requise",
+				valeur: (p) =>
+					`${decimal((p.fonctionPublique?.tauxLiquidation ?? 0) * 100)} %`,
+			},
+			{
+				nom: "Décote ou surcote",
+				valeur: (p) => {
+					const d = p.fonctionPublique;
+					if (d?.trimestresDecote)
+						return `décote, ${d.trimestresDecote} trimestres manquants`;
+					if (d?.trimestresSurcote)
+						return `surcote, ${d.trimestresSurcote} trimestres en plus`;
+					return "aucune";
+				},
+			},
+			{
+				nom: "Minimum garanti",
+				valeur: (p) =>
+					p.fonctionPublique?.minimumGarantiApplique ? "appliqué" : "non",
+			},
+			{
+				nom: "Majoration pour enfants",
+				valeur: (p) =>
+					p.fonctionPublique?.majorationEnfants
+						? `+${entier(p.fonctionPublique.majorationEnfants * 100)} %`
+						: "aucune",
+			},
+			{
+				nom: "Pension de fonctionnaire",
+				aide: "par mois",
+				valeur: (p) => euros((p.fonctionPublique?.pensionAnnuelle ?? 0) / 12),
+				fort: true,
+			},
+		],
+	},
+	{
+		titre: "La retraite additionnelle sur les primes",
+		lignes: [
+			{
+				nom: "Rente",
+				aide: "par mois ; un capital versé une fois quand les points sont trop peu nombreux",
+				valeur: (p) =>
+					p.fonctionPublique?.rafp
+						? euros(p.fonctionPublique.rafp / 12)
+						: "capital",
+				fort: true,
+			},
+		],
+	},
+	{
+		titre: "Au total",
+		lignes: [
+			{
+				nom: "Pension brute",
+				aide: "par mois, hors pension du privé pour les années passées ailleurs",
+				valeur: (p) => euros(p.mensuelleBrute),
+				fort: true,
+			},
+		],
+	},
+];
+
 function Fiche({
 	detail,
 	resume,
@@ -398,7 +578,8 @@ function Fiche({
 	compare: boolean;
 }) {
 	const { reference, scenario } = detail;
-	const qui = resume ? persona(resume) : null;
+	const qui = resume ? habillage(resume) : null;
+	const lignes = scenario.carriere.fonctionPublique ? LIGNES_PUBLIC : LIGNES;
 	const c = scenario.carriere;
 	return (
 		<>
@@ -451,7 +632,7 @@ function Fiche({
 						<th>{compare ? "Votre scénario" : "Loi actuelle"}</th>
 					</tr>
 				</thead>
-				{LIGNES.map((bloc) => (
+				{lignes.map((bloc) => (
 					<tbody key={bloc.titre}>
 						<tr className="groupe">
 							<th colSpan={compare ? 3 : 2}>{bloc.titre}</th>
@@ -478,8 +659,8 @@ function Fiche({
 			</table>
 			<p className="reserve">
 				<Icon name="attention" size={16} /> Montants bruts en euros de 2026. Le
-				comportement de départ est simplifié : chacun part dès qu'il a le taux
-				plein, par la durée ou par l'âge.
+				comportement de départ est simplifié : un tirage propre à chacun décide
+				s'il part avec une décote, au taux plein, ou un peu après.
 			</p>
 		</>
 	);
