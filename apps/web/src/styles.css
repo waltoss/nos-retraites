@@ -467,3 +467,38 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 	.levier-tete { flex-wrap: wrap; }
 	.levier-tete output { margin-left: auto; }
 }
+
+/* Accueil : quatre grandeurs, choix d'une option, trois personnes */
+.reperes { display: flex; gap: 6px; margin-bottom: 10px; }
+.reperes button { font: 600 14px var(--text); color: #fff; height: 36px; padding: 0 14px; border-radius: 999px; cursor: pointer; background: rgba(20, 24, 16, 0.35); border: 1px solid rgba(255, 255, 255, 0.35); }
+.reperes button.actif { background: #fff; color: var(--ink); border-color: #fff; }
+.glass.quatre { grid-template-columns: repeat(4, 1fr); }
+.glass.quatre .v { font-size: clamp(26px, 3.2vw, 36px); }
+.hero-note { margin: 10px 0 0; font-size: 13px; opacity: 0.85; }
+.control.choix { grid-template-columns: auto 1fr auto; }
+.control.choix select { min-width: 0; width: 100%; height: 44px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: 600 16px var(--text); cursor: pointer; text-overflow: ellipsis; }
+.control.choix a.reset { text-decoration: none; }
+.personnes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.personne { display: grid; gap: 14px; align-content: space-between; padding: 18px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); text-decoration: none; color: var(--ink); transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.personne:hover { transform: translateY(-2px); box-shadow: 0 10px 30px -16px rgba(29, 27, 24, 0.35); }
+.personne header { display: flex; align-items: center; gap: 12px; }
+.personne header strong { display: block; font-family: var(--display); font-weight: 650; font-size: 20px; line-height: 1.2; }
+.personne header small { display: block; color: var(--muted); font-size: 13px; line-height: 1.35; }
+.personne dl { margin: 0; display: grid; gap: 10px; }
+.personne dt { font-size: 13px; color: var(--muted); }
+.personne dd { margin: 0; font-family: var(--display); font-weight: 650; font-size: 24px; line-height: 1.15; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.personne dd em { font: 600 13px var(--text); font-style: normal; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--besoin) 12%, var(--card)); color: var(--besoin); }
+.personne.vous { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.personne.vous header small { color: color-mix(in srgb, var(--paper) 75%, transparent); }
+.personne .rond { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--paper) 16%, transparent); }
+.personne .aller { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+.suite-lien { margin: 16px 0 0; }
+.suite-lien a { display: inline-flex; align-items: center; gap: 6px; font-weight: 600; }
+@media (max-width: 1100px) { .personnes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 760px) {
+	.glass.quatre { grid-template-columns: 1fr 1fr; }
+	.control.choix { grid-template-columns: 1fr auto; }
+	.control.choix label { grid-column: 1 / -1; font-size: 14px; }
+	.control.choix { padding-bottom: 10px; }
+}
+@media (max-width: 560px) { .personnes { grid-template-columns: 1fr; } .personne dl { grid-template-columns: 1fr 1fr; } }

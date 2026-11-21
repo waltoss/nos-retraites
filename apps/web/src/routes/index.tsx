@@ -1,18 +1,17 @@
-import type { AnneeSysteme } from "@nos-retraites/engine";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import type { AnneeSysteme, Projection } from "@nos-retraites/engine";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Avatar } from "../components/Avatar";
 import { Distributions } from "../components/Distributions";
 import { Icon, type IconName } from "../components/Icons";
 import { Courbe } from "../components/Trajectoires";
-import { ageEnClair, entier } from "../format";
+import type { ProfilMoi, ResultatMoi } from "../engine.worker";
+import { ageEnClair, decimal, ecart, entier, euros } from "../format";
+import type { Reglages } from "../leviers";
 import { useScenario } from "../scenario";
 import { SCENARIOS } from "../scenarios";
 
 export const Route = createFileRoute("/")({ component: Home });
-
-const AGE_MIN = 60 * 4;
-const AGE_MAX = 67 * 4;
-const AGE_REPOS = 64 * 4;
 
 const SUITES: {
 	to: "/scenarios" | "/simuler" | "/decisions" | "/carrieres" | "/modele";
@@ -52,6 +51,42 @@ const SUITES: {
 const REPERES = [2030, 2050, 2070];
 const milliards = (y: number) =>
 	`${y > 0 ? "+" : y < 0 ? "−" : ""}${entier(Math.abs(y))} milliards`;
+const LOI = "loi";
+const PERSONNALISE = "personnalise";
+const cle = (r: Reglages) =>
+	JSON.stringify(Object.entries(r).sort(([a], [b]) => a.localeCompare(b)));
+
+/** Trois personnes d'exemple, une par génération : le prénom n'est qu'un habillage. */
+const PERSONNES: (ProfilMoi & { id: number; prenom: string })[] = [
+	{
+		id: 11,
+		prenom: "Nathalie",
+		anneeNaissance: 1968,
+		sexe: "F",
+		salaireMensuel: 2400,
+	},
+	{
+		id: 23,
+		prenom: "Julien",
+		anneeNaissance: 1985,
+		sexe: "H",
+		salaireMensuel: 3000,
+	},
+	{
+		id: 37,
+		prenom: "Léa",
+		anneeNaissance: 2000,
+		sexe: "F",
+		salaireMensuel: 2200,
+	},
+];
+
+interface Projections {
+	reference: Projection;
+	courant: Projection;
+	systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
+	anneeEffet: number;
+}
 
 function Home() {
 	const {
@@ -59,29 +94,43 @@ function Home() {
 		courant,
 		reglages,
 		annee,
-		regler,
 		remplacer,
 		modifies,
 		pret,
 		demander,
 		scenario,
 	} = useScenario();
-	const navigate = useNavigate();
-	const ageLegal = reglages.ageLegal ?? null;
-	const autres = modifies - (ageLegal === null ? 0 : 1);
-	const [systeme, setSysteme] = useState<{
-		reference: AnneeSysteme[];
-		courant: AnneeSysteme[];
-		anneeEffet: number;
-	} | null>(null);
+	const [donnees, setDonnees] = useState<Projections | null>(null);
+	const [repere, setRepere] = useState(2050);
+	const [personnes, setPersonnes] = useState<(ResultatMoi | null)[]>([]);
 
 	useEffect(() => {
 		if (!pret) return;
 		let actif = true;
-		const t = setTimeout(() => {
-			demander({ type: "projection", scenario }).then((r) => {
-				if (actif) setSysteme({ ...r.systeme, anneeEffet: r.anneeEffet });
+		const t = setTimeout(async () => {
+			const r = await demander({ type: "projection", scenario });
+			if (!actif) return;
+			setDonnees({
+				reference: r.reference,
+				courant: r.courant,
+				systeme: r.systeme,
+				anneeEffet: r.anneeEffet,
 			});
+			const resultats: (ResultatMoi | null)[] = [];
+			for (const profil of PERSONNES) {
+				const m = await demander({
+					type: "moi",
+					scenario,
+					profil: {
+						anneeNaissance: profil.anneeNaissance,
+						sexe: profil.sexe,
+						salaireMensuel: profil.salaireMensuel,
+					},
+				});
+				if (!actif) return;
+				resultats.push(m.resultat);
+			}
+			setPersonnes(resultats);
 		}, 200);
 		return () => {
 			actif = false;
@@ -89,10 +138,33 @@ function Home() {
 		};
 	}, [pret, demander, scenario]);
 
-	const solde = (annees: AnneeSysteme[] | undefined, annee: number) =>
-		(annees?.find((a) => a.annee === annee)?.solde ?? 0) / 1e9;
+	const systeme = donnees?.systeme ?? null;
 	const cumul = (annees: AnneeSysteme[]) =>
 		annees.reduce((t, a) => t + a.solde, 0) / 1e9;
+	const choisi =
+		modifies === 0
+			? LOI
+			: (SCENARIOS.find((s) => cle(s.reglages) === cle(reglages))?.id ??
+				PERSONNALISE);
+
+	/** Les quatre grandeurs qu'un choix déplace, une année donnée. */
+	const lire = (p: Projection, s: AnneeSysteme[]) => {
+		const a = p.annees.find((x) => x.annee === repere);
+		const y = s.find((x) => x.annee === repere);
+		if (!a || !y) return null;
+		return {
+			age: a.ageMoyenDepart,
+			pension: (100 * a.pensionMoyenne * 12) / a.salaireMoyen,
+			cotisation: (100 * a.cotisations) / (a.cotisants * a.salaireMoyen),
+			solde: (100 * y.solde) / y.pib,
+			milliards: y.solde / 1e9,
+		};
+	};
+	const c = donnees ? lire(donnees.courant, donnees.systeme.courant) : null;
+	const r = donnees ? lire(donnees.reference, donnees.systeme.reference) : null;
+	const pointsDe = (n: number) =>
+		`${decimal(n)} ${n >= 2 ? "points" : "point"}`;
+	const ansDe = (n: number) => `${decimal(n)} ${n >= 2 ? "ans" : "an"}`;
 
 	return (
 		<main className="wrap">
@@ -101,92 +173,189 @@ function Home() {
 					src="/photos/generations.jpg"
 					alt="Dans un parc, un grand-père accompagne un enfant qui apprend à faire du vélo"
 				/>
-				<h1>Que laisse-t-on à ceux qui viennent après ?</h1>
+				<h1>Que laisse‑t‑on à ceux qui viennent après ?</h1>
 				<p className="lede">
 					Ceux qui travaillent paient la pension de ceux qui ont travaillé.
-					Chaque choix fait en 2027 pèsera sur les uns ou sur les autres pendant
-					quarante ans. Voici ce qui manque chaque année pour payer les
-					retraites, tous régimes confondus.
+					Chaque choix fait en 2027 déplace au moins une de ces quatre
+					grandeurs, pendant quarante ans. Aucune n'est la bonne à elle seule.
 				</p>
-				<div className="glass" aria-live="polite">
-					{REPERES.map((a) => {
-						const c = solde(systeme?.courant, a);
-						const r = solde(systeme?.reference, a);
-						return (
-							<Chiffre
-								key={a}
-								icone="pension"
-								valeur={
-									systeme
-										? `${entier(Math.abs(c))} Md€${c > 0 ? " en trop" : ""}`
-										: "…"
-								}
-								ecart={
-									systeme && Math.abs(c - r) >= 1
-										? `${c > r ? "+" : "−"}${entier(Math.abs(c - r))} Md€`
-										: ""
-								}
-								legende={`${c > 0 ? "d'excédent" : "manquent"} en ${a}`}
-							/>
-						);
-					})}
+				<div className="reperes">
+					{REPERES.map((a) => (
+						<button
+							type="button"
+							key={a}
+							className={a === repere ? "actif" : ""}
+							aria-pressed={a === repere}
+							onClick={() => setRepere(a)}
+						>
+							En {a}
+						</button>
+					))}
 				</div>
+				<div className="glass quatre" aria-live="polite">
+					<Chiffre
+						valeur={c ? `${decimal(c.age)} ans` : "…"}
+						ecart={c && r ? ecart(c.age, r.age, ansDe, 0.05) : ""}
+						legende="l'âge moyen de départ à la retraite"
+					/>
+					<Chiffre
+						valeur={c ? `${entier(c.pension)} %` : "…"}
+						ecart={c && r ? ecart(c.pension, r.pension, pointsDe, 0.5) : ""}
+						legende="du salaire brut moyen : la pension moyenne"
+					/>
+					<Chiffre
+						valeur={c ? `${entier(c.cotisation)} %` : "…"}
+						ecart={
+							c && r ? ecart(c.cotisation, r.cotisation, pointsDe, 0.1) : ""
+						}
+						legende="du salaire brut part en cotisations de retraite, employeur compris"
+					/>
+					<Chiffre
+						valeur={c ? `${decimal(Math.abs(c.solde))} %` : "…"}
+						// L'écart suit ce qui est affiché : ce qui manque, donc l'opposé du solde.
+						ecart={
+							c && r
+								? c.solde > 0
+									? ecart(c.solde, r.solde, pointsDe, 0.05)
+									: ecart(-c.solde, -r.solde, pointsDe, 0.05)
+								: ""
+						}
+						legende={
+							c
+								? c.solde > 0
+									? `de la richesse du pays en trop, environ ${entier(c.milliards)} milliards d'euros`
+									: `de la richesse du pays manque, environ ${entier(-c.milliards)} milliards d'euros`
+								: "de la richesse du pays"
+						}
+					/>
+				</div>
+				<p className="hero-note">
+					Âge, pension et cotisations : salariés du privé. Ce qui manque : tous
+					les régimes. Ordres de grandeur.
+				</p>
 			</section>
 
-			<div className="control">
-				<label htmlFor="age-legal">
-					<Icon name="age" />
-					<span>Âge légal</span>
+			<div className="control choix">
+				<label htmlFor="option">
+					<span>Et si on choisissait</span>
 				</label>
-				<output htmlFor="age-legal" className="num">
-					{ageLegal === null ? "Loi actuelle" : ageEnClair(ageLegal)}
-					<small>
-						{ageLegal === null
-							? "62 à 64 ans selon la génération"
-							: "par étapes, à partir de 2028"}
-					</small>
-				</output>
-				<input
-					id="age-legal"
-					type="range"
-					min={AGE_MIN}
-					max={AGE_MAX}
-					step={1}
-					value={Math.min(AGE_MAX, ageLegal ?? AGE_REPOS)}
-					className={ageLegal === null ? "neutre" : ""}
-					onChange={(e) => regler("ageLegal", Number(e.target.value))}
-					aria-valuetext={
-						ageLegal === null ? "Loi actuelle" : ageEnClair(ageLegal)
-					}
-				/>
-				<button
-					type="button"
-					className="reset"
-					onClick={() => regler("ageLegal", null)}
-					disabled={ageLegal === null}
+				<select
+					id="option"
+					value={choisi}
+					onChange={(e) => {
+						const s = SCENARIOS.find((x) => x.id === e.target.value);
+						remplacer(s ? s.reglages : {});
+					}}
 				>
-					<Icon name="retour" size={18} />
-					<span>Loi actuelle</span>
-				</button>
+					<option value={LOI}>De ne rien changer à la loi</option>
+					{SCENARIOS.map((s) => (
+						<option key={s.id} value={s.id}>
+							{s.titre}
+						</option>
+					))}
+					{choisi === PERSONNALISE && (
+						<option value={PERSONNALISE}>Votre scénario</option>
+					)}
+				</select>
+				<Link to="/simuler" search={(p) => p} className="reset">
+					<Icon name="curseurs" size={18} />
+					<span>Régler moi-même</span>
+				</Link>
 			</div>
 
 			<section>
-				<h2>
-					{modifies > 0
-						? "Votre scénario, année après année"
-						: "La loi actuelle, année après année"}
-				</h2>
+				<h2>Trois générations, la même question</h2>
 				<p className="sub">
-					Bougez l'âge légal ci-dessus : la réforme s'applique par étapes à
-					partir de 2028 et son effet se lit sur quarante ans, pas sur un
-					budget.
-					{autres > 0 &&
-						` Votre scénario modifie aussi ${autres} ${autres > 1 ? "autres réglages" : "autre réglage"}.`}
+					Ce que {choisi === LOI ? "la loi actuelle" : "ce choix"} donne à trois
+					salariés du privé. Les chiffres sont ceux des carrières simulées qui
+					leur ressemblent, pas une promesse.
+				</p>
+				<div className="personnes">
+					{PERSONNES.map((p, i) => {
+						const m = personnes[i];
+						return (
+							<Link key={p.id} to="/moi" search={(x) => x} className="personne">
+								<header>
+									<Avatar
+										id={p.id}
+										sexe={p.sexe}
+										age={2026 - p.anneeNaissance}
+										size={52}
+									/>
+									<div>
+										<strong>{p.prenom}</strong>
+										<small>
+											{p.sexe === "F" ? "née" : "né"} en {p.anneeNaissance},{" "}
+											{euros(p.salaireMensuel)} bruts par mois
+										</small>
+									</div>
+								</header>
+								{m ? (
+									<dl>
+										<div>
+											<dt>Départ à</dt>
+											<dd className="num">
+												{ageEnClair(m.scenario.age[1])}
+												{m.ecart.age !== 0 && (
+													<em>
+														{m.ecart.age > 0 ? "+" : "−"}
+														{Math.abs(m.ecart.age) * 3} mois
+													</em>
+												)}
+											</dd>
+										</div>
+										<div>
+											<dt>Pension</dt>
+											<dd className="num">
+												{euros(m.scenario.pension[1])}
+												{Math.abs(m.ecart.pension) >= 5 && (
+													<em>
+														{m.ecart.pension > 0 ? "+" : "−"}
+														{euros(Math.abs(m.ecart.pension))}
+													</em>
+												)}
+											</dd>
+										</div>
+									</dl>
+								) : (
+									<div className="histo attente" style={{ height: 64 }} />
+								)}
+							</Link>
+						);
+					})}
+					<Link to="/moi" search={(x) => x} className="personne vous">
+						<header>
+							<span className="rond">
+								<Icon name="population" size={26} />
+							</span>
+							<div>
+								<strong>Et vous ?</strong>
+								<small>
+									Année de naissance, sexe, salaire : rien ne quitte votre
+									navigateur.
+								</small>
+							</div>
+						</header>
+						<span className="aller">
+							Voir ce que chaque choix vous ferait
+							<Icon name="fleche" size={16} />
+						</span>
+					</Link>
+				</div>
+			</section>
+
+			<section>
+				<h2>Ce qui manque, année après année</h2>
+				<p className="sub">
+					Une réforme s'applique par étapes à partir de 2028 et son effet se lit
+					sur quarante ans, pas sur un budget. Ce solde compte comme une
+					ressource ce que l'État verse pour les retraites de ses agents : sans
+					cela, il manquerait davantage.
 				</p>
 				{systeme ? (
 					<div className="courbes deux">
 						<Courbe
-							anneeEffet={systeme.anneeEffet}
+							anneeEffet={donnees?.anneeEffet ?? 2028}
 							titre="Ressources moins dépenses de retraite, chaque année"
 							aide="En milliards d'euros de 2026, tous régimes. Sous zéro, il manque de l'argent."
 							reference={systeme.reference.map((a) => ({
@@ -212,7 +381,7 @@ function Home() {
 								Math.abs(cumul(systeme.courant) - cumul(systeme.reference)) >=
 									1 && (
 									<>
-										<small>Avec votre scénario</small>
+										<small>Avec ce choix</small>
 										<strong
 											className={
 												cumul(systeme.courant) >= cumul(systeme.reference)
@@ -237,32 +406,12 @@ function Home() {
 				) : (
 					<div className="histo attente" style={{ height: 300 }} />
 				)}
-			</section>
-
-			<section>
-				<h2>Les grandes options du débat</h2>
-				<p className="sub">
-					Neuf réponses possibles, chiffrées de la même façon jusqu'en 2070.
-				</p>
-				<div className="options">
-					{SCENARIOS.map((s) => (
-						<button
-							type="button"
-							key={s.id}
-							className="option"
-							onClick={() => {
-								remplacer(s.reglages);
-								navigate({ to: "/simuler", search: s.reglages as never });
-							}}
-						>
-							{s.titre}
-						</button>
-					))}
-					<Link to="/scenarios" search={(p) => p} className="option toutes">
-						Les comparer côte à côte
+				<p className="suite-lien">
+					<Link to="/scenarios" search={(p) => p}>
+						Comparer les {SCENARIOS.length} grandes options côte à côte
 						<Icon name="fleche" size={16} />
 					</Link>
-				</div>
+				</p>
 			</section>
 
 			<section>
@@ -281,7 +430,7 @@ function Home() {
 			</section>
 
 			<section>
-				<h2>L'âge n'est qu'un levier parmi d'autres</h2>
+				<h2>Pour aller plus loin</h2>
 				<div className="suites">
 					{SUITES.map((s) => (
 						<Link key={s.to} to={s.to} search={(p) => p} className="suite">
@@ -309,16 +458,10 @@ function Home() {
 	);
 }
 
-function Chiffre(props: {
-	icone: IconName;
-	valeur: string;
-	ecart: string;
-	legende: string;
-}) {
+function Chiffre(props: { valeur: string; ecart: string; legende: string }) {
 	return (
 		<div>
 			<div className="v num">
-				<Icon name={props.icone} />
 				<span>{props.valeur}</span>
 				{props.ecart && <em>{props.ecart}</em>}
 			</div>
