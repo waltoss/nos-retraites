@@ -1,0 +1,385 @@
+{
+ "meta": {
+  "objet": "Références sur les départs à la retraite au régime général : règles de la retraite anticipée pour carrière longue (RACL) et statistiques de comportement de départ.",
+  "methode": "Toutes les valeurs ont été lues le 2026-11-21 dans les sources indiquées (PDF téléchargés et convertis en texte, classeur Excel du COR, page web de l'Assurance retraite). Aucune valeur n'est citée de mémoire ; une valeur introuvable vaut null avec une note. Les valeurs marquées « derive » sont calculées à partir de deux valeurs lues (par exemple durée du taux plein + 8 trimestres).",
+  "conventions": "Âges en { ans, mois }. Durées en trimestres. Parts en pourcentage (13.3 = 13,3 %). « fiabilite: primaire » = texte officiel ou publication du producteur de la donnée ; « secondaire » = rapport qui reprend la donnée d'un autre producteur, ou copie d'un texte officiel hébergée par un tiers.",
+  "limites": [
+   "Site statistiques-recherche.lassuranceretraite.fr en maintenance le 2026-11-21 (HTTP 503) : le recueil statistique de la Cnav (répartition des départs par âge fin et par sexe, séries 2019-2024 complètes) n'a pas pu être lu.",
+   "Site drees.solidarites-sante.gouv.fr et data.drees inaccessibles aux requêtes automatisées : le panorama Drees 2026 a été lu dans sa copie PDF sur vie-publique.fr ; les fichiers Excel associés aux fiches n'ont pas été lus, d'où des valeurs lues sur graphiques (arrondies à l'unité).",
+   "Légifrance non consulté directement (article D. 351-1-1 CSS) : les règles en vigueur sont lues dans la circulaire Cnav 2026-29 qui applique les décrets 2026-345 et 2026-700 ; le décret 2012-847 est lu dans un fac-similé du Journal officiel hébergé par un tiers.",
+   "Le REPSS Retraites lu (annexe 1 du PLACSS, PDF créé le 28 mai 2024) s'arrête à 2023 ; pas d'édition plus récente lue."
+  ],
+  "dateConsultation": "2026-11-21"
+ },
+
+ "carriereLongue": {
+  "droitActuel": {
+   "source": "Cnav, circulaire n° 2026-29 du 4 septembre 2026, « Retraite anticipée pour carrière longue à compter du 1er septembre 2026 » (points 1.1.1, 1.1.2, 1.2, annexes 2 et 3). Applique l'article D. 351-1-1 CSS modifié par le décret n° 2026-345 du 7 mai 2026 (pris après l'article 105 de la LFSS 2026, loi n° 2025-1403 du 30 décembre 2025) et le décret n° 2026-700 du 29 juillet 2026.",
+   "url": "https://legislation.lassuranceretraite.fr//Documents/Circulaires/Pdf/circulaire_cnav_2026_29_04092026.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "champ": "Retraites prenant effet à compter du 1er septembre 2026. Régime général (salariés et indépendants, base).",
+   "principe": "Deux conditions cumulatives : début d'activité avant un âge donné ; durée d'assurance cotisée tous régimes de base. Quel que soit l'âge de départ anticipé, la durée cotisée exigée est celle requise pour le taux plein selon la date de naissance (plus de majoration de 4 ou 8 trimestres).",
+   "regleGenerale": {
+    "note": "Texte du point 1.1.1 : assurés nés à compter de 1971.",
+    "nesAPartirDe": 1971,
+    "dureeCotisee": 172,
+    "bornes": {
+     "avant16": { "ans": 58, "mois": 0 },
+     "avant18": { "ans": 60, "mois": 0 },
+     "avant20": { "ans": 62, "mois": 0 },
+     "avant21": { "ans": 63, "mois": 0 }
+    }
+   },
+   "tableauSynthese": {
+    "note": "Tableau de synthèse du point 1.1.1, toutes générations nées à compter du 1er septembre 1961 : la suspension ne modifie que la borne 20 ans.",
+    "avant16": "58 ans",
+    "avant18": "60 ans",
+    "avant20": "De 60 à 62 ans (selon l'année de naissance)",
+    "avant21": "63 ans",
+    "dureeCotisee": "Durée taux plein en fonction de l'année de naissance"
+   },
+   "borne20AnsParGeneration": {
+    "note": "Point 1.1.1 et annexe 3 de la circulaire. Pour 1966 à 1969, le texte dit « 2 ans et 6 mois avant leur âge légal de départ » ; les âges ci-dessous sont ceux des annexes 2 et 3.",
+    "lignes": [
+     { "naissance": "1961-09-01 au 1963-08-31", "age": { "ans": 60, "mois": 0 }, "dureeCotisee": null, "noteDuree": "Non reprise dans les annexes 2026 (générations déjà parties) ; durée du taux plein : 169 (sept. 1961 à 1962), 170 (1963), voir dureeTauxPlein." },
+     { "naissance": "1963-09-01 au 1963-12-31", "age": { "ans": 60, "mois": 3 }, "dureeCotisee": 170 },
+     { "naissance": "1964", "age": { "ans": 60, "mois": 6 }, "dureeCotisee": 170 },
+     { "naissance": "1965-01-01 au 1965-03-31", "age": { "ans": 60, "mois": 9 }, "dureeCotisee": 170 },
+     { "naissance": "1965-04-01 au 1965-11-30", "age": { "ans": 60, "mois": 9 }, "dureeCotisee": 171 },
+     { "naissance": "1965-12-01 au 1965-12-31", "age": { "ans": 60, "mois": 8 }, "dureeCotisee": 171 },
+     { "naissance": "1966", "age": { "ans": 60, "mois": 9 }, "dureeCotisee": 172 },
+     { "naissance": "1967", "age": { "ans": 61, "mois": 0 }, "dureeCotisee": 172 },
+     { "naissance": "1968", "age": { "ans": 61, "mois": 3 }, "dureeCotisee": 172 },
+     { "naissance": "1969", "age": { "ans": 61, "mois": 6 }, "dureeCotisee": 172 },
+     { "naissance": "1970", "age": { "ans": 61, "mois": 9 }, "dureeCotisee": 172 },
+     { "naissance": "1971 et suivantes", "age": { "ans": 62, "mois": 0 }, "dureeCotisee": 172 }
+    ]
+   },
+   "annexe2ParGeneration": {
+    "note": "Annexe 2 telle que lue : seuls figurent les âges de départ encore atteignables au 1er septembre 2026. Une borne absente (null) pour une génération signifie que la ligne n'apparaît pas dans l'annexe (âge déjà dépassé, ou borne 21 ans sans objet tant que l'âge légal ne dépasse pas 63 ans), pas que le droit n'existe pas : le tableau de synthèse donne 58 / 60 / 63 ans sans condition de génération.",
+    "lignes": [
+     { "naissance": "1963-09-01 au 1963-12-31", "dureeCotisee": 170, "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 3 }, "avant21": null },
+     { "naissance": "1964", "dureeCotisee": 170, "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 6 }, "avant21": null },
+     { "naissance": "1965-01-01 au 1965-03-31", "dureeCotisee": 170, "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 9 }, "avant21": null },
+     { "naissance": "1965-04-01 au 1965-11-30", "dureeCotisee": 171, "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 9 }, "avant21": null },
+     { "naissance": "1965-12-01 au 1965-12-31", "dureeCotisee": 171, "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 8 }, "avant21": null },
+     { "naissance": "1966", "dureeCotisee": 172, "avant16": null, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 60, "mois": 9 }, "avant21": { "ans": 63, "mois": 0 } },
+     { "naissance": "1967", "dureeCotisee": 172, "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 0 }, "avant21": { "ans": 63, "mois": 0 } },
+     { "naissance": "1968", "dureeCotisee": 172, "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 3 }, "avant21": { "ans": 63, "mois": 0 } },
+     { "naissance": "1969", "dureeCotisee": 172, "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 6 }, "avant21": { "ans": 63, "mois": 0 } },
+     { "naissance": "1970", "dureeCotisee": 172, "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 9 }, "avant21": { "ans": 63, "mois": 0 } },
+     { "naissance": "1971 et suivantes", "dureeCotisee": 172, "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 62, "mois": 0 }, "avant21": { "ans": 63, "mois": 0 } }
+    ]
+   },
+   "ecartAvecLeCOR": {
+    "note": "Le tableau 1.5 du rapport annuel 2026 du COR (« après suspension ») donne l'âge légal moins 2 ans et 6 mois, soit 60 ans 3 mois pour 1964 et janvier-mars 1965, 60 ans 6 mois pour avril-décembre 1965, 61 ans 9 mois pour 1969 et 62 ans pour 1970. Le décret du 7 mai 2026 tel qu'appliqué par la Cnav retient 60 ans 6 mois (1964), 60 ans 9 mois (janvier-novembre 1965), 60 ans 8 mois (décembre 1965), 61 ans 6 mois (1969), 61 ans 9 mois (1970). Les deux sources concordent pour 1966 (60 ans 9 mois), 1967 (61 ans) et 1968 (61 ans 3 mois), et sur les durées. La Drees (panorama 2026, fiche 16, note 6) explique l'écart pour 1964 : l'âge théorique de 60 ans 3 mois a été fixé alors que la génération avait déjà dépassé 61 ans. Pour le simulateur, les âges de la circulaire Cnav sont le droit appliqué.",
+    "source": "COR, rapport annuel juin 2026, classeur Données_RA2026_P1.xlsx, onglet Tab 1.5",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/Donn%C3%A9es_RA2026_P1.xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "tableauCOR": [
+     { "naissance": "1963-09-01 au 1963-12-31", "ageApresReforme": "60 ans et 3 mois", "ageApresSuspension": "60 ans et 3 mois", "dureeApresReforme": 170, "dureeApresSuspension": 170 },
+     { "naissance": "1964", "ageApresReforme": "60 ans et 6 mois", "ageApresSuspension": "60 ans et 3 mois", "dureeApresReforme": 171, "dureeApresSuspension": 170 },
+     { "naissance": "1965-01-01 au 1965-03-31", "ageApresReforme": "60 ans et 9 mois", "ageApresSuspension": "60 ans et 3 mois", "dureeApresReforme": 172, "dureeApresSuspension": 170 },
+     { "naissance": "1965-04-01 au 1965-12-31", "ageApresReforme": "60 ans et 9 mois", "ageApresSuspension": "60 ans et 6 mois", "dureeApresReforme": 172, "dureeApresSuspension": 171 },
+     { "naissance": "1966", "ageApresReforme": "61 ans", "ageApresSuspension": "60 ans et 9 mois", "dureeApresReforme": 172, "dureeApresSuspension": 172 },
+     { "naissance": "1967", "ageApresReforme": "61 ans et 3 mois", "ageApresSuspension": "61 ans", "dureeApresReforme": 172, "dureeApresSuspension": 172 },
+     { "naissance": "1968", "ageApresReforme": "61 ans et 6 mois", "ageApresSuspension": "61 ans et 3 mois", "dureeApresReforme": 172, "dureeApresSuspension": 172 },
+     { "naissance": "1969", "ageApresReforme": "61 ans et 9 mois", "ageApresSuspension": "61 ans et 9 mois", "dureeApresReforme": 172, "dureeApresSuspension": 172 },
+     { "naissance": "1970", "ageApresReforme": "62 ans", "ageApresSuspension": "62 ans", "dureeApresReforme": 172, "dureeApresSuspension": 172 }
+    ]
+   },
+   "dureeTauxPlein": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 14, tableau 2 (colonne « Après LFSS pour 2026 », salariés du secteur privé et indépendants), p. 130",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "note": "La durée cotisée exigée pour la RACL est cette durée. Concorde avec la circulaire Cnav 2026-29 pour les générations 1963 (fin) à 1971.",
+    "lignes": [
+     { "naissance": "1953-1954", "trimestres": 165 },
+     { "naissance": "1955-1957", "trimestres": 166 },
+     { "naissance": "1958-1960", "trimestres": 167 },
+     { "naissance": "1961-01-01 au 1961-08-31", "trimestres": 168 },
+     { "naissance": "1961-09-01 au 1962-12-31", "trimestres": 169 },
+     { "naissance": "1963-01-01 au 1965-03-31", "trimestres": 170, "avantLFSS2026": "170 (1963), 171 (1964), 172 (janvier-mars 1965)" },
+     { "naissance": "1965-04-01 au 1965-12-31", "trimestres": 171, "avantLFSS2026": 172 },
+     { "naissance": "1966 et suivantes", "trimestres": 172 }
+    ]
+   },
+   "dateEffet": "Les âges et durées issus de la suspension ne valent que pour les retraites prenant effet à compter du 1er septembre 2026 (circulaire 2026-29, qui remplace la circulaire 2026-17 du 12 juin 2026 ; page de l'Assurance retraite mise à jour le 01/06/2026 : https://www.lassuranceretraite.fr/portail-info/hors-menu/actualites-nationales/actif/2026/carriere-longue-quels-changement.html)."
+  },
+
+  "reforme2023AvantSuspension": {
+   "source": "Cnav, circulaire n° 2023-14 du 10 juillet 2023, « Retraite anticipée pour carrière longue à compter du 1er septembre 2023 » (point 1.1.1, annexes 2 et 3). Applique le décret n° 2023-436 du 3 juin 2023.",
+   "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_14_10072023.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "champ": "Retraites prenant effet du 1er septembre 2023 au 31 août 2026. Utile pour les générations 1961 (septembre) à 1965, parties avant la suspension.",
+   "regleGenerale": { "nesAPartirDe": 1970, "dureeCotisee": 172, "avant16": "58 ans", "avant18": "60 ans", "avant20": "62 ans", "avant21": "63 ans" },
+   "parGeneration": [
+    { "naissance": "1961-09-01 au 1963-08-31", "avant16": null, "avant18": null, "avant20": { "ans": 60, "mois": 0 }, "avant21": null, "dureeCotisee": "durée du taux plein de la génération ; clause de sauvegarde : 168 si la durée était acquise avant le 1er septembre 2023", "note": "Annexe 2 : seule la borne 20 ans figure (ces assurés avaient déjà 60 ans ou presque)." },
+    { "naissance": "1963-09-01 au 1963-12-31", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 60, "mois": 3 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 170, "note": "Clause de sauvegarde lue en annexe 3 : départ possible à 60 ans avec 168 trimestres si la durée et la condition de début avant 20 ans étaient acquises avant le 1er septembre 2023." },
+    { "naissance": "1964", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 60, "mois": 6 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 171, "noteDuree": "171 lu dans le tableau 2 de la Drees (avant LFSS 2026) et le tableau 1.5 du COR ; la cellule de l'annexe 3 n'a pas été lisible à l'extraction." },
+    { "naissance": "1965", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 60, "mois": 9 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 },
+    { "naissance": "1966", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 0 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 },
+    { "naissance": "1967", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 3 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 },
+    { "naissance": "1968", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 6 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 },
+    { "naissance": "1969", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 61, "mois": 9 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 },
+    { "naissance": "1970 et suivantes", "avant16": { "ans": 58, "mois": 0 }, "avant18": { "ans": 60, "mois": 0 }, "avant20": { "ans": 62, "mois": 0 }, "avant21": { "ans": 63, "mois": 0 }, "dureeCotisee": 172 }
+   ],
+   "noteGenerations1960A1961": "Les assurés nés avant le 1er septembre 1961 ne sont pas concernés par la réforme de 2023 : ils relèvent des règles du décret de 2012 (voir reglesAvant2023). Selon la Drees (édition 2026, fiche 14, tableau 4, note 2), la borne 21 ans existe juridiquement à partir du 1er septembre 1961 mais n'est utile que lorsque l'âge légal dépasse strictement 63 ans, c'est-à-dire à partir de la génération 1966."
+  },
+
+  "conditionDebutActivite": {
+   "source": "Cnav, circulaire n° 2026-29 du 4 septembre 2026, points 1.1.2 à 1.1.4 (articles D. 351-1-1 et D. 351-1-3 CSS)",
+   "url": "https://legislation.lassuranceretraite.fr//Documents/Circulaires/Pdf/circulaire_cnav_2026_29_04092026.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "trimestresRequis": 5,
+   "trimestresRequisNeAuDernierTrimestre": 4,
+   "regle": "5 trimestres à la fin de l'année civile au cours de laquelle est survenu le 16e, 18e, 20e ou 21e anniversaire ; les assurés nés au cours du 4e trimestre de l'année peuvent justifier de 4 trimestres seulement avant la fin de cette même année civile.",
+   "nonSalariesAgricoles": "4 trimestres à la fin de l'année du 16e, 18e, 20e ou 21e anniversaire si la carrière a débuté au régime des non-salariés agricoles.",
+   "periodesRetenues": "Périodes cotisées à l'assurance vieillesse obligatoire ou volontaire (rachats et versements pour la retraite selon leur nature et la date de la demande) et périodes assimilées validées dans les régimes de base."
+  },
+
+  "trimestresReputesCotises": {
+   "source": "Cnav, circulaire n° 2026-29 du 4 septembre 2026, point 1.2.3 (articles L. 351-1-1, D. 351-1-2 et D. 351-1-2-1 CSS)",
+   "url": "https://legislation.lassuranceretraite.fr//Documents/Circulaires/Pdf/circulaire_cnav_2026_29_04092026.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "note": "Plafonds appréciés sur l'ensemble de la carrière, tous régimes confondus. null = pas de plafond (tous les trimestres comptent).",
+   "categories": [
+    { "cle": "serviceNational", "plafond": 4, "libelle": "Périodes assimilées de service national" },
+    { "cle": "maladieAccidentTravail", "plafond": 4, "libelle": "Maladie et incapacité temporaire des accidents du travail, ensemble (les rentes d'incapacité permanente d'au moins 66 % sont exclues)" },
+    { "cle": "materniteAdoption", "plafond": null, "libelle": "Périodes assimilées de maternité ou d'adoption : toutes" },
+    { "cle": "invalidite", "plafond": 2, "libelle": "Périodes de perception d'une pension d'invalidité" },
+    { "cle": "chomageActivitePartielle", "plafond": 4, "libelle": "Chômage indemnisé (depuis 1980), chômage involontaire constaté avant 1980, activité partielle, allocation des travailleurs indépendants, ensemble" },
+    { "cle": "comptePreventionC2P", "plafond": null, "libelle": "Trimestres de majoration de durée d'assurance du compte professionnel de prévention : tous" },
+    { "cle": "avpfAva", "plafond": 4, "libelle": "Assurance vieillesse des parents au foyer (AVPF) et des aidants (AVA), ensemble", "depuis": "2023-09-01" },
+    { "cle": "majorationsEnfants", "plafond": 2, "libelle": "Majorations de durée d'assurance et bonifications pour enfants (maternité, adoption, éducation, congé parental), ensemble", "depuis": "2026-09-01", "texte": "Article D. 351-1-2-1 CSS créé par le décret n° 2026-700 du 29 juillet 2026, article 104 de la LFSS 2026" }
+   ],
+   "plafondAnnuel": "Le nombre de trimestres cotisés ou réputés cotisés ne peut excéder 4 pour une même année civile, tous régimes de base confondus.",
+   "regleAffectation": "Lorsque plusieurs catégories coexistent une même année, retenir l'affectation la plus favorable (nombre de trimestres réputés cotisés le plus élevé sur l'ensemble de la carrière).",
+   "exclus": "Périodes reconnues équivalentes et autres périodes assimilées non listées ; majorations pour enfants au-delà de 2 trimestres.",
+   "historique": {
+    "source": "Décret n° 2012-847 du 2 juillet 2012 (article D. 351-1-2) ; Cnav, circulaire n° 2012-60 du 4 septembre 2012 ; Drees, édition 2026, fiche 14, p. 134",
+    "avantNovembre2012": "Service national : 4 ; maladie, maternité et accident du travail : 4 au total.",
+    "du2012-11-01": "Service national : 4 ; maladie + maternité + accident du travail : 6 au total, dont 4 au plus pour maladie et accident du travail ; chômage : 2. AVPF exclue.",
+    "du2014-04-01": "Loi du 20 janvier 2014 et décret n° 2014-350 du 19 mars 2014 : chômage porté à 4, invalidité 2, tous les trimestres de maternité (lu dans la Drees ; la date du 1er avril 2014 est celle de la fiche 18).",
+    "du2023-09-01": "AVPF et AVA : 4.",
+    "du2026-09-01": "Majorations pour enfants : 2."
+   }
+  },
+
+  "reglesAvant2023": {
+   "source": "Décret n° 2012-847 du 2 juillet 2012 relatif à l'âge d'ouverture du droit à pension de vieillesse, article 1er (nouvel article D. 351-1-1 CSS), JORF du 3 juillet 2012, texte 12",
+   "url": "https://equipementcgt.fr/IMG/pdf/Decret_ouverture_droit_pension.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "secondaire",
+   "noteFiabilite": "Texte primaire (fac-similé du Journal officiel) lu dans une copie hébergée par un tiers, Légifrance n'ayant pas été consulté. Cadre confirmé par la circulaire Cnav n° 2012-60 du 4 septembre 2012 (copie : https://documents.gereso.com/client/edition/docs-edition/pratique/retraite/docs/circulairecnav2012-60.pdf), dont l'annexe 2 par génération n'était pas dans le fichier lu.",
+   "champ": "Pensions prenant effet à compter du 1er novembre 2012 et jusqu'au 31 août 2023.",
+   "bornesDebutActivite": "16, 17 ou 20 ans : 5 trimestres à la fin de l'année civile du 16e, 17e ou 20e anniversaire, ou 4 trimestres pour les assurés nés au 4e trimestre.",
+   "departA60Ans": {
+    "regle": "Toutes générations : 60 ans, durée cotisée au moins égale à la durée du taux plein (DAR), début d'activité avant 20 ans.",
+    "age": { "ans": 60, "mois": 0 },
+    "majorationDuree": 0,
+    "debutAvant": 20
+   },
+   "departAvant60Ans": {
+    "note": "majorationDuree = trimestres ajoutés à la durée du taux plein (DAR) de la génération. dureeCotisee est dérivée : DAR lue dans le tableau 2 de la Drees (165 pour 1953-1954, 166 pour 1955-1957, 167 pour 1958-1960, 164 pour 1952) + majoration.",
+    "lignes": [
+     { "naissance": "1952", "age": { "ans": 59, "mois": 4 }, "majorationDuree": 0, "debutAvant": 17, "dureeCotisee": 164, "derive": true },
+     { "naissance": "1953", "age": { "ans": 56, "mois": 0 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 173, "derive": true },
+     { "naissance": "1953", "age": { "ans": 58, "mois": 4 }, "majorationDuree": 4, "debutAvant": 16, "dureeCotisee": 169, "derive": true },
+     { "naissance": "1953", "age": { "ans": 59, "mois": 8 }, "majorationDuree": 0, "debutAvant": 17, "dureeCotisee": 165, "derive": true },
+     { "naissance": "1954", "age": { "ans": 56, "mois": 0 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 173, "derive": true },
+     { "naissance": "1954", "age": { "ans": 58, "mois": 8 }, "majorationDuree": 4, "debutAvant": 16, "dureeCotisee": 169, "derive": true },
+     { "naissance": "1955", "age": { "ans": 56, "mois": 4 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 174, "derive": true },
+     { "naissance": "1955", "age": { "ans": 59, "mois": 0 }, "majorationDuree": 4, "debutAvant": 16, "dureeCotisee": 170, "derive": true },
+     { "naissance": "1956", "age": { "ans": 56, "mois": 8 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 174, "derive": true },
+     { "naissance": "1956", "age": { "ans": 59, "mois": 4 }, "majorationDuree": 4, "debutAvant": 16, "dureeCotisee": 170, "derive": true },
+     { "naissance": "1957", "age": { "ans": 57, "mois": 0 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 174, "derive": true },
+     { "naissance": "1957", "age": { "ans": 59, "mois": 8 }, "majorationDuree": 0, "debutAvant": 16, "dureeCotisee": 166, "derive": true },
+     { "naissance": "1958", "age": { "ans": 57, "mois": 4 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 175, "derive": true },
+     { "naissance": "1959", "age": { "ans": 57, "mois": 8 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 175, "derive": true },
+     { "naissance": "1960 et suivantes", "age": { "ans": 58, "mois": 0 }, "majorationDuree": 8, "debutAvant": 16, "dureeCotisee": 175, "derive": true, "noteDuree": "175 vaut pour 1960 (DAR 167) ; 176 pour janvier-août 1961 (DAR 168)." }
+    ]
+   },
+   "conditionDureeValidee": "Supprimée par le décret de 2012 : seule la durée cotisée est exigée (auparavant, durée validée totale égale à la DAR + 8 trimestres)."
+  }
+ },
+
+ "comportements": {
+  "decoteSurcote": {
+   "fluxAnnuelRegimeGeneral": {
+    "source": "DSS, Rapport d'évaluation des politiques de sécurité sociale (REPSS) Retraites, annexe 1 du PLACSS, indicateur 1.18 « Pensions attribuées avec décote ou surcote », p. 88-91 (source des données : Cnav)",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/922282/file/PLACSS%202024%20Annexe%201%20-%20REPSS%20Retraites%202025.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "secondaire",
+    "champ": "Nouveaux retraités de droit direct du régime général, anciens salariés et indépendants à partir de 2020 (anciens salariés seuls avant).",
+    "partDecotePct": { "2019": null, "2020": 12.4, "2021": 12.7, "2022": 13.2, "2023": 13.3, "2024": null },
+    "partSurcotePct": { "2019": 13.9, "2020": 15.0, "2021": 16.3, "2022": 16.9, "2023": 18.2, "2024": 19 },
+    "notes": {
+     "surcote2019": "13,9 % : anciens salariés seuls (rupture de champ en 2020).",
+     "surcote2024": "19 % : lu dans Drees, Les retraités et les retraites, édition 2026, fiche 17, p. 158 (« En 2024, la part des nouveaux assurés partis à la retraite avec une surcote [...] au régime général (19 %) »), source EACR ; arrondi à l'unité.",
+     "decote2019et2024": "Non lues : la part 2019 n'est donnée que sur graphique dans le REPSS, la part 2024 est dans le fichier Excel de la fiche 17 de la Drees (inaccessible) et dans le recueil Cnav (site en maintenance)."
+    },
+    "trimestresMoyensDecote": { "2023": 11.4, "2024": 10 },
+    "notesTrimestresDecote": "2023 : 11,4 trimestres en moyenne, et 19 % des décotants partent avec 20 trimestres (REPSS). 2024 : « 10 au régime général et à la MSA salariés » (Drees, édition 2026, fiche 17, p. 158, arrondi).",
+    "trimestresMoyensSurcote": { "2023": 8 },
+    "notesTrimestresSurcote": "REPSS : « en moyenne 8 trimestres de surcote » en 2023 (7,6 sur le graphique 4) ; gain mensuel moyen 72,20 euros (euros constants 2020). Drees 2024 : durée moyenne de surcote entre un an et demi et deux ans et demi selon les régimes."
+   },
+   "parGeneration": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 17 « Les taux de liquidation des pensions », graphiques 2, 4 et 5, p. 154-159 (EACR 2024, EIR 2020)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "regimeGeneralGeneration1957": {
+     "champ": "Retraités nés en 1957 ayant un droit direct au régime général (y compris indépendants), résidant en France ou à l'étranger, vivants au 31 décembre 2024.",
+     "note": "Valeurs entières lues sur le graphique 2 (somme 99 du fait des arrondis) ; 13,1 et 16,1 lus sur les graphiques 4 et 5. Ordre de priorité des motifs : ex-invalidité, inaptitude, âge, puis durée.",
+     "decotePct": 13.1,
+     "exInvaliditePct": 8,
+     "inaptitudeOuHandicapPct": 7,
+     "incapacitePermanenteOuAmiantePct": 1,
+     "tauxPleinParLaDureeSansSurcotePct": 48,
+     "tauxPleinParLAgePct": 6,
+     "surcotePct": 16.1
+    },
+    "regimeGeneralDecoteGeneration1949Pct": 7,
+    "tousRegimesGeneration1953": {
+     "champ": "Retraités nés en 1953, régime de base principal, résidant en France ou à l'étranger, EIR 2020 (graphique 1).",
+     "ensemble": { "decotePct": 11, "decoteNonApplicablePct": 3, "exInvaliditePct": 8, "inaptitudePct": 7, "autreMotifPct": 1, "tauxPleinDureeSansSurcotePct": 45, "tauxPleinAgePct": 10, "surcotePct": 15 },
+     "femmes": { "decotePct": 13, "decoteNonApplicablePct": 2, "exInvaliditePct": 8, "inaptitudePct": 8, "autreMotifPct": 1, "tauxPleinDureeSansSurcotePct": 41, "tauxPleinAgePct": 12, "surcotePct": 14 },
+     "hommes": { "decotePct": 9, "decoteNonApplicablePct": 4, "exInvaliditePct": 8, "inaptitudePct": 6, "autreMotifPct": 2, "tauxPleinDureeSansSurcotePct": 50, "tauxPleinAgePct": 8, "surcotePct": 15 },
+     "note": "Lu sur graphique. Texte : 89 % sans décote, 60 % au taux plein par la durée (y compris carrière longue et surcote), 15 % au titre de l'invalidité ou de l'inaptitude."
+    }
+   }
+  },
+
+  "carriereLongue": {
+   "source": "DSS, REPSS Retraites, annexe 1 du PLACSS, indicateur 1.16.1, tableau 1 « Flux de départs en retraite anticipée pour carrière longue », p. 74-75 (source : Cnav)",
+   "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/922282/file/PLACSS%202024%20Annexe%201%20-%20REPSS%20Retraites%202025.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "secondaire",
+   "champ": "Régime général, droits directs contributifs, en date d'effet. Anciens salariés seuls jusqu'en 2019 ; salariés et indépendants à partir de 2020. Données en partie projetées pour 2022 et 2023.",
+   "effectifs": { "2012": 86117, "2014": 155530, "2015": 155452, "2016": 164570, "2017": 168780, "2018": 147731, "2019": 139292, "2020": 139195, "2021": 128273, "2022": 128583, "2023": 125945, "2024": null },
+   "partDesNouveauxRetraitesPct": { "2019": null, "2020": null, "2021": null, "2022": null, "2023": 18, "2024": 18 },
+   "notes": {
+    "2024": "18 % des 652 000 retraites personnelles attribuées en 2024 concernaient une carrière longue : L'Assurance retraite, « Les chiffres 2024 », mis à jour le 06/03/2025, https://www.lassuranceretraite.fr/portail-info/hors-menu/actualites-nationales/institutionnel/2025/assurance-retraite-chiffres-cles.html (primaire). La Drees (édition 2026, fiche 18) écrit « environ un nouveau liquidant sur cinq au régime général » en 2024, en baisse d'environ 5 points depuis 2018.",
+    "parts2019a2022": "Non publiées en clair dans les sources lues (graphique 3 de la fiche 18 de la Drees sans étiquettes ; recueil Cnav inaccessible).",
+    "ensembleDerogatoire2023": "253 000 nouveaux retraités du régime général, soit 36 %, sont partis en 2023 par un dispositif dérogatoire, dont 49 % en carrière longue et 47 % pour inaptitude ou invalidité (REPSS, p. 73)."
+   },
+   "parGeneration": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 18, p. 160-161 (EIR 2020, ANCETRE, EACR)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "fiabilite": "primaire",
+    "tousRegimesGeneration1957": { "departsAnticipesPct": 36, "dontCarriereLonguePct": 25 },
+    "note": "Tous régimes : près d'un homme sur deux et un peu plus d'une femme sur quatre de la génération 1957 ont bénéficié d'un départ anticipé. Pas de valeur propre au régime général par génération."
+   }
+  },
+
+  "inaptitudeInvalidite": {
+   "source": "DSS, REPSS Retraites, annexe 1 du PLACSS, indicateur 1.16.2, tableau 1 « Retraites pour inaptitude ou invalidité au régime général et part parmi les nouveaux retraités », p. 76-77 (source : Cnav, SNSP et SNSP-TI, statistiques labellisées)",
+   "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/922282/file/PLACSS%202024%20Annexe%201%20-%20REPSS%20Retraites%202025.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "secondaire",
+   "champ": "Nouveaux retraités du régime général (y compris indépendants à partir de 2020), hors retraite pour taux d'incapacité permanente de 50 %. Taux plein dès l'âge légal quelle que soit la durée ; depuis le 1er septembre 2023, départ maintenu à 62 ans.",
+   "inaptitude": {
+    "effectifs": { "2013": 48800, "2014": 44400, "2015": 36600, "2016": 40900, "2017": 46900, "2018": 47000, "2019": 49000, "2020": 52000, "2021": 55300, "2022": 57800, "2023": 58600, "2024": null },
+    "partPct": { "2013": 7, "2014": 7, "2015": 6, "2016": 7, "2017": 7, "2018": 7, "2019": 8, "2020": 8, "2021": 8, "2022": 8, "2023": 8, "2024": null }
+   },
+   "exInvalides": {
+    "effectifs": { "2013": 43700, "2014": 42100, "2015": 32400, "2016": 37400, "2017": 51700, "2018": 54900, "2019": 54900, "2020": 55900, "2021": 59000, "2022": 59100, "2023": 61500, "2024": null },
+    "partPct": { "2013": 6, "2014": 6, "2015": 6, "2016": 6, "2017": 8, "2018": 8, "2019": 9, "2020": 9, "2021": 9, "2022": 8, "2023": 9, "2024": null }
+   },
+   "notes": {
+    "ensemble2023": "Inaptitude + invalidité : 17 % des nouveaux retraités du régime général en 2023 (tableau 2 : 120 100 départs, salariés).",
+    "ecartTexte": "Le texte du REPSS cite 58 700 départs pour inaptitude en 2023, le tableau 58 600.",
+    "2024": "Non lu. La Drees (édition 2026, fiche 18) précise que les départs anticipés pour inaptitude créés par la réforme de 2023 ne sont pas encore identifiables dans l'EACR.",
+    "parGeneration": "Génération 1957 au régime général (Drees, fiche 17, graphique 2) : ex-invalidité 8 %, inaptitude ou handicap 7 %. Génération 1953 tous régimes : 16 % des inaptes et 67 % des ex-invalides auraient eu le taux plein par la durée."
+   }
+  },
+
+  "ageDeDepart": {
+   "ageMoyenAnnuelRegimeGeneral": {
+    "source": "DSS, REPSS Retraites, annexe 1 du PLACSS, indicateur 2.7 « Accroître l'âge effectif au départ à la retraite », p. 113-114 (source : Cnav)",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/922282/file/PLACSS%202024%20Annexe%201%20-%20REPSS%20Retraites%202025.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "secondaire",
+    "champ": "Âge moyen des nouveaux retraités de l'année au régime général ; anciens salariés jusqu'en 2019, salariés et indépendants à partir de 2020.",
+    "ensemble": { "2008": 61.0, "2019": 62.8, "2020": 62.7, "2021": null, "2022": null, "2023": 63.3, "2024": null },
+    "corrigeDesRetraitesAnticipees": { "2019": 63.1, "2020": 63.1, "2023": 63.7 },
+    "parSexe2023": { "femmes": 63.5, "hommes": 63.1, "note": "Lu sur les étiquettes de fin de courbe du graphique 1 (attribution aux séries par ordre de la légende : à confirmer dans le recueil Cnav)." },
+    "notes": "2021, 2022 et 2024 : non lus en clair. Un résultat de recherche indique 63,5 ans pour les droits directs dans le recueil statistique 2024 de la Cnav, non vérifié dans la source (site en maintenance) : non retenu."
+   },
+   "ageConjoncturel": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 15, p. 138-141 (EACR, EIR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "regimeGeneral2024": { "ans": 63, "mois": 7, "note": "Y compris indépendants de l'ex-SSI et retraités résidant à l'étranger ; 1 an et 5 mois de plus qu'en 2012." },
+    "tousRegimesResidentsFrance2024": { "ensemble": { "ans": 62, "mois": 11 }, "femmes": { "ans": 63, "mois": 3 }, "hommes": { "ans": 62, "mois": 7 } },
+    "tauxDeRetraitesParAge2024Pct": { "60": 9, "61": 19, "62": 48.1, "63": 70.7, "64": 78.9, "65": 84.8, "66": 86.7, "67": 94.3, "note": "Tous régimes, résidents en France. 62 à 67 ans : étiquettes de fin de courbe du graphique 4, attribuées par ordre croissant (48,1 et 85 % confirmés par le texte)." }
+   },
+   "repartitionParAgeFlux2024": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 16, graphique 3 « Répartition des nouveaux retraités de 2024, selon leur âge au 31 décembre », p. 147 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Retraités ayant acquis un premier droit direct en 2024, résidant en France ou à l'étranger, vivants au 31 décembre. Âge atteint au 31 décembre (et non âge exact au départ).",
+    "note": "Valeurs entières lues sur graphique. Pour le régime général, 7 étiquettes sont affichées pour 9 classes : elles sont attribuées de 60 ans à « plus de 66 ans », les classes de moins de 60 ans étant sans étiquette (somme 102 du fait des arrondis). Seul 29 % à 62 ans est confirmé par le texte.",
+    "regimeGeneralPct": { "moinsDe57": null, "57a59": null, "60": 6, "61": 10, "62": 29, "63a64": 28, "65": 7, "66": 5, "plusDe66": 17 },
+    "tousRegimesPrimoLiquidantsPct": { "moinsDe57": 2, "57a59": 2, "60": 6, "61": 9, "62": 29, "63a64": 25, "65": 7, "66": 5, "plusDe66": 15 },
+    "parSexe": null,
+    "noteParSexe": "Pas de répartition par âge et par sexe au régime général dans le PDF ; taux de nouveaux retraités tous régimes en 2024 : à 62 ans 27 % des femmes et 22 % des hommes, à 60 ans 2 % et 7 %, à 67 ans 10 % et 8 %."
+   },
+   "repartitionParAgeGeneration1953": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 16, tableaux 1 et 2, p. 150-153 (EIR 2020)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "note": "Génération 1953 : âge légal 61 ans 2 mois, âge d'annulation de la décote 66 ans 2 mois. Âge exact à la liquidation. Départs après 67 ans non observés (sous-estimation légère).",
+    "regimeGeneralRegimePrincipal": {
+     "champ": "Retraités nés en 1953 résidant en France, dont le régime général est le régime principal (72,9 % des retraités) ; âge à la liquidation dans le régime principal.",
+     "ageMoyen": 62.0,
+     "ageMoyenApresNeutralisationDesDepartsAvantAgeLegal": 62.3,
+     "repartitionPct": { "moinsDe55": 0.0, "55": 0.1, "56a59": 8.3, "60": 16.5, "61": 44.2, "62": 6.2, "63a65": 12.0, "66": 11.7, "67ouPlus": 1.1 }
+    },
+    "tousRegimesPremiereLiquidation": {
+     "champ": "Retraités nés en 1953 résidant en France (colonnes « résidant en France »), âge à la première liquidation d'une pension de base.",
+     "femmes": { "ageMoyen": 61.6, "repartitionPct": { "moinsDe55": 2, "55": 3, "56a59": 6, "60": 12, "61": 45, "62": 7, "63a65": 12, "66": 13, "67ouPlus": 1 } },
+     "hommes": { "ageMoyen": 60.8, "repartitionPct": { "moinsDe55": 3, "55": 5, "56a59": 14, "60": 21, "61": 31, "62": 6, "63a65": 12, "66": 7, "67ouPlus": 1 } },
+     "ensembleFranceEtEtranger": { "ageMoyen": 61.3, "repartitionPct": { "moinsDe55": 3, "55": 4, "56a59": 10, "60": 16, "61": 38, "62": 6, "63a65": 13, "66": 11, "67ouPlus": 1 } }
+    }
+   },
+   "serieAnnuelleParAgeFinEtSexe2019a2024": {
+    "valeur": null,
+    "note": "Introuvable dans les sources accessibles : la répartition des attributions du régime général par âge fin (60, 61, ..., 67 et plus) et par sexe figure dans le recueil statistique de la Cnav (statistiques-recherche.lassuranceretraite.fr, fiches « Les nouveaux retraités de droit direct » et « Attribution de retraites au cours de l'année 2024 »), site en maintenance le 2026-11-21. À relire : https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/2.1-Les-nouveaux-retraites-de-droit-direct-1.pdf"
+   }
+  },
+
+  "departsA67AnsOuPlus": {
+   "source": "Drees, Les retraités et les retraites, édition 2026, fiches 16 et 17 (EACR 2024, EIR 2020)",
+   "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "tauxPleinParLAgeRegimeGeneralGeneration1957Pct": 6,
+   "noteTauxPleinParLAge": "Fiche 17, graphique 2 : départ à l'âge d'annulation de la décote (67 ans pour cette génération) ou après, sans la durée requise. C'est la mesure la plus proche de la « part des départs à 67 ans ou plus au titre du taux plein par l'âge ». Tous régimes, génération 1953 : 10 % (12 % des femmes, 8 % des hommes).",
+   "fluxRegimeGeneral2024PlusDe66AnsPct": 17,
+   "noteFlux": "Fiche 16, graphique 3 : part des nouveaux retraités du régime général de 2024 âgés de plus de 66 ans au 31 décembre (lecture de graphique ; inclut des départs à 67 ans avec la durée requise ou avec surcote, et les résidents à l'étranger). En hausse de 2 points par rapport à 2023 tous régimes.",
+   "generation1953RegimeGeneral": { "66ansPct": 11.7, "67ansOuPlusPct": 1.1, "note": "Fiche 16, tableau 2 : pour cette génération l'âge d'annulation de la décote est 66 ans 2 mois, donc les départs au taux plein par l'âge sont surtout classés à 66 ans." },
+   "tauxDeNouveauxRetraitesA67Ans2024Pct": { "ensemble": 9, "femmes": 10, "hommes": 8, "note": "Tous régimes, résidents en France : part des personnes de 67 ans fin 2024 ayant liquidé un premier droit dans l'année." },
+   "departsApres67Ans": "Générations 1950 et 1946, tous régimes : les départs entre 68 et 70 ans représentent environ 1 % des départs, ceux entre 71 et 74 ans environ 0,2 % (fiche 16, encadré 2)."
+  }
+ },
+
+ "agirArrcoRetraitesFutur": {
+  "source": "COR, rapport annuel juin 2026, classeurs Données_RA2026_P1.xlsx, Données_RA2026_P2.xlsx et Données_complémentaires.xlsx",
+  "url": "https://www.cor-retraites.fr/rapports-du-cor/rapport-annuel-cor-juin-2026-evolutions-perspectives-retraites-france",
+  "date": "2026-11-21",
+  "fiabilite": "primaire",
+  "retraitesDroitDirectProjetes": { "2030": null, "2040": null, "2050": null, "2070": null },
+  "note": "Introuvable : recherche du terme « Agirc » dans les trois classeurs, les seules mentions concernent les finances (réserves, transferts, liste des régimes complémentaires), aucune série projetée du nombre de retraités de droit direct de l'Agirc-Arrco. Le classeur Données_complémentaires (onglet Cotisants_Retraités) ne détaille pas ce régime. Constat identique à celui déjà consigné dans data/references/projections.json. Le classeur de la partie 4 et le PDF du rapport n'ont pas été relus pour ce point."
+ }
+}

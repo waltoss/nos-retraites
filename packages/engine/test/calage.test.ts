@@ -33,7 +33,9 @@ describe("calage sur la génération 1953", () => {
 	});
 
 	test("pensions, hors calage : bornes de l'état actuel", () => {
-		expect(Math.abs(ecart("ensemble pension D1"))).toBeLessThan(0.3);
+		// Le bas de la distribution de la Drees compte beaucoup de petites pensions du privé versées à des
+		// retraités d'autres régimes, que le modèle ne simule pas.
+		expect(Math.abs(ecart("ensemble pension D1"))).toBeLessThan(0.4);
 		expect(Math.abs(ecart("ensemble pension médiane"))).toBeLessThan(0.16);
 		expect(Math.abs(ecart("ensemble pension D9"))).toBeLessThan(0.18);
 	});

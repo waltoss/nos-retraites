@@ -172,8 +172,12 @@ export function runSimulation(
 		const age = annee - c.anneeNaissance;
 		const g = reglesGeneration(c.anneeNaissance, b, regles);
 		let pension: Pension | null = null;
-		// Personne ne part avant l'âge légal : inutile de calculer la pension de ceux qui ne l'atteignent pas dans l'année.
-		if ((age + 1) * 4 > g.ageLegal) {
+		// Inutile de calculer la pension de ceux qui n'atteignent dans l'année ni l'âge légal ni un âge de départ anticipé.
+		const premierAge = Math.min(
+			g.ageLegal,
+			...(g.carriereLongue ?? []).map((x) => x.age),
+		);
+		if ((age + 1) * 4 > premierAge) {
 			const p = computePension(c, be, {
 				regles,
 				compte: comptes?.[i] ?? buildCompte(c, b),

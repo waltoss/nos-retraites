@@ -2110,5 +2110,551 @@
       "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
       "dateConsultation": "2026-11-21"
     }
+  },
+  "carriereLongue": {
+    "source": "Cnav, circulaire n° 2026-29 du 4 septembre 2026 (droit après la suspension de la LFSS 2026) ; décret n° 2012-847 du 2 juillet 2012 pour les générations 1952 à 1963. Détail et citations dans data/references/departs.json.",
+    "url": "https://legislation.lassuranceretraite.fr//Documents/Circulaires/Pdf/circulaire_cnav_2026_29_04092026.pdf",
+    "dateConsultation": "2026-11-21",
+    "note": "Chacun est supposé né un 1er janvier : les générations coupées en cours d'année prennent la règle de leur plus longue période, et celles de 1962 et 1963 les règles d'avant septembre 2023. La génération 1971 vaut pour les suivantes. Avant 1964 les durées sont dérivées (durée du taux plein plus majoration). Les plafonds de trimestres réputés cotisés sont ceux d'aujourd'hui pour toutes les générations ; service national, invalidité et compte de prévention ne sont pas simulés.",
+    "valeurs": {
+      "trimestresDebut": 5,
+      "plafondsReputes": {
+        "chomage": 4,
+        "maladie": 4,
+        "avpf": 4,
+        "majorationsEnfants": 2
+      },
+      "majorationsEnfantsDepuis": 2026,
+      "parGeneration": {
+        "1952": [
+          {
+            "debutAvant": 17,
+            "age": {
+              "ans": 59,
+              "mois": 4
+            },
+            "dureeCotisee": 164
+          }
+        ],
+        "1953": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 56,
+              "mois": 0
+            },
+            "dureeCotisee": 173
+          },
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 4
+            },
+            "dureeCotisee": 169
+          },
+          {
+            "debutAvant": 17,
+            "age": {
+              "ans": 59,
+              "mois": 8
+            },
+            "dureeCotisee": 165
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 165
+          }
+        ],
+        "1954": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 56,
+              "mois": 0
+            },
+            "dureeCotisee": 173
+          },
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 8
+            },
+            "dureeCotisee": 169
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 165
+          }
+        ],
+        "1955": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 56,
+              "mois": 4
+            },
+            "dureeCotisee": 174
+          },
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 59,
+              "mois": 0
+            },
+            "dureeCotisee": 170
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 166
+          }
+        ],
+        "1956": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 56,
+              "mois": 8
+            },
+            "dureeCotisee": 174
+          },
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 59,
+              "mois": 4
+            },
+            "dureeCotisee": 170
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 166
+          }
+        ],
+        "1957": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 57,
+              "mois": 0
+            },
+            "dureeCotisee": 174
+          },
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 59,
+              "mois": 8
+            },
+            "dureeCotisee": 166
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 166
+          }
+        ],
+        "1958": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 57,
+              "mois": 4
+            },
+            "dureeCotisee": 175
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 167
+          }
+        ],
+        "1959": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 57,
+              "mois": 8
+            },
+            "dureeCotisee": 175
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 167
+          }
+        ],
+        "1960": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 175
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 167
+          }
+        ],
+        "1961": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 176
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 168
+          }
+        ],
+        "1962": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 176
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 168
+          }
+        ],
+        "1963": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 176
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 168
+          }
+        ],
+        "1964": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 170
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 170
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 6
+            },
+            "dureeCotisee": 170
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 170
+          }
+        ],
+        "1965": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 171
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 171
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 9
+            },
+            "dureeCotisee": 171
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 171
+          }
+        ],
+        "1966": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 60,
+              "mois": 9
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ],
+        "1967": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 61,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ],
+        "1968": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 61,
+              "mois": 3
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ],
+        "1969": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 61,
+              "mois": 6
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ],
+        "1970": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 61,
+              "mois": 9
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ],
+        "1971": [
+          {
+            "debutAvant": 16,
+            "age": {
+              "ans": 58,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 18,
+            "age": {
+              "ans": 60,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 20,
+            "age": {
+              "ans": 62,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          },
+          {
+            "debutAvant": 21,
+            "age": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeCotisee": 172
+          }
+        ]
+      }
+    }
   }
 }

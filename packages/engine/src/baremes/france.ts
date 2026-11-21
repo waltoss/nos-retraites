@@ -88,6 +88,7 @@ export const BAREMES_FRANCE: Baremes = {
 		mdaParEnfant: data.cnav.mdaParEnfant,
 		majorationTroisEnfants: data.cnav.majorationTroisEnfants,
 		// service-public.gouv.fr, fiches F31249 et F1761 (voir data/baremes/cnav.json, periodesAssimilees).
+		carriereLongue: data.cnav.carriereLongue,
 		joursParTrimestreAssimile: { chomage: 50, maladie: 60 },
 		heuresSmicParTrimestre: (annee) => (annee >= 2014 ? 150 : 200),
 		minimumContributif: data.cnav.minimumContributif,

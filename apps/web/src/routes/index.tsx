@@ -128,7 +128,7 @@ function Home() {
 					<small>
 						{ageLegal === null
 							? "62 à 64 ans selon la génération"
-							: "pour ceux qui partent dès 2028"}
+							: "par étapes, à partir de 2028"}
 					</small>
 				</output>
 				<input

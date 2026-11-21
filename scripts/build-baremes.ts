@@ -116,6 +116,11 @@ const parGeneration: Record<
 		ageTauxPleinAutomatique: number;
 		nbMeilleuresAnnees?: number;
 		dureeProratisation?: number;
+		carriereLongue?: {
+			debutAvant: number;
+			age: number;
+			dureeCotisee: number;
+		}[];
 	}
 > = {};
 for (const [annee, periodes] of Object.entries<any[]>({
@@ -138,6 +143,20 @@ for (const [annee, periodes] of Object.entries<any[]>({
 		p.dureeReferenceProratisation !== p.dureeAssuranceTauxPlein
 	)
 		regle.dureeProratisation = p.dureeReferenceProratisation;
+}
+// Carrière longue : la dernière génération décrite vaut pour les suivantes.
+const longues = v(cnav.carriereLongue);
+const derniereLongue = Math.max(
+	...Object.keys(longues.parGeneration).map(Number),
+);
+for (const [annee, regle] of Object.entries(parGeneration)) {
+	const bornes = longues.parGeneration[Math.min(Number(annee), derniereLongue)];
+	if (bornes)
+		regle.carriereLongue = bornes.map((x: any) => ({
+			debutAvant: x.debutAvant,
+			age: trimestres(x.age),
+			dureeCotisee: x.dureeCotisee,
+		}));
 }
 const mico = v(cnav.minimumContributif)[ANNEE_REFERENCE];
 const plafonds = mico.plafondTousRegimesMensuel;
@@ -249,6 +268,11 @@ const sortie = {
 		seuilTrimestre,
 		coefficientsRevalorisation,
 		parGeneration,
+		carriereLongue: {
+			trimestresDebut: longues.trimestresDebut,
+			plafondsReputes: longues.plafondsReputes,
+			majorationsEnfantsDepuis: longues.majorationsEnfantsDepuis,
+		},
 		nbMeilleuresAnnees: v(cnav.salaireAnnuelMoyen)
 			.nombreMeilleuresAnneesCasGeneral,
 		tauxPlein: v(cnav.tauxPlein).tauxPleinPct / 100,

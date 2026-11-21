@@ -42,6 +42,11 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Âge légal** : âge minimal d'ouverture des droits à la retraite.
 - **Âge du taux plein automatique** : âge à partir duquel la décote ne s'applique plus, quelle que soit la durée validée.
 - **Liquidation** : moment où un individu fait calculer et verser sa pension ; elle clôt sa carrière.
+- **Montée en charge** : application progressive d'un nouvel âge légal ou d'une nouvelle durée requise, d'un pas par génération à partir de la première concernée.
+- **Carrière longue** : départ anticipé avant l'âge légal, ouvert à ceux qui ont commencé à cotiser jeunes et réunissent la durée cotisée.
+- **Trimestre réputé cotisé** : trimestre non cotisé qui compte quand même pour une carrière longue, dans la limite d'un plafond par type de période.
+- **Inaptitude** : motif de départ qui donne le taux plein dès l'âge légal quelle que soit la durée ; regroupe ici les anciens invalides.
+- **Comportement de départ** : ce que fait un individu quand il a le choix (accepter une décote, continuer après le taux plein), fixé par un tirage qui lui est propre.
 - **Trimestre validé** : unité de durée d'assurance acquise par le travail (trimestre cotisé) ou par une période assimilée.
 - **Période assimilée** : période sans cotisation qui valide quand même des trimestres (chômage indemnisé, maladie, maternité).
 - **Durée requise** : nombre de trimestres validés nécessaire à une génération pour le taux plein.
@@ -72,6 +77,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Élasticité** : ampleur supposée de l'effet d'une politique sur un facteur, donnée en fourchette basse, centrale, haute, d'après des évaluations publiées (`data/references/elasticites.json`).
 - **Délai d'effet** : temps entre la mise en place d'une politique et son effet sur l'équation.
 - **Scénario** : jeu complet de valeurs de leviers et de financement, encodable dans une URL.
+- **Scénario type** : scénario tout fait qui représente une grande option du débat, sans nom de parti.
 - **Scénario de référence** : scénario du droit en vigueur, auquel tous les autres sont comparés.
 - **Projection** : suite des années de l'année de référence à 2070, où l'on regarde chaque année qui cotise et qui perçoit, en euros constants.
 - **Année d'effet** : première année où les règles d'un scénario s'appliquent ; ceux qui sont partis avant gardent leur pension.

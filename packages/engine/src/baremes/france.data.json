@@ -656,123 +656,566 @@
 			"1952": {
 				"ageLegal": 243,
 				"dureeRequise": 164,
-				"ageTauxPleinAutomatique": 263
+				"ageTauxPleinAutomatique": 263,
+				"carriereLongue": [
+					{
+						"debutAvant": 17,
+						"age": 238,
+						"dureeCotisee": 164
+					}
+				]
 			},
 			"1953": {
 				"ageLegal": 245,
 				"dureeRequise": 165,
-				"ageTauxPleinAutomatique": 265
+				"ageTauxPleinAutomatique": 265,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 224,
+						"dureeCotisee": 173
+					},
+					{
+						"debutAvant": 16,
+						"age": 234,
+						"dureeCotisee": 169
+					},
+					{
+						"debutAvant": 17,
+						"age": 239,
+						"dureeCotisee": 165
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 165
+					}
+				]
 			},
 			"1954": {
 				"ageLegal": 247,
 				"dureeRequise": 165,
-				"ageTauxPleinAutomatique": 267
+				"ageTauxPleinAutomatique": 267,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 224,
+						"dureeCotisee": 173
+					},
+					{
+						"debutAvant": 16,
+						"age": 235,
+						"dureeCotisee": 169
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 165
+					}
+				]
 			},
 			"1955": {
 				"ageLegal": 248,
 				"dureeRequise": 166,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 226,
+						"dureeCotisee": 174
+					},
+					{
+						"debutAvant": 16,
+						"age": 236,
+						"dureeCotisee": 170
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 166
+					}
+				]
 			},
 			"1956": {
 				"ageLegal": 248,
 				"dureeRequise": 166,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 227,
+						"dureeCotisee": 174
+					},
+					{
+						"debutAvant": 16,
+						"age": 238,
+						"dureeCotisee": 170
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 166
+					}
+				]
 			},
 			"1957": {
 				"ageLegal": 248,
 				"dureeRequise": 166,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 228,
+						"dureeCotisee": 174
+					},
+					{
+						"debutAvant": 16,
+						"age": 239,
+						"dureeCotisee": 166
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 166
+					}
+				]
 			},
 			"1958": {
 				"ageLegal": 248,
 				"dureeRequise": 167,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 230,
+						"dureeCotisee": 175
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 167
+					}
+				]
 			},
 			"1959": {
 				"ageLegal": 248,
 				"dureeRequise": 167,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 231,
+						"dureeCotisee": 175
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 167
+					}
+				]
 			},
 			"1960": {
 				"ageLegal": 248,
 				"dureeRequise": 167,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 175
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 167
+					}
+				]
 			},
 			"1961": {
 				"ageLegal": 248,
 				"dureeRequise": 168,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 176
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 168
+					}
+				]
 			},
 			"1962": {
 				"ageLegal": 250,
 				"dureeRequise": 169,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 176
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 168
+					}
+				]
 			},
 			"1963": {
 				"ageLegal": 251,
 				"dureeRequise": 170,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 176
+					},
+					{
+						"debutAvant": 20,
+						"age": 240,
+						"dureeCotisee": 168
+					}
+				]
 			},
 			"1964": {
 				"ageLegal": 251,
 				"dureeRequise": 170,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 170
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 170
+					},
+					{
+						"debutAvant": 20,
+						"age": 242,
+						"dureeCotisee": 170
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 170
+					}
+				]
 			},
 			"1965": {
 				"ageLegal": 252,
 				"dureeRequise": 171,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 171
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 171
+					},
+					{
+						"debutAvant": 20,
+						"age": 243,
+						"dureeCotisee": 171
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 171
+					}
+				]
 			},
 			"1966": {
 				"ageLegal": 253,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 243,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1967": {
 				"ageLegal": 254,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 244,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1968": {
 				"ageLegal": 255,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 245,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1969": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 246,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1970": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 247,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1971": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 248,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1972": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 248,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1973": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 248,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1974": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 248,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			},
 			"1975": {
 				"ageLegal": 256,
 				"dureeRequise": 172,
-				"ageTauxPleinAutomatique": 268
+				"ageTauxPleinAutomatique": 268,
+				"carriereLongue": [
+					{
+						"debutAvant": 16,
+						"age": 232,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 18,
+						"age": 240,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 20,
+						"age": 248,
+						"dureeCotisee": 172
+					},
+					{
+						"debutAvant": 21,
+						"age": 252,
+						"dureeCotisee": 172
+					}
+				]
 			}
+		},
+		"carriereLongue": {
+			"trimestresDebut": 5,
+			"plafondsReputes": {
+				"chomage": 4,
+				"maladie": 4,
+				"avpf": 4,
+				"majorationsEnfants": 2
+			},
+			"majorationsEnfantsDepuis": 2026
 		},
 		"nbMeilleuresAnnees": 25,
 		"tauxPlein": 0.5,

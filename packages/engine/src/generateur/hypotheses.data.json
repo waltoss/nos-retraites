@@ -8,28 +8,64 @@
 		"max": 28
 	},
 	"decalageEntree": [
-		[1953, -4.25],
-		[1960, -3.25],
-		[1965, -2.5],
-		[1970, -1],
-		[1975, 0]
+		[
+			1953,
+			-4.25
+		],
+		[
+			1960,
+			-3.25
+		],
+		[
+			1965,
+			-2.5
+		],
+		[
+			1970,
+			-1
+		],
+		[
+			1975,
+			0
+		]
 	],
 	"carrierePartielle": {
 		"part": {
-			"F": 0.0423,
-			"H": 0.01625
+			"F": 0.03577,
+			"H": 0.01557
 		},
 		"dureeMin": 2,
 		"dureeMax": 10
 	},
 	"profilSalaire": [
-		[16, 0.36],
-		[22, 0.46],
-		[30, 0.6],
-		[40, 0.72],
-		[50, 0.78],
-		[60, 0.78],
-		[70, 0.76]
+		[
+			16,
+			0.36
+		],
+		[
+			22,
+			0.46
+		],
+		[
+			30,
+			0.6
+		],
+		[
+			40,
+			0.72
+		],
+		[
+			50,
+			0.78
+		],
+		[
+			60,
+			0.78
+		],
+		[
+			70,
+			0.76
+		]
 	],
 	"niveauSalaire": 1.148,
 	"sigmaPermanent": 0.3644,
@@ -37,7 +73,13 @@
 	"penteRang": 0.006,
 	"ecartSalaireFemmes": 0.8567,
 	"seuilCadre": 0.9,
-	"repartitionEnfants": [0.13, 0.19, 0.39, 0.2, 0.09],
+	"repartitionEnfants": [
+		0.13,
+		0.19,
+		0.39,
+		0.2,
+		0.09
+	],
 	"agePremierEnfant": {
 		"moyenne": 26,
 		"ecartType": 4
@@ -48,31 +90,38 @@
 		"maladie": 0.008,
 		"inactivite": 0.009534
 	},
-	"risqueRang": 1.604,
+	"risqueRang": 1.658,
 	"interruptionNaissance": {
-		"probabilite": 0.2388,
-		"dureeMois": 267.2,
-		"partDefinitive": 0.1857
+		"probabilite": 0.2946,
+		"dureeMois": 301.3,
+		"partDefinitive": 0.07095
 	},
 	"avpf": {
-		"part": 0.8288
+		"part": 0.872
 	},
 	"tendanceInterruption": -0.02,
 	"tempsPartielMeres": {
-		"part": 0.6689,
+		"part": 0.6901,
 		"quotite": 0.7
 	},
 	"seniors": {
 		"age": 55,
-		"multiplicateurSorties": 1.97,
-		"multiplicateurDurees": 4.886
+		"multiplicateurSorties": 1.979,
+		"multiplicateurDurees": 5.812
 	},
-	"etalementSmic": 0.4926,
+	"etalementSmic": 0.493,
 	"heuresAnnuelles": 1820,
 	"dureeMois": {
-		"chomage": 4.787,
+		"chomage": 4.627,
 		"maladie": 14,
-		"inactivite": 220.7,
+		"inactivite": 164.5,
 		"maternite": 4
+	},
+	"depart": {
+		"partInaptitude": 0.45,
+		"partDecote": 0.2,
+		"trimestresDecoteMax": 20,
+		"partSurcote": 0.62,
+		"trimestresSurcote": 10
 	}
 }

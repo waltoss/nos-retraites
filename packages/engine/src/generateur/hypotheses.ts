@@ -87,10 +87,31 @@ export interface Hypotheses {
 		multiplicateurSorties: number;
 		multiplicateurDurees: number;
 	};
+	depart: ComportementDepart;
 	/** Largeur de la zone juste au-dessus du SMIC où sont étalés les salaires que le modèle placerait dessous. */
 	etalementSmic: number;
 	/** Heures annuelles d'un temps plein, pour le plancher au SMIC. */
 	heuresAnnuelles: number;
+}
+
+/**
+ * Comportement de départ : ce que font les individus quand ils ont le choix.
+ * Parts réglées sur les départs observés au régime général (`data/references/departs.json`).
+ */
+export interface ComportementDepart {
+	/**
+	 * Part de ceux qui n'ont ni emploi ni durée suffisante à l'âge légal et obtiennent
+	 * le taux plein dès cet âge, au titre de l'inaptitude ou de l'invalidité.
+	 */
+	partInaptitude: number;
+	/** Part de ceux à qui il manque des trimestres et qui acceptent une décote. */
+	partDecote: number;
+	/** Nombre maximal de trimestres de décote acceptés ; chacun a son seuil entre 1 et ce maximum. */
+	trimestresDecoteMax: number;
+	/** Part de ceux qui atteignent le taux plein en emploi et continuent de travailler. */
+	partSurcote: number;
+	/** Durée moyenne de cette poursuite d'activité, en trimestres. */
+	trimestresSurcote: number;
 }
 
 /** Valeurs calées par `scripts/calage.ts`, qui réécrit `hypotheses.data.json`. */

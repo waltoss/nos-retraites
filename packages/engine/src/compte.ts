@@ -18,6 +18,11 @@ export interface CompteCarriere {
 	ageDebut: number;
 	trimestresCotises: Float64Array;
 	trimestresAssimiles: Float64Array;
+	/**
+	 * Trimestres cotisés ou réputés cotisés pour la retraite anticipée pour carrière longue :
+	 * les trimestres cotisés, la maternité, et une part plafonnée du chômage, de la maladie et de l'AVPF.
+	 */
+	trimestresReputes: Uint8Array;
 	/** Salaire plafonné au PASS puis revalorisé vers l'année de référence. */
 	salairesRevalorises: Float64Array;
 	points: Float64Array;
@@ -30,6 +35,7 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 			n > 0 ? (carriere.annees[0]?.annee ?? 0) - carriere.anneeNaissance : 0,
 		trimestresCotises: new Float64Array(n),
 		trimestresAssimiles: new Float64Array(n),
+		trimestresReputes: new Uint8Array(n),
 		salairesRevalorises: new Float64Array(n),
 		points: new Float64Array(n),
 	};
@@ -37,6 +43,8 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 	const jours = b.cnav.joursParTrimestreAssimile;
 	/** Points d'une année complète au dernier salaire connu : base des points attribués hors emploi. */
 	let pointsAnneePleine = 0;
+	const plafonds = b.cnav.carriereLongue?.plafondsReputes;
+	const reputes = { chomage: 0, maladie: 0, avpf: 0 };
 	for (let i = 0; i < n; i++) {
 		const a = carriere.annees[i];
 		if (!a) continue;
@@ -63,9 +71,9 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 			points = pointsAnneePleine * part;
 		}
 		// Périodes assimilées : des trimestres sans cotisation, et des points sur la base du dernier salaire.
-		let assimiles =
-			Math.floor((mois.chomage * JOURS_PAR_MOIS) / jours.chomage) +
-			Math.floor((mois.maladie * JOURS_PAR_MOIS) / jours.maladie);
+		const chomage = Math.floor((mois.chomage * JOURS_PAR_MOIS) / jours.chomage);
+		const maladie = Math.floor((mois.maladie * JOURS_PAR_MOIS) / jours.maladie);
+		let assimiles = chomage + maladie;
 		points += (pointsAnneePleine * mois.chomage) / MOIS;
 		if (mois.maladie >= MOIS_MALADIE_POUR_POINTS)
 			points += (pointsAnneePleine * mois.maladie) / MOIS;
@@ -82,13 +90,46 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 		}
 		compte.trimestresCotises[i] = cotises;
 		compte.trimestresAssimiles[i] = Math.min(4 - cotises, assimiles);
+		if (plafonds) {
+			// Chaque type de période compte dans la limite de son plafond de carrière ; la maternité compte toujours.
+			let libres = 4 - cotises;
+			const prendre = (
+				type: "chomage" | "maladie" | "avpf",
+				trimestres: number,
+			) => {
+				const pris = Math.max(
+					0,
+					Math.min(trimestres, libres, plafonds[type] - reputes[type]),
+				);
+				reputes[type] += pris;
+				libres -= pris;
+			};
+			if (carriere.sexe === "F" && carriere.enfants.includes(a.annee))
+				libres -= Math.min(libres, maladie);
+			else prendre("maladie", maladie);
+			prendre("chomage", chomage);
+			if (a.avpf) prendre("avpf", 4);
+			compte.trimestresReputes[i] = 4 - libres;
+		} else compte.trimestresReputes[i] = cotises;
 		compte.salairesRevalorises[i] = salairePorte * coefficient;
 		compte.points[i] = points;
 	}
 	return compte;
 }
 
+/** Trimestres cotisés avant la fin de l'année civile d'un âge donné : la condition de début d'une carrière longue. */
+export function trimestresCotisesAvant(
+	compte: CompteCarriere,
+	age: number,
+): number {
+	let total = 0;
+	const n = Math.min(compte.points.length, age - compte.ageDebut + 1);
+	for (let i = 0; i < n; i++) total += compte.trimestresCotises[i] as number;
+	return total;
+}
+
 export interface Cumul {
+	trimestresReputes: number;
 	trimestresCotises: number;
 	trimestresAssimiles: number;
 	points: number;
@@ -101,8 +142,10 @@ export function cumulJusqua(compte: CompteCarriere, age: AgeTrimestres): Cumul {
 	let cotises = 0;
 	let assimiles = 0;
 	let points = 0;
+	let reputes = 0;
 	const n = compte.points.length;
 	for (let i = 0; i < n && i < anneesPleines; i++) {
+		reputes += compte.trimestresReputes[i] as number;
 		cotises += compte.trimestresCotises[i] as number;
 		assimiles += compte.trimestresAssimiles[i] as number;
 		points += compte.points[i] as number;
@@ -110,11 +153,17 @@ export function cumulJusqua(compte: CompteCarriere, age: AgeTrimestres): Cumul {
 	if (fraction > 0 && anneesPleines >= 0 && anneesPleines < n) {
 		const max = age % 4;
 		cotises += Math.min(max, compte.trimestresCotises[anneesPleines] as number);
+		reputes += Math.min(max, compte.trimestresReputes[anneesPleines] as number);
 		assimiles += Math.min(
 			max,
 			compte.trimestresAssimiles[anneesPleines] as number,
 		);
 		points += (compte.points[anneesPleines] as number) * fraction;
 	}
-	return { trimestresCotises: cotises, trimestresAssimiles: assimiles, points };
+	return {
+		trimestresReputes: reputes,
+		trimestresCotises: cotises,
+		trimestresAssimiles: assimiles,
+		points,
+	};
 }

@@ -63,10 +63,11 @@ export const Route = createRootRoute({
 });
 
 const PAGES: {
-	to: "/simuler" | "/decisions" | "/carrieres" | "/modele";
+	to: "/scenarios" | "/simuler" | "/decisions" | "/carrieres" | "/modele";
 	label: string;
 	icone: IconName;
 }[] = [
+	{ to: "/scenarios", label: "Scénarios", icone: "tableau" },
 	{ to: "/simuler", label: "Simuler", icone: "curseurs" },
 	{ to: "/decisions", label: "Décisions", icone: "tableau" },
 	{ to: "/carrieres", label: "Carrières", icone: "carriere" },

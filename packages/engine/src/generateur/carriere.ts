@@ -277,7 +277,15 @@ export function generateCarriere(
 		annees.push(ligne);
 	}
 
-	return { anneeNaissance, sexe, enfants, cadre: rang > h.seuilCadre, annees };
+	return {
+		anneeNaissance,
+		sexe,
+		enfants,
+		cadre: rang > h.seuilCadre,
+		annees,
+		// Dérivé du rang pour ne consommer aucun tirage : la population reste la même qu'avant.
+		tirageDepart: (Math.abs(rang) * 7919.123) % 1,
+	};
 }
 
 /** Carrière type : emploi continu entre deux âges, à un salaire constant en part du PASS. */

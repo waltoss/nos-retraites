@@ -37,6 +37,11 @@ export interface Carriere {
 	cadre: boolean;
 	/** Années successives, de l'entrée dans la vie active jusqu'à la fin de l'horizon simulé. */
 	annees: AnneeCarriere[];
+	/**
+	 * Tirage entre 0 et 1 propre à l'individu, qui fixe son comportement de départ
+	 * (inaptitude, départ avec décote, poursuite d'activité). Absent, il part dès le taux plein.
+	 */
+	tirageDepart?: number;
 }
 
 export interface Individu {
@@ -66,6 +71,8 @@ export interface DetailCnav {
 	proratisation: number;
 	majorationEnfants: number;
 	minimumContributifApplique: boolean;
+	/** Motif du départ quand ce n'est pas le cas général. */
+	motif?: "carriereLongue" | "inaptitude";
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
 }

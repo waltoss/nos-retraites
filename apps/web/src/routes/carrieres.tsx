@@ -281,7 +281,11 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 	{
 		titre: "Le départ",
 		lignes: [
-			{ nom: "Âge de départ", valeur: (p) => ageEnClair(p.liquidation.age) },
+			{
+				nom: "Âge de départ",
+				valeur: (p) =>
+					`${ageEnClair(p.liquidation.age)}${p.cnav.motif === "carriereLongue" ? ", carrière longue" : p.cnav.motif === "inaptitude" ? ", inaptitude" : ""}`,
+			},
 			{
 				nom: "Trimestres cotisés",
 				aide: "par le travail",

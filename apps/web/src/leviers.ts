@@ -12,6 +12,7 @@ import politiques from "./politiques.json";
 export type LevierId =
 	| "ageLegal"
 	| "dureeRequise"
+	| "rythme"
 	| "meilleuresAnnees"
 	| "tauxPlein"
 	| "valeurPoint"
@@ -144,7 +145,7 @@ export const LEVIERS: Levier[] = [
 		repos: 256,
 		affiche: ageEnClair,
 		termes: ["retraites", "cotisants", "pension"],
-		aide: "Personne ne peut partir avant cet âge. Le relever garde plus longtemps au travail ceux qui ont un emploi, et fait attendre les autres sans pension.",
+		aide: "Personne ne peut partir avant cet âge, sauf carrière longue. Le relever garde plus longtemps au travail ceux qui ont un emploi, et fait attendre les autres sans pension. Le nouvel âge s'applique peu à peu, génération après génération.",
 	},
 	{
 		id: "dureeRequise",
@@ -158,6 +159,18 @@ export const LEVIERS: Levier[] = [
 		affiche: (v) => `${(v / 4).toLocaleString("fr-FR")} ans (${v} trim.)`,
 		termes: ["retraites", "pension"],
 		aide: "Il faut cette durée pour partir sans décote avant 67 ans. L'allonger retarde les départs et réduit la pension de ceux qui partent quand même.",
+	},
+	{
+		id: "rythme",
+		groupe: "age",
+		label: "Vitesse d'application",
+		min: 1,
+		max: 8,
+		pas: 1,
+		defaut: 1,
+		affiche: (v) => (v >= 8 ? "tout de suite" : `${v * 3} mois par génération`),
+		termes: ["retraites", "cotisants"],
+		aide: "Un nouvel âge légal ou une nouvelle durée ne s'appliquent pas d'un coup : chaque génération fait un pas de plus que la précédente, à partir de celle qui atteint l'âge légal en 2028. La réforme de 2023 avance de trois mois par génération.",
 	},
 	{
 		id: "meilleuresAnnees",
@@ -252,7 +265,8 @@ export const LEVIERS: Levier[] = [
 		max: 3,
 		pas: 0.25,
 		defaut: 0,
-		affiche: (v) => (v === 0 ? "inchangée" : `${signe(v)} point`),
+		affiche: (v) =>
+			v === 0 ? "inchangée" : `${signe(v)} point${Math.abs(v) >= 2 ? "s" : ""}`,
 		termes: ["cotisation"],
 		aide: "Points de cotisation ajoutés ou retirés sur le salaire sous le plafond. Les pensions ne changent pas : c'est le coût du travail et le salaire net qui bougent, ce que ce modèle ne suit pas.",
 	},
@@ -465,6 +479,12 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 		demographie.soldeMigratoire = r.immigration * 1000;
 	if (r.ageLegal !== undefined) regles.ageLegal = r.ageLegal;
 	if (r.dureeRequise !== undefined) regles.dureeRequise = r.dureeRequise;
+	// La vitesse n'a de sens que s'il y a quelque chose à appliquer ; 8 pas valent une application immédiate.
+	if (
+		r.rythme !== undefined &&
+		(r.ageLegal !== undefined || r.dureeRequise !== undefined)
+	)
+		regles.rythme = r.rythme >= 8 ? 80 : r.rythme;
 	if (r.meilleuresAnnees !== undefined)
 		regles.nbMeilleuresAnnees = r.meilleuresAnnees;
 	if (r.tauxPlein !== undefined) regles.tauxPlein = r.tauxPlein / 100;
@@ -515,12 +535,12 @@ export interface Decision {
 }
 
 export const DECISIONS: Decision[] = [
-	{ levier: "ageLegal", valeur: 248, label: "Âge légal à 62 ans pour tous" },
-	{ levier: "ageLegal", valeur: 260, label: "Âge légal à 65 ans pour tous" },
+	{ levier: "ageLegal", valeur: 248, label: "Âge légal ramené à 62 ans" },
+	{ levier: "ageLegal", valeur: 260, label: "Âge légal porté à 65 ans" },
 	{
 		levier: "dureeRequise",
 		valeur: 176,
-		label: "Durée requise de 44 ans pour tous",
+		label: "Durée requise portée à 44 ans",
 	},
 	{
 		levier: "meilleuresAnnees",

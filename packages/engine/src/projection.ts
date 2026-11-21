@@ -112,16 +112,20 @@ const cle = (individu: Individu) =>
 export function prepareProjection(
 	population: Individu[],
 	b: Baremes,
-	regles: ReglesScenario,
+	reglesVisees: ReglesScenario,
 	options: OptionsProjection,
 ): Preparation {
 	const { anneeEffet } = options;
+	const inchange = Object.keys(reglesVisees).length === 0;
+	// L'âge légal et la durée requise montent en charge par génération depuis l'année d'effet.
+	const regles: ReglesScenario = inchange
+		? reglesVisees
+		: { anneeEffet, ...reglesVisees };
 	const be = appliquerRegles(b, regles);
 	const comptes =
 		options.comptes ?? population.map((i) => buildCompte(i.carriere, b));
 	const reference =
 		options.pensionsReference ?? computePensions(population, b, {}, comptes);
-	const inchange = Object.keys(regles).length === 0;
 	const n = population.length;
 	const pensions: Pension[] = new Array(n);
 	const avantReforme = new Uint8Array(n);

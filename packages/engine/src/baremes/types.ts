@@ -13,6 +13,18 @@ export interface BaremeGeneration {
 	nbMeilleuresAnnees?: number;
 	/** Durée de référence de la proratisation, quand elle diffère de la durée requise. */
 	dureeProratisation?: number;
+	/** Départs anticipés pour carrière longue ouverts à cette génération. */
+	carriereLongue?: ReadonlyArray<BorneCarriereLongue>;
+}
+
+/** Une porte de la retraite anticipée pour carrière longue. */
+export interface BorneCarriereLongue {
+	/** Il faut avoir commencé à cotiser avant la fin de l'année civile de cet âge. */
+	debutAvant: number;
+	/** Âge de départ possible, en trimestres. */
+	age: number;
+	/** Durée cotisée ou réputée cotisée exigée, en trimestres. */
+	dureeCotisee: number;
 }
 
 export interface BaremeCnav {
@@ -33,6 +45,21 @@ export interface BaremeCnav {
 	/** Trimestres de majoration de durée d'assurance par enfant, attribués à la mère. */
 	mdaParEnfant: number;
 	majorationTroisEnfants: number;
+	/** Conditions communes de la retraite anticipée pour carrière longue ; absentes, elle n'existe pas. */
+	carriereLongue?: {
+		/** Trimestres cotisés exigés avant la fin de l'année civile de l'âge de début. */
+		trimestresDebut: number;
+		/** Trimestres non cotisés comptés comme cotisés, au plus, sur toute la carrière. */
+		plafondsReputes: {
+			chomage: number;
+			maladie: number;
+			avpf: number;
+			/** Trimestres de majoration pour enfants comptés comme cotisés. */
+			majorationsEnfants: number;
+		};
+		/** Première année de départ où les majorations pour enfants comptent. */
+		majorationsEnfantsDepuis: number;
+	};
 	/** Jours indemnisés qui valident un trimestre assimilé. */
 	joursParTrimestreAssimile: { chomage: number; maladie: number };
 	/** Heures de SMIC nécessaires pour valider un trimestre, selon l'année. */
