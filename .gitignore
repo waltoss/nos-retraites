@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.output/
+.wrangler/
+.env*
+.DS_Store
+data/raw/
