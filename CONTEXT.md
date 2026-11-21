@@ -36,7 +36,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 ## Les règles
 
 - **Régime** : ensemble de règles de cotisation et de calcul de pension propre à une population (un module du moteur).
-- **Bloc résiduel** : ce qui manque au privé simulé pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario il réagit comme le régime de base du privé.
+- **Bloc résiduel** : ce qui manque au privé simulé pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario, les régimes alignés sur le régime général suivent toutes ses règles, les autres seulement les règles communes à tous.
+- **Règle commune** : règle d'un scénario qui vaut pour tous les régimes (âge légal, durée requise, décote et surcote, droits familiaux, revalorisation), par opposition aux règles propres au privé (meilleures années, taux plein, minimum contributif, valeur du point, taux de cotisation).
+- **Régime aligné** : régime de base qui applique les règles de calcul du régime général (indépendants, salariés agricoles).
 - **Cadrage** : totaux publiés du système entier, année par année, sur lesquels le bloc résiduel est calé (projections du COR).
 - **Barème** : table versionnée des paramètres légaux par génération ou par année (âge légal, durée requise, taux).
 - **Âge légal** : âge minimal d'ouverture des droits à la retraite.

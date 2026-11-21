@@ -15,7 +15,7 @@ Un simulateur public pour les débats de la présidentielle de 2027. Il montre c
 - **Règles** : régime général et Agirc-Arrco en vraies règles (salaire annuel moyen, proratisation, décote, surcote, minimum contributif, majorations pour enfants, points, coefficients d'anticipation), sur barèmes par génération lus dans leurs sources. Carrières longues selon la circulaire Cnav 2026-29.
 - **Pondération** : poids = pyramide Insee par âge et sexe × part de l'âge qui relève du privé, réglée sur les cotisants et retraités de l'Agirc-Arrco fin 2024.
 - **Projection 2026-2070** en euros constants : population selon les projections Insee de 2026, salaires +0,7 % par an (scénario de référence du COR), pensions liquidées indexées sur les prix.
-- **Système entier** : les autres régimes ne sont pas simulés. Un bloc résiduel est la différence entre les totaux projetés par le COR (juin 2026) et le privé simulé avec la loi actuelle. Dans un scénario, ce bloc réagit comme le régime de base du privé.
+- **Système entier** : les autres régimes ne sont pas simulés. Un bloc résiduel est la différence entre les totaux projetés par le COR (juin 2026) et le privé simulé avec la loi actuelle. Dans un scénario, il réagit levier par levier : les règles communes à tous les régimes (âge, durée, décote et surcote, droits familiaux, revalorisation) s'y appliquent en entier ; les règles propres au régime général (meilleures années, taux plein, minimum contributif, taux de cotisation) ne s'appliquent qu'aux régimes alignés (groupe « Lura » du COR) ; celles de l'Agirc-Arrco restent dans l'Agirc-Arrco.
 - **Réformes** : effet en 2028. Âge légal et durée requise montent de trois mois par génération à partir de la première qui atteint son âge légal en 2028. Ceux qui sont partis avant gardent leur pension.
 
 ## Réglage
@@ -51,7 +51,7 @@ Les effectifs de 2026 sont réglés ; le reste est une vérification. Les cas ty
 
 ## Hypothèses qui pèsent le plus
 
-1. **Bloc résiduel.** Fonction publique, indépendants, régimes spéciaux et réversion sont supposés réagir à une réforme comme le régime de base du privé. PIB et autres ressources suivent la masse salariale du privé.
+1. **Bloc résiduel.** Fonction publique, régimes spéciaux et autres complémentaires réagissent aux règles communes dans la même proportion que le régime de base du privé. Leurs règles propres (six derniers mois, catégories actives) ne sont pas simulées. PIB et autres ressources suivent la masse salariale du privé.
 2. **Comportements figés.** Les parts de départs avec décote, surcote ou pour inaptitude ne changent pas quand l'âge légal change. Aucun effet de l'âge légal sur l'emploi des seniors au-delà du report mécanique : celui qui était en emploi y reste, celui qui n'y était pas attend.
 3. **Carrières longues dans un scénario.** Elles gardent leur avance sur l'âge légal. Aucun texte ne le dit.
 4. **Une seule génération de réglage.** Les suivantes diffèrent par l'âge d'entrée et la fréquence des interruptions après une naissance, pas par le reste.
@@ -62,7 +62,7 @@ Les effectifs de 2026 sont réglés ; le reste est une vérification. Les cas ty
 
 ## Questions aux relecteurs
 
-1. L'extension au système entier par un bloc résiduel proportionnel est-elle défendable pour des ordres de grandeur, ou fausse-t-elle le classement des réformes ?
+1. L'extension au système entier par un bloc résiduel qui ne suit que les règles communes est-elle défendable pour des ordres de grandeur ? Une mesure d'âge rapporte-t-elle vraiment autant, en proportion, dans la fonction publique que dans le privé ?
 2. Comment faire réagir les comportements de départ à l'âge légal sans données individuelles ? Existe-t-il des élasticités publiées utilisables ?
 3. Que faut-il supposer pour l'emploi des 60-64 ans quand l'âge légal monte ? Le report mécanique surestime-t-il le gain ?
 4. L'écart sur le premier décile vient-il surtout des polypensionnés, ou d'un défaut du générateur de carrières ?

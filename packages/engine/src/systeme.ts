@@ -8,6 +8,11 @@ export interface AnneeCadrage {
 	ressources: number;
 	/** Contributions et subventions d'équilibre de l'État, comprises dans les ressources. */
 	contributionsEtat: number;
+	/**
+	 * Dépenses des régimes alignés sur le régime général (Cnav, indépendants, salariés agricoles) :
+	 * les seuls, hors du privé simulé, à suivre toutes ses règles de calcul.
+	 */
+	depensesAlignes?: number;
 }
 
 export interface Cadrage {
@@ -40,26 +45,42 @@ export interface AnneeSysteme {
  * Étend un scénario simulé sur le privé au système entier.
  *
  * Avec la loi actuelle, les totaux sont ceux du cadrage : le bloc résiduel est ce qui manque au privé.
- * Dans un scénario, le privé bouge comme le moteur le calcule, et le bloc résiduel est supposé réagir
- * comme le régime de base du privé (mêmes variations relatives de pensions et de cotisations).
+ * Dans un scénario, le privé bouge comme le moteur le calcule, et le bloc résiduel réagit selon ce
+ * que le scénario change :
+ * - les régimes alignés sur le régime général suivent toutes ses règles, donc les pensions de base du scénario ;
+ * - les autres régimes (fonction publique, régimes spéciaux, indépendants non alignés, autres
+ *   complémentaires) ne suivent que les règles communes à tous (âge, durée, revalorisation, décote,
+ *   droits familiaux, emploi, démographie) : ils réagissent comme les pensions de base de la
+ *   projection `universel`, le même scénario sans ses règles propres au privé ;
+ * - les cotisations des autres régimes suivent aussi cette projection : une hausse du taux du privé
+ *   ne s'y applique pas.
  * Les autres ressources, dont les versements de l'État, et le PIB suivent la masse des salaires du privé.
  */
 export function computeSysteme(
 	reference: Projection,
 	scenario: Projection,
 	cadrage: Cadrage = CADRAGE_COR,
+	universel: Projection = scenario,
 ): AnneeSysteme[] {
 	const resultat: AnneeSysteme[] = [];
 	scenario.annees.forEach((s, i) => {
 		const r = reference.annees[i];
+		const u = universel.annees[i] ?? s;
 		const c = cadrage.annees[s.annee];
 		if (!r || !c) return;
 		const rapport = (x: number, y: number) => (y > 0 ? x / y : 1);
 		const residuelDepenses = Math.max(0, c.depenses - r.pensions);
+		// Sans la répartition par groupe de régimes, tout le bloc suit les règles communes.
+		const residuelAlignes = Math.min(
+			residuelDepenses,
+			Math.max(0, (c.depensesAlignes ?? 0) - r.pensionsBase),
+		);
 		const depenses =
 			c.depenses +
 			(s.pensions - r.pensions) +
-			residuelDepenses * (rapport(s.pensionsBase, r.pensionsBase) - 1);
+			residuelAlignes * (rapport(s.pensionsBase, r.pensionsBase) - 1) +
+			(residuelDepenses - residuelAlignes) *
+				(rapport(u.pensionsBase, r.pensionsBase) - 1);
 		const cotisationsReference = cadrage.partCotisations * c.ressources;
 		const residuelCotisations = Math.max(
 			0,
@@ -68,7 +89,7 @@ export function computeSysteme(
 		const cotisations =
 			cotisationsReference +
 			(s.cotisations - r.cotisations) +
-			residuelCotisations * (rapport(s.cotisationsBase, r.cotisationsBase) - 1);
+			residuelCotisations * (rapport(u.cotisationsBase, r.cotisationsBase) - 1);
 		// Les autres ressources (CSG, impôts affectés) et le PIB suivent la masse des salaires :
 		// plus de monde au travail, c'est aussi plus d'impôts et plus de richesse produite.
 		const activite = rapport(

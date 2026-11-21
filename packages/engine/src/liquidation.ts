@@ -65,6 +65,30 @@ export interface ReglesScenario {
 	revalorisationReelle?: number;
 }
 
+/**
+ * Les règles d'un scénario qui valent pour tous les régimes : âge, durée, décote et surcote,
+ * droits familiaux, revalorisation. Les autres (meilleures années, taux plein, minimum contributif,
+ * valeur du point, taux de cotisation) sont propres au régime général ou à la complémentaire du privé.
+ */
+export function reglesUniverselles(r: ReglesScenario): ReglesScenario {
+	const u: ReglesScenario = {};
+	const communes = [
+		"ageLegal",
+		"dureeRequise",
+		"anneeEffet",
+		"rythme",
+		"carriereLongue",
+		"decoteParTrimestre",
+		"surcoteParTrimestre",
+		"mdaParEnfant",
+		"majorationTroisEnfants",
+		"revalorisationReelle",
+	] as const;
+	for (const cle of communes)
+		if (r[cle] !== undefined) (u as Record<string, unknown>)[cle] = r[cle];
+	return u;
+}
+
 /** Barèmes d'un scénario : le droit en vigueur, modifié par les règles du scénario. */
 export function appliquerRegles(b: Baremes, r: ReglesScenario = {}): Baremes {
 	const m = b.cnav.minimumContributif;

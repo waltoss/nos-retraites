@@ -22,6 +22,7 @@ import {
 	projeter,
 	pyramidesProjetees,
 	type Resultat,
+	reglesUniverselles,
 	SCENARIO_REFERENCE,
 	SURVIE_SELON_PENSION,
 	valeur,
@@ -166,6 +167,7 @@ interface Monde {
 
 /** Un scénario prêt à être regardé : sa population, ses pensions, ses trajectoires. */
 interface Scene {
+	scenario: ScenarioMoteur;
 	monde: Monde;
 	preparation: Preparation;
 	projection: Projection | null;
@@ -207,6 +209,7 @@ function scene(s: ScenarioMoteur): Scene {
 		const sansFacteur = Object.keys(s.facteurs).length === 0;
 		const m = sansFacteur ? base : monde(s.facteurs);
 		sc = {
+			scenario: s,
 			monde: m,
 			preparation: prepareProjection(m.population, B, s.regles, {
 				debut: B.anneeReference,
@@ -240,8 +243,21 @@ function trajectoires(sc: Scene): Projection {
 
 /** Le scénario étendu au système entier, année par année. */
 function systeme(sc: Scene): AnneeSysteme[] {
-	if (!sc.systeme)
-		sc.systeme = computeSysteme(trajectoires(scene(DROIT)), trajectoires(sc));
+	if (!sc.systeme) {
+		// Les autres régimes ne suivent que les règles communes à tous : on projette aussi
+		// le scénario sans ses règles propres au privé, quand il en a.
+		const communes = reglesUniverselles(sc.scenario.regles);
+		const universel =
+			Object.keys(communes).length === Object.keys(sc.scenario.regles).length
+				? sc
+				: scene({ ...sc.scenario, regles: communes });
+		sc.systeme = computeSysteme(
+			trajectoires(scene(DROIT)),
+			trajectoires(sc),
+			undefined,
+			trajectoires(universel),
+		);
+	}
 	return sc.systeme;
 }
 

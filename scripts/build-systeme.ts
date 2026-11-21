@@ -49,8 +49,11 @@ const annees: Record<
 		depenses: number;
 		ressources: number;
 		contributionsEtat: number;
+		depensesAlignes: number;
 	}
 > = {};
+// Régimes alignés sur le régime général (Cnav, indépendants, salariés agricoles, FSV) : le groupe « Lura » du COR.
+const groupes = f.parGroupeDeRegimes.depensesPartPIB.horsTransfertsInternes;
 for (let annee = ANNEE; annee <= FIN; annee++) {
 	// Milliards d'euros courants ramenés en euros de l'année de référence.
 	const reel = (lire(pib, annee) * lire(prix, ANNEE)) / lire(prix, annee);
@@ -59,6 +62,7 @@ for (let annee = ANNEE; annee <= FIN; annee++) {
 		pib: Math.round(reel * 1e9),
 		depenses: Math.round(part(f.depensesPartPIB.scenarioReference)),
 		ressources: Math.round(part(f.ressourcesPartPIB.scenarioReference)),
+		depensesAlignes: Math.round(part(groupes.LURA)),
 		contributionsEtat: Math.round(
 			part(
 				f.tauxDePrelevementEtContributionEtat.contributionEtSubventionsEtat

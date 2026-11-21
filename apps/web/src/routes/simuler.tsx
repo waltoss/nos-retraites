@@ -65,8 +65,8 @@ function Simuler() {
 								que le modèle simule : régime général et Agirc-Arrco, pensions
 								de droit direct. Le total tous régimes vient des projections du
 								Conseil d'orientation des retraites ; dans un scénario, les
-								autres régimes sont supposés réagir comme le régime de base du
-								privé.
+								autres régimes suivent les règles communes à tous (âge, durée,
+								revalorisation), pas celles qui sont propres au privé.
 							</p>
 						</section>
 

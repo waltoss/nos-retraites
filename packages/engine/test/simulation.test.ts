@@ -250,5 +250,24 @@ describe("système entier", () => {
 		// Un réglage propre à la complémentaire du privé ne se propage pas aux autres régimes.
 		const ecartPrive = (reference.annees[fin]?.pensions ?? 0) * 0.05;
 		expect((loi[fin]?.depenses ?? 0) - (point[fin]?.depenses ?? 0)).toBeLessThan(ecartPrive);
+
+		// Une règle propre au régime général ne touche pas la fonction publique : son effet tous régimes
+		// est plus petit quand le bloc résiduel ne suit que les règles communes.
+		const { reglesUniverselles } = await import("../src/index.ts");
+		const regles = { nbMeilleuresAnnees: 42, ageLegal: 260 };
+		const scenario = runProjection(population, BAREMES_FRANCE, regles, options);
+		const communes = runProjection(population, BAREMES_FRANCE, reglesUniverselles(regles), options);
+		expect(Object.keys(reglesUniverselles(regles))).toEqual(["ageLegal"]);
+		const proportionnel = computeSysteme(reference, scenario);
+		const parLevier = computeSysteme(reference, scenario, undefined, communes);
+		const economie = (s: typeof loi) => (loi[fin]?.depenses ?? 0) - (s[fin]?.depenses ?? 0);
+		expect(economie(parLevier)).toBeGreaterThan(0);
+		expect(economie(parLevier)).toBeLessThan(economie(proportionnel) * 0.9);
+		// Une règle commune à tous, elle, se propage en entier.
+		const age = runProjection(population, BAREMES_FRANCE, { ageLegal: 260 }, options);
+		expect(economie(computeSysteme(reference, age, undefined, age))).toBeCloseTo(
+			economie(computeSysteme(reference, age)),
+			0,
+		);
 	});
 });
