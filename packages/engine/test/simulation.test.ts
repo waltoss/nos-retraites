@@ -181,6 +181,14 @@ describe("projection", () => {
 		const finReference = reference.annees.at(-1);
 		expect(fin?.retraites ?? 0).toBeLessThan(finReference?.retraites ?? 0);
 		expect((fin?.pensions ?? 0) / (finReference?.pensions ?? 1)).toBeLessThan(0.95);
+		// Mortalité selon la pension : autant de retraités, mais les pensions élevées durent plus longtemps.
+		const { SURVIE_SELON_PENSION } = await import("../src/index.ts");
+		const inegale = runProjection(population, BAREMES_FRANCE, {}, {
+			...options,
+			survie: SURVIE_SELON_PENSION,
+		});
+		expect((inegale.annees[20]?.retraites ?? 0) / (reference.annees[20]?.retraites ?? 1)).toBeCloseTo(1, 2);
+		expect(inegale.annees[20]?.pensions ?? 0).toBeGreaterThan((reference.annees[20]?.pensions ?? 0) * 1.01);
 		// Les générations déjà parties ne voient pas leur âge de départ bouger.
 		const g1950 = (p: typeof reference) => p.generations.find((g) => g.generation === 1950);
 		expect(g1950(reforme)?.ageMoyenDepart).toBeCloseTo(g1950(reference)?.ageMoyenDepart ?? 0, 6);

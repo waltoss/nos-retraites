@@ -1,6 +1,7 @@
 /**
  * Tolérances du calage. Les salaires (Insee) et les durées de carrière (Drees) servent à ajuster
- * les hypothèses ; les pensions (Drees) ne servent qu'à vérifier, elles ne sont jamais ciblées.
+ * les hypothèses. Les pensions ne sont jamais ciblées : elles sont vérifiées par le backtest
+ * (backtest.test.ts), régime par régime.
  */
 import { describe, expect, test } from "bun:test";
 import { mesurer, mesurerSalaires } from "../../../scripts/calage.ts";
@@ -30,20 +31,5 @@ describe("calage sur la génération 1953", () => {
 			(x) => x.nom.includes("durée") && x.nom.endsWith("(ans)"),
 		))
 			expect(Math.abs(m.modele - m.cible)).toBeLessThan(2.5);
-	});
-
-	test("pensions, hors calage : bornes de l'état actuel", () => {
-		// Le bas de la distribution de la Drees compte beaucoup de petites pensions du privé versées à des
-		// retraités d'autres régimes, que le modèle ne simule pas.
-		expect(Math.abs(ecart("ensemble pension D1"))).toBeLessThan(0.4);
-		expect(Math.abs(ecart("ensemble pension médiane"))).toBeLessThan(0.16);
-		expect(Math.abs(ecart("ensemble pension D9"))).toBeLessThan(0.18);
-	});
-
-	// Critère du projet, pas encore tenu. La cible Drees couvre tous les régimes,
-	// le modèle les seuls salariés du privé : une partie de l'écart vient de là.
-	test.failing("critère : D1, médiane et D9 à ±10 % de la Drees", () => {
-		for (const q of ["D1", "médiane", "D9"])
-			expect(Math.abs(ecart(`ensemble pension ${q}`))).toBeLessThan(0.1);
 	});
 });

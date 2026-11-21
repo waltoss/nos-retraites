@@ -1,0 +1,61 @@
+/**
+ * Backtest : le modèle rejoue 2010-2024 avec la loi de chaque génération, et on borne
+ * son écart à ce qui a été observé. Rien ici ne sert à régler le modèle, sauf le coefficient
+ * de proratisation (réglage de la part de carrière passée dans un autre régime).
+ * Les bornes décrivent l'état actuel : les resserrer quand le modèle progresse.
+ */
+import { describe, expect, test } from "bun:test";
+import { BACKTEST } from "../../../scripts/backtest.ts";
+
+const groupe = (debut: string) => {
+	const lignes = BACKTEST.filter((l) => l.groupe.startsWith(debut));
+	if (lignes.length === 0) throw new Error(`groupe inconnu : ${debut}`);
+	return lignes;
+};
+const relatif = (l: { modele: number; observe: number }) =>
+	Math.abs(l.modele / l.observe - 1);
+
+describe("backtest 2010-2024", () => {
+	test("âge moyen de départ au régime général à moins de 0,6 an", () => {
+		for (const l of groupe("Âge moyen de départ"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.6);
+	});
+
+	test("départs par an à moins de 15 %, effectifs à moins de 8 %", () => {
+		for (const l of groupe("Départs à la retraite"))
+			expect(relatif(l)).toBeLessThan(0.15);
+		for (const l of [...groupe("Cotisants"), ...groupe("Retraités de droit")])
+			expect(relatif(l)).toBeLessThan(0.08);
+	});
+
+	test("part de carrière au régime général à moins de 0,03", () => {
+		for (const l of groupe("Coefficient de proratisation"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.03);
+	});
+
+	// Le modèle laisse trop de monde sans activité : il est prudent sur le gain d'un relèvement de l'âge.
+	test("réforme de 2010 : chaque situation à moins de 18 points de l'évaluation", () => {
+		for (const l of groupe("Réforme de 2010"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(18);
+	});
+
+	test("pensions par régime : bornes de l'état actuel", () => {
+		const pensions = [
+			...groupe("Pension moyenne des retraités"),
+			...groupe("Pension moyenne des nouveaux"),
+		];
+		for (const l of pensions) expect(relatif(l)).toBeLessThan(0.3);
+		for (const l of pensions.filter((x) => x.nom.startsWith("hommes, régime général")))
+			expect(relatif(l)).toBeLessThan(0.12);
+	});
+
+	// Critère du projet, pas encore tenu : la pension de base des femmes est trop haute,
+	// la complémentaire des hommes trop basse.
+	test.failing("critère : toutes les pensions moyennes à ±10 %", () => {
+		for (const l of [
+			...groupe("Pension moyenne des retraités"),
+			...groupe("Pension moyenne des nouveaux"),
+		])
+			expect(relatif(l)).toBeLessThan(0.1);
+	});
+});

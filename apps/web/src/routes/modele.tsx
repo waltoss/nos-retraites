@@ -4,6 +4,7 @@ import {
 	HYPOTHESES as H,
 } from "@nos-retraites/engine";
 import { createFileRoute } from "@tanstack/react-router";
+import backtest from "../backtest.json";
 import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, entier, euros } from "../format";
@@ -230,7 +231,10 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 const LIMITES = [
 	"Seuls les salariés du privé sont simulés. Ni fonctionnaires, ni indépendants, ni régimes spéciaux.",
 	"Les effectifs par âge de fin 2024 sont appliqués à 2026. Avant 24 ans le modèle manque d'apprentis et d'emplois étudiants, et les plus de 96 ans sont absents.",
-	"À âge égal, tous les retraités ont la même chance d'être encore en vie. En réalité les pensions élevées vivent plus longtemps.",
+	"À âge égal, les pensions élevées vivent plus longtemps : le modèle reprend les tables de mortalité de l'Insee par niveau de vie, en réduisant l'écart de 40 % parce qu'une pension n'est pas un niveau de vie. Le classement se fait sur la pension de chacun, pas sur les revenus du ménage.",
+	"Trois personnes sur dix passent une partie de leur carrière dans un autre régime. Ces années comptent pour leur durée, mais leur pension de fonctionnaire ou d'indépendant n'est pas calculée : elle est dans le bloc des autres régimes.",
+	"Les points de retraite complémentaire d'avant 2019 sont attribués au taux de cotisation moyen de chaque année, pas au taux de chaque entreprise.",
+	"Le modèle confond ceux qui ont eu un salaire dans l'année et ceux qui sont en emploi en fin d'année. Les petits contrats et le temps partiel hors mères de jeunes enfants manquent, ce qui explique une partie des pensions de base trop hautes.",
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
 	"La population suit les projections de l'Insee de 2026. Natalité et solde migratoire se règlent entre ses variantes basse et haute, par interpolation ; leurs effets sont supposés s'additionner. Les arrivants reçoivent la carrière des personnes de leur âge. Les salaires suivent l'hypothèse du COR : +0,7 % par an au-dessus des prix.",
@@ -280,6 +284,76 @@ const sexes = [
 	["femmes", "Femmes"],
 	["hommes", "Hommes"],
 ] as const;
+
+const deuxDecimales = (x: number) =>
+	x.toLocaleString("fr-FR", {
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2,
+	});
+const EACR =
+	"Drees, enquête annuelle auprès des caisses de retraite, données ouvertes de mai 2026.";
+
+/** Le passé rejoué par le modèle : rien ici ne sert à le régler. */
+const BACKTEST: Record<
+	string,
+	{
+		texte: string;
+		source: string;
+		format: (x: number) => string;
+		enPoints?: boolean;
+	}
+> = {
+	"Âge moyen de départ au régime général, en années": {
+		texte:
+			"Le modèle applique à chaque génération la loi qui a été la sienne, réforme de 2010 comprise, et on regarde l'âge moyen de départ année après année.",
+		source: EACR,
+		format: (x) => decimal(x),
+	},
+	"Pension moyenne des retraités, euros de 2026 par mois": {
+		texte:
+			"Par régime, pour tous les retraités en fin d'année. C'est le plus gros écart du modèle : la pension de base des femmes est trop haute, la complémentaire des hommes trop basse.",
+		source: EACR,
+		format: (x) => euros(x),
+	},
+	"Pension moyenne des nouveaux retraités, euros de 2026 par mois": {
+		texte: "Par régime, pour ceux qui partent dans l'année.",
+		source: EACR,
+		format: (x) => euros(x),
+	},
+	"Coefficient de proratisation au régime général, génération 1953": {
+		texte:
+			"Part d'une carrière complète validée au régime général. Elle est loin de 1 parce que beaucoup de retraités ont aussi travaillé dans la fonction publique ou comme indépendants. Le modèle est réglé sur ce chiffre.",
+		source:
+			"Drees, Les retraités et les retraites, édition 2026, fiche 11, échantillon interrégimes de retraités 2020.",
+		format: deuxDecimales,
+	},
+	"Départs à la retraite par an à l'Agirc-Arrco, en milliers": {
+		texte:
+			"Le modèle est rejoué depuis 2012 avec la population réelle de chaque année.",
+		source: EACR,
+		format: (x) => entier(x),
+	},
+	"Cotisants de l'Agirc-Arrco, en millions": {
+		texte: "Même exercice, pour ceux qui cotisent.",
+		source: "Agirc-Arrco, cotisants présents en fin d'année.",
+		format: deuxDecimales,
+	},
+	"Retraités de droit direct de l'Agirc-Arrco, en millions": {
+		texte:
+			"Même exercice, pour ceux qui perçoivent une pension. Avant 2018 la comparaison n'a pas de sens : le modèle n'a pas les générations nées avant 1930.",
+		source: EACR,
+		format: deuxDecimales,
+	},
+	"Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %":
+		{
+			texte:
+				"Quand l'âge légal est passé de 60 à 62 ans, que sont devenus à 60 ans ceux qui seraient partis ? Le modèle n'est pas réglé sur cette évaluation. Il en envoie moins vers l'emploi et le chômage, et davantage vers l'inactivité : il est prudent sur ce que rapporte un relèvement de l'âge.",
+			source:
+				"Rabaté et Rochut, évaluation sur un échantillon de la Cnav, présentée au Conseil d'orientation des retraites en 2016.",
+			format: (x) => entier(x),
+			enPoints: true,
+		},
+};
 
 const COMPARAISONS: Comparaison[] = [
 	{
@@ -369,23 +443,18 @@ const COMPARAISONS: Comparaison[] = [
 			},
 		]),
 	},
-	{
-		titre: "Pensions, génération 1953",
-		texte:
-			"Pension mensuelle brute. Ces chiffres ne servent pas au réglage : c'est la vérification. La Drees compte tous les régimes, fonctionnaires et indépendants compris ; le modèle ne connaît que les salariés du privé, dont la pension moyenne est plus basse d'environ 8 %.",
-		source: `Drees, échantillon interrégimes de retraités 2020, pensions de droit direct, portées en euros de ${A} avec le coefficient de revalorisation de la Cnav.`,
-		format: (x) => euros(x),
-		lignes: [
-			{
-				...mesure("ensemble pension D1"),
-				nom: "1er décile, les plus petites pensions",
-			},
-			{ ...mesure("ensemble pension médiane"), nom: "Médiane" },
-			{ ...mesure("ensemble pension D9"), nom: "9e décile, les plus hautes" },
-			{ ...mesure("femmes pension médiane"), nom: "Médiane des femmes" },
-			{ ...mesure("hommes pension médiane"), nom: "Médiane des hommes" },
-		],
-	},
+	...Object.entries(BACKTEST).map(
+		([groupe, b]): Comparaison => ({
+			titre: groupe,
+			texte: b.texte,
+			source: b.source,
+			format: b.format,
+			enPoints: b.enPoints,
+			lignes: backtest
+				.filter((l) => l.groupe === groupe)
+				.map((l) => ({ nom: l.nom, modele: l.modele, cible: l.observe })),
+		}),
+	),
 ];
 
 const FAMILLES_POLITIQUES: Record<
@@ -445,9 +514,9 @@ function Modele() {
 				<h2>Face aux chiffres publics</h2>
 				<p className="sub">
 					Le modèle est réglé sur les salaires et les durées de carrière
-					publiés. Les pensions qu'il en déduit sont ensuite confrontées à
-					celles que la Drees observe. Les lignes surlignées s'écartent de plus
-					de 10 %, ou de plus de 5 points pour les parts.
+					publiés. On lui fait ensuite rejouer le passé, de 2010 à 2024, et on
+					compare ce qu'il donne à ce qui a été observé. Les lignes surlignées
+					s'écartent de plus de 10 %, ou de plus de 5 points pour les parts.
 				</p>
 				{COMPARAISONS.map((c) => (
 					<div key={c.titre} className="comparaison">

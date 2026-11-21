@@ -25,6 +25,11 @@ export interface AnneeCarriere {
 	moisMaladie?: number;
 	/** Quotité de travail quand elle est inférieure à un temps plein. */
 	quotite?: number;
+	/**
+	 * Année travaillée dans un autre régime (fonction publique, indépendants, agriculture) :
+	 * elle compte pour la durée tous régimes, sans salaire porté au compte ni points.
+	 */
+	autreRegime?: boolean;
 	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
 	avpf?: boolean;
 }
@@ -63,6 +68,8 @@ export interface DetailCnav {
 	salaireAnnuelMoyen: number;
 	trimestresValides: number;
 	trimestresCotises: number;
+	/** Trimestres validés dans d'autres régimes : comptés dans la durée validée, pas dans la proratisation. */
+	trimestresAutresRegimes: number;
 	trimestresMda: number;
 	dureeRequise: number;
 	tauxLiquidation: number;

@@ -23,6 +23,7 @@ import {
 	pyramidesProjetees,
 	type Resultat,
 	SCENARIO_REFERENCE,
+	SURVIE_SELON_PENSION,
 	valeur,
 } from "@nos-retraites/engine";
 import type { ScenarioMoteur } from "./leviers";
@@ -212,6 +213,7 @@ function scene(s: ScenarioMoteur): Scene {
 				fin: FIN_PROJECTION,
 				pyramides: pyramidesProjetees(s.demographie),
 				champ: CHAMP_PRIVE,
+				survie: SURVIE_SELON_PENSION,
 				anneeEffet: ANNEE_EFFET,
 				comptes: m.comptes,
 				// Avant la réforme les carrières sont les mêmes : les pensions déjà liquidées aussi.

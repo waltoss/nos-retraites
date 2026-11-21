@@ -1,0 +1,230 @@
+[
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2012",
+		"modele": 62.3,
+		"observe": 62.4
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2012",
+		"modele": 62.1,
+		"observe": 62
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2014",
+		"modele": 62.38,
+		"observe": 62.6
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2014",
+		"modele": 62.01,
+		"observe": 62.2
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2016",
+		"modele": 62.68,
+		"observe": 63.1
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2016",
+		"modele": 62.44,
+		"observe": 62.6
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2018",
+		"modele": 62.94,
+		"observe": 63.2
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2018",
+		"modele": 62.67,
+		"observe": 62.8
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2020",
+		"modele": 63.29,
+		"observe": 63.3
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2020",
+		"modele": 62.85,
+		"observe": 63
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2022",
+		"modele": 63.28,
+		"observe": 63.4
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2022",
+		"modele": 63,
+		"observe": 63.3
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "femmes, 2024",
+		"modele": 63.62,
+		"observe": 63.7
+	},
+	{
+		"groupe": "Âge moyen de départ au régime général, en années",
+		"nom": "hommes, 2024",
+		"modele": 63.29,
+		"observe": 63.5
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "femmes, régime général, fin 2019",
+		"modele": 793.1,
+		"observe": 642.7
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "femmes, Agirc-Arrco, fin 2019",
+		"modele": 308.2,
+		"observe": 348.1
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "femmes, Agirc-Arrco, fin 2024",
+		"modele": 333,
+		"observe": 362.1
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "hommes, régime général, fin 2019",
+		"modele": 924.1,
+		"observe": 859.5
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "hommes, Agirc-Arrco, fin 2019",
+		"modele": 548.6,
+		"observe": 768
+	},
+	{
+		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
+		"nom": "hommes, Agirc-Arrco, fin 2024",
+		"modele": 558.4,
+		"observe": 758.7
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "femmes, régime général, 2010-2013",
+		"modele": 796,
+		"observe": 675.6
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "femmes, régime général, 2016-2019",
+		"modele": 848.7,
+		"observe": 719.4
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "femmes, Agirc-Arrco, 2019-2023",
+		"modele": 409.2,
+		"observe": 343.5
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "hommes, régime général, 2010-2013",
+		"modele": 929,
+		"observe": 881.8
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "hommes, régime général, 2016-2019",
+		"modele": 942.1,
+		"observe": 944.8
+	},
+	{
+		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
+		"nom": "hommes, Agirc-Arrco, 2019-2023",
+		"modele": 568.3,
+		"observe": 645.3
+	},
+	{
+		"groupe": "Coefficient de proratisation au régime général, génération 1953",
+		"nom": "femmes",
+		"modele": 0.7321,
+		"observe": 0.73
+	},
+	{
+		"groupe": "Coefficient de proratisation au régime général, génération 1953",
+		"nom": "hommes",
+		"modele": 0.7032,
+		"observe": 0.72
+	},
+	{
+		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
+		"nom": "2012-2015",
+		"modele": 565.2,
+		"observe": 525.5
+	},
+	{
+		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
+		"nom": "2016-2019",
+		"modele": 571.8,
+		"observe": 572.7
+	},
+	{
+		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
+		"nom": "2020-2024",
+		"modele": 603.1,
+		"observe": 624.9
+	},
+	{
+		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
+		"nom": "2020",
+		"modele": 18.4,
+		"observe": 18.87
+	},
+	{
+		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
+		"nom": "2020",
+		"modele": 11.59,
+		"observe": 12.01
+	},
+	{
+		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
+		"nom": "2024",
+		"modele": 18.97,
+		"observe": 20.06
+	},
+	{
+		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
+		"nom": "2024",
+		"modele": 12.36,
+		"observe": 12.8
+	},
+	{
+		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
+		"nom": "en emploi",
+		"modele": 27.13,
+		"observe": 33.58
+	},
+	{
+		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
+		"nom": "au chômage",
+		"modele": 27.46,
+		"observe": 33.08
+	},
+	{
+		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
+		"nom": "en invalidité, en maladie ou sans activité",
+		"modele": 45.4,
+		"observe": 29.1
+	}
+]

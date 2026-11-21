@@ -1,5 +1,6 @@
 import type { Champ, Pyramide } from "../ponderation.ts";
 import data from "./france.data.json" with { type: "json" };
+import mortalite from "./mortalite.data.json" with { type: "json" };
 import projection from "./projection.data.json" with { type: "json" };
 
 /** Généré par scripts/build-population.ts à partir de data/references/population.json. */
@@ -139,3 +140,22 @@ export function pyramidesProjetees(
 		}),
 	);
 }
+
+/**
+ * Chance d'être en vie à un âge donné, rapportée à celle de l'ensemble des personnes du même sexe,
+ * selon le vingtième de pension (0 = les plus basses). Vaut 1 avant 60 ans.
+ * D'après les tables de mortalité par niveau de vie de l'Insee, atténuées (scripts/build-mortalite.ts).
+ */
+export type SurvieRelative = (
+	sexe: "F" | "H",
+	vingtieme: number,
+	age: number,
+) => number;
+
+export const SURVIE_SELON_PENSION: SurvieRelative = (sexe, vingtieme, age) => {
+	if (age < mortalite.ageMin) return 1;
+	const table = (sexe === "F" ? mortalite.femmes : mortalite.hommes)[
+		Math.max(0, Math.min(19, vingtieme))
+	] as number[];
+	return table[Math.min(table.length - 1, age - mortalite.ageMin)] ?? 1;
+};

@@ -87,7 +87,10 @@ export function mesurer(h: Hypotheses, generation = GENERATION): Mesure[] {
 		if (p.mensuelleBrute <= 0) continue;
 		const g = groupes[carriere.sexe === "F" ? "femmes" : "hommes"];
 		g.pensions.push(p.mensuelleBrute);
-		g.cotisee.push(p.cnav.trimestresCotises / 4);
+		// La cible de la Drees porte sur tous les régimes.
+		g.cotisee.push(
+			(p.cnav.trimestresCotises + p.cnav.trimestresAutresRegimes) / 4,
+		);
 		g.validee.push(p.cnav.trimestresValides / 4);
 		if (p.cnav.trimestresValides >= p.cnav.dureeRequise) g.complete++;
 		g.age += p.liquidation.age / 4;
@@ -216,6 +219,8 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 			["d7", 0.7],
 			["d8", 0.8],
 			["d9", 0.9],
+			["c95", 0.95],
+			["c99", 0.99],
 		] as const) {
 			const cible = cibles[cle] / SMIC_NET;
 			mesures.push({
@@ -225,6 +230,13 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 				echelle: 0.05 * cible,
 			});
 		}
+		const cible = cibles.moyenne / SMIC_NET;
+		mesures.push({
+			nom: `${sexe} salaire moyenne (SMIC)`,
+			modele: tri.reduce((t, x) => t + x, 0) / tri.length,
+			cible,
+			echelle: 0.05 * cible,
+		});
 	}
 	return mesures;
 }

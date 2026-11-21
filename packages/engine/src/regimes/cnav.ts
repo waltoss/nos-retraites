@@ -56,7 +56,9 @@ export function computeCnav(
 ): DetailCnav {
 	const anneeLiquidation = carriere.anneeNaissance + Math.floor(age / 4);
 	const mda = trimestresMda(carriere, b, anneeLiquidation);
-	const valides = cumul.trimestresCotises + cumul.trimestresAssimiles + mda;
+	// Durée au régime général, qui fixe la proratisation, et durée tous régimes, qui fixe le taux.
+	const auRegime = cumul.trimestresCotises + cumul.trimestresAssimiles + mda;
+	const valides = auRegime + cumul.trimestresAutresRegimes;
 	const manquants = Math.min(
 		b.decoteTrimestresMax,
 		trimestresManquants(valides, age, g),
@@ -68,7 +70,7 @@ export function computeCnav(
 	);
 	const proratisation = Math.min(
 		1,
-		valides / (g.dureeProratisation ?? g.dureeRequise),
+		auRegime / (g.dureeProratisation ?? g.dureeRequise),
 	);
 	const sam = salaireAnnuelMoyen(
 		compte,
@@ -81,7 +83,8 @@ export function computeCnav(
 	const mico = b.minimumContributif;
 	if (mico && manquants === 0 && pension > 0) {
 		const plancher =
-			(cumul.trimestresCotises >= mico.trimestresCotisesPourMajoration
+			(cumul.trimestresCotises + cumul.trimestresAutresRegimes >=
+			mico.trimestresCotisesPourMajoration
 				? mico.annuelMajore
 				: mico.annuel) *
 			(b.indiceMinimumContributif?.(anneeLiquidation) ?? 1) *
@@ -100,6 +103,7 @@ export function computeCnav(
 		salaireAnnuelMoyen: sam,
 		trimestresValides: valides,
 		trimestresCotises: cumul.trimestresCotises,
+		trimestresAutresRegimes: cumul.trimestresAutresRegimes,
 		trimestresMda: mda,
 		dureeRequise: g.dureeRequise,
 		tauxLiquidation: taux,

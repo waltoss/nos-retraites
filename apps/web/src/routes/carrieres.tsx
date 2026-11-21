@@ -288,8 +288,13 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 			},
 			{
 				nom: "Trimestres cotisés",
-				aide: "par le travail",
+				aide: "par le travail dans le privé",
 				valeur: (p) => entier(p.cnav.trimestresCotises),
+			},
+			{
+				nom: "Trimestres dans d'autres régimes",
+				aide: "fonction publique, indépendants, agriculture",
+				valeur: (p) => entier(p.cnav.trimestresAutresRegimes),
 			},
 			{
 				nom: "Trimestres assimilés",
@@ -298,6 +303,7 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 					entier(
 						p.cnav.trimestresValides -
 							p.cnav.trimestresCotises -
+							p.cnav.trimestresAutresRegimes -
 							p.cnav.trimestresMda,
 					),
 			},

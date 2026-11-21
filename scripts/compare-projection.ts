@@ -20,6 +20,7 @@ import {
 	pyramidesProjetees,
 	runProjection,
 	SCENARIO_REFERENCE,
+	SURVIE_SELON_PENSION,
 } from "../packages/engine/src/index.ts";
 
 const cor =
@@ -40,6 +41,7 @@ const projeter = (d: Demographie = {}) =>
 					? PYRAMIDES_PROJETEES
 					: pyramidesProjetees(d),
 			champ: CHAMP_PRIVE,
+			survie: SURVIE_SELON_PENSION,
 			anneeEffet: 2028,
 			comptes,
 		},

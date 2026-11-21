@@ -1,7 +1,16 @@
 import { type Baremes, valeur } from "../baremes/types.ts";
 import type { Rng } from "../rng.ts";
 import type { AnneeCarriere, Carriere, Etat, Sexe } from "../types.ts";
+import ecartSalaire from "./ecartSalaire.data.json" with { type: "json" };
 import type { Hypotheses } from "./hypotheses.ts";
+
+/** Le salaire des femmes rapporté à celui des hommes, en indice de la dernière année connue (Insee). */
+const INDICE_ECART = ecartSalaire.indice as Record<string, number>;
+const PREMIERE_ANNEE_ECART = Math.min(...Object.keys(INDICE_ECART).map(Number));
+const indiceEcart = (annee: number): number =>
+	annee >= ecartSalaire.derniereAnnee
+		? 1
+		: (INDICE_ECART[Math.max(PREMIERE_ANNEE_ECART, annee)] ?? 1);
 
 const AGE_FIN = 70;
 
@@ -109,6 +118,21 @@ export function generateCarriere(
 	);
 	const present = (age: number) =>
 		!partielle || (age >= debutPresence && age < debutPresence + dureePresence);
+
+	// Polypensionné : une partie de la vie active se passe dans un autre régime.
+	// Tirages dérivés du rang, pour ne consommer aucun tirage du générateur.
+	const derive = (k: number) => (Math.abs(rang) * k) % 1;
+	const ailleurs = derive(15485.863) < h.autreRegime.part[sexe];
+	const partAilleurs =
+		h.autreRegime.dureeMin +
+		derive(32452.843) * (h.autreRegime.dureeMax - h.autreRegime.dureeMin);
+	const ailleursDabord = derive(49979.687) < 0.5;
+	const anneesAilleurs = Math.round(partAilleurs * (62 - ageEntree));
+	const dansUnAutreRegime = (age: number) =>
+		ailleurs &&
+		(ailleursDabord
+			? age < ageEntree + anneesAilleurs
+			: age >= 62 - anneesAilleurs);
 
 	const annees: AnneeCarriere[] = [];
 	let periode: Periode | null = null;
@@ -234,10 +258,12 @@ export function generateCarriere(
 				hy.niveauSalaire *
 				Math.exp(
 					hy.sigmaPermanent * rang +
+						hy.queueSalaire.pente[sexe] *
+							Math.max(0, rang - hy.queueSalaire.seuil) +
 						hy.penteRang * rang * (Math.min(age, 55) - 30) +
 						hy.sigmaTransitoire * choc,
 				) *
-				(sexe === "F" ? hy.ecartSalaireFemmes : 1);
+				(sexe === "F" ? hy.ecartSalaireFemmes * indiceEcart(annee) : 1);
 			const smicAnnuel = valeur(b.cnav.smicHoraire, annee) * hy.heuresAnnuelles;
 			const brut = niveau * valeur(b.cnav.pass, annee);
 			// Plancher au SMIC, étalé juste au-dessus pour ne pas empiler tous les bas salaires au même euro.
@@ -272,8 +298,12 @@ export function generateCarriere(
 			moisChomage: mois.chomage,
 			moisMaladie: mois.maladie,
 		};
+		if (dansUnAutreRegime(age) && mois.emploi > 0) {
+			ligne.salaireBrut = 0;
+			ligne.autreRegime = true;
+		}
 		if (avpf) ligne.avpf = true;
-		if (quotite < 1) ligne.quotite = quotite;
+		if (quotite < 1 && !ligne.autreRegime) ligne.quotite = quotite;
 		annees.push(ligne);
 	}
 

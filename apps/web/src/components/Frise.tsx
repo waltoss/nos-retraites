@@ -17,6 +17,12 @@ export const ETATS: Record<Etat, { label: string; couleur: string }> = {
 	retraite: { label: "À la retraite", couleur: "var(--retraites)" },
 };
 
+/** Emploi dans un autre régime : ni salaire porté au compte du privé, ni points. */
+const AILLEURS = {
+	label: "Dans un autre régime",
+	couleur: "color-mix(in srgb, var(--cotisants) 38%, var(--card))",
+};
+
 const AGE_DEBUT = 16;
 const AGE_FIN = 70;
 
@@ -70,13 +76,14 @@ export function Frise({
 	for (let age = AGE_DEBUT; age < AGE_FIN; age++) {
 		const { a, retraite, mois, part } = lire(age);
 		const naissance = carriere.enfants.includes(carriere.anneeNaissance + age);
-		const blocs: { etat: Etat; hauteur: number }[] = [];
+		const blocs: { etat: Etat; hauteur: number; ailleurs?: boolean }[] = [];
 		if (retraite) blocs.push({ etat: "retraite", hauteur: 8 });
 		else if (a && mois) {
 			if (mois.emploi > 0)
 				blocs.push({
 					etat: "emploi",
-					hauteur: Math.max(8, (part / echelle) * 100),
+					hauteur: a.autreRegime ? 30 : Math.max(8, (part / echelle) * 100),
+					ailleurs: a.autreRegime,
 				});
 			// Les autres états de l'année se posent en petits blocs au-dessus de l'emploi.
 			for (const etat of ["chomage", "maladieMaternite", "inactivite"] as const)
@@ -101,7 +108,9 @@ export function Frise({
 							key={bloc.etat}
 							style={{
 								height: `${bloc.hauteur}%`,
-								background: ETATS[bloc.etat].couleur,
+								background: bloc.ailleurs
+									? AILLEURS.couleur
+									: ETATS[bloc.etat].couleur,
 								opacity: bloc.etat === "retraite" ? 0.35 : 1,
 							}}
 						/>
@@ -112,13 +121,17 @@ export function Frise({
 		);
 	}
 	const vise = survol === null ? null : lire(survol);
+	const libelle = (etat: Etat) =>
+		etat === "emploi" && vise?.a?.autreRegime
+			? "en emploi dans un autre régime"
+			: ETATS[etat].label;
 	const detailMois = vise?.mois
 		? (Object.entries(vise.mois) as [Etat, number][])
 				.filter(([, n]) => n > 0)
 				.map(([etat, n]) =>
 					n === 12
-						? `Toute l'année ${ETATS[etat].label.toLowerCase()}`
-						: `${pluriel(n)} ${ETATS[etat].label.toLowerCase()}`,
+						? `Toute l'année ${libelle(etat).toLowerCase()}`
+						: `${pluriel(n)} ${libelle(etat).toLowerCase()}`,
 				)
 		: [];
 	const position = (age: number) =>
@@ -197,6 +210,12 @@ export function Frise({
 						{ETATS[e].label}
 					</span>
 				))}
+				{carriere.annees.some((a) => a.autreRegime) && (
+					<span>
+						<i style={{ background: AILLEURS.couleur }} />
+						{AILLEURS.label}
+					</span>
+				)}
 				<span>
 					<b />
 					Naissance d'un enfant

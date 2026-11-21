@@ -1,4 +1,5 @@
 import data from "./france.data.json" with { type: "json" };
+import moyens from "./tauxMoyens.data.json" with { type: "json" };
 import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
 
 /**
@@ -6,14 +7,19 @@ import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
  *
  * Simplifications du calcul des points de retraite complémentaire avant 2019 :
  * - avant 1999, la caisse Arrco est supposée être l'UNIRS, dont les points sont convertis en points Arrco ;
- * - les taux sont les taux minimaux obligatoires (entreprises créées avant 1997 pour l'Arrco, avant 1981 pour l'Agirc) ;
- * - la garantie minimale de points des cadres n'est pas modélisée ;
+ * - les taux sont les taux obligatoires, multipliés par le rapport du taux moyen réellement pratiqué
+ *   au taux obligatoire (scripts/build-historique.ts) : chacun cotise au taux moyen de son année ;
+ * - la garantie minimale de points des cadres (1989 à 2018) vaut pour une année complète ;
  * - avant 1960, les points sont reconstitués au barème de 1960, à salaire égal en part du plafond.
  */
 const a = data.agircArrco;
 const serie = (s: Record<string, number>) => s as unknown as SerieAnnuelle;
 const tranche = (salaire: number, bas: number, haut: number) =>
 	Math.max(0, Math.min(salaire, haut) - bas);
+
+const rapport = (s: Record<string, number>, annee: number) =>
+	valeur(serie(s), annee);
+const garantie = moyens.garantieMinimaleDePoints;
 
 /** Première année des séries de prix d'achat du point. */
 const PREMIERE_ANNEE_POINTS = Math.min(
@@ -39,7 +45,9 @@ function pointsAnnee(
 	}
 	if (annee >= 2019) {
 		return (
-			(tranche(salaireBrut, 0, pass) * a.tauxContractuel.tranche1 +
+			(tranche(salaireBrut, 0, pass) *
+				a.tauxContractuel.tranche1 *
+				moyens.agircArrcoTranche1 +
 				tranche(salaireBrut, pass, 8 * pass) * a.tauxContractuel.tranche2) /
 			valeur(serie(a.prixAchat.agircArrco), annee)
 		);
@@ -51,23 +59,29 @@ function pointsAnnee(
 			: valeur(serie(a.prixAchat.unirs), annee) / a.conversion.unirs;
 	let cotisationsArrco =
 		tranche(salaireBrut, 0, pass) *
-		valeur(serie(a.tauxContractuel.arrcoTranche1), annee);
+		valeur(serie(a.tauxContractuel.arrcoTranche1), annee) *
+		rapport(moyens.arrcoTranche1, annee);
 	let pointsAgirc = 0;
 	if (cadre) {
 		const cotisationsAgirc =
 			tranche(salaireBrut, pass, 4 * pass) *
-				valeur(serie(a.tauxContractuel.agircTrancheB), annee) +
+				valeur(serie(a.tauxContractuel.agircTrancheB), annee) *
+				rapport(moyens.agircTrancheB, annee) +
 			(annee >= 1991
 				? tranche(salaireBrut, 4 * pass, 8 * pass) *
 					valeur(serie(a.tauxContractuel.agircTrancheC), annee)
 				: 0);
-		pointsAgirc =
-			(cotisationsAgirc / valeur(serie(a.prixAchat.agirc), annee)) *
-			a.conversion.agirc;
+		const acquis = cotisationsAgirc / valeur(serie(a.prixAchat.agirc), annee);
+		const minimum =
+			annee >= garantie.debut && annee <= garantie.fin
+				? garantie.pointsAgircParAn
+				: 0;
+		pointsAgirc = Math.max(acquis, minimum) * a.conversion.agirc;
 	} else {
 		cotisationsArrco +=
 			tranche(salaireBrut, pass, 3 * pass) *
-			valeur(serie(a.tauxContractuel.arrcoTranche2), annee);
+			valeur(serie(a.tauxContractuel.arrcoTranche2), annee) *
+			rapport(moyens.arrcoTranche2, annee);
 	}
 	return cotisationsArrco / prixArrco + pointsAgirc;
 }
@@ -105,7 +119,8 @@ export const BAREMES_FRANCE: Baremes = {
 		valeurDeServiceDuPoint: a.valeurDeServiceDuPoint,
 		indiceValeurDeService: serie(a.indiceValeurDeService),
 		cotisation: {
-			tauxTranche1: a.tauxContractuel.tranche1,
+			// Taux moyen réellement pratiqué, un peu au-dessus du taux obligatoire.
+			tauxTranche1: a.tauxContractuel.tranche1 * moyens.agircArrcoTranche1,
 			tauxTranche2: a.tauxContractuel.tranche2,
 			plafondTranche2EnPass: 8,
 			tauxAppel: a.tauxAppel,

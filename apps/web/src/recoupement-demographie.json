@@ -1,22 +1,22 @@
 [
 	{
 		"nom": "Natalité à 1,70, en 2050",
-		"modele": 0.08,
+		"modele": 0.07,
 		"cible": 0.21
 	},
 	{
 		"nom": "Natalité à 1,70, en 2070",
-		"modele": 0.92,
+		"modele": 0.91,
 		"cible": 0.92
 	},
 	{
 		"nom": "Natalité à 1,20, en 2050",
-		"modele": -0.06,
+		"modele": -0.05,
 		"cible": -0.19
 	},
 	{
 		"nom": "Natalité à 1,20, en 2070",
-		"modele": -0.98,
+		"modele": -0.97,
 		"cible": -0.97
 	},
 	{

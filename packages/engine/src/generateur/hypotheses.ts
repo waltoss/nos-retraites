@@ -33,6 +33,16 @@ export interface Hypotheses {
 		dureeMin: number;
 		dureeMax: number;
 	};
+	/**
+	 * Polypensionnés : part des individus qui passent une partie de leur vie active dans un autre
+	 * régime (fonction publique, indépendants, agriculture), et bornes de cette partie, en part
+	 * de la vie active. Elle se place au début ou à la fin de la carrière, à chances égales.
+	 */
+	autreRegime: {
+		part: { F: number; H: number };
+		dureeMin: number;
+		dureeMax: number;
+	};
 	/** Salaire à temps plein, en part du PASS, pour un individu médian : points (âge, part du PASS). */
 	profilSalaire: ReadonlyArray<readonly [age: number, partDuPass: number]>;
 	/** Multiplicateur d'ensemble du profil de salaire. */
@@ -41,6 +51,11 @@ export interface Hypotheses {
 	sigmaPermanent: number;
 	/** Dispersion des chocs annuels de salaire (écart-type du logarithme). */
 	sigmaTransitoire: number;
+	/**
+	 * Haut de la distribution : au-dessus de ce rang (en écarts-types), le salaire croît plus vite
+	 * que la loi log-normale, de cette pente par écart-type. Réglé sur les centiles 95 et 99 de l'Insee.
+	 */
+	queueSalaire: { seuil: number; pente: { F: number; H: number } };
 	/** Pente de salaire supplémentaire par année d'âge et par écart-type de rang. */
 	penteRang: number;
 	/** Rapport du salaire des femmes à celui des hommes, à caractéristiques égales. */

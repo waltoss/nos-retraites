@@ -280,6 +280,7 @@ export function decideLiquidation(
 		return trimestresManquants(
 			cumul.trimestresCotises +
 				cumul.trimestresAssimiles +
+				cumul.trimestresAutresRegimes +
 				trimestresMda(carriere, b.cnav, annee),
 			age,
 			g,
@@ -287,7 +288,11 @@ export function decideLiquidation(
 	};
 	const enEmploi = (age: AgeTrimestres) => {
 		const a = carriere.annees[Math.floor(age / 4) - compte.ageDebut];
-		return a !== undefined && a.etat === "emploi" && a.salaireBrut > 0;
+		return (
+			a !== undefined &&
+			a.etat === "emploi" &&
+			(a.salaireBrut > 0 || a.autreRegime === true)
+		);
 	};
 	const u = comportement ? carriere.tirageDepart : undefined;
 	const seuilDecote =

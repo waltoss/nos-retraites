@@ -37,6 +37,11 @@ export interface OptionsProjection {
 	pensionsReference?: Pension[];
 	ageMin?: number;
 	ageMax?: number;
+	/**
+	 * Mortalité selon le niveau de pension : à âge égal, les pensions élevées pèsent plus
+	 * et les basses moins, sans changer le nombre total de personnes de cet âge.
+	 */
+	survie?: (sexe: "F" | "H", vingtieme: number, age: number) => number;
 }
 
 export interface AnneeProjetee {
@@ -55,6 +60,8 @@ export interface AnneeProjetee {
 	salaireMoyen: number;
 	/** Âge moyen de ceux qui partent cette année-là. */
 	ageMoyenDepart: number;
+	/** Nombre de départs dans l'année. */
+	departs: number;
 }
 
 export interface GenerationProjetee {
@@ -99,6 +106,8 @@ export interface Preparation {
 	avantReforme: Uint8Array;
 	/** Individus simulés par génération et par sexe : le dénominateur des poids. */
 	simules: Map<string, number>;
+	/** Vingtième de pension de chacun dans sa génération et son sexe, avec le droit en vigueur. */
+	vingtiemes: Uint8Array;
 }
 
 const cle = (individu: Individu) =>
@@ -149,6 +158,27 @@ export function prepareProjection(
 		}
 		pensions[k] = p;
 	}
+	// Rang de pension dans la génération, avec le droit en vigueur : il ne dépend pas du scénario.
+	const vingtiemes = new Uint8Array(n);
+	if (options.survie) {
+		const cellules = new Map<string, number[]>();
+		for (let k = 0; k < n; k++) {
+			const c = cle(population[k] as Individu);
+			const v = cellules.get(c) ?? [];
+			v.push(k);
+			cellules.set(c, v);
+		}
+		for (const membres of cellules.values()) {
+			membres.sort(
+				(x, y) =>
+					(reference[x] as Pension).mensuelleBrute -
+					(reference[y] as Pension).mensuelleBrute,
+			);
+			membres.forEach((k, rang) => {
+				vingtiemes[k] = Math.floor((rang * 20) / membres.length);
+			});
+		}
+	}
 	return {
 		population,
 		b,
@@ -158,6 +188,7 @@ export function prepareProjection(
 		pensions,
 		avantReforme,
 		simules,
+		vingtiemes,
 	};
 }
 
@@ -180,12 +211,40 @@ function lecteur(prep: Preparation, annee: number) {
 		? valeur(b.agircArrco.indiceValeurDeService, annee)
 		: 1;
 	const point = regles.valeurDuPoint ?? 1;
+	// Somme des chances de survie de chaque génération : les poids d'un âge gardent le même total.
+	const survie = options.survie;
+	const survies = new Map<string, number>();
+	const chance = (k: number, age: number) => {
+		const c = (prep.population[k] as Individu).carriere;
+		return survie ? survie(c.sexe, prep.vingtiemes[k] as number, age) : 1;
+	};
+	if (survie)
+		for (let k = 0; k < prep.population.length; k++) {
+			const individu = prep.population[k] as Individu;
+			const age = annee - individu.carriere.anneeNaissance;
+			if (age < 60 || age > ageMax) continue;
+			survies.set(
+				cle(individu),
+				(survies.get(cle(individu)) ?? 0) + chance(k, age),
+			);
+		}
 	return {
 		poids(k: number): number {
 			const individu = prep.population[k] as Individu;
 			const c = individu.carriere;
 			const age = annee - c.anneeNaissance;
 			if (age < ageMin || age > ageMax) return 0;
+			if (survie && age >= 60) {
+				const reels = (c.sexe === "F" ? pyramide.femmes : pyramide.hommes)[
+					Math.min(age, pyramide.femmes.length - 1)
+				];
+				return (
+					((reels ?? 0) *
+						options.champ.part(age, c.sexe, annee) *
+						chance(k, age)) /
+					(survies.get(cle(individu)) ?? 1)
+				);
+			}
 			const reels = (c.sexe === "F" ? pyramide.femmes : pyramide.hommes)[
 				Math.min(age, pyramide.femmes.length - 1)
 			];
@@ -296,6 +355,7 @@ export function projeter(prep: Preparation): Projection {
 				: 0,
 			salaireMoyen: ligne.cotisants ? ligne.salaires / ligne.cotisants : 0,
 			ageMoyenDepart: ligne.departs ? ligne.ages / ligne.departs : 0,
+			departs: ligne.departs,
 		});
 	}
 
