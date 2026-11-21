@@ -45,6 +45,10 @@ export function Distributions({
 							mediane={courant.cotisations.resume.mediane}
 							couleur="var(--cotisants)"
 							description="Répartition des cotisations retraite annuelles des salariés du privé"
+							effectif={courant.effectifs.cotisants}
+							effectifReference={reference.effectifs.cotisants}
+							population="des cotisants"
+							periode="par an"
 						/>
 					) : (
 						<div className="histo attente" />
@@ -79,6 +83,10 @@ export function Distributions({
 							mediane={courant.pensions.resume.mediane}
 							couleur="var(--retraites)"
 							description="Répartition des pensions mensuelles brutes des retraités du privé"
+							effectif={courant.effectifs.retraites}
+							effectifReference={reference.effectifs.retraites}
+							population="des retraités"
+							periode="par mois"
 						/>
 					) : (
 						<div className="histo attente" />

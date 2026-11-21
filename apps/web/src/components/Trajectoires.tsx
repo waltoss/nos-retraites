@@ -1,7 +1,8 @@
 import type { Projection } from "@nos-retraites/engine";
-import { useEffect, useState } from "react";
+import { type PointerEvent, useEffect, useState } from "react";
 import { decimal, entier, euros } from "../format";
 import { useScenario } from "../scenario";
+import { cadrer } from "./Histogram";
 
 interface Point {
 	x: number;
@@ -22,6 +23,8 @@ function Courbe({
 	format,
 	depuisZero = false,
 	anneeEffet,
+	enTete = "En",
+	sansReference = false,
 }: {
 	titre: string;
 	aide: string;
@@ -31,6 +34,10 @@ function Courbe({
 	format: (y: number) => string;
 	depuisZero?: boolean;
 	anneeEffet: number;
+	/** Mot qui précède l'abscisse dans la bulle : « En 2045 », « Nés en 1975 ». */
+	enTete?: string;
+	/** La courbe est déjà un écart à la loi actuelle : inutile de la rappeler. */
+	sansReference?: boolean;
 }) {
 	const tous = [...reference, ...courant];
 	const xs = tous.map((p) => p.x);
@@ -52,9 +59,26 @@ function Courbe({
 				(p, i) => `${i ? "L" : "M"}${px(p.x).toFixed(1)} ${py(p.y).toFixed(1)}`,
 			)
 			.join(" ");
-	const differe = courant.some(
-		(p, i) => Math.abs(p.y - (reference[i]?.y ?? p.y)) > 1e-9,
-	);
+	const differe =
+		!sansReference &&
+		courant.some((p, i) => Math.abs(p.y - (reference[i]?.y ?? p.y)) > 1e-9);
+	const [survol, setSurvol] = useState<number | null>(null);
+	const viser = (e: PointerEvent<SVGSVGElement>) => {
+		const cadre = e.currentTarget.getBoundingClientRect();
+		const x =
+			x0 +
+			((((e.clientX - cadre.left) / cadre.width) * L - MARGE.gauche) /
+				(L - MARGE.gauche - MARGE.droite)) *
+				(x1 - x0);
+		let proche = 0;
+		courant.forEach((p, i) => {
+			if (Math.abs(p.x - x) < Math.abs((courant[proche] as Point).x - x))
+				proche = i;
+		});
+		setSurvol(proche);
+	};
+	const vise = survol === null ? null : (courant[survol] as Point);
+	const viseReference = survol === null ? null : reference[survol];
 	const debut = courant[0] as Point;
 	const fin = courant[courant.length - 1] as Point;
 	const finReference = reference[reference.length - 1] as Point;
@@ -64,43 +88,92 @@ function Courbe({
 				<strong>{titre}</strong>
 				<small>{aide}</small>
 			</figcaption>
-			<svg viewBox={`0 0 ${L} ${H}`} role="img" aria-label={titre}>
-				{depuisZero && (
+			<div className="trace">
+				<svg
+					viewBox={`0 0 ${L} ${H}`}
+					role="img"
+					aria-label={titre}
+					onPointerMove={viser}
+					onPointerDown={viser}
+					onPointerLeave={() => setSurvol(null)}
+				>
+					{depuisZero && (
+						<line
+							x1={MARGE.gauche}
+							x2={L - MARGE.droite}
+							y1={py(0)}
+							y2={py(0)}
+							className="zero"
+						/>
+					)}
 					<line
-						x1={MARGE.gauche}
-						x2={L - MARGE.droite}
-						y1={py(0)}
-						y2={py(0)}
-						className="zero"
+						x1={px(anneeEffet)}
+						x2={px(anneeEffet)}
+						y1={MARGE.haut}
+						y2={H - MARGE.bas}
+						className="effet"
 					/>
-				)}
-				<line
-					x1={px(anneeEffet)}
-					x2={px(anneeEffet)}
-					y1={MARGE.haut}
-					y2={H - MARGE.bas}
-					className="effet"
-				/>
-				{differe && <path d={trace(reference)} className="reference" />}
-				<path d={trace(courant)} stroke={couleur} className="scenario" />
-				<circle cx={px(fin.x)} cy={py(fin.y)} r="3.5" fill={couleur} />
-				<text x={MARGE.gauche} y={H - 5} className="axe">
-					{x0}
-				</text>
-				{px(anneeEffet) - MARGE.gauche > 48 && (
-					<text
-						x={px(anneeEffet)}
-						y={H - 5}
-						className="axe"
-						textAnchor="middle"
-					>
-						{anneeEffet}
+					{differe && <path d={trace(reference)} className="reference" />}
+					<path d={trace(courant)} stroke={couleur} className="scenario" />
+					<circle cx={px(fin.x)} cy={py(fin.y)} r="3.5" fill={couleur} />
+					<text x={MARGE.gauche} y={H - 5} className="axe">
+						{x0}
 					</text>
+					{px(anneeEffet) - MARGE.gauche > 48 && (
+						<text
+							x={px(anneeEffet)}
+							y={H - 5}
+							className="axe"
+							textAnchor="middle"
+						>
+							{anneeEffet}
+						</text>
+					)}
+					<text x={L - MARGE.droite} y={H - 5} className="axe" textAnchor="end">
+						{x1}
+					</text>
+					{vise && (
+						<g className="vise">
+							<line
+								x1={px(vise.x)}
+								x2={px(vise.x)}
+								y1={MARGE.haut}
+								y2={H - MARGE.bas}
+							/>
+							{differe && viseReference && (
+								<circle cx={px(vise.x)} cy={py(viseReference.y)} r="3" />
+							)}
+							<circle
+								cx={px(vise.x)}
+								cy={py(vise.y)}
+								r="4.5"
+								fill={couleur}
+								className="point"
+							/>
+						</g>
+					)}
+				</svg>
+				{vise && (
+					<div
+						className="bulle num"
+						style={{
+							left: cadrer((px(vise.x) / L) * 100),
+							bottom: `calc(${(1 - py(vise.y) / H) * 100}% + 12px)`,
+						}}
+					>
+						<strong>
+							{enTete} {vise.x} : {format(vise.y)}
+						</strong>
+						{differe &&
+							viseReference &&
+							Math.abs(viseReference.y - vise.y) > 1e-9 && (
+								<span className="avant">
+									{format(viseReference.y)} avec la loi actuelle
+								</span>
+							)}
+					</div>
 				)}
-				<text x={L - MARGE.droite} y={H - 5} className="axe" textAnchor="end">
-					{x1}
-				</text>
-			</svg>
+			</div>
 			<p className="num">
 				{format(debut.y)} en {debut.x}, <strong>{format(fin.y)}</strong> en{" "}
 				{fin.x}
@@ -185,7 +258,10 @@ export function Trajectoires() {
 					courant={serie(courant, (a) => a.cotisants / a.retraites)}
 					couleur="var(--cotisants)"
 					format={(y) =>
-						decimal(Math.round(y * 100) / 100).replace(/,(\d)$/, ",$1")
+						y.toLocaleString("fr-FR", {
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2,
+						})
 					}
 				/>
 				<Courbe
@@ -237,6 +313,7 @@ export function Trajectoires() {
 						couleur={cumul >= 0 ? "var(--cotisants)" : "var(--besoin)"}
 						format={milliards}
 						depuisZero
+						sansReference
 					/>
 					<div className="cumul">
 						<small>
@@ -263,6 +340,7 @@ export function Trajectoires() {
 			<div className="courbes deux">
 				<Courbe
 					anneeEffet={anneeEffet - 62}
+					enTete="Nés en"
 					titre="Âge moyen de départ"
 					aide="Par année de naissance."
 					reference={generations(reference).map((g) => ({
@@ -278,6 +356,7 @@ export function Trajectoires() {
 				/>
 				<Courbe
 					anneeEffet={anneeEffet - 62}
+					enTete="Nés en"
 					titre="Pension moyenne au moment du départ"
 					aide="Par année de naissance, en euros de 2026 par mois."
 					reference={generations(reference).map((g) => ({
