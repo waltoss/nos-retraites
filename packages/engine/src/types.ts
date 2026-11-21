@@ -12,9 +12,17 @@ export type Etat =
 /** Une année de carrière. L'individu est supposé né un 1er janvier : l'année civile et l'âge coïncident. */
 export interface AnneeCarriere {
 	annee: number;
+	/** État où l'individu a passé le plus de mois dans l'année. */
 	etat: Etat;
-	/** Salaire brut annuel en euros courants ; 0 hors emploi. */
+	/** Salaire brut perçu dans l'année, en euros courants. */
 	salaireBrut: number;
+	/**
+	 * Mois passés en emploi, au chômage, en maladie ou maternité ; le reste de l'année est de l'inactivité.
+	 * Absents, l'année entière est passée dans l'état indiqué.
+	 */
+	moisEmploi?: number;
+	moisChomage?: number;
+	moisMaladie?: number;
 	/** Quotité de travail quand elle est inférieure à un temps plein. */
 	quotite?: number;
 	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
@@ -76,4 +84,23 @@ export interface Pension {
 	agircArrco: DetailAgircArrco;
 	/** Pension mensuelle brute totale, en euros de l'année de référence. */
 	mensuelleBrute: number;
+}
+
+/** Mois de l'année passés dans chaque état. */
+export function moisParEtat(a: AnneeCarriere): {
+	emploi: number;
+	chomage: number;
+	maladie: number;
+} {
+	if (a.moisEmploi === undefined)
+		return {
+			emploi: a.etat === "emploi" ? 12 : 0,
+			chomage: a.etat === "chomage" ? 12 : 0,
+			maladie: a.etat === "maladieMaternite" ? 12 : 0,
+		};
+	return {
+		emploi: a.moisEmploi,
+		chomage: a.moisChomage ?? 0,
+		maladie: a.moisMaladie ?? 0,
+	};
 }

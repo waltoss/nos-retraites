@@ -17,7 +17,7 @@ const ETAPES: { icone: IconName; titre: string; texte: string }[] = [
 		icone: "population",
 		titre: "Inventer des vies",
 		texte:
-			"20 000 personnes nées de 1930 à 2008. Chaque année, un tirage décide si chacune travaille, perd son emploi, s'arrête ou reprend. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
+			"20 000 personnes nées de 1930 à 2008. Chaque année, des tirages décident si chacune travaille, perd son emploi, tombe malade ou s'arrête, et pour combien de mois. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
 	},
 	{
 		icone: "carriere",
@@ -190,16 +190,20 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 		valeur: `${pc(H.depuisEmploi.chomage)} pour une personne médiane, plus en bas de l'échelle`,
 	},
 	{
-		nom: "Retour à l'emploi depuis le chômage",
-		valeur: `${pc(H.depuisChomage.emploi)} par an`,
+		nom: "Durée moyenne d'une période de chômage",
+		valeur: `${decimal(H.dureeMois.chomage)} mois`,
 	},
 	{
 		nom: "Après 55 ans",
-		valeur: `sorties de l'emploi × ${H.seniors.multiplicateurSorties.toLocaleString("fr-FR")}, retours ÷ ${H.seniors.diviseurRetours.toLocaleString("fr-FR")}`,
+		valeur: `sorties de l'emploi × ${decimal(H.seniors.multiplicateurSorties)}, périodes hors emploi × ${decimal(H.seniors.multiplicateurDurees)}`,
+	},
+	{
+		nom: "Congé maternité",
+		valeur: `${H.dureeMois.maternite} mois par naissance`,
 	},
 	{
 		nom: "Mères qui s'arrêtent après une naissance",
-		valeur: `${pc(H.interruptionNaissance.probabilite)} par naissance pour la génération 1953, puis ${pc(H.interruptionNaissance.retourAnnuel)} de retours par an ; ${pc(H.interruptionNaissance.partDefinitive)} ne reprennent jamais`,
+		valeur: `${pc(H.interruptionNaissance.probabilite)} par naissance pour la génération 1953, pour ${entier(H.interruptionNaissance.dureeMois / 12)} ans en moyenne ; ${pc(H.interruptionNaissance.partDefinitive)} ne reprennent jamais`,
 	},
 	{
 		nom: "Carrières partielles en France",
@@ -232,6 +236,7 @@ const LIMITES = [
 	"Le chômage est toujours indemnisé, donc toujours validé. Les fins de droits n'existent pas.",
 	"Les années de parent au foyer sont validées sans condition de ressources, sur une règle simplifiée.",
 	"Le réglage porte sur une seule génération, née en 1953. Les générations suivantes sont supposées lui ressembler, à l'âge d'entrée et aux arrêts pour enfant près.",
+	"Une année se découpe en mois d'emploi, de chômage, de maladie ou d'inactivité, avec au plus une période hors emploi qui commence par an.",
 	"Chacun est né un 1er janvier. Les générations coupées en cours d'année (1961, 1965) prennent la règle de leur plus longue période.",
 	"Avant 1999, tout le monde est supposé cotiser à la caisse UNIRS, aux taux minimaux.",
 	"Montants bruts. Ni CSG, ni impôt.",

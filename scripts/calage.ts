@@ -199,9 +199,9 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 			b,
 		);
 		const a = carriere.annees.find((x) => x.annee === ANNEE_SALAIRES);
-		if (!a || a.etat !== "emploi") continue;
+		if (!a || a.salaireBrut <= 0 || !a.moisEmploi) continue;
 		groupes[carriere.sexe === "F" ? "femmes" : "hommes"].push(
-			a.salaireBrut / (a.quotite ?? 1) / smic,
+			(a.salaireBrut * 12) / a.moisEmploi / (a.quotite ?? 1) / smic,
 		);
 	}
 	const mesures: Mesure[] = [];
@@ -290,7 +290,7 @@ const LIBRES: {
 			depuisEmploi: { ...h.depuisEmploi, chomage: v },
 		}),
 		min: 0.005,
-		max: 0.15,
+		max: 0.4,
 	},
 	{
 		nom: "depuisEmploi.inactivite",
@@ -303,21 +303,38 @@ const LIBRES: {
 		max: 0.08,
 	},
 	{
-		nom: "depuisChomage.emploi",
-		lit: (h) => h.depuisChomage.emploi,
-		ecrit: (h, v) => ({
-			...h,
-			depuisChomage: { ...h.depuisChomage, emploi: v },
-		}),
-		min: 0.15,
-		max: 0.8,
+		nom: "dureeMois.chomage",
+		lit: (h) => h.dureeMois.chomage,
+		ecrit: (h, v) => ({ ...h, dureeMois: { ...h.dureeMois, chomage: v } }),
+		min: 3,
+		max: 30,
 	},
 	{
-		nom: "depuisInactivite.emploi",
-		lit: (h) => h.depuisInactivite.emploi,
-		ecrit: (h, v) => ({ ...h, depuisInactivite: { emploi: v } }),
-		min: 0.02,
-		max: 0.5,
+		nom: "dureeMois.inactivite",
+		lit: (h) => h.dureeMois.inactivite,
+		ecrit: (h, v) => ({ ...h, dureeMois: { ...h.dureeMois, inactivite: v } }),
+		min: 12,
+		max: 400,
+	},
+	{
+		nom: "seniors.multiplicateurDurees",
+		lit: (h) => h.seniors.multiplicateurDurees,
+		ecrit: (h, v) => ({
+			...h,
+			seniors: { ...h.seniors, multiplicateurDurees: v },
+		}),
+		min: 1,
+		max: 10,
+	},
+	{
+		nom: "interruptionNaissance.dureeMois",
+		lit: (h) => h.interruptionNaissance.dureeMois,
+		ecrit: (h, v) => ({
+			...h,
+			interruptionNaissance: { ...h.interruptionNaissance, dureeMois: v },
+		}),
+		min: 6,
+		max: 400,
 	},
 	{
 		nom: "risqueRang",
@@ -337,13 +354,6 @@ const LIBRES: {
 		max: 5,
 	},
 	{
-		nom: "seniors.diviseurRetours",
-		lit: (h) => h.seniors.diviseurRetours,
-		ecrit: (h, v) => ({ ...h, seniors: { ...h.seniors, diviseurRetours: v } }),
-		min: 1,
-		max: 10,
-	},
-	{
 		nom: "interruptionNaissance.probabilite",
 		lit: (h) => h.interruptionNaissance.probabilite,
 		ecrit: (h, v) => ({
@@ -352,16 +362,6 @@ const LIBRES: {
 		}),
 		min: 0,
 		max: 0.6,
-	},
-	{
-		nom: "interruptionNaissance.retourAnnuel",
-		lit: (h) => h.interruptionNaissance.retourAnnuel,
-		ecrit: (h, v) => ({
-			...h,
-			interruptionNaissance: { ...h.interruptionNaissance, retourAnnuel: v },
-		}),
-		min: 0.03,
-		max: 0.5,
 	},
 	{
 		nom: "interruptionNaissance.partDefinitive",

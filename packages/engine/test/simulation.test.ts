@@ -30,7 +30,8 @@ describe("générateur", () => {
 			expect(ageEntree).toBeLessThanOrEqual(28);
 			for (const a of c.annees) {
 				expect(a.salaireBrut).toBeGreaterThanOrEqual(0);
-				if (a.etat !== "emploi") expect(a.salaireBrut).toBe(0);
+				if ((a.moisEmploi ?? 12) === 0) expect(a.salaireBrut).toBe(0);
+				expect((a.moisEmploi ?? 0) + (a.moisChomage ?? 0) + (a.moisMaladie ?? 0)).toBeLessThanOrEqual(12);
 			}
 		}
 		const femmes = population.filter((i) => i.carriere.sexe === "F").length;

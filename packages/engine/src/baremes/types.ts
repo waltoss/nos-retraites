@@ -33,6 +33,8 @@ export interface BaremeCnav {
 	/** Trimestres de majoration de durée d'assurance par enfant, attribués à la mère. */
 	mdaParEnfant: number;
 	majorationTroisEnfants: number;
+	/** Jours indemnisés qui valident un trimestre assimilé. */
+	joursParTrimestreAssimile: { chomage: number; maladie: number };
 	/** Heures de SMIC nécessaires pour valider un trimestre, selon l'année. */
 	heuresSmicParTrimestre(annee: number): number;
 	minimumContributif: {

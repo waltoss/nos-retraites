@@ -21,6 +21,7 @@ export const BAREMES_FICTIFS: Baremes = {
 		surcoteParTrimestre: 0.0125,
 		mdaParEnfant: 8,
 		majorationTroisEnfants: 0.1,
+		joursParTrimestreAssimile: { chomage: 50, maladie: 60 },
 		heuresSmicParTrimestre: () => 150,
 		minimumContributif: null,
 		tauxCotisation: { plafonne: 0.15, deplafonne: 0.02 },

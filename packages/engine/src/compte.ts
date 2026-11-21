@@ -1,5 +1,5 @@
 import { type Baremes, valeur } from "./baremes/types.ts";
-import type { AgeTrimestres, Carriere } from "./types.ts";
+import { type AgeTrimestres, type Carriere, moisParEtat } from "./types.ts";
 
 /**
  * Heures annuelles du salaire forfaitaire de l'AVPF (169 heures par mois).
@@ -8,6 +8,10 @@ import type { AgeTrimestres, Carriere } from "./types.ts";
  * (consulté le 2026-11-21). Simplification : SMIC de l'année et non du 1er juillet précédent.
  */
 const HEURES_AVPF = 169 * 12;
+const MOIS = 12;
+const JOURS_PAR_MOIS = 30;
+/** L'Agirc-Arrco attribue des points pour un arrêt de plus de 60 jours. */
+const MOIS_MALADIE_POUR_POINTS = 2;
 
 /** Droits acquis année par année, calculés une fois par carrière. */
 export interface CompteCarriere {
@@ -30,40 +34,56 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 		points: new Float64Array(n),
 	};
 	const aa = b.agircArrco;
-	let derniersPoints = 0;
+	const jours = b.cnav.joursParTrimestreAssimile;
+	/** Points d'une année complète au dernier salaire connu : base des points attribués hors emploi. */
+	let pointsAnneePleine = 0;
 	for (let i = 0; i < n; i++) {
 		const a = carriere.annees[i];
 		if (!a) continue;
+		const mois = moisParEtat(a);
 		const pass = valeur(b.cnav.pass, a.annee);
-		if (a.etat === "emploi" && a.salaireBrut > 0) {
+		const coefficient = valeur(b.cnav.coefficientsRevalorisation, a.annee);
+		let cotises = 0;
+		let salairePorte = 0;
+		let points = 0;
+		if (mois.emploi > 0 && a.salaireBrut > 0) {
 			const seuil =
 				b.cnav.heuresSmicParTrimestre(a.annee) *
 				valeur(b.cnav.smicHoraire, a.annee);
-			const cotises = Math.min(4, Math.floor(a.salaireBrut / seuil));
-			compte.trimestresCotises[i] = cotises;
-			if (cotises > 0) {
-				compte.salairesRevalorises[i] =
-					Math.min(a.salaireBrut, pass) *
-					valeur(b.cnav.coefficientsRevalorisation, a.annee);
-			}
-			derniersPoints = aa.pointsAnnee(
+			cotises = Math.min(4, Math.floor(a.salaireBrut / seuil));
+			const part = mois.emploi / MOIS;
+			// Le plafond s'applique au prorata des mois travaillés.
+			if (cotises > 0) salairePorte = Math.min(a.salaireBrut, pass * part);
+			pointsAnneePleine = aa.pointsAnnee(
 				a.annee,
-				a.salaireBrut,
+				a.salaireBrut / part,
 				pass,
 				carriere.cadre,
 			);
-			compte.points[i] = derniersPoints;
-		} else if (a.avpf) {
-			// AVPF : la Caf cotise sur un salaire forfaitaire de 169 heures de SMIC par mois. Pas de points.
-			compte.trimestresAssimiles[i] = 4;
-			compte.salairesRevalorises[i] =
-				Math.min(HEURES_AVPF * valeur(b.cnav.smicHoraire, a.annee), pass) *
-				valeur(b.cnav.coefficientsRevalorisation, a.annee);
-		} else if (a.etat === "chomage" || a.etat === "maladieMaternite") {
-			// Période assimilée : 4 trimestres validés, points attribués sur la base du dernier salaire.
-			compte.trimestresAssimiles[i] = 4;
-			compte.points[i] = derniersPoints;
+			points = pointsAnneePleine * part;
 		}
+		// Périodes assimilées : des trimestres sans cotisation, et des points sur la base du dernier salaire.
+		let assimiles =
+			Math.floor((mois.chomage * JOURS_PAR_MOIS) / jours.chomage) +
+			Math.floor((mois.maladie * JOURS_PAR_MOIS) / jours.maladie);
+		points += (pointsAnneePleine * mois.chomage) / MOIS;
+		if (mois.maladie >= MOIS_MALADIE_POUR_POINTS)
+			points += (pointsAnneePleine * mois.maladie) / MOIS;
+		if (a.avpf) {
+			// AVPF : la Caf cotise sur un salaire forfaitaire de 169 heures de SMIC par mois. Pas de points.
+			const moisAuFoyer = MOIS - mois.emploi - mois.chomage - mois.maladie;
+			assimiles = 4;
+			salairePorte = Math.min(
+				pass,
+				salairePorte +
+					(HEURES_AVPF * valeur(b.cnav.smicHoraire, a.annee) * moisAuFoyer) /
+						MOIS,
+			);
+		}
+		compte.trimestresCotises[i] = cotises;
+		compte.trimestresAssimiles[i] = Math.min(4 - cotises, assimiles);
+		compte.salairesRevalorises[i] = salairePorte * coefficient;
+		compte.points[i] = points;
 	}
 	return compte;
 }

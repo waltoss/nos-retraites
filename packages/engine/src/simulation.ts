@@ -193,7 +193,7 @@ export function runSimulation(
 			c.annees[
 				age - (c.annees[0] ? c.annees[0].annee - c.anneeNaissance : age)
 			];
-		if (a && a.etat === "emploi" && a.salaireBrut > 0) {
+		if (a && a.salaireBrut > 0) {
 			cotisations.push(computeCotisations(a.salaireBrut, be));
 			poidsCotisations.push(w);
 		} else {

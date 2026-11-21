@@ -76,11 +76,7 @@ population.forEach((i, k) => {
 	const g = compte[c.sexe === "F" ? "femmes" : "hommes"];
 	plus(g.n, age);
 	if (!Number.isNaN(r.pensionParIndividu[k] as number)) plus(g.r, age);
-	else if (
-		c.annees.some(
-			(a) => a.annee === ANNEE && a.etat === "emploi" && a.salaireBrut > 0,
-		)
-	)
+	else if (c.annees.some((a) => a.annee === ANNEE && a.salaireBrut > 0))
 		plus(g.c, age);
 });
 /** Taux lissé sur cinq âges. */

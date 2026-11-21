@@ -16,11 +16,11 @@
 	],
 	"carrierePartielle": {
 		"part": {
-			"F": 0.03602,
-			"H": 0.0094
+			"F": 0.0423,
+			"H": 0.01625
 		},
 		"dureeMin": 2,
-		"dureeMax": 10.06
+		"dureeMax": 10
 	},
 	"profilSalaire": [
 		[16, 0.36],
@@ -32,10 +32,10 @@
 		[70, 0.76]
 	],
 	"niveauSalaire": 1.148,
-	"sigmaPermanent": 0.3523,
+	"sigmaPermanent": 0.3644,
 	"sigmaTransitoire": 0.08,
 	"penteRang": 0.006,
-	"ecartSalaireFemmes": 0.85,
+	"ecartSalaireFemmes": 0.8567,
 	"seuilCadre": 0.9,
 	"repartitionEnfants": [0.13, 0.19, 0.39, 0.2, 0.09],
 	"agePremierEnfant": {
@@ -44,40 +44,35 @@
 	},
 	"ecartEntreEnfants": 3,
 	"depuisEmploi": {
-		"chomage": 0.01607,
+		"chomage": 0.07907,
 		"maladie": 0.008,
-		"inactivite": 0.005465
+		"inactivite": 0.009534
 	},
-	"risqueRang": 1.349,
-	"depuisChomage": {
-		"emploi": 0.7916,
-		"inactivite": 0.1
-	},
-	"depuisMaladie": {
-		"emploi": 0.6,
-		"inactivite": 0.1
-	},
-	"depuisInactivite": {
-		"emploi": 0.04349
-	},
+	"risqueRang": 1.604,
 	"interruptionNaissance": {
-		"probabilite": 0.1399,
-		"retourAnnuel": 0.03674,
-		"partDefinitive": 0.1703
+		"probabilite": 0.2388,
+		"dureeMois": 267.2,
+		"partDefinitive": 0.1857
 	},
 	"avpf": {
-		"part": 1
+		"part": 0.8288
 	},
 	"tendanceInterruption": -0.02,
 	"tempsPartielMeres": {
-		"part": 0.6059,
+		"part": 0.6689,
 		"quotite": 0.7
 	},
 	"seniors": {
 		"age": 55,
-		"multiplicateurSorties": 1.512,
-		"diviseurRetours": 8.47
+		"multiplicateurSorties": 1.97,
+		"multiplicateurDurees": 4.886
 	},
-	"etalementSmic": 0.481,
-	"heuresAnnuelles": 1820
+	"etalementSmic": 0.4926,
+	"heuresAnnuelles": 1820,
+	"dureeMois": {
+		"chomage": 4.787,
+		"maladie": 14,
+		"inactivite": 220.7,
+		"maternite": 4
+	}
 }

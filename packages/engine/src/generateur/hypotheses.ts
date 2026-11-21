@@ -51,20 +51,24 @@ export interface Hypotheses {
 	repartitionEnfants: ReadonlyArray<number>;
 	agePremierEnfant: { moyenne: number; ecartType: number };
 	ecartEntreEnfants: number;
-	/** Probabilités annuelles de transition depuis l'emploi, pour un individu médian. */
+	/** Probabilité, chaque année passée en emploi, de commencer une période hors emploi (individu médian). */
 	depuisEmploi: { chomage: number; maladie: number; inactivite: number };
 	/** Sensibilité du risque de chômage au rang de salaire (multiplicateur par écart-type en moins). */
 	risqueRang: number;
-	depuisChomage: { emploi: number; inactivite: number };
-	depuisMaladie: { emploi: number; inactivite: number };
-	depuisInactivite: { emploi: number };
+	/** Durée moyenne des périodes hors emploi, en mois ; le congé maternité a une durée fixe. */
+	dureeMois: {
+		chomage: number;
+		maladie: number;
+		inactivite: number;
+		maternite: number;
+	};
 	/**
-	 * Probabilité qu'une mère interrompe son activité l'année d'une naissance, son retour annuel ensuite,
-	 * et la part des interruptions qui sont définitives.
+	 * Probabilité qu'une mère interrompe son activité après un congé maternité, durée moyenne de
+	 * l'interruption en mois, et part des interruptions qui sont définitives.
 	 */
 	interruptionNaissance: {
 		probabilite: number;
-		retourAnnuel: number;
+		dureeMois: number;
 		partDefinitive: number;
 	};
 	/**
@@ -77,11 +81,11 @@ export interface Hypotheses {
 	tendanceInterruption: number;
 	/** Part des mères en emploi qui travaillent à temps partiel tant qu'un enfant a moins de 12 ans, et leur quotité. */
 	tempsPartielMeres: { part: number; quotite: number };
-	/** Après cet âge, les sorties de l'emploi sont multipliées et les retours divisés. */
+	/** Après cet âge, les sorties de l'emploi sont plus fréquentes et les périodes hors emploi plus longues. */
 	seniors: {
 		age: number;
 		multiplicateurSorties: number;
-		diviseurRetours: number;
+		multiplicateurDurees: number;
 	};
 	/** Largeur de la zone juste au-dessus du SMIC où sont étalés les salaires que le modèle placerait dessous. */
 	etalementSmic: number;
