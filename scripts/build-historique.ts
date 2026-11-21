@@ -4,9 +4,24 @@
  *   obligatoires (packages/engine/src/baremes/tauxMoyens.data.json) ;
  * - rapport du salaire des femmes à celui des hommes au fil du temps
  *   (packages/engine/src/generateur/ecartSalaire.data.json).
- * Source des deux : data/references/complementaire-historique.json.
+ * - salaire moyen rapporté au plafond de la Sécurité sociale
+ *   (packages/engine/src/generateur/salaireMoyen.data.json).
+ * Sources : data/references/complementaire-historique.json et salaires.json.
  */
 import reference from "../data/references/complementaire-historique.json" with {
+	type: "json",
+};
+import minimum from "../data/references/minimum-contributif.json" with {
+	type: "json",
+};
+import projections from "../data/references/projections.json" with {
+	type: "json",
+};
+import salaires from "../data/references/salaires.json" with { type: "json" };
+import tempsPartiel from "../data/references/temps-partiel.json" with {
+	type: "json",
+};
+import baremes from "../packages/engine/src/baremes/france.data.json" with {
 	type: "json",
 };
 
@@ -82,6 +97,118 @@ await Bun.write(
 		import.meta.url,
 	),
 	`${JSON.stringify(ecart)}\n`,
+);
+
+// Salaire moyen rapporté au plafond de la Sécurité sociale, en indice de l'année des salaires calés.
+// Le générateur exprime les salaires en part du plafond : sans cet indice, il supposerait que
+// le plafond a toujours suivi les salaires, alors qu'il a monté plus vite qu'eux depuis 1980.
+const ANNEE_DES_SALAIRES = 2025;
+const rmpt = salaires.remunerationMoyenneParTete;
+const moyen = rmpt.rmptEurosCourants_sc0_7 as Record<string, number>;
+const pass = baremes.cnav.pass as Record<string, number>;
+const rapportAuPlafond = (annee: number) =>
+	(moyen[annee] as number) / (pass[annee] as number);
+const indiceSalaire: Record<string, number> = {};
+for (const annee of Object.keys(moyen).map(Number)) {
+	if (annee > ANNEE_DES_SALAIRES || pass[annee] === undefined) continue;
+	indiceSalaire[annee] = Number(
+		(rapportAuPlafond(annee) / rapportAuPlafond(ANNEE_DES_SALAIRES)).toFixed(4),
+	);
+}
+await Bun.write(
+	new URL(
+		"../packages/engine/src/generateur/salaireMoyen.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify({
+		source: `${rmpt.source} Plafond : data/baremes/cnav.json.`,
+		url: rmpt.url,
+		date: rmpt.date,
+		note: "Rémunération moyenne par tête rapportée au plafond de la Sécurité sociale, en indice de 2025. Après 2025 le plafond est supposé suivre les salaires : l'indice vaut 1.",
+		derniereAnnee: ANNEE_DES_SALAIRES,
+		indice: indiceSalaire,
+	})}\n`,
+);
+
+// Minimum contributif selon l'année de départ, en euros de l'année de référence.
+const mico = minimum.montants;
+const prixCor = projections.hypothesesEconomiquesCOR.prix.indice as {
+	anneeDebut: number;
+	valeurs: number[];
+};
+const prixDe = (annee: number) =>
+	prixCor.valeurs[annee - prixCor.anneeDebut] as number;
+const reference2026 = baremes.anneeReference;
+const montantsMico: Record<
+	string,
+	{ annuel: number; annuelMajore: number; plafondAnnuel: number | null }
+> = {};
+for (const annee of Object.keys(mico.simple).map(Number)) {
+	if (annee >= reference2026 || annee < prixCor.anneeDebut) continue;
+	const enEuros = (mensuel: number | null) =>
+		mensuel === null || mensuel === undefined
+			? null
+			: Math.round((mensuel * 12 * prixDe(reference2026)) / prixDe(annee));
+	const simple = (mico.simple as Record<string, number | null>)[annee];
+	const majore = (mico.majore as Record<string, number | null>)[annee];
+	if (simple == null || majore == null) continue;
+	montantsMico[annee] = {
+		annuel: enEuros(simple) as number,
+		annuelMajore: enEuros(majore) as number,
+		plafondAnnuel: enEuros(
+			(mico.plafondTousRegimes as Record<string, number | null>)[annee] ?? null,
+		),
+	};
+}
+await Bun.write(
+	new URL(
+		"../packages/engine/src/baremes/minimumContributif.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify({
+		source: minimum.montants.source,
+		url: minimum.montants.url,
+		date: "2026-11-21",
+		note: `Montants annuels au 1er janvier de l'année de départ, en euros de ${reference2026} (indice des prix du COR). Sans plafond tous régimes avant 2012. Avant la première année, celle-ci s'applique.`,
+		parAnnee: montantsMico,
+	})}\n`,
+);
+
+// Temps partiel : part des salariés à temps partiel par sexe et par année, et quotité moyenne.
+const tp = tempsPartiel.partTempsPartiel.salariesFranceMetropolitaine;
+const fraction = (s: Serie) =>
+	Object.fromEntries(
+		Object.entries(propre(s)).map(([a, v]) => [
+			a,
+			Number((v / 100).toFixed(4)),
+		]),
+	);
+const heures = tempsPartiel.quotite.dureeHebdoHabituelle2025;
+const quotite = (sexe: "femmes" | "hommes") =>
+	Number(
+		(
+			(heures.tempsPartiel[sexe] as Record<string, number>)["2025"] /
+			(heures.tempsComplet[sexe] as Record<string, number>)["2025"]
+		).toFixed(3),
+	);
+await Bun.write(
+	new URL(
+		"../packages/engine/src/generateur/tempsPartiel.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify({
+		source: tp.source,
+		url: tp.url,
+		date: "2026-11-21",
+		note: "Part des salariés à temps partiel par année. Quotité : durée hebdomadaire habituelle des temps partiels rapportée à celle des temps complets en 2025 (Insee, fiche Temps partiel).",
+		femmes: fraction(tp.femmes as Serie),
+		hommes: fraction(tp.hommes as Serie),
+		quotite: { F: quotite("femmes"), H: quotite("hommes") },
+	})}\n`,
+);
+console.log(
+	"salaire moyen rapporté au plafond, indice 2025 :",
+	[1950, 1970, 1990, 2010].map((a) => `${a}: ${indiceSalaire[a]}`).join(" "),
 );
 console.log(
 	"taux moyen, Arrco T1 :",

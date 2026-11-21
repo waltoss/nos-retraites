@@ -1,12 +1,39 @@
 import { type Baremes, valeur } from "../baremes/types.ts";
-import type { Rng } from "../rng.ts";
+import { quantileNormal, type Rng } from "../rng.ts";
 import type { AnneeCarriere, Carriere, Etat, Sexe } from "../types.ts";
 import ecartSalaire from "./ecartSalaire.data.json" with { type: "json" };
 import type { Hypotheses } from "./hypotheses.ts";
+import salaireMoyen from "./salaireMoyen.data.json" with { type: "json" };
+import tempsPartielData from "./tempsPartiel.data.json" with { type: "json" };
 
 /** Le salaire des femmes rapporté à celui des hommes, en indice de la dernière année connue (Insee). */
 const INDICE_ECART = ecartSalaire.indice as Record<string, number>;
 const PREMIERE_ANNEE_ECART = Math.min(...Object.keys(INDICE_ECART).map(Number));
+/** Part des salariés à temps partiel par sexe et par année, et quotité moyenne (Dares, Insee). */
+const PARTS_TEMPS_PARTIEL = {
+	F: tempsPartielData.femmes as Record<string, number>,
+	H: tempsPartielData.hommes as Record<string, number>,
+};
+const ANNEES_TEMPS_PARTIEL = Object.keys(PARTS_TEMPS_PARTIEL.F).map(Number);
+const BORNES_TEMPS_PARTIEL = [
+	Math.min(...ANNEES_TEMPS_PARTIEL),
+	Math.max(...ANNEES_TEMPS_PARTIEL),
+] as const;
+const partTempsPartiel = (sexe: Sexe, annee: number): number =>
+	PARTS_TEMPS_PARTIEL[sexe][
+		Math.max(BORNES_TEMPS_PARTIEL[0], Math.min(BORNES_TEMPS_PARTIEL[1], annee))
+	] ?? 0;
+const QUOTITE_TEMPS_PARTIEL = tempsPartielData.quotite as Record<Sexe, number>;
+
+/** Le salaire moyen rapporté au plafond de la Sécurité sociale, en indice de l'année des salaires calés. */
+const INDICE_SALAIRE = salaireMoyen.indice as Record<string, number>;
+const PREMIERE_ANNEE_SALAIRE = Math.min(
+	...Object.keys(INDICE_SALAIRE).map(Number),
+);
+const indiceSalaire = (annee: number): number =>
+	annee >= salaireMoyen.derniereAnnee
+		? 1
+		: (INDICE_SALAIRE[Math.max(PREMIERE_ANNEE_SALAIRE, annee)] ?? 1);
 const indiceEcart = (annee: number): number =>
 	annee >= ecartSalaire.derniereAnnee
 		? 1
@@ -248,11 +275,17 @@ export function generateCarriere(
 		let quotite = 1;
 		if (mois.emploi > 0) {
 			const jeuneEnfant = enfants.some((n) => annee >= n && annee - n < 12);
+			// Temps partiel : les mêmes personnes d'une année sur l'autre, de plus en plus nombreuses
+			// à mesure que la part publiée monte ; les mères de jeunes enfants y sont plus exposées.
+			const propension =
+				sexe === "F"
+					? jeuneEnfant
+						? hy.tempsPartielFemmes.meres
+						: hy.tempsPartielFemmes.autres
+					: 1;
 			const tempsPartiel =
-				sexe === "F" &&
-				nbEnfants > 0 &&
-				tirageTempsPartiel < hy.tempsPartielMeres.part;
-			quotite = tempsPartiel && jeuneEnfant ? hy.tempsPartielMeres.quotite : 1;
+				tirageTempsPartiel < partTempsPartiel(sexe, annee) * propension;
+			quotite = tempsPartiel ? QUOTITE_TEMPS_PARTIEL[sexe] : 1;
 			const niveau =
 				interpole(hy.profilSalaire, age) *
 				hy.niveauSalaire *
@@ -265,7 +298,7 @@ export function generateCarriere(
 				) *
 				(sexe === "F" ? hy.ecartSalaireFemmes * indiceEcart(annee) : 1);
 			const smicAnnuel = valeur(b.cnav.smicHoraire, annee) * hy.heuresAnnuelles;
-			const brut = niveau * valeur(b.cnav.pass, annee);
+			const brut = niveau * valeur(b.cnav.pass, annee) * indiceSalaire(annee);
 			// Plancher au SMIC, étalé juste au-dessus pour ne pas empiler tous les bas salaires au même euro.
 			const pleinTemps =
 				brut >= smicAnnuel * (1 + hy.etalementSmic)
@@ -311,7 +344,8 @@ export function generateCarriere(
 		anneeNaissance,
 		sexe,
 		enfants,
-		cadre: rang > h.seuilCadre,
+		cadre:
+			rang > quantileNormal(1 - interpole(h.partCadres[sexe], anneeNaissance)),
 		annees,
 		// Dérivé du rang pour ne consommer aucun tirage : la population reste la même qu'avant.
 		tirageDepart: (Math.abs(rang) * 7919.123) % 1,

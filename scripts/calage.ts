@@ -393,16 +393,6 @@ const LIBRES: {
 		max: 1,
 	},
 	{
-		nom: "tempsPartielMeres.part",
-		lit: (h) => h.tempsPartielMeres.part,
-		ecrit: (h, v) => ({
-			...h,
-			tempsPartielMeres: { ...h.tempsPartielMeres, part: v },
-		}),
-		min: 0,
-		max: 0.7,
-	},
-	{
 		nom: "ecartSalaireFemmes",
 		lit: (h) => h.ecartSalaireFemmes,
 		ecrit: (h, v) => ({ ...h, ecartSalaireFemmes: v }),

@@ -72,7 +72,6 @@
 	"sigmaTransitoire": 0.08,
 	"penteRang": 0.006,
 	"ecartSalaireFemmes": 0.8567,
-	"seuilCadre": 0.9,
 	"repartitionEnfants": [
 		0.13,
 		0.19,
@@ -100,10 +99,6 @@
 		"part": 0.8064
 	},
 	"tendanceInterruption": -0.02,
-	"tempsPartielMeres": {
-		"part": 0.6997,
-		"quotite": 0.7
-	},
 	"seniors": {
 		"age": 55,
 		"multiplicateurSorties": 2.067,
@@ -138,5 +133,31 @@
 		},
 		"dureeMin": 0.55,
 		"dureeMax": 1
+	},
+	"partCadres": {
+		"F": [
+			[
+				1945,
+				0.12
+			],
+			[
+				1990,
+				0.26
+			]
+		],
+		"H": [
+			[
+				1945,
+				0.31
+			],
+			[
+				1990,
+				0.31
+			]
+		]
+	},
+	"tempsPartielFemmes": {
+		"meres": 1.5,
+		"autres": 0.85
 	}
 }

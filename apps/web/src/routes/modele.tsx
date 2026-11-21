@@ -219,7 +219,7 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 	},
 	{
 		nom: "Mères à temps partiel",
-		valeur: `${pc(H.tempsPartielMeres.part)}, à ${pc(H.tempsPartielMeres.quotite)} d'un temps plein`,
+		valeur: `${H.tempsPartielFemmes.meres.toLocaleString("fr-FR")} fois plus souvent que la moyenne des femmes, tant qu'un enfant a moins de 12 ans`,
 	},
 	{
 		nom: "Nombre d'enfants",
@@ -234,7 +234,10 @@ const LIMITES = [
 	"À âge égal, les pensions élevées vivent plus longtemps : le modèle reprend les tables de mortalité de l'Insee par niveau de vie, en réduisant l'écart de 40 % parce qu'une pension n'est pas un niveau de vie. Le classement se fait sur la pension de chacun, pas sur les revenus du ménage.",
 	"Trois personnes sur dix passent une partie de leur carrière dans un autre régime. Ces années comptent pour leur durée, mais leur pension de fonctionnaire ou d'indépendant n'est pas calculée : elle est dans le bloc des autres régimes.",
 	"Les points de retraite complémentaire d'avant 2019 sont attribués au taux de cotisation moyen de chaque année, pas au taux de chaque entreprise.",
-	"Le modèle confond ceux qui ont eu un salaire dans l'année et ceux qui sont en emploi en fin d'année. Les petits contrats et le temps partiel hors mères de jeunes enfants manquent, ce qui explique une partie des pensions de base trop hautes.",
+	"Le temps partiel suit la part de salariés à temps partiel publiée chaque année pour les femmes et pour les hommes. Les mères de jeunes enfants y sont supposées une fois et demie plus exposées que les autres femmes : c'est une hypothèse.",
+	"Les salaires d'autrefois suivent le salaire moyen de l'économie, pas le plafond de la Sécurité sociale, qui a monté plus vite depuis 1980.",
+	"Le minimum contributif des départs passés est celui de leur année. Pour ceux qui ont aussi cotisé ailleurs, son plafond tous régimes utilise une estimation de leur autre pension.",
+	"Il manque un demi-million de cotisants de moins de 25 ans : apprentis, emplois d'été, petits contrats.",
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
 	"La population suit les projections de l'Insee de 2026. Natalité et solde migratoire se règlent entre ses variantes basse et haute, par interpolation ; leurs effets sont supposés s'additionner. Les arrivants reçoivent la carrière des personnes de leur âge. Les salaires suivent l'hypothèse du COR : +0,7 % par an au-dessus des prix.",
@@ -311,7 +314,7 @@ const BACKTEST: Record<
 	},
 	"Pension moyenne des retraités, euros de 2026 par mois": {
 		texte:
-			"Par régime, pour tous les retraités en fin d'année. C'est le plus gros écart du modèle : la pension de base des femmes est trop haute, la complémentaire des hommes trop basse.",
+			"Par régime, pour tous les retraités en fin d'année, hors majorations pour enfants. C'est le plus gros écart du modèle : la pension de base des femmes est trop haute, la complémentaire des hommes trop basse.",
 		source: EACR,
 		format: (x) => euros(x),
 	},
@@ -326,6 +329,13 @@ const BACKTEST: Record<
 		source:
 			"Drees, Les retraités et les retraites, édition 2026, fiche 11, échantillon interrégimes de retraités 2020.",
 		format: deuxDecimales,
+	},
+	"Part des nouveaux retraités au minimum contributif, en % (régime général)": {
+		texte:
+			"Part de ceux dont la pension de base est relevée jusqu'au minimum prévu pour une carrière complète à petits salaires.",
+		source: EACR,
+		format: (x) => entier(x),
+		enPoints: true,
 	},
 	"Départs à la retraite par an à l'Agirc-Arrco, en milliers": {
 		texte:

@@ -76,6 +76,17 @@ export interface BaremeCnav {
 		/** Plafond annuel de la pension totale, tous régimes, au-delà duquel le minimum est écrêté. */
 		plafondTousRegimesAnnuel: number | null;
 	} | null;
+	/**
+	 * Minimum contributif des départs passés, en euros de l'année de référence ;
+	 * rien pour l'année de référence et après, où `minimumContributif` s'applique.
+	 */
+	minimumContributifPasse?(annee: number):
+		| {
+				annuel: number;
+				annuelMajore: number;
+				plafondTousRegimesAnnuel: number | null;
+		  }
+		| undefined;
 	/** Évolution du minimum contributif en euros constants selon l'année de départ, base 1 l'année de référence. */
 	indiceMinimumContributif?(annee: number): number;
 	/** Taux de cotisation vieillesse (salarié + employeur) de l'année de référence. */

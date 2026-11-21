@@ -16,14 +16,14 @@
 	{
 		"nom": "Cotisations versées",
 		"unite": "milliards",
-		"modele": 211.5,
+		"modele": 202.7,
 		"cible": 217.3,
 		"source": "Cotisations 2025 du régime général (indépendants compris) et de l'Agirc-Arrco"
 	},
 	{
 		"nom": "Pensions versées",
 		"unite": "milliards",
-		"modele": 199.8,
+		"modele": 202.4,
 		"cible": 220.7,
 		"source": "Drees, effectifs × pension moyenne de droit direct fin 2024, régime général et Agirc-Arrco"
 	}

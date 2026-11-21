@@ -1,0 +1,1444 @@
+{
+ "meta": {
+  "objet": "Références sur le minimum contributif (MICO) du régime général : bénéficiaires (flux et stock, par sexe), montants et plafond d'écrêtement par date d'effet, règles, majoration pour trois enfants.",
+  "methode": "Toutes les valeurs ont été lues le 2026-11-21 dans les sources indiquées : classeurs Excel de l'EACR (data.drees) extraits par script, PDF convertis en texte (panorama Drees 2026 sur vie-publique.fr, REPSS Retraites 2026, circulaires Cnav), tables HTML des barèmes IPP, page service-public. Aucune valeur n'est citée de mémoire ; une valeur introuvable vaut null avec une note. Les parts marquées « derive » sont le rapport de deux effectifs lus. Le fichier CSV du barème IPP « Montant du minimum contributif » fourni par l'utilisateur a été comparé aux montants 2004-2023 retenus : 20 lignes, aucune différence (hors date d'effet de 2019, corrigée d'après la circulaire).",
+  "conventions": "Parts en pourcentage (17.4 = 17,4 %). Montants en euros courants bruts par mois sauf mention. Séries { \"annee\": valeur }. Sexes : ensemble / femmes / hommes. « fiabilite: primaire » = texte officiel ou publication du producteur de la donnée ; « secondaire » = reprise par un tiers.",
+  "limites": [
+   "drees.solidarites-sante.gouv.fr refuse les requêtes automatisées : le fichier Excel de la fiche 08 du panorama (valeurs exactes du graphique 1, dont 2008-2011) n'a pas été lu. Les parts 2012-2024 sont donc dérivées des effectifs de l'EACR (data.drees), qui est la source du graphique ; elles recoupent les valeurs citées dans le texte de la fiche (25 % en 2015, 17,4 % en 2024).",
+   "Flux 2010 et 2011 : aucune valeur chiffrée par année trouvée (la table E-Minima de l'EACR ne renseigne la Cnav qu'à partir de 2012). Seuls ordres de grandeur lus : « 45 % environ au régime général » fin 2008 et « plus de 40 % avant 2012 » (Drees).",
+   "Flux par sexe : disponible seulement pour 2022, 2023 et 2024 dans l'EACR. Le REPSS ne donne par sexe que la part des femmes dans le flux 2024 (70 %).",
+   "Montant moyen du complément sur le stock : introuvable. La variable m1 de la table H de l'EACR est la pension moyenne des bénéficiaires, pas le complément.",
+   "legifrance.gouv.fr refuse les requêtes automatisées (HTTP 403) : le texte des articles L. 351-10, L. 173-2, D. 351-2-1 et D. 173-21-0-1-1 et suivants du code de la sécurité sociale n'a pas été lu. Les règles sont citées mot pour mot depuis service-public, la Drees, le REPSS et les circulaires Cnav.",
+   "statistiques-recherche.lassuranceretraite.fr en maintenance (HTTP 503) : recueil statistique et « principaux chiffres » de la Cnav non lus. www.legislation.cnav.fr ne répond plus (domaine introuvable) : le barème d'origine a été lu dans sa reprise par l'IPP et vérifié sur les circulaires disponibles sur legislation.lassuranceretraite.fr.",
+   "Majoration de 10 % pour trois enfants au seul régime général (part par sexe, montant moyen) : introuvable ; seules des données tous régimes ou « régimes alignés » ont été lues."
+  ]
+ },
+ "beneficiaires": {
+  "source": "Drees, enquête annuelle auprès des caisses de retraite (EACR), fichiers diffusés version du 26 mai 2026, tables E-Minima, H-Conditions_liq et A-Cadrage",
+  "url": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/donnes_eacr/attachments/62_eacr_diffusee_part_2_version_du_26_mai_2026_xlsx",
+  "urlDenominateurs": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/donnes_eacr/attachments/62_eacr_diffusee_part_1_version_du_26_mai_2026_xlsx",
+  "urlDocumentation": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/donnes_eacr/attachments/documentationeacr_mai2026_pdf",
+  "date": "2026-11-21",
+  "fiabilite": "primaire",
+  "champ": "Retraités de droit direct de la Cnav, résidant en France ou à l'étranger, vivants au 31 décembre. Jusqu'en 2019 : régime général hors indépendants (code caisse 0010) ; à partir de 2020 : régime général y compris ex-SSI (code 0015). Rupture de série en 2020.",
+  "flux": {
+   "definition": "Nouveaux retraités de droit direct de l'année (nl_ddir) dont la pension est portée au minimum contributif effectivement servi. part = effectifsMico / effectifsNouveauxRetraites (derive).",
+   "part": {
+    "ensemble": {
+     "2010": null,
+     "2011": null,
+     "2012": 27.1,
+     "2013": 24.8,
+     "2014": 24.9,
+     "2015": 24.8,
+     "2016": 22.1,
+     "2017": 20.9,
+     "2018": 22.0,
+     "2019": 19.8,
+     "2020": 17.8,
+     "2021": 17.5,
+     "2022": 18.3,
+     "2023": 17.9,
+     "2024": 17.4
+    },
+    "femmes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 24.8,
+     "2023": 24.5,
+     "2024": 23.1
+    },
+    "hommes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 10.9,
+     "2023": 10.7,
+     "2024": 11.1
+    }
+   },
+   "effectifsMico": {
+    "ensemble": {
+     "2010": null,
+     "2011": null,
+     "2012": 146374,
+     "2013": 165412,
+     "2014": 159972,
+     "2015": 143006,
+     "2016": 131243,
+     "2017": 130446,
+     "2018": 140145,
+     "2019": 125666,
+     "2020": 112002,
+     "2021": 115707,
+     "2022": 126762,
+     "2023": 123885,
+     "2024": 112861
+    },
+    "femmes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 90928,
+     "2023": 88191,
+     "2024": 78566
+    },
+    "hommes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 35834,
+     "2023": 35694,
+     "2024": 34399
+    }
+   },
+   "effectifsNouveauxRetraites": {
+    "ensemble": {
+     "2010": null,
+     "2011": null,
+     "2012": 540555,
+     "2013": 666418,
+     "2014": 642673,
+     "2015": 575493,
+     "2016": 595089,
+     "2017": 624653,
+     "2018": 636793,
+     "2019": 635903,
+     "2020": 630255,
+     "2021": 661875,
+     "2022": 693238,
+     "2023": 692416,
+     "2024": 648346
+    },
+    "femmes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 365911,
+     "2023": 359513,
+     "2024": 339640
+    },
+    "hommes": {
+     "2010": null,
+     "2011": null,
+     "2012": null,
+     "2013": null,
+     "2014": null,
+     "2015": null,
+     "2016": null,
+     "2017": null,
+     "2018": null,
+     "2019": null,
+     "2020": null,
+     "2021": null,
+     "2022": 327327,
+     "2023": 332903,
+     "2024": 308706
+    }
+   },
+   "millesimeRetenu": {
+    "2012": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2013": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2014": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2015": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2016": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2017": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2018": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0010",
+    "2019": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0015",
+    "2020": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0015",
+    "2021": "EACR 2022 / mico_servi / CC 0015 ; denominateur CC 0015",
+    "2022": "EACR 2023 / mico_traité_servi / CC 0015 ; denominateur CC 0015",
+    "2023": "EACR 2024 / mico_traité_servi / CC 0015 ; denominateur CC 0015",
+    "2024": "EACR 2024 / mico_estimation_drees / CC 0015 ; denominateur CC 0015"
+   },
+   "notes": [
+    "Le MICO n'est calculé qu'une fois tous les droits liquidés (subsidiarité) : les effectifs d'une année sont révisés à la hausse pendant plusieurs années. On retient le millésime le plus récent : EACR 2022 (type mico_servi) pour 2012-2021, EACR 2023 puis EACR 2024 (type mico_traité_servi) pour 2022 et 2023.",
+    "2024 : estimation de la Drees (type mico_estimation_drees), qui extrapole les dossiers tardifs ; c'est la valeur du panorama (« 17,4 % des nouveaux retraités du régime général »). Le constat brut 2024 est dans constatBrut2024.",
+    "2022 à 2024 sont encore provisoires et seront révisés. 2010 et 2011 : null (voir meta.limites).",
+    "Depuis 2020 la Cnav ne distingue plus dossiers traités et non traités.",
+    "2019 : numérateur du millésime EACR 2022 rapporté aux 635 903 nouveaux retraités du champ avec ex-SSI (code 0015, EACR 2020) ; rapporté aux 603 616 du champ hors indépendants (code 0010, EACR 2019), la part serait de 20,8 % (derive). Le REPSS donne 22 %.",
+    "2012-2018 : numérateur étiqueté code 0015 dans le millésime 2022, dénominateur code 0010 (seul disponible) ; avant 2020 les deux champs coïncident pour la Cnav."
+   ],
+   "effectifsMicoPremierConstat": {
+    "valeurs": {
+     "2012": 151542,
+     "2013": 170262,
+     "2014": 157660,
+     "2015": 104872,
+     "2016": 94905,
+     "2017": 92472,
+     "2018": 103568,
+     "2019": 96413,
+     "2020": 87264,
+     "2021": 98512,
+     "2022": 94112
+    },
+    "note": "Effectifs mico_servi au premier millésime disponible (EACR 2015 pour 2012-2014, EACR N ensuite) : mesure l'ampleur des révisions."
+   },
+   "constatBrut2024": {
+    "source": "EACR 2024, table H-Conditions_liq, Champ_FluxStock = Flux, Type_depart = mico",
+    "valeurs": {
+     "ensemble": {
+      "effectifs": 92830,
+      "pensionMoyenne": 571.6
+     },
+     "femmes": {
+      "effectifs": 65660,
+      "pensionMoyenne": 591.7
+     },
+     "hommes": {
+      "effectifs": 27170,
+      "pensionMoyenne": 522.9
+     }
+    },
+    "note": "Constat non redressé des dossiers tardifs : 92 830 / 648 346 = 14,3 % (derive), cohérent avec les 14 % du REPSS. pensionMoyenne = avantage principal moyen de droit direct des bénéficiaires (minimum inclus), pas le complément."
+   },
+   "repss": {
+    "source": "REPSS Retraites 2026, annexe 1 au PLACSS 2025, indicateur 1-12, tableaux 3, 4 et 6",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+    "page": "57-59",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Régime général, en date d'effet ; anciens salariés jusqu'en 2019, salariés et indépendants à partir de 2020. Cnav constaté, situation fin 2024, échantillon au 1/20e.",
+    "part": {
+     "ensemble": {
+      "2012": 29,
+      "2013": 26,
+      "2015": 27,
+      "2017": 22,
+      "2019": 22,
+      "2020": 18,
+      "2021": 18,
+      "2022": 18,
+      "2023": 18,
+      "2024": 14
+     },
+     "femmes": null,
+     "hommes": null
+    },
+    "effectifsMico": {
+     "ensemble": {
+      "2012": 166200,
+      "2013": 182000,
+      "2014": 172800,
+      "2015": 155000,
+      "2016": 141700,
+      "2017": 136000,
+      "2018": 145100,
+      "2019": 131600,
+      "2020": 117200,
+      "2021": 122800,
+      "2022": 126800,
+      "2023": 125400,
+      "2024": 87500
+     }
+    },
+    "effectifsPotentielsAvantEcretement": {
+     "ensemble": {
+      "2012": 255000,
+      "2013": 290100,
+      "2014": 275200,
+      "2015": 237400,
+      "2016": 233900,
+      "2017": 232400,
+      "2018": 239300,
+      "2019": 226500,
+      "2020": 215000,
+      "2021": 219800,
+      "2022": 232200,
+      "2023": 238100,
+      "2024": 223000
+     }
+    },
+    "partDesPotentielsPercevantReellement": {
+     "ensemble": {
+      "2012": 65,
+      "2013": 63,
+      "2014": 63,
+      "2015": 65,
+      "2016": 61,
+      "2017": 59,
+      "2018": 61,
+      "2019": 58,
+      "2020": 54,
+      "2021": 56,
+      "2022": 55,
+      "2023": 53,
+      "2024": 39
+     }
+    },
+    "partDesFemmesDansLeFlux": {
+     "2024": 70
+    },
+    "motifTauxPlein2024": {
+     "ensemble": {
+      "age": 29,
+      "categorie": 26,
+      "duree": 44
+     },
+     "femmes": {
+      "age": 31,
+      "categorie": 21,
+      "duree": 48
+     },
+     "hommes": {
+      "age": 25,
+      "categorie": 39,
+      "duree": 36
+     }
+    },
+    "ecretement": "« parmi les assurés anciens travailleurs salariés pour lesquels le calcul du minimum contributif a été effectué en 2019, 40 % ont vu leur majoration réduite à zéro (écrêtement total) [...] (55 % parmi les polypensionnés contre 2 % parmi les monopensionnés) »",
+    "notes": [
+     "Le tableau 4 ne donne pas 2014, 2016 et 2018.",
+     "Parts par sexe non publiées (graphique 1 seulement, effectifs par sexe non lisibles).",
+     "2024 non redressé des dossiers tardifs : « Les flux les plus récents sont amenés à être fortement révisés »."
+    ]
+   },
+   "dreesTexte": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 08 « Les bénéficiaires d'un minimum de pension », texte et graphique 1",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "page": "78-83",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "citations": [
+     "« au régime général, une pension sur six environ (17 %) liquidée en 2024 est portée au minimum contributif. Cette proportion était de 25 % en 2015 et de plus de 40 % avant 2012. »",
+     "« la part des nouveaux retraités dont la pension était portée à un minimum était de plus de 40 % tous régimes confondus (44 % fin 2008). Cette part variait d'un régime à l'autre, de 7 % pour les anciens fonctionnaires civils de l'État à 45 % environ au régime général »",
+     "« Par régime, entre 2008 et 2024, c'est surtout à la Mutualité sociale agricole (MSA) salariés, au régime général et à la Caisse nationale de retraites des agents des collectivités locales (CNRACL) qu'elle a le plus diminué, de respectivement 39 points, 26 points et 9 points. »",
+     "« Lecture > En 2024, 17,4 % des nouveaux retraités du régime général perçoivent le minimum contributif. »"
+    ],
+    "part": {
+     "ensemble": {
+      "2008": 45,
+      "2015": 25,
+      "2024": 17.4
+     }
+    },
+    "note": "2008 : « 45 % environ ». Série annuelle exacte dans le fichier Excel de la fiche, non lu."
+   }
+  },
+  "stock": {
+   "definition": "Retraités de droit direct en paiement au 31 décembre dont la pension est portée au minimum contributif. part = effectifsMico / effectifsRetraites (derive). Source : EACR, table H-Conditions_liq (Champ_FluxStock = Stock, Type_depart = mico) et table A-Cadrage (Champ = ddir).",
+   "part": {
+    "ensemble": {
+     "2010": 39.6,
+     "2011": 40.1,
+     "2012": 39.4,
+     "2013": 38.7,
+     "2014": 38.0,
+     "2015": 37.5,
+     "2016": 36.8,
+     "2017": 36.0,
+     "2018": 35.2,
+     "2019": 34.6,
+     "2020": 34.9,
+     "2021": 34.1,
+     "2022": 33.0,
+     "2023": 32.2,
+     "2024": 31.3
+    },
+    "femmes": {
+     "2010": 53.6,
+     "2011": 54.1,
+     "2012": 53.3,
+     "2013": 52.5,
+     "2014": 51.9,
+     "2015": 51.2,
+     "2016": 50.4,
+     "2017": 49.4,
+     "2018": 48.4,
+     "2019": 47.4,
+     "2020": 46.8,
+     "2021": 45.8,
+     "2022": 44.4,
+     "2023": 43.3,
+     "2024": 42.2
+    },
+    "hommes": {
+     "2010": 24.5,
+     "2011": 24.9,
+     "2012": 24.1,
+     "2013": 23.3,
+     "2014": 22.7,
+     "2015": 22.1,
+     "2016": 21.5,
+     "2017": 20.8,
+     "2018": 20.3,
+     "2019": 19.8,
+     "2020": 21.1,
+     "2021": 20.5,
+     "2022": 19.7,
+     "2023": 19.0,
+     "2024": 18.4
+    }
+   },
+   "effectifsMico": {
+    "ensemble": {
+     "2010": 4770376,
+     "2011": 4917931,
+     "2012": 4885946,
+     "2013": 4908155,
+     "2014": 4916733,
+     "2015": 4899496,
+     "2016": 4879957,
+     "2017": 4831427,
+     "2018": 4800390,
+     "2019": 4768052,
+     "2020": 4904729,
+     "2021": 4845374,
+     "2022": 4750283,
+     "2023": 4692474,
+     "2024": 4610467
+    },
+    "femmes": {
+     "2010": 3347709,
+     "2011": 3458304,
+     "2012": 3461816,
+     "2013": 3501788,
+     "2014": 3531242,
+     "2015": 3536964,
+     "2016": 3537222,
+     "2017": 3523068,
+     "2018": 3513727,
+     "2019": 3499539,
+     "2020": 3528954,
+     "2021": 3500689,
+     "2022": 3446105,
+     "2023": 3415068,
+     "2024": 3365285
+    },
+    "hommes": {
+     "2010": 1422667,
+     "2011": 1459627,
+     "2012": 1424130,
+     "2013": 1406367,
+     "2014": 1385491,
+     "2015": 1362532,
+     "2016": 1342735,
+     "2017": 1308359,
+     "2018": 1286663,
+     "2019": 1268513,
+     "2020": 1375775,
+     "2021": 1344685,
+     "2022": 1304178,
+     "2023": 1277406,
+     "2024": 1245182
+    }
+   },
+   "effectifsRetraites": {
+    "ensemble": {
+     "2010": 12050700,
+     "2011": 12268921,
+     "2012": 12415992,
+     "2013": 12693341,
+     "2014": 12922464,
+     "2015": 13076324,
+     "2016": 13249763,
+     "2017": 13411597,
+     "2018": 13618264,
+     "2019": 13798591,
+     "2020": 14052675,
+     "2021": 14208620,
+     "2022": 14389241,
+     "2023": 14594635,
+     "2024": 14744736
+    },
+    "femmes": {
+     "2010": 6249375,
+     "2011": 6396980,
+     "2012": 6498906,
+     "2013": 6665562,
+     "2014": 6807227,
+     "2015": 6906713,
+     "2016": 7013704,
+     "2017": 7130580,
+     "2018": 7265999,
+     "2019": 7387714,
+     "2020": 7534076,
+     "2021": 7646034,
+     "2022": 7765389,
+     "2023": 7887701,
+     "2024": 7983968
+    },
+    "hommes": {
+     "2010": 5801325,
+     "2011": 5871941,
+     "2012": 5917086,
+     "2013": 6027779,
+     "2014": 6115237,
+     "2015": 6169611,
+     "2016": 6236059,
+     "2017": 6281017,
+     "2018": 6352265,
+     "2019": 6410877,
+     "2020": 6518599,
+     "2021": 6562586,
+     "2022": 6623852,
+     "2023": 6706934,
+     "2024": 6760768
+    }
+   },
+   "codeCaisse": {
+    "2010": "0010",
+    "2011": "0010",
+    "2012": "0010",
+    "2013": "0010",
+    "2014": "0010",
+    "2015": "0010",
+    "2016": "0010",
+    "2017": "0010",
+    "2018": "0010",
+    "2019": "0010",
+    "2020": "0015",
+    "2021": "0015",
+    "2022": "0015",
+    "2023": "0015",
+    "2024": "0015"
+   },
+   "pensionMoyenneBeneficiaires": {
+    "valeurs": {
+     "ensemble": {
+      "2010": 187,
+      "2011": 290,
+      "2012": 299,
+      "2013": 308,
+      "2014": 311,
+      "2015": 314,
+      "2016": 318,
+      "2017": 324,
+      "2018": 329,
+      "2019": 334,
+      "2020": 396,
+      "2021": 400,
+      "2022": 423,
+      "2023": 434,
+      "2024": 456.6
+     },
+     "femmes": {
+      "2010": 207,
+      "2011": 328,
+      "2012": 338,
+      "2013": 346,
+      "2014": 349,
+      "2015": 352,
+      "2016": 355,
+      "2017": 361,
+      "2018": 365,
+      "2019": 370,
+      "2020": 400,
+      "2021": 405,
+      "2022": 429,
+      "2023": 441,
+      "2024": 464.5
+     },
+     "hommes": {
+      "2010": 139,
+      "2011": 199,
+      "2012": 205,
+      "2013": 211,
+      "2014": 215,
+      "2015": 217,
+      "2016": 220,
+      "2017": 226,
+      "2018": 230,
+      "2019": 234,
+      "2020": 385,
+      "2021": 386,
+      "2022": 407,
+      "2023": 415,
+      "2024": 435.5
+     }
+    },
+    "note": "Variable m1 de la table H, documentée comme « l'avantage principal moyen de droit direct » des bénéficiaires. Ce n'est PAS le montant du complément. Ruptures inexpliquées en 2011 et en 2020 : à ne pas utiliser sans vérification."
+   },
+   "repss": {
+    "source": "REPSS Retraites 2026, indicateur 1-12, tableau 5 (Cnav, séries labellisées, stock SNSP TS-TI en paiement au 31/12/2024)",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+    "page": "58",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "effectifsMico": {
+     "ensemble": {
+      "2012": 4877600,
+      "2013": 4898600,
+      "2015": 4899500,
+      "2017": 4824700,
+      "2019": 4761900,
+      "2020": 4900400,
+      "2021": 4839100,
+      "2022": 4744400,
+      "2023": 4686400,
+      "2024": 4605300
+     }
+    },
+    "part": {
+     "ensemble": {
+      "2024": 31
+     },
+     "femmes": null,
+     "hommes": null
+    }
+   },
+   "generation1953TousRegimes": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 08, tableaux 1 et 2 (EIR 2020)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "page": "84",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Retraités de droit direct d'un régime de base, nés en 1953, résidant en France, vivants au 31 décembre 2020.",
+    "partMinimumRegimePrincipalRegimeGeneral": {
+     "ensemble": 25,
+     "femmes": 35,
+     "hommes": 12
+    },
+    "partMinimumRegimeNonPrincipalRegimeGeneral": {
+     "ensemble": 3,
+     "femmes": 3,
+     "hommes": 3
+    },
+    "partMinimumAuMoinsUnRegimeTousRegimes": {
+     "toutesCarrieres": {
+      "ensemble": 25,
+      "femmes": 34,
+      "hommes": 15
+     },
+     "carrieresCompletes": {
+      "ensemble": 18,
+      "femmes": 28,
+      "hommes": 10
+     },
+     "monopensionnesCarriereComplete": {
+      "ensemble": 14,
+      "femmes": 24,
+      "hommes": 4
+     }
+    },
+    "note": "Régime général = régime principal d'affiliation. Minimum de pension = minimum contributif pour ce régime."
+   },
+   "tousRetraitesTousRegimesEir2020": {
+    "source": "Drees, EIR 2020, « Caractéristiques de tous les retraités », feuille Minima",
+    "url": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/3013_donnees-statistiques-sur-les-caracteristiques-des-retraites/attachments/caracteristiques_de_tous_les_retraites_eir_2020_xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Tous retraités, tous régimes, fin 2020 (minimum contributif, minimum garanti ou pension majorée de référence).",
+    "partMinimumAuMoinsUnRegime": {
+     "ensemble": 36.9,
+     "femmes": 46.5,
+     "hommes": 26.1
+    },
+    "partMinimumRegimePrincipal": {
+     "ensemble": 26.1,
+     "femmes": 38.5,
+     "hommes": 12.4
+    }
+   }
+  },
+  "montantComplement": {
+   "flux": {
+    "source": "Drees, EACR, table E-Minima, variable m1 (« le montant moyen de mico pour les régimes du privé »)",
+    "url": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/donnes_eacr/attachments/62_eacr_diffusee_part_2_version_du_26_mai_2026_xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "euros courants bruts par mois",
+    "champ": "Nouveaux retraités de la Cnav de l'année percevant le MICO, même millésime que flux.part.",
+    "valeurs": {
+     "ensemble": {
+      "2010": null,
+      "2011": null,
+      "2012": 128,
+      "2013": 126,
+      "2014": 123,
+      "2015": 122,
+      "2016": 120,
+      "2017": 123,
+      "2018": 127,
+      "2019": 126,
+      "2020": 125,
+      "2021": 125,
+      "2022": 132,
+      "2023": 137.7,
+      "2024": null
+     },
+     "femmes": {
+      "2010": null,
+      "2011": null,
+      "2012": null,
+      "2013": null,
+      "2014": null,
+      "2015": null,
+      "2016": null,
+      "2017": null,
+      "2018": null,
+      "2019": null,
+      "2020": null,
+      "2021": null,
+      "2022": 135,
+      "2023": 139.8,
+      "2024": null
+     },
+     "hommes": {
+      "2010": null,
+      "2011": null,
+      "2012": null,
+      "2013": null,
+      "2014": null,
+      "2015": null,
+      "2016": null,
+      "2017": null,
+      "2018": null,
+      "2019": null,
+      "2020": null,
+      "2021": null,
+      "2022": 125,
+      "2023": 132.6,
+      "2024": null
+     }
+    },
+    "note": "2024 : null (estimation Drees sans montant). Par sexe : 2022 et 2023 seulement."
+   },
+   "flux2024Repss": {
+    "source": "REPSS Retraites 2026, indicateur 1-12, tableau 8 et texte",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+    "page": "60",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "euros constants 2025 par mois",
+    "champ": "Assurés pour lesquels le calcul du minimum contributif a été effectué en 2024, anciens salariés et indépendants.",
+    "montantMoyen": {
+     "ensemble": 169,
+     "femmes": 170,
+     "hommes": 165
+    },
+    "poidsDansLaPension": {
+     "ensemble": 33,
+     "femmes": 32,
+     "hommes": 35
+    },
+    "mediane": {
+     "femmes": 163,
+     "hommes": 155
+    },
+    "p95": {
+     "femmes": 347,
+     "hommes": 370
+    },
+    "pensionRegimeGeneralMediane": {
+     "femmes": 700,
+     "hommes": 605
+    }
+   },
+   "stock": {
+    "valeurs": {
+     "ensemble": null,
+     "femmes": null,
+     "hommes": null
+    },
+    "note": "Introuvable dans les sources lues."
+   },
+   "generation1953TousRegimes": {
+    "source": "Drees, Les retraités et les retraites, édition 2026, fiche 08, tableau 4 (EIR 2020)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "page": "86",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Retraités nés en 1953, résidant en France, percevant un minimum dans leur régime principal (tous régimes, pas seulement la Cnav), fin 2020.",
+    "majorationLieeAuMinimum": {
+     "ensemble": 140,
+     "femmes": 140,
+     "hommes": 130
+    },
+    "pensionDroitDirectYComprisMinimum": {
+     "ensemble": 750,
+     "femmes": 740,
+     "hommes": 800
+    },
+    "partDuMinimumDansLaPension": {
+     "moyenne": {
+      "ensemble": 25,
+      "femmes": 25,
+      "hommes": 23
+     },
+     "q1": {
+      "ensemble": 10,
+      "femmes": 11,
+      "hommes": 8
+     },
+     "mediane": {
+      "ensemble": 21,
+      "femmes": 22,
+      "hommes": 18
+     },
+     "q3": {
+      "ensemble": 35,
+      "femmes": 35,
+      "hommes": 34
+     }
+    }
+   },
+   "majorationExceptionnelle2023": {
+    "source": "REPSS Retraites 2026, indicateur 1-12, encadré 1 et tableau 9",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+    "page": "61",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Retraités du régime général en paiement au 31/12/2025 bénéficiant de la majoration exceptionnelle (pensions liquidées avant le 1er septembre 2023).",
+    "effectifs": {
+     "ensemble": 1279428,
+     "femmes": 855780,
+     "hommes": 423648
+    },
+    "montantMoyenMensuel": {
+     "ensemble": 53.02,
+     "femmes": 59.36,
+     "hommes": 40.23
+    },
+    "partBeneficiairesDuMico": {
+     "ensemble": 62,
+     "femmes": 64,
+     "hommes": 58
+    },
+    "partMajorationEntiere": {
+     "ensemble": 6,
+     "femmes": 8,
+     "hommes": 3
+    }
+   }
+  }
+ },
+ "montants": {
+  "source": "Cnav, barème « Minimum contributif : montants » repris par l'IPP (barèmes IPP, retraites, régime général) pour 2004-2023 ; circulaires Cnav pour 2019 et 2023-2026",
+  "url": "https://baremes.ipp.eu/parameters/regimes-de-retraites/retraites.secteur_prive.regime_general_cnav.montant_mico/table/",
+  "urlPlafond": "https://baremes.ipp.eu/parameters/regimes-de-retraites/retraites.secteur_prive.regime_general_cnav.plafond_mico/table",
+  "urlsCirculaires": {
+   "2019/4": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2019_04_09012019.pdf",
+   "2023/16": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_16_08092023.pdf",
+   "2024/3": "https://legislation.lassuranceretraite.fr/Documents/Circulaires/Pdf/circulaire_cnav_2024_03_09012024.pdf",
+   "2024/40": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_40_23122024.pdf",
+   "2025/8": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_08_05032025.pdf",
+   "2025/33": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+   "2026/16": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_16_12062026.pdf"
+  },
+  "date": "2026-11-21",
+  "fiabilite": "secondaire pour les valeurs lues dans l'IPP (reprise du barème Cnav), primaire pour celles lues dans les circulaires Cnav (champ luDans de chaque ligne)",
+  "champ": "Montant entier (durée d'assurance complète au régime général) du minimum contributif, euros courants bruts par mois, applicable aux pensions prenant effet à compter de la date indiquée. Le plafond est le total mensuel des retraites personnelles tous régimes (base et complémentaires) au-delà duquel le minimum est écrêté.",
+  "simple": {
+   "2004": 542.58,
+   "2005": 553.44,
+   "2006": 563.4,
+   "2007": 573.54,
+   "2008": 579.85,
+   "2009": 584.48,
+   "2010": 590.33,
+   "2011": 595.64,
+   "2012": 608.15,
+   "2013": 620.92,
+   "2014": 628.99,
+   "2015": 628.99,
+   "2016": 629.62,
+   "2017": 629.62,
+   "2018": 634.66,
+   "2019": 636.56,
+   "2020": 642.93,
+   "2021": 645.5,
+   "2022": 652.6,
+   "2023": 684.13,
+   "2024": 733.03,
+   "2025": 747.47,
+   "2026": 756.29
+  },
+  "majore": {
+   "2004": 558.86,
+   "2005": 570.04,
+   "2006": 597.71,
+   "2007": 608.47,
+   "2008": 633.61,
+   "2009": 638.68,
+   "2010": 645.07,
+   "2011": 650.87,
+   "2012": 664.54,
+   "2013": 678.5,
+   "2014": 687.32,
+   "2015": 687.32,
+   "2016": 688.0,
+   "2017": 688.0,
+   "2018": 693.51,
+   "2019": 695.59,
+   "2020": 702.54,
+   "2021": 705.35,
+   "2022": 713.11,
+   "2023": 747.57,
+   "2024": 876.13,
+   "2025": 893.39,
+   "2026": 903.93
+  },
+  "plafondTousRegimes": {
+   "2012": 1005.0,
+   "2013": 1028.17,
+   "2014": 1039.47,
+   "2015": 1128.96,
+   "2016": 1135.73,
+   "2017": 1145.95,
+   "2018": 1160.04,
+   "2019": 1177.44,
+   "2020": 1191.56,
+   "2021": 1203.35,
+   "2022": 1240.88,
+   "2023": 1322.87,
+   "2024": 1367.51,
+   "2025": 1394.44,
+   "2026": 1410.89
+  },
+  "definitionSeries": "Valeur en vigueur au 1er janvier de l'année (pour une pension prenant effet ce jour-là). Les changements en cours d'année sont dans datesEffet.",
+  "datesEffet": {
+   "montants": [
+    {
+     "dateEffet": "2004-01-01",
+     "simpleAnnuel": 6511.06,
+     "simpleMensuel": 542.58,
+     "majoreAnnuel": 6706.39,
+     "majoreMensuel": 558.86,
+     "reference": "Circulaire CNAV 2003/56 du 30/12/2003",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2005-01-01",
+     "simpleAnnuel": 6641.28,
+     "simpleMensuel": 553.44,
+     "majoreAnnuel": 6840.51,
+     "majoreMensuel": 570.04,
+     "reference": "Circulaire CNAV 2003/56 du 30/12/2003",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2006-01-01",
+     "simpleAnnuel": 6760.82,
+     "simpleMensuel": 563.4,
+     "majoreAnnuel": 7172.54,
+     "majoreMensuel": 597.71,
+     "reference": "Décret 2005-1770 du 30/12/2005",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2007-01-01",
+     "simpleAnnuel": 6882.51,
+     "simpleMensuel": 573.54,
+     "majoreAnnuel": 7301.64,
+     "majoreMensuel": 608.47,
+     "reference": "Circulaire CNAV 2006/75 du 20/12/2006",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2008-01-01",
+     "simpleAnnuel": 6958.21,
+     "simpleMensuel": 579.85,
+     "majoreAnnuel": 7603.41,
+     "majoreMensuel": 633.61,
+     "reference": "Décret 2007-1899 du 26/12/2007",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2008-09-01",
+     "simpleAnnuel": 7013.87,
+     "simpleMensuel": 584.48,
+     "majoreAnnuel": 7664.23,
+     "majoreMensuel": 638.68,
+     "reference": "Circulaire CNAV 2008/45 du 12/08/2008",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2009-04-01",
+     "simpleAnnuel": 7084.0,
+     "simpleMensuel": 590.33,
+     "majoreAnnuel": 7740.87,
+     "majoreMensuel": 645.07,
+     "reference": "Circulaire CNAV 2009/31 du 16/04/2009",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2010-04-01",
+     "simpleAnnuel": 7147.75,
+     "simpleMensuel": 595.64,
+     "majoreAnnuel": 7810.53,
+     "majoreMensuel": 650.87,
+     "reference": "Circulaire CNAV 2010/43 du 23/04/2010",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2011-04-01",
+     "simpleAnnuel": 7297.85,
+     "simpleMensuel": 608.15,
+     "majoreAnnuel": 7974.55,
+     "majoreMensuel": 664.54,
+     "reference": "Circulaire CNAV 2011/30 du 14/04/2011",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2012-04-01",
+     "simpleAnnuel": 7451.1,
+     "simpleMensuel": 620.92,
+     "majoreAnnuel": 8142.01,
+     "majoreMensuel": 678.5,
+     "reference": "Circulaire CNAV 2012/35 du 17/04/2012",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2013-04-01",
+     "simpleAnnuel": 7547.96,
+     "simpleMensuel": 628.99,
+     "majoreAnnuel": 8247.85,
+     "majoreMensuel": 687.32,
+     "reference": "Circulaire CNAV 2013/29 du 18/04/2013",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2015-10-01",
+     "simpleAnnuel": 7555.5,
+     "simpleMensuel": 629.62,
+     "majoreAnnuel": 8256.09,
+     "majoreMensuel": 688.0,
+     "reference": "Circulaire CNAV 2016/13 du 16/02/2016",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2017-10-01",
+     "simpleAnnuel": 7615.94,
+     "simpleMensuel": 634.66,
+     "majoreAnnuel": 8322.13,
+     "majoreMensuel": 693.51,
+     "reference": "Circulaire CNAV 2017/32 du 26/09/2017",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2019-01-01",
+     "simpleAnnuel": 7638.78,
+     "simpleMensuel": 636.56,
+     "majoreAnnuel": 8347.09,
+     "majoreMensuel": 695.59,
+     "reference": "Circulaire CNAV 2019/4 du 09/01/2019",
+     "luDans": "circulaire Cnav 2019/4 (PDF) et IPP"
+    },
+    {
+     "dateEffet": "2020-01-01",
+     "simpleAnnuel": 7715.16,
+     "simpleMensuel": 642.93,
+     "majoreAnnuel": 8430.56,
+     "majoreMensuel": 702.54,
+     "reference": "Circulaire CNAV 2020/5 du 09/01/2020",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2021-01-01",
+     "simpleAnnuel": 7746.02,
+     "simpleMensuel": 645.5,
+     "majoreAnnuel": 8464.28,
+     "majoreMensuel": 705.35,
+     "reference": "Circulaire CNAV 2021/1 du 11/01/2021",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2022-01-01",
+     "simpleAnnuel": 7831.22,
+     "simpleMensuel": 652.6,
+     "majoreAnnuel": 8557.38,
+     "majoreMensuel": 713.11,
+     "reference": "Circulaire CNAV 2022/3 du 11/01/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2022-07-01",
+     "simpleAnnuel": 8144.46,
+     "simpleMensuel": 678.7,
+     "majoreAnnuel": 8899.67,
+     "majoreMensuel": 741.63,
+     "reference": "Circulaire CNAV 2022/19 du 18/08/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2023-01-01",
+     "simpleAnnuel": 8209.61,
+     "simpleMensuel": 684.13,
+     "majoreAnnuel": 8970.86,
+     "majoreMensuel": 747.57,
+     "reference": "Circulaire CNAV 2023/3 du 09/01/2023",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2023-09-01",
+     "simpleAnnuel": 8509.61,
+     "simpleMensuel": 709.13,
+     "majoreAnnuel": 10170.86,
+     "majoreMensuel": 847.57,
+     "reference": "Circulaire CNAV 2023/16 du 08/09/2023 (décret 2023-754 du 10/08/2023, art. D. 351-2-1 CSS)",
+     "luDans": "circulaire Cnav 2023/16 (PDF) et IPP"
+    },
+    {
+     "dateEffet": "2024-01-01",
+     "simpleAnnuel": 8796.38,
+     "simpleMensuel": 733.03,
+     "majoreAnnuel": 10513.61,
+     "majoreMensuel": 876.13,
+     "reference": "Circulaire CNAV 2024/3 du 09/01/2024 (coefficient 1,0337)",
+     "luDans": "circulaire Cnav 2024/3 (PDF)"
+    },
+    {
+     "dateEffet": "2025-01-01",
+     "simpleAnnuel": 8969.66,
+     "simpleMensuel": 747.47,
+     "majoreAnnuel": 10720.72,
+     "majoreMensuel": 893.39,
+     "reference": "Circulaire CNAV 2025/8 du 05/03/2025 (coefficient 1,0197), qui annule et remplace la circulaire 2024/40",
+     "luDans": "circulaire Cnav 2025/8 (PDF)"
+    },
+    {
+     "dateEffet": "2026-01-01",
+     "simpleAnnuel": 9075.5,
+     "simpleMensuel": 756.29,
+     "majoreAnnuel": 10847.22,
+     "majoreMensuel": 903.93,
+     "reference": "Circulaire CNAV 2025/33 du 23/12/2025 (coefficient 1,0118)",
+     "luDans": "circulaire Cnav 2025/33 (PDF)"
+    }
+   ],
+   "plafondTousRegimes": [
+    {
+     "dateEffet": "2012-01-01",
+     "mensuel": 1005.0,
+     "reference": "Décret 2011-772 du 28/06/2011",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2012-07-01",
+     "mensuel": 1025.1,
+     "reference": "Décret 2012-828 du 28/06/2012",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2013-01-01",
+     "mensuel": 1028.17,
+     "reference": "Décret 2012-1429 du 19/12/2012",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2014-01-01",
+     "mensuel": 1039.47,
+     "reference": "Décret 2013-1190",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2014-02-01",
+     "mensuel": 1120.0,
+     "reference": "Décret 2014-129",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2015-01-01",
+     "mensuel": 1128.96,
+     "reference": "Circulaire CNAV 2015/4 du 26/01/2015",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2016-01-01",
+     "mensuel": 1135.73,
+     "reference": "Circulaire CNAV 2015/64 du 18/12/2015",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2017-01-01",
+     "mensuel": 1145.95,
+     "reference": "Circulaire CNAV 2016/55 du 30/12/2016",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2018-01-01",
+     "mensuel": 1160.04,
+     "reference": "Circulaire CNAV 2017/44 du 27/12/2017",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2019-01-01",
+     "mensuel": 1177.44,
+     "reference": "Circulaire CNAV 2018/32 du 27/12/2018",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2020-01-01",
+     "mensuel": 1191.56,
+     "reference": "Circulaire CNAV 2019/34 du 30/12/2019",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2021-01-01",
+     "mensuel": 1203.35,
+     "reference": "Circulaire CNAV 2020/40 du 22/12/2020",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2021-10-01",
+     "mensuel": 1229.82,
+     "reference": "Circulaire CNAV 2021/29 du 15/10/2021",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2022-01-01",
+     "mensuel": 1240.88,
+     "reference": "Circulaire CNAV 2022/02 du 10/01/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2022-05-01",
+     "mensuel": 1273.76,
+     "reference": "Circulaire CNAV 2022/13 du 28/04/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2022-08-01",
+     "mensuel": 1299.36,
+     "reference": "Circulaire CNAV 2022/17 du 02/08/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2023-01-01",
+     "mensuel": 1322.87,
+     "reference": "Circulaire CNAV 2022/40 du 30/12/2022",
+     "luDans": "IPP (reprise du barème Cnav)"
+    },
+    {
+     "dateEffet": "2023-05-01",
+     "mensuel": 1352.23,
+     "reference": "Circulaire CNAV 2023/11 du 05/05/2023",
+     "luDans": "IPP ; confirmé par la circulaire Cnav 2023/16 (PDF)"
+    },
+    {
+     "dateEffet": "2024-01-01",
+     "mensuel": 1367.51,
+     "reference": "Circulaire CNAV 2024/3 du 09/01/2024",
+     "luDans": "circulaire Cnav 2024/3 (PDF)"
+    },
+    {
+     "dateEffet": "2024-11-01",
+     "mensuel": 1394.44,
+     "reference": "Circulaire CNAV 2025/8 du 05/03/2025 (remplace 1 394,86 de la circulaire 2024/40)",
+     "luDans": "circulaire Cnav 2025/8 (PDF)"
+    },
+    {
+     "dateEffet": "2026-01-01",
+     "mensuel": 1410.89,
+     "reference": "Circulaire CNAV 2025/33 du 23/12/2025",
+     "luDans": "circulaire Cnav 2025/33 (PDF)"
+    },
+    {
+     "dateEffet": "2026-06-01",
+     "mensuel": 1444.89,
+     "reference": "Circulaire CNAV 2026/16 du 12/06/2026 (Smic du 1er juin 2026)",
+     "luDans": "circulaire Cnav 2026/16 (PDF)"
+    }
+   ]
+  },
+  "seuilAvance": {
+   "valeurs": {
+    "2019-01-01": 104.33,
+    "2023-01-01": 112.13,
+    "2024-01-01": 131.41,
+    "2025-01-01": 134.0,
+    "2026-01-01": 135.58
+   },
+   "note": "Seuil mensuel de l'avance au titre du minimum contributif tous régimes (15 % du minimum entier majoré selon le REPSS), lu dans les circulaires Cnav 2019/4, 2023/16, 2024/3, 2025/8, 2025/33."
+  },
+  "notes": [
+   "Le premier montant de 2004 est celui des pensions liquidées à partir de 2004 (note de l'IPP). La majoration au titre des périodes cotisées existe depuis le 1er janvier 2004.",
+   "L'IPP date du 01/10/2019 les montants 636,56 € / 695,59 € ; la circulaire Cnav 2019/4 du 09/01/2019, lue, les fixe « pour les pensions dont la date d'effet est fixée à compter du 1er janvier 2019 » (coefficient 1,003). Date corrigée ici en 2019-01-01.",
+   "2012-04-01 : l'IPP affiche 620,925 € (7 451,10 / 12) ; arrondi ici à 620,92, à vérifier (620,92 ou 620,93 dans la circulaire 2012/35, non lue).",
+   "Pas de revalorisation entre avril 2013 et octobre 2015, ni en 2018 (aucune ligne dans le barème).",
+   "2025 : la circulaire 2024/40 du 23/12/2024 donnait 747,69 € / 893,65 € et un plafond de 1 394,86 € (coefficient 1,02) ; elle est « annulée et remplacée » par la circulaire 2025/8 du 05/03/2025 (coefficient 1,0197) : 747,47 € / 893,39 € et 1 394,44 €. Les valeurs 2026 (× 1,0118) partent bien de celles de la circulaire 2025/8. Le panorama Drees édition 2025 (fiche 08) cite 747,69 € au 1er janvier 2025, valeur de la circulaire annulée.",
+   "2026 : service-public affiche 903,94 € par mois pour le majoré (10 847,22 / 12 = 903,935) ; la circulaire Cnav écrit 903,93 €.",
+   "Depuis le 1er septembre 2023, ces barèmes sont revalorisés au 1er janvier selon le Smic et ne valent que pour l'attribution ; un minimum déjà servi évolue ensuite comme les pensions (inflation).",
+   "Le plafond suit le Smic (mêmes dates, mêmes conditions) depuis 2014, d'où des changements en cours d'année (2021, 2022, 2023, 2024, 2026). Le REPSS confirme : « il est ainsi passé de 1 028 € en 2013 à 1 120 € en 2014 » et « s'établit à 1 410,89 € depuis le 1er janvier 2026 ».",
+   "Le barème d'origine (legislation.cnav.fr) n'est plus en ligne à cette adresse ; les circulaires antérieures à 2019 n'ont pas été relues une à une."
+  ]
+ },
+ "regles": {
+  "source": "Service-public (DILA), fiche F15522 « Montant de la retraite du salarié du secteur privé », vérifiée le 1er septembre 2026 ; Drees, panorama 2026, fiche 08, encadré 1 ; REPSS Retraites 2026, indicateur 1-12 ; circulaires Cnav 2023/16 et 2025/33",
+  "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F15522",
+  "urls": {
+   "servicePublic": "https://www.service-public.gouv.fr/particuliers/vosdroits/F15522",
+   "drees": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+   "repss": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+   "circulaire2023_16": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_16_08092023.pdf",
+   "circulaire2025_33": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf"
+  },
+  "date": "2026-11-21",
+  "fiabilite": "primaire (publications officielles), mais ce ne sont pas les articles du code : le texte de loi lui-même n'a pas été lu (Légifrance inaccessible)",
+  "champ": "Régime général (salariés et indépendants), règles en vigueur en 2026. Citations mot pour mot.",
+  "articlesCss": {
+   "valeur": null,
+   "references": [
+    "L. 351-10 (conditions générales, revalorisation selon le Smic au quatrième alinéa)",
+    "L. 173-2 (minimum tous régimes, plafond)",
+    "D. 351-2-1 (montants)",
+    "D. 173-21-4 (cité par service-public sous « condition de revalorisation »)",
+    "D. 173-21-0-0-1 (le plafond suit le Smic, cité par l'IPP)"
+   ],
+   "note": "Références relevées dans service-public, les circulaires Cnav et l'IPP ; texte des articles non lu (legifrance.gouv.fr renvoie HTTP 403 aux requêtes automatisées)."
+  },
+  "conditions": {
+   "servicePublic": "« Vous avez droit au minimum contributif si vous remplissez les conditions suivantes : Vous bénéficiez d'une retraite à taux plein de l'Assurance retraite ; Vous avez demandé toutes vos retraites à l'ensemble des régimes de base et complémentaires, français et étrangers, auprès desquels vous avez des droits ; Le montant total de ces retraites ne dépasse pas 1 410,89 €. Le minimum contributif vous est automatiquement accordé si vous remplissez ces conditions pour en bénéficier. »"
+  },
+  "tauxPlein": {
+   "drees": "« Seuls les assurés qui partent à la retraite au taux plein (par la durée validée, l'âge, ou en référence à une situation d'ex-invalidité ou d'inaptitude) y sont éligibles. »",
+   "note": "Une pension liquidée avec décote n'ouvre donc jamais droit au minimum contributif."
+  },
+  "proratisation": {
+   "drees": "« Si la durée validée dans le régime correspond à celle requise pour une carrière complète, le minimum est versé en entier. Dans le cas contraire, il est calculé au prorata de la durée validée dans le régime. »",
+   "repss": "« Le minimum contributif est servi intégralement dès lors que les assurés justifient d'une durée validée dans le régime au moins égale à la durée requise pour l'application du taux plein, compte tenu de l'année de naissance de l'assuré ; à défaut, il est servi au prorata de la durée d'assurance validée dans le régime. »",
+   "servicePublic": "« 3e cas : vous partez à la retraite à 67 ans sans avoir le nombre de trimestres exigé pour avoir droit à une retraite à taux plein avant 67 ans, le montant de 756,29 € brut par mois est réduit en fonction de votre nombre de trimestres par rapport au nombre de trimestres exigé pour avoir droit à une retraite à taux plein avant 67 ans. Par exemple, si vous êtes né en 1964 et partez à la retraite à 67 ans en ayant seulement 140 trimestres, le montant de votre pension ne peut pas être inférieur à 756,29 € x 140 / 170 = 622,83 € brut par mois. »",
+   "formule": "minimum simple × min(1, trimestres validés au régime général / durée requise pour le taux plein de la génération)"
+  },
+  "majoration": {
+   "seuilTrimestresCotises": 120,
+   "drees": "« La réforme des retraites de 2003 introduit une majoration du minimum contributif au titre des périodes cotisées. Cette majoration est destinée à porter la pension brute des assurés à carrière complète à 85 % du smic net. Depuis le 1er avril 2009, elle est attribuée si l'assuré réunit au moins 120 trimestres d'assurance cotisés. Depuis cette date également, le montant du minimum est calculé avant l'application d'une éventuelle surcote pour les périodes cotisées au-delà de la durée légale »",
+   "repss": "« Au 1er avril 2009, le dispositif du minimum contributif majoré a été modifié : la majoration est désormais attribuée sous la condition de totaliser au moins 120 trimestres cotisés tous régimes. » ; « Les périodes considérées comme cotisées sont les périodes ayant donné lieu à des cotisations à un régime de base français. » ; les périodes assimilées « ne sont à l'inverse pas pris en compte pour la majoration du minimum contributif ou dans le calcul de la surcote ».",
+   "servicePublic": "« 1er cas : vous partez à la retraite avant 67 ans en ayant le nombre de trimestres exigé pour avoir droit à une retraite à taux plein et tous ces trimestres sont cotisés, le montant de votre pension ne peut pas être inférieur à 10 847,22 € brut par an, soit 903,94 € brut par mois. 2e cas : vous partez à la retraite avant 67 ans en ayant le nombre de trimestres exigé pour avoir droit à une retraite à taux plein mais tous ces trimestres ne sont pas cotisés. Si vous avez moins de 120 trimestres cotisés, le montant de votre pension ne peut pas être inférieur à 9 075,50 € brut par an, soit 756,29 € brut par mois. Si vous avez plus de 120 trimestres cotisés, le montant de 756,29 € brut par mois est majoré en fonction de votre nombre de trimestres cotisés par rapport à votre nombre de trimestres total. Par exemple, si vous êtes né en 1964 et partez à la retraite avant 67 ans en ayant les 170 trimestres exigés pour avoir droit à une retraite à taux plein mais seulement 135 trimestres cotisés, le montant de votre pension ne peut pas être inférieur à 756,29 € + [(903,94 € - 756,29 €) x 135 / 170] = 873,54 € brut par mois. »",
+   "formule": "si trimestres cotisés ≥ 120 : minimum simple + (minimum majoré − minimum simple) × trimestres cotisés / durée requise ; sinon minimum simple. Le tout proratisé si la durée validée est incomplète.",
+   "note": "La formule est tirée de l'exemple de service-public ; le plafonnement du ratio à 1 et la combinaison avec la proratisation ne sont pas explicités dans les sources lues."
+  },
+  "ecretementTousRegimes": {
+   "depuis": "2012-01-01",
+   "drees": "« Depuis le 1er janvier 2012, le minimum contributif n'est plus servi qu'aux assurés ayant liquidé l'ensemble de leurs droits à la retraite (condition de subsidiarité) et dont le montant brut de la pension totale de droit direct n'excède pas un seuil fixé par décret (1 410,89 euros par mois à partir du 1er janvier 2026). En cas de dépassement du seuil après ajout du minimum contributif, le montant de ce dernier est partiellement ou totalement écrêté »",
+   "servicePublic": "« Le versement du minimum contributif ne peut pas avoir pour conséquence de porter le total de vos pensions de retraites au-delà de 1 410,89 € brut par mois. En cas de dépassement, le minimum contributif est réduit de façon à ce que ce montant ne soit pas dépassé. »",
+   "repss": "« Depuis le 1er janvier 2012, pour avoir droit au minimum contributif, l'assuré doit avoir demandé toutes ses retraites personnelles à l'ensemble des régimes de base et complémentaires, français et étrangers, ainsi que des organisations internationales (condition de subsidiarité). Un mécanisme d'écrêtement du minimum contributif a également été mis en place : le total des retraites personnelles (base et complémentaire) de l'assuré ne doit pas dépasser le plafond autorisé pour le minimum contributif. [...] Si le plafond autorisé est dépassé, la majoration due au titre du minimum est réduite. »",
+   "cnav": "« Lors de l'attribution du minimum tous régimes, le plafond mensuel de retraites à comparer au total mensuel des retraites personnelles de l'assuré est celui en vigueur à la date à laquelle le droit au minimum tous régimes est ouvert (article L. 173-2 CSS). Il est revalorisé aux mêmes dates et dans les mêmes conditions que le salaire minimum de croissance (Smic). »",
+   "formule": "complément servi = max(0, min(complément théorique, plafond − total des pensions personnelles tous régimes hors complément))",
+   "exclusions": "La majoration pour tierce personne est exclue du montant comparé au seuil (REPSS, note du graphique 2). Pour la majoration exceptionnelle de 2023, la circulaire Cnav 2023/21 exclut aussi la surcote et les retraites des régimes étrangers ; l'application de ces deux exclusions au minimum contributif lui-même n'a pas été lue.",
+   "avance": "« Au RG, si le montant théorique du minimum contributif dépasse le seuil de 15 % du minimum entier majoré (134 € par mois au 1er janvier 2025) et que l'assuré remplit la condition de subsidiarité, une avance est versée jusqu'à ce que le calcul soit possible. » (REPSS)"
+  },
+  "reforme2023": {
+   "texte": "Loi n° 2023-270 du 14 avril 2023 de financement rectificative de la sécurité sociale pour 2023, article 18 ; décret n° 2023-754 du 10 août 2023 (article D. 351-2-1 CSS)",
+   "dateEffet": "2023-09-01",
+   "avant": {
+    "dateEffet": "2023-01-01",
+    "simple": 684.13,
+    "majore": 747.57,
+    "plafondTousRegimes": 1352.23
+   },
+   "apres": {
+    "dateEffet": "2023-09-01",
+    "simple": 709.13,
+    "majore": 847.57,
+    "plafondTousRegimes": 1352.23
+   },
+   "hausse": {
+    "simple": 25,
+    "majore": 100
+   },
+   "cnav": "« le montant entier du minimum contributif de base est égal à 8 509,61 euros par an, soit 709,13 euros par mois (soit une augmentation de 25 euros par mois par rapport au 1er janvier 2023) ; le montant entier du minimum contributif majoré, au titre des périodes cotisées, est égal à 10 170, 86 euros par an, soit 847,57 euros par mois (soit une augmentation de 100 euros par mois par rapport au 1er janvier 2023) » ; « Le montant du plafond de retraites personnelles, pour l'attribution du minimum contributif, est fixé à 1 352,23 euros par mois (pas de modification depuis le 1er mai 2023). »",
+   "drees": "« La réforme des retraites de 2023 prévoit une revalorisation du minimum contributif d'un montant de 100 euros au 1er septembre 2023. Cette revalorisation concerne les nouveaux assurés liquidant leur pension après le 1er septembre 2023. La hausse se décompose comme suit : 75 euros sur la majoration et 25 euros sur la partie non majorée. La réforme de 2023 modifie également la revalorisation du minimum contributif (avec ou sans majoration), en le faisant évoluer selon le smic et non plus selon le même indice que les pensions. Avec cette modification, un salarié ayant eu une carrière complète à temps plein et ayant été rémunéré au smic toute sa vie est assuré de percevoir une pension brute tous régimes (intégrant, le cas échéant, les pensions complémentaires et celles des autres régimes de base) au moins égale à 85 % du smic net. »",
+   "indexation": "« la revalorisation des barèmes, pour l'attribution du minimum contributif de base et du minimum contributif majoré, interviendra désormais au 1er janvier de chaque année, sur la base du Smic ; en revanche, pour les retraites en cours de service la revalorisation du minimum contributif de base et du minimum contributif majoré interviendra au 1er janvier de chaque année, dans les conditions de droit commun, en fonction de l'inflation (application des coefficients de revalorisation des retraites). » (circulaire Cnav 2023/16) ; « en fonction d'un taux au moins égal à l'évolution du Smic depuis le 1er janvier précédent (article L.351-10 CSS quatrième alinéa) »",
+   "coefficientsSmicAppliques": {
+    "2024": 1.0337,
+    "2025": 1.0197,
+    "2026": 1.0118
+   },
+   "majorationExceptionnelle": "Pour les pensions ayant pris effet avant le 1er septembre 2023 : majoration exceptionnelle d'au plus 100 euros par mois pour une carrière complète, sous condition de 120 trimestres cotisés, proratisée, écrêtée au minimum majoré (847,57 €) puis au plafond tous régimes (1 352,23 €). Voir beneficiaires.montantComplement.majorationExceptionnelle2023.",
+   "note": "La hausse de 100 euros ne vaut que pour le minimum majoré entier (carrière complète cotisée) ; le minimum simple ne gagne que 25 euros."
+  }
+ },
+ "majorations": {
+  "source": "Drees, « Pensions de retraite : les dispositifs de solidarité », données de l'EIR 2016 (tableaux 3 et 7) ; REPSS Retraites 2026, indicateur sur les droits familiaux, citant Les Dossiers de la Drees n° 130 (EIR 2020)",
+  "url": "https://data.drees.solidarites-sante.gouv.fr/api/explore/v2.1/catalog/datasets/1393_les-effectifs-et-montants-de-pension-des-retraites/attachments/pensions_de_retraite_les_dispositifs_de_solidaritexlsx",
+  "urlRepss": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+  "date": "2026-11-21",
+  "fiabilite": "primaire",
+  "champ": "TOUS RÉGIMES (pas le seul régime général) : retraités vivants au 31 décembre 2016 percevant une pension de droit propre sous forme de rente (EIR 2016) ; ensemble des retraités fin 2020 pour le REPSS.",
+  "partBeneficiairesRegimeGeneral": {
+   "ensemble": null,
+   "femmes": null,
+   "hommes": null,
+   "note": "Introuvable pour le seul régime général dans les sources lues (le panorama Drees 2026 n'a pas de fiche « droits familiaux » chiffrant la majoration par régime)."
+  },
+  "montantMoyenRegimeGeneral": {
+   "ensemble": null,
+   "femmes": null,
+   "hommes": null,
+   "note": "Introuvable."
+  },
+  "partRetraitesTroisEnfantsOuPlusTousRegimes2016": {
+   "femmes": 39.0,
+   "hommes": 40.7,
+   "ensemble": 39.8,
+   "effectifsMillions": {
+    "femmes": {
+     "deuxEnfantsOuMoins": 5.08,
+     "troisEnfantsOuPlus": 3.25
+    },
+    "hommes": {
+     "deuxEnfantsOuMoins": 4.58,
+     "troisEnfantsOuPlus": 3.14
+    }
+   },
+   "note": "derive : 3,25 / (5,08 + 3,25) ; 3,14 / (4,58 + 3,14) ; 6,39 / 16,05. Approche la part de bénéficiaires de la majoration tous régimes."
+  },
+  "partBeneficiairesTousRegimes2020": {
+   "ensemble": 39,
+   "citation": "« la majoration de pension pour enfants portant sur les droits directs, qui concerne 39 % des retraités, 8,1 Md€ »"
+  },
+  "poidsDansLesPensionsDeDroitPropre2016": {
+   "parentsDeTroisEnfantsOuPlus": {
+    "femmes": 8.5,
+    "hommes": 7.7
+   },
+   "regimesAlignes": 3.4,
+   "arrco": 1.4,
+   "agirc": 2.5,
+   "note": "En % de la masse des pensions de droit propre du groupe. 8,5 % et 7,7 % : poids de la majoration dans les pensions des parents de trois enfants ou plus, tous régimes. 3,4 % : poids dans la masse des régimes alignés (régime général, MSA salariés, ex-RSI), tous retraités."
+  },
+  "taux": {
+   "valeur": 10,
+   "note": "Taux de 10 % du régime général : énoncé de la demande, non relu dans un texte officiel lors de cette recherche."
+  }
+ }
+}

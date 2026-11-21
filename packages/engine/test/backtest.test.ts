@@ -39,14 +39,19 @@ describe("backtest 2010-2024", () => {
 			expect(Math.abs(l.modele - l.observe)).toBeLessThan(18);
 	});
 
+	test("part au minimum contributif à moins de 9 points", () => {
+		for (const l of groupe("Part des nouveaux retraités au minimum"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(9);
+	});
+
 	test("pensions par régime : bornes de l'état actuel", () => {
 		const pensions = [
 			...groupe("Pension moyenne des retraités"),
 			...groupe("Pension moyenne des nouveaux"),
 		];
-		for (const l of pensions) expect(relatif(l)).toBeLessThan(0.3);
+		for (const l of pensions) expect(relatif(l)).toBeLessThan(0.22);
 		for (const l of pensions.filter((x) => x.nom.startsWith("hommes, régime général")))
-			expect(relatif(l)).toBeLessThan(0.12);
+			expect(relatif(l)).toBeLessThan(0.09);
 	});
 
 	// Critère du projet, pas encore tenu : la pension de base des femmes est trop haute,

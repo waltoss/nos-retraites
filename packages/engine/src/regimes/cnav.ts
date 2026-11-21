@@ -82,13 +82,20 @@ export function computeCnav(
 	let minimumApplique = false;
 	const mico = b.minimumContributif;
 	if (mico && manquants === 0 && pension > 0) {
-		const plancher =
-			(cumul.trimestresCotises + cumul.trimestresAutresRegimes >=
+		// Départ passé : le minimum de l'époque. Sinon celui du scénario, qui suit le SMIC.
+		const passe = b.minimumContributifPasse?.(anneeLiquidation);
+		const indice = b.indiceMinimumContributif?.(anneeLiquidation) ?? 1;
+		const simple = passe ? passe.annuel : mico.annuel * indice;
+		const majore = passe ? passe.annuelMajore : mico.annuelMajore * indice;
+		// La majoration demande 120 trimestres cotisés, tous régimes, et se compte au prorata
+		// des trimestres cotisés au régime général.
+		const majoration =
+			cumul.trimestresCotises + cumul.trimestresAutresRegimes >=
 			mico.trimestresCotisesPourMajoration
-				? mico.annuelMajore
-				: mico.annuel) *
-			(b.indiceMinimumContributif?.(anneeLiquidation) ?? 1) *
-			proratisation;
+				? (majore - simple) *
+					Math.min(1, cumul.trimestresCotises / g.dureeRequise)
+				: 0;
+		const plancher = simple * proratisation + majoration;
 		if (plancher > pension) {
 			pension = plancher;
 			minimumApplique = true;

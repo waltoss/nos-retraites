@@ -1,4 +1,5 @@
 import data from "./france.data.json" with { type: "json" };
+import micoPasse from "./minimumContributif.data.json" with { type: "json" };
 import moyens from "./tauxMoyens.data.json" with { type: "json" };
 import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
 
@@ -104,6 +105,22 @@ export const BAREMES_FRANCE: Baremes = {
 		joursParTrimestreAssimile: { chomage: 50, maladie: 60, maternite: 90 },
 		heuresSmicParTrimestre: (annee) => (annee >= 2014 ? 150 : 200),
 		minimumContributif: data.cnav.minimumContributif,
+		minimumContributifPasse: (annee) => {
+			if (annee >= data.anneeReference) return undefined;
+			const passe = micoPasse.parAnnee as Record<
+				string,
+				{ annuel: number; annuelMajore: number; plafondAnnuel: number | null }
+			>;
+			const premiere = Math.min(...Object.keys(passe).map(Number));
+			const m = passe[Math.max(premiere, annee)];
+			return (
+				m && {
+					annuel: m.annuel,
+					annuelMajore: m.annuelMajore,
+					plafondTousRegimesAnnuel: m.plafondAnnuel,
+				}
+			);
+		},
 		// Le minimum contributif suit le SMIC (hypothèse du COR) : en euros constants, il monte avec lui.
 		indiceMinimumContributif: (annee) =>
 			annee <= data.anneeReference

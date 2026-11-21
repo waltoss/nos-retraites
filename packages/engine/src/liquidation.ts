@@ -371,21 +371,35 @@ export function computePension(
 	if (depart.motif) cnav.motif = depart.motif;
 
 	// Écrêtement du minimum contributif quand la pension totale dépasse le plafond tous régimes.
-	const plafond = b.cnav.minimumContributif?.plafondTousRegimesAnnuel;
+	const passe = b.cnav.minimumContributifPasse?.(
+		carriere.anneeNaissance + Math.floor(age / 4),
+	);
+	const plafond = passe
+		? passe.plafondTousRegimesAnnuel
+		: b.cnav.minimumContributif?.plafondTousRegimesAnnuel;
 	if (cnav.minimumContributifApplique && plafond) {
-		const total = cnav.pensionAnnuelle + agircArrco.pensionAnnuelle;
-		if (total > plafond) {
-			const sansMinimum =
-				cnav.salaireAnnuelMoyen *
-				cnav.tauxLiquidation *
-				cnav.proratisation *
-				(1 + b.cnav.surcoteParTrimestre * cnav.trimestresSurcote) *
-				(1 + cnav.majorationEnfants);
+		const sansMinimum =
+			cnav.salaireAnnuelMoyen *
+			cnav.tauxLiquidation *
+			cnav.proratisation *
+			(1 + b.cnav.surcoteParTrimestre * cnav.trimestresSurcote) *
+			(1 + cnav.majorationEnfants);
+		// La pension des autres régimes n'est pas calculée : on suppose qu'ils versent autant
+		// par trimestre validé que le régime général et la complémentaire réunis.
+		const auRegime = cnav.trimestresValides - cnav.trimestresAutresRegimes;
+		const autresRegimes =
+			cnav.trimestresAutresRegimes > 0
+				? ((sansMinimum + agircArrco.pensionAnnuelle) *
+						cnav.trimestresAutresRegimes) /
+					Math.max(1, auRegime)
+				: 0;
+		const total =
+			cnav.pensionAnnuelle + agircArrco.pensionAnnuelle + autresRegimes;
+		if (total > plafond)
 			cnav.pensionAnnuelle = Math.max(
 				sansMinimum,
 				cnav.pensionAnnuelle - (total - plafond),
 			);
-		}
 	}
 
 	return {

@@ -60,8 +60,17 @@ export interface Hypotheses {
 	penteRang: number;
 	/** Rapport du salaire des femmes à celui des hommes, à caractéristiques égales. */
 	ecartSalaireFemmes: number;
-	/** Seuil de rang (en écarts-types) au-dessus duquel l'individu est cadre. */
-	seuilCadre: number;
+	/**
+	 * Part des individus qui sont cadres, les mieux classés par le salaire, selon la génération :
+	 * points (année de naissance, part). Réglée sur la part des retraités qui ont des droits Agirc
+	 * (31 % des hommes, 13 % des femmes en 2018) et, pour les générations récentes, sur la part
+	 * des cadres parmi les cotisants (26 % et 22 % en 2024), relevée comme chez les hommes
+	 * pour passer d'une photographie à une carrière entière.
+	 */
+	partCadres: {
+		F: ReadonlyArray<readonly [generation: number, part: number]>;
+		H: ReadonlyArray<readonly [generation: number, part: number]>;
+	};
 	/** Répartition du nombre d'enfants (indice = nombre d'enfants). */
 	repartitionEnfants: ReadonlyArray<number>;
 	agePremierEnfant: { moyenne: number; ecartType: number };
@@ -94,8 +103,12 @@ export interface Hypotheses {
 	avpf: { part: number };
 	/** Pente de la probabilité d'interruption par génération après 1953 (par an, relative), bornée à zéro. */
 	tendanceInterruption: number;
-	/** Part des mères en emploi qui travaillent à temps partiel tant qu'un enfant a moins de 12 ans, et leur quotité. */
-	tempsPartielMeres: { part: number; quotite: number };
+	/**
+	 * Temps partiel des femmes : la part de salariées à temps partiel de chaque année (Dares) est
+	 * multipliée par `meres` tant qu'un enfant a moins de 12 ans, et par `autres` sinon.
+	 * Les deux sont choisis pour que l'ensemble retrouve la part publiée ; le premier est une hypothèse.
+	 */
+	tempsPartielFemmes: { meres: number; autres: number };
 	/** Après cet âge, les sorties de l'emploi sont plus fréquentes et les périodes hors emploi plus longues. */
 	seniors: {
 		age: number;
@@ -142,7 +155,7 @@ export interface Facteurs {
 	chomage?: number;
 	/** Multiplicateur de la probabilité d'interruption d'activité après une naissance. */
 	interruptionsNaissance?: number;
-	/** Multiplicateur de la part de mères à temps partiel. */
+	/** Multiplicateur du temps partiel des mères de jeunes enfants. */
 	tempsPartielMeres?: number;
 	/** Multiplicateur des sorties de l'emploi après 55 ans. */
 	sortiesSeniors?: number;
@@ -164,9 +177,9 @@ export function appliquerFacteurs(h: Hypotheses, f: Facteurs = {}): Hypotheses {
 				h.interruptionNaissance.probabilite * (f.interruptionsNaissance ?? 1),
 			),
 		},
-		tempsPartielMeres: {
-			...h.tempsPartielMeres,
-			part: Math.min(1, h.tempsPartielMeres.part * (f.tempsPartielMeres ?? 1)),
+		tempsPartielFemmes: {
+			...h.tempsPartielFemmes,
+			meres: h.tempsPartielFemmes.meres * (f.tempsPartielMeres ?? 1),
 		},
 		seniors: {
 			...h.seniors,

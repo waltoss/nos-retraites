@@ -6,6 +6,9 @@
 import historique from "../data/references/historique.json" with {
 	type: "json",
 };
+import minima from "../data/references/minimum-contributif.json" with {
+	type: "json",
+};
 import projections from "../data/references/projections.json" with {
 	type: "json",
 };
@@ -21,7 +24,9 @@ import {
 	moisParEtat,
 	type Pension,
 	type Pyramide,
-	runProjection,
+	poidsDeLAnnee,
+	prepareProjection,
+	projeter,
 	SCENARIO_REFERENCE,
 	SURVIE_SELON_PENSION,
 } from "../packages/engine/src/index.ts";
@@ -100,13 +105,73 @@ const SEXES = [
 	["H", "hommes"],
 ] as const;
 
+// Le modèle rejoué depuis 2012 avec la population réelle de chaque année.
+const t = projections.populationProjetee.scenarios.central
+	.population as unknown as {
+	anneeDebut: number;
+	femmes: number[][];
+	hommes: number[][];
+};
+const AGE_MAX = 96;
+const pyramides: Record<number, Pyramide> = {};
+for (let annee = 2012; annee <= B.anneeReference; annee++) {
+	// Même convention que la pondération : l'âge du moteur est l'âge révolu de l'Insee plus un.
+	const ligne = (table: number[][]) => {
+		const insee = table[annee - t.anneeDebut] as number[];
+		const v = new Array<number>(AGE_MAX + 1).fill(0);
+		for (let age = 1; age <= AGE_MAX; age++)
+			v[age] =
+				age === AGE_MAX
+					? insee.slice(age - 1).reduce((s, x) => s + x, 0)
+					: (insee[age - 1] as number);
+		return v;
+	};
+	pyramides[annee] = {
+		annee,
+		femmes: ligne(t.femmes),
+		hommes: ligne(t.hommes),
+	};
+}
+const preparation = prepareProjection(
+	population,
+	B,
+	{},
+	{
+		debut: 2012,
+		fin: 2024,
+		pyramides,
+		champ: CHAMP_PRIVE,
+		anneeEffet: 2100,
+		comptes,
+		pensionsReference: pensions,
+		survie: SURVIE_SELON_PENSION,
+	},
+);
+const passe = projeter(preparation);
+
 // 2. Pension moyenne de droit direct des retraités en fin d'année, par régime (Drees, EACR).
+// La statistique publiée exclut les majorations pour enfants : on les retire aussi du modèle.
+const base = (p: Pension) =>
+	p.cnav.pensionAnnuelle / (1 + p.cnav.majorationEnfants) / 12;
+const complementaire = (p: Pension) =>
+	p.agircArrco.pensionAnnuelle / (1 + p.agircArrco.majorationEnfants) / 12;
 // Le modèle ne simule pas les générations nées avant 1930 : on ne regarde que les années récentes.
 const e = historique.effectifs;
-const stock = (annee: number) =>
-	retraites.filter(
-		(x) => x.pension.liquidation.annee <= annee && x.individu.poids > 0,
-	);
+/** Les retraités d'une fin d'année, avec le poids qu'ils ont cette année-là (mortalité selon la pension comprise). */
+const stock = (annee: number) => {
+	const poids = poidsDeLAnnee(preparation, annee);
+	return population
+		.map((individu, k) => ({
+			individu: { ...individu, poids: poids[k] as number },
+			pension: pensions[k] as Pension,
+		}))
+		.filter(
+			(x) =>
+				x.pension.mensuelleBrute > 0 &&
+				x.pension.liquidation.annee <= annee &&
+				x.individu.poids > 0,
+		);
+};
 const moyennePonderee = (
 	groupe: typeof retraites,
 	sexe: "F" | "H",
@@ -125,11 +190,7 @@ for (const [sexe, cle] of SEXES) {
 	lignes.push({
 		groupe: "Pension moyenne des retraités, euros de 2026 par mois",
 		nom: `${cle}, régime général, fin 2019`,
-		modele: moyennePonderee(
-			stock(2019),
-			sexe,
-			(p) => p.cnav.pensionAnnuelle / 12,
-		),
+		modele: moyennePonderee(stock(2019), sexe, base),
 		observe:
 			lire(e.cnav.pensionMoyenne[cle] as Serie, 2019) *
 			enEurosDeReference(2019),
@@ -138,11 +199,7 @@ for (const [sexe, cle] of SEXES) {
 		lignes.push({
 			groupe: "Pension moyenne des retraités, euros de 2026 par mois",
 			nom: `${cle}, Agirc-Arrco, fin ${annee}`,
-			modele: moyennePonderee(
-				stock(annee),
-				sexe,
-				(p) => p.agircArrco.pensionAnnuelle / 12,
-			),
+			modele: moyennePonderee(stock(annee), sexe, complementaire),
 			observe:
 				lire(e.agircArrco.pensionMoyenne[cle] as Serie, annee) *
 				enEurosDeReference(annee),
@@ -170,11 +227,7 @@ for (const [sexe, cle] of SEXES) {
 		lignes.push({
 			groupe: "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 			nom: `${cle}, régime général, ${debut}-${fin}`,
-			modele: moyennePonderee(
-				partants(debut, fin),
-				sexe,
-				(p) => p.cnav.pensionAnnuelle / 12,
-			),
+			modele: moyennePonderee(partants(debut, fin), sexe, base),
 			observe: moyenneObservee(
 				e.cnav.pensionMoyenneNouveaux[cle] as Serie,
 				debut,
@@ -184,11 +237,7 @@ for (const [sexe, cle] of SEXES) {
 	lignes.push({
 		groupe: "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		nom: `${cle}, Agirc-Arrco, 2019-2023`,
-		modele: moyennePonderee(
-			partants(2019, 2023),
-			sexe,
-			(p) => p.agircArrco.pensionAnnuelle / 12,
-		),
+		modele: moyennePonderee(partants(2019, 2023), sexe, complementaire),
 		observe: moyenneObservee(
 			e.agircArrco.pensionMoyenneNouveaux[cle] as Serie,
 			2019,
@@ -196,6 +245,35 @@ for (const [sexe, cle] of SEXES) {
 		),
 	});
 }
+
+// 3 bis. Part des nouveaux retraités dont la pension est portée au minimum contributif (Drees, EACR).
+const beneficiaires = minima.beneficiaires.flux.part;
+for (const [debut, fin, cles] of [
+	[2015, 2019, ["ensemble"]],
+	[2022, 2024, ["femmes", "hommes"]],
+] as const)
+	for (const cle of cles) {
+		const groupeDeDeparts = partants(debut, fin).filter(
+			(x) =>
+				cle === "ensemble" ||
+				x.individu.carriere.sexe === (cle === "femmes" ? "F" : "H"),
+		);
+		let observe = 0;
+		for (let a = debut; a <= fin; a++)
+			observe += lire(beneficiaires[cle] as Serie, a);
+		lignes.push({
+			groupe:
+				"Part des nouveaux retraités au minimum contributif, en % (régime général)",
+			nom: `${cle}, ${debut}-${fin}`,
+			modele:
+				(100 *
+					groupeDeDeparts.filter(
+						(x) => x.pension.cnav.minimumContributifApplique,
+					).length) /
+				groupeDeDeparts.length,
+			observe: observe / (fin - debut + 1),
+		});
+	}
 
 // 4. Part de la carrière validée au régime général, génération 1953 (Drees, EIR 2020).
 const proratisation =
@@ -217,49 +295,7 @@ for (const [sexe, cle] of SEXES)
 		observe: proratisation[cle],
 	});
 
-// 5. Départs à la retraite par an, en milliers (Drees, EACR, Agirc-Arrco) : le modèle rejoué
-// depuis 2012 avec la population de chaque année.
-const t = projections.populationProjetee.scenarios.central
-	.population as unknown as {
-	anneeDebut: number;
-	femmes: number[][];
-	hommes: number[][];
-};
-const AGE_MAX = 96;
-const pyramides: Record<number, Pyramide> = {};
-for (let annee = 2012; annee <= B.anneeReference; annee++) {
-	// Même convention que la pondération : l'âge du moteur est l'âge révolu de l'Insee plus un.
-	const ligne = (table: number[][]) => {
-		const insee = table[annee - t.anneeDebut] as number[];
-		const v = new Array<number>(AGE_MAX + 1).fill(0);
-		for (let age = 1; age <= AGE_MAX; age++)
-			v[age] =
-				age === AGE_MAX
-					? insee.slice(age - 1).reduce((s, x) => s + x, 0)
-					: (insee[age - 1] as number);
-		return v;
-	};
-	pyramides[annee] = {
-		annee,
-		femmes: ligne(t.femmes),
-		hommes: ligne(t.hommes),
-	};
-}
-const passe = runProjection(
-	population,
-	B,
-	{},
-	{
-		debut: 2012,
-		fin: 2024,
-		pyramides,
-		champ: CHAMP_PRIVE,
-		anneeEffet: 2100,
-		comptes,
-		pensionsReference: pensions,
-		survie: SURVIE_SELON_PENSION,
-	},
-);
+// 5. Départs à la retraite par an, en milliers (Drees, EACR, Agirc-Arrco).
 for (const [debut, fin] of [
 	[2012, 2015],
 	[2016, 2019],

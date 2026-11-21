@@ -298,6 +298,14 @@ function lecteur(prep: Preparation, annee: number) {
 	};
 }
 
+/** Poids de chaque individu une année donnée : le nombre de personnes réelles qu'il représente alors. */
+export function poidsDeLAnnee(prep: Preparation, annee: number): Float64Array {
+	const lit = lecteur(prep, annee);
+	const poids = new Float64Array(prep.population.length);
+	for (let k = 0; k < poids.length; k++) poids[k] = lit.poids(k);
+	return poids;
+}
+
 /** Trajectoires année par année et par génération d'un scénario préparé. */
 export function projeter(prep: Preparation): Projection {
 	const depart = performance.now();
