@@ -2,6 +2,7 @@ import {
 	BAREMES_FRANCE as B,
 	baremeGeneration,
 	HYPOTHESES as H,
+	HYPOTHESES_PUBLIQUES,
 } from "@nos-retraites/engine";
 import { createFileRoute } from "@tanstack/react-router";
 import backtest from "../backtest.json";
@@ -21,25 +22,25 @@ const ETAPES: { icone: IconName; titre: string; texte: string }[] = [
 		icone: "population",
 		titre: "Inventer des vies",
 		texte:
-			"20 000 personnes nées de 1930 à 2008. Chaque année, des tirages décident si chacune travaille, perd son emploi, tombe malade ou s'arrête, et pour combien de mois. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
+			"30 000 salariés du privé et près de 10 000 fonctionnaires, nés de 1930 à 2052. Dans le privé, des tirages décident chaque année si chacun travaille, perd son emploi, tombe malade ou s'arrête, et pour combien de mois ; les salaires sont réglés sur ceux de 2025, les durées de carrière sur celles de la génération 1953. Les fonctionnaires ont une carrière plus simple : quelques années ailleurs, puis un emploi continu. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
 	},
 	{
 		icone: "carriere",
 		titre: "Tenir leur compte",
 		texte:
-			"Pour chaque année : les trimestres validés, le salaire retenu sous le plafond, les points de retraite complémentaire. Ce compte ne dépend pas de vos réglages de pension.",
+			"Pour chaque année : les trimestres validés, le salaire retenu sous le plafond, les points de retraite complémentaire. Pour un fonctionnaire : les trimestres de services, le traitement et les primes. Ce compte ne dépend pas de vos réglages de pension.",
 	},
 	{
 		icone: "age",
 		titre: "Décider du départ",
 		texte:
-			"Chacun part dès qu'il a le taux plein, par la durée ou à 67 ans, et jamais avant l'âge légal. C'est la plus grosse simplification du modèle : dans la réalité, certains partent avec une décote et d'autres continuent.",
+			"Personne ne part avant l'âge légal, sauf carrière longue ou catégorie active de la fonction publique. Ensuite un tirage propre à chacun décide : partir pour inaptitude, accepter une décote, attendre le taux plein, ou continuer un peu. Les parts sont réglées sur les départs observés et ne changent pas quand les règles changent.",
 	},
 	{
 		icone: "pension",
 		titre: "Calculer la pension",
 		texte:
-			"Pension de base : salaire annuel moyen × taux × part de carrière validée. Pension complémentaire : points × valeur du point. Les règles sont celles du régime général et de l'Agirc-Arrco.",
+			"Dans le privé, pension de base : salaire annuel moyen × taux × part de carrière validée ; pension complémentaire : points × valeur du point. Pour un fonctionnaire : traitement des six derniers mois × 75 % × part de carrière faite dans la fonction publique. Les règles sont celles du régime général, de l'Agirc-Arrco, de l'État et de la CNRACL.",
 	},
 	{
 		icone: "tableau",
@@ -167,6 +168,137 @@ const PARAMETRES: { nom: string; valeur: string; source: CleSource }[] = [
 		nom: "Points et taux d'avant 2019",
 		valeur: "séries Arrco et Agirc reconstituées",
 		source: "historiqueArrco",
+	},
+];
+
+const FP = B.fonctionPublique;
+const fpGeneration = (categorie: "sedentaire" | "actif" | "superActif") =>
+	FP?.parGeneration[categorie][1980];
+const SRE = "https://retraitesdeletat.gouv.fr/actif/le-calcul-de-ma-retraite";
+const JAUNE_URL =
+	"https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf";
+/** Règles de la fonction publique, lues sur les sites des régimes et dans le rapport annexé au budget. */
+const PARAMETRES_PUBLICS: { nom: string; valeur: string; url: string }[] = FP
+	? [
+			{
+				nom: "Base de la pension",
+				valeur: "traitement des six derniers mois, sans les primes",
+				url: `${SRE}/la-formule-de-calcul`,
+			},
+			{
+				nom: "Taux pour une carrière complète",
+				valeur: `${entier(FP.tauxPlein * 100)} %, ${entier(FP.tauxMaximalAvecBonifications * 100)} % au plus avec les bonifications`,
+				url: `${SRE}/la-formule-de-calcul`,
+			},
+			{
+				nom: "Âge légal, génération 1974 et suivantes",
+				valeur: `${ageEnClair(fpGeneration("sedentaire")?.ageLegal ?? 0)} ; ${ageEnClair(fpGeneration("actif")?.ageLegal ?? 0)} en catégorie active ; ${ageEnClair(fpGeneration("superActif")?.ageLegal ?? 0)} pour les policiers et surveillants de prison`,
+				url: JAUNE_URL,
+			},
+			{
+				nom: "Services exigés en catégorie active",
+				valeur: `${FP.servicesActifs.actif / 4} ans, ${FP.servicesActifs.superActif / 4} ans pour les policiers et surveillants`,
+				url: JAUNE_URL,
+			},
+			{
+				nom: "Âge où la décote disparaît",
+				valeur: `${ageEnClair(fpGeneration("sedentaire")?.ageAnnulationDecote ?? 0)} ; ${ageEnClair(fpGeneration("actif")?.ageAnnulationDecote ?? 0)} en catégorie active`,
+				url: `${SRE}/la-decote`,
+			},
+			{
+				nom: "Décote par trimestre manquant",
+				valeur: `${(FP.decote(2030).taux * 100).toLocaleString("fr-FR")} % de la pension, ${FP.decote(2030).plafond} trimestres au plus ; mise en place par étapes de 2006 à 2020`,
+				url: `${SRE}/la-decote`,
+			},
+			{
+				nom: "Surcote par trimestre",
+				valeur: `${(FP.surcoteParTrimestre * 100).toLocaleString("fr-FR")} %`,
+				url: `${SRE}/la-surcote`,
+			},
+			{
+				nom: "Minimum garanti",
+				valeur: `${exact(FP.minimumGaranti.annuel / 12)} € par mois pour 40 ans de services, ${(FP.minimumGaranti.partA15Ans * 100).toLocaleString("fr-FR")} % de ce montant pour 15 ans`,
+				url: `${SRE}/le-minimum-garanti`,
+			},
+			{
+				nom: "Trimestres par enfant pour la mère",
+				valeur: `${FP.droitsFamiliaux.bonificationAvant} trimestres de services pour un enfant né avant ${FP.droitsFamiliaux.anneeBascule}, ${FP.droitsFamiliaux.mdaDepuis} trimestres de durée d'assurance ensuite`,
+				url: `${SRE}/les-bonifications`,
+			},
+			{
+				nom: "Valeur du point d'indice",
+				valeur: `${exact(FP.valeurPoint[A] ?? 0)} € par an, inchangée depuis juillet 2023`,
+				url: "https://www.fonction-publique.gouv.fr/etre-agent-public/ma-remuneration/connaitre-le-point-dindice",
+			},
+			{
+				nom: "Cotisation de l'agent",
+				valeur: `${(FP.tauxCotisation.agent * 100).toLocaleString("fr-FR")} % du traitement`,
+				url: JAUNE_URL,
+			},
+			{
+				nom: "Contribution de l'employeur",
+				valeur: `${(FP.tauxCotisation.employeur.sre * 100).toLocaleString("fr-FR")} % du traitement pour l'État, ${(FP.tauxCotisation.employeur.cnracl * 100).toLocaleString("fr-FR")} % pour les collectivités et les hôpitaux`,
+				url: JAUNE_URL,
+			},
+			{
+				nom: "Retraite additionnelle sur les primes",
+				valeur: `${entier(FP.rafp.taux * 100)} % des primes, dans la limite de ${entier(FP.rafp.plafondAssiette * 100)} % du traitement`,
+				url: "https://www.rafp.fr/employeur/calcul-et-versement-des-cotisations",
+			},
+		]
+	: [];
+
+const HP = HYPOTHESES_PUBLIQUES;
+const points = (
+	v: ReadonlyArray<readonly [number, number]>,
+	f: (y: number) => string,
+) => v.map(([x, y]) => `${x} : ${f(y)}`).join(", ");
+const pc0 = (x: number) => `${entier(x * 100)} %`;
+/** Paramètres des carrières de fonctionnaires, réglés à la main sur les statistiques des deux régimes. */
+const HYPOTHESES_FP: { nom: string; valeur: string }[] = [
+	{
+		nom: "Âge d'entrée dans la fonction publique",
+		valeur: `à partir de ${HP.entree.sre.min} ans, ${decimal(HP.entree.sre.delaiMoyen)} ans plus tard en moyenne à l'État, ${decimal(HP.entree.cnracl.delaiMoyen)} ans dans les collectivités et les hôpitaux`,
+	},
+	{
+		nom: "Années d'avant l'entrée validées dans un autre régime",
+		valeur: pc0(HP.partValideeAvantEntree),
+	},
+	{
+		nom: "Traitement annuel d'un agent médian en fin de carrière, en 2024",
+		valeur: `${euros(HP.traitement.niveau.sre)} à l'État, ${euros(HP.traitement.niveau.cnracl)} à la CNRACL`,
+	},
+	{
+		nom: "Traitement selon l'âge, en part de celui de 55 ans, à l'État",
+		valeur: points(HP.traitement.profil.sre, pc0),
+	},
+	{
+		nom: "Retard de traitement de ceux qui entrent tard",
+		valeur: `${pc0(HP.traitement.partAnciennete.sre)} des années de retard à l'État, ${pc0(HP.traitement.partAnciennete.cnracl)} à la CNRACL`,
+	},
+	{
+		nom: "Traitement des femmes rapporté aux hommes, selon la génération",
+		valeur: points(HP.traitement.ecartFemmes.sre, pc0),
+	},
+	{
+		nom: "Hausse des grilles en plus du point d'indice",
+		valeur: `${(HP.traitement.glissementDesGrilles * 100).toLocaleString("fr-FR")} % par an jusqu'en 2026`,
+	},
+	{
+		nom: "Primes en part du traitement",
+		valeur: `${pc0(HP.primes.enseignants)} pour les enseignants, ${pc0(HP.primes.autresSre)} pour les autres agents de l'État, ${pc0(HP.primes.cnracl)} à la CNRACL`,
+	},
+	{
+		nom: "Part des catégories actives à l'État, selon la génération",
+		valeur: points(HP.categories.sre.actif, pc0),
+	},
+	{
+		nom: "Part des catégories actives à la CNRACL, selon la génération",
+		valeur: points(HP.categories.cnracl.actif, pc0),
+	},
+	{
+		nom: "Fonctionnaires qui continuent après le taux plein",
+		valeur: `${pc0(HP.depart.sre.partSurcote)} à l'État, ${pc0(HP.depart.cnracl.partSurcote)} à la CNRACL, hors ceux qui ont commencé tôt`,
 	},
 ];
 
@@ -685,6 +817,27 @@ function Modele() {
 						})}
 					</tbody>
 				</table>
+				<h3>Fonction publique</h3>
+				<table className="table sources">
+					<tbody>
+						{PARAMETRES_PUBLICS.map((p) => (
+							<tr key={p.nom}>
+								<th>{p.nom}</th>
+								<td className="num">{p.valeur}</td>
+								<td>
+									<a href={p.url} rel="noreferrer">
+										{new URL(p.url).hostname.replace(/^www2?\./, "")}
+									</a>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+				<p className="reserve">
+					Les règles de la fonction publique ont été lues sur les sites des
+					régimes et dans le rapport annexé au budget, pas dans les textes de
+					loi eux-mêmes.
+				</p>
 				<p className="reserve">
 					Les séries d'avant 2019 de la retraite complémentaire viennent des
 					barèmes de l'Institut des politiques publiques, une source secondaire
@@ -759,6 +912,22 @@ function Modele() {
 				<table className="table">
 					<tbody>
 						{HYPOTHESES.map((h) => (
+							<tr key={h.nom}>
+								<th>{h.nom}</th>
+								<td className="num">{h.valeur}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+				<h3>Carrières des fonctionnaires</h3>
+				<p className="sub">
+					Ces valeurs-là ne sortent pas d'un programme : elles sont réglées à la
+					main jusqu'à ce que les durées, les traitements, les âges et les
+					pensions simulés approchent ceux que publient les deux régimes.
+				</p>
+				<table className="table">
+					<tbody>
+						{HYPOTHESES_FP.map((h) => (
 							<tr key={h.nom}>
 								<th>{h.nom}</th>
 								<td className="num">{h.valeur}</td>
