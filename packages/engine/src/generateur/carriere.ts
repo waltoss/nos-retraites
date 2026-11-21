@@ -1,6 +1,7 @@
 import { type Baremes, valeur } from "../baremes/types.ts";
 import { quantileNormal, type Rng } from "../rng.ts";
 import type { AnneeCarriere, Carriere, Etat, Sexe } from "../types.ts";
+import alternanceData from "./alternance.data.json" with { type: "json" };
 import ecartSalaire from "./ecartSalaire.data.json" with { type: "json" };
 import emploiSeniors from "./emploiSeniors.data.json" with { type: "json" };
 import type { Hypotheses } from "./hypotheses.ts";
@@ -48,6 +49,15 @@ const indiceEcart = (annee: number): number =>
 	annee >= ecartSalaire.derniereAnnee
 		? 1
 		: (INDICE_ECART[Math.max(PREMIERE_ANNEE_ECART, annee)] ?? 1);
+
+/** Nombre d'apprentis de chaque année rapporté à celui de la dernière année connue (Dares). */
+const INDICE_ALTERNANCE = alternanceData.indice as Record<string, number>;
+const indiceAlternance = (annee: number): number =>
+	annee >= alternanceData.fin
+		? 1
+		: annee < alternanceData.debut
+			? (INDICE_ALTERNANCE[alternanceData.debut] ?? 0)
+			: (INDICE_ALTERNANCE[annee] ?? 1);
 
 const AGE_FIN = 70;
 
@@ -176,6 +186,43 @@ export function generateCarriere(
 	/** Durée d'une période en mois : loi exponentielle de moyenne donnée, un mois au moins. */
 	const duree = (moyenne: number, u: number) =>
 		Math.max(1, Math.round(-moyenne * Math.log(1 - Math.min(u, 0.999999))));
+
+	// Apprentissage ou alternance avant l'entrée : le même tirage d'une année sur l'autre, pour que
+	// celui qui a commencé un contrat le poursuive jusqu'à son premier emploi.
+	if (!partielle) {
+		const tirageAlternance = derive(86028.121);
+		let commence = false;
+		for (
+			let age = h.alternance.parAge[0]?.[0] ?? ageEntree;
+			age < ageEntree;
+			age++
+		) {
+			const annee = anneeNaissance + age;
+			const hy = pour(annee);
+			if (
+				!commence &&
+				tirageAlternance >=
+					interpole(hy.alternance.parAge, age) * indiceAlternance(annee)
+			)
+				continue;
+			commence = true;
+			annees.push({
+				annee,
+				etat: "emploi",
+				salaireBrut:
+					interpole(
+						alternanceData.salaireEnSmic as unknown as [number, number][],
+						age,
+					) *
+					valeur(b.cnav.smicHoraire, annee) *
+					hy.heuresAnnuelles,
+				moisEmploi: MOIS,
+				moisChomage: 0,
+				moisMaladie: 0,
+				alternance: true,
+			});
+		}
+	}
 
 	for (let age = ageEntree; age < AGE_FIN; age++) {
 		const annee = anneeNaissance + age;

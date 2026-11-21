@@ -531,6 +531,24 @@ export function reglesGenerationFonctionPublique(
 		);
 		return table[borne] as (typeof table)[number];
 	};
+	if (statut.regime === "militaire") {
+		// Un militaire part quand ses services le permettent : ni âge légal ni décote ne jouent ici,
+		// et aucun levier d'âge ne le touche. La durée requise est celle de l'année de son départ.
+		const age = (statut.ageRadiation ?? 50) * 4;
+		const services = cumulJusqua(compte, age).trimestresCotises;
+		const m = fp.bonificationDuCinquieme;
+		return {
+			ageLegal: age,
+			dureeRequise: lire("sedentaire", naissance + Math.floor(age / 4) - 60)
+				.dureeRequise,
+			ageTauxPleinAutomatique: age,
+			ageSurcote: Number.POSITIVE_INFINITY,
+			anneeOuverture: naissance + Math.floor(age / 4),
+			bonifications:
+				Math.min(m.plafond, Math.floor(services * m.part)) +
+				(statut.bonifications ?? 0),
+		};
+	}
 	const sedentaire = lire("sedentaire", naissance);
 	let categorie = statut.categorie;
 	if (
@@ -621,19 +639,36 @@ function computePensionFonctionPublique(
 	if (!fp) throw new Error("Barème de la fonction publique absent");
 	const compte = options.compte ?? buildCompte(carriere, b);
 	const regles = options.regles ?? {};
-	const g = reglesGenerationFonctionPublique(carriere, compte, b, regles);
+	let g = reglesGenerationFonctionPublique(carriere, compte, b, regles);
+	// Invalidité : la pension est versée dès la radiation, quel que soit l'âge, sans décote ni surcote.
+	const invalidite = carriere.fonctionPublique?.ageInvalidite;
+	const invalide = invalidite !== undefined && invalidite * 4 < g.ageLegal;
+	if (invalide)
+		g = {
+			...g,
+			ageLegal: (invalidite as number) * 4,
+			ageTauxPleinAutomatique: (invalidite as number) * 4,
+			ageSurcote: Number.POSITIVE_INFINITY,
+		};
 	const age =
-		options.ageLiquidation ??
-		decideLiquidation(
-			carriere,
-			compte,
-			g,
-			b,
-			options.comportement ??
-				HYPOTHESES_PUBLIQUES.depart[carriere.fonctionPublique?.regime ?? "sre"],
-			(annee) =>
-				trimestresEnfantsFonctionPublique(carriere, fp, annee).dureeAssurance,
-		).age;
+		carriere.fonctionPublique?.regime === "militaire"
+			? g.ageLegal
+			: invalide
+				? (invalidite as number) * 4
+				: (options.ageLiquidation ??
+					decideLiquidation(
+						carriere,
+						compte,
+						g,
+						b,
+						options.comportement ??
+							HYPOTHESES_PUBLIQUES.depart[
+								carriere.fonctionPublique?.regime ?? "sre"
+							],
+						(annee) =>
+							trimestresEnfantsFonctionPublique(carriere, fp, annee)
+								.dureeAssurance,
+					).age);
 	const detail = computeFonctionPublique(
 		carriere,
 		compte,
@@ -642,6 +677,7 @@ function computePensionFonctionPublique(
 		g,
 		fp,
 		regles,
+		invalide,
 	);
 	return {
 		liquidation: { age, annee: carriere.anneeNaissance + Math.floor(age / 4) },

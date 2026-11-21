@@ -30,6 +30,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Événement** : fait daté qui modifie une carrière (naissance d'un enfant, interruption, migration, liquidation).
 - **Générateur de carrières** : composant qui fait avancer chaque individu d'une année par des probabilités de transition entre états.
 - **Graine** : valeur qui fixe les tirages aléatoires, identique entre scénarios pour que l'écart vienne de la réforme.
+- **Alternance** : années d'apprentissage ou de contrat en alternance avant l'entrée dans la vie active, payées en part du SMIC et qui valident des trimestres.
 - **Carrière partielle** : carrière dont une partie seulement se déroule dans le système français (arrivée tardive, départ à l'étranger).
 - **Portrait** : carrière d'un individu présentée à l'utilisateur pour illustrer une partie d'une distribution.
 

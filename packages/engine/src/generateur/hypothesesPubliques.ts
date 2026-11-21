@@ -23,7 +23,8 @@ export interface HypothesesPubliques {
 		min: number;
 	}>;
 	/** Âge d'entrée dans la fonction publique : un âge minimal plus un délai de loi exponentielle. */
-	entree: ParRegime<{ min: number; delaiMoyen: number; max: number }>;
+	/** Le délai moyen dépend de la génération : les plus anciennes entraient plus jeunes. */
+	entree: ParRegime<{ min: number; delaiMoyen: Points; max: number }>;
 	/** Part des années d'avant l'entrée qui valident quatre trimestres dans un autre régime. */
 	partValideeAvantEntree: number;
 	traitement: {
@@ -48,6 +49,11 @@ export interface HypothesesPubliques {
 		 */
 		glissementDesGrilles: number;
 	};
+	/**
+	 * Temps partiel : les parts publiées (tempsPartielPublic.data.json) valent pour tous les âges réunis.
+	 * Ici il se prend entre deux âges, par une part des agents relevée d'autant pour retrouver la part publiée.
+	 */
+	tempsPartiel: { ageMin: number; ageMax: number; facteur: number };
 	/** Enseignants de l'État : part, et niveau de traitement rapporté à la moyenne du régime. */
 	enseignants: { part: number; traitement: number; autres: number };
 	/** Primes en part du traitement, et dispersion entre individus autour de cette part. */
@@ -55,12 +61,30 @@ export interface HypothesesPubliques {
 		enseignants: number;
 		autresSre: number;
 		cnracl: number;
+		militaire: number;
 		dispersion: number;
 	};
 	/** Part de chaque catégorie active selon la génération. */
-	categories: ParRegime<
+	categories: Record<
+		"sre" | "cnracl",
 		Record<Exclude<CategorieFonctionnaire, "sedentaire">, Points>
 	>;
+	/**
+	 * Militaires qui quittent l'armée avec une pension : années de services au départ (un minimum plus
+	 * un délai de loi exponentielle, plafonné) et bonifications de campagne, en trimestres, tirées
+	 * entre zéro et ce maximum. Ceux qui partent sans pension militaire ne sont pas simulés.
+	 */
+	militaires: {
+		servicesMin: number;
+		delaiMoyen: number;
+		servicesMax: number;
+		bonificationsMax: number;
+	};
+	/**
+	 * Mise à la retraite pour invalidité : part de chaque génération, et âges entre lesquels elle survient.
+	 * Réglé sur la part des départs pour invalidité et leur âge moyen.
+	 */
+	invalidite: ParRegime<{ part: number; ageMin: number; ageMax: number }>;
 	depart: ParRegime<ComportementDepart>;
 }
 

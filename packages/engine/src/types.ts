@@ -35,6 +35,8 @@ export interface AnneeCarriere {
 	 * le reste du salaire est le traitement, seule base de la pension de la fonction publique.
 	 */
 	primes?: number;
+	/** Année d'apprentissage ou d'alternance, avant l'entrée dans la vie active : un petit salaire, des droits entiers. */
+	alternance?: boolean;
 	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
 	avpf?: boolean;
 }
@@ -56,13 +58,22 @@ export interface Carriere {
 	fonctionPublique?: StatutFonctionnaire;
 }
 
-export type RegimeFonctionPublique = "sre" | "cnracl";
+export type RegimeFonctionPublique = "sre" | "cnracl" | "militaire";
 export type CategorieFonctionnaire = "sedentaire" | "actif" | "superActif";
 
 export interface StatutFonctionnaire {
-	/** SRE pour l'État, CNRACL pour les collectivités et les hôpitaux. */
+	/** SRE pour les civils de l'État, CNRACL pour les collectivités et les hôpitaux, militaire pour les armées et la gendarmerie. */
 	regime: RegimeFonctionPublique;
 	categorie: CategorieFonctionnaire;
+	/** Âge, en années, d'une mise à la retraite pour invalidité : la pension est versée dès cet âge, sans décote. */
+	ageInvalidite?: number;
+	/**
+	 * Militaire : âge, en années, où il quitte l'armée avec une pension versée tout de suite.
+	 * Cet âge dépend de ses années de services, pas de l'âge légal.
+	 */
+	ageRadiation?: number;
+	/** Militaire : trimestres de bonification pour campagnes et services aériens ou sous-marins. */
+	bonifications?: number;
 }
 
 export interface Individu {
@@ -123,6 +134,8 @@ export interface DetailFonctionPublique {
 	trimestresSurcote: number;
 	majorationEnfants: number;
 	minimumGarantiApplique: boolean;
+	/** Motif du départ quand ce n'est pas l'ancienneté. */
+	motif?: "invalidite";
 	/** Rente annuelle de la retraite additionnelle sur les primes ; nulle quand les points sont versés en capital. */
 	rafp: number;
 	/** Pension annuelle brute du régime, hors retraite additionnelle, en euros de l'année de référence. */

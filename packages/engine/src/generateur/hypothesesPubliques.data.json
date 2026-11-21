@@ -1,12 +1,14 @@
 {
 	"note": "Paramètres libres du générateur de carrières de fonctionnaires. Réglés à la main sur data/references/fonction-publique.json (durées de services, indices et pensions à la liquidation, parts des catégories actives) ; voir scripts/backtest-public.ts.",
 	"partRegime": {
-		"sre": 0.45,
-		"cnracl": 0.55
+		"sre": 0.4,
+		"cnracl": 0.5,
+		"militaire": 0.1
 	},
 	"partFemmes": {
 		"sre": 0.6,
-		"cnracl": 0.65
+		"cnracl": 0.65,
+		"militaire": 0.12
 	},
 	"debutVieActive": {
 		"sre": {
@@ -18,30 +20,77 @@
 			"moyenne": 20.5,
 			"ecartType": 3.5,
 			"min": 16
+		},
+		"militaire": {
+			"moyenne": 20,
+			"ecartType": 2,
+			"min": 17
 		}
 	},
 	"entree": {
 		"sre": {
 			"min": 21,
-			"delaiMoyen": 6.5,
+			"delaiMoyen": [
+				[
+					1940,
+					6.5
+				],
+				[
+					1990,
+					6.5
+				]
+			],
 			"max": 50
 		},
 		"cnracl": {
 			"min": 22,
-			"delaiMoyen": 17,
+			"delaiMoyen": [
+				[
+					1935,
+					8.5
+				],
+				[
+					1950,
+					11
+				],
+				[
+					1962,
+					13.5
+				],
+				[
+					1990,
+					13.5
+				]
+			],
 			"max": 57
+		},
+		"militaire": {
+			"min": 18,
+			"delaiMoyen": [
+				[
+					1940,
+					3
+				],
+				[
+					1990,
+					3
+				]
+			],
+			"max": 30
 		}
 	},
 	"partValideeAvantEntree": 0.9,
 	"traitement": {
 		"anneeDeNiveau": 2024,
 		"niveau": {
-			"sre": 39600,
-			"cnracl": 31600
+			"sre": 39300,
+			"cnracl": 30000,
+			"militaire": 31600
 		},
 		"sigma": {
 			"sre": 0.24,
-			"cnracl": 0.24
+			"cnracl": 0.24,
+			"militaire": 0.28
 		},
 		"profil": {
 			"sre": [
@@ -91,23 +140,55 @@
 					62,
 					1.02
 				]
+			],
+			"militaire": [
+				[
+					20,
+					0.55
+				],
+				[
+					30,
+					0.75
+				],
+				[
+					40,
+					0.92
+				],
+				[
+					47,
+					1
+				],
+				[
+					58,
+					1.15
+				]
 			]
 		},
 		"ecartFemmes": {
 			"sre": [
 				[
 					1940,
-					0.84
+					0.87
 				],
 				[
 					1990,
-					0.97
+					0.99
 				]
 			],
 			"cnracl": [
 				[
 					1940,
-					0.86
+					0.87
+				],
+				[
+					1990,
+					0.98
+				]
+			],
+			"militaire": [
+				[
+					1940,
+					0.95
 				],
 				[
 					1990,
@@ -118,7 +199,8 @@
 		"glissementDesGrilles": 0.004,
 		"partAnciennete": {
 			"sre": 0.5,
-			"cnracl": 0.9
+			"cnracl": 0.9,
+			"militaire": 0
 		},
 		"ageEntreeDeReference": 24
 	},
@@ -131,7 +213,8 @@
 		"enseignants": 0.244,
 		"autresSre": 0.509,
 		"cnracl": 0.324,
-		"dispersion": 0.4
+		"dispersion": 0.4,
+		"militaire": 0.5
 	},
 	"categories": {
 		"sre": {
@@ -199,6 +282,23 @@
 			]
 		}
 	},
+	"invalidite": {
+		"sre": {
+			"part": 0.045,
+			"ageMin": 53,
+			"ageMax": 62
+		},
+		"cnracl": {
+			"part": 0.15,
+			"ageMin": 48,
+			"ageMax": 62
+		},
+		"militaire": {
+			"part": 0,
+			"ageMin": 30,
+			"ageMax": 40
+		}
+	},
 	"depart": {
 		"sre": {
 			"partInaptitude": 0,
@@ -213,6 +313,24 @@
 			"trimestresDecoteMax": 12,
 			"partSurcote": 0.6,
 			"trimestresSurcote": 9
+		},
+		"militaire": {
+			"partInaptitude": 0,
+			"partDecote": 0.17,
+			"trimestresDecoteMax": 12,
+			"partSurcote": 0.7,
+			"trimestresSurcote": 9
 		}
+	},
+	"militaires": {
+		"servicesMin": 17,
+		"delaiMoyen": 12.5,
+		"servicesMax": 40,
+		"bonificationsMax": 36
+	},
+	"tempsPartiel": {
+		"ageMin": 30,
+		"ageMax": 50,
+		"facteur": 2.1
 	}
 }

@@ -65,9 +65,9 @@ function Simuler() {
 								régime général et Agirc-Arrco, pensions de droit direct. Le
 								total tous régimes vient des projections du Conseil
 								d'orientation des retraites. Dans un scénario, les
-								fonctionnaires civils suivent leurs propres règles, simulées à
-								part ; les autres régimes suivent les règles communes à tous
-								(âge, durée, revalorisation).
+								fonctionnaires suivent leurs propres règles, simulées à part ;
+								les autres régimes suivent les règles communes à tous (âge,
+								durée, revalorisation).
 							</p>
 						</section>
 
@@ -99,10 +99,11 @@ function Simuler() {
 						<section className="bloc">
 							<h2>Les fonctionnaires en {annee}</h2>
 							<p className="sub">
-								Agents de l'État, des collectivités et des hôpitaux, hors
-								militaires. Leur pension se calcule sur le traitement des six
-								derniers mois, sans les primes. Ils sont simulés à part et ne
-								figurent pas dans les distributions ci-dessus.
+								Agents de l'État, des collectivités et des hôpitaux, militaires
+								compris pour la pension moyenne. Leur pension se calcule sur le
+								traitement des six derniers mois, sans les primes. Ils sont
+								simulés à part et ne figurent pas dans les distributions
+								ci-dessus.
 							</p>
 							<div className="faits">
 								<Fait
@@ -145,7 +146,7 @@ function Simuler() {
 										annees,
 										0.05,
 									)}
-									legende="âge moyen de ceux qui partent cette année-là"
+									legende="âge moyen de départ des civils, hors invalidité, autour de cette année-là"
 								/>
 							</div>
 						</section>
@@ -205,10 +206,10 @@ function Simuler() {
 					<p>
 						<strong>Des ordres de grandeur, pas une prévision.</strong> Les
 						carrières sont inventées, réglées sur les salaires et les durées
-						publiés. Les salariés du privé et les fonctionnaires civils sont
-						simulés, les autres régimes suivent les projections officielles. La
-						natalité et le solde migratoire se règlent entre les variantes basse
-						et haute de l'Insee.
+						publiés. Les salariés du privé et les fonctionnaires sont simulés,
+						les autres régimes suivent les projections officielles. La natalité
+						et le solde migratoire se règlent entre les variantes basse et haute
+						de l'Insee.
 					</p>
 				</aside>
 			</div>

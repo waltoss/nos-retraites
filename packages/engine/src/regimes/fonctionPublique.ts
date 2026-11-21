@@ -18,6 +18,8 @@ export interface GenerationFonctionnaire extends BaremeGeneration {
 	ageSurcote: number;
 	/** Année d'atteinte de l'âge d'ouverture du droit en vigueur, qui fixe le taux de la décote. */
 	anneeOuverture: number;
+	/** Trimestres de bonification propres au métier, en plus de ceux pour enfants. */
+	bonifications?: number;
 }
 
 /** Ce qu'un scénario change au calcul de la pension des fonctionnaires. */
@@ -33,7 +35,8 @@ export interface ReglesFonctionPublique {
 /**
  * Compte d'une carrière de fonctionnaire : les trimestres cotisés sont les services,
  * les salaires portés au compte sont les traitements, les points sont ceux de la retraite additionnelle.
- * Simplification : pas de temps partiel, une année en poste vaut quatre trimestres de services.
+ * Le temps partiel compte au prorata dans les services et en entier dans la durée d'assurance ;
+ * le traitement retenu est celui d'un temps plein.
  */
 export function buildCompteFonctionPublique(
 	carriere: Carriere,
@@ -62,10 +65,14 @@ export function buildCompteFonctionPublique(
 			if (a.autreRegime) compte.trimestresAutresRegimes[i] = trimestres;
 		} else {
 			const coefficient = valeur(b.cnav.coefficientsRevalorisation, a.annee);
+			const quotite = a.quotite ?? 1;
 			const traitement = a.salaireBrut - a.primes;
-			compte.trimestresCotises[i] = trimestres;
-			compte.salairesRevalorises[i] = traitement * coefficient;
-			(compte.primesRevalorisees as Float64Array)[i] = a.primes * coefficient;
+			compte.trimestresCotises[i] = trimestres * quotite;
+			// Le reste de l'année compte pour la durée d'assurance, pas pour les services.
+			compte.trimestresAssimiles[i] = trimestres * (1 - quotite);
+			compte.salairesRevalorises[i] = (traitement / quotite) * coefficient;
+			(compte.primesRevalorisees as Float64Array)[i] =
+				(a.primes / quotite) * coefficient;
 			if (a.annee >= fp.rafp.premiereAnnee)
 				compte.points[i] =
 					(fp.rafp.taux *
@@ -108,13 +115,17 @@ function partMinimumGaranti(
 	services: number,
 	dureeRequise: number,
 	m: BaremeFonctionPublique["minimumGaranti"],
+	invalidite: boolean,
 ): number {
 	const annees = services / 4;
 	if (annees >= 40) return 1;
 	if (annees >= 30)
 		return m.partA15Ans + 15 * m.parAnDe15A30 + (annees - 30) * m.parAnDe30A40;
 	if (annees >= 15) return m.partA15Ans + (annees - 15) * m.parAnDe15A30;
-	return Math.min(1, services / dureeRequise);
+	// En deçà de 15 ans : un quinzième du taux de 15 ans par année en cas d'invalidité, sinon au prorata de la durée requise.
+	return invalidite
+		? (m.partA15Ans * annees) / 15
+		: Math.min(1, services / dureeRequise);
 }
 
 /**
@@ -130,6 +141,7 @@ export function computeFonctionPublique(
 	g: GenerationFonctionnaire,
 	fp: BaremeFonctionPublique,
 	regles: ReglesFonctionPublique = {},
+	invalidite = false,
 ): DetailFonctionPublique {
 	const anneeLiquidation = carriere.anneeNaissance + Math.floor(age / 4);
 	const enfants = trimestresEnfantsFonctionPublique(
@@ -138,12 +150,17 @@ export function computeFonctionPublique(
 		anneeLiquidation,
 	);
 	const services = cumul.trimestresCotises;
+	const bonifications = enfants.bonifications + (g.bonifications ?? 0);
 	const valides =
-		services + enfants.dureeAssurance + cumul.trimestresAutresRegimes;
+		services +
+		cumul.trimestresAssimiles +
+		enfants.dureeAssurance +
+		(g.bonifications ?? 0) +
+		cumul.trimestresAutresRegimes;
 	const taux = Math.min(
 		fp.tauxMaximalAvecBonifications,
 		fp.tauxPlein * Math.min(1, services / g.dureeRequise) +
-			(fp.tauxPlein * enfants.bonifications) / g.dureeRequise,
+			(fp.tauxPlein * bonifications) / g.dureeRequise,
 	);
 	const d = fp.decote(g.anneeOuverture);
 	const manquants = Math.min(
@@ -203,7 +220,8 @@ export function computeFonctionPublique(
 		pension > 0 &&
 		(manquants === 0 || anneeLiquidation < m.conditionDepuis)
 	) {
-		const plancher = m.annuel * partMinimumGaranti(services, g.dureeRequise, m);
+		const plancher =
+			m.annuel * partMinimumGaranti(services, g.dureeRequise, m, invalidite);
 		if (plancher > pension) {
 			pension = plancher;
 			minimumApplique = true;
@@ -245,7 +263,7 @@ export function computeFonctionPublique(
 	return {
 		traitementDeReference: reference,
 		services,
-		bonifications: enfants.bonifications,
+		bonifications,
 		trimestresValides: valides,
 		dureeRequise: g.dureeRequise,
 		tauxLiquidation: taux,
@@ -253,6 +271,7 @@ export function computeFonctionPublique(
 		trimestresSurcote: surcote,
 		majorationEnfants: majoration,
 		minimumGarantiApplique: minimumApplique,
+		...(invalidite ? { motif: "invalidite" as const } : {}),
 		rafp,
 		pensionAnnuelle: pension,
 	};
@@ -261,7 +280,7 @@ export function computeFonctionPublique(
 /** Cotisations annuelles d'un fonctionnaire (agent et employeur), aux taux de l'année de référence. */
 export function cotisationsFonctionPublique(
 	traitement: number,
-	regime: "sre" | "cnracl",
+	regime: "sre" | "cnracl" | "militaire",
 	fp: BaremeFonctionPublique,
 ): number {
 	const t = fp.tauxCotisation;

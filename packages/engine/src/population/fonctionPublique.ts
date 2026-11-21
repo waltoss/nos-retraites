@@ -1,17 +1,18 @@
 import type { Champ } from "../ponderation.ts";
+import type { RegimeFonctionPublique } from "../types.ts";
 import data from "./fonctionPublique.data.json" with { type: "json" };
 
-type Parts = Record<"sre" | "cnracl", Record<"F" | "H", number[]>>;
+type Parts = Record<RegimeFonctionPublique, Record<"F" | "H", number[]>>;
 const parts = data.parts as Parts;
 
 /** Part d'une génération qui fait carrière dans un régime de la fonction publique. */
 export function partFonctionPublique(
-	regime: "sre" | "cnracl",
+	regime: RegimeFonctionPublique,
 	sexe: "F" | "H",
 	generation: number,
 	p: Parts = parts,
 ): number {
-	const v = p[regime][sexe];
+	const v = p[regime]?.[sexe] ?? [];
 	const i = Math.max(
 		0,
 		Math.min(v.length - 1, generation - data.generationDebut),

@@ -85,7 +85,7 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 
 /** Taille et graine de la population de fonctionnaires simulée à côté de celle du privé. */
 export const SCENARIO_PUBLIC = {
-	taille: 9840,
+	taille: 14760,
 	graine: 2027,
 	generations: GENERATIONS_REFERENCE,
 } as const;

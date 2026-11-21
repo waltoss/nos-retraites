@@ -8,6 +8,11 @@ import type {
 	Sexe,
 } from "../types.ts";
 import type { HypothesesPubliques } from "./hypothesesPubliques.ts";
+import tempsPartielData from "./tempsPartielPublic.data.json" with {
+	type: "json",
+};
+
+type TempsPartiel = Record<"F" | "H", { part: number; quotite: number }>;
 
 const AGE_FIN = 70;
 
@@ -63,14 +68,23 @@ export function generateCarriereFonctionPublique(
 	h: HypothesesPubliques,
 	b: Baremes,
 ): Carriere {
+	const tirageRegime = rng.next();
 	const regime: RegimeFonctionPublique =
-		rng.next() < h.partRegime.sre ? "sre" : "cnracl";
+		tirageRegime < h.partRegime.sre
+			? "sre"
+			: tirageRegime < h.partRegime.sre + h.partRegime.cnracl
+				? "cnracl"
+				: "militaire";
 	const sexe: Sexe = rng.next() < h.partFemmes[regime] ? "F" : "H";
 	const rang = rng.normal();
 	const e = h.entree[regime];
 	const ageEntree = Math.min(
 		e.max,
-		Math.round(e.min - e.delaiMoyen * Math.log(1 - rng.next() * 0.999999)),
+		Math.round(
+			e.min -
+				interpole(e.delaiMoyen, anneeNaissance) *
+					Math.log(1 - rng.next() * 0.999999),
+		),
 	);
 	const debut = Math.min(
 		ageEntree,
@@ -85,6 +99,18 @@ export function generateCarriereFonctionPublique(
 	const tirageCategorie = rng.next();
 	const enseignant = regime === "sre" && rng.next() < h.enseignants.part;
 	const tiragePrimes = rng.next();
+	// Tirages dérivés du rang : la population reste la même qu'avant l'ajout de l'invalidité.
+	const derive = (k: number) => (Math.abs(rang) * k) % 1;
+	const inv = h.invalidite[regime];
+	const tirageInvalidite =
+		derive(15485.863) < inv.part
+			? Math.floor(inv.ageMin + derive(32452.843) * (inv.ageMax - inv.ageMin))
+			: undefined;
+	// Sans objet pour qui n'est pas encore entré dans la fonction publique à cet âge.
+	const ageInvalidite =
+		tirageInvalidite !== undefined && tirageInvalidite > ageEntree
+			? tirageInvalidite
+			: undefined;
 	// Enfants : mêmes lois simples que le privé, sans effet sur la carrière.
 	const tirageEnfants = rng.next();
 	const nbEnfants =
@@ -104,9 +130,22 @@ export function generateCarriereFonctionPublique(
 		ageNaissance += Math.max(1, Math.round(3 + rng.normal()));
 	}
 
-	const parts = h.categories[regime];
-	const partSuper = interpole(parts.superActif, anneeNaissance);
-	const partActif = interpole(parts.actif, anneeNaissance);
+	const parts = regime === "militaire" ? null : h.categories[regime];
+	const partSuper = parts ? interpole(parts.superActif, anneeNaissance) : 0;
+	const partActif = parts ? interpole(parts.actif, anneeNaissance) : 0;
+	// Militaire : il quitte l'armée après un nombre d'années de services tiré une fois pour toutes.
+	const mil = h.militaires;
+	const ageRadiation =
+		regime === "militaire"
+			? ageEntree +
+				Math.min(
+					mil.servicesMax,
+					Math.round(
+						mil.servicesMin -
+							mil.delaiMoyen * Math.log(1 - derive(49979.687) * 0.999999),
+					),
+				)
+			: undefined;
 	// Les enseignants d'aujourd'hui sont sédentaires ; les instituteurs d'hier sont dans la part des actifs.
 	const categorie: CategorieFonctionnaire =
 		tirageCategorie < partSuper
@@ -126,13 +165,22 @@ export function generateCarriereFonctionPublique(
 				: h.enseignants.autres
 			: 1);
 	const partPrimes =
-		(regime === "cnracl"
-			? h.primes.cnracl
-			: enseignant
-				? h.primes.enseignants
-				: h.primes.autresSre) *
+		(regime === "militaire"
+			? h.primes.militaire
+			: regime === "cnracl"
+				? h.primes.cnracl
+				: enseignant
+					? h.primes.enseignants
+					: h.primes.autresSre) *
 		(1 + h.primes.dispersion * (2 * tiragePrimes - 1));
 
+	// Temps partiel : les mêmes agents pendant toute la période où il se prend.
+	const tp =
+		regime === "militaire"
+			? null
+			: (tempsPartielData[regime] as TempsPartiel)[sexe];
+	const aTempsPartiel =
+		tp !== null && derive(22801.763) < tp.part * h.tempsPartiel.facteur;
 	const retard =
 		t.partAnciennete[regime] * Math.max(0, ageEntree - t.ageEntreeDeReference);
 	const annees: AnneeCarriere[] = [];
@@ -152,16 +200,38 @@ export function generateCarriereFonctionPublique(
 			});
 			continue;
 		}
+		if (
+			(ageInvalidite !== undefined && age >= ageInvalidite) ||
+			(ageRadiation !== undefined && age >= ageRadiation)
+		) {
+			annees.push({
+				annee,
+				etat: "inactivite",
+				salaireBrut: 0,
+				moisEmploi: 0,
+				moisChomage: 0,
+				moisMaladie: 0,
+			});
+			continue;
+		}
 		const traitement =
 			niveau *
 			interpole(t.profil[regime], age - retard) *
 			indiceTraitement(annee, h, b);
-		const primes = traitement * partPrimes;
+		const quotite =
+			tp !== null &&
+			aTempsPartiel &&
+			age >= h.tempsPartiel.ageMin &&
+			age < h.tempsPartiel.ageMax
+				? tp.quotite
+				: 1;
+		const primes = traitement * partPrimes * quotite;
 		annees.push({
 			annee,
 			etat: "emploi",
-			salaireBrut: traitement + primes,
+			salaireBrut: traitement * quotite + primes,
 			primes,
+			...(quotite < 1 ? { quotite } : {}),
 		});
 	}
 	return {
@@ -171,6 +241,16 @@ export function generateCarriereFonctionPublique(
 		cadre: false,
 		annees,
 		tirageDepart: (Math.abs(rang) * 7919.123) % 1,
-		fonctionPublique: { regime, categorie },
+		fonctionPublique: {
+			regime,
+			categorie,
+			...(ageInvalidite !== undefined ? { ageInvalidite } : {}),
+			...(ageRadiation !== undefined
+				? {
+						ageRadiation,
+						bonifications: Math.round(derive(67867.979) * mil.bonificationsMax),
+					}
+				: {}),
+		},
 	};
 }

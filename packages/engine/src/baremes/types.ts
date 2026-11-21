@@ -173,7 +173,12 @@ export interface BaremeFonctionPublique {
 		majorationParEnfantSupplementaire: number;
 	};
 	/** Taux de l'année de référence, en part du traitement. */
-	tauxCotisation: { agent: number; employeur: { sre: number; cnracl: number } };
+	tauxCotisation: {
+		agent: number;
+		employeur: { sre: number; cnracl: number; militaire: number };
+	};
+	/** Militaires : bonification d'un cinquième des services, dans la limite d'un nombre de trimestres. */
+	bonificationDuCinquieme: { part: number; plafond: number };
 	rafp: {
 		premiereAnnee: number;
 		/** Part du traitement au-delà de laquelle les primes ne cotisent plus. */

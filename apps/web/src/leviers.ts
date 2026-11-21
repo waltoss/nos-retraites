@@ -88,7 +88,7 @@ export const GROUPES: {
 		id: "fonctionPublique",
 		label: "Fonction publique",
 		icone: "tableau",
-		note: "Ces réglages ne touchent que les fonctionnaires de l'État, des collectivités et des hôpitaux, hors militaires : environ 3,7 millions d'agents en poste et 3 millions de retraités. Leur effet se lit dans le solde tous régimes et dans l'encadré « Les fonctionnaires ». Les autres leviers d'âge, de durée et de revalorisation s'appliquent déjà à eux.",
+		note: "Ces réglages ne touchent que les fonctionnaires de l'État, des collectivités et des hôpitaux et les militaires : environ 4 millions d'agents en poste et 3,5 millions de retraités. Les leviers d'âge ne changent rien pour les militaires, qui partent selon leurs années de services. Leur effet se lit dans le solde tous régimes et dans l'encadré « Les fonctionnaires ». Les autres leviers d'âge, de durée et de revalorisation s'appliquent déjà à eux.",
 	},
 	{
 		id: "emploi",

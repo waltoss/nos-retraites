@@ -1,0 +1,5710 @@
+{
+ "meta": {
+  "objet": "Compléments de références pour trois sujets : temps partiel des fonctionnaires (part, quotités, âge, règle de retraite, surcotisation) ; jeunes cotisants du privé (apprentis, rémunération et trimestres des apprentis, taux d'emploi des 15-24 ans, cotisants Agirc-Arrco par âge) ; pensions militaires de l'État (conditions de liquidation, formule, chiffres par catégorie).",
+  "methode": "Valeurs lues le 2026-11-21 dans les sources indiquées : classeurs lus par script (les .xls convertis en .xlsx avec LibreOffice), PDF lus avec pdftotext, pages web téléchargées et converties en texte. Aucune valeur citée de mémoire. Les tableaux volumineux sont recopiés par script depuis les fichiers ; les autres sont transcrits depuis le texte extrait. Une valeur introuvable est décrite dans « manquants » avec les essais faits. Les valeurs calculées portent « calcule », « derive » ou une note.",
+  "conventions": "Chaque bloc porte source, url, date (de lecture), fiabilite, et le plus souvent citation, champ et unite. Clés en français sans accents ; fpe, fpt, fph = versants ; q50 à q90 = quotités de temps de travail. « primaire » = texte officiel ou producteur de la donnée.",
+  "date": "2026-11-21",
+  "plan": {
+   "tempsPartielFonctionnaires": "A : état 2025, séries 2014-2025 (enquête Emploi), fonctionnaires par versant, sexe et quotité 2014-2019 (Siasp), par âge 2019, points 2010-2012 et 1998-1999, règle de retraite et surcotisation",
+   "jeunesCotisants": "B : apprentis 1982-2025, apprentis du public fin 2024, rémunération légale, trimestres avant et après 2014, taux d'emploi 15-19 et 20-24 ans 1975-2025, cotisants Agirc-Arrco par âge fin 2024",
+   "militaires": "C : conditions de liquidation, limites d'âge, formule, bonifications, décote, minimum garanti ; effectifs, nouveaux retraités, pensions, solde et primes par catégorie"
+  },
+  "lienAvecLesAutresFichiers": "fonction-publique.json contient déjà : cotisants militaires 2014-2025, indice moyen de liquidation des militaires 2004-2025, âges des pensions différées, résumé des règles militaires. temps-partiel.json porte sur le privé. Rien n'est recopié de ces fichiers.",
+  "limites": [
+   "Site de la Dares inaccessible (vérification anti-robot) : pas de série de contrats d'apprentissage en cours ni de partage privé / public.",
+   "Légifrance non interrogé : les règles viennent du jaune pensions, du SRE, du ministère des Armées, de la DGAFP et de réponses ministérielles.",
+   "Temps partiel : aucune série continue 1990-2024 pour les fonctionnaires ; trois sources de champ et de méthode différents."
+  ]
+ },
+ "tempsPartielFonctionnaires": {
+  "note": "Trois familles de sources, non comparables entre elles : (1) enquête Emploi (déclaratif, tous agents ou fonctionnaires, 2014-2025, rupture en 2021) ; (2) Siasp (administratif, emplois principaux au 31 décembre, fonctionnaires, 2014-2019, regroupe temps partiel et temps non complet ou incomplet) ; (3) fichiers de paie de l'État (titulaires civils de l'État, 1998-1999). Les niveaux diffèrent : en 2019, 16,6 % des fonctionnaires à temps partiel selon Siasp ; environ 14 % en 2022 selon l'enquête Emploi.",
+  "dernierEtat2025": {
+   "source": "DGAFP, Rapport annuel sur l'état de la fonction publique, édition 2026, vue « Temps et organisation du temps de travail dans la fonction publique en 2025 », figure 7 (enquête Emploi 2025, Insee, traitement DGAFP-SDessi)",
+   "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/le-temps-et-organisation-du-temps-de-travail-dans-la-fonction-publique-en-2025",
+   "urlDonnees": "https://www.fonction-publique.gouv.fr/files/files/publications/vue-rapport-annuel/2026/ra_2026_tps_organisation_tps_travail.zip",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% des agents à temps partiel",
+   "champ": "Agents de la fonction publique vivant en logement ordinaire, en emploi au sens du BIT, 15 ans ou plus ; France hors Mayotte ; hors apprentis, contrats de professionnalisation, stagiaires et contrats aidés. Temps partiel déclaré (ne distingue pas temps partiel, temps non complet et temps incomplet).",
+   "citation": "En 2025, 10 % des fonctionnaires de la FPE déclarent être à temps partiel.",
+   "citation2": "chez les fonctionnaires, c’est le cas de 20 % des femmes et de seulement 6 % des hommes",
+   "valeurs": {
+    "fpe": {
+     "fonctionnaires": 10.0,
+     "contractuelsEtAutres": 27.93,
+     "ensembleFonctionPublique": 16.07,
+     "salariesDuPrive": null
+    },
+    "fpt": {
+     "fonctionnaires": 17.34,
+     "contractuelsEtAutres": 30.11,
+     "ensembleFonctionPublique": 21.39,
+     "salariesDuPrive": null
+    },
+    "fph": {
+     "fonctionnaires": 22.66,
+     "contractuelsEtAutres": 24.44,
+     "ensembleFonctionPublique": 23.19,
+     "salariesDuPrive": null
+    },
+    "femmes": {
+     "fonctionnaires": 20.35,
+     "contractuelsEtAutres": 33.98,
+     "ensembleFonctionPublique": 24.82,
+     "salariesDuPrive": 27.22
+    },
+    "hommes": {
+     "fonctionnaires": 5.6,
+     "contractuelsEtAutres": 17.0,
+     "ensembleFonctionPublique": 9.2,
+     "salariesDuPrive": 7.88
+    },
+    "moinsDe30": {
+     "fonctionnaires": 8.29,
+     "contractuelsEtAutres": 28.71,
+     "ensembleFonctionPublique": 20.38,
+     "salariesDuPrive": 17.4
+    },
+    "de30a49": {
+     "fonctionnaires": 17.41,
+     "contractuelsEtAutres": 26.55,
+     "ensembleFonctionPublique": 20.3,
+     "salariesDuPrive": 13.75
+    },
+    "de50ouPlus": {
+     "fonctionnaires": 13.4,
+     "contractuelsEtAutres": 29.78,
+     "ensembleFonctionPublique": 17.51,
+     "salariesDuPrive": 21.16
+    },
+    "ensemble": {
+     "fonctionnaires": 14.98,
+     "contractuelsEtAutres": 28.02,
+     "ensembleFonctionPublique": 19.2,
+     "salariesDuPrive": 16.83
+    }
+   },
+   "parTypeDeContratEtVersant": {
+    "note": "Données complémentaires, figure 7 : part à temps partiel et part du sous-emploi parmi les agents à temps partiel",
+    "valeurs": {
+     "fonctionnaires": {
+      "partTempsPartiel": {
+       "fpe": 10.0,
+       "fpt": 17.34,
+       "fph": 22.66,
+       "ensembleFonctionPublique": 14.98,
+       "salariesDuPrive": null
+      },
+      "partSousEmploiParmiTempsPartiel": {
+       "fpe": 9.23,
+       "fpt": 15.83,
+       "fph": 7.82,
+       "ensembleFonctionPublique": 11.35,
+       "salariesDuPrive": null
+      }
+     },
+     "contractuelsCdi": {
+      "partTempsPartiel": {
+       "fpe": 24.05,
+       "fpt": 21.65,
+       "fph": 25.79,
+       "ensembleFonctionPublique": 23.86,
+       "salariesDuPrive": 14.73
+      },
+      "partSousEmploiParmiTempsPartiel": {
+       "fpe": 25.17,
+       "fpt": 26.27,
+       "fph": 13.74,
+       "ensembleFonctionPublique": 22.88,
+       "salariesDuPrive": 19.81
+      }
+     },
+     "contractuelsCdd": {
+      "partTempsPartiel": {
+       "fpe": 33.23,
+       "fpt": 34.75,
+       "fph": 22.58,
+       "ensembleFonctionPublique": 32.28,
+       "salariesDuPrive": 34.12
+      },
+      "partSousEmploiParmiTempsPartiel": {
+       "fpe": 36.91,
+       "fpt": 46.22,
+       "fph": 19.93,
+       "ensembleFonctionPublique": 39.37,
+       "salariesDuPrive": 38.53
+      }
+     },
+     "ensemble": {
+      "partTempsPartiel": {
+       "fpe": 16.07,
+       "fpt": 21.39,
+       "fph": 23.19,
+       "ensembleFonctionPublique": 19.2,
+       "salariesDuPrive": 16.83
+      },
+      "partSousEmploiParmiTempsPartiel": {
+       "fpe": 22.08,
+       "fpt": 27.14,
+       "fph": 10.42,
+       "ensembleFonctionPublique": 21.22,
+       "salariesDuPrive": 23.79
+      }
+     }
+    }
+   },
+   "limite": "Pas de croisement versant × sexe pour les seuls fonctionnaires dans cette source (voir siaspFonctionnaires pour 2014-2019)."
+  },
+  "serieEnqueteEmploi2014_2025": {
+   "source": "DGAFP, Rapport annuel sur l'état de la fonction publique, édition 2026, données complémentaires « Durées, quotités de travail, contraintes horaires », figure 4 (enquêtes Emploi, Insee, traitement DGAFP-SDessi)",
+   "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/le-temps-et-organisation-du-temps-de-travail-dans-la-fonction-publique-en-2025",
+   "urlDonnees": "https://www.fonction-publique.gouv.fr/files/files/publications/vue-rapport-annuel/2026/ra_2026_tps_organisation_tps_travail.zip",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% des agents à temps partiel",
+   "champ": "Agents de la fonction publique vivant en logement ordinaire, en emploi au sens du BIT, 15 ans ou plus ; France hors Mayotte ; hors apprentis, contrats de professionnalisation, stagiaires et contrats aidés. Temps partiel déclaré (ne distingue pas temps partiel, temps non complet et temps incomplet). Tous statuts (fonctionnaires et contractuels).",
+   "rupture": "Rupture de série entre 2020 et 2021 (refonte de l'enquête Emploi) : « rendant les résultats d’avant 2021 non comparables à ceux des années postérieures ». Militaires et magistrats reclassés en totalité dans la FPE sur 2014-2025.",
+   "valeurs": {
+    "fpe": {
+     "2014": 16.21,
+     "2015": 15.21,
+     "2016": 15.62,
+     "2017": 15.77,
+     "2018": 16.08,
+     "2019": 16.19,
+     "2020": 16.24,
+     "2021": 16.33,
+     "2022": 16.53,
+     "2023": 17.32,
+     "2024": 16.34,
+     "2025": 16.07
+    },
+    "fpt": {
+     "2014": 24.09,
+     "2015": 24.79,
+     "2016": 24.31,
+     "2017": 24.35,
+     "2018": 24.57,
+     "2019": 23.59,
+     "2020": 23.82,
+     "2021": 22.24,
+     "2022": 20.11,
+     "2023": 20.95,
+     "2024": 21.23,
+     "2025": 21.39
+    },
+    "fph": {
+     "2014": 21.17,
+     "2015": 21.02,
+     "2016": 18.88,
+     "2017": 21.1,
+     "2018": 21.26,
+     "2019": 20.96,
+     "2020": 18.37,
+     "2021": 19.56,
+     "2022": 17.89,
+     "2023": 20.27,
+     "2024": 21.52,
+     "2025": 23.19
+    },
+    "femmes": {
+     "2014": 27.88,
+     "2015": 26.86,
+     "2016": 26.27,
+     "2017": 27.12,
+     "2018": 27.27,
+     "2019": 26.44,
+     "2020": 25.94,
+     "2021": 24.87,
+     "2022": 23.65,
+     "2023": 25.16,
+     "2024": 24.92,
+     "2025": 24.82
+    },
+    "hommes": {
+     "2014": 6.97,
+     "2015": 7.21,
+     "2016": 7.1,
+     "2017": 7.18,
+     "2018": 7.51,
+     "2019": 7.8,
+     "2020": 6.92,
+     "2021": 8.2,
+     "2022": 8.22,
+     "2023": 9.06,
+     "2024": 8.76,
+     "2025": 9.2
+    },
+    "ensemble": {
+     "2014": 19.98,
+     "2015": 19.67,
+     "2016": 19.24,
+     "2017": 19.82,
+     "2018": 20.07,
+     "2019": 19.68,
+     "2020": 19.24,
+     "2021": 18.93,
+     "2022": 18.0,
+     "2023": 19.14,
+     "2024": 19.02,
+     "2025": 19.2
+    }
+   }
+  },
+  "quotitesEnqueteEmploi2014_2025": {
+   "source": "DGAFP, Rapport annuel sur l'état de la fonction publique, édition 2026, données complémentaires, figure 6 « Part des agents publics à temps partiel selon le versant, le sexe et la quotité, depuis 2014 »",
+   "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/le-temps-et-organisation-du-temps-de-travail-dans-la-fonction-publique-en-2025",
+   "urlDonnees": "https://www.fonction-publique.gouv.fr/files/files/publications/vue-rapport-annuel/2026/ra_2026_tps_organisation_tps_travail.zip",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% de l'ensemble des agents du groupe (et non % des agents à temps partiel)",
+   "champ": "Agents de la fonction publique vivant en logement ordinaire, en emploi au sens du BIT, 15 ans ou plus ; France hors Mayotte ; hors apprentis, contrats de professionnalisation, stagiaires et contrats aidés. Temps partiel déclaré (ne distingue pas temps partiel, temps non complet et temps incomplet). Tous statuts.",
+   "citation": "En 2025, parmi les femmes de la FPE, 21 % se déclarent à temps partiel : 8 % ont une quotité de travail compris entre plus de 50% et moins 80 % et 4 % travaillent à mi-temps (50 %)",
+   "note": "La source ne donne pas les hommes par versant. Rupture de série entre 2020 et 2021.",
+   "valeurs": {
+    "ensembleFonctionPublique": {
+     "total": {
+      "2014": 19.92,
+      "2015": 19.63,
+      "2016": 19.18,
+      "2017": 19.75,
+      "2018": 20.01,
+      "2019": 19.66,
+      "2020": 19.19,
+      "2021": 18.93,
+      "2022": 18.0,
+      "2023": 19.14,
+      "2024": 19.02,
+      "2025": 19.2
+     },
+     "plusDe80": {
+      "2014": 2.1,
+      "2015": 2.3,
+      "2016": 2.23,
+      "2017": 2.07,
+      "2018": 1.98,
+      "2019": 2.11,
+      "2020": 2.19,
+      "2021": 2.19,
+      "2022": 2.07,
+      "2023": 2.12,
+      "2024": 2.13,
+      "2025": 2.3
+     },
+     "q80": {
+      "2014": 7.34,
+      "2015": 6.88,
+      "2016": 6.81,
+      "2017": 7.15,
+      "2018": 6.7,
+      "2019": 6.92,
+      "2020": 6.91,
+      "2021": 6.27,
+      "2022": 6.17,
+      "2023": 6.47,
+      "2024": 6.53,
+      "2025": 6.4
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 4.61,
+      "2015": 4.71,
+      "2016": 4.63,
+      "2017": 4.87,
+      "2018": 5.33,
+      "2019": 4.98,
+      "2020": 4.95,
+      "2021": 5.24,
+      "2022": 4.85,
+      "2023": 5.08,
+      "2024": 5.08,
+      "2025": 5.17
+     },
+     "q50": {
+      "2014": 3.0,
+      "2015": 2.98,
+      "2016": 2.98,
+      "2017": 2.98,
+      "2018": 3.23,
+      "2019": 2.95,
+      "2020": 2.83,
+      "2021": 2.99,
+      "2022": 2.87,
+      "2023": 2.97,
+      "2024": 2.86,
+      "2025": 3.17
+     },
+     "moinsDe50": {
+      "2014": 2.87,
+      "2015": 2.76,
+      "2016": 2.53,
+      "2017": 2.67,
+      "2018": 2.77,
+      "2019": 2.7,
+      "2020": 2.31,
+      "2021": 2.24,
+      "2022": 2.05,
+      "2023": 2.51,
+      "2024": 2.42,
+      "2025": 2.16
+     }
+    },
+    "femmesFonctionPublique": {
+     "total": {
+      "2014": 27.84,
+      "2015": 26.84,
+      "2016": 26.23,
+      "2017": 27.06,
+      "2018": 27.23,
+      "2019": 26.43,
+      "2020": 25.92,
+      "2021": 24.87,
+      "2022": 23.65,
+      "2023": 25.16,
+      "2024": 24.92,
+      "2025": 24.82
+     },
+     "plusDe80": {
+      "2014": 3.03,
+      "2015": 3.24,
+      "2016": 3.27,
+      "2017": 2.97,
+      "2018": 2.78,
+      "2019": 2.97,
+      "2020": 3.05,
+      "2021": 2.94,
+      "2022": 2.7,
+      "2023": 2.8,
+      "2024": 2.89,
+      "2025": 3.13
+     },
+     "q80": {
+      "2014": 11.03,
+      "2015": 10.06,
+      "2016": 9.92,
+      "2017": 10.43,
+      "2018": 9.79,
+      "2019": 9.96,
+      "2020": 9.77,
+      "2021": 8.82,
+      "2022": 8.57,
+      "2023": 9.18,
+      "2024": 9.01,
+      "2025": 8.86
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 6.41,
+      "2015": 6.43,
+      "2016": 6.4,
+      "2017": 6.61,
+      "2018": 7.37,
+      "2019": 6.66,
+      "2020": 6.74,
+      "2021": 6.86,
+      "2022": 6.6,
+      "2023": 6.8,
+      "2024": 6.9,
+      "2025": 6.79
+     },
+     "q50": {
+      "2014": 3.96,
+      "2015": 3.87,
+      "2016": 3.81,
+      "2017": 3.9,
+      "2018": 4.15,
+      "2019": 3.67,
+      "2020": 3.52,
+      "2021": 3.65,
+      "2022": 3.49,
+      "2023": 3.58,
+      "2024": 3.4,
+      "2025": 3.61
+     },
+     "moinsDe50": {
+      "2014": 3.41,
+      "2015": 3.24,
+      "2016": 2.83,
+      "2017": 3.14,
+      "2018": 3.16,
+      "2019": 3.17,
+      "2020": 2.84,
+      "2021": 2.58,
+      "2022": 2.29,
+      "2023": 2.79,
+      "2024": 2.72,
+      "2025": 2.42
+     }
+    },
+    "hommesFonctionPublique": {
+     "total": {
+      "2014": 6.84,
+      "2015": 7.14,
+      "2016": 6.98,
+      "2017": 7.09,
+      "2018": 7.41,
+      "2019": 7.76,
+      "2020": 6.8,
+      "2021": 8.2,
+      "2022": 8.22,
+      "2023": 9.06,
+      "2024": 8.76,
+      "2025": 9.2
+     },
+     "plusDe80": {
+      "2014": 0.55,
+      "2015": 0.68,
+      "2016": 0.45,
+      "2017": 0.5,
+      "2018": 0.6,
+      "2019": 0.59,
+      "2020": 0.59,
+      "2021": 0.83,
+      "2022": 0.98,
+      "2023": 0.99,
+      "2024": 0.81,
+      "2025": 0.81
+     },
+     "q80": {
+      "2014": 1.26,
+      "2015": 1.37,
+      "2016": 1.43,
+      "2017": 1.48,
+      "2018": 1.3,
+      "2019": 1.59,
+      "2020": 1.65,
+      "2021": 1.65,
+      "2022": 2.02,
+      "2023": 1.92,
+      "2024": 2.22,
+      "2025": 2.01
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 1.64,
+      "2015": 1.73,
+      "2016": 1.57,
+      "2017": 1.86,
+      "2018": 1.78,
+      "2019": 2.01,
+      "2020": 1.67,
+      "2021": 2.3,
+      "2022": 1.8,
+      "2023": 2.19,
+      "2024": 1.91,
+      "2025": 2.3
+     },
+     "q50": {
+      "2014": 1.42,
+      "2015": 1.43,
+      "2016": 1.53,
+      "2017": 1.39,
+      "2018": 1.64,
+      "2019": 1.69,
+      "2020": 1.57,
+      "2021": 1.8,
+      "2022": 1.8,
+      "2023": 1.94,
+      "2024": 1.92,
+      "2025": 2.37
+     },
+     "moinsDe50": {
+      "2014": 1.97,
+      "2015": 1.93,
+      "2016": 2.0,
+      "2017": 1.87,
+      "2018": 2.09,
+      "2019": 1.88,
+      "2020": 1.33,
+      "2021": 1.62,
+      "2022": 1.62,
+      "2023": 2.03,
+      "2024": 1.89,
+      "2025": 1.7
+     }
+    },
+    "fpeEnsemble": {
+     "total": {
+      "2014": 16.13,
+      "2015": 15.18,
+      "2016": 15.58,
+      "2017": 15.65,
+      "2018": 16.05,
+      "2019": 16.17,
+      "2020": 16.18,
+      "2021": 16.33,
+      "2022": 16.53,
+      "2023": 17.32,
+      "2024": 16.34,
+      "2025": 16.07
+     },
+     "plusDe80": {
+      "2014": 1.52,
+      "2015": 1.67,
+      "2016": 1.75,
+      "2017": 1.48,
+      "2018": 1.32,
+      "2019": 1.24,
+      "2020": 1.24,
+      "2021": 1.57,
+      "2022": 1.71,
+      "2023": 1.86,
+      "2024": 1.57,
+      "2025": 1.5
+     },
+     "q80": {
+      "2014": 5.88,
+      "2015": 5.22,
+      "2016": 5.2,
+      "2017": 4.94,
+      "2018": 4.81,
+      "2019": 4.83,
+      "2020": 5.12,
+      "2021": 4.55,
+      "2022": 4.62,
+      "2023": 4.38,
+      "2024": 4.19,
+      "2025": 3.69
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 3.71,
+      "2015": 3.59,
+      "2016": 3.19,
+      "2017": 3.7,
+      "2018": 4.49,
+      "2019": 5.11,
+      "2020": 5.26,
+      "2021": 5.44,
+      "2022": 5.36,
+      "2023": 6.06,
+      "2024": 5.84,
+      "2025": 6.05
+     },
+     "q50": {
+      "2014": 2.56,
+      "2015": 2.57,
+      "2016": 3.15,
+      "2017": 2.99,
+      "2018": 3.09,
+      "2019": 2.7,
+      "2020": 2.49,
+      "2021": 2.96,
+      "2022": 3.26,
+      "2023": 2.88,
+      "2024": 2.8,
+      "2025": 3.07
+     },
+     "moinsDe50": {
+      "2014": 2.47,
+      "2015": 2.13,
+      "2016": 2.3,
+      "2017": 2.54,
+      "2018": 2.34,
+      "2019": 2.29,
+      "2020": 2.08,
+      "2021": 1.82,
+      "2022": 1.58,
+      "2023": 2.14,
+      "2024": 1.94,
+      "2025": 1.75
+     }
+    },
+    "fpeFemmes": {
+     "total": {
+      "2014": 23.97,
+      "2015": 22.04,
+      "2016": 22.85,
+      "2017": 23.42,
+      "2018": 23.72,
+      "2019": 22.66,
+      "2020": 22.96,
+      "2021": 22.84,
+      "2022": 22.64,
+      "2023": 23.39,
+      "2024": 21.99,
+      "2025": 21.44
+     },
+     "plusDe80": {
+      "2014": 2.38,
+      "2015": 2.43,
+      "2016": 2.72,
+      "2017": 2.27,
+      "2018": 1.94,
+      "2019": 1.84,
+      "2020": 1.63,
+      "2021": 2.22,
+      "2022": 2.04,
+      "2023": 2.27,
+      "2024": 1.91,
+      "2025": 2.14
+     },
+     "q80": {
+      "2014": 9.37,
+      "2015": 8.18,
+      "2016": 8.26,
+      "2017": 8.09,
+      "2018": 7.68,
+      "2019": 7.38,
+      "2020": 7.69,
+      "2021": 6.77,
+      "2022": 6.4,
+      "2023": 6.34,
+      "2024": 6.1,
+      "2025": 5.12
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 5.76,
+      "2015": 5.25,
+      "2016": 4.8,
+      "2017": 5.6,
+      "2018": 6.91,
+      "2019": 7.3,
+      "2020": 7.86,
+      "2021": 7.64,
+      "2022": 7.98,
+      "2023": 8.86,
+      "2024": 8.47,
+      "2025": 8.45
+     },
+     "q50": {
+      "2014": 3.64,
+      "2015": 3.64,
+      "2016": 4.26,
+      "2017": 4.37,
+      "2018": 4.33,
+      "2019": 3.54,
+      "2020": 3.17,
+      "2021": 3.88,
+      "2022": 4.29,
+      "2023": 3.53,
+      "2024": 3.29,
+      "2025": 3.67
+     },
+     "moinsDe50": {
+      "2014": 2.82,
+      "2015": 2.54,
+      "2016": 2.8,
+      "2017": 3.09,
+      "2018": 2.86,
+      "2019": 2.61,
+      "2020": 2.6,
+      "2021": 2.33,
+      "2022": 1.94,
+      "2023": 2.39,
+      "2024": 2.22,
+      "2025": 2.06
+     }
+    },
+    "fptEnsemble": {
+     "total": {
+      "2014": 24.01,
+      "2015": 24.74,
+      "2016": 24.19,
+      "2017": 24.32,
+      "2018": 24.48,
+      "2019": 23.56,
+      "2020": 23.78,
+      "2021": 22.24,
+      "2022": 20.11,
+      "2023": 20.95,
+      "2024": 21.23,
+      "2025": 21.39
+     },
+     "plusDe80": {
+      "2014": 3.1,
+      "2015": 3.26,
+      "2016": 3.06,
+      "2017": 2.98,
+      "2018": 2.99,
+      "2019": 3.12,
+      "2020": 3.64,
+      "2021": 3.33,
+      "2022": 2.86,
+      "2023": 2.67,
+      "2024": 2.79,
+      "2025": 3.07
+     },
+     "q80": {
+      "2014": 7.15,
+      "2015": 6.44,
+      "2016": 6.77,
+      "2017": 7.25,
+      "2018": 6.47,
+      "2019": 7.1,
+      "2020": 7.56,
+      "2021": 6.8,
+      "2022": 6.05,
+      "2023": 6.1,
+      "2024": 6.67,
+      "2025": 6.56
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 5.97,
+      "2015": 6.7,
+      "2016": 7.47,
+      "2017": 7.16,
+      "2018": 7.16,
+      "2019": 5.71,
+      "2020": 5.48,
+      "2021": 5.53,
+      "2022": 5.2,
+      "2023": 5.17,
+      "2024": 5.2,
+      "2025": 4.93
+     },
+     "q50": {
+      "2014": 3.44,
+      "2015": 3.74,
+      "2016": 3.02,
+      "2017": 3.06,
+      "2018": 3.58,
+      "2019": 3.28,
+      "2020": 3.56,
+      "2021": 3.02,
+      "2022": 2.6,
+      "2023": 3.18,
+      "2024": 2.8,
+      "2025": 3.27
+     },
+     "moinsDe50": {
+      "2014": 4.34,
+      "2015": 4.6,
+      "2016": 3.88,
+      "2017": 3.86,
+      "2018": 4.29,
+      "2019": 4.35,
+      "2020": 3.53,
+      "2021": 3.56,
+      "2022": 3.4,
+      "2023": 3.83,
+      "2024": 3.77,
+      "2025": 3.55
+     }
+    },
+    "fptFemmes": {
+     "total": {
+      "2014": 34.29,
+      "2015": 34.15,
+      "2016": 33.15,
+      "2017": 32.71,
+      "2018": 32.52,
+      "2019": 32.36,
+      "2020": 32.66,
+      "2021": 29.77,
+      "2022": 27.46,
+      "2023": 28.87,
+      "2024": 29.31,
+      "2025": 28.46
+     },
+     "plusDe80": {
+      "2014": 4.45,
+      "2015": 4.71,
+      "2016": 4.59,
+      "2017": 4.25,
+      "2018": 4.18,
+      "2019": 4.52,
+      "2020": 5.26,
+      "2021": 4.61,
+      "2022": 4.15,
+      "2023": 4.03,
+      "2024": 4.25,
+      "2025": 4.38
+     },
+     "q80": {
+      "2014": 11.0,
+      "2015": 9.44,
+      "2016": 9.67,
+      "2017": 10.24,
+      "2018": 9.28,
+      "2019": 10.33,
+      "2020": 10.7,
+      "2021": 9.65,
+      "2022": 8.96,
+      "2023": 9.08,
+      "2024": 9.32,
+      "2025": 9.3
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 8.46,
+      "2015": 9.39,
+      "2016": 10.44,
+      "2017": 9.58,
+      "2018": 9.7,
+      "2019": 7.86,
+      "2020": 7.5,
+      "2021": 7.53,
+      "2022": 7.24,
+      "2023": 6.86,
+      "2024": 7.27,
+      "2025": 6.71
+     },
+     "q50": {
+      "2014": 4.63,
+      "2015": 4.88,
+      "2016": 4.01,
+      "2017": 3.93,
+      "2018": 4.41,
+      "2019": 4.02,
+      "2020": 4.56,
+      "2021": 3.76,
+      "2022": 3.18,
+      "2023": 4.03,
+      "2024": 3.72,
+      "2025": 3.85
+     },
+     "moinsDe50": {
+      "2014": 5.75,
+      "2015": 5.73,
+      "2016": 4.44,
+      "2017": 4.7,
+      "2018": 4.96,
+      "2019": 5.63,
+      "2020": 4.64,
+      "2021": 4.22,
+      "2022": 3.93,
+      "2023": 4.88,
+      "2024": 4.75,
+      "2025": 4.22
+     }
+    },
+    "fphEnsemble": {
+     "total": {
+      "2014": 21.16,
+      "2015": 21.0,
+      "2016": 18.86,
+      "2017": 21.07,
+      "2018": 21.23,
+      "2019": 20.96,
+      "2020": 18.34,
+      "2021": 19.56,
+      "2022": 17.89,
+      "2023": 20.27,
+      "2024": 21.52,
+      "2025": 23.19
+     },
+     "plusDe80": {
+      "2014": 1.62,
+      "2015": 2.06,
+      "2016": 1.92,
+      "2017": 1.81,
+      "2018": 1.72,
+      "2019": 2.34,
+      "2020": 1.9,
+      "2021": 1.79,
+      "2022": 1.6,
+      "2023": 1.8,
+      "2024": 2.32,
+      "2025": 2.92
+     },
+     "q80": {
+      "2014": 10.98,
+      "2015": 11.69,
+      "2016": 10.77,
+      "2017": 11.96,
+      "2018": 11.55,
+      "2019": 11.52,
+      "2020": 10.09,
+      "2021": 9.4,
+      "2022": 9.86,
+      "2023": 11.86,
+      "2024": 11.78,
+      "2025": 12.81
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 4.21,
+      "2015": 3.76,
+      "2016": 3.02,
+      "2017": 3.53,
+      "2018": 4.0,
+      "2019": 3.37,
+      "2020": 3.27,
+      "2021": 4.29,
+      "2022": 3.13,
+      "2023": 2.67,
+      "2024": 3.08,
+      "2025": 3.42
+     },
+     "q50": {
+      "2014": 3.21,
+      "2015": 2.58,
+      "2016": 2.49,
+      "2017": 2.84,
+      "2018": 2.96,
+      "2019": 2.97,
+      "2020": 2.38,
+      "2021": 3.02,
+      "2022": 2.41,
+      "2023": 2.81,
+      "2024": 3.12,
+      "2025": 3.23
+     },
+     "moinsDe50": {
+      "2014": 1.14,
+      "2015": 0.92,
+      "2016": 0.66,
+      "2017": 0.92,
+      "2018": 1.0,
+      "2019": 0.76,
+      "2020": 0.7,
+      "2021": 1.05,
+      "2022": 0.89,
+      "2023": 1.14,
+      "2024": 1.22,
+      "2025": 0.81
+     }
+    },
+    "fphFemmes": {
+     "total": {
+      "2014": 24.9,
+      "2015": 24.55,
+      "2016": 22.25,
+      "2017": 24.78,
+      "2018": 25.15,
+      "2019": 24.39,
+      "2020": 21.38,
+      "2021": 21.93,
+      "2022": 20.54,
+      "2023": 23.43,
+      "2024": 24.08,
+      "2025": 26.21
+     },
+     "plusDe80": {
+      "2014": 2.07,
+      "2015": 2.51,
+      "2016": 2.34,
+      "2017": 2.26,
+      "2018": 2.06,
+      "2019": 2.69,
+      "2020": 2.37,
+      "2021": 2.02,
+      "2022": 1.96,
+      "2023": 2.11,
+      "2024": 2.76,
+      "2025": 3.31
+     },
+     "q80": {
+      "2014": 13.73,
+      "2015": 14.18,
+      "2016": 13.12,
+      "2017": 14.44,
+      "2018": 14.11,
+      "2019": 13.83,
+      "2020": 12.08,
+      "2021": 11.26,
+      "2022": 11.74,
+      "2023": 14.15,
+      "2024": 13.6,
+      "2025": 15.19
+     },
+     "plusDe50MoinsDe80": {
+      "2014": 4.55,
+      "2015": 4.18,
+      "2016": 3.42,
+      "2017": 3.97,
+      "2018": 4.61,
+      "2019": 3.87,
+      "2020": 3.65,
+      "2021": 4.66,
+      "2022": 3.49,
+      "2023": 3.23,
+      "2024": 3.7,
+      "2025": 3.82
+     },
+     "q50": {
+      "2014": 3.51,
+      "2015": 2.81,
+      "2016": 2.77,
+      "2017": 3.12,
+      "2018": 3.45,
+      "2019": 3.39,
+      "2020": 2.63,
+      "2021": 3.12,
+      "2022": 2.54,
+      "2023": 3.11,
+      "2024": 3.18,
+      "2025": 3.19
+     },
+     "moinsDe50": {
+      "2014": 1.04,
+      "2015": 0.86,
+      "2016": 0.6,
+      "2017": 0.97,
+      "2018": 0.92,
+      "2019": 0.62,
+      "2020": 0.65,
+      "2021": 0.87,
+      "2022": 0.81,
+      "2023": 0.82,
+      "2024": 0.84,
+      "2025": 0.7
+     }
+    }
+   }
+  },
+  "raisonsDuTempsPartiel2025": {
+   "source": "DGAFP, Rapport annuel édition 2026, données complémentaires, figure 8 (enquête Emploi 2025)",
+   "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/le-temps-et-organisation-du-temps-de-travail-dans-la-fonction-publique-en-2025",
+   "urlDonnees": "https://www.fonction-publique.gouv.fr/files/files/publications/vue-rapport-annuel/2026/ra_2026_tps_organisation_tps_travail.zip",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% des agents à temps partiel",
+   "note": "La feuille donne aussi 2021 à 2024, non recopiés.",
+   "valeurs": {
+    "N’a pas trouvé d’emploi à temps complet": {
+     "fpe": 20.55,
+     "fpt": 32.84,
+     "fph": 5.88,
+     "fonctionnaires": 12.04,
+     "contractuels": 32.4,
+     "ensembleFonctionPublique": 21.65
+    },
+    "Exerce une autre activité professionnelle": {
+     "fpe": 5.34,
+     "fpt": 5.75,
+     "fph": 5.92,
+     "fonctionnaires": 5.16,
+     "contractuels": 6.14,
+     "ensembleFonctionPublique": 5.63
+    },
+    "Pour s’occuper de ses enfants ou d’un proche": {
+     "fpe": 31.33,
+     "fpt": 24.71,
+     "fph": 52.43,
+     "fonctionnaires": 43.06,
+     "contractuels": 23.46,
+     "ensembleFonctionPublique": 33.81
+    },
+    "Pour raison de santé ou de handicap": {
+     "fpe": 12.16,
+     "fpt": 10.95,
+     "fph": 10.55,
+     "fonctionnaires": 15.47,
+     "contractuels": 6.71,
+     "ensembleFonctionPublique": 11.34
+    },
+    "Pour suivre des études ou une formation": {
+     "fpe": 5.94,
+     "fpt": 2.76,
+     "fph": 3.0,
+     "fonctionnaires": 1.63,
+     "contractuels": 6.83,
+     "ensembleFonctionPublique": 4.08
+    },
+    "Pour avoir du temps libre": {
+     "fpe": 14.98,
+     "fpt": 14.82,
+     "fph": 15.4,
+     "fonctionnaires": 17.69,
+     "contractuels": 12.03,
+     "ensembleFonctionPublique": 15.02
+    },
+    "Autres raisons": {
+     "fpe": 9.71,
+     "fpt": 8.18,
+     "fph": 6.83,
+     "fonctionnaires": 4.94,
+     "contractuels": 12.43,
+     "ensembleFonctionPublique": 8.47
+    }
+   }
+  },
+  "siaspFonctionnaires2014_2019": {
+   "source": "DGAFP, Rapport annuel sur l'état de la fonction publique, éditions 2016 à 2021, fiche thématique 2.7 « Temps partiel », figure 2.7-1 « Effectifs physiques des agents civils par versant de la fonction publique par statut, sexe et quotité de temps de travail au 31 décembre » (Siasp, Insee, traitement DGAFP)",
+   "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/rapport-annuel-2021-faits-et-chiffres-fiches-thematiques-excel.html",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "effectifs physiques ; partPct en % (colonne de la source)",
+   "champ": "Emplois principaux, fonctionnaires civils, métropole et DOM (hors Mayotte), hors COM et étranger, hors contrats aidés. Situation au 31 décembre.",
+   "citation": "Note : Le temps incomplet a des fondements juridiques différents du temps partiel mais les deux sont ici regroupés.",
+   "notes": [
+    "Clé = année de la situation au 31 décembre ; chaque année vient de l'édition parue deux ans plus tard (url propre).",
+    "q50 à q90 = quotités 50 %, 60 %, 70 %, 80 %, 90 % ; moinsDe50OuIndetermine = « < 50 % et quotité indéterminée ».",
+    "2014 (édition 2016) : dans la FPT, les 2 200 militaires sapeurs-pompiers de Marseille sont regroupés avec les fonctionnaires.",
+    "Fichiers .xls des éditions 2016 à 2020 convertis en .xlsx avec LibreOffice puis lus par script ; édition 2021 lue directement.",
+    "La ligne « ensemble » = « dont fonctionnaires » de l'ensemble de la fonction publique.",
+    "Quotité moyenne non publiée ; elle se calcule à partir des effectifs par quotité (à faire côté script, la tranche < 50 % restant indéterminée)."
+   ],
+   "valeurs": {
+    "2014": {
+     "edition": 2016,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2016/xls/FT2-7_temps-partiels.xls",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1537855,
+        "moinsDe50OuIndetermine": 3050,
+        "q50": 22217,
+        "q60": 5136,
+        "q70": 9224,
+        "q80": 90288,
+        "q90": 44141,
+        "aTempsPartiel": 174056,
+        "partPct": 11.32
+       },
+       "femmes": {
+        "effectifs": 923990,
+        "moinsDe50OuIndetermine": 1609,
+        "q50": 18823,
+        "q60": 4156,
+        "q70": 7807,
+        "q80": 81470,
+        "q90": 38346,
+        "aTempsPartiel": 152211,
+        "partPct": 16.47
+       },
+       "hommes": {
+        "effectifs": 613865,
+        "moinsDe50OuIndetermine": 1441,
+        "q50": 3394,
+        "q60": 980,
+        "q70": 1417,
+        "q80": 8818,
+        "q90": 5795,
+        "aTempsPartiel": 21845,
+        "partPct": 3.56
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1468020,
+        "moinsDe50OuIndetermine": 20525,
+        "q50": 36846,
+        "q60": 30303,
+        "q70": 30398,
+        "q80": 115581,
+        "q90": 62457,
+        "aTempsPartiel": 296110,
+        "partPct": 20.17
+       },
+       "femmes": {
+        "effectifs": 858930,
+        "moinsDe50OuIndetermine": 15847,
+        "q50": 28382,
+        "q60": 23485,
+        "q70": 24292,
+        "q80": 105203,
+        "q90": 57552,
+        "aTempsPartiel": 254761,
+        "partPct": 29.66
+       },
+       "hommes": {
+        "effectifs": 609090,
+        "moinsDe50OuIndetermine": 4678,
+        "q50": 8464,
+        "q60": 6818,
+        "q70": 6106,
+        "q80": 10378,
+        "q90": 4905,
+        "aTempsPartiel": 41349,
+        "partPct": 6.79
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 838375,
+        "moinsDe50OuIndetermine": 5277,
+        "q50": 20572,
+        "q60": 6314,
+        "q70": 7144,
+        "q80": 126056,
+        "q90": 16563,
+        "aTempsPartiel": 181926,
+        "partPct": 21.7
+       },
+       "femmes": {
+        "effectifs": 678704,
+        "moinsDe50OuIndetermine": 4214,
+        "q50": 19053,
+        "q60": 5657,
+        "q70": 6148,
+        "q80": 121004,
+        "q90": 15512,
+        "aTempsPartiel": 171588,
+        "partPct": 25.28
+       },
+       "hommes": {
+        "effectifs": 159671,
+        "moinsDe50OuIndetermine": 1063,
+        "q50": 1519,
+        "q60": 657,
+        "q70": 996,
+        "q80": 5052,
+        "q90": 1051,
+        "aTempsPartiel": 10338,
+        "partPct": 6.47
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3844250,
+        "moinsDe50OuIndetermine": 28852,
+        "q50": 79635,
+        "q60": 41753,
+        "q70": 46766,
+        "q80": 331925,
+        "q90": 123161,
+        "aTempsPartiel": 652092,
+        "partPct": 16.96
+       },
+       "femmes": {
+        "effectifs": 2461624,
+        "moinsDe50OuIndetermine": 21670,
+        "q50": 66258,
+        "q60": 33298,
+        "q70": 38247,
+        "q80": 307677,
+        "q90": 111410,
+        "aTempsPartiel": 578560,
+        "partPct": 23.5
+       },
+       "hommes": {
+        "effectifs": 1382626,
+        "moinsDe50OuIndetermine": 7182,
+        "q50": 13377,
+        "q60": 8455,
+        "q70": 8519,
+        "q80": 24248,
+        "q90": 11751,
+        "aTempsPartiel": 73532,
+        "partPct": 5.32
+       }
+      }
+     }
+    },
+    "2015": {
+     "edition": 2017,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2017/FT2-7_temps_partiels.xls",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1542419,
+        "moinsDe50OuIndetermine": 3374,
+        "q50": 21519,
+        "q60": 5085,
+        "q70": 9053,
+        "q80": 87113,
+        "q90": 44878,
+        "aTempsPartiel": 171022,
+        "partPct": 11.09
+       },
+       "femmes": {
+        "effectifs": 930533,
+        "moinsDe50OuIndetermine": 1849,
+        "q50": 18136,
+        "q60": 4177,
+        "q70": 7608,
+        "q80": 78374,
+        "q90": 39103,
+        "aTempsPartiel": 149247,
+        "partPct": 16.04
+       },
+       "hommes": {
+        "effectifs": 611886,
+        "moinsDe50OuIndetermine": 1525,
+        "q50": 3383,
+        "q60": 908,
+        "q70": 1445,
+        "q80": 8739,
+        "q90": 5775,
+        "aTempsPartiel": 21775,
+        "partPct": 3.56
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1472339,
+        "moinsDe50OuIndetermine": 19811,
+        "q50": 35344,
+        "q60": 29051,
+        "q70": 29354,
+        "q80": 114600,
+        "q90": 63596,
+        "aTempsPartiel": 291756,
+        "partPct": 19.82
+       },
+       "femmes": {
+        "effectifs": 863564,
+        "moinsDe50OuIndetermine": 15184,
+        "q50": 27309,
+        "q60": 22473,
+        "q70": 23647,
+        "q80": 104152,
+        "q90": 58668,
+        "aTempsPartiel": 251433,
+        "partPct": 29.12
+       },
+       "hommes": {
+        "effectifs": 608775,
+        "moinsDe50OuIndetermine": 4627,
+        "q50": 8035,
+        "q60": 6578,
+        "q70": 5707,
+        "q80": 10448,
+        "q90": 4928,
+        "aTempsPartiel": 40323,
+        "partPct": 6.62
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 836373,
+        "moinsDe50OuIndetermine": 5514,
+        "q50": 20586,
+        "q60": 6308,
+        "q70": 7257,
+        "q80": 125117,
+        "q90": 17118,
+        "aTempsPartiel": 181900,
+        "partPct": 21.75
+       },
+       "femmes": {
+        "effectifs": 677845,
+        "moinsDe50OuIndetermine": 4352,
+        "q50": 18997,
+        "q60": 5622,
+        "q70": 6241,
+        "q80": 120168,
+        "q90": 16120,
+        "aTempsPartiel": 171500,
+        "partPct": 25.3
+       },
+       "hommes": {
+        "effectifs": 158528,
+        "moinsDe50OuIndetermine": 1162,
+        "q50": 1589,
+        "q60": 686,
+        "q70": 1016,
+        "q80": 4949,
+        "q90": 998,
+        "aTempsPartiel": 10400,
+        "partPct": 6.56
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3851131,
+        "moinsDe50OuIndetermine": 28699,
+        "q50": 77449,
+        "q60": 40444,
+        "q70": 45664,
+        "q80": 326830,
+        "q90": 125592,
+        "aTempsPartiel": 644678,
+        "partPct": 16.74
+       },
+       "femmes": {
+        "effectifs": 2471942,
+        "moinsDe50OuIndetermine": 21385,
+        "q50": 64442,
+        "q60": 32272,
+        "q70": 37496,
+        "q80": 302694,
+        "q90": 113891,
+        "aTempsPartiel": 572180,
+        "partPct": 23.15
+       },
+       "hommes": {
+        "effectifs": 1379189,
+        "moinsDe50OuIndetermine": 7314,
+        "q50": 13007,
+        "q60": 8172,
+        "q70": 8168,
+        "q80": 24136,
+        "q90": 11701,
+        "aTempsPartiel": 72498,
+        "partPct": 5.26
+       }
+      }
+     }
+    },
+    "2016": {
+     "edition": 2018,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2018/xls/FT2-7_temps_partiels.xls",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1545827,
+        "moinsDe50OuIndetermine": 3381,
+        "q50": 21123,
+        "q60": 5262,
+        "q70": 8505,
+        "q80": 85620,
+        "q90": 46217,
+        "aTempsPartiel": 170108,
+        "partPct": 11.0
+       },
+       "femmes": {
+        "effectifs": 935087,
+        "moinsDe50OuIndetermine": 1907,
+        "q50": 17684,
+        "q60": 4217,
+        "q70": 7084,
+        "q80": 76714,
+        "q90": 40050,
+        "aTempsPartiel": 147656,
+        "partPct": 15.79
+       },
+       "hommes": {
+        "effectifs": 610740,
+        "moinsDe50OuIndetermine": 1474,
+        "q50": 3439,
+        "q60": 1045,
+        "q70": 1421,
+        "q80": 8906,
+        "q90": 6167,
+        "aTempsPartiel": 22452,
+        "partPct": 3.68
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1469265,
+        "moinsDe50OuIndetermine": 20989,
+        "q50": 35577,
+        "q60": 30633,
+        "q70": 30028,
+        "q80": 115307,
+        "q90": 64222,
+        "aTempsPartiel": 296756,
+        "partPct": 20.2
+       },
+       "femmes": {
+        "effectifs": 863910,
+        "moinsDe50OuIndetermine": 16010,
+        "q50": 27299,
+        "q60": 23353,
+        "q70": 23938,
+        "q80": 104489,
+        "q90": 59068,
+        "aTempsPartiel": 254157,
+        "partPct": 29.42
+       },
+       "hommes": {
+        "effectifs": 605355,
+        "moinsDe50OuIndetermine": 4979,
+        "q50": 8278,
+        "q60": 7280,
+        "q70": 6090,
+        "q80": 10818,
+        "q90": 5154,
+        "aTempsPartiel": 42599,
+        "partPct": 7.04
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 832938,
+        "moinsDe50OuIndetermine": 6435,
+        "q50": 20055,
+        "q60": 6301,
+        "q70": 7163,
+        "q80": 125016,
+        "q90": 18111,
+        "aTempsPartiel": 183081,
+        "partPct": 21.98
+       },
+       "femmes": {
+        "effectifs": 675804,
+        "moinsDe50OuIndetermine": 5091,
+        "q50": 18445,
+        "q60": 5643,
+        "q70": 6190,
+        "q80": 120111,
+        "q90": 17071,
+        "aTempsPartiel": 172551,
+        "partPct": 25.53
+       },
+       "hommes": {
+        "effectifs": 157134,
+        "moinsDe50OuIndetermine": 1344,
+        "q50": 1610,
+        "q60": 658,
+        "q70": 973,
+        "q80": 4905,
+        "q90": 1040,
+        "aTempsPartiel": 10530,
+        "partPct": 6.7
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3848030,
+        "moinsDe50OuIndetermine": 30805,
+        "q50": 76755,
+        "q60": 42196,
+        "q70": 45696,
+        "q80": 325943,
+        "q90": 128550,
+        "aTempsPartiel": 649945,
+        "partPct": 16.89
+       },
+       "femmes": {
+        "effectifs": 2474801,
+        "moinsDe50OuIndetermine": 23008,
+        "q50": 63428,
+        "q60": 33213,
+        "q70": 37212,
+        "q80": 301314,
+        "q90": 116189,
+        "aTempsPartiel": 574364,
+        "partPct": 23.21
+       },
+       "hommes": {
+        "effectifs": 1373229,
+        "moinsDe50OuIndetermine": 7797,
+        "q50": 13327,
+        "q60": 8983,
+        "q70": 8484,
+        "q80": 24629,
+        "q90": 12361,
+        "aTempsPartiel": 75581,
+        "partPct": 5.5
+       }
+      }
+     }
+    },
+    "2017": {
+     "edition": 2019,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2019/xls/FT2.7_temps_partiel(1).xls",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1546685,
+        "moinsDe50OuIndetermine": 3416,
+        "q50": 23362,
+        "q60": 5467,
+        "q70": 6514,
+        "q80": 82470,
+        "q90": 43198,
+        "aTempsPartiel": 164427,
+        "partPct": 10.63
+       },
+       "femmes": {
+        "effectifs": 938807,
+        "moinsDe50OuIndetermine": 1945,
+        "q50": 19409,
+        "q60": 4387,
+        "q70": 5272,
+        "q80": 73875,
+        "q90": 37448,
+        "aTempsPartiel": 142336,
+        "partPct": 15.16
+       },
+       "hommes": {
+        "effectifs": 607878,
+        "moinsDe50OuIndetermine": 1471,
+        "q50": 3953,
+        "q60": 1080,
+        "q70": 1242,
+        "q80": 8595,
+        "q90": 5750,
+        "aTempsPartiel": 22091,
+        "partPct": 3.63
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1467766,
+        "moinsDe50OuIndetermine": 21263,
+        "q50": 37022,
+        "q60": 30355,
+        "q70": 30269,
+        "q80": 115011,
+        "q90": 64341,
+        "aTempsPartiel": 298261,
+        "partPct": 20.32
+       },
+       "femmes": {
+        "effectifs": 865129,
+        "moinsDe50OuIndetermine": 16047,
+        "q50": 28192,
+        "q60": 23103,
+        "q70": 24070,
+        "q80": 103866,
+        "q90": 59076,
+        "aTempsPartiel": 254354,
+        "partPct": 29.4
+       },
+       "hommes": {
+        "effectifs": 602637,
+        "moinsDe50OuIndetermine": 5216,
+        "q50": 8830,
+        "q60": 7252,
+        "q70": 6199,
+        "q80": 11145,
+        "q90": 5265,
+        "aTempsPartiel": 43907,
+        "partPct": 7.29
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 826502,
+        "moinsDe50OuIndetermine": 6499,
+        "q50": 20893,
+        "q60": 7112,
+        "q70": 8516,
+        "q80": 122703,
+        "q90": 19922,
+        "aTempsPartiel": 185645,
+        "partPct": 22.46
+       },
+       "femmes": {
+        "effectifs": 671503,
+        "moinsDe50OuIndetermine": 5188,
+        "q50": 19010,
+        "q60": 6243,
+        "q70": 7231,
+        "q80": 117544,
+        "q90": 18770,
+        "aTempsPartiel": 173986,
+        "partPct": 25.91
+       },
+       "hommes": {
+        "effectifs": 154999,
+        "moinsDe50OuIndetermine": 1311,
+        "q50": 1883,
+        "q60": 869,
+        "q70": 1285,
+        "q80": 5159,
+        "q90": 1152,
+        "aTempsPartiel": 11659,
+        "partPct": 7.52
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3840953,
+        "moinsDe50OuIndetermine": 31178,
+        "q50": 81277,
+        "q60": 42934,
+        "q70": 45299,
+        "q80": 320184,
+        "q90": 127461,
+        "aTempsPartiel": 648333,
+        "partPct": 16.88
+       },
+       "femmes": {
+        "effectifs": 2475439,
+        "moinsDe50OuIndetermine": 23180,
+        "q50": 66611,
+        "q60": 33733,
+        "q70": 36573,
+        "q80": 295285,
+        "q90": 115294,
+        "aTempsPartiel": 570676,
+        "partPct": 23.05
+       },
+       "hommes": {
+        "effectifs": 1365514,
+        "moinsDe50OuIndetermine": 7998,
+        "q50": 14666,
+        "q60": 9201,
+        "q70": 8726,
+        "q80": 24899,
+        "q90": 12167,
+        "aTempsPartiel": 77657,
+        "partPct": 5.69
+       }
+      }
+     }
+    },
+    "2018": {
+     "edition": 2020,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2020/FT2.7_temps_partiel.xls",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1545389,
+        "moinsDe50OuIndetermine": 3264,
+        "q50": 18879,
+        "q60": 4994,
+        "q70": 7876,
+        "q80": 79213,
+        "q90": 43996,
+        "aTempsPartiel": 158222,
+        "partPct": 10.24
+       },
+       "femmes": {
+        "effectifs": 939483,
+        "moinsDe50OuIndetermine": 1888,
+        "q50": 15515,
+        "q60": 3960,
+        "q70": 6440,
+        "q80": 70403,
+        "q90": 37890,
+        "aTempsPartiel": 136096,
+        "partPct": 14.49
+       },
+       "hommes": {
+        "effectifs": 605906,
+        "moinsDe50OuIndetermine": 1376,
+        "q50": 3364,
+        "q60": 1034,
+        "q70": 1436,
+        "q80": 8810,
+        "q90": 6106,
+        "aTempsPartiel": 22126,
+        "partPct": 3.65
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1467277,
+        "moinsDe50OuIndetermine": 21843,
+        "q50": 38010,
+        "q60": 31148,
+        "q70": 31870,
+        "q80": 115200,
+        "q90": 64600,
+        "aTempsPartiel": 302671,
+        "partPct": 20.63
+       },
+       "femmes": {
+        "effectifs": 865862,
+        "moinsDe50OuIndetermine": 16374,
+        "q50": 28662,
+        "q60": 23513,
+        "q70": 25050,
+        "q80": 103476,
+        "q90": 58995,
+        "aTempsPartiel": 256070,
+        "partPct": 29.57
+       },
+       "hommes": {
+        "effectifs": 601415,
+        "moinsDe50OuIndetermine": 5469,
+        "q50": 9348,
+        "q60": 7635,
+        "q70": 6820,
+        "q80": 11724,
+        "q90": 5605,
+        "aTempsPartiel": 46601,
+        "partPct": 7.75
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 816571,
+        "moinsDe50OuIndetermine": 6776,
+        "q50": 20768,
+        "q60": 6964,
+        "q70": 7651,
+        "q80": 120339,
+        "q90": 19731,
+        "aTempsPartiel": 182229,
+        "partPct": 22.32
+       },
+       "femmes": {
+        "effectifs": 664458,
+        "moinsDe50OuIndetermine": 5339,
+        "q50": 18805,
+        "q60": 6154,
+        "q70": 6560,
+        "q80": 115317,
+        "q90": 18527,
+        "aTempsPartiel": 170702,
+        "partPct": 25.69
+       },
+       "hommes": {
+        "effectifs": 152113,
+        "moinsDe50OuIndetermine": 1437,
+        "q50": 1963,
+        "q60": 810,
+        "q70": 1091,
+        "q80": 5022,
+        "q90": 1204,
+        "aTempsPartiel": 11527,
+        "partPct": 7.58
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3829237,
+        "moinsDe50OuIndetermine": 31883,
+        "q50": 77657,
+        "q60": 43106,
+        "q70": 47397,
+        "q80": 314752,
+        "q90": 128327,
+        "aTempsPartiel": 643122,
+        "partPct": 16.8
+       },
+       "femmes": {
+        "effectifs": 2469803,
+        "moinsDe50OuIndetermine": 23601,
+        "q50": 62982,
+        "q60": 33627,
+        "q70": 38050,
+        "q80": 289196,
+        "q90": 115412,
+        "aTempsPartiel": 562868,
+        "partPct": 22.79
+       },
+       "hommes": {
+        "effectifs": 1359434,
+        "moinsDe50OuIndetermine": 8282,
+        "q50": 14675,
+        "q60": 9479,
+        "q70": 9347,
+        "q80": 25556,
+        "q90": 12915,
+        "aTempsPartiel": 80254,
+        "partPct": 5.9
+       }
+      }
+     }
+    },
+    "2019": {
+     "edition": 2021,
+     "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2021/FT2.7_temps_partiel.xlsx",
+     "parVersant": {
+      "fpe": {
+       "ensemble": {
+        "effectifs": 1539550,
+        "moinsDe50OuIndetermine": 3203,
+        "q50": 17815,
+        "q60": 4820,
+        "q70": 7412,
+        "q80": 76248,
+        "q90": 43872,
+        "aTempsPartiel": 153370,
+        "partPct": 9.96
+       },
+       "femmes": {
+        "effectifs": 938073,
+        "moinsDe50OuIndetermine": 1975,
+        "q50": 14539,
+        "q60": 3740,
+        "q70": 5848,
+        "q80": 67451,
+        "q90": 37619,
+        "aTempsPartiel": 131172,
+        "partPct": 13.98
+       },
+       "hommes": {
+        "effectifs": 601477,
+        "moinsDe50OuIndetermine": 1228,
+        "q50": 3276,
+        "q60": 1080,
+        "q70": 1564,
+        "q80": 8797,
+        "q90": 6253,
+        "aTempsPartiel": 22198,
+        "partPct": 3.69
+       }
+      },
+      "fpt": {
+       "ensemble": {
+        "effectifs": 1468421,
+        "moinsDe50OuIndetermine": 21884,
+        "q50": 38507,
+        "q60": 31047,
+        "q70": 30264,
+        "q80": 113633,
+        "q90": 63979,
+        "aTempsPartiel": 299314,
+        "partPct": 20.38
+       },
+       "femmes": {
+        "effectifs": 866586,
+        "moinsDe50OuIndetermine": 16252,
+        "q50": 28931,
+        "q60": 23243,
+        "q70": 23677,
+        "q80": 102002,
+        "q90": 58364,
+        "aTempsPartiel": 252469,
+        "partPct": 29.13
+       },
+       "hommes": {
+        "effectifs": 601835,
+        "moinsDe50OuIndetermine": 5632,
+        "q50": 9576,
+        "q60": 7804,
+        "q70": 6587,
+        "q80": 11631,
+        "q90": 5615,
+        "aTempsPartiel": 46845,
+        "partPct": 7.78
+       }
+      },
+      "fph": {
+       "ensemble": {
+        "effectifs": 810471,
+        "moinsDe50OuIndetermine": 6902,
+        "q50": 21089,
+        "q60": 7178,
+        "q70": 8151,
+        "q80": 118901,
+        "q90": 19828,
+        "aTempsPartiel": 182049,
+        "partPct": 22.46
+       },
+       "femmes": {
+        "effectifs": 660520,
+        "moinsDe50OuIndetermine": 5498,
+        "q50": 19090,
+        "q60": 6318,
+        "q70": 6996,
+        "q80": 113668,
+        "q90": 18576,
+        "aTempsPartiel": 170146,
+        "partPct": 25.76
+       },
+       "hommes": {
+        "effectifs": 149951,
+        "moinsDe50OuIndetermine": 1404,
+        "q50": 1999,
+        "q60": 860,
+        "q70": 1155,
+        "q80": 5233,
+        "q90": 1252,
+        "aTempsPartiel": 11903,
+        "partPct": 7.94
+       }
+      },
+      "ensemble": {
+       "ensemble": {
+        "effectifs": 3818442,
+        "moinsDe50OuIndetermine": 31989,
+        "q50": 77411,
+        "q60": 43045,
+        "q70": 45827,
+        "q80": 308782,
+        "q90": 127679,
+        "aTempsPartiel": 634733,
+        "partPct": 16.62
+       },
+       "femmes": {
+        "effectifs": 2465179,
+        "moinsDe50OuIndetermine": 23725,
+        "q50": 62560,
+        "q60": 33301,
+        "q70": 36521,
+        "q80": 283121,
+        "q90": 114559,
+        "aTempsPartiel": 553787,
+        "partPct": 22.46
+       },
+       "hommes": {
+        "effectifs": 1353263,
+        "moinsDe50OuIndetermine": 8264,
+        "q50": 14851,
+        "q60": 9744,
+        "q70": 9306,
+        "q80": 25661,
+        "q90": 13120,
+        "aTempsPartiel": 80946,
+        "partPct": 5.98
+       }
+      }
+     }
+    }
+   },
+   "parAge2019": {
+    "source": "Même fiche, édition 2021, feuilles « Source figure 2.7-5 » (FPE), « 2.7-6 » (FPT), « 2.7-7 » (FPH) : part des fonctionnaires à temps partiel par tranche d'âge et par sexe au 31 décembre 2019",
+    "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/rapports_annuels/2021/FT2.7_temps_partiel.xlsx",
+    "date": "2026-11-21",
+    "note": "partPct calculé ici = aTempsPartiel / effectifs (la source publie les mêmes pourcentages non arrondis). Les éditions 2016 à 2020 contiennent les mêmes tableaux pour 2014 à 2018 (tranches d'âge différentes en 2014), non extraits.",
+    "valeurs": {
+     "fpe": {
+      "moinsDe30": {
+       "femmes": {
+        "aTempsPartiel": 3274,
+        "effectifs": 77110,
+        "partPct": 4.25
+       },
+       "hommes": {
+        "aTempsPartiel": 512,
+        "effectifs": 42695,
+        "partPct": 1.2
+       },
+       "ensemble": {
+        "aTempsPartiel": 3786,
+        "effectifs": 119805,
+        "partPct": 3.16
+       }
+      },
+      "de30a39": {
+       "femmes": {
+        "aTempsPartiel": 39399,
+        "effectifs": 206599,
+        "partPct": 19.07
+       },
+       "hommes": {
+        "aTempsPartiel": 4241,
+        "effectifs": 112373,
+        "partPct": 3.77
+       },
+       "ensemble": {
+        "aTempsPartiel": 43640,
+        "effectifs": 318972,
+        "partPct": 13.68
+       }
+      },
+      "de40a59": {
+       "femmes": {
+        "aTempsPartiel": 79521,
+        "effectifs": 585841,
+        "partPct": 13.57
+       },
+       "hommes": {
+        "aTempsPartiel": 14860,
+        "effectifs": 394533,
+        "partPct": 3.77
+       },
+       "ensemble": {
+        "aTempsPartiel": 94381,
+        "effectifs": 980374,
+        "partPct": 9.63
+       }
+      },
+      "de60ouPlus": {
+       "femmes": {
+        "aTempsPartiel": 8978,
+        "effectifs": 68523,
+        "partPct": 13.1
+       },
+       "hommes": {
+        "aTempsPartiel": 2585,
+        "effectifs": 51876,
+        "partPct": 4.98
+       },
+       "ensemble": {
+        "aTempsPartiel": 11563,
+        "effectifs": 120399,
+        "partPct": 9.6
+       }
+      }
+     },
+     "fpt": {
+      "moinsDe30": {
+       "femmes": {
+        "aTempsPartiel": 8701,
+        "effectifs": 37005,
+        "partPct": 23.51
+       },
+       "hommes": {
+        "aTempsPartiel": 2037,
+        "effectifs": 33786,
+        "partPct": 6.03
+       },
+       "ensemble": {
+        "aTempsPartiel": 10738,
+        "effectifs": 70791,
+        "partPct": 15.17
+       }
+      },
+      "de30a39": {
+       "femmes": {
+        "aTempsPartiel": 53647,
+        "effectifs": 154974,
+        "partPct": 34.62
+       },
+       "hommes": {
+        "aTempsPartiel": 8237,
+        "effectifs": 111302,
+        "partPct": 7.4
+       },
+       "ensemble": {
+        "aTempsPartiel": 61884,
+        "effectifs": 266276,
+        "partPct": 23.24
+       }
+      },
+      "de40a59": {
+       "femmes": {
+        "aTempsPartiel": 167594,
+        "effectifs": 591923,
+        "partPct": 28.31
+       },
+       "hommes": {
+        "aTempsPartiel": 31158,
+        "effectifs": 411557,
+        "partPct": 7.57
+       },
+       "ensemble": {
+        "aTempsPartiel": 198752,
+        "effectifs": 1003480,
+        "partPct": 19.81
+       }
+      },
+      "de60ouPlus": {
+       "femmes": {
+        "aTempsPartiel": 22527,
+        "effectifs": 82684,
+        "partPct": 27.24
+       },
+       "hommes": {
+        "aTempsPartiel": 5413,
+        "effectifs": 45190,
+        "partPct": 11.98
+       },
+       "ensemble": {
+        "aTempsPartiel": 27940,
+        "effectifs": 127874,
+        "partPct": 21.85
+       }
+      }
+     },
+     "fph": {
+      "moinsDe30": {
+       "femmes": {
+        "aTempsPartiel": 9319,
+        "effectifs": 63090,
+        "partPct": 14.77
+       },
+       "hommes": {
+        "aTempsPartiel": 529,
+        "effectifs": 10942,
+        "partPct": 4.83
+       },
+       "ensemble": {
+        "aTempsPartiel": 9848,
+        "effectifs": 74032,
+        "partPct": 13.3
+       }
+      },
+      "de30a39": {
+       "femmes": {
+        "aTempsPartiel": 60234,
+        "effectifs": 176444,
+        "partPct": 34.14
+       },
+       "hommes": {
+        "aTempsPartiel": 3016,
+        "effectifs": 34254,
+        "partPct": 8.8
+       },
+       "ensemble": {
+        "aTempsPartiel": 63250,
+        "effectifs": 210698,
+        "partPct": 30.02
+       }
+      },
+      "de40a59": {
+       "femmes": {
+        "aTempsPartiel": 94243,
+        "effectifs": 391846,
+        "partPct": 24.05
+       },
+       "hommes": {
+        "aTempsPartiel": 7196,
+        "effectifs": 95362,
+        "partPct": 7.55
+       },
+       "ensemble": {
+        "aTempsPartiel": 101439,
+        "effectifs": 487208,
+        "partPct": 20.82
+       }
+      },
+      "de60ouPlus": {
+       "femmes": {
+        "aTempsPartiel": 6350,
+        "effectifs": 29140,
+        "partPct": 21.79
+       },
+       "hommes": {
+        "aTempsPartiel": 1162,
+        "effectifs": 9393,
+        "partPct": 12.37
+       },
+       "ensemble": {
+        "aTempsPartiel": 7512,
+        "effectifs": 38533,
+        "partPct": 19.49
+       }
+      }
+     }
+    }
+   }
+  },
+  "pointStat2023EnqueteEmploi2022": {
+   "source": "DGAFP, Point Stat n° 42 (juin 2023), « Dans la fonction publique, le temps partiel et le sous-emploi concernent davantage les contractuels », figure 1 et figure complémentaire 1 (enquête Emploi 2022)",
+   "url": "https://www.fonction-publique.gouv.fr/toutes-les-publications/dans-la-fonction-publique-le-temps-partiel-et-le-sous-emploi-concernent-davantage-les-contractuels",
+   "urlDonnees": "https://www.fonction-publique.gouv.fr/files/files/publications/point-stat/le-temps-partiel-et-le-sous-emploi-dans-la-fonction-publique.xlsx",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "%",
+   "champ": "France (hors Mayotte), agents de la fonction publique s'étant déclarés fonctionnaires ou contractuels et salariés du privé (CDI ou CDD).",
+   "partTempsPartiel": {
+    "fpe": {
+     "fonctionnaires": 9.77,
+     "contractuels": 23.6,
+     "ensembleFonctionPublique": 13.78,
+     "salariesDuPrive": null
+    },
+    "fpt": {
+     "fonctionnaires": 16.71,
+     "contractuels": 35.79,
+     "ensembleFonctionPublique": 22.6,
+     "salariesDuPrive": null
+    },
+    "fph": {
+     "fonctionnaires": 17.52,
+     "contractuels": 21.15,
+     "ensembleFonctionPublique": 18.63,
+     "salariesDuPrive": null
+    },
+    "femmes": {
+     "fonctionnaires": 19.24,
+     "contractuels": 32.78,
+     "ensembleFonctionPublique": 23.44,
+     "salariesDuPrive": 27.1
+    },
+    "hommes": {
+     "fonctionnaires": 4.52,
+     "contractuels": 17.01,
+     "ensembleFonctionPublique": 8.02,
+     "salariesDuPrive": 6.46
+    },
+    "moinsDe30": {
+     "fonctionnaires": 10.52,
+     "contractuels": 25.01,
+     "ensembleFonctionPublique": 18.14,
+     "salariesDuPrive": 16.15
+    },
+    "de30a49": {
+     "fonctionnaires": 15.65,
+     "contractuels": 25.6,
+     "ensembleFonctionPublique": 18.53,
+     "salariesDuPrive": 13.48
+    },
+    "de50ouPlus": {
+     "fonctionnaires": 12.09,
+     "contractuels": 32.38,
+     "ensembleFonctionPublique": 16.92,
+     "salariesDuPrive": 20.77
+    },
+    "ensemble": {
+     "fonctionnaires": 13.79,
+     "contractuels": 27.46,
+     "ensembleFonctionPublique": 17.89,
+     "salariesDuPrive": 16.2
+    }
+   },
+   "partTempsPartielParAgeEtVersantTousAgents": {
+    "fpe": {
+     "moinsDe30": 16.97,
+     "de30a49": 12.95,
+     "de50ouPlus": 13.81,
+     "ensemble": 13.78
+    },
+    "fpt": {
+     "moinsDe30": 26.99,
+     "de30a49": 23.71,
+     "de50ouPlus": 20.4,
+     "ensemble": 22.6
+    },
+    "fph": {
+     "moinsDe30": 11.93,
+     "de30a49": 22.04,
+     "de50ouPlus": 16.4,
+     "ensemble": 18.63
+    },
+    "ensembleFonctionPublique": {
+     "moinsDe30": 18.14,
+     "de30a49": 18.53,
+     "de50ouPlus": 16.92,
+     "ensemble": 17.89
+    }
+   },
+   "numeroDeLaNote": "numéro 42 lu dans un résumé de recherche, non vérifié dans le PDF"
+  },
+  "pointStat2016EnqueteEmploi2010_2012": {
+   "source": "DGAFP, Point Stat (2016), « Temps partiel subi et choisi dans la fonction publique et le secteur privé », figures 1 à 3 (enquêtes Emploi 2010, 2011 et 2012 compilées)",
+   "url": "https://www.fonction-publique.gouv.fr/files/files/publications/point-stat/temps-partiel-2016.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% des salariés à temps partiel, moyenne 2010-2012",
+   "champ": "Actifs salariés de 16 à 65 ans, hors bénéficiaires de contrats aidés. Ménages ordinaires. France métropolitaine. Tous statuts.",
+   "parVersant": {
+    "fpe": 15,
+    "fpt": 23,
+    "fph": 20,
+    "ensembleFonctionPublique": 19,
+    "salariesDuPrive": 18
+   },
+   "parSexe": {
+    "femmes": {
+     "fonctionPublique": 26,
+     "prive": 32
+    },
+    "hommes": {
+     "fonctionPublique": 6,
+     "prive": 6
+    }
+   },
+   "parAge": {
+    "de16a25": {
+     "fonctionPublique": 27,
+     "prive": 20
+    },
+    "de26a35": {
+     "fonctionPublique": 17,
+     "prive": 13
+    },
+    "de36a45": {
+     "fonctionPublique": 20,
+     "prive": 17
+    },
+    "de46a55": {
+     "fonctionPublique": 17,
+     "prive": 18
+    },
+    "de56a65": {
+     "fonctionPublique": 18,
+     "prive": 26
+    }
+   },
+   "partDuTempsPartielSubiParmiLesTempsPartiels": {
+    "fonctionPublique": 24,
+    "fpe": 16,
+    "fpt": 38,
+    "fph": 9,
+    "prive": 33
+   },
+   "citation": "Le temps partiel subi est inexistant pour les fonctionnaires de l’État et hospitaliers"
+  },
+  "titulairesCivilsEtat1998_1999": {
+   "source": "DGAFP, Point Stat n° 01.02 (octobre 2001), « Le travail à temps partiel progresse encore dans la fonction publique de l'État », tableaux 1 à 3 (DGAFP - Insee, exploitation des fichiers de paie)",
+   "url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/files/files/statistiques/point_stat/pointstat_temps_partiel_2000.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "champ": "Titulaires civils de l'État en fonction au 31 décembre (hors cessation progressive d'activité, comptée à part)",
+   "effectifsATempsPartiel": {
+    "1998": {
+     "hommes": 10715,
+     "femmes": 147093,
+     "ensemble": 157808
+    },
+    "1999": {
+     "hommes": 11655,
+     "femmes": 150519,
+     "ensemble": 162174
+    }
+   },
+   "enCessationProgressiveDActivite": {
+    "1998": {
+     "hommes": 6907,
+     "femmes": 13713,
+     "ensemble": 20620
+    },
+    "1999": {
+     "hommes": 7088,
+     "femmes": 14584,
+     "ensemble": 21672
+    }
+   },
+   "tauxDeTempsPartiel1999Pct": {
+    "hommes": 1.6,
+    "femmes": 15.7,
+    "ensemble": 9.6,
+    "note": "en % de l'effectif total des titulaires civils (tableau 2, ligne Ensemble)"
+   },
+   "repartitionParQuotite1999Pct": {
+    "ensembleDesTitulairesCivils": {
+     "hommes": {
+      "q50": 23.8,
+      "q60": 6.9,
+      "q70": 6.3,
+      "q80": 50.6,
+      "q90": 12.4
+     },
+     "femmes": {
+      "q50": 24.0,
+      "q60": 5.6,
+      "q70": 5.0,
+      "q80": 55.4,
+      "q90": 10.0
+     },
+     "ensemble": {
+      "q50": 24.0,
+      "q60": 5.7,
+      "q70": 5.1,
+      "q80": 55.1,
+      "q90": 10.1
+     }
+    },
+    "horsEducationNationale": {
+     "hommes": {
+      "q50": 12.9,
+      "q60": 3.2,
+      "q70": 2.2,
+      "q80": 68.9,
+      "q90": 12.8
+     },
+     "femmes": {
+      "q50": 7.4,
+      "q60": 4.2,
+      "q70": 3.0,
+      "q80": 74.8,
+      "q90": 10.6
+     },
+     "ensemble": {
+      "q50": 7.7,
+      "q60": 4.2,
+      "q70": 3.0,
+      "q80": 74.4,
+      "q90": 10.7
+     }
+    }
+   },
+   "profilParAge": "« Fin 1999, c’est autour de 38 ans (40 ans pour les cadres) que le recours au temps partiel est le plus fréquent » ; « A cet âge, environ 28% des femmes ne travaillent pas à temps complet » ; « le taux maximum de temps partiel en 1990 était de 22%, pour les femmes d’environ 35 ans » ; après 50 ans les taux « se stabilisent alors à un niveau voisin de 13% ». Le graphique 2 (taux des femmes par âge en 1982, 1986, 1990, 1994, 1999) et le graphique 1 (effectifs 1982-1999) ne sont publiés qu'en image.",
+   "citation": "Fin 1999, environ 270 000 agents civils de l’État, soit 14% des effectifs, ne travaillaient pas à temps complet."
+  },
+  "regleDeRetraite": {
+   "prorataEtDureeDAssurance": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III (décote), p. 108, et partie IV (minimum garanti)",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "citation": "Les services effectués à temps partiel sont par ailleurs décomptés comme des services à temps plein pour le calcul de la durée d’assurance (à la différence du calcul de la durée des services et bonifications).",
+    "citation2": "Pour ce qui concerne le temps partiel, il est, hors temps partiel de droit, pris en compte au prorata de sa durée à la fois pour le calcul du montant de la pension normale et pour le calcul du montant du MIGA. Ainsi, une carrière complète à mi-temps comptera comme une demi-carrière.",
+    "resume": {
+     "constitutionDuDroit": "compté comme du temps plein",
+     "dureeDeServicesEtBonifications": "au prorata de la quotité travaillée",
+     "dureeDAssurance": "compté comme du temps plein",
+     "surcote": "seuls les trimestres entiers cotisés comptent"
+    }
+   },
+   "guideDgafp": {
+    "source": "DGAFP, Guide relatif à la mise en œuvre du temps partiel pour les agents publics (2025), partie 5 « L'impact sur le calcul de la pension », p. 40-44",
+    "url": "https://www.fonction-publique.gouv.fr/files/files/publications/publications-dgafp/Guide_temps_partiel_2025.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "citation": "En résumé, la période passée à temps partiel est prise en compte au prorata de la durée effectivement travaillée en termes de durée de services, et comme s’il s’agissait d’un temps plein pour la durée d’assurance.",
+    "exemple": "Un agent travaillant à temps partiel à mi-temps (quotité de 50 %) pendant deux ans ne validera que quatre trimestres de durée de service et de bonification retenue pour le calcul du taux de liquidation. Toutefois, ces deux années seront entièrement prises en compte pour la constitution du droit à pension […] et la durée d’assurance tous régimes (huit trimestres comptabilisés).",
+    "tempsPartielsComptesATempsPlein": [
+     "temps partiel de droit pour élever un enfant (gratuit, dans la limite de trois ans par enfant né ou adopté à partir du 1er janvier 2004)",
+     "temps partiel dans le cadre du congé de présence parentale",
+     "temps partiel dans le cadre du congé de proche aidant",
+     "temps partiel thérapeutique",
+     "cas exceptionnels prévus par une loi ou un décret en Conseil d'État (dont congé de solidarité familiale)"
+    ],
+    "citationTempsPlein": "Ces périodes sont prises en compte à 100 % : en constitution, en liquidation et en durée d’assurance. Cette prise en compte est gratuite",
+    "complementaire": "« l’exercice d’une activité à temps partiel a un impact sur le nombre de points acquis […] au régime additionnel de la fonction publique (RAFP) »",
+    "quotitesAutorisees": "50 %, 60 %, 70 %, 80 % ou 90 % d'un temps plein (rapport annuel 2026) ; la quotité de 90 % n'est pas autorisée pour le temps partiel de droit (Point Stat 2016)"
+   },
+   "surcotisation": {
+    "existence": true,
+    "source": "DGAFP, Guide temps partiel 2025, p. 43-44 ; Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III « La possibilité de cotiser au-delà de la quotité travaillée » ; SRE, page « Mes cotisations »",
+    "url": "https://www.fonction-publique.gouv.fr/files/files/publications/publications-dgafp/Guide_temps_partiel_2025.pdf",
+    "urls": [
+     "https://www.fonction-publique.gouv.fr/files/files/publications/publications-dgafp/Guide_temps_partiel_2025.pdf",
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "https://retraitesdeletat.gouv.fr/actif/ma-carriere/mes-cotisations"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "textes": "Article L. 11 bis du CPCMR ; article 14 du décret n° 2003-1306 (CNRACL) ; taux : article 2 du décret n° 2004-678 du 8 juillet 2004",
+    "depuis": "2004-01-01",
+    "citation": "Depuis le 1er janvier 2004, les fonctionnaires stagiaires ou titulaires peuvent demander à surcotiser pour la retraite sur la base du traitement soumis à retenue pour pension correspondant à un fonctionnaire de même grade, échelon et indice travaillant à temps plein. La surcotisation permet d’améliorer la durée des services prise en compte pour la liquidation, dans la limite de 4 trimestres.",
+    "plafondTrimestres": 4,
+    "plafondTrimestresHandicap80Pct": 8,
+    "assiette": "traitement indiciaire brut à temps plein, y compris NBI",
+    "tauxAu2026_01_01": {
+     "source": "SRE, page « Mes cotisations », tableau « Le taux de surcotisation pour pension », à compter du 01/01/2026",
+     "url": "https://retraitesdeletat.gouv.fr/actif/ma-carriere/mes-cotisations",
+     "unite": "% du traitement à temps plein",
+     "q50": {
+      "taux": 25.05,
+      "dureePossible": "2 ans"
+     },
+     "q60": {
+      "taux": 22.26,
+      "dureePossible": "2 ans et 6 mois"
+     },
+     "q70": {
+      "taux": 19.47,
+      "dureePossible": "3 ans et 4 mois"
+     },
+     "q80": {
+      "taux": 16.68,
+      "dureePossible": "5 ans"
+     },
+     "q90": {
+      "taux": 13.89,
+      "dureePossible": "10 ans"
+     },
+     "tauxNormal": "11,10 % depuis 2020"
+    },
+    "usage": "Aucun chiffre de recours trouvé (voir manquants)."
+   }
+  }
+ },
+ "jeunesCotisants": {
+  "apprentis": {
+   "effectifsAu31Decembre1982_2023": {
+    "source": "Insee, « Formations et emploi », édition 2025, fiche « Apprentis en formation », figure 1 « Évolution des effectifs d'apprentis selon le diplôme préparé, de 1982 à 2023 » (source Depp, enquête SIFA)",
+    "url": "https://www.insee.fr/fr/statistiques/8305506",
+    "urlDonnees": "https://www.insee.fr/fr/statistiques/fichier/8305506/BFE2025-F4.xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "apprentis inscrits en CFA au 31 décembre",
+    "champ": "France hors Mayotte jusqu'en 2010, France à partir de 2011. Privé et public confondus (apprentis inscrits en centre de formation, quel que soit l'employeur).",
+    "note": "totalCalcule = somme des cinq colonnes de la source (la source ne publie pas le total). Ce n'est pas la série Dares des contrats en cours : voir manquants.",
+    "valeurs": {
+     "1982": {
+      "capEtMentionComplementaire": 233719,
+      "bepEtCertificationProfessionnelle": 0,
+      "niveauBacPro": 0,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 233719
+     },
+     "1983": {
+      "capEtMentionComplementaire": 226900,
+      "bepEtCertificationProfessionnelle": 0,
+      "niveauBacPro": 0,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 226900
+     },
+     "1984": {
+      "capEtMentionComplementaire": 222042,
+      "bepEtCertificationProfessionnelle": 0,
+      "niveauBacPro": 0,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 222042
+     },
+     "1985": {
+      "capEtMentionComplementaire": 222230,
+      "bepEtCertificationProfessionnelle": 0,
+      "niveauBacPro": 0,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 222230
+     },
+     "1986": {
+      "capEtMentionComplementaire": 225870,
+      "bepEtCertificationProfessionnelle": 54,
+      "niveauBacPro": 249,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 226173
+     },
+     "1987": {
+      "capEtMentionComplementaire": 233391,
+      "bepEtCertificationProfessionnelle": 166,
+      "niveauBacPro": 2198,
+      "niveauBac2": 0,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 235755
+     },
+     "1988": {
+      "capEtMentionComplementaire": 235668,
+      "bepEtCertificationProfessionnelle": 2456,
+      "niveauBacPro": 5585,
+      "niveauBac2": 242,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 243951
+     },
+     "1989": {
+      "capEtMentionComplementaire": 226384,
+      "bepEtCertificationProfessionnelle": 4975,
+      "niveauBacPro": 9629,
+      "niveauBac2": 703,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 241691
+     },
+     "1990": {
+      "capEtMentionComplementaire": 207012,
+      "bepEtCertificationProfessionnelle": 8262,
+      "niveauBacPro": 13210,
+      "niveauBac2": 1319,
+      "niveauBac3OuPlus": 0,
+      "totalCalcule": 229803
+     },
+     "1991": {
+      "capEtMentionComplementaire": 187700,
+      "bepEtCertificationProfessionnelle": 12350,
+      "niveauBacPro": 17203,
+      "niveauBac2": 2724,
+      "niveauBac3OuPlus": 312,
+      "totalCalcule": 220289
+     },
+     "1992": {
+      "capEtMentionComplementaire": 172165,
+      "bepEtCertificationProfessionnelle": 17076,
+      "niveauBacPro": 19796,
+      "niveauBac2": 3960,
+      "niveauBac3OuPlus": 828,
+      "totalCalcule": 213825
+     },
+     "1993": {
+      "capEtMentionComplementaire": 173673,
+      "bepEtCertificationProfessionnelle": 22465,
+      "niveauBacPro": 23698,
+      "niveauBac2": 5897,
+      "niveauBac3OuPlus": 1932,
+      "totalCalcule": 227665
+     },
+     "1994": {
+      "capEtMentionComplementaire": 187471,
+      "bepEtCertificationProfessionnelle": 30565,
+      "niveauBacPro": 31026,
+      "niveauBac2": 9234,
+      "niveauBac3OuPlus": 3306,
+      "totalCalcule": 261602
+     },
+     "1995": {
+      "capEtMentionComplementaire": 194485,
+      "bepEtCertificationProfessionnelle": 37650,
+      "niveauBacPro": 41327,
+      "niveauBac2": 15273,
+      "niveauBac3OuPlus": 4777,
+      "totalCalcule": 293512
+     },
+     "1996": {
+      "capEtMentionComplementaire": 196974,
+      "bepEtCertificationProfessionnelle": 44208,
+      "niveauBacPro": 48438,
+      "niveauBac2": 19952,
+      "niveauBac3OuPlus": 6357,
+      "totalCalcule": 315929
+     },
+     "1997": {
+      "capEtMentionComplementaire": 197845,
+      "bepEtCertificationProfessionnelle": 48645,
+      "niveauBacPro": 56579,
+      "niveauBac2": 25603,
+      "niveauBac3OuPlus": 9018,
+      "totalCalcule": 337690
+     },
+     "1998": {
+      "capEtMentionComplementaire": 196945,
+      "bepEtCertificationProfessionnelle": 52905,
+      "niveauBacPro": 62622,
+      "niveauBac2": 29581,
+      "niveauBac3OuPlus": 11579,
+      "totalCalcule": 353632
+     },
+     "1999": {
+      "capEtMentionComplementaire": 193179,
+      "bepEtCertificationProfessionnelle": 54905,
+      "niveauBacPro": 66469,
+      "niveauBac2": 32507,
+      "niveauBac3OuPlus": 13177,
+      "totalCalcule": 360237
+     },
+     "2000": {
+      "capEtMentionComplementaire": 190508,
+      "bepEtCertificationProfessionnelle": 54825,
+      "niveauBacPro": 69355,
+      "niveauBac2": 35553,
+      "niveauBac3OuPlus": 15633,
+      "totalCalcule": 365874
+     },
+     "2001": {
+      "capEtMentionComplementaire": 184324,
+      "bepEtCertificationProfessionnelle": 53122,
+      "niveauBacPro": 71828,
+      "niveauBac2": 37234,
+      "niveauBac3OuPlus": 16420,
+      "totalCalcule": 362928
+     },
+     "2002": {
+      "capEtMentionComplementaire": 179872,
+      "bepEtCertificationProfessionnelle": 52294,
+      "niveauBacPro": 74802,
+      "niveauBac2": 37751,
+      "niveauBac3OuPlus": 18757,
+      "totalCalcule": 363476
+     },
+     "2003": {
+      "capEtMentionComplementaire": 175949,
+      "bepEtCertificationProfessionnelle": 49386,
+      "niveauBacPro": 77362,
+      "niveauBac2": 38217,
+      "niveauBac3OuPlus": 21052,
+      "totalCalcule": 361966
+     },
+     "2004": {
+      "capEtMentionComplementaire": 176832,
+      "bepEtCertificationProfessionnelle": 48442,
+      "niveauBacPro": 80623,
+      "niveauBac2": 39560,
+      "niveauBac3OuPlus": 23531,
+      "totalCalcule": 368988
+     },
+     "2005": {
+      "capEtMentionComplementaire": 179921,
+      "bepEtCertificationProfessionnelle": 48692,
+      "niveauBacPro": 86609,
+      "niveauBac2": 44233,
+      "niveauBac3OuPlus": 26404,
+      "totalCalcule": 385859
+     },
+     "2006": {
+      "capEtMentionComplementaire": 184660,
+      "bepEtCertificationProfessionnelle": 50731,
+      "niveauBacPro": 91951,
+      "niveauBac2": 50316,
+      "niveauBac3OuPlus": 30151,
+      "totalCalcule": 407809
+     },
+     "2007": {
+      "capEtMentionComplementaire": 187994,
+      "bepEtCertificationProfessionnelle": 51300,
+      "niveauBacPro": 95753,
+      "niveauBac2": 55577,
+      "niveauBac3OuPlus": 34538,
+      "totalCalcule": 425162
+     },
+     "2008": {
+      "capEtMentionComplementaire": 182721,
+      "bepEtCertificationProfessionnelle": 48938,
+      "niveauBacPro": 98470,
+      "niveauBac2": 58572,
+      "niveauBac3OuPlus": 38949,
+      "totalCalcule": 427650
+     },
+     "2009": {
+      "capEtMentionComplementaire": 182636,
+      "bepEtCertificationProfessionnelle": 27131,
+      "niveauBacPro": 111900,
+      "niveauBac2": 59532,
+      "niveauBac3OuPlus": 43543,
+      "totalCalcule": 424742
+     },
+     "2010": {
+      "capEtMentionComplementaire": 182217,
+      "bepEtCertificationProfessionnelle": 9640,
+      "niveauBacPro": 123018,
+      "niveauBac2": 62074,
+      "niveauBac3OuPlus": 49331,
+      "totalCalcule": 426280
+     },
+     "2011": {
+      "capEtMentionComplementaire": 182308,
+      "bepEtCertificationProfessionnelle": 7252,
+      "niveauBacPro": 123888,
+      "niveauBac2": 67193,
+      "niveauBac3OuPlus": 55693,
+      "totalCalcule": 436334
+     },
+     "2012": {
+      "capEtMentionComplementaire": 180299,
+      "bepEtCertificationProfessionnelle": 5576,
+      "niveauBacPro": 116897,
+      "niveauBac2": 74868,
+      "niveauBac3OuPlus": 60503,
+      "totalCalcule": 438143
+     },
+     "2013": {
+      "capEtMentionComplementaire": 169114,
+      "bepEtCertificationProfessionnelle": 5540,
+      "niveauBacPro": 111682,
+      "niveauBac2": 74048,
+      "niveauBac3OuPlus": 63964,
+      "totalCalcule": 424348
+     },
+     "2014": {
+      "capEtMentionComplementaire": 156884,
+      "bepEtCertificationProfessionnelle": 5342,
+      "niveauBacPro": 104880,
+      "niveauBac2": 71419,
+      "niveauBac3OuPlus": 67357,
+      "totalCalcule": 405882
+     },
+     "2015": {
+      "capEtMentionComplementaire": 154103,
+      "bepEtCertificationProfessionnelle": 5507,
+      "niveauBacPro": 101582,
+      "niveauBac2": 73317,
+      "niveauBac3OuPlus": 70696,
+      "totalCalcule": 405205
+     },
+     "2016": {
+      "capEtMentionComplementaire": 154466,
+      "bepEtCertificationProfessionnelle": 5532,
+      "niveauBacPro": 99814,
+      "niveauBac2": 76326,
+      "niveauBac3OuPlus": 76128,
+      "totalCalcule": 412266
+     },
+     "2017": {
+      "capEtMentionComplementaire": 156665,
+      "bepEtCertificationProfessionnelle": 5985,
+      "niveauBacPro": 100952,
+      "niveauBac2": 82200,
+      "niveauBac3OuPlus": 84104,
+      "totalCalcule": 429906
+     },
+     "2018": {
+      "capEtMentionComplementaire": 158529,
+      "bepEtCertificationProfessionnelle": 6345,
+      "niveauBacPro": 103453,
+      "niveauBac2": 88551,
+      "niveauBac3OuPlus": 91249,
+      "totalCalcule": 448127
+     },
+     "2019": {
+      "capEtMentionComplementaire": 160702,
+      "bepEtCertificationProfessionnelle": 7000,
+      "niveauBacPro": 107255,
+      "niveauBac2": 95860,
+      "niveauBac3OuPlus": 107986,
+      "totalCalcule": 478803
+     },
+     "2020": {
+      "capEtMentionComplementaire": 169212,
+      "bepEtCertificationProfessionnelle": 12856,
+      "niveauBacPro": 124236,
+      "niveauBac2": 135540,
+      "niveauBac3OuPlus": 187791,
+      "totalCalcule": 629635
+     },
+     "2021": {
+      "capEtMentionComplementaire": 182027,
+      "bepEtCertificationProfessionnelle": 22548,
+      "niveauBacPro": 149859,
+      "niveauBac2": 191565,
+      "niveauBac3OuPlus": 288064,
+      "totalCalcule": 834063
+     },
+     "2022": {
+      "capEtMentionComplementaire": 191493,
+      "bepEtCertificationProfessionnelle": 22342,
+      "niveauBacPro": 163494,
+      "niveauBac2": 216089,
+      "niveauBac3OuPlus": 360172,
+      "totalCalcule": 953590
+     },
+     "2023": {
+      "capEtMentionComplementaire": 195438,
+      "bepEtCertificationProfessionnelle": 25622,
+      "niveauBacPro": 164568,
+      "niveauBac2": 234987,
+      "niveauBac3OuPlus": 400838,
+      "totalCalcule": 1021453
+     }
+    }
+   },
+   "effectifsParDiplome2000_2024": {
+    "source": "Insee, « Effectifs d'apprentis en fonction du diplôme préparé, données annuelles de 2000 à 2024 » (source Depp)",
+    "url": "https://www.insee.fr/fr/statistiques/2384301",
+    "urlDonnees": "https://www.insee.fr/fr/statistiques/fichier/2384301/cond-educ-apprenti-dip.xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "apprentis",
+    "champ": "France hors Mayotte jusqu'en 2010 et y compris Mayotte à partir de 2011",
+    "citation": "Note : les millésimes correspondent à la rentrée scolaire.",
+    "note": "Colonnes retenues : Ensemble, CAP, Diplômes du supérieur, Préapprentis (CPA, CLIPA, DIMA ; hors Ensemble). Les autres colonnes (BEP, BP, bac pro, STS, licences, ingénieurs) sont dans le fichier.",
+    "valeurs": {
+     "2000": {
+      "ensemble": 365874,
+      "cap": 183997,
+      "diplomesDuSuperieur": 51186,
+      "preapprentis": 10184
+     },
+     "2001": {
+      "ensemble": 362928,
+      "cap": 178511,
+      "diplomesDuSuperieur": 53654,
+      "preapprentis": 10330
+     },
+     "2002": {
+      "ensemble": 363476,
+      "cap": 174188,
+      "diplomesDuSuperieur": 56508,
+      "preapprentis": 10052
+     },
+     "2003": {
+      "ensemble": 361966,
+      "cap": 171367,
+      "diplomesDuSuperieur": 59269,
+      "preapprentis": 9254
+     },
+     "2004": {
+      "ensemble": 368988,
+      "cap": 172565,
+      "diplomesDuSuperieur": 63091,
+      "preapprentis": 9771
+     },
+     "2005": {
+      "ensemble": 385859,
+      "cap": 175002,
+      "diplomesDuSuperieur": 70637,
+      "preapprentis": 9718
+     },
+     "2006": {
+      "ensemble": 407809,
+      "cap": 179940,
+      "diplomesDuSuperieur": 80467,
+      "preapprentis": 9936
+     },
+     "2007": {
+      "ensemble": 425162,
+      "cap": 183038,
+      "diplomesDuSuperieur": 90115,
+      "preapprentis": 8547
+     },
+     "2008": {
+      "ensemble": 427650,
+      "cap": 177578,
+      "diplomesDuSuperieur": 97521,
+      "preapprentis": 7583
+     },
+     "2009": {
+      "ensemble": 424742,
+      "cap": 177290,
+      "diplomesDuSuperieur": 103075,
+      "preapprentis": 7344
+     },
+     "2010": {
+      "ensemble": 426280,
+      "cap": 176956,
+      "diplomesDuSuperieur": 111405,
+      "preapprentis": 7243
+     },
+     "2011": {
+      "ensemble": 436334,
+      "cap": 177298,
+      "diplomesDuSuperieur": 122886,
+      "preapprentis": 6919
+     },
+     "2012": {
+      "ensemble": 438143,
+      "cap": 174740,
+      "diplomesDuSuperieur": 135371,
+      "preapprentis": 6670
+     },
+     "2013": {
+      "ensemble": 424348,
+      "cap": 163381,
+      "diplomesDuSuperieur": 138012,
+      "preapprentis": 5769
+     },
+     "2014": {
+      "ensemble": 405882,
+      "cap": 150810,
+      "diplomesDuSuperieur": 138776,
+      "preapprentis": 5932
+     },
+     "2015": {
+      "ensemble": 405205,
+      "cap": 148184,
+      "diplomesDuSuperieur": 144013,
+      "preapprentis": 5304
+     },
+     "2016": {
+      "ensemble": 412266,
+      "cap": 148436,
+      "diplomesDuSuperieur": 152454,
+      "preapprentis": 5097
+     },
+     "2017": {
+      "ensemble": 429906,
+      "cap": 150168,
+      "diplomesDuSuperieur": 166304,
+      "preapprentis": 4810
+     },
+     "2018": {
+      "ensemble": 448127,
+      "cap": 152268,
+      "diplomesDuSuperieur": 179800,
+      "preapprentis": 4525
+     },
+     "2019": {
+      "ensemble": 478803,
+      "cap": 154093,
+      "diplomesDuSuperieur": 203846,
+      "preapprentis": null
+     },
+     "2020": {
+      "ensemble": 629635,
+      "cap": 161458,
+      "diplomesDuSuperieur": 323331,
+      "preapprentis": null
+     },
+     "2021": {
+      "ensemble": 834063,
+      "cap": 173683,
+      "diplomesDuSuperieur": 479629,
+      "preapprentis": null
+     },
+     "2022": {
+      "ensemble": 953590,
+      "cap": 184024,
+      "diplomesDuSuperieur": 576261,
+      "preapprentis": null
+     },
+     "2023": {
+      "ensemble": 1021453,
+      "cap": 187723,
+      "diplomesDuSuperieur": 635825,
+      "preapprentis": null
+     },
+     "2024": {
+      "ensemble": 1049965,
+      "cap": 182804,
+      "diplomesDuSuperieur": 657930,
+      "preapprentis": null
+     }
+    }
+   },
+   "effectifsAu31Decembre2025": {
+    "source": "Depp, Note d'information n° 26.35 (juillet 2026), « L'apprentissage au 31 décembre 2025 : une baisse des effectifs de 2,8 % par rapport à 2024 »",
+    "url": "https://www.education.gouv.fr/sites/default/files/document/deppni-2026-35sifapdf-519078.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "valeur": 1020400,
+    "champ": "France",
+    "citation": "Au 31 décembre 2025, les centres de formation d’apprentis accueillent 1 020 400 apprentis, soit une diminution de 2,8 % par rapport à 2024. Au total, 8,5 % des 16-29 ans sont en apprentissage.",
+    "secondDegre": 391900,
+    "partDuSuperieurPct": 62
+   },
+   "partDesJeunesEnApprentissage1982_2023": {
+    "source": "Insee, « Formations et emploi », édition 2025, fiche « Apprentis en formation », figure 2 « Évolution de la part des apprentis selon le sexe et l'âge, de 1982 à 2023 » (Depp, enquête SIFA ; Insee, estimations de population)",
+    "url": "https://www.insee.fr/fr/statistiques/8305506",
+    "urlDonnees": "https://www.insee.fr/fr/statistiques/fichier/8305506/BFE2025-F4.xlsx",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "% de la classe d'âge en apprentissage au 31 décembre",
+    "champ": "France métropolitaine jusqu'en 2005, France hors Mayotte de 2006 à 2018, France à partir de 2019",
+    "citation": "Au 31 décembre 2023, 6,4 % des filles âgées de 15 à 19 ans suivent un apprentissage.",
+    "ensemble2023": {
+     "de15a19": 9.3,
+     "de20a24": 12.7,
+     "de25a29": 2.6
+    },
+    "valeurs": {
+     "1982": {
+      "femmes15a19": 2.5,
+      "femmes20a24": 0.0,
+      "femmes25a29": null,
+      "hommes15a19": 7.4,
+      "hommes20a24": 0.0,
+      "hommes25a29": null
+     },
+     "1983": {
+      "femmes15a19": 2.6,
+      "femmes20a24": 0.0,
+      "femmes25a29": null,
+      "hommes15a19": 7.2,
+      "hommes20a24": 0.0,
+      "hommes25a29": null
+     },
+     "1984": {
+      "femmes15a19": 2.6,
+      "femmes20a24": 0.1,
+      "femmes25a29": null,
+      "hommes15a19": 6.9,
+      "hommes20a24": 0.1,
+      "hommes25a29": null
+     },
+     "1985": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.1,
+      "femmes25a29": null,
+      "hommes15a19": 7.2,
+      "hommes20a24": 0.1,
+      "hommes25a29": null
+     },
+     "1986": {
+      "femmes15a19": 2.8,
+      "femmes20a24": 0.1,
+      "femmes25a29": null,
+      "hommes15a19": 7.2,
+      "hommes20a24": 0.1,
+      "hommes25a29": null
+     },
+     "1987": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.2,
+      "femmes25a29": null,
+      "hommes15a19": 7.1,
+      "hommes20a24": 0.2,
+      "hommes25a29": null
+     },
+     "1988": {
+      "femmes15a19": 2.8,
+      "femmes20a24": 0.3,
+      "femmes25a29": null,
+      "hommes15a19": 7.3,
+      "hommes20a24": 0.4,
+      "hommes25a29": null
+     },
+     "1989": {
+      "femmes15a19": 2.8,
+      "femmes20a24": 0.4,
+      "femmes25a29": null,
+      "hommes15a19": 7.0,
+      "hommes20a24": 0.5,
+      "hommes25a29": null
+     },
+     "1990": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.4,
+      "femmes25a29": null,
+      "hommes15a19": 6.8,
+      "hommes20a24": 0.5,
+      "hommes25a29": null
+     },
+     "1991": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.5,
+      "femmes25a29": null,
+      "hommes15a19": 6.5,
+      "hommes20a24": 0.7,
+      "hommes25a29": null
+     },
+     "1992": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.6,
+      "femmes25a29": null,
+      "hommes15a19": 6.4,
+      "hommes20a24": 0.9,
+      "hommes25a29": null
+     },
+     "1993": {
+      "femmes15a19": 2.7,
+      "femmes20a24": 0.8,
+      "femmes25a29": null,
+      "hommes15a19": 6.8,
+      "hommes20a24": 1.2,
+      "hommes25a29": null
+     },
+     "1994": {
+      "femmes15a19": 2.9,
+      "femmes20a24": 1.1,
+      "femmes25a29": null,
+      "hommes15a19": 7.6,
+      "hommes20a24": 1.8,
+      "hommes25a29": null
+     },
+     "1995": {
+      "femmes15a19": 3.0,
+      "femmes20a24": 1.3,
+      "femmes25a29": null,
+      "hommes15a19": 8.2,
+      "hommes20a24": 2.2,
+      "hommes25a29": null
+     },
+     "1996": {
+      "femmes15a19": 3.1,
+      "femmes20a24": 1.5,
+      "femmes25a29": null,
+      "hommes15a19": 8.6,
+      "hommes20a24": 2.5,
+      "hommes25a29": null
+     },
+     "1997": {
+      "femmes15a19": 3.1,
+      "femmes20a24": 1.7,
+      "femmes25a29": null,
+      "hommes15a19": 8.8,
+      "hommes20a24": 2.9,
+      "hommes25a29": null
+     },
+     "1998": {
+      "femmes15a19": 3.3,
+      "femmes20a24": 1.8,
+      "femmes25a29": null,
+      "hommes15a19": 9.2,
+      "hommes20a24": 2.9,
+      "hommes25a29": null
+     },
+     "1999": {
+      "femmes15a19": 3.4,
+      "femmes20a24": 1.9,
+      "femmes25a29": null,
+      "hommes15a19": 9.4,
+      "hommes20a24": 3.0,
+      "hommes25a29": null
+     },
+     "2000": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 1.9,
+      "femmes25a29": null,
+      "hommes15a19": 9.6,
+      "hommes20a24": 3.0,
+      "hommes25a29": null
+     },
+     "2001": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 1.9,
+      "femmes25a29": null,
+      "hommes15a19": 9.6,
+      "hommes20a24": 2.8,
+      "hommes25a29": null
+     },
+     "2002": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 2.0,
+      "femmes25a29": null,
+      "hommes15a19": 9.6,
+      "hommes20a24": 2.8,
+      "hommes25a29": null
+     },
+     "2003": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 2.0,
+      "femmes25a29": null,
+      "hommes15a19": 9.4,
+      "hommes20a24": 2.9,
+      "hommes25a29": null
+     },
+     "2004": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 2.0,
+      "femmes25a29": null,
+      "hommes15a19": 9.5,
+      "hommes20a24": 3.0,
+      "hommes25a29": null
+     },
+     "2005": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 2.2,
+      "femmes25a29": null,
+      "hommes15a19": 9.6,
+      "hommes20a24": 3.3,
+      "hommes25a29": null
+     },
+     "2006": {
+      "femmes15a19": 3.5,
+      "femmes20a24": 2.4,
+      "femmes25a29": 0.2,
+      "hommes15a19": 9.6,
+      "hommes20a24": 3.7,
+      "hommes25a29": 0.3
+     },
+     "2007": {
+      "femmes15a19": 3.7,
+      "femmes20a24": 2.6,
+      "femmes25a29": 0.2,
+      "hommes15a19": 10.0,
+      "hommes20a24": 4.0,
+      "hommes25a29": 0.3
+     },
+     "2008": {
+      "femmes15a19": 3.7,
+      "femmes20a24": 2.7,
+      "femmes25a29": 0.2,
+      "hommes15a19": 10.0,
+      "hommes20a24": 4.1,
+      "hommes25a29": 0.3
+     },
+     "2009": {
+      "femmes15a19": 3.6,
+      "femmes20a24": 2.8,
+      "femmes25a29": 0.2,
+      "hommes15a19": 9.6,
+      "hommes20a24": 4.4,
+      "hommes25a29": 0.3
+     },
+     "2010": {
+      "femmes15a19": 3.6,
+      "femmes20a24": 3.0,
+      "femmes25a29": 0.2,
+      "hommes15a19": 9.3,
+      "hommes20a24": 4.7,
+      "hommes25a29": 0.3
+     },
+     "2011": {
+      "femmes15a19": 3.6,
+      "femmes20a24": 3.2,
+      "femmes25a29": 0.3,
+      "hommes15a19": 9.4,
+      "hommes20a24": 5.1,
+      "hommes25a29": 0.4
+     },
+     "2012": {
+      "femmes15a19": 3.6,
+      "femmes20a24": 3.4,
+      "femmes25a29": 0.3,
+      "hommes15a19": 9.2,
+      "hommes20a24": 5.2,
+      "hommes25a29": 0.4
+     },
+     "2013": {
+      "femmes15a19": 3.4,
+      "femmes20a24": 3.4,
+      "femmes25a29": 0.3,
+      "hommes15a19": 8.7,
+      "hommes20a24": 5.2,
+      "hommes25a29": 0.5
+     },
+     "2014": {
+      "femmes15a19": 3.1,
+      "femmes20a24": 3.3,
+      "femmes25a29": 0.3,
+      "hommes15a19": 8.1,
+      "hommes20a24": 5.1,
+      "hommes25a29": 0.5
+     },
+     "2015": {
+      "femmes15a19": 3.1,
+      "femmes20a24": 3.4,
+      "femmes25a29": 0.4,
+      "hommes15a19": 7.8,
+      "hommes20a24": 5.2,
+      "hommes25a29": 0.5
+     },
+     "2016": {
+      "femmes15a19": 3.2,
+      "femmes20a24": 3.5,
+      "femmes25a29": 0.4,
+      "hommes15a19": 7.8,
+      "hommes20a24": 5.3,
+      "hommes25a29": 0.6
+     },
+     "2017": {
+      "femmes15a19": 3.2,
+      "femmes20a24": 3.7,
+      "femmes25a29": 0.5,
+      "hommes15a19": 8.1,
+      "hommes20a24": 5.4,
+      "hommes25a29": 0.7
+     },
+     "2018": {
+      "femmes15a19": 3.3,
+      "femmes20a24": 3.7,
+      "femmes25a29": 0.6,
+      "hommes15a19": 8.4,
+      "hommes20a24": 5.5,
+      "hommes25a29": 0.8
+     },
+     "2019": {
+      "femmes15a19": 3.3,
+      "femmes20a24": 4.1,
+      "femmes25a29": 0.7,
+      "hommes15a19": 8.8,
+      "hommes20a24": 5.8,
+      "hommes25a29": 0.9
+     },
+     "2020": {
+      "femmes15a19": 4.0,
+      "femmes20a24": 6.7,
+      "femmes25a29": 1.2,
+      "hommes15a19": 9.7,
+      "hommes20a24": 8.0,
+      "hommes25a29": 1.4
+     },
+     "2021": {
+      "femmes15a19": 5.0,
+      "femmes20a24": 10.0,
+      "femmes25a29": 2.0,
+      "hommes15a19": 10.9,
+      "hommes20a24": 10.9,
+      "hommes25a29": 2.1
+     },
+     "2022": {
+      "femmes15a19": 5.8,
+      "femmes20a24": 11.7,
+      "femmes25a29": 2.4,
+      "hommes15a19": 11.7,
+      "hommes20a24": 12.2,
+      "hommes25a29": 2.5
+     },
+     "2023": {
+      "femmes15a19": 6.4,
+      "femmes20a24": 12.7,
+      "femmes25a29": 2.6,
+      "hommes15a19": 12.1,
+      "hommes20a24": 12.8,
+      "hommes25a29": 2.6
+     }
+    }
+   },
+   "fonctionPublique": {
+    "source": "DGAFP, Rapport annuel sur l'état de la fonction publique, édition 2026, vue « L'emploi dans la fonction publique en 2024 », encadré 1 « Les apprentis dans la fonction publique » (Siasp, Insee) et encadré 2 (SIA, Dares)",
+    "url": "https://www.fonction-publique.gouv.fr/files/files/publications/rapport-annuel/rapport_annuel_2026.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Emplois principaux, apprentis, situés en France (hors Mayotte)",
+    "effectifsAu31Decembre2024": {
+     "fpe": 11800,
+     "fpeMinisteres": 7600,
+     "fpeEpa": 4200,
+     "fpt": 19700,
+     "fph": 3600,
+     "ensemble": 35100
+    },
+    "evolutionsAnnuellesPct": {
+     "2021": 28.4,
+     "2022": 18.6,
+     "2023": 12.2,
+     "2024": 3.5
+    },
+    "effectifFin2023Derive": {
+     "valeur": 33900,
+     "note": "35 100 − 1 200, d'après « + 1 200 apprentis, soit + 3,5 % »"
+    },
+    "nouveauxContrats2025": {
+     "valeur": 21450,
+     "citation": "En 2025, 21 450 nouveaux contrats d’apprentissage ont débuté dans la fonction publique, soit 11,5 % de moins"
+    },
+    "citation": "Fin 2024, 35 100 apprentis se forment dans la fonction publique, soit une nouvelle hausse (+ 1 200 apprentis, soit + 3,5 %) par rapport à fin 2023, moins forte que celle des années précédentes (+ 12,2 % en 2023, + 18,6 % en 2022 et + 28,4 % en 2021)",
+    "note": "Part du public ≈ 35 100 / 1 049 965 = 3,3 % (deux sources de champ différent ; ordre de grandeur seulement). Avant 2021 : non lu."
+   }
+  },
+  "remunerationDesApprentis": {
+   "source": "Service-Public (Entreprendre), fiche « Contrat d'apprentissage », tableau « Rémunération brute mensuelle minimale d'un apprenti », vérifiée le 08 septembre 2026",
+   "url": "https://entreprendre.service-public.gouv.fr/vosdroits/F2918",
+   "date": "2026-11-21",
+   "fiabilite": "primaire (information administrative officielle ; texte : code du travail, articles D. 6222-26 et suivants, non lus)",
+   "unite": "% du Smic",
+   "smicMensuelBrutDeLaPage": 1867.02,
+   "grille": {
+    "annee1": {
+     "de16a17": 27,
+     "de18a20": 43,
+     "de21a25": 53,
+     "de26ouPlus": 100
+    },
+    "annee2": {
+     "de16a17": 39,
+     "de18a20": 51,
+     "de21a25": 61,
+     "de26ouPlus": 100
+    },
+    "annee3": {
+     "de16a17": 55,
+     "de18a20": 67,
+     "de21a25": 78,
+     "de26ouPlus": 100
+    }
+   },
+   "montantsMensuelsEuros": {
+    "annee1": {
+     "de16a17": 504.09,
+     "de18a20": 802.82,
+     "de21a25": 989.52
+    },
+    "annee2": {
+     "de16a17": 728.14,
+     "de18a20": 952.18,
+     "de21a25": 1138.88
+    },
+    "annee3": {
+     "de16a17": 1026.86,
+     "de18a20": 1250.9,
+     "de21a25": 1456.27
+    }
+   },
+   "notes": [
+    "21-25 ans : le plus élevé entre le % du Smic et le même % du salaire minimum conventionnel ; 26 ans et plus : le plus élevé entre le Smic et le minimum conventionnel.",
+    "« Les jeunes apprentis de moins de 16 ans bénéficient d'une rémunération identique à celle prévue pour les apprentis âgés de 16 à 17 ans. »",
+    "« L'apprenti préparant une licence professionnelle en 1 an bénéficie d'une rémunération correspondant à une 2e année de contrat. »",
+    "Grille en vigueur à la date de la page ; la grille antérieure (contrats conclus avant 2019) et son historique ne sont pas lus (voir manquants). Rémunération moyenne observée : non trouvée."
+   ]
+  },
+  "trimestresDesApprentis": {
+   "source": "Assemblée nationale, réponse ministérielle à la question écrite n° 64729 (14e législature), publiée au JO le 30 août 2016, p. 7649",
+   "url": "https://www.assemblee-nationale.fr/dyn/14/questions/QANR5L14QE64729.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire (réponse ministérielle) ; textes non lus : loi n° 2014-40 du 20 janvier 2014, décret n° 2014-1514 du 16 décembre 2014, décret n° 2015-14 du 8 janvier 2015",
+   "avant2014": {
+    "regle": "Droit commun appliqué à une assiette forfaitaire : un trimestre par tranche de 200 Smic horaires de salaire soumis à cotisation ; l'assiette forfaitaire des apprentis ne permettait pas en pratique de valider un trimestre par trimestre travaillé.",
+    "citation": "le montant de l'assiette soumise à cotisation des apprentis ne leur permettait pas de valider, en pratique, un trimestre à chaque trimestre travaillé et ne couvrait donc pas la totalité de la période d'apprentissage",
+    "avantLe1erJuillet1972": "pas d'obligation de rémunération ; régularisation de cotisations arriérées admise (lettre ministérielle du 23 septembre 1999)"
+   },
+   "depuis2014": {
+    "regle": "Autant de trimestres validés que de trimestres passés en apprentissage, quelle que soit la rémunération (validation complémentaire) ; seuil de droit commun abaissé à 150 Smic horaires par trimestre.",
+    "citation": "A compter de l'année 2014 incluse, les apprentis valident donc un nombre de trimestres de retraite correspondant aux nombres de trimestres passés en apprentissage, et ce quelle que soit leur rémunération ou leur année d'apprentissage."
+   },
+   "rachatAide": {
+    "periodes": "apprentissage accompli entre le 1er juillet 1972 et le 31 décembre 2013",
+    "citation": "il fixe le montant de ce rachat aidé, par trimestre, au taux de cotisations du régime général, rapporté à 75% du plafond trimestriel de la sécurité sociale. En 2015, ce rachat aidé a été fixé à environ 1 660 € le trimestre",
+    "carriereLongue": "trimestres rachetés non pris en compte pour la retraite anticipée"
+   },
+   "nonLu": "Montant de l'assiette forfaitaire avant 2014 (en % du Smic par âge et année) et nombre de trimestres effectivement validés par un apprenti type avant 2014 : voir manquants. Une autre réponse ministérielle (résumé de recherche, non ouverte) daterait la mesure du 1er janvier 2015 : à trancher sur le décret."
+  },
+  "tauxDEmploiDesJeunes1975_2025": {
+   "source": "Insee, « Activité, emploi et chômage en 2025 et en séries longues » (Insee Résultats, paru le 02/07/2026), tableau T207 « Taux d'emploi en pourcentage par sexe et âge quinquennal, en moyenne annuelle »",
+   "url": "https://www.insee.fr/fr/statistiques/8977303?sommaire=8977323",
+   "urlDonnees": "https://www.insee.fr/fr/statistiques/fichier/8977303/EEC_T207.xlsx",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "% (emploi au sens du BIT, moyenne annuelle)",
+   "champ": "France, personnes de 15 ans ou plus, vivant en logement ordinaire",
+   "citation": "Note : données de 1975 à 2025, corrigées pour les ruptures de série",
+   "note": "Tranches publiées : 15-19 et 20-24 (pas de 15-17 / 18-19, pas d'âge détaillé). Les apprentis et les emplois d'été sont comptés en emploi s'ils travaillent la semaine de référence. 25-29 ans ajouté pour le raccord.",
+   "valeurs": {
+    "femmes": {
+     "de15a24": {
+      "1975": 46.9,
+      "1976": 46.2,
+      "1977": 45.2,
+      "1978": 43.8,
+      "1979": 42.8,
+      "1980": 40.5,
+      "1981": 38.7,
+      "1982": 38.1,
+      "1983": 37.2,
+      "1984": 34.9,
+      "1985": 34.7,
+      "1986": 35.2,
+      "1987": 34.7,
+      "1988": 33.2,
+      "1989": 33.2,
+      "1990": 32.1,
+      "1991": 29.9,
+      "1992": 28.7,
+      "1993": 27.1,
+      "1994": 25.1,
+      "1995": 25.1,
+      "1996": 24.1,
+      "1997": 23.2,
+      "1998": 24.2,
+      "1999": 24.0,
+      "2000": 26.8,
+      "2001": 27.1,
+      "2002": 27.2,
+      "2003": 27.0,
+      "2004": 26.5,
+      "2005": 26.1,
+      "2006": 25.6,
+      "2007": 27.3,
+      "2008": 27.6,
+      "2009": 27.4,
+      "2010": 26.1,
+      "2011": 25.7,
+      "2012": 25.1,
+      "2013": 24.7,
+      "2014": 25.1,
+      "2015": 25.5,
+      "2016": 25.5,
+      "2017": 25.9,
+      "2018": 26.8,
+      "2019": 27.4,
+      "2020": 26.0,
+      "2021": 30.6,
+      "2022": 33.2,
+      "2023": 33.4,
+      "2024": 32.1,
+      "2025": 31.8
+     },
+     "de15a19": {
+      "1975": 30.0,
+      "1976": 28.1,
+      "1977": 27.0,
+      "1978": 23.8,
+      "1979": 23.2,
+      "1980": 20.5,
+      "1981": 18.5,
+      "1982": 17.3,
+      "1983": 16.8,
+      "1984": 13.9,
+      "1985": 13.5,
+      "1986": 14.2,
+      "1987": 13.8,
+      "1988": 13.6,
+      "1989": 12.7,
+      "1990": 11.0,
+      "1991": 8.9,
+      "1992": 8.4,
+      "1993": 7.4,
+      "1994": 6.0,
+      "1995": 5.8,
+      "1996": 5.5,
+      "1997": 5.6,
+      "1998": 6.3,
+      "1999": 6.6,
+      "2000": 8.1,
+      "2001": 8.5,
+      "2002": 8.1,
+      "2003": 8.2,
+      "2004": 8.5,
+      "2005": 8.6,
+      "2006": 8.6,
+      "2007": 9.2,
+      "2008": 9.3,
+      "2009": 9.0,
+      "2010": 8.4,
+      "2011": 8.8,
+      "2012": 8.0,
+      "2013": 8.0,
+      "2014": 7.9,
+      "2015": 7.6,
+      "2016": 8.2,
+      "2017": 8.3,
+      "2018": 8.7,
+      "2019": 9.4,
+      "2020": 8.3,
+      "2021": 10.6,
+      "2022": 12.4,
+      "2023": 12.3,
+      "2024": 11.5,
+      "2025": 11.9
+     },
+     "de20a24": {
+      "1975": 64.3,
+      "1976": 64.8,
+      "1977": 63.8,
+      "1978": 63.6,
+      "1979": 62.9,
+      "1980": 61.5,
+      "1981": 59.5,
+      "1982": 59.1,
+      "1983": 57.9,
+      "1984": 56.1,
+      "1985": 56.0,
+      "1986": 56.0,
+      "1987": 55.3,
+      "1988": 53.0,
+      "1989": 53.6,
+      "1990": 53.4,
+      "1991": 50.5,
+      "1992": 47.7,
+      "1993": 45.0,
+      "1994": 42.1,
+      "1995": 42.5,
+      "1996": 41.5,
+      "1997": 40.6,
+      "1998": 42.3,
+      "1999": 42.2,
+      "2000": 46.2,
+      "2001": 46.0,
+      "2002": 46.3,
+      "2003": 45.6,
+      "2004": 44.4,
+      "2005": 43.6,
+      "2006": 42.6,
+      "2007": 45.3,
+      "2008": 45.7,
+      "2009": 45.1,
+      "2010": 43.1,
+      "2011": 41.9,
+      "2012": 41.4,
+      "2013": 40.9,
+      "2014": 42.3,
+      "2015": 43.9,
+      "2016": 43.7,
+      "2017": 44.8,
+      "2018": 46.3,
+      "2019": 46.8,
+      "2020": 44.9,
+      "2021": 51.9,
+      "2022": 55.4,
+      "2023": 55.9,
+      "2024": 54.0,
+      "2025": 53.4
+     },
+     "de25a29": {
+      "1975": 62.4,
+      "1976": 63.2,
+      "1977": 65.4,
+      "1978": 66.0,
+      "1979": 67.5,
+      "1980": 66.9,
+      "1981": 66.5,
+      "1982": 66.4,
+      "1983": 67.6,
+      "1984": 68.1,
+      "1985": 67.2,
+      "1986": 69.0,
+      "1987": 68.5,
+      "1988": 69.2,
+      "1989": 69.0,
+      "1990": 70.5,
+      "1991": 71.1,
+      "1992": 71.0,
+      "1993": 70.5,
+      "1994": 70.8,
+      "1995": 70.6,
+      "1996": 70.0,
+      "1997": 69.8,
+      "1998": 70.2,
+      "1999": 71.5,
+      "2000": 73.7,
+      "2001": 73.7,
+      "2002": 74.9,
+      "2003": 74.0,
+      "2004": 73.4,
+      "2005": 73.9,
+      "2006": 74.8,
+      "2007": 74.5,
+      "2008": 74.7,
+      "2009": 74.2,
+      "2010": 74.2,
+      "2011": 72.7,
+      "2012": 71.8,
+      "2013": 72.0,
+      "2014": 71.4,
+      "2015": 70.5,
+      "2016": 72.0,
+      "2017": 72.1,
+      "2018": 73.2,
+      "2019": 74.3,
+      "2020": 72.9,
+      "2021": 74.4,
+      "2022": 75.3,
+      "2023": 75.0,
+      "2024": 75.8,
+      "2025": 75.0
+     }
+    },
+    "hommes": {
+     "de15a24": {
+      "1975": 60.4,
+      "1976": 59.3,
+      "1977": 57.7,
+      "1978": 56.6,
+      "1979": 56.3,
+      "1980": 55.2,
+      "1981": 52.8,
+      "1982": 52.2,
+      "1983": 51.0,
+      "1984": 47.2,
+      "1985": 46.5,
+      "1986": 46.5,
+      "1987": 45.8,
+      "1988": 43.7,
+      "1989": 43.6,
+      "1990": 41.7,
+      "1991": 39.5,
+      "1992": 38.6,
+      "1993": 35.5,
+      "1994": 33.6,
+      "1995": 33.9,
+      "1996": 33.4,
+      "1997": 31.9,
+      "1998": 32.1,
+      "1999": 32.8,
+      "2000": 35.0,
+      "2001": 35.2,
+      "2002": 35.2,
+      "2003": 35.2,
+      "2004": 34.6,
+      "2005": 34.5,
+      "2006": 34.1,
+      "2007": 34.8,
+      "2008": 35.0,
+      "2009": 33.3,
+      "2010": 33.8,
+      "2011": 33.1,
+      "2012": 31.6,
+      "2013": 31.7,
+      "2014": 30.8,
+      "2015": 31.1,
+      "2016": 31.0,
+      "2017": 32.1,
+      "2018": 33.3,
+      "2019": 32.4,
+      "2020": 31.5,
+      "2021": 33.8,
+      "2022": 36.0,
+      "2023": 36.5,
+      "2024": 36.6,
+      "2025": 37.0
+     },
+     "de15a19": {
+      "1975": 38.1,
+      "1976": 36.6,
+      "1977": 34.4,
+      "1978": 33.0,
+      "1979": 33.4,
+      "1980": 32.0,
+      "1981": 29.4,
+      "1982": 29.1,
+      "1983": 26.7,
+      "1984": 23.2,
+      "1985": 22.6,
+      "1986": 21.9,
+      "1987": 21.6,
+      "1988": 19.7,
+      "1989": 19.2,
+      "1990": 18.3,
+      "1991": 16.5,
+      "1992": 14.7,
+      "1993": 12.9,
+      "1994": 10.6,
+      "1995": 11.3,
+      "1996": 11.8,
+      "1997": 11.2,
+      "1998": 12.5,
+      "1999": 13.1,
+      "2000": 14.5,
+      "2001": 14.5,
+      "2002": 14.5,
+      "2003": 15.1,
+      "2004": 14.2,
+      "2005": 15.3,
+      "2006": 14.8,
+      "2007": 16.2,
+      "2008": 15.7,
+      "2009": 14.1,
+      "2010": 14.8,
+      "2011": 13.3,
+      "2012": 12.2,
+      "2013": 12.4,
+      "2014": 11.8,
+      "2015": 11.6,
+      "2016": 11.8,
+      "2017": 13.2,
+      "2018": 13.7,
+      "2019": 13.1,
+      "2020": 13.1,
+      "2021": 14.8,
+      "2022": 16.8,
+      "2023": 17.3,
+      "2024": 15.9,
+      "2025": 17.1
+     },
+     "de20a24": {
+      "1975": 83.5,
+      "1976": 83.2,
+      "1977": 82.4,
+      "1978": 81.1,
+      "1979": 81.0,
+      "1980": 80.5,
+      "1981": 78.3,
+      "1982": 76.8,
+      "1983": 77.2,
+      "1984": 72.5,
+      "1985": 71.4,
+      "1986": 71.7,
+      "1987": 71.4,
+      "1988": 69.0,
+      "1989": 69.3,
+      "1990": 66.1,
+      "1991": 63.3,
+      "1992": 62.2,
+      "1993": 57.1,
+      "1994": 55.0,
+      "1995": 55.2,
+      "1996": 54.7,
+      "1997": 53.6,
+      "1998": 53.1,
+      "1999": 54.0,
+      "2000": 57.2,
+      "2001": 57.2,
+      "2002": 56.8,
+      "2003": 56.1,
+      "2004": 56.0,
+      "2005": 54.7,
+      "2006": 54.4,
+      "2007": 54.5,
+      "2008": 55.2,
+      "2009": 52.9,
+      "2010": 53.0,
+      "2011": 53.0,
+      "2012": 51.0,
+      "2013": 51.3,
+      "2014": 50.7,
+      "2015": 52.1,
+      "2016": 52.1,
+      "2017": 53.3,
+      "2018": 55.4,
+      "2019": 54.2,
+      "2020": 51.9,
+      "2021": 54.8,
+      "2022": 57.1,
+      "2023": 57.6,
+      "2024": 59.6,
+      "2025": 59.3
+     },
+     "de25a29": {
+      "1975": 93.4,
+      "1976": 93.7,
+      "1977": 93.1,
+      "1978": 92.8,
+      "1979": 92.4,
+      "1980": 92.0,
+      "1981": 89.9,
+      "1982": 89.7,
+      "1983": 89.3,
+      "1984": 88.1,
+      "1985": 87.2,
+      "1986": 87.0,
+      "1987": 87.5,
+      "1988": 87.2,
+      "1989": 88.0,
+      "1990": 86.9,
+      "1991": 86.3,
+      "1992": 84.9,
+      "1993": 83.3,
+      "1994": 82.8,
+      "1995": 83.0,
+      "1996": 82.0,
+      "1997": 80.9,
+      "1998": 81.4,
+      "1999": 81.6,
+      "2000": 84.2,
+      "2001": 85.1,
+      "2002": 83.5,
+      "2003": 81.6,
+      "2004": 81.9,
+      "2005": 81.5,
+      "2006": 82.1,
+      "2007": 82.4,
+      "2008": 83.7,
+      "2009": 80.8,
+      "2010": 80.1,
+      "2011": 79.3,
+      "2012": 77.8,
+      "2013": 77.0,
+      "2014": 76.5,
+      "2015": 76.5,
+      "2016": 77.3,
+      "2017": 77.9,
+      "2018": 77.6,
+      "2019": 77.8,
+      "2020": 76.5,
+      "2021": 80.2,
+      "2022": 81.6,
+      "2023": 81.9,
+      "2024": 81.2,
+      "2025": 79.7
+     }
+    },
+    "ensemble": {
+     "de15a24": {
+      "1975": 53.7,
+      "1976": 52.8,
+      "1977": 51.5,
+      "1978": 50.2,
+      "1979": 49.6,
+      "1980": 47.9,
+      "1981": 45.8,
+      "1982": 45.2,
+      "1983": 44.2,
+      "1984": 41.1,
+      "1985": 40.7,
+      "1986": 40.9,
+      "1987": 40.3,
+      "1988": 38.5,
+      "1989": 38.5,
+      "1990": 37.0,
+      "1991": 34.7,
+      "1992": 33.7,
+      "1993": 31.4,
+      "1994": 29.4,
+      "1995": 29.5,
+      "1996": 28.8,
+      "1997": 27.6,
+      "1998": 28.2,
+      "1999": 28.4,
+      "2000": 30.9,
+      "2001": 31.2,
+      "2002": 31.2,
+      "2003": 31.1,
+      "2004": 30.6,
+      "2005": 30.3,
+      "2006": 29.9,
+      "2007": 31.1,
+      "2008": 31.3,
+      "2009": 30.3,
+      "2010": 30.0,
+      "2011": 29.4,
+      "2012": 28.4,
+      "2013": 28.2,
+      "2014": 28.0,
+      "2015": 28.3,
+      "2016": 28.3,
+      "2017": 29.0,
+      "2018": 30.1,
+      "2019": 29.9,
+      "2020": 28.8,
+      "2021": 32.2,
+      "2022": 34.6,
+      "2023": 34.9,
+      "2024": 34.4,
+      "2025": 34.5
+     },
+     "de15a19": {
+      "1975": 34.1,
+      "1976": 32.4,
+      "1977": 30.8,
+      "1978": 28.5,
+      "1979": 28.4,
+      "1980": 26.3,
+      "1981": 24.0,
+      "1982": 23.3,
+      "1983": 21.9,
+      "1984": 18.7,
+      "1985": 18.2,
+      "1986": 18.1,
+      "1987": 17.8,
+      "1988": 16.7,
+      "1989": 16.0,
+      "1990": 14.7,
+      "1991": 12.8,
+      "1992": 11.6,
+      "1993": 10.2,
+      "1994": 8.4,
+      "1995": 8.6,
+      "1996": 8.7,
+      "1997": 8.5,
+      "1998": 9.5,
+      "1999": 9.9,
+      "2000": 11.4,
+      "2001": 11.6,
+      "2002": 11.3,
+      "2003": 11.7,
+      "2004": 11.4,
+      "2005": 12.0,
+      "2006": 11.7,
+      "2007": 12.8,
+      "2008": 12.6,
+      "2009": 11.6,
+      "2010": 11.7,
+      "2011": 11.1,
+      "2012": 10.2,
+      "2013": 10.3,
+      "2014": 9.9,
+      "2015": 9.6,
+      "2016": 10.1,
+      "2017": 10.8,
+      "2018": 11.3,
+      "2019": 11.3,
+      "2020": 10.8,
+      "2021": 12.8,
+      "2022": 14.7,
+      "2023": 14.8,
+      "2024": 13.8,
+      "2025": 14.6
+     },
+     "de20a24": {
+      "1975": 74.0,
+      "1976": 74.0,
+      "1977": 73.1,
+      "1978": 72.3,
+      "1979": 71.8,
+      "1980": 71.0,
+      "1981": 68.8,
+      "1982": 67.9,
+      "1983": 67.5,
+      "1984": 64.3,
+      "1985": 63.7,
+      "1986": 63.8,
+      "1987": 63.3,
+      "1988": 60.9,
+      "1989": 61.4,
+      "1990": 59.8,
+      "1991": 56.9,
+      "1992": 54.9,
+      "1993": 51.0,
+      "1994": 48.5,
+      "1995": 48.8,
+      "1996": 48.1,
+      "1997": 47.1,
+      "1998": 47.7,
+      "1999": 48.1,
+      "2000": 51.7,
+      "2001": 51.6,
+      "2002": 51.5,
+      "2003": 50.8,
+      "2004": 50.1,
+      "2005": 49.0,
+      "2006": 48.4,
+      "2007": 49.8,
+      "2008": 50.4,
+      "2009": 48.9,
+      "2010": 48.0,
+      "2011": 47.4,
+      "2012": 46.2,
+      "2013": 46.0,
+      "2014": 46.4,
+      "2015": 48.0,
+      "2016": 47.9,
+      "2017": 49.0,
+      "2018": 50.9,
+      "2019": 50.5,
+      "2020": 48.4,
+      "2021": 53.4,
+      "2022": 56.3,
+      "2023": 56.8,
+      "2024": 56.8,
+      "2025": 56.4
+     },
+     "de25a29": {
+      "1975": 78.0,
+      "1976": 78.7,
+      "1977": 79.4,
+      "1978": 79.4,
+      "1979": 80.0,
+      "1980": 79.5,
+      "1981": 78.2,
+      "1982": 78.0,
+      "1983": 78.4,
+      "1984": 78.0,
+      "1985": 77.1,
+      "1986": 77.9,
+      "1987": 78.0,
+      "1988": 78.1,
+      "1989": 78.4,
+      "1990": 78.7,
+      "1991": 78.6,
+      "1992": 77.9,
+      "1993": 76.9,
+      "1994": 76.7,
+      "1995": 76.8,
+      "1996": 76.0,
+      "1997": 75.3,
+      "1998": 75.7,
+      "1999": 76.5,
+      "2000": 78.9,
+      "2001": 79.3,
+      "2002": 79.1,
+      "2003": 77.7,
+      "2004": 77.6,
+      "2005": 77.6,
+      "2006": 78.4,
+      "2007": 78.4,
+      "2008": 79.1,
+      "2009": 77.4,
+      "2010": 77.1,
+      "2011": 75.9,
+      "2012": 74.8,
+      "2013": 74.4,
+      "2014": 73.9,
+      "2015": 73.4,
+      "2016": 74.6,
+      "2017": 74.9,
+      "2018": 75.3,
+      "2019": 76.0,
+      "2020": 74.7,
+      "2021": 77.3,
+      "2022": 78.4,
+      "2023": 78.4,
+      "2024": 78.5,
+      "2025": 77.3
+     }
+    }
+   }
+  },
+  "cotisantsAgircArrcoParAge2024": {
+   "source": "Agirc-Arrco, « chiffrAA 2026 », annexe « Répartition par âge des cotisants au 31/12/2024 – Ensemble des cotisants », p. 146 (base salaires de la direction technique)",
+   "url": "https://www.agirc-arrco.fr/storage/chiffrAA_2026_VF.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "unite": "cotisants",
+   "champ": "Cotisants Agirc-Arrco à temps complet ou à temps partiel, présents en fin d'année (hors Ircem)",
+   "total": {
+    "hommes": 11064259,
+    "femmes": 8995476,
+    "ensemble": 20059735,
+    "ageMoyen": {
+     "hommes": 40.3,
+     "femmes": 40.2,
+     "ensemble": 40.2
+    }
+   },
+   "moinsDe25AnsCalcule": {
+    "hommes": 1536630,
+    "femmes": 1236070,
+    "ensemble": 2772700,
+    "partPct": 13.8,
+    "note": "somme des âges ≤ 16 à 24 ans, calculée ici"
+   },
+   "parAge": {
+    "16ouMoins": {
+     "generation": "Après 2007",
+     "hommes": 73835,
+     "femmes": 28334,
+     "ensemble": 102169,
+     "partPct": 0.5
+    },
+    "17": {
+     "generation": "2007",
+     "hommes": 64527,
+     "femmes": 33872,
+     "ensemble": 98399,
+     "partPct": 0.5
+    },
+    "18": {
+     "generation": "2006",
+     "hommes": 120103,
+     "femmes": 84936,
+     "ensemble": 205039,
+     "partPct": 1.0
+    },
+    "19": {
+     "generation": "2005",
+     "hommes": 156980,
+     "femmes": 128309,
+     "ensemble": 285289,
+     "partPct": 1.4
+    },
+    "20": {
+     "generation": "2004",
+     "hommes": 188481,
+     "femmes": 158703,
+     "ensemble": 347184,
+     "partPct": 1.7
+    },
+    "21": {
+     "generation": "2003",
+     "hommes": 210233,
+     "femmes": 179932,
+     "ensemble": 390165,
+     "partPct": 1.9
+    },
+    "22": {
+     "generation": "2002",
+     "hommes": 229116,
+     "femmes": 198218,
+     "ensemble": 427334,
+     "partPct": 2.1
+    },
+    "23": {
+     "generation": "2001",
+     "hommes": 240181,
+     "femmes": 207153,
+     "ensemble": 447334,
+     "partPct": 2.2
+    },
+    "24": {
+     "generation": "2000",
+     "hommes": 253174,
+     "femmes": 216613,
+     "ensemble": 469787,
+     "partPct": 2.3
+    },
+    "25": {
+     "generation": "1999",
+     "hommes": 250156,
+     "femmes": 213721,
+     "ensemble": 463877,
+     "partPct": 2.3
+    },
+    "26": {
+     "generation": "1998",
+     "hommes": 253735,
+     "femmes": 215305,
+     "ensemble": 469040,
+     "partPct": 2.3
+    },
+    "27": {
+     "generation": "1997",
+     "hommes": 254244,
+     "femmes": 213722,
+     "ensemble": 467966,
+     "partPct": 2.3
+    },
+    "28": {
+     "generation": "1996",
+     "hommes": 256547,
+     "femmes": 214548,
+     "ensemble": 471095,
+     "partPct": 2.3
+    },
+    "29": {
+     "generation": "1995",
+     "hommes": 255212,
+     "femmes": 212756,
+     "ensemble": 467968,
+     "partPct": 2.3
+    }
+   },
+   "limite": "Stock de fin d'année : ne compte pas les jeunes ayant cotisé dans l'année sans être présents au 31 décembre (emplois d'été, contrats courts). Âges 30 à 70 ans et tableaux cadres / non-cadres disponibles p. 146-148, non recopiés."
+  }
+ },
+ "militaires": {
+  "conditionsDeLiquidation": {
+   "liquidationImmediate": {
+    "source": "Service des retraites de l'État, page « L'ouverture des droits à retraite et l'âge légal de départ » (militaires) ; ministère des Armées, fiche « La pension de retraite des militaires » ; Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III.3, p. 136",
+    "url": "https://retraitesdeletat.gouv.fr/actif/les-specificites-des-militaires/louverture-des-droits-retraite-et-lage-legal-de-depart",
+    "urls": [
+     "https://retraitesdeletat.gouv.fr/actif/les-specificites-des-militaires/louverture-des-droits-retraite-et-lage-legal-de-depart",
+     "https://prod-site-internet-minarm-admin.cloud.defense.gouv.fr/sites/default/files/sga/La%20pension%20de%20retraite%20des%20militaires.pdf",
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "texte": "CPCMR, article L. 24-II (non lu sur Légifrance)",
+    "dureeDeServicesAns": {
+     "nonOfficiers": 17,
+     "militairesCommissionnes": 17,
+     "officiersSousContrat": 20,
+     "officiersDeCarriere": 27
+    },
+    "citation": "Pour les officiers : si 27 ans de services effectifs, ou à 52 ans, Pour les militaires non officiers : si 17 ans de services effectifs, ou à 52 ans, Pour les officiers sous contrat ou militaires commissionnés : si 20 ans de contrat (ou à 52 ans) pour les uns ou 17 ans de services (ou à 52 ans) pour les autres.",
+    "tableauMinarm": {
+     "nonOfficiers": {
+      "differeeAgeLegal": "entre 2 et 15 ans de services (entrés à partir du 1er janvier 2014)",
+      "differee54Ans": "entre 15 et 17 ans de services",
+      "immediate": "à partir de 17 ans de services"
+     },
+     "officiersSousContrat": {
+      "differeeAgeLegal": "entre 2 et 15 ans",
+      "differee54Ans": "entre 15 et 20 ans",
+      "immediate": "à partir de 20 ans"
+     },
+     "officiersDeCarriere": {
+      "differeeAgeLegal": "entre 2 et 15 ans",
+      "differee54Ans": "entre 15 et 27 ans",
+      "immediate": "à partir de 27 ans"
+     }
+    },
+    "sansConditionDeDuree": [
+     "radiation des cadres par limite d'âge (carrière) ou limite de durée de services (contrat)",
+     "radiation par suite d'infirmités",
+     "parent d'un enfant invalide à 80 % ou conjoint infirme, avec quinze ans de services",
+     "officiers généraux en deuxième section à compter de 67 ans"
+    ],
+    "militairesDuRang": "Les militaires du rang sont des non-officiers : 17 ans. Ils servent exclusivement sous contrat (HCECM)."
+   },
+   "avantEtApresLaReformeDe2010": {
+    "source": "Assemblée nationale, réponse ministérielle à la question écrite n° 10039 (14e législature), publiée au JO le 31 mars 2015, p. 2494",
+    "url": "https://www.assemblee-nationale.fr/dyn/14/questions/QANR5L14QE10039.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire (réponse ministérielle ; loi n° 2010-1330 et décret n° 2011-2103 non lus)",
+    "avant": {
+     "officiers": 25,
+     "nonOfficiers": 15
+    },
+    "apres": {
+     "officiers": 27,
+     "nonOfficiers": 17
+    },
+    "citation": "Cette réforme s'applique aux pensions prenant effet à compter du 1er juillet 2011 et a fait passer la durée de services exigible pour une liquidation de pension immédiate, pour les officiers, de 25 ans de services effectifs à 27 ans, et, pour les non-officiers, de 15 ans de services effectifs à 17 ans.",
+    "monteeEnCharge": {
+     "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III, p. 101 (texte écrit pour la catégorie active, « dans les mêmes conditions » ; la réponse ministérielle confirme « progressivement puis, à compter de 2015 » pour les militaires)",
+     "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "citation": "+4 mois pour les fonctionnaires qui atteignent entre le 1er juillet et le 31 décembre 2011 la durée requise antérieurement, puis +5 mois par génération pour les fonctionnaires qui atteignent cette durée à compter de 2012). Ainsi, depuis le 1er janvier 2015, elles sont de 12 ans lorsqu’elles étaient de 10 ans, de 17 ans lorsqu’elles étaient de 15 ans et de 27 ans lorsqu’elles étaient de 25 ans",
+     "incertitude": "Le calendrier exact appliqué aux militaires (année par année) et la durée exigée des officiers sous contrat avant 2010 ne sont pas lus dans un texte : voir manquants."
+    },
+    "reforme2023": "La LFRSS 2023 ne relève pas les durées de services de 17 et 27 ans ; elle relève l'âge des pensions différées (52 → 54 ans avec au moins 15 ans de services ; 62 → 64 ans en deçà), relèvement suspendu pour les pensions prenant effet à compter du 1er septembre 2026 (SRE)."
+   },
+   "clauseDeStage": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, fiche de synthèse du régime de la FPE et partie V « La réforme des retraites de 2014 »",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "regle": "Durée minimale de services pour une pension militaire : 15 ans pour les militaires engagés avant 2014, 2 ans ensuite (article 42 de la loi du 20 janvier 2014) ; en deçà, affiliation rétroactive à la Cnav et à l'Ircantec.",
+    "citation": "La réduction de la clause de stage […] des militaires de 15 ans à 2 ans pour les militaires engagés à compter du 1 er janvier 2014, par l’article 42 de la loi du 20 janvier 2014."
+   },
+   "limitesDAge": {
+    "source": "Service des retraites de l'État, page « La limite d'âge des militaires »",
+    "url": "https://retraitesdeletat.gouv.fr/actif/les-specificites-des-militaires/la-limite-dage-des-militaires",
+    "date": "2026-11-21",
+    "fiabilite": "primaire (reprise du tableau de l’article L. 4139-16 du code de la défense, non lu sur Légifrance)",
+    "unite": "ans",
+    "officiers": {
+     "colonnes": [
+      "officiersSubalternes",
+      "commandant",
+      "lieutenantColonel",
+      "colonel"
+     ],
+     "armesTerreMarineBasesEtMecaniciensAir": [
+      59,
+      59,
+      59,
+      59
+     ],
+     "gendarmerie": [
+      59,
+      59,
+      59,
+      60
+     ],
+     "officiersDeLAir": [
+      52,
+      52,
+      56,
+      56
+     ],
+     "commissairesCorpsTechniquesIngenieursMilitaires": [
+      62,
+      62,
+      62,
+      62
+     ],
+     "medecinsPharmaciensVeterinairesDentistes": [
+      62,
+      62,
+      62,
+      62
+     ],
+     "infirmiersEtTechniciensDesHopitauxOfficiers": [
+      62,
+      62,
+      62,
+      62
+     ],
+     "ingenieursDeLArmementEtAssimiles": [
+      66,
+      66,
+      66,
+      66
+     ],
+     "greffiersChefsDeMusiqueAumoniers": [
+      66,
+      66,
+      66,
+      66
+     ]
+    },
+    "sousOfficiers": {
+     "colonnes": [
+      "sergent",
+      "sergentChef",
+      "adjudant",
+      "adjudantChef",
+      "major"
+     ],
+     "carriereTerreMarineAirNonNavigant": [
+      47,
+      47,
+      52,
+      58,
+      59
+     ],
+     "gendarmerie": [
+      58,
+      58,
+      58,
+      58,
+      59
+     ],
+     "personnelNavigantAir": [
+      47,
+      47,
+      47,
+      52,
+      52
+     ],
+     "infirmiersEnSoinsGenerauxEtSpecialises": [
+      62,
+      62,
+      62,
+      62,
+      62
+     ],
+     "autresInfirmiersTechniciensMajorsDesPorts": [
+      59,
+      59,
+      59,
+      59,
+      59
+     ],
+     "serviceDesEssences": [
+      null,
+      null,
+      62,
+      62,
+      62
+     ],
+     "musiciensMaitresOuvriersGreffiers": [
+      66,
+      66,
+      66,
+      66,
+      66
+     ]
+    },
+    "generaux": {
+     "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, encadré sur la loi du 13 juillet 2018, p. 137",
+     "citation": "la limite d’âge des généraux est égale à celle des colonels ; […] la limite d’âge des généraux de l’air […] sera progressivement portée de 56 à 59 ans, à compter du 1er janvier 2019"
+    },
+    "militairesSousContrat": "Pas de limite d'âge de grade mais une limite de durée de services (20 ans pour les officiers sous contrat, 17 ans pour les commissionnés selon le SRE ; limite des militaires du rang non lue).",
+    "note": "Le tableau du SRE ne donne pas l'historique des limites d'âge (relèvement de deux ans après 2010) : voir manquants."
+   }
+  },
+  "formule": {
+   "calcul": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III.3, « 2) Le calcul de la pension », p. 136-137 ; HCECM, Revue annuelle 2025, p. 166-167",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "urls": [
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "identiqueAuxCivils": true,
+    "citation": "Le calcul de la pension des militaires est identique à celui des fonctionnaires civils, à savoir pour une carrière complète, 75 % de la solde correspondant au grade détenu depuis 6 mois au moins avant le départ en retraite.",
+    "formuleHcecm": "indice majoré (> 6 mois) × valeur du point d'indice × 75 % × durée liquidable / durée de référence × coefficient de décote + accessoires",
+    "tauxMaximal": {
+     "servicesSeuls": 75,
+     "avecBonifications": 80,
+     "citation": "Le pourcentage maximum de la pension est fixé à 75 % des émoluments de base pour les pensions rémunérant seulement les services et à 80 % avec l’ajout des bonifications (article L12 du CPCMR)."
+    },
+    "primes": "« Excepté les accessoires de pension et l’indemnité de sujétions spéciales de police (ISSP), aucune prime ou indemnité n’est prise en compte dans le calcul de la pension. » (HCECM) ; ISSP : gendarmes, à partir de 50 ans (SRE).",
+    "dureeDeReference": "Déterminée par l'année où le militaire atteint la durée de services ouvrant droit à liquidation immédiate (17, 20 ou 27 ans), et non par l'année de naissance (fiche du ministère des Armées). En 2025, 11 % des militaires ont liquidé « dans les conditions antérieures à la réforme de 2003 (durée de référence de 150 trimestres avant, contre 165 après réforme) » (jaune, partie V, « 2) Militaires »)."
+   },
+   "bonificationDuCinquieme": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III.2, p. 125-126 ; SRE, page « Le calcul de la pension » (militaires)",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "urls": [
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "https://retraitesdeletat.gouv.fr/actif/les-specificites-des-militaires/le-calcul-de-la-pension"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "texte": "CPCMR, articles L. 12 i et R. 25-1",
+    "regle": "Une annuité supplémentaire par période de cinq années de services effectifs (un cinquième du temps de service), plafonnée à cinq annuités (20 trimestres).",
+    "condition": "au moins 17 ans de services militaires effectifs, ou radiation des cadres pour invalidité",
+    "plafondTrimestres": 20,
+    "citation": "Une bonification du « cinquième » du temps de service accompli est accordée, dans la limite de 5 années, aux militaires ayant réalisé au moins dix-sept ans de services effectifs ou ayant été rayés des cadres pour invalidité (L.12 i et R. 25-1 du CPCMR).",
+    "reforme2023": "Pensions prenant effet à compter du 1er septembre 2023 : « l’écrêtement de la bonification du cinquième après 60 ans est supprimée » ; bonification accordée aussi à ceux qui ne sont plus militaires à la liquidation ; cumul avec les bonifications du cinquième de la catégorie active dans la limite de cinq annuités (SRE).",
+    "avant2023": "Dégressivité après un certain âge (écrêtement après 60 ans) : barème non lu."
+   },
+   "autresBonifications": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie III.2, p. 124-125, tableau 49 ; SRE ; fiche du ministère des Armées",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "beneficesDeCampagne": {
+     "texte": "CPCMR, article L. 12 c, R. 14 à R. 19",
+     "taux": {
+      "demiCampagne": "1,5 jour retenu pour 1 jour de service",
+      "campagneSimple": "2 jours pour 1",
+      "campagneSimplePlusUnDemi": "cité par le SRE (4 taux)",
+      "campagneDouble": "3 jours pour 1 (opérations de guerre et certaines opérations extérieures)"
+     },
+     "citation": "Les opérations de guerre donnent droit à la campagne double : une année de services accomplis en opérations de guerre donne droit à deux années de bonifications et compte donc triple pour la retraite.",
+     "territoires": "Pas de bonification : service en Europe ; demi-campagne : troupes d'occupation en Europe, ports du bassin méditerranéen, Égypte, Japon, Amérique (hors Guyane), Océanie ; campagne simple : militaires envoyés hors d'Europe (Maghreb, Antilles, Pacifique, Saint-Pierre-et-Miquelon) et autres territoires hors d'Europe (tableau 49, lecture partielle : la mise en page du PDF ne permet pas d'attribuer chaque territoire sans ambiguïté)."
+    },
+    "servicesAeriensOuSousMarins": "Article L. 12 d ; coefficients selon la nature du service ; même barème pour civils et militaires.",
+    "plafondCumul": "« Les durées des bénéfices de campagne et des bonifications services aériens + services sous-marins s’additionnent sans que leur total puisse dépasser le double de la durée effective du service auquel elles se rapportent. » (SRE)",
+    "conditionDe15Ans": "Bonifications de dépaysement, de campagne et de services aériens ou sous-marins réservées aux agents comptant au moins quinze années de services effectifs ou radiés pour invalidité (jaune, note 127).",
+    "beneficesDEtudes": "Bénéfices d'études préliminaires des officiers (article R. 10 ; exemple : 2 ans pour l'École polytechnique).",
+    "pourEnfants": "mêmes conditions que les fonctionnaires civils"
+   },
+   "decote": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, p. 136-137 ; SRE, page « Le calcul de la pension » ; HCECM, Revue annuelle 2025, p. 166",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "urls": [
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "https://retraitesdeletat.gouv.fr/actif/les-specificites-des-militaires/le-calcul-de-la-pension",
+     "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "texte": "CPCMR, article L. 14",
+    "carriereLongue": {
+     "champ": "limite d'âge ≥ 57 ans et départ à 52 ans ou plus (54 ans à terme selon le jaune : « AOD abaissé de 10 ans »)",
+     "taux": "1,25 % par trimestre manquant",
+     "plafondTrimestres": 20,
+     "identiqueAuxCivils": true,
+     "tauxHistorique": "1 % en 2013, 1,125 % en 2014, 1,25 % en 2015 et après (selon l'année d'ouverture des droits)"
+    },
+    "carriereCourte": {
+     "champ": "limite d'âge < 57 ans, ou départ avant 52 ans",
+     "taux": "1,25 % par trimestre manquant",
+     "plafondTrimestres": 10,
+     "seuilSansDecoteTrimestres": {
+      "officiersDeCarriere": 118,
+      "officiersSousContrat": 90,
+      "nonOfficiersEtCommissionnes": 78
+     },
+     "seuilSansDecote": {
+      "officiers": "29 ans 6 mois",
+      "nonOfficiers": "19 ans 6 mois",
+      "officiersSousContrat": "22 ans 6 mois",
+      "commissionnes": "19 ans 6 mois"
+     },
+     "calcul": "Nombre de trimestres manquants = le plus petit de (a) durée requise de services selon la catégorie majorée de 10 trimestres − services militaires effectifs, et (b) durée requise pour le taux plein − services et bonifications retenus en liquidation.",
+     "citation": "se voient appliquer une règle plus favorable, dite décote « carrière courte », selon laquelle la décote est de 1,25 % par trimestre mais dans la limite de 10 trimestres"
+    },
+    "exclusions": "Pas de décote en cas d'invalidité ou de pension afférente au grade supérieur ; carrière longue non applicable aux militaires sous contrat, à la limite d'âge, au taux de 75 % ou au minimum garanti (fiche du ministère des Armées).",
+    "desaccordDeLibelle": "Le jaune écrit « 118 trimestres pour les officiers et militaires engagés sous contrat » ; le SRE et le HCECM donnent 29 ans 6 mois (118 trimestres) pour les officiers de carrière, 20 à 22,5 ans pour les officiers sous contrat et 17 à 19,5 ans pour les non-officiers. Lecture retenue : celle du SRE."
+   },
+   "surcote": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, p. 137",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "applicable": false,
+    "citation": "Les militaires ne peuvent pas bénéficier du mécanisme de la surcote."
+   },
+   "minimumGaranti": {
+    "source": "HCECM, Revue annuelle 2025, p. 167 ; Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, partie IV ; réponse ministérielle à la question écrite n° 116211 (13e législature), JO du 25 octobre 2011",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+    "urls": [
+     "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+     "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+     "https://www.assemblee-nationale.fr/dyn/13/questions/QANR5L13QE116211.pdf"
+    ],
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "regle": "Même minimum garanti que les civils (article L. 17), montant selon les années de services effectifs. Depuis 2011, accordé au non-officier qui a la durée de services annulant la décote ; sans condition en cas d'infirmité.",
+    "citation": "L'article 45 de la loi précitée prévoit ainsi qu'à compter du 1er janvier 2011, le minimum garanti pourra être accordé au militaire non officier qui aura effectué la durée de services nécessaire pour l'annulation de la décote, soit 17,5 ans en 2011 et 19,5 ans en 2016. Les militaires radiés des cadres ou des contrôles pour infirmité et ceux qui totalisent 15 ans de services effectifs au 1er janvier 2011 seront, pour leur part, éligibles au minimum garanti dans les mêmes conditions qu'antérieurement",
+    "recours2025": "« 26,2 % des pensions militaires des non-officiers entrées en paiement en 2025 bénéficient en revanche du minimum garanti » (jaune) ; 35,6 % des non-officiers Terre-Mer-Air, 3,7 % des non-officiers de gendarmerie (tableau B-4)."
+   }
+  },
+  "chiffres": {
+   "effectifsParCategorie2024": {
+    "source": "Haut Comité d'évaluation de la condition militaire (HCECM), Revue annuelle de la condition militaire, rapport annuel 2025 (données 2024), tableau 6 « Situation des effectifs militaires en 2024, en équivalent temps plein travaillé (ETPT) »",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "ETPT",
+    "champ": "Ensemble du personnel militaire sous plafond d'emplois du ministère des Armées, de la gendarmerie nationale, et militaires servant hors de ces périmètres (BSPP, BMPM, affaires maritimes, etc.)",
+    "total": {
+     "officiers": 42233,
+     "sousOfficiers": 173300,
+     "militairesDuRang": 82644,
+     "volontaires": 11324,
+     "ensemble": 309501
+    },
+    "partPct": {
+     "officiers": 13.6,
+     "sousOfficiers": 56.0,
+     "militairesDuRang": 26.7,
+     "volontaires": 3.7
+    },
+    "parArmee": {
+     "armeeDeTerre": {
+      "officiers": 14744,
+      "sousOfficiers": 38002,
+      "militairesDuRang": 57895,
+      "volontaires": 405,
+      "total": 111046
+     },
+     "marineNationale": {
+      "officiers": 5073,
+      "sousOfficiers": 22186,
+      "militairesDuRang": 6922,
+      "volontaires": 264,
+      "total": 34445
+     },
+     "armeeDeLAirEtDeLEspace": {
+      "officiers": 6716,
+      "sousOfficiers": 22626,
+      "militairesDuRang": 8637,
+      "volontaires": 92,
+      "total": 38071
+     },
+     "gendarmerieNationale": {
+      "officiers": 6089,
+      "sousOfficiers": 79854,
+      "militairesDuRang": 0,
+      "volontaires": 9753,
+      "total": 95696
+     }
+    },
+    "note": "Approximation de la structure des cotisants : le jaune ne ventile pas les cotisants militaires par catégorie (321 432 cotisants fin 2025, déjà dans fonction-publique.json). Autre mesure (tableau 10, source DGAFP, emplois principaux au 31 décembre 2023) : officiers 15 %, sous-officiers 52 %, militaires du rang 33 %."
+   },
+   "nouveauxRetraitesParCategorie2025": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, tableau 108 et annexe statistique, tableaux B-7 et B-10",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Pensions militaires de droit direct entrées en paiement en 2025, tous motifs (y compris invalidité)",
+    "effectifs": {
+     "officiersGenerauxEtSuperieurs": 1031,
+     "officiersSubalternes": 480,
+     "sousOfficiers": 6887,
+     "caporauxEtSoldats": 2293,
+     "ensemble": 10691
+    },
+    "partPctCalculee": {
+     "officiers": 14.1,
+     "sousOfficiers": 64.4,
+     "caporauxEtSoldats": 21.4
+    },
+    "montantBrutMensuelMoyenALaLiquidation": {
+     "officiersGenerauxEtSuperieurs": 3572,
+     "officiersSubalternes": 2331,
+     "sousOfficiers": 1767,
+     "caporauxEtSoldats": 775,
+     "ensemble": 1754
+    },
+    "tauxMoyenDeLiquidationPct": {
+     "officiersGenerauxEtSuperieurs": 73.4,
+     "officiersSubalternes": 65.9,
+     "sousOfficiers": 65.2,
+     "caporauxEtSoldats": 54.2,
+     "ensemble": 65.3
+    },
+    "tauxMoyenHorsDecotePct": {
+     "officiersGenerauxEtSuperieurs": 74.2,
+     "officiersSubalternes": 66.7,
+     "sousOfficiers": 65.5,
+     "caporauxEtSoldats": 54.6,
+     "ensemble": 65.7
+    },
+    "ageMoyenALaDateDEffet": {
+     "ensemble": 46.0,
+     "caporauxEtSoldats": 35.7,
+     "sousOfficiers": 47.6,
+     "officiers": 54.3,
+     "departsPourInvalidite": 32.0
+    },
+    "parSexeEtMinistereTableauB10": {
+     "colonnes": [
+      "categorieAHommes",
+      "categorieAFemmes",
+      "categorieBHommes",
+      "categorieBFemmes",
+      "categorieCHommes",
+      "categorieCFemmes",
+      "total"
+     ],
+     "militaires": [
+      1340,
+      171,
+      5728,
+      1159,
+      1852,
+      441,
+      10691
+     ],
+     "ministereDesArmees": [
+      1129,
+      152,
+      3348,
+      830,
+      1852,
+      441,
+      7752
+     ],
+     "gendarmes": [
+      211,
+      19,
+      2380,
+      329,
+      0,
+      0,
+      2939
+     ],
+     "armeesOfficiersGeneraux": [
+      102,
+      10,
+      0,
+      0,
+      0,
+      0,
+      112
+     ],
+     "armeesOfficiersSuperieurs": [
+      716,
+      89,
+      0,
+      0,
+      0,
+      0,
+      805
+     ],
+     "armeesOfficiersSubalternes": [
+      311,
+      53,
+      0,
+      0,
+      0,
+      0,
+      364
+     ],
+     "armeesSousOfficiers": [
+      0,
+      0,
+      3348,
+      830,
+      0,
+      0,
+      4178
+     ],
+     "armeesCaporauxEtSoldats": [
+      0,
+      0,
+      0,
+      0,
+      1852,
+      441,
+      2293
+     ],
+     "note": "Les lignes par grade ne couvrent que le ministère des Armées (leur somme = 7 752)."
+    },
+    "distributionParAge": {
+     "source": "tableau B-7 « Ventilation par âge des militaires dont la pension de retraite (premier droit) est entrée en paiement en 2025 »",
+     "valeurs": {
+      "total": {
+       "total": 10691,
+       "caporauxEtSoldats": 2293,
+       "sousOfficiers": 6887,
+       "officiers": 1511,
+       "dontInvalidite": 2018
+      },
+      "moinsDe30": {
+       "total": 1106,
+       "caporauxEtSoldats": 830,
+       "sousOfficiers": 256,
+       "officiers": 20,
+       "dontInvalidite": 1106
+      },
+      "30": {
+       "total": 63,
+       "caporauxEtSoldats": 29,
+       "sousOfficiers": 32,
+       "officiers": 2,
+       "dontInvalidite": 63
+      },
+      "31": {
+       "total": 62,
+       "caporauxEtSoldats": 35,
+       "sousOfficiers": 25,
+       "officiers": 2,
+       "dontInvalidite": 62
+      },
+      "32": {
+       "total": 59,
+       "caporauxEtSoldats": 30,
+       "sousOfficiers": 24,
+       "officiers": 5,
+       "dontInvalidite": 59
+      },
+      "33": {
+       "total": 44,
+       "caporauxEtSoldats": 27,
+       "sousOfficiers": 14,
+       "officiers": 3,
+       "dontInvalidite": 44
+      },
+      "34": {
+       "total": 68,
+       "caporauxEtSoldats": 29,
+       "sousOfficiers": 34,
+       "officiers": 5,
+       "dontInvalidite": 61
+      },
+      "35": {
+       "total": 58,
+       "caporauxEtSoldats": 15,
+       "sousOfficiers": 39,
+       "officiers": 4,
+       "dontInvalidite": 44
+      },
+      "36": {
+       "total": 91,
+       "caporauxEtSoldats": 29,
+       "sousOfficiers": 59,
+       "officiers": 3,
+       "dontInvalidite": 37
+      },
+      "37": {
+       "total": 174,
+       "caporauxEtSoldats": 43,
+       "sousOfficiers": 128,
+       "officiers": 3,
+       "dontInvalidite": 33
+      },
+      "38": {
+       "total": 264,
+       "caporauxEtSoldats": 77,
+       "sousOfficiers": 183,
+       "officiers": 4,
+       "dontInvalidite": 31
+      },
+      "39": {
+       "total": 446,
+       "caporauxEtSoldats": 143,
+       "sousOfficiers": 300,
+       "officiers": 3,
+       "dontInvalidite": 50
+      },
+      "40": {
+       "total": 483,
+       "caporauxEtSoldats": 148,
+       "sousOfficiers": 328,
+       "officiers": 7,
+       "dontInvalidite": 35
+      },
+      "41": {
+       "total": 534,
+       "caporauxEtSoldats": 144,
+       "sousOfficiers": 382,
+       "officiers": 8,
+       "dontInvalidite": 39
+      },
+      "42": {
+       "total": 496,
+       "caporauxEtSoldats": 122,
+       "sousOfficiers": 358,
+       "officiers": 16,
+       "dontInvalidite": 36
+      },
+      "43": {
+       "total": 489,
+       "caporauxEtSoldats": 105,
+       "sousOfficiers": 369,
+       "officiers": 15,
+       "dontInvalidite": 38
+      },
+      "44": {
+       "total": 475,
+       "caporauxEtSoldats": 94,
+       "sousOfficiers": 362,
+       "officiers": 19,
+       "dontInvalidite": 38
+      },
+      "45": {
+       "total": 432,
+       "caporauxEtSoldats": 87,
+       "sousOfficiers": 303,
+       "officiers": 42,
+       "dontInvalidite": 33
+      },
+      "46": {
+       "total": 376,
+       "caporauxEtSoldats": 85,
+       "sousOfficiers": 245,
+       "officiers": 46,
+       "dontInvalidite": 35
+      },
+      "47": {
+       "total": 370,
+       "caporauxEtSoldats": 76,
+       "sousOfficiers": 239,
+       "officiers": 55,
+       "dontInvalidite": 24
+      },
+      "48": {
+       "total": 287,
+       "caporauxEtSoldats": 42,
+       "sousOfficiers": 177,
+       "officiers": 68,
+       "dontInvalidite": 18
+      },
+      "49": {
+       "total": 240,
+       "caporauxEtSoldats": 43,
+       "sousOfficiers": 137,
+       "officiers": 60,
+       "dontInvalidite": 23
+      },
+      "50": {
+       "total": 294,
+       "caporauxEtSoldats": 21,
+       "sousOfficiers": 209,
+       "officiers": 64,
+       "dontInvalidite": 14
+      },
+      "51": {
+       "total": 398,
+       "caporauxEtSoldats": 12,
+       "sousOfficiers": 290,
+       "officiers": 96,
+       "dontInvalidite": 22
+      },
+      "52": {
+       "total": 318,
+       "caporauxEtSoldats": 12,
+       "sousOfficiers": 173,
+       "officiers": 133,
+       "dontInvalidite": 10
+      },
+      "53": {
+       "total": 238,
+       "caporauxEtSoldats": 4,
+       "sousOfficiers": 186,
+       "officiers": 48,
+       "dontInvalidite": 12
+      },
+      "54": {
+       "total": 273,
+       "caporauxEtSoldats": 2,
+       "sousOfficiers": 230,
+       "officiers": 41,
+       "dontInvalidite": 9
+      },
+      "55": {
+       "total": 337,
+       "caporauxEtSoldats": 2,
+       "sousOfficiers": 280,
+       "officiers": 55,
+       "dontInvalidite": 8
+      },
+      "56": {
+       "total": 358,
+       "caporauxEtSoldats": 2,
+       "sousOfficiers": 308,
+       "officiers": 48,
+       "dontInvalidite": 10
+      },
+      "57": {
+       "total": 363,
+       "caporauxEtSoldats": 1,
+       "sousOfficiers": 306,
+       "officiers": 56,
+       "dontInvalidite": 15
+      },
+      "58": {
+       "total": 613,
+       "caporauxEtSoldats": 0,
+       "sousOfficiers": 544,
+       "officiers": 69,
+       "dontInvalidite": 5
+      },
+      "plusDe58": {
+       "total": 882,
+       "caporauxEtSoldats": 4,
+       "sousOfficiers": 367,
+       "officiers": 511,
+       "dontInvalidite": 4
+      }
+     }
+    }
+   },
+   "detailParArmeeEtCategorie2025": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, annexe statistique, tableau B-4 « Pensions de droit direct entrées en paiement en 2025 […] par armée pour les militaires », p. 213 (source DGFiP, SRE)",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Pensions militaires, tous motifs de départ (invalidité comprise) ; non-officiers = sous-officiers et militaires du rang",
+    "effectifs": {
+     "terreMerAirNonOfficiers": 6471,
+     "terreMerAirOfficiers": 1281,
+     "gendarmerieNonOfficiers": 2709,
+     "gendarmerieOfficiers": 230
+    },
+    "partHommesPct": {
+     "terreMerAirNonOfficiers": 80.4,
+     "terreMerAirOfficiers": 88.1,
+     "gendarmerieNonOfficiers": 87.9,
+     "gendarmerieOfficiers": 91.7
+    },
+    "ageMoyenALaRadiation": {
+     "terreMerAirNonOfficiers": 41.6,
+     "terreMerAirOfficiers": 52.3,
+     "gendarmerieNonOfficiers": 51.7,
+     "gendarmerieOfficiers": 56.2
+    },
+    "ageMoyenDePremiereMiseEnPaiement": {
+     "terreMerAirNonOfficiers": 41.6,
+     "terreMerAirOfficiers": 53.9,
+     "gendarmerieNonOfficiers": 51.7,
+     "gendarmerieOfficiers": 56.8
+    },
+    "dureeDeServicesTrimestres": {
+     "terreMerAirNonOfficiers": 82.6,
+     "terreMerAirOfficiers": 123.9,
+     "gendarmerieNonOfficiers": 119.2,
+     "gendarmerieOfficiers": 139.7
+    },
+    "bonificationsTrimestres": {
+     "terreMerAirNonOfficiers": 31.3,
+     "terreMerAirOfficiers": 60.3,
+     "gendarmerieNonOfficiers": 27.5,
+     "gendarmerieOfficiers": 34.4
+    },
+    "dureeDAssuranceTousRegimesTrimestres": {
+     "terreMerAirNonOfficiers": 117.1,
+     "terreMerAirOfficiers": 187.3,
+     "gendarmerieNonOfficiers": 153.5,
+     "gendarmerieOfficiers": 177.4
+    },
+    "partAvecDecotePct": {
+     "terreMerAirNonOfficiers": 6.8,
+     "terreMerAirOfficiers": 16.5,
+     "gendarmerieNonOfficiers": 11.1,
+     "gendarmerieOfficiers": 12.2
+    },
+    "perteMensuelleMoyenneDecoteEuros": {
+     "terreMerAirNonOfficiers": -61.8,
+     "terreMerAirOfficiers": -195.4,
+     "gendarmerieNonOfficiers": -74.9,
+     "gendarmerieOfficiers": -214.6
+    },
+    "tauxMoyenDeDecotePct": {
+     "terreMerAirNonOfficiers": 6.5,
+     "terreMerAirOfficiers": 9.6,
+     "gendarmerieNonOfficiers": 7.7,
+     "gendarmerieOfficiers": 8.8
+    },
+    "tauxMoyenDeLiquidationPct": {
+     "terreMerAirNonOfficiers": 61.8,
+     "terreMerAirOfficiers": 70.5,
+     "gendarmerieNonOfficiers": 67.4,
+     "gendarmerieOfficiers": 73.8
+    },
+    "tauxMoyenHorsDecotePct": {
+     "terreMerAirNonOfficiers": 62.1,
+     "terreMerAirOfficiers": 71.4,
+     "gendarmerieNonOfficiers": 67.8,
+     "gendarmerieOfficiers": 74.4
+    },
+    "partAuTauxPleinPct": {
+     "terreMerAirNonOfficiers": 28.1,
+     "terreMerAirOfficiers": 65.2,
+     "gendarmerieNonOfficiers": 52.6,
+     "gendarmerieOfficiers": 73.5
+    },
+    "partAuTauxDe80Pct": {
+     "terreMerAirNonOfficiers": 22.6,
+     "terreMerAirOfficiers": 55.3,
+     "gendarmerieNonOfficiers": 37.4,
+     "gendarmerieOfficiers": 51.3
+    },
+    "indiceMoyenALaLiquidation": {
+     "terreMerAirNonOfficiers": 492.4,
+     "terreMerAirOfficiers": 817.1,
+     "gendarmerieNonOfficiers": 637.9,
+     "gendarmerieOfficiers": 913.5
+    },
+    "partAuMinimumGarantiPct": {
+     "terreMerAirNonOfficiers": 35.6,
+     "terreMerAirOfficiers": 0.4,
+     "gendarmerieNonOfficiers": 3.7,
+     "gendarmerieOfficiers": 0.0
+    },
+    "avantagePrincipalMensuelEuros": {
+     "terreMerAirNonOfficiers": 1209,
+     "terreMerAirOfficiers": 2940,
+     "gendarmerieNonOfficiers": 2137,
+     "gendarmerieOfficiers": 3387
+    },
+    "principalEtAccessoiresMensuelEuros": {
+     "terreMerAirNonOfficiers": 1238,
+     "terreMerAirOfficiers": 3117,
+     "gendarmerieNonOfficiers": 2191,
+     "gendarmerieOfficiers": 3520
+    },
+    "note": "Taux de liquidation, décote et indice : hors pensions portées au minimum garanti (note de la source)."
+   },
+   "pensionMoyenneParGrade2025": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, annexe statistique, tableaux B-18 (hors invalidité) et B-19 (invalidité)",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "unite": "euros par mois (effectif ; avantage principal ; pension totale)",
+    "horsInvalidite": {
+     "ensemble": [
+      8673,
+      1943,
+      2009
+     ],
+     "officiersGeneraux": [
+      124,
+      5320,
+      5845
+     ],
+     "officiersSuperieurs": [
+      874,
+      3114,
+      3297
+     ],
+     "officiersSubalternes": [
+      417,
+      2431,
+      2501
+     ],
+     "sousOfficiers": [
+      6105,
+      1827,
+      1875
+     ],
+     "caporauxEtSoldats": [
+      1153,
+      1126,
+      1156
+     ],
+     "hommes": [
+      7386,
+      2021,
+      2093
+     ],
+     "femmes": [
+      1287,
+      1494,
+      1527
+     ]
+    },
+    "invalidite": {
+     "ensemble": [
+      2018,
+      649,
+      654
+     ],
+     "officiersSuperieurs": [
+      33,
+      2264,
+      2316
+     ],
+     "officiersSubalternes": [
+      63,
+      1193,
+      1206
+     ],
+     "sousOfficiers": [
+      782,
+      918,
+      927
+     ],
+     "caporauxEtSoldats": [
+      1140,
+      387,
+      388
+     ]
+    }
+   },
+   "bonificationsDesLiquidants": {
+    "source": "Rapport sur les pensions de retraite de la fonction publique, annexe (« jaune ») au projet de loi de finances pour 2027, direction du budget, encart statistique 2, tableau 50 « Pourcentage de retraités bénéficiaires d’une bonification de pension et gain moyen associé », p. 126-127",
+    "url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Militaires liquidants (année non précisée dans l'extrait lu ; édition PLF 2027)",
+    "partDesLiquidantsPct": {
+     "pourEnfant": 2.5,
+     "campagneMilitaire": 79.4,
+     "serviceAerienOuSousMarin": 57.6,
+     "duCinquieme": 99.0,
+     "bonificationsNonL12": 3.4,
+     "auMoinsUne": 99.7
+    },
+    "gainMoyenTrimestres": {
+     "pourEnfant": 6.4,
+     "campagneMilitaire": 12.8,
+     "serviceAerienOuSousMarin": 12.2,
+     "duCinquieme": 16.5,
+     "bonificationsNonL12": 5.5,
+     "ensemble": 34
+    },
+    "gainMensuelMoyenEuros": {
+     "pourEnfant": 65,
+     "campagneMilitaire": 107,
+     "serviceAerienOuSousMarin": 78,
+     "duCinquieme": 146,
+     "bonificationsNonL12": 46,
+     "ensemble": 324
+    }
+   },
+   "hcecmPensionsParCategorie2024": {
+    "source": "Haut Comité d'évaluation de la condition militaire (HCECM), Revue annuelle de la condition militaire, rapport annuel 2025 (données 2024), tableaux 108 à 111 (données DGFiP/SRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire (reprise de données SRE par le HCECM)",
+    "champ": "Pensions militaires de droit direct entrées en paiement en 2024",
+    "effectifsParMotif": {
+     "anciennete": {
+      "armeesOfficiers": 1207,
+      "armeesSousOfficiers": 4036,
+      "armeesMilitairesDuRang": 1364,
+      "gendarmerieOfficiers": 242,
+      "gendarmerieSousOfficiers": 2806,
+      "total": 9655
+     },
+     "invalidite": {
+      "armeesOfficiers": 104,
+      "armeesSousOfficiers": 621,
+      "armeesMilitairesDuRang": 1226,
+      "gendarmerieOfficiers": 8,
+      "gendarmerieSousOfficiers": 203,
+      "total": 2162
+     },
+     "total": 11817
+    },
+    "ancienneteArmees": {
+     "colonnes": [
+      "officiers",
+      "dontOfficiersSuperieursHorsGeneraux",
+      "dontOfficiersSubalternes",
+      "sousOfficiers",
+      "militairesDuRang"
+     ],
+     "ageMoyen": [
+      54.7,
+      54.7,
+      50.9,
+      46.2,
+      43.6
+     ],
+     "dureeDeServicesRetenueHorsBonificationsTrimestres": [
+      125.7,
+      127.4,
+      113.5,
+      101.1,
+      89.5
+     ],
+     "indiceMajoreMoyen": [
+      832,
+      842,
+      654,
+      489,
+      434
+     ],
+     "tauxMoyenDePensionPct": [
+      72.4,
+      71.8,
+      70.8,
+      63.0,
+      55.5
+     ],
+     "partAvecDecotePct": [
+      17.4,
+      20.1,
+      18.2,
+      10.2,
+      10.0
+     ],
+     "montantMensuelBrutMoyenEuros": [
+      3245,
+      3227,
+      2366,
+      1534,
+      1179
+     ]
+    },
+    "ancienneteGendarmerie": {
+     "colonnes": [
+      "officiers",
+      "dontOfficiersSuperieursHorsGeneraux",
+      "dontOfficiersSubalternes",
+      "sousOfficiers"
+     ],
+     "ageMoyen": [
+      57.1,
+      57.4,
+      55.4,
+      52.2
+     ],
+     "dureeDeServicesRetenueHorsBonificationsTrimestres": [
+      141.1,
+      142.6,
+      138.1,
+      121.8
+     ],
+     "indiceMoyen": [
+      943,
+      998,
+      816,
+      634
+     ],
+     "tauxMoyenDePensionPct": [
+      74.9,
+      74.8,
+      74.3,
+      68.9
+     ],
+     "partAvecDecotePct": [
+      12.0,
+      11.5,
+      14.3,
+      11.3
+     ],
+     "montantMensuelBrutMoyenEuros": [
+      3702,
+      3899,
+      3115,
+      2258
+     ]
+    },
+    "invaliditeArmees": {
+     "colonnes": [
+      "officiers",
+      "sousOfficiers",
+      "militairesDuRang"
+     ],
+     "ageMoyen": [
+      39.9,
+      34.4,
+      27.7
+     ],
+     "dureeDeServicesRetenueTrimestres": [
+      69.9,
+      52.5,
+      27.0
+     ],
+     "montantMensuelBrutMoyenEuros": [
+      1558,
+      765,
+      369
+     ],
+     "partAuMinimumGarantiPct": [
+      3.8,
+      65.4,
+      92.1
+     ]
+    },
+    "toutesForcesAnciennete": {
+     "citation": "le montant mensuel brut moyen des pensions militaires de retraite (y compris les accessoires) entrées en paiement en 2024 pour motif d’ancienneté s’établit à 5 566 € pour les officiers généraux, 3 329 € pour les officiers supérieurs, 2 535 € pour les officiers subalternes, 1 831 € pour les sous-officiers et 1 179 € pour les militaires du rang"
+    },
+    "stockAu31Decembre2024": {
+     "pensionsDeDroitDirect": 406645,
+     "armees": 323323,
+     "gendarmes": 83322
+    },
+    "departsDuServiceActif2024": {
+     "armees": 19652,
+     "gendarmerie": 4771,
+     "partAvecPensionALiquidationImmediatePct": 43.9,
+     "partPartisAvant15AnsDeServicesPct": 55.5,
+     "partPensionDiffereeA52_54AnsPct": 0.7,
+     "partPensionALAgeLegalPct": 21.6,
+     "partSansDroitAPensionMilitairePct": 33.9
+    },
+    "note": "Les indices et taux sont hors pensions élevées au minimum garanti ; bonifications non publiées par le HCECM (voir tableau B-4 du jaune)."
+   },
+   "soldeEtPrimes2024": {
+    "source": "Haut Comité d'évaluation de la condition militaire (HCECM), Revue annuelle de la condition militaire, rapport annuel 2025 (données 2024), tableau 93 et graphique 60, p. 134-135 (sous-direction des statistiques et études économiques, RAE-M et RAE-G 2024)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "champ": "Militaires des trois armées et de la gendarmerie (hors volontaires, élèves et réservistes), affectés en France toute l'année, en équivalent temps plein",
+    "unite": "euros courants par mois",
+    "soldeMensuelleMoyenne": {
+     "2023": {
+      "soldeBrute": 3514,
+      "soldeIndiciaire": 2106,
+      "complementDeSolde": 55,
+      "primesEtIndemnites": 1353,
+      "cotisations": 634,
+      "soldeNette": 2880
+     },
+     "2024": {
+      "soldeBrute": 3722,
+      "soldeIndiciaire": 2172,
+      "complementDeSolde": 55,
+      "primesEtIndemnites": 1495,
+      "cotisations": 662,
+      "soldeNette": 3060
+     }
+    },
+    "partDansLaSoldeBrute2024Pct": {
+     "colonnes": [
+      "soldeIndiciaire",
+      "complementDeSolde",
+      "primesEtIndemnites"
+     ],
+     "officiersGeneraux": [
+      51,
+      4,
+      45
+     ],
+     "officiersSuperieurs": [
+      53,
+      null,
+      44
+     ],
+     "officiersSubalternes": [
+      53,
+      1,
+      45
+     ],
+     "sousOfficiersSuperieurs": [
+      55,
+      null,
+      43
+     ],
+     "sousOfficiersSubalternes": [
+      59,
+      1,
+      40
+     ],
+     "militairesDuRang": [
+      67,
+      1,
+      32
+     ],
+     "ensemble": [
+      58,
+      null,
+      40
+     ]
+    },
+    "citation": "La solde indiciaire des militaires des trois armées et de la gendarmerie nationale représente en moyenne 58 % de la solde brute (de 51 % pour les officiers généraux à 67 % pour les militaires du rang).",
+    "note": "Complément de solde = indemnité de résidence, supplément familial de solde et NBI ; valeurs None = étiquette absente du graphique (complément = le reste). Solde indiciaire moyenne par catégorie en euros : non publiée dans les passages lus."
+   },
+   "ageEtAnciennete": {
+    "source": "Haut Comité d'évaluation de la condition militaire (HCECM), Revue annuelle de la condition militaire, rapport annuel 2025 (données 2024), tableaux 11, 14, 80 et 81",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/301864.pdf",
+    "date": "2026-11-21",
+    "fiabilite": "primaire",
+    "ageMoyen2024": {
+     "armeesDirectionsEtServices": {
+      "hommes": 32.5,
+      "femmes": 32.0,
+      "ensemble": 32.4
+     },
+     "gendarmerieNationale": {
+      "hommes": 37.8,
+      "femmes": 33.9,
+      "ensemble": 36.9
+     }
+    },
+    "ancienneteMoyenneDeServices2024Ans": {
+     "officiers": 17.1,
+     "sousOfficiers": 14.3,
+     "militairesDuRang": 6.1,
+     "ensemble": 11.6,
+     "champ": "personnel militaire sous plafond d'emplois du ministère des Armées en décembre"
+    },
+    "dureeMoyenneDeServicesDesPartants2024Ans": {
+     "sousContrat": {
+      "terre": {
+       "officiers": 15.6,
+       "sousOfficiers": 14.4,
+       "militairesDuRang": 8.3
+      },
+      "marine": {
+       "officiers": 14.1,
+       "sousOfficiers": 12.9,
+       "militairesDuRang": 4.7
+      },
+      "airEtEspace": {
+       "officiers": 14.0,
+       "sousOfficiers": 7.6,
+       "militairesDuRang": 8.2
+      },
+      "gendarmerie": {
+       "officiers": 6.8,
+       "sousOfficiers": 2.5,
+       "volontaires": 1.2
+      }
+     },
+     "deCarriere": {
+      "terre": {
+       "officiers": 32.5,
+       "sousOfficiers": 27.5
+      },
+      "marine": {
+       "officiers": 30.2,
+       "sousOfficiers": 25.2
+      },
+      "airEtEspace": {
+       "officiers": 31.7,
+       "sousOfficiers": 26.5
+      },
+      "gendarmerie": {
+       "officiers": 32.5,
+       "sousOfficiers": 25.8
+      }
+     }
+    },
+    "statutDeCarriere": "« l’âge d’admission au statut de carrière au sein des armées intervient généralement entre 31 ans et 35 ans » pour les sous-officiers ; les militaires du rang sont exclusivement sous contrat.",
+    "ageMoyenDEngagement": "non trouvé (voir manquants)"
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  {
+   "sujet": "Part des agents à temps partiel selon la source",
+   "detail": "Fonctionnaires, FPE : 10,0 % (enquête Emploi 2025) contre 9,96 % (Siasp, fin 2019) — concordant. FPT : 17,3 % (enquête Emploi 2025) contre 20,4 % (Siasp 2019, temps non complet inclus). Ensemble des fonctionnaires : 15,0 % (EEC 2025), 13,8 % (EEC 2022), 16,6 % (Siasp 2019). Hommes fonctionnaires : 5,6 % (EEC 2025), 4,5 % (EEC 2022), 6,0 % (Siasp 2019)."
+  },
+  {
+   "sujet": "Révision de la FPE entre éditions",
+   "detail": "Part des agents de la FPE à temps partiel en 2022 : 13,8 % dans le Point Stat de 2023, 16,5 % dans la série révisée de l'édition 2026 (reclassement des AESH, militaires et magistrats dans la FPE et repondération). Pour 2024, des résumés de recherche donnent 17 % (édition 2025) et 16 % (édition 2026) ; seule l'édition 2026 a été lue (16,34 %)."
+  },
+  {
+   "sujet": "Nombre d'apprentis",
+   "detail": "Fin 2023 : 1 021 453 (Insee, tableau par diplôme, « rentrée scolaire ») et 1 021 453 par somme de la figure 1 (au 31 décembre) — concordant. Fin 2025 : 1 020 400 (Depp) après 1 049 965 fin 2024, soit −2,8 %. La Dares compte des contrats en cours (non lus) : champ différent de celui des inscrits en CFA."
+  },
+  {
+   "sujet": "Nouveaux retraités militaires : jaune et HCECM",
+   "detail": "Âges moyens et montants ne portent pas sur le même champ : jaune 2025 tous motifs (âge moyen 46,0 ans, sous-officiers 47,6, officiers 54,3, caporaux et soldats 35,7) ; HCECM 2024 hors invalidité et gendarmerie à part (sous-officiers des armées 46,2 ans, militaires du rang 43,6 ans). Pension moyenne des caporaux et soldats : 775 € tous motifs (tableau 108), 1 126 € hors invalidité (B-18), 387 € en invalidité (B-19)."
+  },
+  {
+   "sujet": "Date de la clause de stage de 2 ans",
+   "detail": "Le jaune écrit « militaires engagés à compter du 1er janvier 2014 » (partie V) et, dans la fiche de synthèse, « contre 15 ans pour les militaires engagés jusqu’au 31 décembre 2014 ». Le ministère des Armées et le SRE retiennent le 1er janvier 2014."
+  },
+  {
+   "sujet": "Seuil de la décote carrière longue",
+   "detail": "52 ans dans les pages du SRE, du ministère des Armées et du HCECM ; le jaune écrit « AOD abaissé de 10 ans (soit 54 ans à terme) »."
+  },
+  {
+   "sujet": "Structure par catégorie des militaires",
+   "detail": "HCECM tableau 6 (ETPT 2024) : officiers 13,6 %, sous-officiers 56,0 %, militaires du rang 26,7 %, volontaires 3,7 % ; HCECM tableau 10 (DGAFP, fin 2023) : 15 / 52 / 33 %. Parmi les nouveaux pensionnés 2025 : officiers 14,1 %, sous-officiers 64,4 %, caporaux et soldats 21,4 % (calculé)."
+  }
+ ],
+ "manquants": [
+  {
+   "partie": "tempsPartielFonctionnaires",
+   "quoi": "Série 1990-2013 de la part des fonctionnaires à temps partiel par versant et sexe (et 2020-2024 en source administrative)",
+   "essais": [
+    "Fiches thématiques 2.7 des éditions 2016 à 2021 du rapport annuel DGAFP (trouvées : 2014-2019)",
+    "pages d'index des éditions 2013 à 2015 sur l'ancien portail fonction-publique.gouv.fr (HTTP 404)",
+    "rapport annuel 2023 et 2026 (ne publient plus que l'enquête Emploi)",
+    "Point Stat d'octobre 2001 (État seulement, 1998-1999 ; séries 1982-1999 en graphique)"
+   ],
+   "raison": "Avant 2014, seuls des points isolés sont lus : titulaires civils de l'État 1998-1999 (fichiers de paie) et moyenne 2010-2012 tous statuts (enquête Emploi). Aucune série FPT ou FPH avant 2010. Après 2019, la DGAFP ne publie plus la fiche Siasp ; l'enquête Emploi ne croise pas versant × sexe pour les seuls fonctionnaires."
+  },
+  {
+   "partie": "tempsPartielFonctionnaires",
+   "quoi": "Répartition par quotité des seuls fonctionnaires après 2019 ; hommes par versant dans l'enquête Emploi ; quotité moyenne publiée",
+   "essais": [
+    "données complémentaires du rapport annuel 2026, figures 4, 6 et 7"
+   ],
+   "raison": "La figure 6 porte sur tous les agents et ne donne que l'ensemble et les femmes par versant."
+  },
+  {
+   "partie": "tempsPartielFonctionnaires",
+   "quoi": "Part à temps partiel par âge détaillé (quinquennal) ; tableaux par âge 2014-2018",
+   "essais": [
+    "fiche 2.7, feuilles « Source figure 2.7-5 à 2.7-7 »"
+   ],
+   "raison": "Quatre tranches seulement (moins de 30, 30-39, 40-59, 60 et plus) ; seules celles de 2019 sont extraites, les éditions 2016-2020 sont téléchargeables aux url de siaspFonctionnaires2014_2019."
+  },
+  {
+   "partie": "tempsPartielFonctionnaires",
+   "quoi": "Recours à la surcotisation (nombre ou part des agents à temps partiel qui surcotisent, masse de cotisations)",
+   "essais": [
+    "jaune pensions PLF 2027 (recherche « surcotis »)",
+    "guide DGAFP du temps partiel 2025",
+    "page SRE « Mes cotisations »"
+   ],
+   "raison": "Aucun chiffre d'usage publié dans les sources lues. Taux de surcotisation CNRACL non lu (renvoi à juris-cnracl.retraites.fr)."
+  },
+  {
+   "partie": "jeunesCotisants",
+   "quoi": "Série Dares des contrats d'apprentissage en cours au 31 décembre, privé et public séparés, 1990-2025",
+   "essais": [
+    "https://dares.travail-emploi.gouv.fr/donnees/le-contrat-dapprentissage (page de vérification anti-robot)",
+    "PDF Dares en accès direct (même blocage)",
+    "catalogue data.dares.travail-emploi.gouv.fr (33 jeux, aucun sur l'apprentissage)",
+    "recherche sur data.gouv.fr (aucun résultat)"
+   ],
+   "raison": "Site de la Dares inaccessible aux requêtes automatisées. Remplacé par la série Depp des apprentis inscrits en CFA (1982-2025, privé et public confondus) et par les apprentis de la fonction publique (Siasp, fin 2024). Des chiffres Dares (1 042 500 contrats en cours fin 2024, environ 3 % dans le public) n'ont été vus que dans des extraits de moteur de recherche et ne sont pas retenus."
+  },
+  {
+   "partie": "jeunesCotisants",
+   "quoi": "Apprentis de la fonction publique avant 2023 (série) ",
+   "essais": [
+    "rapport annuel DGAFP 2026, encadré 1"
+   ],
+   "raison": "Seuls l'effectif fin 2024 et les taux de croissance 2021-2024 sont lus."
+  },
+  {
+   "partie": "jeunesCotisants",
+   "quoi": "Grille de rémunération des apprentis avant 2019 et son historique ; rémunération moyenne observée ; assiette forfaitaire de cotisation avant 2014 et trimestres réellement validés par un apprenti avant 2014",
+   "essais": [
+    "fiche Service-Public F2918 (grille actuelle seulement)",
+    "réponse ministérielle n° 64729 (principe, sans barème)",
+    "legislation.lassuranceretraite.fr (application JavaScript, non lue)"
+   ],
+   "raison": "Textes sur Légifrance non accessibles par requête automatisée ; barèmes historiques non publiés dans les pages lues."
+  },
+  {
+   "partie": "jeunesCotisants",
+   "quoi": "Taux d'emploi par âge détaillé (15-17, 18-19) et par année d'âge ; part des emplois courts ou d'été chez les jeunes",
+   "essais": [
+    "Insee, séries longues de l'enquête Emploi, tableaux T205 à T208"
+   ],
+   "raison": "Le tableau T207 s'arrête aux tranches quinquennales. Le fichier détail de l'enquête Emploi 2025 (insee.fr/fr/statistiques/9034119) permettrait le calcul par âge ; non exploité."
+  },
+  {
+   "partie": "jeunesCotisants",
+   "quoi": "Cotisants du régime général par âge ; série temporelle des cotisants Agirc-Arrco de moins de 25 ans ; cotisants dans l'année (et non présents au 31 décembre)",
+   "essais": [
+    "abrégé statistique 2025 de la Cnav (HTTP 503)",
+    "chiffrAA 2026 (une seule année : 2024)"
+   ],
+   "raison": "Éditions antérieures de chiffrAA (2019, 2022, 2023, 2025) repérées sur agirc-arrco.fr mais non lues."
+  },
+  {
+   "partie": "militaires",
+   "quoi": "Calendrier année par année du passage de 15 à 17 ans et de 25 à 27 ans pour les militaires ; durée exigée des officiers sous contrat avant 2010 ; historique des limites d'âge par grade (avant et après 2010)",
+   "essais": [
+    "réponse ministérielle n° 10039 (principe)",
+    "jaune pensions PLF 2027 (calendrier décrit pour la catégorie active)",
+    "page SRE « La limite d'âge des militaires » (état actuel seulement)"
+   ],
+   "raison": "Décret n° 2011-2103 et article L. 4139-16 du code de la défense non lus (Légifrance refuse les requêtes automatisées)."
+  },
+  {
+   "partie": "militaires",
+   "quoi": "Répartition des cotisants militaires par catégorie (au sens du régime) ; solde indiciaire moyenne par catégorie en euros ; âge moyen d'engagement par catégorie",
+   "essais": [
+    "jaune pensions PLF 2027 (cotisants non ventilés par grade)",
+    "HCECM, Revue annuelle 2025 (recherche « âge moyen », « recrut »)",
+    "HCECM, rapport 2026 « Faire carrière(s) aujourd'hui » (survol)"
+   ],
+   "raison": "Remplacé par les effectifs en ETPT par catégorie (HCECM, tableau 6) et par la part de la solde indiciaire par catégorie. L'âge moyen au recrutement n'apparaît pas dans les passages lus ; le bilan social / rapport social unique du ministère des Armées n'a pas été consulté."
+  },
+  {
+   "partie": "militaires",
+   "quoi": "Barème de l'ancien écrêtement de la bonification du cinquième (dégressivité avant 2023) ; coefficients des bonifications pour services aériens et sous-marins ; montants du minimum garanti propres aux militaires",
+   "essais": [
+    "page SRE « Le calcul de la pension » (militaires)",
+    "jaune pensions PLF 2027"
+   ],
+   "raison": "Non détaillé dans les sources lues."
+  }
+ ]
+}

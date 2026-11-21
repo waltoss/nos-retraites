@@ -185,6 +185,7 @@ export const BAREMES_FRANCE: Baremes = {
 		minimumGaranti: fp.minimumGaranti,
 		droitsFamiliaux: fp.droitsFamiliaux,
 		tauxCotisation: fp.tauxCotisation,
+		bonificationDuCinquieme: fp.bonificationDuCinquieme,
 		rafp: {
 			...fp.rafp,
 			valeurAcquisition: serie(fp.rafp.valeurAcquisition),

@@ -161,6 +161,43 @@ describe("pension d'un fonctionnaire", () => {
 	});
 });
 
+describe("invalidité et militaires", () => {
+	test("une pension d'invalidité est versée dès la radiation, sans décote", () => {
+		const c = fonctionnaire(1975, 25, () => 30000);
+		if (c.fonctionPublique) c.fonctionPublique.ageInvalidite = 52;
+		c.annees = c.annees.map((a) =>
+			a.annee - 1975 >= 52
+				? { annee: a.annee, etat: "inactivite", salaireBrut: 0, moisEmploi: 0 }
+				: a,
+		);
+		const p = computePension(c, B);
+		expect(p.liquidation.age).toBe(52 * 4);
+		expect(p.fonctionPublique?.motif).toBe("invalidite");
+		expect(p.fonctionPublique?.trimestresDecote).toBe(0);
+		expect(p.fonctionPublique?.services).toBe(27 * 4);
+	});
+
+	test("un militaire part à l'âge que fixent ses services, avec un cinquième de services en plus, et un nouvel âge légal n'y change rien", () => {
+		const c = fonctionnaire(1980, 20, () => 28000);
+		c.fonctionPublique = {
+			regime: "militaire",
+			categorie: "sedentaire",
+			ageRadiation: 45,
+			bonifications: 10,
+		};
+		const p = computePension(c, B);
+		expect(p.liquidation.age).toBe(45 * 4);
+		// 25 ans de services : 100 trimestres, 20 de bonification du cinquième, 10 de campagne.
+		expect(p.fonctionPublique?.services).toBe(100);
+		expect(p.fonctionPublique?.bonifications).toBe(30);
+		expect(p.fonctionPublique?.trimestresDecote).toBe(0);
+		const regles = { ageLegal: 268, anneeEffet: 2028 };
+		const q = computePension(c, appliquerRegles(B, regles), { regles });
+		expect(q.liquidation.age).toBe(45 * 4);
+		expect(q.mensuelleBrute).toBeCloseTo(p.mensuelleBrute, 6);
+	});
+});
+
 describe("leviers propres à la fonction publique", () => {
 	// Traitement qui monte de 2 % par an : les 25 meilleures années valent moins que la dernière.
 	const c = fonctionnaire(1975, 24, (age) => 25000 * 1.02 ** (age - 24), {
@@ -229,14 +266,24 @@ describe("backtest de la fonction publique", () => {
 	const relatif = (l: { modele: number; observe: number }) =>
 		Math.abs(l.modele / l.observe - 1);
 
-	test("pension moyenne des retraités : État à moins de 8 %, CNRACL à moins de 13 %", () => {
+	test("pension moyenne des retraités : État et militaires à moins de 8 %, CNRACL à moins de 10 %", () => {
 		for (const l of groupe("pension moyenne des retraités"))
-			expect(relatif(l)).toBeLessThan(l.nom.startsWith("État") ? 0.08 : 0.13);
+			expect(relatif(l)).toBeLessThan(l.nom.startsWith("CNRACL") ? 0.1 : 0.08);
 	});
 
-	test("pension moyenne des nouveaux retraités à moins de 15 %", () => {
+	// Trois années de départs groupées : quelques dizaines de personnes simulées par ligne.
+	test("pension moyenne des nouveaux retraités à moins de 17 %", () => {
 		for (const l of groupe("pension moyenne des nouveaux retraités"))
-			expect(relatif(l)).toBeLessThan(0.15);
+			expect(relatif(l)).toBeLessThan(0.17);
+	});
+
+	test("militaires : âge, durée et indice au départ à moins de 6 %", () => {
+		for (const l of groupe("militaires")) expect(relatif(l)).toBeLessThan(0.06);
+	});
+
+	test("pente des dépenses jusqu'en 2070 à moins de 5 points de celle du COR", () => {
+		for (const l of groupe("dépenses"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(5);
 	});
 
 	test("durées de services et d'assurance à moins de 6 %", () => {
@@ -251,12 +298,12 @@ describe("backtest de la fonction publique", () => {
 			);
 	});
 
-	test("traitements et primes de 2024 à moins de 10 %", () => {
-		for (const l of groupe("rémunération")) expect(relatif(l)).toBeLessThan(0.1);
+	test("traitements et primes de 2024 à moins de 5 %", () => {
+		for (const l of groupe("rémunération")) expect(relatif(l)).toBeLessThan(0.05);
 	});
 
-	test("masse des pensions de 2024 à moins de 15 %", () => {
+	test("masse des pensions de 2024 à moins de 10 %", () => {
 		for (const l of groupe("pensions de droit direct"))
-			expect(relatif(l)).toBeLessThan(0.15);
+			expect(relatif(l)).toBeLessThan(0.1);
 	});
 });

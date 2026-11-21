@@ -260,3 +260,71 @@ console.log(
 	"indice du salaire des femmes :",
 	[1960, 1980, 2000, derniere].map((a) => `${a}: ${ecart.indice[a]}`).join(" "),
 );
+
+// Apprentissage : nombre d'apprentis de chaque année rapporté à la dernière, et salaire légal moyen
+// en part du SMIC selon l'âge (moyenne des trois années de contrat).
+import complements from "../data/references/complements-2026-11.json" with {
+	type: "json",
+};
+
+const apprentis = complements.jeunesCotisants.apprentis;
+const anciens = apprentis.effectifsAu31Decembre1982_2023.valeurs as Record<
+	string,
+	{ totalCalcule: number }
+>;
+const recents = apprentis.effectifsParDiplome2000_2024.valeurs as Record<
+	string,
+	{ ensemble: number }
+>;
+const effectifsApprentis: Record<number, number> = {};
+for (const [annee, v] of Object.entries(anciens))
+	effectifsApprentis[Number(annee)] = v.totalCalcule;
+for (const [annee, v] of Object.entries(recents))
+	effectifsApprentis[Number(annee)] = v.ensemble;
+const anneesApprentis = Object.keys(effectifsApprentis).map(Number);
+const finApprentis = Math.max(...anneesApprentis);
+const grille = complements.jeunesCotisants.remunerationDesApprentis
+	.grille as Record<string, Record<string, number>>;
+const moyenneGrille = (tranche: string) =>
+	Number(
+		(
+			Object.values(grille).reduce((t, a) => t + (a[tranche] ?? 0), 0) /
+			Object.values(grille).length /
+			100
+		).toFixed(3),
+	);
+await Bun.write(
+	new URL(
+		"../packages/engine/src/generateur/alternance.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify(
+		{
+			source: `${apprentis.effectifsParDiplome2000_2024.source} ; ${apprentis.effectifsAu31Decembre1982_2023.source} ; ${complements.jeunesCotisants.remunerationDesApprentis.source}`,
+			url: apprentis.effectifsParDiplome2000_2024.url,
+			date: "2026-11-21",
+			note: "Apprentis inscrits au 31 décembre, privé et public confondus, rapportés à la dernière année ; avant la première année connue, le niveau de cette année-là. Salaire : grille légale en vigueur, moyenne des trois années de contrat, appliquée à toutes les années faute d'avoir lu les grilles antérieures.",
+			debut: Math.min(...anneesApprentis),
+			fin: finApprentis,
+			indice: Object.fromEntries(
+				anneesApprentis.map((a) => [
+					a,
+					Number(
+						(
+							(effectifsApprentis[a] as number) /
+							(effectifsApprentis[finApprentis] as number)
+						).toFixed(4),
+					),
+				]),
+			),
+			salaireEnSmic: [
+				[17, moyenneGrille("de16a17")],
+				[18, moyenneGrille("de18a20")],
+				[20, moyenneGrille("de18a20")],
+				[21, moyenneGrille("de21a25")],
+			],
+		},
+		null,
+		"\t",
+	)}\n`,
+);

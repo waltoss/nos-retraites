@@ -353,10 +353,21 @@ function faitsFonctionPublique(
 	const a = projection.annees.find((x) => x.annee === annee);
 	const poids = poidsDeLAnnee(preparation, annee);
 	const groupes = { peu: { n: 0, s: 0 }, beaucoup: { n: 0, s: 0 } };
+	// Âge de départ des civils partis pour ancienneté : les militaires et les invalides partent
+	// bien plus tôt, pour d'autres raisons que l'âge légal.
+	const ages = { n: 0, s: 0 };
 	preparation.population.forEach((individu, k) => {
 		const p = preparation.pensions[k] as Pension;
 		if (Math.abs(p.liquidation.annee - annee) > 2) return;
 		const c = individu.carriere;
+		if (
+			c.fonctionPublique?.regime === "militaire" ||
+			p.fonctionPublique?.motif === "invalidite" ||
+			p.mensuelleBrute === 0
+		)
+			return;
+		ages.n += poids[k] as number;
+		ages.s += ((poids[k] as number) * p.liquidation.age) / 4;
 		const derniere =
 			c.annees[p.liquidation.annee - 1 - (c.annees[0]?.annee ?? 0)];
 		if (!derniere || derniere.primes === undefined) return;
@@ -370,7 +381,7 @@ function faitsFonctionPublique(
 		retraites: a?.retraites ?? 0,
 		pensions: a?.pensions ?? 0,
 		pensionMoyenne: a?.pensionMoyenne ?? 0,
-		ageMoyenDepart: a?.ageMoyenDepart ?? 0,
+		ageMoyenDepart: ages.n ? ages.s / ages.n : 0,
 		nouveaux: {
 			peuDePrimes: groupes.peu.n ? groupes.peu.s / groupes.peu.n : 0,
 			beaucoupDePrimes: groupes.beaucoup.n

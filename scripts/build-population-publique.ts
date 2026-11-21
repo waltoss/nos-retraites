@@ -45,7 +45,12 @@ const population = generatePopulationPublique(B);
 const comptes = buildComptes(population, B);
 const pensions = computePensions(population, B, {}, comptes);
 
-const REGIMES = ["sre", "cnracl"] as const;
+const REGIMES = ["sre", "cnracl", "militaire"] as const;
+const CLE_DREES = {
+	sre: "fpeCivile",
+	cnracl: "cnracl",
+	militaire: "fpeMilitaire",
+} as const;
 const SEXES = ["F", "H"] as const;
 type Regime = (typeof REGIMES)[number];
 type Sexe = (typeof SEXES)[number];
@@ -89,9 +94,21 @@ interface Cible {
 	compte: (k: number, sexe: Sexe) => { annee: number; age: number } | null;
 	sexes: readonly Sexe[];
 }
+/**
+ * La Drees ne compte un retraité pour invalidité qu'à partir de l'âge d'ouverture des droits
+ * des sédentaires, et pas parmi les nouveaux retraités : même convention ici.
+ */
+const invalide = (k: number) =>
+	(pensions[k] as Pension).fonctionPublique?.motif === "invalidite";
+const anneeDOuverture = (k: number) => {
+	const g = population[k]?.carriere.anneeNaissance ?? 0;
+	const table = B.fonctionPublique?.parGeneration.sedentaire ?? {};
+	return g + Math.ceil((table[Math.min(1985, g)]?.ageLegal ?? 248) / 4);
+};
 const retraite = (k: number, annee: number) =>
 	(pensions[k] as Pension).liquidation.annee <= annee &&
-	(pensions[k] as Pension).mensuelleBrute > 0;
+	(pensions[k] as Pension).mensuelleBrute > 0 &&
+	(!invalide(k) || annee >= anneeDOuverture(k));
 const cotise = (k: number, annee: number) => {
 	const c = population[k]?.carriere;
 	if (!c || (pensions[k] as Pension).liquidation.annee <= annee) return false;
@@ -112,7 +129,7 @@ const pyramideSre = cotisants.pyramideDesAges
 
 function cibles(regime: Regime): Cible[] {
 	const liste: Cible[] = [];
-	const drees = eacr[regime === "sre" ? "fpeCivile" : "cnracl"];
+	const drees = eacr[CLE_DREES[regime]];
 	const ageEn = (k: number, annee: number) =>
 		annee - (population[k]?.carriere.anneeNaissance ?? 0);
 	for (const [sexe, nom] of [
@@ -142,7 +159,8 @@ function cibles(regime: Regime): Cible[] {
 					sexes: [sexe],
 					compte: (k) =>
 						(pensions[k] as Pension).liquidation.annee === annee &&
-						(pensions[k] as Pension).mensuelleBrute > 0
+						(pensions[k] as Pension).mensuelleBrute > 0 &&
+						!invalide(k)
 							? { annee, age: ageEn(k, annee) }
 							: null,
 				});
@@ -166,9 +184,15 @@ function cibles(regime: Regime): Cible[] {
 				});
 			}
 	}
+	// Militaires : seuls ceux qui auront une pension militaire sont simulés, les cotisants ne se comparent pas.
 	const serie = (
-		regime === "sre" ? cotisants.sreCivils : cotisants.cnraclEnsembleCalcule
-	).valeurs as Record<string, number>;
+		regime === "militaire"
+			? {}
+			: (regime === "sre"
+					? cotisants.sreCivils
+					: cotisants.cnraclEnsembleCalcule
+				).valeurs
+	) as Record<string, number>;
 	for (let annee = 2012; annee <= 2025; annee++) {
 		const valeur = serie[annee];
 		if (valeur)
@@ -188,6 +212,7 @@ const LAMBDA = 0.02;
 const resultat: Record<Regime, Record<Sexe, number[]>> = {
 	sre: { F: [], H: [] },
 	cnracl: { F: [], H: [] },
+	militaire: { F: [], H: [] },
 };
 for (const regime of REGIMES) {
 	const liste = cibles(regime);

@@ -10,6 +10,12 @@ import { type AgeTrimestres, type Carriere, moisParEtat } from "./types.ts";
  */
 const HEURES_AVPF = 169 * 12;
 const MOIS = 12;
+/**
+ * Depuis 2014, un apprenti valide autant de trimestres que de trimestres d'apprentissage
+ * (data/references/complements-2026-11.json, trimestresDesApprentis).
+ */
+const ANNEE_APPRENTIS_PLEINS_DROITS = 2014;
+const TRIMESTRES_APPRENTI_AVANT = 1;
 const JOURS_PAR_MOIS = 30;
 /** L'Agirc-Arrco attribue des points pour un arrêt de plus de 60 jours. */
 const MOIS_MALADIE_POUR_POINTS = 2;
@@ -69,6 +75,10 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 				b.cnav.heuresSmicParTrimestre(a.annee) *
 				valeur(b.cnav.smicHoraire, a.annee);
 			cotises = Math.min(4, Math.floor(a.salaireBrut / seuil));
+			// Avant 2014 un apprenti cotisait sur une assiette forfaitaire, plus basse que son salaire :
+			// il ne validait pas toute son année. Hypothèse : un trimestre par an, réglé sur la part des départs pour carrière longue.
+			if (a.alternance && a.annee < ANNEE_APPRENTIS_PLEINS_DROITS)
+				cotises = Math.min(cotises, TRIMESTRES_APPRENTI_AVANT);
 			const part = mois.emploi / MOIS;
 			// Le plafond s'applique au prorata des mois travaillés.
 			if (cotises > 0) salairePorte = Math.min(a.salaireBrut, pass * part);

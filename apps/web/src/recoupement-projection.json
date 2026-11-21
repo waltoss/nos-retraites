@@ -1,17 +1,17 @@
 [
 	{
 		"nom": "Cotisants pour un retraité en 2030",
-		"modele": 1.54,
+		"modele": 1.6,
 		"cible": 1.43
 	},
 	{
 		"nom": "Cotisants pour un retraité en 2050",
-		"modele": 1.28,
+		"modele": 1.32,
 		"cible": 1.11
 	},
 	{
 		"nom": "Cotisants pour un retraité en 2070",
-		"modele": 1.07,
+		"modele": 1.02,
 		"cible": 0.87
 	}
 ]

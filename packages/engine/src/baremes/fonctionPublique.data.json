@@ -1012,8 +1012,13 @@
 		"agent": 0.111,
 		"employeur": {
 			"sre": 0.8228,
-			"cnracl": 0.3765
+			"cnracl": 0.3765,
+			"militaire": 1.2607
 		}
+	},
+	"bonificationDuCinquieme": {
+		"part": 0.2,
+		"plafond": 20
 	},
 	"rafp": {
 		"premiereAnnee": 2005,

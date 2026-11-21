@@ -202,7 +202,7 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 			b,
 		);
 		const a = carriere.annees.find((x) => x.annee === ANNEE_SALAIRES);
-		if (!a || a.salaireBrut <= 0 || !a.moisEmploi) continue;
+		if (!a || a.salaireBrut <= 0 || !a.moisEmploi || a.alternance) continue;
 		groupes[carriere.sexe === "F" ? "femmes" : "hommes"].push(
 			(a.salaireBrut * 12) / a.moisEmploi / (a.quotite ?? 1) / smic,
 		);

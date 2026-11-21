@@ -30,7 +30,7 @@ export const Route = createFileRoute("/carrieres")({ component: Carrieres });
 
 const CHAMPS: { id: ChampSimule; label: string }[] = [
 	{ id: "prive", label: "Salariés du privé" },
-	{ id: "public", label: "Fonctionnaires" },
+	{ id: "public", label: "Fonctionnaires et militaires" },
 ];
 /** Habillage d'un portrait : pour un fonctionnaire, le métier se déduit de sa catégorie et de ses primes. */
 function habillage(p: ResumePortrait): {
@@ -42,29 +42,31 @@ function habillage(p: ResumePortrait): {
 	if (!f) return qui;
 	const femme = p.sexe === "F";
 	const metier =
-		f.categorie === "superActif"
-			? femme
-				? "policière"
-				: "policier"
-			: f.regime === "cnracl"
-				? f.categorie === "actif"
-					? femme
-						? "aide-soignante à l'hôpital"
-						: "aide-soignant à l'hôpital"
-					: femme
-						? "agente d'une collectivité"
-						: "agent d'une collectivité"
-				: f.categorie === "actif"
-					? femme
-						? "institutrice ou douanière"
-						: "instituteur ou douanier"
-					: f.partPrimes < 0.3
+		f.regime === "militaire"
+			? "militaire"
+			: f.categorie === "superActif"
+				? femme
+					? "policière"
+					: "policier"
+				: f.regime === "cnracl"
+					? f.categorie === "actif"
 						? femme
-							? "professeure"
-							: "professeur"
+							? "aide-soignante à l'hôpital"
+							: "aide-soignant à l'hôpital"
 						: femme
-							? "agente d'un ministère"
-							: "agent d'un ministère";
+							? "agente d'une collectivité"
+							: "agent d'une collectivité"
+					: f.categorie === "actif"
+						? femme
+							? "institutrice ou douanière"
+							: "instituteur ou douanier"
+						: f.partPrimes < 0.3
+							? femme
+								? "professeure"
+								: "professeur"
+							: femme
+								? "agente d'un ministère"
+								: "agent d'un ministère";
 	return { prenom: qui.prenom, metier };
 }
 
@@ -319,6 +321,11 @@ const duree = (mois: number) =>
 	mois >= 12 ? pluriel(Math.round(mois / 12), "an") : `${mois} mois`;
 
 function recit(c: Carriere, ageDepart: number): string {
+	if (c.fonctionPublique?.regime === "militaire") {
+		const entree = c.annees.find((a) => a.primes !== undefined);
+		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;
+		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Engagée" : "Engagé"} à ${ageEntree} ans, quitte l'armée à ${c.fonctionPublique.ageRadiation} ans avec une pension versée tout de suite. La suite de sa vie active, dans le civil, n'est pas simulée.`;
+	}
 	if (c.fonctionPublique) {
 		const entree = c.annees.find((a) => a.primes !== undefined);
 		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;

@@ -121,6 +121,15 @@ export interface Hypotheses {
 		multiplicateurDurees: number;
 		effetFinal: number;
 	};
+	/**
+	 * Apprentissage et alternance avant l'entrée dans la vie active : part de ceux qui n'ont pas encore
+	 * commencé leur carrière et qui sont en contrat à chaque âge, la dernière année connue.
+	 * Les parts sont réglées sur les cotisants de l'Agirc-Arrco de moins de 26 ans ; elles suivent
+	 * dans le temps le nombre d'apprentis, et le salaire suit la grille légale (alternance.data.json).
+	 */
+	alternance: {
+		parAge: ReadonlyArray<readonly [age: number, part: number]>;
+	};
 	depart: ComportementDepart;
 	/** Largeur de la zone juste au-dessus du SMIC où sont étalés les salaires que le modèle placerait dessous. */
 	etalementSmic: number;

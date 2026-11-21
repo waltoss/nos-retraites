@@ -9,6 +9,9 @@
  * - une valeur par année civile : la dernière en vigueur dans l'année ;
  * - le taux de décote de 2007, absent des sources lues, est interpolé entre 2006 et 2008.
  */
+import complements from "../data/references/complements-2026-11.json" with {
+	type: "json",
+};
 import reference from "../data/references/fonction-publique.json" with {
 	type: "json",
 };
@@ -273,8 +276,12 @@ const sortie = {
 		employeur: {
 			sre: taux.contributionEmployeurEtat.enVigueurAu2026_11_21.civils / 100,
 			cnracl: taux.contributionEmployeurCnracl.enVigueurAu2026_11_21 / 100,
+			militaire:
+				taux.contributionEmployeurEtat.enVigueurAu2026_11_21.militaires / 100,
 		},
 	},
+	/** Militaires : un cinquième des services en plus, vingt trimestres au plus (data/references/complements-2026-11.json). */
+	bonificationDuCinquieme: { part: 0.2, plafond: 20 },
 	rafp: {
 		premiereAnnee: 2005,
 		plafondAssiette:
@@ -295,6 +302,71 @@ const sortie = {
 		).map((x) => x.coefficient),
 	},
 };
+
+// Temps partiel des fonctionnaires : part et quotité moyenne par régime et par sexe (Siasp, fin 2019).
+const siasp =
+	complements.tempsPartielFonctionnaires.siaspFonctionnaires2014_2019;
+type Quotites = {
+	effectifs: number;
+	aTempsPartiel: number;
+	moinsDe50OuIndetermine: number;
+	q50: number;
+	q60: number;
+	q70: number;
+	q80: number;
+	q90: number;
+};
+const versants = (
+	siasp.valeurs as unknown as Record<
+		string,
+		{ parVersant: Record<string, Record<string, Quotites>> }
+	>
+)[2019]?.parVersant;
+const tempsPartiel = (noms: string[], sexe: "femmes" | "hommes") => {
+	let effectifs = 0;
+	let partiel = 0;
+	let quotites = 0;
+	for (const nom of noms) {
+		const x = versants?.[nom]?.[sexe];
+		if (!x) throw new Error(`Temps partiel absent pour ${nom}`);
+		effectifs += x.effectifs;
+		partiel += x.aTempsPartiel;
+		// Moins de 50 % ou indéterminé : compté pour 40 %.
+		quotites +=
+			0.4 * x.moinsDe50OuIndetermine +
+			0.5 * x.q50 +
+			0.6 * x.q60 +
+			0.7 * x.q70 +
+			0.8 * x.q80 +
+			0.9 * x.q90;
+	}
+	return {
+		part: Number((partiel / effectifs).toFixed(4)),
+		quotite: Number((quotites / partiel).toFixed(3)),
+	};
+};
+const parSexe = (noms: string[]) => ({
+	F: tempsPartiel(noms, "femmes"),
+	H: tempsPartiel(noms, "hommes"),
+});
+await Bun.write(
+	new URL(
+		"../packages/engine/src/generateur/tempsPartielPublic.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify(
+		{
+			source: siasp.source,
+			url: siasp.url,
+			date: reference.meta.date,
+			note: "Fonctionnaires civils au 31 décembre 2019 : part à temps partiel et quotité moyenne de ceux qui y sont. Les collectivités et les hôpitaux sont regroupés.",
+			sre: parSexe(["fpe"]),
+			cnracl: parSexe(["fpt", "fph"]),
+		},
+		null,
+		"\t",
+	)}\n`,
+);
 
 await Bun.write(
 	new URL(

@@ -1,0 +1,26 @@
+{
+	"source": "DGAFP, Rapport annuel sur l'état de la fonction publique, éditions 2016 à 2021, fiche thématique 2.7 « Temps partiel », figure 2.7-1 « Effectifs physiques des agents civils par versant de la fonction publique par statut, sexe et quotité de temps de travail au 31 décembre » (Siasp, Insee, traitement DGAFP)",
+	"url": "https://www.fonction-publique.gouv.fr/files/files/ArchivePortailFP/www.fonction-publique.gouv.fr/rapport-annuel-2021-faits-et-chiffres-fiches-thematiques-excel.html",
+	"date": "2026-11-21",
+	"note": "Fonctionnaires civils au 31 décembre 2019 : part à temps partiel et quotité moyenne de ceux qui y sont. Les collectivités et les hôpitaux sont regroupés.",
+	"sre": {
+		"F": {
+			"part": 0.1398,
+			"quotite": 0.779
+		},
+		"H": {
+			"part": 0.0369,
+			"quotite": 0.745
+		}
+	},
+	"cnracl": {
+		"F": {
+			"part": 0.2767,
+			"quotite": 0.742
+		},
+		"H": {
+			"part": 0.0781,
+			"quotite": 0.662
+		}
+	}
+}

@@ -258,7 +258,7 @@ const pc0 = (x: number) => `${entier(x * 100)} %`;
 const HYPOTHESES_FP: { nom: string; valeur: string }[] = [
 	{
 		nom: "Âge d'entrée dans la fonction publique",
-		valeur: `à partir de ${HP.entree.sre.min} ans, ${decimal(HP.entree.sre.delaiMoyen)} ans plus tard en moyenne à l'État, ${decimal(HP.entree.cnracl.delaiMoyen)} ans dans les collectivités et les hôpitaux`,
+		valeur: `à partir de ${HP.entree.sre.min} ans, ${decimal(HP.entree.sre.delaiMoyen.at(-1)?.[1] ?? 0)} ans plus tard en moyenne à l'État, ${decimal(HP.entree.cnracl.delaiMoyen.at(-1)?.[1] ?? 0)} ans dans les collectivités et les hôpitaux (${decimal(HP.entree.cnracl.delaiMoyen[0]?.[1] ?? 0)} ans pour les générations d'avant-guerre)`,
 	},
 	{
 		nom: "Années d'avant l'entrée validées dans un autre régime",
@@ -361,13 +361,15 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 ];
 
 const LIMITES = [
-	"Les salariés du privé et les fonctionnaires civils (État, collectivités, hôpitaux) sont simulés. Ni militaires, ni indépendants, ni régimes spéciaux, ni contractuels du public.",
-	"Les fonctionnaires sont une seconde population, plus petite et plus simple que celle du privé : un emploi continu de l'entrée au départ, sans temps partiel, sans invalidité, sans sortie vers le privé. Leur traitement suit l'âge, l'ancienneté et un rang ; les primes sont une part du traitement propre à chacun, constante dans le temps. Ces carrières sont réglées à la main sur les statistiques des deux régimes, pas par un calage automatique.",
+	"Les salariés du privé, les fonctionnaires (État, collectivités, hôpitaux) et les militaires sont simulés. Ni indépendants, ni régimes spéciaux, ni contractuels du public.",
+	"Les fonctionnaires sont une seconde population, plus petite et plus simple que celle du privé : un emploi continu de l'entrée au départ, sans sortie vers le privé. Le temps partiel se prend entre 30 et 50 ans, à la part et à la quotité publiées pour 2019, supposées valables à toutes les époques. Leur traitement suit l'âge, l'ancienneté et un rang ; les primes sont une part du traitement propre à chacun, constante dans le temps. Ces carrières sont réglées à la main sur les statistiques des deux régimes, pas par un calage automatique.",
 	"La part de chaque génération qui devient fonctionnaire est réglée sur les cotisants et les retraités de 2012 à 2025. Pour les générations nées après 2000 elle reste celle des dernières observées : si l'État et les collectivités recrutent davantage de contractuels, il y aura moins de fonctionnaires que dans le modèle.",
+	"Une part des fonctionnaires est mise à la retraite pour invalidité avant l'âge légal, avec une pension sans décote : 4,5 % à l'État, 15 % dans les collectivités et les hôpitaux, parts réglées sur les départs de 2024.",
+	"Pour les militaires, seuls ceux qui quittent l'armée avec une pension sont simulés, après 17 ans de services au moins. Les règles sont simplifiées : pas de décote, une bonification d'un cinquième des services et des bonifications de campagne tirées au sort. Les leviers d'âge ne les touchent pas. Les femmes militaires sont trop peu nombreuses dans la population simulée pour être vérifiées.",
 	"Jusqu'en 2026 les traitements suivent la valeur du point d'indice, plus 0,4 % par an pour le relèvement des grilles. Ensuite ils sont supposés suivre les salaires du privé.",
 	"Compter les primes dans la pension des fonctionnaires garde le taux de 75 % et les cotisations d'aujourd'hui : c'est une borne haute de ce que coûterait la mesure, pas une réforme équilibrée. La retraite additionnelle sur les primes est calculée pour chacun mais reste hors du solde, comme dans les comptes du COR.",
 	"Les cotisations des fonctionnaires restent dans le bloc des autres régimes : le nombre de postes ne dépend pas de l'âge de départ. Un fonctionnaire qui a aussi travaillé dans le privé est compté dans les deux populations, avec dans chacune la seule pension de ce régime.",
-	"Les effectifs par âge de fin 2024 sont appliqués à 2026. Avant 24 ans le modèle manque d'apprentis et d'emplois étudiants, et les plus de 96 ans sont absents.",
+	"Les effectifs par âge de fin 2024 sont appliqués à 2026. Les plus de 96 ans sont absents.",
 	"À âge égal, les pensions élevées vivent plus longtemps : le modèle reprend les tables de mortalité de l'Insee par niveau de vie, en réduisant l'écart de 40 % parce qu'une pension n'est pas un niveau de vie. Le classement se fait sur la pension de chacun, pas sur les revenus du ménage.",
 	"Trois personnes sur dix passent une partie de leur carrière dans un autre régime. Ces années comptent pour leur durée, mais leur pension de fonctionnaire ou d'indépendant n'est pas calculée : elle est dans le bloc des autres régimes.",
 	"Les points de retraite complémentaire d'avant 2019 sont attribués au taux de cotisation moyen de chaque année, pas au taux de chaque entreprise.",
@@ -375,12 +377,12 @@ const LIMITES = [
 	"Les salaires d'autrefois suivent le salaire moyen de l'économie, pas le plafond de la Sécurité sociale, qui a monté plus vite depuis 1980.",
 	"Le minimum contributif des départs passés est celui de leur année. Pour ceux qui ont aussi cotisé ailleurs, son plafond tous régimes utilise une estimation de leur autre pension.",
 	"L'emploi après 55 ans suit la hausse observée depuis 2010 (62 % des 55-59 ans en emploi en 2010, 79 % en 2025) et reste ensuite à ce niveau. Si la hausse continue, un relèvement de l'âge rapporte davantage que ce que le modèle affiche.",
-	"Il manque un demi-million de cotisants de moins de 25 ans : apprentis, emplois d'été, petits contrats.",
+	"Avant leur premier emploi, une partie des jeunes passent par l'apprentissage ou l'alternance : près d'un sur deux à 21 ans aujourd'hui, bien moins autrefois, selon le nombre d'apprentis de chaque année. Ils sont payés selon la grille légale d'aujourd'hui, appliquée à toutes les époques. Avant 2014 un apprenti ne validait pas toute son année : le modèle retient un trimestre par an, une hypothèse réglée sur la part des départs pour carrière longue (20 % dans le modèle en 2023, 18 % observés). Les emplois d'été et les petits contrats ne sont pas simulés.",
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
 	"La population suit les projections de l'Insee de 2026. Natalité et solde migratoire se règlent entre ses variantes basse et haute, par interpolation ; leurs effets sont supposés s'additionner. Les arrivants reçoivent la carrière des personnes de leur âge. Les salaires suivent l'hypothèse du COR : +0,7 % par an au-dessus des prix.",
 	"Dans la projection, la part des retraités qui relève du privé suit la génération : les futurs retraités gardent la part des jeunes retraités d'aujourd'hui. C'est encore trop peu, voir la comparaison avec le COR plus haut.",
-	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR, et ce qui n'est ni le privé ni les fonctionnaires civils forme un bloc. Dans un scénario, les règles communes à tous (âge, durée, décote, droits familiaux, revalorisation) s'appliquent à ce bloc comme au privé. Les règles propres au régime général (meilleures années, taux plein, minimum contributif, cotisation) ne s'appliquent qu'aux régimes qui lui sont alignés, pas à la fonction publique ni aux régimes spéciaux. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde retombe près des variantes du COR en 2070, un peu en dessous en 2050.",
+	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR, et ce qui n'est ni le privé ni les fonctionnaires forme un bloc. Dans un scénario, les règles communes à tous (âge, durée, décote, droits familiaux, revalorisation) s'appliquent à ce bloc comme au privé. Les règles propres au régime général (meilleures années, taux plein, minimum contributif, cotisation) ne s'appliquent qu'aux régimes qui lui sont alignés, pas à la fonction publique ni aux régimes spéciaux. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde retombe près des variantes du COR en 2070, un peu en dessous en 2050.",
 	"Un nouvel âge légal ou une nouvelle durée s'appliquent par étapes de trois mois par génération, à partir de celle qui atteint son âge légal en 2028. C'est le rythme de la réforme de 2023 ; il se règle.",
 	"Les départs pour carrière longue suivent les règles de la Cnav de septembre 2026. Dans un scénario, ils gardent leur avance sur l'âge légal : c'est une hypothèse, aucune loi ne le dit.",
 	"Qui part quand il a le choix ? Le modèle tire au sort : 45 % de ceux qui n'ont ni emploi ni durée suffisante à l'âge légal partent pour inaptitude ou invalidité, un cinquième des autres accepte une décote, et six sur dix de ceux qui ont le taux plein en emploi continuent un peu. Ces parts sont réglées sur les départs de 2021 à 2023 au régime général, et ne changent pas quand les règles changent.",
@@ -547,6 +549,27 @@ const BACKTEST: Record<
 			source: EACR,
 			format: (x) => decimal(x),
 		},
+	"Fonction publique : dépenses en 2040, 2055 et 2070, base 100 en 2026": {
+		texte:
+			"Pensions des fonctionnaires en part de la richesse du pays, rapportées à leur niveau de 2026. Le COR compte aussi les réversions et les ouvriers de l'État : les niveaux ne se comparent pas (2,8 % du PIB ici contre 3,1 %), les pentes oui, et le modèle n'est pas réglé dessus.",
+		source:
+			"Conseil d'orientation des retraites, rapport de juin 2026, figure 2.6, groupes État et CNRACL.",
+		format: (x) => entier(x),
+	},
+	"Fonction publique : agents à temps partiel, en %": {
+		texte:
+			"Part des fonctionnaires en poste qui travaillent à temps partiel. Dans le modèle il se prend entre 30 et 50 ans, à la quotité moyenne publiée. Il réduit la durée de services, pas la durée d'assurance.",
+		source:
+			"DGAFP, rapport annuel sur l'état de la fonction publique, fiche 2.7, fonctionnaires au 31 décembre 2019.",
+		format: (x) => entier(x),
+		enPoints: true,
+	},
+	"Fonction publique : militaires qui partent avec une pension": {
+		texte:
+			"Départs pour ancienneté : âge à la sortie de l'armée, durée de services avec les bonifications, indice de fin de carrière. Ces chiffres servent au réglage.",
+		source: JAUNE,
+		format: (x) => decimal(x),
+	},
 	"Situation avant la retraite en 2023, en % de la classe d'âge": {
 		texte:
 			"Ce que font les gens juste avant l'âge légal décide de ce que rapporte son relèvement. L'emploi après 55 ans a beaucoup monté depuis 2010 : le modèle suit cette hausse et la suppose acquise ensuite. L'enquête couvre toute la population, le modèle les seuls salariés du privé.",

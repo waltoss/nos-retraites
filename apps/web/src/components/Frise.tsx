@@ -124,7 +124,9 @@ export function Frise({
 	const libelle = (etat: Etat) =>
 		etat === "emploi" && vise?.a?.autreRegime
 			? "en emploi dans un autre régime"
-			: ETATS[etat].label;
+			: etat === "emploi" && vise?.a?.alternance
+				? "en apprentissage ou en alternance"
+				: ETATS[etat].label;
 	const detailMois = vise?.mois
 		? (Object.entries(vise.mois) as [Etat, number][])
 				.filter(([, n]) => n > 0)
