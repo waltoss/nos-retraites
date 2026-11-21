@@ -61,7 +61,12 @@ export interface BaremeCnav {
 		majorationsEnfantsDepuis: number;
 	};
 	/** Jours indemnisés qui valident un trimestre assimilé. */
-	joursParTrimestreAssimile: { chomage: number; maladie: number };
+	/** Maternité : un trimestre par tranche de jours indemnisés, et au moins celui de l'accouchement. */
+	joursParTrimestreAssimile: {
+		chomage: number;
+		maladie: number;
+		maternite?: number;
+	};
 	/** Heures de SMIC nécessaires pour valider un trimestre, selon l'année. */
 	heuresSmicParTrimestre(annee: number): number;
 	minimumContributif: {

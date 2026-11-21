@@ -23,10 +23,21 @@ const taux = {
 	source: t.source,
 	url: t.url,
 	date: reference.tauxMoyensEffectifs.date ?? "2026-11-21",
-	note: "Rapport du taux de cotisation moyen au taux obligatoire, par année. Les points d'un salarié moyen sont ceux du taux obligatoire multipliés par ce rapport.",
-	arrcoTranche1: propre(t.arrco.tranche1.rapportMoyenSurObligatoire as Serie),
-	arrcoTranche2: propre(t.arrco.tranche2.rapportMoyenSurObligatoire as Serie),
-	agircTrancheB: propre(t.agirc.trancheB.rapportMoyenSurObligatoire as Serie),
+	note: "Taux de cotisation contractuel moyen réellement pratiqué, par année, d'après l'Agirc-Arrco (classeur d'hypothèses du COR). Le moteur attribue les points à ce taux. Avant la première année connue, il applique au taux obligatoire le rapport de cette première année.",
+	arrcoTranche1: propre(t.arrco.tranche1.tauxMoyen as Serie),
+	arrcoTranche2: propre(t.arrco.tranche2.tauxMoyen as Serie),
+	agircTrancheB: propre(t.agirc.trancheB.tauxMoyen as Serie),
+	rapportInitial: {
+		arrcoTranche1: Object.values(
+			propre(t.arrco.tranche1.rapportMoyenSurObligatoire as Serie),
+		)[0],
+		arrcoTranche2: Object.values(
+			propre(t.arrco.tranche2.rapportMoyenSurObligatoire as Serie),
+		)[0],
+		agircTrancheB: Object.values(
+			propre(t.agirc.trancheB.rapportMoyenSurObligatoire as Serie),
+		)[0],
+	},
 	/** Depuis la fusion de 2019, sur la tranche 1 seulement. */
 	agircArrcoTranche1: Number(
 		(
@@ -73,7 +84,7 @@ await Bun.write(
 	`${JSON.stringify(ecart)}\n`,
 );
 console.log(
-	"taux moyen / obligatoire, Arrco T1 :",
+	"taux moyen, Arrco T1 :",
 	[1970, 1995, 2010].map((a) => `${a}: ${taux.arrcoTranche1[a]}`).join(" "),
 	"| depuis 2019 :",
 	taux.agircArrcoTranche1,

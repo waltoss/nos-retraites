@@ -23,7 +23,7 @@
 	{
 		"nom": "Pensions versées",
 		"unite": "milliards",
-		"modele": 199.3,
+		"modele": 199.8,
 		"cible": 220.7,
 		"source": "Drees, effectifs × pension moyenne de droit direct fin 2024, régime général et Agirc-Arrco"
 	}

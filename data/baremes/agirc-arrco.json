@@ -1,17 +1,13 @@
 {
   "avertissements": [
     "Sources primaires reellement ouvertes : pages 'Baremes' de reglementation.agirc-arrco.fr, circulaire Agirc-Arrco 2025-16-SG-DRJ (parametres 2026), circulaire 2023-11-DRJ + avenant n°17, notice Agirc-Arrco 'coefficients temporaires' (17/05/2022), fiche 'Decrypter la majoration pour enfants' (02-03/2025), guides salaries n°6 (02/2022) et n°7 (03/2016), service-public.gouv.fr F15396.",
-    "TOUTES les series anterieures a 2019 (valeurs de point, salaires de reference, taux de cotisation, taux d'appel, repartition) viennent d'une source SECONDAIRE : les baremes IPP. Aucune n'a pu etre recoupee avec un document Agirc-Arrco primaire.",
+    "Series anterieures a 2019 : reprises des baremes IPP (source secondaire). Valeurs de point et salaires de reference Agirc 1947-2018, Arrco 1999-2018 et UNIRS 1961-1998 recoupes le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf). Taux de cotisation contractuels et taux d'appel d'avant 2019 : compares le 2026-11-21 a la serie du COR (hypo_parametres_2026.xlsx, onglets ARRCO et AGIRC, 'Source : AGIRC-ARRCO') : concordants de 1967 a 2018 ; desaccords : Arrco 1962-1966 (IPP 2,5 %, COR 4 %), taux d'appel Agirc 1957-1960 (IPP 85 %, COR 90 %), repartition Agirc tranche B 2006-2013 (IPP 12,60 / 7,70, COR 12,65 / 7,65). Aucun document Agirc-Arrco primaire n'a ete lu pour ces taux. Non recoupes du tout : UNIRS avant 1961, tranche C Agirc 1991-1998, series 'entreprises nouvelles' (Arrco T2 depuis 1997, Agirc depuis 1981).",
     "Arrco avant 1999 : il n'existait pas de valeur de point unique (une valeur par caisse). Seule la serie UNIRS (principal regime Arrco) est fournie ; elle ne vaut pas pour les autres caisses. Les points des anciennes caisses ont ete convertis en points Arrco en 1999 (coefficient UNIRS 0,387417 selon l'IPP, non verifie ailleurs).",
-    "Unites monetaires d'avant 1960 incertaines dans la source IPP (Agirc en anciens francs ; UNIRS apparemment en nouveaux francs). Contre-valeurs en euros du salaire de reference UNIRS avant 1958 incoherentes dans la source : mises a null.",
-    "Anomalies relevees dans la source IPP : salaire de reference Agirc 2007 nominal saisi '47125' (valeur en euros 4,7125 retenue) ; pas de ligne Agirc de valeur du point entre 1999 et 2001 ni de 1993 a 1996 (valeur inchangee ou lacune : non tranche) ; taux effectifs Agirc 'entreprises creees depuis 1981' a null a partir de 1996 pour la tranche B ; la part salariale Agirc 'avant 1981' n'a pas de palier 1989 alors que la part patronale en a un.",
+    "Unites monetaires d'avant 1960 : Agirc en anciens francs jusqu'en 1959 puis nouveaux francs (confirme par la compilation officielle Agirc-Arrco) ; UNIRS avant 1961 : unite incertaine dans la source IPP (libelle 'AFRF' mais montants apparemment en nouveaux francs), non recoupee. Contre-valeurs en euros du salaire de reference UNIRS avant 1958 incoherentes dans la source : mises a null.",
+    "Anomalies relevees dans la source IPP : libelle de monnaie 'euros' pour l'Arrco 2001 alors que la compilation officielle donne des francs (6,7983 F ; 76,7965 F ; contre-valeurs en euros justes) ; dates d'effet au 1er avril du salaire de reference Agirc 2004-2014 non confirmees (la compilation officielle donne un montant par annee) ; taux effectifs Agirc 'entreprises creees depuis 1981' a null a partir de 1996 pour la tranche B ; la part salariale Agirc 'avant 1981' n'a pas de palier 1989 alors que la part patronale en a un.",
     "Taux de cotisation historiques : ce sont les taux de droit commun/minimaux. Des taux contractuels superieurs existent dans certaines entreprises ou branches (la circulaire 2026 precise 'sauf obligation nee anterieurement au 2 janvier 1993' et 'sauf dispositions particulieres applicables dans l'entreprise').",
-    "Taux Agirc-Arrco 2019-2025 : la source officielle ouverte ne donne que 2026 ; la constance des taux depuis le 01/01/2019 vient de l'IPP (secondaire).",
-    "Valeur d'achat du point 2027 et plafond des majorations familiales a compter du 01/11/2026 : non trouves (null). La circulaire 2026-3-DT du 21/10/2026 est citee par la page officielle mais n'a pas ete ouverte.",
-    "Coefficients d'anticipation : les deux tableaux officiels ont ete lus, mais la regle de choix entre le bareme 'age' et le bareme 'trimestres manquants' n'a pas ete lue dans une source ouverte.",
-    "CEG/CET 'sans points' : les taux sont lus dans la circulaire officielle ; le principe d'absence de points est lu sur service-public (difference entre taux de cotisation et taux de calcul des points) mais pas mot pour mot pour la CEG/CET dans un texte officiel ouvert.",
+    "Valeur d'achat du point 2027 : non fixee (null). Selon la circulaire 2026-3-DT, elle le sera par le prochain accord national interprofessionnel 2027-2030 ; la valeur 2026 (20,1877 EUR) s'applique dans l'attente (circulaire 2026-4-SG-DRJ).",
     "Points chomage : la formule exacte de calcul n'a pas ete lue ; la source ouverte est un guide de mars 2016 (avant fusion, vocabulaire Pole emploi/Arrco/Agirc).",
-    "Coefficient de conversion Agirc 2019 : lu dans deux sources secondaires concordantes (IPP, la-retraite-en-clair.fr) ; la circulaire Agirc-Arrco 2018-7-DT n'a pas ete ouverte.",
     "Les taux IPP sont publies en fraction ; ils ont ete multiplies par 100 (seule transformation appliquee). AGFF, ancienne CET (1997-2018), cotisation GMP et APEC ne sont pas repris."
   ],
   "valeurDeServiceDuPoint": {
@@ -73,7 +69,7 @@
       },
       "arrco": {
         "periode": "1999-2018",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas de revalorisation de 2014 a octobre 2018.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) : valeurs concordantes. Pas de revalorisation de 2014 a octobre 2018.",
         "serie": [
           {
             "dateEffet": "1999-01-01",
@@ -184,7 +180,7 @@
       },
       "arrcoUnirsAvant1999": {
         "periode": "1957-1998",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Valeur du point UNIRS uniquement (plus gros regime Arrco) ; non applicable telle quelle aux autres caisses Arrco.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) pour 1961-1998 ; avant 1961 non recoupe. Valeur du point UNIRS uniquement (plus gros regime Arrco) ; non applicable telle quelle aux autres caisses Arrco.",
         "serie": [
           {
             "dateEffet": "1957-01-01",
@@ -553,7 +549,7 @@
       },
       "agirc": {
         "periode": "1947-2018",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas de revalorisation de 2014 a octobre 2018.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) : valeurs concordantes. Pas de revalorisation de 2014 a octobre 2018.",
         "serie": [
           {
             "dateEffet": "1947-04-01",
@@ -1137,7 +1133,7 @@
             "annee": 2027,
             "dateEffet": "2027-01-01",
             "valeur": null,
-            "note": "Non publie sur la page officielle a la date de consultation."
+            "note": "Non fixee : selon la circulaire Agirc-Arrco 2026-3-DT du 21/10/2026, elle le sera par le prochain accord national interprofessionnel 2027-2030 ; la valeur 2026 (20,1877 EUR) s'applique dans l'attente (circulaire 2026-4-SG-DRJ du 19/11/2026)."
           }
         ],
         "source": "Agirc-Arrco, reglementation, bareme 'Valeur d'achat du point Agirc-Arrco' ; circulaire 2025-16-SG-DRJ",
@@ -1146,7 +1142,7 @@
       },
       "arrco": {
         "periode": "1999-2018",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas d'evolution en 2015.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) : valeurs concordantes. Pas d'evolution en 2015.",
         "serie": [
           {
             "dateEffet": "1999-01-01",
@@ -1269,7 +1265,7 @@
       },
       "arrcoUnirsAvant1999": {
         "periode": "1949-1998",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Salaire de reference UNIRS uniquement.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) pour 1961-1998 ; avant 1961 non recoupe. Salaire de reference UNIRS uniquement.",
         "serie": [
           {
             "dateEffet": "1949-01-01",
@@ -1587,7 +1583,7 @@
       },
       "agirc": {
         "periode": "1947-2018",
-        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas d'evolution en 2015.",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Recoupe le 2026-11-21 avec la source primaire Agirc-Arrco, 'Compilation des valeurs de point' (https://www.agirc-arrco.fr/storage/2024/10/Compilation_valeurs_de_point_novembre_2026.pdf) : valeurs concordantes. Pas d'evolution en 2015.",
         "serie": [
           {
             "dateEffet": "1947-04-01",
@@ -3215,9 +3211,9 @@
       "reglePointsArrco": "1 point Arrco = 1 point Agirc-Arrco (pas de conversion)",
       "reglePointsAgirc": "points Agirc-Arrco = points Agirc x 0,347791548"
     },
-    "note": "Sources secondaires concordantes ; circulaire Agirc-Arrco 2018-7-DT non ouverte.",
-    "source": "la-retraite-en-clair.fr (secondaire) ; note du bareme IPP 'Valeur du point AGIRC' (secondaire)",
-    "url": "https://www.la-retraite-en-clair.fr/parcours-professionnel-regimes-retraite/retraite-salaries-prive/fusion-caisses-retraite-complementaire-consequences-points-agirc-arrco",
+    "note": "Lu mot pour mot dans la fiche officielle : quotient des valeurs de service au 31 decembre 2018, 0,347791548 (0,4378/1,2588) ; le resultat de la conversion est arrondi a 2 decimales.",
+    "source": "Agirc-Arrco, reglementation, fiche 'Alimentation des comptes de points'",
+    "url": "https://reglementation.agirc-arrco.fr/home/liste-fiche-reglementaires/listes-area/liste-de-fiches-reglementaires/alimentation-des-comptes-de-points.html",
     "dateConsultation": "2026-11-21"
   },
   "contributions": {
@@ -3246,7 +3242,7 @@
       },
       "unite": "pourcent du salaire de la tranche"
     },
-    "note": "Taux lus dans la circulaire officielle (inchanges depuis 2019 selon IPP). Les points sont calcules sur le seul taux de calcul des points (6,20 % / 17 %) ; l'absence de points pour CEG/CET n'a pas ete lue mot pour mot dans un texte officiel ouvert (reprise de l'ANI du 17/11/2017 art. 37 par des sources secondaires).",
+    "note": "Taux lus dans la circulaire officielle (inchanges depuis le 1er janvier 2019 selon la fiche officielle 'Cotisations du regime Agirc-Arrco', reglementation.agirc-arrco.fr, lue le 2026-11-21). Les points sont calcules sur le seul taux de calcul des points (6,20 % / 17 %) ; la meme fiche qualifie les deux contributions d'equilibre de 'non generatrices de droits' (art. 37 de l'ANI) et fixe le pourcentage d'appel a 127 % (art. 36).",
     "source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ du 30/10/2025 ; page 'Cotisations au regime Agirc-Arrco en 2026'",
     "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/cotisations-au-regime-agirc-arrco-en-2026.html",
     "dateConsultation": "2026-11-21"
@@ -3500,7 +3496,7 @@
       ],
       "lecture": "Bareme age : 1 point par trimestre de 67 a 64 ans, 1,25 de 64 a 62 ans, 1,75 en dessous (constate sur le tableau). Bareme carriere courte : memes pas, limite a 20 trimestres."
     },
-    "note": "Tableaux officiels lus integralement. La regle de choix entre les deux baremes n'a PAS ete lue dans une source ouverte. Le bareme par age s'arrete a 66 ans et 9 mois : age de reference de 67 ans (deduction du tableau, non lue explicitement).",
+    "note": "Tableaux officiels lus integralement. Regle de choix (agirc-arrco.fr, 'Conditions d'ouverture de mes droits', lu le 2026-11-21) : avant l'age legal (a partir de 57 ans), minoration selon l'age ; a partir de l'age legal, s'il manque au plus 20 trimestres pour le taux plein au regime de base, la minoration est determinee selon l'age ou selon les trimestres manquants, la solution la plus favorable etant retenue. Le bareme par age s'arrete a 66 ans et 9 mois : age de reference de 67 ans (deduction du tableau, non lue explicitement).",
     "source": "Agirc-Arrco, reglementation, baremes 'Coefficients d'anticipation pour age' et 'pour carriere courte'",
     "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/coefficients-d-anticipation-pour-age.html",
     "urlsComplementaires": [
@@ -3628,8 +3624,8 @@
           },
           {
             "dateEffet": "2026-11-01",
-            "montantEnEuros": null,
-            "note": "non trouve dans une source ouverte"
+            "montantEnEuros": 2400.55,
+            "note": "Bareme officiel 'Plafond de la majoration pour enfants nes ou eleves' (reglementation.agirc-arrco.fr), circulaire 2026-3-DT, lu le 2026-11-21"
           }
         ],
         "calcul": "somme, periode par periode, de : points de la periode x taux x valeur du point au depart"

@@ -1,15 +1,14 @@
 {
   "avertissements": [
-    "Toutes les valeurs proviennent de pages ou PDF officiels ouverts le 2026-11-21. Les PDF de circulaires Cnav ont ete lus directement ; les pages HTML (service-public, popups lassuranceretraite.fr, Legifrance) ont ete lues via un outil de restitution automatique qui reformule : un controle humain par sondage est recommande, en particulier pour les grandes tables 'pass' et 'salaireMinimumPourUnTrimestre'.",
+    "Toutes les valeurs proviennent de pages ou PDF officiels ouverts le 2026-11-21. Les PDF de circulaires Cnav ont ete lus directement ; les pages HTML (service-public, popups lassuranceretraite.fr, Legifrance) ont ete lues via un outil de restitution automatique qui reformule : les grandes tables 'pass' et 'salaireMinimumPourUnTrimestre' ont ete controlees a la main par sondage sur les popups de lassuranceretraite.fr le 2026-11-21, et les points signales ci-dessous relus dans un navigateur le meme jour.",
     "legislation.cnav.fr ne repond plus (domaine remplace par legislation.lassuranceretraite.fr) ; les pages 'bareme' de ce site sont une application JavaScript illisible par l'outil : les baremes ont ete pris dans les circulaires PDF et les popups de lassuranceretraite.fr.",
-    "Texte de la LFSS 2026 (loi n 2025-1403 du 30/12/2025, art. 105) et articles L161-17-2 / L161-17-3 CSS NON lus directement sur Legifrance : le bareme par generation repose sur la circulaire Cnav 2026-07 du 05/03/2026 qui les applique, recoupe avec service-public F14043 / F35063 et lassuranceretraite.fr (concordants). La page vie-publique.fr sur la LFSS 2026 s'est affichee vide.",
+    "Texte de la LFSS 2026 (loi n 2025-1403 du 30/12/2025, art. 105) et le texte de l'article 105 n'a pas ete lu ; les articles L161-17-2 et L161-17-3 CSS qu'il modifie ont ete lus dans la base LEGI de la DILA (version du 08/11/2026) et concordent avec la circulaire Cnav 2026-07 du 05/03/2026, service-public F14043 / F35063 et l'expose Cnav 'Duree d'assurance pour le taux plein' (controle par sondage du 2026-11-21 sur les generations 1961 a 1969). La page vie-publique.fr sur la LFSS 2026 s'est affichee vide.",
     "Smic horaire 1970-1971 : null. Smic 1972-1979 : uniquement deduit du seuil de validation d'un trimestre (calcul), pas lu directement.",
     "smicHoraire : source Insee (hors liste demandee, mais officielle).",
-    "Taux de cotisation vieillesse employeur 2026 (8,55 % / 2,11 %) : page Urssaf inaccessible (erreur reseau repetee) ; ventilation vue seulement dans un extrait de recherche, total 17,96 % verifie dans une circulaire Cnav. Historique avant 2012 absent ; annees 2016-2017 deduites de cellules fusionnees.",
+    "Taux de cotisation vieillesse : historique avant 2012 absent ; annees 2016-2017 deduites de cellules fusionnees.",
     "Coefficients de revalorisation : seule la table d'effet 01/01/2026 est fournie (pas celle de 2025).",
-    "Coefficients de minoration 1948-1952 et regle des 25 meilleures annees : lus dans une version 2020 du code (Legifrance) ; l'outil a signale que R351-29-1 serait abroge depuis le 01/01/2026 et que R351-27 aurait ete modifie par un decret n 2026-699 du 29/07/2026 : non verifie.",
-    "Surcote : taux historiques avant 2009 non trouves (null). Conditions precises de la regle SAM 24/23 annees pour les parents (LFSS 2026) non verifiees dans la loi.",
-    "Durees d'assurance 1948-1957 : lues sur une popup intitulee 'duree maximale retenue au regime general' et non 'duree requise pour le taux plein'.",
+    "Coefficients de minoration 1948-1952 : ils ne figurent plus dans le droit en vigueur (R351-27 reecrit par le decret n 2025-1409 puis le decret n 2026-699 du 29/07/2026, en vigueur le 01/08/2026 : seul 1,25 % subsiste) ; ils restent publies au bareme Cnav 'Pourcentage de minoration applique au taux plein' (relu le 2026-11-21 pour 1952). Meilleures annees : R351-29-1 est abroge au 01/01/2026 par le decret n 2025-1409 (lu sur Legifrance le 2026-11-21) ; la regle figure desormais a l'article R173-3-2 CSS.",
+    "Surcote : taux historiques avant 2009 non trouves (null). Regle SAM 24/23 annees pour les parents : conditions lues a l'article R173-3-2 CSS (Legifrance, 2026-11-21).",
     "Taux de conversion franc/euro non fourni (non lu dans une source ouverte) ; les montants en francs ne sont pas convertis. Le mode d'application des coefficients de revalorisation aux salaires en francs n'a pas ete verifie.",
     "Departs anticipes (carriere longue, handicap, inaptitude, penibilite), Mayotte, Saint-Pierre-et-Miquelon et travailleurs independants non couverts."
   ],
@@ -979,7 +978,7 @@
     "urlsComplementaires": [
       "https://www.lassuranceretraite.fr/portail-info/portail-info/home/actif/montant-retraite/montant-retraite.html"
     ],
-    "note": "Selon lassuranceretraite.fr, la regle 24/23 annees s'applique depuis le 1er septembre 2026 mais le nouveau calcul ne sera mis en oeuvre que courant 2027, avec recalcul retroactif automatique. Conditions exactes (quel parent, quelles majorations) non verifiees dans le texte de loi."
+    "note": "Selon lassuranceretraite.fr, la regle 24/23 annees s'applique depuis le 1er septembre 2026 mais le nouveau calcul ne sera mis en oeuvre que courant 2027, avec recalcul retroactif automatique. Conditions (art. R173-3-2 CSS, lu sur Legifrance le 2026-11-21) : 24 annees pour les beneficiaires d'une majoration ou bonification au titre d'un seul enfant, 23 au titre d'au moins deux enfants ; s'applique aux pensions prenant effet a compter du 1er septembre 2026."
   },
   "tauxPlein": {
     "valeurs": {
@@ -2007,7 +2006,7 @@
         "employeurDeplafonneePct": 2.11,
         "totalSalariePlusEmployeurPct": 17.96,
         "plafondMensuelEUR": 4005,
-        "niveauVerification": "Part salariale lue sur service-public F2302 (verifiee le 01/01/2026). Total 17,96 % lu dans la circulaire Cnav 2025-33 (decret n 2025-1446 du 31/12/2025). Ventilation employeur 8,55 % / 2,11 % : lue uniquement dans un extrait de moteur de recherche citant urssaf.fr (page Urssaf inaccessible : erreur reseau) ; coherente avec le total (17,96 - 6,90 - 0,40 = 10,66)."
+        "niveauVerification": "Part salariale lue sur service-public F2302 (verifiee le 01/01/2026). Total 17,96 % lu dans la circulaire Cnav 2025-33 (decret n 2025-1446 du 31/12/2025). Ventilation employeur 8,55 % / 2,11 % et salarie 6,9 % / 0,40 % : lue a l'article D242-4 CSS sur Legifrance le 2026-11-21 (https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000053302465, 'A compter du 1er janvier 2026')."
       },
       "historique": [
         {
@@ -2093,11 +2092,10 @@
       "dateConsultation": "2026-11-21"
     },
     "maternite": {
-      "valeurs": "1 trimestre valide par periode de 90 jours d'indemnites journalieres maternite.",
-      "source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026)",
-      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
-      "dateConsultation": "2026-11-21",
-      "note": "La fiche ne precise pas si le trimestre de l'accouchement est valide d'office lorsque moins de 90 jours sont indemnises : point non verifie."
+      "valeurs": "Accouchement a partir du 01/01/2014 : chaque periode de 90 jours d'indemnites journalieres valide le trimestre civil qui comprend le 90e jour ; si l'indemnisation a dure moins de 90 jours au total, le trimestre civil du dernier jour d'indemnisation est valide. Du 01/07/1948 au 31/12/2013 : le trimestre qui comprend la date de l'accouchement est valide.",
+      "source": "Cnav, expose 'Maternite' (legislation.lassuranceretraite.fr, art. R351-12 CSS) ; service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026)",
+      "url": "https://legislation.lassuranceretraite.fr/#/expose?file_leaf_ref=periode_assimilee_maternite_maternite_ex.aspx",
+      "dateConsultation": "2026-11-21"
     },
     "autres": {
       "valeurs": {

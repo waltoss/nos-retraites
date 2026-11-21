@@ -7,8 +7,8 @@ import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
  *
  * Simplifications du calcul des points de retraite complémentaire avant 2019 :
  * - avant 1999, la caisse Arrco est supposée être l'UNIRS, dont les points sont convertis en points Arrco ;
- * - les taux sont les taux obligatoires, multipliés par le rapport du taux moyen réellement pratiqué
- *   au taux obligatoire (scripts/build-historique.ts) : chacun cotise au taux moyen de son année ;
+ * - de 1957 à 2018 les points sont attribués au taux moyen réellement pratiqué chaque année
+ *   (Agirc-Arrco, scripts/build-historique.ts), et non au taux de chaque entreprise ;
  * - la garantie minimale de points des cadres (1989 à 2018) vaut pour une année complète ;
  * - avant 1960, les points sont reconstitués au barème de 1960, à salaire égal en part du plafond.
  */
@@ -17,8 +17,12 @@ const serie = (s: Record<string, number>) => s as unknown as SerieAnnuelle;
 const tranche = (salaire: number, bas: number, haut: number) =>
 	Math.max(0, Math.min(salaire, haut) - bas);
 
-const rapport = (s: Record<string, number>, annee: number) =>
-	valeur(serie(s), annee);
+type Tranche = "arrcoTranche1" | "arrcoTranche2" | "agircTrancheB";
+/** Taux moyen de l'année ; avant la première année connue, le taux obligatoire relevé du rapport initial. */
+const tauxMoyen = (tranche: Tranche, annee: number): number =>
+	(moyens[tranche] as Record<string, number>)[annee] ??
+	valeur(serie(a.tauxContractuel[tranche]), annee) *
+		(moyens.rapportInitial[tranche] ?? 1);
 const garantie = moyens.garantieMinimaleDePoints;
 
 /** Première année des séries de prix d'achat du point. */
@@ -58,15 +62,11 @@ function pointsAnnee(
 			? valeur(serie(a.prixAchat.arrco), annee)
 			: valeur(serie(a.prixAchat.unirs), annee) / a.conversion.unirs;
 	let cotisationsArrco =
-		tranche(salaireBrut, 0, pass) *
-		valeur(serie(a.tauxContractuel.arrcoTranche1), annee) *
-		rapport(moyens.arrcoTranche1, annee);
+		tranche(salaireBrut, 0, pass) * tauxMoyen("arrcoTranche1", annee);
 	let pointsAgirc = 0;
 	if (cadre) {
 		const cotisationsAgirc =
-			tranche(salaireBrut, pass, 4 * pass) *
-				valeur(serie(a.tauxContractuel.agircTrancheB), annee) *
-				rapport(moyens.agircTrancheB, annee) +
+			tranche(salaireBrut, pass, 4 * pass) * tauxMoyen("agircTrancheB", annee) +
 			(annee >= 1991
 				? tranche(salaireBrut, 4 * pass, 8 * pass) *
 					valeur(serie(a.tauxContractuel.agircTrancheC), annee)
@@ -79,9 +79,7 @@ function pointsAnnee(
 		pointsAgirc = Math.max(acquis, minimum) * a.conversion.agirc;
 	} else {
 		cotisationsArrco +=
-			tranche(salaireBrut, pass, 3 * pass) *
-			valeur(serie(a.tauxContractuel.arrcoTranche2), annee) *
-			rapport(moyens.arrcoTranche2, annee);
+			tranche(salaireBrut, pass, 3 * pass) * tauxMoyen("arrcoTranche2", annee);
 	}
 	return cotisationsArrco / prixArrco + pointsAgirc;
 }
@@ -103,7 +101,7 @@ export const BAREMES_FRANCE: Baremes = {
 		majorationTroisEnfants: data.cnav.majorationTroisEnfants,
 		// service-public.gouv.fr, fiches F31249 et F1761 (voir data/baremes/cnav.json, periodesAssimilees).
 		carriereLongue: data.cnav.carriereLongue,
-		joursParTrimestreAssimile: { chomage: 50, maladie: 60 },
+		joursParTrimestreAssimile: { chomage: 50, maladie: 60, maternite: 90 },
 		heuresSmicParTrimestre: (annee) => (annee >= 2014 ? 150 : 200),
 		minimumContributif: data.cnav.minimumContributif,
 		// Le minimum contributif suit le SMIC (hypothèse du COR) : en euros constants, il monte avec lui.

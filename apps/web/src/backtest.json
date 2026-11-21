@@ -14,7 +14,7 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2014",
-		"modele": 62.38,
+		"modele": 62.4,
 		"observe": 62.6
 	},
 	{
@@ -26,7 +26,7 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2016",
-		"modele": 62.68,
+		"modele": 62.69,
 		"observe": 63.1
 	},
 	{
@@ -38,7 +38,7 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2018",
-		"modele": 62.94,
+		"modele": 62.97,
 		"observe": 63.2
 	},
 	{
@@ -50,7 +50,7 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2020",
-		"modele": 63.29,
+		"modele": 63.3,
 		"observe": 63.3
 	},
 	{
@@ -62,7 +62,7 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2022",
-		"modele": 63.28,
+		"modele": 63.3,
 		"observe": 63.4
 	},
 	{
@@ -86,55 +86,55 @@
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, fin 2019",
-		"modele": 793.1,
+		"modele": 793.7,
 		"observe": 642.7
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2019",
-		"modele": 308.2,
+		"modele": 313,
 		"observe": 348.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2024",
-		"modele": 333,
+		"modele": 336.5,
 		"observe": 362.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, fin 2019",
-		"modele": 924.1,
+		"modele": 924,
 		"observe": 859.5
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2019",
-		"modele": 548.6,
+		"modele": 554.9,
 		"observe": 768
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2024",
-		"modele": 558.4,
+		"modele": 563.1,
 		"observe": 758.7
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2010-2013",
-		"modele": 796,
+		"modele": 793.6,
 		"observe": 675.6
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2016-2019",
-		"modele": 848.7,
+		"modele": 850.9,
 		"observe": 719.4
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, 2019-2023",
-		"modele": 409.2,
+		"modele": 407.8,
 		"observe": 343.5
 	},
 	{
@@ -158,7 +158,7 @@
 	{
 		"groupe": "Coefficient de proratisation au régime général, génération 1953",
 		"nom": "femmes",
-		"modele": 0.7321,
+		"modele": 0.7323,
 		"observe": 0.73
 	},
 	{
@@ -170,19 +170,19 @@
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2012-2015",
-		"modele": 565.2,
+		"modele": 564.4,
 		"observe": 525.5
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2016-2019",
-		"modele": 571.8,
+		"modele": 569,
 		"observe": 572.7
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2020-2024",
-		"modele": 603.1,
+		"modele": 605.8,
 		"observe": 624.9
 	},
 	{
@@ -194,7 +194,7 @@
 	{
 		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
 		"nom": "2020",
-		"modele": 11.59,
+		"modele": 11.58,
 		"observe": 12.01
 	},
 	{
@@ -212,19 +212,19 @@
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "en emploi",
-		"modele": 27.13,
+		"modele": 27.27,
 		"observe": 33.58
 	},
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "au chômage",
-		"modele": 27.46,
+		"modele": 27.6,
 		"observe": 33.08
 	},
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "en invalidité, en maladie ou sans activité",
-		"modele": 45.4,
+		"modele": 45.13,
 		"observe": 29.1
 	}
 ]

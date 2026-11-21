@@ -77,7 +77,20 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 		}
 		// Périodes assimilées : des trimestres sans cotisation, et des points sur la base du dernier salaire.
 		const chomage = Math.floor((mois.chomage * JOURS_PAR_MOIS) / jours.chomage);
-		const maladie = Math.floor((mois.maladie * JOURS_PAR_MOIS) / jours.maladie);
+		// L'année d'une naissance, l'arrêt de la mère est un congé maternité : un trimestre par
+		// tranche de jours indemnisés, et au moins celui de l'accouchement.
+		const maternite =
+			jours.maternite !== undefined &&
+			carriere.sexe === "F" &&
+			carriere.enfants.includes(a.annee);
+		const maladie = maternite
+			? Math.max(
+					1,
+					Math.floor(
+						(mois.maladie * JOURS_PAR_MOIS) / (jours.maternite as number),
+					),
+				)
+			: Math.floor((mois.maladie * JOURS_PAR_MOIS) / jours.maladie);
 		let assimiles = chomage + maladie;
 		points += (pointsAnneePleine * mois.chomage) / MOIS;
 		if (mois.maladie >= MOIS_MALADIE_POUR_POINTS)
