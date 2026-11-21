@@ -1,5 +1,6 @@
 /// <reference lib="webworker" />
 import {
+	type AnneeSysteme,
 	BAREMES_FRANCE as B,
 	buildComptes,
 	type Carriere,
@@ -7,6 +8,7 @@ import {
 	type CompteCarriere,
 	compareScenarios,
 	computePensions,
+	computeSysteme,
 	type EcartDecile,
 	type Facteurs,
 	generatePopulation,
@@ -31,9 +33,11 @@ export type ResultatLeger = Omit<
 > & {
 	cotisations: Omit<Resultat["cotisations"], "valeurs">;
 	pensions: Omit<Resultat["pensions"], "valeurs">;
+	/** L'équation du système entier, tous régimes, l'année photographiée. */
+	systeme: AnneeSysteme;
 	/**
-	 * Cotisations en plus et pensions en moins face à la loi actuelle, cumulées
-	 * de l'année d'effet à la fin de la projection, en euros de l'année de référence.
+	 * Écart de solde du système entier face à la loi actuelle, cumulé jusqu'à la fin
+	 * de la projection, en euros de l'année de référence et sans intérêts.
 	 */
 	cumulEquilibre: number;
 };
@@ -121,6 +125,7 @@ export type Reponse =
 			id: number;
 			reference: Projection;
 			courant: Projection;
+			systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
 			anneeEffet: number;
 	  };
 
@@ -138,6 +143,7 @@ interface Scene {
 	monde: Monde;
 	preparation: Preparation;
 	projection: Projection | null;
+	systeme: AnneeSysteme[] | null;
 }
 
 let taille = SCENARIO_REFERENCE.taille;
@@ -187,6 +193,7 @@ function scene(s: ScenarioMoteur): Scene {
 				pensionsReference: sansFacteur ? pensionsReference : undefined,
 			}),
 			projection: null,
+			systeme: null,
 		};
 		if (scenes.size >= 4) {
 			const ancienne = [...scenes.keys()].find(
@@ -204,17 +211,22 @@ function trajectoires(sc: Scene): Projection {
 	return sc.projection;
 }
 
-function cumulEquilibre(sc: Scene): number {
-	const reference = trajectoires(scene(DROIT));
-	return trajectoires(sc).annees.reduce((t, a, i) => {
-		const r = reference.annees[i];
-		return r
-			? t + (a.cotisations - r.cotisations) - (a.pensions - r.pensions)
-			: t;
-	}, 0);
+/** Le scénario étendu au système entier, année par année. */
+function systeme(sc: Scene): AnneeSysteme[] {
+	if (!sc.systeme)
+		sc.systeme = computeSysteme(trajectoires(scene(DROIT)), trajectoires(sc));
+	return sc.systeme;
 }
 
-function leger(r: Resultat, cumul: number): ResultatLeger {
+function cumulEquilibre(sc: Scene): number {
+	const reference = systeme(scene(DROIT));
+	return systeme(sc).reduce(
+		(t, a, i) => t + a.solde - (reference[i]?.solde ?? a.solde),
+		0,
+	);
+}
+
+function leger(r: Resultat, sc: Scene): ResultatLeger {
 	const {
 		pensionParIndividu: _p,
 		poidsParIndividu: _w,
@@ -229,7 +241,10 @@ function leger(r: Resultat, cumul: number): ResultatLeger {
 			histogramme: cotisations.histogramme,
 		},
 		pensions: { resume: pensions.resume, histogramme: pensions.histogramme },
-		cumulEquilibre: cumul,
+		systeme: systeme(sc).find(
+			(a) => a.annee === r.anneeReference,
+		) as AnneeSysteme,
+		cumulEquilibre: cumulEquilibre(sc),
 	};
 }
 
@@ -361,8 +376,8 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			envoyer({
 				type: "result",
 				id: m.id,
-				reference: leger(reference, 0),
-				courant: leger(courant, cumulEquilibre(sc)),
+				reference: leger(reference, scene(DROIT)),
+				courant: leger(courant, sc),
 				ecarts: compareScenarios(
 					reference.pensionParIndividu,
 					courant.pensionParIndividu,
@@ -375,13 +390,13 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			envoyer({
 				type: "decisions",
 				id: m.id,
-				reference: leger(photographier(scene(DROIT).preparation, m.annee), 0),
+				reference: leger(
+					photographier(scene(DROIT).preparation, m.annee),
+					scene(DROIT),
+				),
 				resultats: m.scenarios.map((s) => {
 					const sc = scene(s);
-					return leger(
-						photographier(sc.preparation, m.annee),
-						cumulEquilibre(sc),
-					);
+					return leger(photographier(sc.preparation, m.annee), sc);
 				}),
 			});
 			break;
@@ -398,6 +413,10 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				id: m.id,
 				reference: trajectoires(scene(DROIT)),
 				courant: trajectoires(scene(m.scenario)),
+				systeme: {
+					reference: systeme(scene(DROIT)),
+					courant: systeme(scene(m.scenario)),
+				},
 				anneeEffet: ANNEE_EFFET,
 			});
 			break;

@@ -1,4 +1,4 @@
-import type { Projection } from "@nos-retraites/engine";
+import type { AnneeSysteme, Projection } from "@nos-retraites/engine";
 import { type PointerEvent, useEffect, useState } from "react";
 import { decimal, entier, euros } from "../format";
 import { useScenario } from "../scenario";
@@ -194,8 +194,10 @@ export function Trajectoires() {
 	const [donnees, setDonnees] = useState<{
 		reference: Projection;
 		courant: Projection;
+		systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
 		anneeEffet: number;
 	} | null>(null);
+	const [horsEtat, setHorsEtat] = useState(false);
 
 	useEffect(() => {
 		if (!pret) return;
@@ -206,6 +208,7 @@ export function Trajectoires() {
 					setDonnees({
 						reference: r.reference,
 						courant: r.courant,
+						systeme: r.systeme,
 						anneeEffet: r.anneeEffet,
 					});
 			});
@@ -218,20 +221,20 @@ export function Trajectoires() {
 
 	if (!donnees)
 		return <div className="histo attente" style={{ height: 420 }} />;
-	const { reference, courant, anneeEffet } = donnees;
+	const { reference, courant, systeme, anneeEffet } = donnees;
 	const serie = (
 		p: Projection,
 		f: (a: Projection["annees"][number]) => number,
 	) => p.annees.map((a) => ({ x: a.annee, y: f(a) }));
-	// Ce que le scénario change à l'équilibre, année par année : cotisations en plus, pensions en moins.
-	const effet = courant.annees.map((a, i) => {
-		const r = reference.annees[i] as Projection["annees"][number];
-		return {
-			x: a.annee,
-			y: (a.cotisations - r.cotisations - (a.pensions - r.pensions)) / 1e9,
-		};
-	});
-	const cumul = effet.reduce((t, p) => t + p.y, 0);
+	// Solde du système entier, selon que les versements d'équilibre de l'État comptent ou non comme une ressource.
+	const solde = (a: AnneeSysteme) => (horsEtat ? a.soldeHorsEtat : a.solde);
+	const soldes = (annees: AnneeSysteme[]) =>
+		annees.map((a) => ({ x: a.annee, y: solde(a) / 1e9 }));
+	const cumul = (annees: AnneeSysteme[]) =>
+		annees.reduce((t, a) => t + solde(a), 0) / 1e9;
+	const cumulReference = cumul(systeme.reference);
+	const cumulCourant = cumul(systeme.courant);
+	const derniere = systeme.courant.at(-1)?.annee ?? 2070;
 	// Moyenne glissante sur cinq générations : chacune ne compte que quelques centaines de personnes simulées.
 	const generations = (p: Projection) =>
 		p.generations
@@ -249,6 +252,76 @@ export function Trajectoires() {
 	const communs = { anneeEffet };
 	return (
 		<>
+			<div className="solde">
+				<div className="solde-tete">
+					<h3>Le solde du système de retraite, tous régimes</h3>
+					<fieldset className="choix-annee">
+						<legend>Lecture</legend>
+						<button
+							type="button"
+							className={horsEtat ? "puce" : "puce actif"}
+							aria-pressed={!horsEtat}
+							onClick={() => setHorsEtat(false)}
+						>
+							Officielle
+						</button>
+						<button
+							type="button"
+							className={horsEtat ? "puce actif" : "puce"}
+							aria-pressed={horsEtat}
+							onClick={() => setHorsEtat(true)}
+						>
+							Sans les versements de l'État
+						</button>
+					</fieldset>
+				</div>
+				<p className="sub">
+					{horsEtat
+						? "Ici les sommes que l'État verse pour équilibrer les retraites de ses propres agents ne comptent pas comme une ressource. Certains y voient le vrai déficit, d'autres une simple cotisation d'employeur plus élevée qu'ailleurs."
+						: "C'est la lecture du Conseil d'orientation des retraites : les sommes que l'État verse pour équilibrer les retraites de ses propres agents comptent comme une ressource."}
+				</p>
+				<div className="courbes deux">
+					<Courbe
+						{...communs}
+						titre="Ressources moins dépenses, chaque année"
+						aide="En milliards d'euros de 2026. Sous zéro, il manque de l'argent."
+						reference={soldes(systeme.reference)}
+						courant={soldes(systeme.courant)}
+						couleur="var(--besoin)"
+						format={milliards}
+						depuisZero
+					/>
+					<div className="cumul">
+						<small>
+							Ce qu'il faut trouver de {systeme.courant[0]?.annee} à {derniere},
+							avec la loi actuelle
+						</small>
+						<strong className="num">
+							{entier(Math.abs(cumulReference))} milliards
+						</strong>
+						{modifies > 0 && Math.abs(cumulCourant - cumulReference) >= 1 && (
+							<>
+								<small>Avec votre scénario</small>
+								<strong
+									className={
+										cumulCourant >= cumulReference ? "num mieux" : "num pire"
+									}
+								>
+									{cumulCourant >= 0
+										? `${entier(cumulCourant)} milliards d'excédent`
+										: `${entier(Math.abs(cumulCourant))} milliards`}
+								</strong>
+							</>
+						)}
+						<p>
+							Somme des soldes annuels, en euros de 2026 et sans intérêts :
+							dette à lever, impôts, cotisations ou économies ailleurs.
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<h3>Ce qui se passe chez les salariés du privé</h3>
 			<div className="courbes">
 				<Courbe
 					{...communs}
@@ -301,36 +374,6 @@ export function Trajectoires() {
 					format={(y) => `${decimal(y)} ans`}
 				/>
 			</div>
-
-			{modifies > 0 && (
-				<div className="courbes deux">
-					<Courbe
-						{...communs}
-						titre="Ce que votre scénario change à l'équilibre, chaque année"
-						aide="Cotisations en plus et pensions en moins, en milliards d'euros de 2026. Au-dessus de zéro, le système a besoin de moins d'argent."
-						reference={effet.map((p) => ({ x: p.x, y: 0 }))}
-						courant={effet}
-						couleur={cumul >= 0 ? "var(--cotisants)" : "var(--besoin)"}
-						format={milliards}
-						depuisZero
-						sansReference
-					/>
-					<div className="cumul">
-						<small>
-							Cumul de {anneeEffet} à {courant.annees.at(-1)?.annee}
-						</small>
-						<strong className={cumul >= 0 ? "num mieux" : "num pire"}>
-							{milliards(cumul)}
-						</strong>
-						<p>
-							{cumul >= 0
-								? "C'est autant de dette en moins à lever, ou d'autres ressources à ne pas chercher, d'ici 2070."
-								: "C'est autant à trouver d'ici 2070 : dette, impôts, cotisations ou économies ailleurs."}{" "}
-							En euros de 2026, sans intérêts.
-						</p>
-					</div>
-				</div>
-			)}
 
 			<h3>Génération par génération</h3>
 			<p className="sub">

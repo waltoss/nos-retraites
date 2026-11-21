@@ -9,6 +9,9 @@ import {
 } from "../leviers";
 import { Icon } from "./Icons";
 
+const signe = (x: number) =>
+	`${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toLocaleString("fr-FR", { maximumFractionDigits: 0 })}`;
+
 function variation(valeur: number, reference: number): string {
 	if (!reference) return "";
 	const p = (valeur / reference - 1) * 100;
@@ -56,12 +59,14 @@ export function Equation({
 		courant.masses.pensions,
 		reference.masses.pensions,
 	);
-	/** Écart de cotisations moins écart de pensions, en milliards par an : positif, le système a besoin de moins d'argent. */
-	const effet =
-		(courant.masses.cotisations -
-			reference.masses.cotisations -
-			(courant.masses.pensions - reference.masses.pensions)) /
-		1e9;
+	const sys = courant.systeme;
+	const sysReference = reference.systeme;
+	/** Écart de solde du système entier, en milliards : positif, il faut trouver moins d'argent. */
+	const effet = (sys.solde - sysReference.solde) / 1e9;
+	const besoin = Math.max(0, -sys.solde);
+	const excedent = Math.max(0, sys.solde);
+	const largeur = (x: number) =>
+		`${(x / Math.max(sys.depenses, sys.ressources)) * 100}%`;
 	return (
 		<div className="equation">
 			<div className="cote">
@@ -122,25 +127,70 @@ export function Equation({
 					{ecartPensions && <em className="num"> {ecartPensions}</em>}
 				</p>
 			</div>
-			<p
-				className={`equilibre${effet > 0 ? " mieux" : effet < 0 ? " pire" : ""}`}
-			>
-				{Math.abs(effet) < 0.05 ? (
-					"Votre scénario ne change pas l'équilibre entre cotisations et pensions."
-				) : (
-					<>
-						Votre scénario {effet > 0 ? "améliore" : "dégrade"} l'équilibre
-						entre cotisations et pensions de{" "}
+			<div className="systeme">
+				<h3>Tous régimes confondus, en {courant.anneeReference}</h3>
+				<p className="unit">
+					{milliards(sys.depenses)} de dépenses de retraite, à payer avec :
+				</p>
+				<div
+					className="systeme-barre"
+					role="img"
+					aria-label="Ce qui finance les retraites"
+				>
+					<i className="cot" style={{ width: largeur(sys.cotisations) }} />
+					<i
+						className="autres"
+						style={{ width: largeur(sys.autresRessources) }}
+					/>
+					{besoin > 0 && (
+						<i className="besoin" style={{ width: largeur(besoin) }} />
+					)}
+				</div>
+				<ul className="systeme-legende">
+					<li className="cot">
+						<strong className="num">{milliards(sys.cotisations)}</strong>
+						de cotisations
+					</li>
+					<li className="autres">
+						<strong className="num">{milliards(sys.autresRessources)}</strong>
+						d'autres ressources : CSG, impôts affectés, transferts, versements
+						de l'État à ses propres régimes
+					</li>
+					<li className="besoin">
 						<strong className="num">
-							{Math.abs(effet).toLocaleString("fr-FR", {
-								maximumFractionDigits: 1,
-							})}{" "}
-							milliards d'euros
-						</strong>{" "}
-						cette année-là.
-					</>
-				)}
-			</p>
+							{milliards(besoin > 0 ? besoin : excedent)}
+						</strong>
+						{besoin > 0
+							? "qui manquent : le besoin de financement"
+							: "d'excédent"}
+						, soit{" "}
+						{(Math.abs(sys.solde / sys.pib) * 100).toLocaleString("fr-FR", {
+							maximumFractionDigits: 1,
+						})}{" "}
+						% du PIB
+					</li>
+				</ul>
+				<p
+					className={`equilibre${effet > 0 ? " mieux" : effet < 0 ? " pire" : ""}`}
+				>
+					{Math.abs(effet) < 0.5 ? (
+						"Votre scénario ne change pas ce besoin de financement."
+					) : (
+						<>
+							Avec la loi actuelle, le solde serait de{" "}
+							{signe(sysReference.solde / 1e9)} milliards. Votre scénario{" "}
+							{effet > 0 ? "l'améliore" : "le dégrade"} de{" "}
+							<strong className="num">
+								{Math.abs(effet).toLocaleString("fr-FR", {
+									maximumFractionDigits: 0,
+								})}{" "}
+								milliards d'euros
+							</strong>{" "}
+							cette année-là.
+						</>
+					)}
+				</p>
+			</div>
 		</div>
 	);
 }

@@ -11,7 +11,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Ratio démographique** : nombre de cotisants divisé par le nombre de retraités.
 - **Pension relative** : pension moyenne divisée par le revenu d'activité moyen.
 - **Autres ressources** : recettes du système hors cotisations (CSG, impôts affectés, transferts de l'État et d'autres branches).
-- **Solde** : ressources moins pensions sur une année, hors besoin de financement.
+- **Solde** : ressources moins dépenses sur une année ; lecture officielle avec les versements d'équilibre de l'État en ressources, ou lecture sans eux.
 - **Besoin de financement** : montant annuel qui manque pour fermer l'équation ; l'opposé du solde quand il est négatif.
 - **Dette cumulée** : somme des besoins de financement non comblés depuis l'année de base, avec ou sans intérêts.
 - **Financement** : répartition du besoin de financement entre pensions, cotisations, âge et dette, choisie par l'utilisateur.
@@ -36,7 +36,8 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 ## Les règles
 
 - **Régime** : ensemble de règles de cotisation et de calcul de pension propre à une population (un module du moteur).
-- **Bloc résiduel** : agrégat des régimes non modélisés en vraies règles, calé sur les totaux publiés.
+- **Bloc résiduel** : ce qui manque au privé simulé pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario il réagit comme le régime de base du privé.
+- **Cadrage** : totaux publiés du système entier, année par année, sur lesquels le bloc résiduel est calé (projections du COR).
 - **Barème** : table versionnée des paramètres légaux par génération ou par année (âge légal, durée requise, taux).
 - **Âge légal** : âge minimal d'ouverture des droits à la retraite.
 - **Âge du taux plein automatique** : âge à partir duquel la décote ne s'applique plus, quelle que soit la durée validée.

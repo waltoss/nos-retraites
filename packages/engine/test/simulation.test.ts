@@ -186,3 +186,61 @@ describe("projection", () => {
 		expect(g1950(reforme)?.ageMoyenDepart).toBeCloseTo(g1950(reference)?.ageMoyenDepart ?? 0, 6);
 	});
 });
+
+describe("système entier", () => {
+	test("la loi actuelle retombe sur le cadrage du COR, un scénario s'en écarte dans le bon sens", async () => {
+		const {
+			BAREMES_FRANCE,
+			CADRAGE_COR,
+			CHAMP_PRIVE,
+			computeSysteme,
+			PYRAMIDES_PROJETEES,
+			runProjection,
+			SCENARIO_REFERENCE,
+		} = await import("../src/index.ts");
+		const population = generatePopulation(
+			{ ...SCENARIO_REFERENCE, taille: 8000 },
+			BAREMES_FRANCE,
+		);
+		const options = {
+			debut: 2026,
+			fin: 2070,
+			pyramides: PYRAMIDES_PROJETEES,
+			champ: CHAMP_PRIVE,
+			anneeEffet: 2028,
+			comptes: buildComptes(population, BAREMES_FRANCE),
+		};
+		const reference = runProjection(population, BAREMES_FRANCE, {}, options);
+		const loi = computeSysteme(reference, reference);
+		for (const a of loi) {
+			const c = CADRAGE_COR.annees[a.annee];
+			expect(a.depenses).toBeCloseTo(c?.depenses ?? 0, 0);
+			expect(a.ressources).toBeCloseTo(c?.ressources ?? 0, 0);
+			expect(a.soldeHorsEtat).toBeLessThan(a.solde);
+		}
+		// Solde officiel de 2026 : un besoin de financement de l'ordre de 0,2 % du PIB.
+		const debut = loi[0];
+		expect((debut?.solde ?? 0) / (debut?.pib ?? 1)).toBeGreaterThan(-0.004);
+		expect(debut?.solde ?? 0).toBeLessThan(0);
+
+		const sousIndexe = computeSysteme(
+			reference,
+			runProjection(population, BAREMES_FRANCE, { revalorisationReelle: -0.01 }, options),
+		);
+		const cotise = computeSysteme(
+			reference,
+			runProjection(population, BAREMES_FRANCE, { cotisationBase: 0.01 }, options),
+		);
+		const point = computeSysteme(
+			reference,
+			runProjection(population, BAREMES_FRANCE, { valeurDuPoint: 0.95 }, options),
+		);
+		const fin = loi.length - 1;
+		expect(sousIndexe[fin]?.depenses ?? 0).toBeLessThan(loi[fin]?.depenses ?? 0);
+		expect(cotise[fin]?.cotisations ?? 0).toBeGreaterThan(loi[fin]?.cotisations ?? 0);
+		expect(cotise[fin]?.depenses).toBeCloseTo(loi[fin]?.depenses ?? 0, 0);
+		// Un réglage propre à la complémentaire du privé ne se propage pas aux autres régimes.
+		const ecartPrive = (reference.annees[fin]?.pensions ?? 0) * 0.05;
+		expect((loi[fin]?.depenses ?? 0) - (point[fin]?.depenses ?? 0)).toBeLessThan(ecartPrive);
+	});
+});

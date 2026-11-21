@@ -50,7 +50,7 @@ function Simuler() {
 						</div>
 
 						<section className="bloc">
-							<h2>L'équation en {annee}</h2>
+							<h2>L'équation des retraites en {annee}</h2>
 							<p className="sub">
 								D'un côté ceux qui cotisent, de l'autre ceux qui perçoivent. Les
 								termes encadrés sont ceux que vos réglages visent.
@@ -61,12 +61,12 @@ function Simuler() {
 								reglages={reglages}
 							/>
 							<p className="reserve">
-								Ces totaux portent sur les salariés du privé de 18 à 96 ans :
-								régime général et Agirc-Arrco, pensions de droit direct, sans
-								les pensions de réversion. L'écart entre cotisations et pensions
-								n'est pas le déficit du système : il manque les autres
-								ressources (CSG, impôts affectés, transferts) et les autres
-								régimes. Seule sa variation se lit ici.
+								Les cases du haut ne portent que sur les salariés du privé, ceux
+								que le modèle simule : régime général et Agirc-Arrco, pensions
+								de droit direct. Le total tous régimes vient des projections du
+								Conseil d'orientation des retraites ; dans un scénario, les
+								autres régimes sont supposés réagir comme le régime de base du
+								privé.
 							</p>
 						</section>
 

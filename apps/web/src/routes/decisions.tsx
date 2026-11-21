@@ -88,9 +88,9 @@ const COLONNES: Colonne[] = [
 		seuil: 0.05,
 	},
 	{
-		titre: "Équilibre",
-		aide: "cotisations moins pensions, en milliards cette année-là",
-		valeur: (r) => (r.masses.cotisations - r.masses.pensions) / 1e9,
+		titre: "Solde tous régimes",
+		aide: "en milliards cette année-là",
+		valeur: (r) => r.systeme.solde / 1e9,
 		mode: "absolu",
 		format: (e) => `${decimal(Math.abs(e))} Md€`,
 		plein: 25,
@@ -98,7 +98,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Cumul d'ici 2070",
-		aide: "en milliards d'euros de 2026",
+		aide: "solde tous régimes, milliards d'euros de 2026",
 		valeur: (r) => r.cumulEquilibre / 1e9,
 		mode: "absolu",
 		format: (e) => `${entier(Math.abs(e))} Md€`,

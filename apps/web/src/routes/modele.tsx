@@ -232,6 +232,7 @@ const LIMITES = [
 	"Pas de pensions de réversion.",
 	"La projection suit le scénario central de l'Insee (1,45 enfant par femme, 150 000 entrées nettes par an) et les hypothèses du COR (salaires à +0,7 % par an au-dessus des prix). Natalité, immigration et croissance ne sont pas encore réglables.",
 	"Dans la projection, la part de chaque âge qui relève du privé reste celle d'aujourd'hui. Les générations futures de retraités, presque toutes passées par le privé, sont donc sous-comptées.",
+	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR et suppose que, dans un scénario, les autres régimes réagissent comme le régime de base du privé. Les autres ressources, dont les versements de l'État, restent celles de la loi actuelle, et le PIB ne bouge pas.",
 	"Une réforme s'applique d'un coup en 2028 à tous ceux qui ne sont pas partis, sans montée en charge par génération.",
 	"Personne ne part avec une décote ni ne reste pour une surcote : ces deux réglages existent dans le moteur mais n'auraient aucun effet ici, ils ne sont donc pas proposés.",
 	"Pas de départs anticipés pour carrière longue, invalidité ou pénibilité.",

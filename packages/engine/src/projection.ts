@@ -2,8 +2,8 @@ import { type Baremes, valeur } from "./baremes/types.ts";
 import { buildCompte, type CompteCarriere } from "./compte.ts";
 import {
 	appliquerRegles,
-	computeCotisations,
 	computePension,
+	detailCotisations,
 	type ReglesScenario,
 	reglesGeneration,
 } from "./liquidation.ts";
@@ -46,6 +46,9 @@ export interface AnneeProjetee {
 	/** Sommes annuelles, en euros de l'année de référence. */
 	cotisations: number;
 	pensions: number;
+	/** Part du régime de base dans ces sommes : elle sert à étendre le scénario aux autres régimes. */
+	cotisationsBase: number;
+	pensionsBase: number;
 	/** Pension mensuelle moyenne des retraités. */
 	pensionMoyenne: number;
 	/** Salaire brut annuel moyen des cotisants. */
@@ -187,6 +190,17 @@ function lecteur(prep: Preparation, annee: number) {
 				(prep.simules.get(cle(individu)) ?? 1)
 			);
 		},
+		/** Part du régime de base dans la pension annuelle versée cette année-là. */
+		pensionBase(k: number): number {
+			const p = prep.pensions[k] as Pension;
+			const partiDepuis = annee - p.liquidation.annee;
+			return (
+				(revalorisation === 1
+					? 1
+					: revalorisation ** Math.min(depuisEffet, Math.max(0, partiDepuis))) *
+				p.cnav.pensionAnnuelle
+			);
+		},
 		/** Pension annuelle versée cette année-là, ou null si l'individu n'est pas encore parti. */
 		pensionAnnuelle(k: number): number | null {
 			const p = prep.pensions[k] as Pension;
@@ -211,8 +225,8 @@ function lecteur(prep: Preparation, annee: number) {
 			const premiere = c.annees[0]?.annee ?? annee + 1;
 			return c.annees[annee - premiere]?.salaireBrut ?? 0;
 		},
-		cotisation(salaire: number): number {
-			return computeCotisations(
+		cotisation(salaire: number): { base: number; complementaire: number } {
+			return detailCotisations(
 				salaire,
 				annee >= options.anneeEffet ? prep.be : b,
 				annee,
@@ -234,6 +248,8 @@ export function projeter(prep: Preparation): Projection {
 			retraites: 0,
 			cotisations: 0,
 			pensions: 0,
+			cotisationsBase: 0,
+			pensionsBase: 0,
 			salaires: 0,
 			departs: 0,
 			ages: 0,
@@ -245,6 +261,7 @@ export function projeter(prep: Preparation): Projection {
 			if (pension !== null) {
 				ligne.retraites += poids;
 				ligne.pensions += poids * pension;
+				ligne.pensionsBase += poids * lit.pensionBase(k);
 				const p = prep.pensions[k] as Pension;
 				if (p.liquidation.annee === annee) {
 					ligne.departs += poids;
@@ -256,7 +273,10 @@ export function projeter(prep: Preparation): Projection {
 			if (salaire > 0) {
 				ligne.cotisants += poids;
 				ligne.salaires += poids * salaire;
-				ligne.cotisations += poids * lit.cotisation(salaire);
+				const cotisation = lit.cotisation(salaire);
+				ligne.cotisations +=
+					poids * (cotisation.base + cotisation.complementaire);
+				ligne.cotisationsBase += poids * cotisation.base;
 			}
 		}
 		annees.push({
@@ -265,6 +285,8 @@ export function projeter(prep: Preparation): Projection {
 			retraites: ligne.retraites,
 			cotisations: ligne.cotisations,
 			pensions: ligne.pensions,
+			cotisationsBase: ligne.cotisationsBase,
+			pensionsBase: ligne.pensionsBase,
 			pensionMoyenne: ligne.retraites
 				? ligne.pensions / ligne.retraites / 12
 				: 0,
@@ -373,7 +395,8 @@ export function photographier(prep: Preparation, annee: number): Resultat {
 		}
 		const salaire = lit.salaire(k);
 		if (salaire > 0) {
-			cotisations.push(lit.cotisation(salaire));
+			const cotisation = lit.cotisation(salaire);
+			cotisations.push(cotisation.base + cotisation.complementaire);
 			poidsCotisations.push(w);
 		} else autres += w;
 	}

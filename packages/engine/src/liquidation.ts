@@ -180,14 +180,14 @@ export function computePension(
 }
 
 /**
- * Cotisations vieillesse annuelles (salarié + employeur, base + complémentaire),
+ * Cotisations vieillesse annuelles (salarié + employeur), régime de base et complémentaire,
  * aux taux de l'année de référence et au plafond de l'année du salaire.
  */
-export function computeCotisations(
+export function detailCotisations(
 	salaireBrut: number,
 	b: Baremes,
 	annee: number = b.anneeReference,
-): number {
+): { base: number; complementaire: number } {
 	const pass = valeur(b.cnav.pass, annee);
 	const c = b.agircArrco.cotisation;
 	const tranche1 = Math.min(salaireBrut, pass);
@@ -195,12 +195,22 @@ export function computeCotisations(
 		0,
 		Math.min(salaireBrut, c.plafondTranche2EnPass * pass) - pass,
 	);
-	const base =
-		tranche1 * b.cnav.tauxCotisation.plafonne +
-		salaireBrut * b.cnav.tauxCotisation.deplafonne;
-	const complementaire =
-		tranche1 * (c.tauxTranche1 * c.tauxAppel + c.cegTranche1) +
-		tranche2 * (c.tauxTranche2 * c.tauxAppel + c.cegTranche2) +
-		(tranche2 > 0 ? (tranche1 + tranche2) * c.cet : 0);
-	return base + complementaire;
+	return {
+		base:
+			tranche1 * b.cnav.tauxCotisation.plafonne +
+			salaireBrut * b.cnav.tauxCotisation.deplafonne,
+		complementaire:
+			tranche1 * (c.tauxTranche1 * c.tauxAppel + c.cegTranche1) +
+			tranche2 * (c.tauxTranche2 * c.tauxAppel + c.cegTranche2) +
+			(tranche2 > 0 ? (tranche1 + tranche2) * c.cet : 0),
+	};
+}
+
+export function computeCotisations(
+	salaireBrut: number,
+	b: Baremes,
+	annee: number = b.anneeReference,
+): number {
+	const d = detailCotisations(salaireBrut, b, annee);
+	return d.base + d.complementaire;
 }

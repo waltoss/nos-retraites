@@ -13,4 +13,5 @@ export * from "./regimes/cnav.ts";
 export * from "./rng.ts";
 export * from "./simulation.ts";
 export * from "./stats.ts";
+export * from "./systeme.ts";
 export * from "./types.ts";

@@ -1,0 +1,280 @@
+{
+	"source": "Conseil d'orientation des retraites, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026 : fichier de données de la partie 2 (figures 2.2 à 2.15, tableau 2.2), fichier « Données complémentaires » et fichier d'hypothèses de cotisants.",
+	"url": "https://www.cor-retraites.fr/sites/default/files/2026-06/Donn%C3%A9es_RA2026_P2.xlsx",
+	"date": "2026-11-21",
+	"champ": "Ensemble des régimes de retraite français légalement obligatoires, y compris FSV, hors RAFP (mention « Champ » des feuilles).",
+	"convention": "Solde en convention EPR : les contributions et subventions d'équilibre de l'État comptent comme des ressources.",
+	"partCotisations": 0.665,
+	"annees": {
+		"2026": {
+			"pib": 3058115800000,
+			"depenses": 431995554140,
+			"ressources": 427050580891,
+			"contributionsEtat": 57419182261
+		},
+		"2027": {
+			"pib": 3083829035903,
+			"depenses": 438665428870,
+			"ressources": 431757651830,
+			"contributionsEtat": 57245118393
+		},
+		"2028": {
+			"pib": 3118076944663,
+			"depenses": 443683640764,
+			"ressources": 436222082635,
+			"contributionsEtat": 57291545781
+		},
+		"2029": {
+			"pib": 3152705529125,
+			"depenses": 444588228306,
+			"ressources": 439175032913,
+			"contributionsEtat": 58243081945
+		},
+		"2030": {
+			"pib": 3195267148660,
+			"depenses": 449714679571,
+			"ressources": 443343316877,
+			"contributionsEtat": 58566051568
+		},
+		"2031": {
+			"pib": 3238722761470,
+			"depenses": 454480248949,
+			"ressources": 446593959025,
+			"contributionsEtat": 58303487152
+		},
+		"2032": {
+			"pib": 3281149992396,
+			"depenses": 459351155485,
+			"ressources": 450764385955,
+			"contributionsEtat": 58493060914
+		},
+		"2033": {
+			"pib": 3323148805822,
+			"depenses": 463855079763,
+			"ressources": 454796176118,
+			"contributionsEtat": 58607052339
+		},
+		"2034": {
+			"pib": 3357377249984,
+			"depenses": 469163254290,
+			"ressources": 457764958526,
+			"contributionsEtat": 58764174006
+		},
+		"2035": {
+			"pib": 3391958209796,
+			"depenses": 474494250052,
+			"ressources": 461492874234,
+			"contributionsEtat": 58850474940
+		},
+		"2036": {
+			"pib": 3424181784713,
+			"depenses": 479467630223,
+			"ressources": 464805283820,
+			"contributionsEtat": 58858260697
+		},
+		"2037": {
+			"pib": 3454314489003,
+			"depenses": 484564327888,
+			"ressources": 467752179270,
+			"contributionsEtat": 58664622967
+		},
+		"2038": {
+			"pib": 3485057862595,
+			"depenses": 489204542288,
+			"ressources": 470733735616,
+			"contributionsEtat": 58371234141
+		},
+		"2039": {
+			"pib": 3516423446923,
+			"depenses": 493800795381,
+			"ressources": 473658721877,
+			"contributionsEtat": 57957691252
+		},
+		"2040": {
+			"pib": 3545258052752,
+			"depenses": 497892495670,
+			"ressources": 476284147839,
+			"contributionsEtat": 57493449841
+		},
+		"2041": {
+			"pib": 3571138497341,
+			"depenses": 501916373524,
+			"ressources": 478593267998,
+			"contributionsEtat": 56970372448
+		},
+		"2042": {
+			"pib": 3596136453156,
+			"depenses": 505951226004,
+			"ressources": 480749501740,
+			"contributionsEtat": 56376631176
+		},
+		"2043": {
+			"pib": 3618073016641,
+			"depenses": 510061461594,
+			"ressources": 482614759690,
+			"contributionsEtat": 55787067844
+		},
+		"2044": {
+			"pib": 3638696003222,
+			"depenses": 514245990047,
+			"ressources": 484248580197,
+			"contributionsEtat": 55140799233
+		},
+		"2045": {
+			"pib": 3657617223213,
+			"depenses": 518090506816,
+			"ressources": 485713279157,
+			"contributionsEtat": 54480208540
+		},
+		"2046": {
+			"pib": 3673344962668,
+			"depenses": 521493764315,
+			"ressources": 486732900933,
+			"contributionsEtat": 53770423564
+		},
+		"2047": {
+			"pib": 3688772922449,
+			"depenses": 524698438035,
+			"ressources": 487692668077,
+			"contributionsEtat": 53022421987
+		},
+		"2048": {
+			"pib": 3702790424845,
+			"depenses": 528254893170,
+			"ressources": 488605413301,
+			"contributionsEtat": 52375970559
+		},
+		"2049": {
+			"pib": 3716860880158,
+			"depenses": 532083502438,
+			"ressources": 489547746526,
+			"contributionsEtat": 51701534843
+		},
+		"2050": {
+			"pib": 3728754883105,
+			"depenses": 535643096468,
+			"ressources": 490219404482,
+			"contributionsEtat": 51039196840
+		},
+		"2051": {
+			"pib": 3739941255161,
+			"depenses": 539101312108,
+			"ressources": 490889729387,
+			"contributionsEtat": 50425627943
+		},
+		"2052": {
+			"pib": 3751535000370,
+			"depenses": 542359415003,
+			"ressources": 491507358073,
+			"contributionsEtat": 49771614850
+		},
+		"2053": {
+			"pib": 3762789577434,
+			"depenses": 545807679365,
+			"ressources": 492278234837,
+			"contributionsEtat": 49311357412
+		},
+		"2054": {
+			"pib": 3774454162229,
+			"depenses": 549235922963,
+			"ressources": 493109789570,
+			"contributionsEtat": 48848985768
+		},
+		"2055": {
+			"pib": 3786909907657,
+			"depenses": 552305662392,
+			"ressources": 494051627283,
+			"contributionsEtat": 48366413341
+		},
+		"2056": {
+			"pib": 3797891951015,
+			"depenses": 555285984266,
+			"ressources": 494853927541,
+			"contributionsEtat": 47971173233
+		},
+		"2057": {
+			"pib": 3809285637776,
+			"depenses": 558090820219,
+			"ressources": 495668056473,
+			"contributionsEtat": 47532266188
+		},
+		"2058": {
+			"pib": 3820332606562,
+			"depenses": 560855389304,
+			"ressources": 496551550870,
+			"contributionsEtat": 47112341704
+		},
+		"2059": {
+			"pib": 3832175713225,
+			"depenses": 563490781224,
+			"ressources": 497462393685,
+			"contributionsEtat": 46683564539
+		},
+		"2060": {
+			"pib": 3843288845892,
+			"depenses": 566370104064,
+			"ressources": 498382324380,
+			"contributionsEtat": 46265511127
+		},
+		"2061": {
+			"pib": 3853281410792,
+			"depenses": 569464899857,
+			"ressources": 499288938803,
+			"contributionsEtat": 45915701291
+		},
+		"2062": {
+			"pib": 3862914729964,
+			"depenses": 572607576252,
+			"ressources": 500166336321,
+			"contributionsEtat": 45528313007
+		},
+		"2063": {
+			"pib": 3872571944347,
+			"depenses": 576168999024,
+			"ressources": 501095319311,
+			"contributionsEtat": 45208404878
+		},
+		"2064": {
+			"pib": 3881478870451,
+			"depenses": 580424705851,
+			"ressources": 502003306752,
+			"contributionsEtat": 44928117925
+		},
+		"2065": {
+			"pib": 3888853686144,
+			"depenses": 584782484200,
+			"ressources": 502863781302,
+			"contributionsEtat": 44710150830
+		},
+		"2066": {
+			"pib": 3895075874198,
+			"depenses": 588503118757,
+			"ressources": 503461927195,
+			"contributionsEtat": 44466186180
+		},
+		"2067": {
+			"pib": 3902086961170,
+			"depenses": 591876354444,
+			"ressources": 504243285470,
+			"contributionsEtat": 44304295357
+		},
+		"2068": {
+			"pib": 3909500955481,
+			"depenses": 595162877958,
+			"ressources": 505103613947,
+			"contributionsEtat": 44161722793
+		},
+		"2069": {
+			"pib": 3916929088569,
+			"depenses": 598028899385,
+			"ressources": 505930145725,
+			"contributionsEtat": 44061535317
+		},
+		"2070": {
+			"pib": 3928679720237,
+			"depenses": 601087997196,
+			"ressources": 507212195281,
+			"contributionsEtat": 43934425311
+		}
+	}
+}
