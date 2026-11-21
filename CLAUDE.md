@@ -47,5 +47,4 @@ Fait : règles CNAV + Agirc-Arrco sur barèmes sourcés (générations 1930 à 2
 Écarts connus : pensions de la génération 1953 face à la Drees D1 +37 %, médiane -12 %, D9 -14 % (cible tous régimes, critère ±10 %) ; cas types COR à ±2 % en carrière continue seulement ; en 2026 pensions versées +10 % et cotisations -7 % face aux chiffres publiés.
 Recoupements de la projection avec le COR (`bun scripts/compare-projection.ts`) : natalité et migrations collent en 2070 ; cotisants pour un retraité 1,07 en 2070 contre 0,87 (il manque des retraités futurs). Page « Et moi ? » : carrières simulées ressemblantes, rien ne quitte le navigateur.
 Reste, par priorité : relecture extérieure (`docs/methode.md`), retraités futurs manquants, cas types COR à carrière interrompue, leviers décote et surcote, autres régimes en vraies règles.
-
 `proto/` contient des maquettes jetables à données fictives.
