@@ -12,6 +12,13 @@ export const euros = (n: number) =>
 export const entier = (n: number) => ENTIER.format(n);
 export const decimal = (n: number) => UNE_DECIMALE.format(n);
 
+/** « 15,2 millions » au-delà du million, sinon le nombre entier. */
+export const personnes = (n: number) =>
+	n >= 1e6 ? `${UNE_DECIMALE.format(n / 1e6)} millions` : ENTIER.format(n);
+/** Montant annuel en milliards d'euros. */
+export const milliards = (n: number) =>
+	`${ENTIER.format(n / 1e9)} milliards d'euros`;
+
 /** « 62 ans 9 mois » à partir d'un âge en trimestres. */
 export function ageEnClair(trimestres: number): string {
 	const ans = Math.floor(trimestres / 4);

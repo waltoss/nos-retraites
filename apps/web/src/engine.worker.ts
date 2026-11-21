@@ -39,6 +39,8 @@ export interface ResumePortrait {
 	cadre: boolean;
 	reference: { mensuelle: number; age: number };
 	scenario: { mensuelle: number; age: number };
+	/** Nombre de personnes réelles que cet individu représente. */
+	poids: number;
 }
 
 export interface DetailPortrait {
@@ -84,6 +86,7 @@ export type Reponse =
 			type: "portraits";
 			id: number;
 			portraits: ResumePortrait[];
+			/** Personnes réelles représentées par l'ensemble où les portraits sont tirés. */
 			total: number;
 	  }
 	| { type: "portrait"; id: number; detail: DetailPortrait };
@@ -163,7 +166,8 @@ function portraits(
 	const tous: ResumePortrait[] = [];
 	const droit = { regles: {}, facteurs: {} };
 	for (let i = 0; i < base.population.length; i++) {
-		const c = (base.population[i] as Individu).carriere;
+		const individu = base.population[i] as Individu;
+		const c = individu.carriere;
 		if (B.anneeReference - c.anneeNaissance < AGE_MIN_PORTRAIT) continue;
 		if (filtre.sexe !== "tous" && c.sexe !== filtre.sexe) continue;
 		const r = pensionDans(droit, i).pension;
@@ -176,14 +180,26 @@ function portraits(
 			cadre: c.cadre,
 			reference: { mensuelle: r.mensuelleBrute, age: r.liquidation.age },
 			scenario: { mensuelle: p.mensuelleBrute, age: p.liquidation.age },
+			poids: individu.poids,
 		});
 	}
 	tous.sort((x, y) => x.reference.mensuelle - y.reference.mensuelle);
+	const poids = (liste: ResumePortrait[]) =>
+		liste.reduce((t, p) => t + p.poids, 0);
+	/** Tranche de la liste triée, entre deux parts du poids total. */
+	const tranche = (de: number, a: number) => {
+		const total = poids(tous);
+		let cumul = 0;
+		return tous.filter((p) => {
+			const milieu = (cumul + p.poids / 2) / total;
+			cumul += p.poids;
+			return milieu >= de && milieu < a;
+		});
+	};
 	let choisis = tous;
-	const tiers = Math.floor(tous.length / 3);
-	if (filtre.niveau === "bas") choisis = tous.slice(0, tiers);
-	else if (filtre.niveau === "milieu") choisis = tous.slice(tiers, 2 * tiers);
-	else if (filtre.niveau === "haut") choisis = tous.slice(2 * tiers);
+	if (filtre.niveau === "bas") choisis = tranche(0, 1 / 3);
+	else if (filtre.niveau === "milieu") choisis = tranche(1 / 3, 2 / 3);
+	else if (filtre.niveau === "haut") choisis = tranche(2 / 3, 1.01);
 	else if (filtre.niveau === "touches") {
 		const effet = (p: ResumePortrait) =>
 			Math.abs(p.scenario.mensuelle - p.reference.mensuelle) /
@@ -192,18 +208,20 @@ function portraits(
 		choisis = [...tous]
 			.sort((x, y) => effet(y) - effet(x))
 			.slice(0, Math.max(nombre, Math.floor(tous.length / 10)));
-		choisis.sort((x, y) => effet(y) - effet(x));
 	}
-	const pas = Math.max(1, choisis.length / nombre);
+	// Tirage représentatif : un portrait au milieu de chaque part égale du poids total.
+	const total = poids(choisis);
 	const pris: ResumePortrait[] = [];
-	for (
-		let k = 0;
-		k < nombre && Math.floor(k * pas + pas / 2) < choisis.length;
-		k++
-	) {
-		pris.push(choisis[Math.floor(k * pas + pas / 2)] as ResumePortrait);
+	let cumul = 0;
+	let k = 0;
+	for (const p of choisis) {
+		cumul += p.poids;
+		while (k < nombre && cumul >= ((k + 0.5) / nombre) * total) {
+			if (pris[pris.length - 1] !== p) pris.push(p);
+			k++;
+		}
 	}
-	return { portraits: pris, total: choisis.length };
+	return { portraits: pris, total };
 }
 
 const envoyer = (r: Reponse) => self.postMessage(r);
@@ -229,6 +247,7 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				ecarts: compareScenarios(
 					ref.pensionParIndividu,
 					courant.pensionParIndividu,
+					monde({}).population.map((i) => i.poids),
 				),
 			});
 			break;

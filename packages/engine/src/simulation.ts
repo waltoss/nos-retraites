@@ -14,6 +14,8 @@ import {
 	type ReglesScenario,
 	reglesGeneration,
 } from "./liquidation.ts";
+import { type Champ, type Pyramide, ponderer } from "./ponderation.ts";
+import { CHAMP_PRIVE, PYRAMIDE_FRANCE } from "./population/france.ts";
 import { createRng, graineIndividu } from "./rng.ts";
 import { type Histogramme, histogramme, type Resume, resume } from "./stats.ts";
 import type { Individu, Pension } from "./types.ts";
@@ -27,12 +29,18 @@ export interface Scenario {
 	regles?: ReglesScenario;
 	facteurs?: Facteurs;
 	hypotheses?: Hypotheses;
+	/** Sans pondération, chaque individu compte pour une personne. */
+	ponderation?: { pyramide: Pyramide; champ: Champ };
 }
+
+/** De 96 ans à 18 ans l'année de référence. */
+export const GENERATIONS_REFERENCE = [1930, 2008] as const;
 
 export const SCENARIO_REFERENCE: Scenario = {
 	taille: 20000,
 	graine: 2025,
-	generations: [1955, 2003],
+	generations: GENERATIONS_REFERENCE,
+	ponderation: { pyramide: PYRAMIDE_FRANCE, champ: CHAMP_PRIVE },
 };
 
 /** Population synthétique : dépend de la graine et des hypothèses, pas des règles du scénario. */
@@ -53,7 +61,13 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 			carriere: generateCarriere(anneeNaissance, rng, h, b),
 		});
 	}
-	return population;
+	return scenario.ponderation
+		? ponderer(
+				population,
+				scenario.ponderation.pyramide,
+				scenario.ponderation.champ,
+			)
+		: population;
 }
 
 /** Comptes de carrière de la population : indépendants des règles du scénario, à calculer une seule fois. */
@@ -81,8 +95,9 @@ export interface Resultat {
 	};
 	/** Pensions mensuelles brutes des individus déjà partis l'année de référence. */
 	pensions: { valeurs: Float64Array; resume: Resume; histogramme: Histogramme };
+	/** Personnes représentées : sommes des poids. */
 	effectifs: { cotisants: number; retraites: number; autres: number };
-	/** Sommes annuelles sur l'échantillon, en euros. */
+	/** Sommes annuelles pondérées, en euros. */
 	masses: { cotisations: number; pensions: number };
 	parSexe: { F: GroupeSexe; H: GroupeSexe };
 	/** Parts parmi les retraités. */
@@ -120,8 +135,13 @@ export function runSimulation(
 	const be = appliquerRegles(b, regles);
 	const annee = b.anneeReference;
 	const cotisations: number[] = [];
+	const poidsCotisations: number[] = [];
 	const pensions: number[] = [];
-	const parSexe = { F: [] as number[], H: [] as number[] };
+	const poidsPensions: number[] = [];
+	const parSexe = {
+		F: { valeurs: [] as number[], poids: [] as number[] },
+		H: { valeurs: [] as number[], poids: [] as number[] },
+	};
 	const ages = { F: 0, H: 0 };
 	const pensionParIndividu = new Float64Array(population.length).fill(
 		Number.NaN,
@@ -137,6 +157,7 @@ export function runSimulation(
 	for (let i = 0; i < population.length; i++) {
 		const individu = population[i] as Individu;
 		const c = individu.carriere;
+		const w = individu.poids;
 		const age = annee - c.anneeNaissance;
 		const g = reglesGeneration(c.anneeNaissance, b, regles);
 		let pension: Pension | null = null;
@@ -149,21 +170,23 @@ export function runSimulation(
 			if (p.liquidation.annee <= annee) pension = p;
 		}
 		const sexagenaire = age >= 60 && age < 70;
-		if (sexagenaire) sexagenaires++;
+		if (sexagenaire) sexagenaires += w;
 		if (pension) {
-			if (sexagenaire) sexagenairesRetraites++;
+			if (sexagenaire) sexagenairesRetraites += w;
 			pensions.push(pension.mensuelleBrute);
+			poidsPensions.push(w);
 			pensionParIndividu[i] = pension.mensuelleBrute;
-			parSexe[c.sexe].push(pension.mensuelleBrute);
-			ages[c.sexe] += pension.liquidation.age / 4;
-			if (pension.cnav.minimumContributifApplique) minimum++;
-			if (pension.cnav.trimestresDecote > 0) decote++;
-			if (pension.cnav.trimestresSurcote > 0) surcote++;
+			parSexe[c.sexe].valeurs.push(pension.mensuelleBrute);
+			parSexe[c.sexe].poids.push(w);
+			ages[c.sexe] += (pension.liquidation.age / 4) * w;
+			if (pension.cnav.minimumContributifApplique) minimum += w;
+			if (pension.cnav.trimestresDecote > 0) decote += w;
+			if (pension.cnav.trimestresSurcote > 0) surcote += w;
 			if (
 				pension.liquidation.age >= g.ageTauxPleinAutomatique &&
 				pension.cnav.trimestresValides < g.dureeRequise
 			)
-				parAge++;
+				parAge += w;
 			continue;
 		}
 		const a =
@@ -172,42 +195,52 @@ export function runSimulation(
 			];
 		if (a && a.etat === "emploi" && a.salaireBrut > 0) {
 			cotisations.push(computeCotisations(a.salaireBrut, be));
+			poidsCotisations.push(w);
 		} else {
-			autres++;
+			autres += w;
 		}
 	}
 
 	const vc = Float64Array.from(cotisations);
 	const vp = Float64Array.from(pensions);
-	const n = Math.max(1, vp.length);
+	const resumeCotisations = resume(vc, poidsCotisations);
+	const resumePensions = resume(vp, poidsPensions);
+	const n = Math.max(1e-9, resumePensions.effectif);
 	const groupe = (sexe: "F" | "H"): GroupeSexe => {
 		const v = parSexe[sexe];
-		const r = resume(v);
+		const r = resume(v.valeurs, v.poids);
 		return {
-			effectif: v.length,
+			effectif: r.effectif,
 			pensionMoyenne: r.moyenne,
 			pensionMediane: r.mediane,
-			ageMoyenDepart: v.length ? ages[sexe] / v.length : 0,
+			ageMoyenDepart: r.effectif ? ages[sexe] / r.effectif : 0,
 		};
 	};
-	const resumeCotisations = resume(vc);
-	const resumePensions = resume(vp);
 	return {
 		anneeReference: annee,
 		cotisations: {
 			valeurs: vc,
 			resume: resumeCotisations,
-			histogramme: histogramme(vc, MAX_COTISATION, NB_CLASSES),
+			histogramme: histogramme(
+				vc,
+				MAX_COTISATION,
+				NB_CLASSES,
+				poidsCotisations,
+			),
 		},
 		pensions: {
 			valeurs: vp,
 			resume: resumePensions,
-			histogramme: histogramme(vp, MAX_PENSION, NB_CLASSES),
+			histogramme: histogramme(vp, MAX_PENSION, NB_CLASSES, poidsPensions),
 		},
-		effectifs: { cotisants: vc.length, retraites: vp.length, autres },
+		effectifs: {
+			cotisants: resumeCotisations.effectif,
+			retraites: resumePensions.effectif,
+			autres,
+		},
 		masses: {
-			cotisations: resumeCotisations.moyenne * vc.length,
-			pensions: resumePensions.moyenne * vp.length * 12,
+			cotisations: resumeCotisations.moyenne * resumeCotisations.effectif,
+			pensions: resumePensions.moyenne * resumePensions.effectif * 12,
 		},
 		parSexe: { F: groupe("F"), H: groupe("H") },
 		parts: {
@@ -219,7 +252,9 @@ export function runSimulation(
 		partRetraitesSexagenaires: sexagenaires
 			? sexagenairesRetraites / sexagenaires
 			: 0,
-		ageMoyenDepart: vp.length ? (ages.F + ages.H) / vp.length : 0,
+		ageMoyenDepart: resumePensions.effectif
+			? (ages.F + ages.H) / resumePensions.effectif
+			: 0,
 		pensionParIndividu,
 		dureeMs: performance.now() - debut,
 	};
@@ -238,33 +273,48 @@ export interface EcartDecile {
 export function compareScenarios(
 	reference: Float64Array,
 	scenario: Float64Array,
+	poids?: ArrayLike<number>,
 ): EcartDecile[] {
 	const retraites: number[] = [];
+	let total = 0;
+	const w = (i: number) => (poids ? (poids[i] as number) : 1);
 	for (let i = 0; i < reference.length; i++) {
-		if (!Number.isNaN(reference[i] as number)) retraites.push(i);
+		if (!Number.isNaN(reference[i] as number)) {
+			retraites.push(i);
+			total += w(i);
+		}
 	}
 	retraites.sort((x, y) => (reference[x] as number) - (reference[y] as number));
 	const deciles: EcartDecile[] = [];
+	let k = 0;
+	let cumul = 0;
 	for (let d = 0; d < 10; d++) {
-		const debut = Math.floor((d * retraites.length) / 10);
-		const fin = Math.floor(((d + 1) * retraites.length) / 10);
+		const seuil = ((d + 1) * total) / 10;
+		let poidsDixieme = 0;
 		let sommeReference = 0;
 		let sommeScenario = 0;
 		let restes = 0;
-		for (let k = debut; k < fin; k++) {
+		while (
+			k < retraites.length &&
+			(d === 9 || cumul + w(retraites[k] as number) / 2 < seuil)
+		) {
 			const i = retraites[k] as number;
-			sommeReference += reference[i] as number;
+			const wi = w(i);
+			cumul += wi;
+			poidsDixieme += wi;
+			sommeReference += (reference[i] as number) * wi;
 			const p = scenario[i] as number;
 			if (!Number.isNaN(p)) {
-				sommeScenario += p;
-				restes++;
+				sommeScenario += p * wi;
+				restes += wi;
 			}
+			k++;
 		}
-		const taille = Math.max(1, fin - debut);
+		const taille = Math.max(1e-9, poidsDixieme);
 		deciles.push({
 			reference: sommeReference / taille,
 			scenario: restes ? sommeScenario / restes : 0,
-			partSortie: 1 - restes / taille,
+			partSortie: poidsDixieme ? 1 - restes / poidsDixieme : 0,
 		});
 	}
 	return deciles;

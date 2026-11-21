@@ -5,6 +5,8 @@ export * from "./compte.ts";
 export * from "./generateur/carriere.ts";
 export * from "./generateur/hypotheses.ts";
 export * from "./liquidation.ts";
+export * from "./ponderation.ts";
+export * from "./population/france.ts";
 export * from "./regimes/agircArrco.ts";
 export * from "./regimes/cnav.ts";
 export * from "./rng.ts";

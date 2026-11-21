@@ -21,7 +21,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Individu** : personne synthétique de la population simulée, porteuse d'une carrière et d'un poids.
 - **Génération** : ensemble des individus nés la même année.
 - **Cohorte** : effectif réel d'une génération par sexe, suivi d'année en année par la démographie.
-- **Poids** : nombre de personnes réelles qu'un individu représente dans sa cohorte.
+- **Poids** : nombre de personnes réelles qu'un individu représente : la population de son âge et de son sexe dans le champ, partagée entre les individus simulés de cette cellule.
+- **Pyramide** : population réelle par sexe et âge une année donnée, d'après l'Insee.
+- **Champ** : partie de la population réelle que la population simulée représente (aujourd'hui les salariés du privé), définie par une part à chaque âge.
 - **Population synthétique** : ensemble des individus simulés, construit à partir d'agrégats publics et non de données personnelles.
 - **Carrière** : suite annuelle des états, salaires et événements d'un individu, de l'entrée dans la vie active à la liquidation.
 - **État** : situation d'un individu sur une année : emploi cotisant, chômage, maladie ou maternité, inactivité, retraite. Chaque état dit combien on cotise et combien on valide.
@@ -73,7 +75,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Calage** : ajustement des hypothèses du générateur pour que salaires et durées de carrière simulés reproduisent les données observées.
 - **Cas type** : carrière type publiée par le COR avec son taux de remplacement, utilisée pour vérifier les règles de calcul.
 - **Backtest** : simulation partant d'une année passée avec les données observées de l'époque, comparée au présent.
-- **Recoupement** : comparaison des projections avec celles d'un organisme tiers, sans en faire une cible.
+- **Recoupement** : comparaison des résultats avec des chiffres publiés par un organisme tiers, sans en faire une cible.
 
 ## Acronymes
 

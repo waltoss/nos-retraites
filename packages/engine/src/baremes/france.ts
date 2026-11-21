@@ -7,12 +7,18 @@ import { type Baremes, type SerieAnnuelle, valeur } from "./types.ts";
  * Simplifications du calcul des points de retraite complémentaire avant 2019 :
  * - avant 1999, la caisse Arrco est supposée être l'UNIRS, dont les points sont convertis en points Arrco ;
  * - les taux sont les taux minimaux obligatoires (entreprises créées avant 1997 pour l'Arrco, avant 1981 pour l'Agirc) ;
- * - la garantie minimale de points des cadres n'est pas modélisée.
+ * - la garantie minimale de points des cadres n'est pas modélisée ;
+ * - avant 1960, les points sont reconstitués au barème de 1960, à salaire égal en part du plafond.
  */
 const a = data.agircArrco;
 const serie = (s: Record<string, number>) => s as unknown as SerieAnnuelle;
 const tranche = (salaire: number, bas: number, haut: number) =>
 	Math.max(0, Math.min(salaire, haut) - bas);
+
+/** Première année des séries de prix d'achat du point. */
+const PREMIERE_ANNEE_POINTS = Math.min(
+	...Object.keys(a.prixAchat.unirs).map(Number),
+);
 
 function pointsAnnee(
 	annee: number,
@@ -20,6 +26,17 @@ function pointsAnnee(
 	pass: number,
 	cadre: boolean,
 ): number {
+	if (annee < PREMIERE_ANNEE_POINTS) {
+		// Avant la première année connue, les droits sont reconstitués comme si le salaire,
+		// à même distance du plafond, avait été perçu cette année-là.
+		return pointsAnnee(
+			PREMIERE_ANNEE_POINTS,
+			(salaireBrut / pass) *
+				valeur(serie(data.cnav.pass), PREMIERE_ANNEE_POINTS),
+			valeur(serie(data.cnav.pass), PREMIERE_ANNEE_POINTS),
+			cadre,
+		);
+	}
 	if (annee >= 2019) {
 		return (
 			(tranche(salaireBrut, 0, pass) * a.tauxContractuel.tranche1 +

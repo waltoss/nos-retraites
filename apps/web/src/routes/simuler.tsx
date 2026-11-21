@@ -41,14 +41,10 @@ function Simuler() {
 								reglages={reglages}
 							/>
 							<p className="reserve">
-								Ces totaux portent sur les{" "}
-								{entier(
-									courant.effectifs.cotisants +
-										courant.effectifs.retraites +
-										courant.effectifs.autres,
-								)}{" "}
-								personnes simulées, nées de 1955 à 2003. Les retraités plus âgés
-								n'y sont pas : lisez les écarts, pas les niveaux.
+								Ces totaux portent sur les salariés du privé de 18 à 96 ans :
+								régime général et Agirc-Arrco, pensions de droit direct, sans
+								les pensions de réversion. Chaque personne simulée en représente
+								quelques milliers de son âge et de son sexe.
 							</p>
 						</section>
 

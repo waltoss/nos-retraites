@@ -39,6 +39,8 @@ function parAnnee(
 }
 
 const cnav = await lire("cnav.json");
+/** Générations 1930 à 1947 et séries d'avant 1970, pour simuler les retraités les plus âgés. */
+const anciennes = await lire("cnav-generations-anciennes.json");
 const aa = await lire("agirc-arrco.json");
 
 // --- CNAV ---
@@ -49,7 +51,18 @@ for (const [annee, e] of Object.entries<any>(v(cnav.pass))) {
 		2,
 	);
 }
+// Avant 1970 : contre-valeurs en euros publiées par le COR (anciens francs et francs déjà convertis).
+for (const [annee, montant] of Object.entries<number>(
+	anciennes.pass.contreValeurEurosSelonCOR,
+)) {
+	if (pass[Number(annee)] === undefined) pass[Number(annee)] = montant;
+}
 const coefficientsRevalorisation: Serie = { [ANNEE_REFERENCE]: 1 };
+for (const [annee, c] of Object.entries<number>(
+	v(anciennes.coefficientsRevalorisation),
+)) {
+	coefficientsRevalorisation[Number(annee)] = c;
+}
 for (const [annee, c] of Object.entries<number>(
 	v(cnav.coefficientsRevalorisation),
 )) {
@@ -78,14 +91,37 @@ for (const [annee, seuil] of Object.entries(seuilTrimestre)) {
 	if (Number(annee) >= heures[0]!.de)
 		smicHoraire[Number(annee)] = arrondi(seuil / heuresPour(Number(annee)), 4);
 }
+// Avant la règle des 200 heures de SMIC, un trimestre se validait par un montant fixe.
+// On l'exprime en « SMIC horaire équivalent » pour que le moteur retrouve exactement ce seuil.
+const DIVISEUR_ANCIEN_FRANC = 100;
+for (const [annee, e] of Object.entries<any>(
+	v(anciennes.validationTrimestre).salaireMinimumPourUnTrimestre,
+)) {
+	const a = Number(annee);
+	if (!e?.montant || smicHoraire[a] !== undefined) continue;
+	const francs =
+		e.unite === "anciens francs"
+			? e.montant / DIVISEUR_ANCIEN_FRANC
+			: e.montant;
+	smicHoraire[a] = arrondi(francs / FRF_PAR_EUR / heuresPour(a), 6);
+}
 
 const trimestres = (age: { ans: number; mois: number }) =>
 	age.ans * 4 + Math.ceil(age.mois / 3);
 const parGeneration: Record<
 	number,
-	{ ageLegal: number; dureeRequise: number; ageTauxPleinAutomatique: number }
+	{
+		ageLegal: number;
+		dureeRequise: number;
+		ageTauxPleinAutomatique: number;
+		nbMeilleuresAnnees?: number;
+		dureeProratisation?: number;
+	}
 > = {};
-for (const [annee, periodes] of Object.entries<any[]>(v(cnav.parGeneration))) {
+for (const [annee, periodes] of Object.entries<any[]>({
+	...v(anciennes.parGeneration),
+	...v(cnav.parGeneration),
+})) {
 	const duree = (p: any) =>
 		new Date(p.neAu).getTime() - new Date(p.neDu).getTime();
 	const p = [...periodes].sort((a, b) => duree(b) - duree(a))[0];
@@ -94,6 +130,14 @@ for (const [annee, periodes] of Object.entries<any[]>(v(cnav.parGeneration))) {
 		dureeRequise: p.dureeAssuranceTauxPlein,
 		ageTauxPleinAutomatique: trimestres(p.ageTauxPleinAutomatique),
 	};
+	const regle = parGeneration[Number(annee)]!;
+	if (p.nombreMeilleuresAnneesSam && p.nombreMeilleuresAnneesSam !== 25)
+		regle.nbMeilleuresAnnees = p.nombreMeilleuresAnneesSam;
+	if (
+		p.dureeReferenceProratisation &&
+		p.dureeReferenceProratisation !== p.dureeAssuranceTauxPlein
+	)
+		regle.dureeProratisation = p.dureeReferenceProratisation;
 }
 const mico = v(cnav.minimumContributif)[ANNEE_REFERENCE];
 const plafonds = mico.plafondTousRegimesMensuel;

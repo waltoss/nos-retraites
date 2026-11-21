@@ -1,5 +1,5 @@
 import type { ResultatLeger } from "../engine.worker";
-import { entier } from "../format";
+import { personnes } from "../format";
 import { Histogram } from "./Histogram";
 import { Icon } from "./Icons";
 
@@ -34,7 +34,7 @@ export function Distributions({
 						Cotisation retraite par an, part salariale et patronale
 						{courant && (
 							<span className="effectif num">
-								, {entier(courant.effectifs.cotisants)} personnes
+								, {personnes(courant.effectifs.cotisants)} de personnes
 							</span>
 						)}
 					</p>
@@ -68,7 +68,7 @@ export function Distributions({
 						Pension brute par mois, base et complémentaire
 						{courant && (
 							<span className="effectif num">
-								, {entier(courant.effectifs.retraites)} personnes
+								, {personnes(courant.effectifs.retraites)} de personnes
 							</span>
 						)}
 					</p>

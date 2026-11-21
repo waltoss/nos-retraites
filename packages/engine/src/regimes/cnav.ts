@@ -66,8 +66,15 @@ export function computeCnav(
 		0,
 		Math.min(valides - g.dureeRequise, age - g.ageLegal),
 	);
-	const proratisation = Math.min(1, valides / g.dureeRequise);
-	const sam = salaireAnnuelMoyen(compte, age, b.nbMeilleuresAnnees);
+	const proratisation = Math.min(
+		1,
+		valides / (g.dureeProratisation ?? g.dureeRequise),
+	);
+	const sam = salaireAnnuelMoyen(
+		compte,
+		age,
+		g.nbMeilleuresAnnees ?? b.nbMeilleuresAnnees,
+	);
 
 	let pension = sam * taux * proratisation;
 	let minimumApplique = false;

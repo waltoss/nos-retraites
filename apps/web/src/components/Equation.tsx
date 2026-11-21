@@ -1,5 +1,5 @@
 import type { ResultatLeger } from "../engine.worker";
-import { entier, euros } from "../format";
+import { euros, milliards, personnes } from "../format";
 import {
 	LEVIER,
 	type LevierId,
@@ -62,7 +62,7 @@ export function Equation({
 				<div className="produit">
 					<Case
 						terme="cotisants"
-						valeur={entier(courant.effectifs.cotisants)}
+						valeur={personnes(courant.effectifs.cotisants)}
 						ecart={variation(
 							courant.effectifs.cotisants,
 							reference.effectifs.cotisants,
@@ -81,15 +81,18 @@ export function Equation({
 					/>
 				</div>
 				<p className="masse ressources">
-					Cotisations versées{" "}
-					<strong className="num">{ecartCotisations || "inchangées"}</strong>
+					Cotisations versées par an{" "}
+					<strong className="num">
+						{milliards(courant.masses.cotisations)}
+					</strong>
+					{ecartCotisations && <em className="num"> {ecartCotisations}</em>}
 				</p>
 			</div>
 			<div className="cote">
 				<div className="produit">
 					<Case
 						terme="retraites"
-						valeur={entier(courant.effectifs.retraites)}
+						valeur={personnes(courant.effectifs.retraites)}
 						ecart={variation(
 							courant.effectifs.retraites,
 							reference.effectifs.retraites,
@@ -108,8 +111,9 @@ export function Equation({
 					/>
 				</div>
 				<p className="masse depenses">
-					Pensions versées{" "}
-					<strong className="num">{ecartPensions || "inchangées"}</strong>
+					Pensions versées par an{" "}
+					<strong className="num">{milliards(courant.masses.pensions)}</strong>
+					{ecartPensions && <em className="num"> {ecartPensions}</em>}
 				</p>
 			</div>
 		</div>

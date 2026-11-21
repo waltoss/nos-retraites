@@ -8,7 +8,7 @@ import type {
 	FiltrePortraits,
 	ResumePortrait,
 } from "../engine.worker";
-import { ageEnClair, decimal, entier, euros } from "../format";
+import { ageEnClair, decimal, entier, euros, personnes } from "../format";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/carrieres")({ component: Carrieres });
@@ -152,9 +152,10 @@ function Carrieres() {
 					)}
 					{liste && (
 						<p className="reserve">
-							{entier(liste.portraits.length)} carrières affichées sur{" "}
-							{entier(liste.total)}, de la plus petite pension à la plus grande.
-							Ce sont les personnes de 60 ans et plus en 2026.
+							{entier(liste.portraits.length)} carrières, de la plus petite
+							pension à la plus grande. Elles sont tirées pour représenter à
+							parts égales les {personnes(liste.total)} de personnes de 60 ans
+							et plus concernées en 2026.
 						</p>
 					)}
 				</div>

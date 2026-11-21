@@ -1,0 +1,868 @@
+{
+ "avertissements": [
+  "Fichier complementaire de cnav.json pour les assures nes de 1930 a 1947. Toutes les valeurs ont ete lues le 2026-11-21 dans les sources indiquees (PDF de circulaires Cnav lus avec pdftotext, pages HTML de lassuranceretraite.fr lues en brut par script, classeurs du COR et de la Drees lus par script, tableaux IPP lus en HTML brut). Les articles de Legifrance ont ete lus via un outil de restitution automatique qui reformule : un controle humain est souhaitable pour R351-27 et R351-29-1.",
+  "Ces baremes sont ceux applicables A LA GENERATION, tels que publies aujourd'hui. Les retraites nes en 1930-1947 ont liquide pour l'essentiel entre 1990 et 2012 : leur pension a ete calculee avec les coefficients de revalorisation des salaires en vigueur l'annee de leur liquidation, puis revalorisee chaque annee comme les pensions. Les coefficients de revalorisation fournis ici sont ceux des liquidations 2026 : ils ne reproduisent pas le salaire annuel moyen calcule a l'epoque.",
+  "Surcote des generations anciennes : non documentee ici. Minimum contributif, majorations et departs anticipes des generations anciennes : non couverts.",
+  "Monnaies : anciens francs avant 1960 (1 nouveau franc = 100 anciens francs), francs de 1960 a 2001. Les montants Cnav sont reproduits dans la monnaie de la source, sans conversion ; les series du COR sont deja converties en euros par le COR (division par 6,55957, et par 100 avant 1960 : verifie par script, exactement sur le salaire validant un trimestre et a moins de 0,1 % pres sur le plafond)."
+ ],
+ "parGeneration": {
+  "valeurs": {
+   "1930": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1930-01-01",
+     "neAu": "1930-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 150,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 10,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1931": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1931-01-01",
+     "neAu": "1931-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 150,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 10,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1932": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1932-01-01",
+     "neAu": "1932-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 150,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 10,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1933": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1933-01-01",
+     "neAu": "1933-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 150,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 10,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1934": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1934-01-01",
+     "neAu": "1934-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 151,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 11,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1935": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1935-01-01",
+     "neAu": "1935-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 152,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 12,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1936": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1936-01-01",
+     "neAu": "1936-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 153,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 13,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1937": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1937-01-01",
+     "neAu": "1937-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 154,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 14,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1938": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1938-01-01",
+     "neAu": "1938-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 155,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 15,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1939": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1939-01-01",
+     "neAu": "1939-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 156,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 16,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1940": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1940-01-01",
+     "neAu": "1940-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 157,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 17,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1941": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1941-01-01",
+     "neAu": "1941-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 158,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 18,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1942": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1942-01-01",
+     "neAu": "1942-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 159,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 19,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1943": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1943-01-01",
+     "neAu": "1943-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 160,
+     "dureeReferenceProratisation": 150,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 20,
+     "coefficientMinorationParTrimestrePct": 2.5,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1944": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1944-01-01",
+     "neAu": "1944-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 160,
+     "dureeReferenceProratisation": 152,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 21,
+     "coefficientMinorationParTrimestrePct": 2.375,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1945": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1945-01-01",
+     "neAu": "1945-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 160,
+     "dureeReferenceProratisation": 154,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 22,
+     "coefficientMinorationParTrimestrePct": 2.25,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1946": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1946-01-01",
+     "neAu": "1946-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 160,
+     "dureeReferenceProratisation": 156,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 23,
+     "coefficientMinorationParTrimestrePct": 2.125,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ],
+   "1947": [
+    {
+     "periodeNaissance": "annee entiere",
+     "neDu": "1947-01-01",
+     "neAu": "1947-12-31",
+     "ageLegal": {
+      "ans": 60,
+      "mois": 0
+     },
+     "dureeAssuranceTauxPlein": 160,
+     "dureeReferenceProratisation": 158,
+     "ageTauxPleinAutomatique": {
+      "ans": 65,
+      "mois": 0
+     },
+     "nombreMeilleuresAnneesSam": 24,
+     "coefficientMinorationParTrimestrePct": 2.0,
+     "nombreMaxTrimestresDecote": 20
+    }
+   ]
+  },
+  "source": "Age legal et age du taux plein : Cnav, circulaire n 2026-07 du 5 mars 2026 (tableaux 'Avant le 1er juillet 1951 : 60 ans' et 'Avant le 01/07/1951 : 65 ans'). Duree de reference pour la proratisation : L'Assurance retraite, popup 'Duree d'assurance' ('Duree d'assurance maximum retenue au regime general' : avant 1944 = 150, 1944 = 152, 1945 = 154, 1946 = 156, 1947 = 158). Duree d'assurance requise pour le taux plein : baremes IPP 'Duree d'assurance cible pour le taux plein' (SECONDAIRE ; reference citee par l'IPP : circulaire Cnav 103/93 du 30/12/1993, article L351-1 CSS), recoupee avec le classeur Drees 'hypo_cas_types_PourR - envoi DREES.xls' (onglet EspVie) et le REPSS Retraites 2026. Nombre de meilleures annees et coefficient de minoration : Legifrance, articles R351-29-1 (II) et R351-27 (II) du code de la securite sociale, version au 28/11/2020, recoupes avec les tables 'nbAnPourSam' et 'coeffDecote' de parametres.Rds (Drees, depot calcul_pension).",
+  "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "urlsComplementaires": [
+   "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupCommentDuree.jsp",
+   "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173400/2020-11-28/",
+   "https://baremes.ipp.eu/parameters/regimes-de-retraites/retraites.secteur_prive.regime_general_cnav.trimtp/table/",
+   "https://baremes.ipp.eu/parameters/regimes-de-retraites/retraites.secteur_prive.regime_general_cnav.prorat/table/",
+   "https://gitlab.com/DREES_code/public/outils/calcul_pension",
+   "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf"
+  ],
+  "fiabilite": {
+   "ageLegal": "primaire (circulaire Cnav 2026-07, PDF lu directement)",
+   "ageTauxPleinAutomatique": "primaire (circulaire Cnav 2026-07, PDF lu directement)",
+   "dureeReferenceProratisation": "primaire (popup lassuranceretraite.fr lue en HTML brut) ; concordante avec le bareme IPP 'prorat' et la table Drees 'Duree proratisation'",
+   "dureeAssuranceTauxPlein": "SECONDAIRE (bareme IPP lu en HTML brut), concordante avec le classeur Drees EspVie (37,5 ans jusqu'a 1933 puis +0,25 an par generation jusqu'a 40 ans en 1943) et avec le REPSS 2026 de la DSS (generations 1934-1942 : 150-159 ; 1943-1948 : 160) ; texte reglementaire d'origine (decret n 93-1022 du 27 aout 1993) non ouvert",
+   "nombreMeilleuresAnneesSam": "primaire lue par outil de restitution (Legifrance R351-29-1 II), concordante avec la table Drees nbAnPourSam lue par script",
+   "coefficientMinorationParTrimestrePct": "primaire lue par outil de restitution (Legifrance R351-27 II), concordante avec la table Drees coeffDecote lue par script",
+   "nombreMaxTrimestresDecote": "secondaire (table Drees coeffDecote, colonne nbTrimDecoteMax = 20) ; coherent avec l'ecart de 5 ans entre 60 et 65 ans"
+  },
+  "recoupementDreesEspVie": {
+   "source": "Drees, depot calcul_pension, cas-typeCOR/hypo_cas_types_PourR - envoi DREES.xls, onglet EspVie (colonnes DureeReqTP en annees et AgeOuvDroit)",
+   "url": "https://gitlab.com/DREES_code/public/outils/calcul_pension/-/blob/main/cas-typeCOR/hypo_cas_types_PourR%20-%20envoi%20DREES.xls",
+   "date": "2026-11-21",
+   "fiabilite": "secondaire (classeur de travail Drees, dernier commit 2023)",
+   "dureeRequiseTauxPleinEnAnnees": {
+    "1930": 37.5,
+    "1931": 37.5,
+    "1932": 37.5,
+    "1933": 37.5,
+    "1934": 37.75,
+    "1935": 38.0,
+    "1936": 38.25,
+    "1937": 38.5,
+    "1938": 38.75,
+    "1939": 39.0,
+    "1940": 39.25,
+    "1941": 39.5,
+    "1942": 39.75,
+    "1943": 40.0,
+    "1944": 40.0,
+    "1945": 40.0,
+    "1946": 40.0,
+    "1947": 40.0
+   },
+   "ageOuvertureDesDroits": {
+    "1930": 60.0,
+    "1931": 60.0,
+    "1932": 60.0,
+    "1933": 60.0,
+    "1934": 60.0,
+    "1935": 60.0,
+    "1936": 60.0,
+    "1937": 60.0,
+    "1938": 60.0,
+    "1939": 60.0,
+    "1940": 60.0,
+    "1941": 60.0,
+    "1942": 60.0,
+    "1943": 60.0,
+    "1944": 60.0,
+    "1945": 60.0,
+    "1946": 60.0,
+    "1947": 60.0
+   },
+   "note": "Controle fait par script : DureeReqTP x 4 est egal a dureeAssuranceTauxPlein pour chaque generation 1930-1947. Le classeur donne aussi EspVie60 (esperance de vie a 60 ans par generation), non reprise."
+  },
+  "note": "Meme structure que cnav.json (cle parGeneration), plus le champ 'dureeReferenceProratisation' : pour les generations 1934 a 1947 la duree requise tous regimes pour le taux plein (151 a 160) differe de la duree de reference de la proratisation au regime general (150 jusqu'a la generation 1943, puis 152, 154, 156, 158). Dans cnav.json (1948 et apres) les deux durees sont egales. dureeAssuranceTauxPlein : le bareme IPP donne 150 pour 'ne avant le 01/01/1934', 151 a 159 pour 1934 a 1942, 160 de 1943 a 1948 (lignes de date d'effet 01/01/1994 a 01/09/2026 identiques pour ces generations). Avant le 1er janvier 1994 la duree requise etait de 150 trimestres pour tous (ligne IPP du 01/01/1983, decret 82-628) : les assures nes en 1930-1933 relevent de cette regle. nombreMeilleuresAnneesSam (R351-29-1 II) : dix annees pour l'assure ne avant le 1er janvier 1934, puis une annee de plus par generation jusqu'a 24 pour 1947 (25 pour les assures nes apres 1947). coefficientMinorationParTrimestrePct (R351-27 II) : bareme applicable aux pensions prenant effet apres le 31 decembre 2003 : 2,5 % pour l'assure ne avant le 1er janvier 1944, 2,375 % (1944), 2,25 % (1945), 2,125 % (1946), 2 % (1947) ; il s'applique au taux plein de 50 % (2,5 % = 1,25 point de taux par trimestre). La regle applicable aux pensions liquidees AVANT 2004 (la plupart des assures nes en 1930-1938) n'a pas ete lue dans une source ouverte : l'usage de 2,5 % pour ces liquidations est une hypothese a verifier. L'article R351-29-1 est signale comme abroge au 1er janvier 2026 par l'outil de lecture."
+ },
+ "pass": {
+  "valeurs": {
+   "1947": {
+    "montant": 163500,
+    "unite": "anciens francs"
+   },
+   "1948": {
+    "montant": 224000,
+    "unite": "anciens francs"
+   },
+   "1949": {
+    "montant": 258000,
+    "unite": "anciens francs"
+   },
+   "1950": {
+    "montant": 264000,
+    "unite": "anciens francs"
+   },
+   "1951": {
+    "montant": 345000,
+    "unite": "anciens francs"
+   },
+   "1952": {
+    "montant": 444000,
+    "unite": "anciens francs"
+   },
+   "1953": {
+    "montant": 456000,
+    "unite": "anciens francs"
+   },
+   "1954": {
+    "montant": 456000,
+    "unite": "anciens francs"
+   },
+   "1955": {
+    "montant": 474000,
+    "unite": "anciens francs"
+   },
+   "1956": {
+    "montant": 528000,
+    "unite": "anciens francs"
+   },
+   "1957": {
+    "montant": 528000,
+    "unite": "anciens francs"
+   },
+   "1958": {
+    "montant": 600000,
+    "unite": "anciens francs"
+   },
+   "1959": {
+    "montant": 660000,
+    "unite": "anciens francs"
+   },
+   "1960": {
+    "montant": 6840,
+    "unite": "FRF"
+   },
+   "1961": {
+    "montant": 8100,
+    "unite": "FRF"
+   },
+   "1962": {
+    "montant": 9600,
+    "unite": "FRF"
+   },
+   "1963": {
+    "montant": 10440,
+    "unite": "FRF"
+   },
+   "1964": {
+    "montant": 11400,
+    "unite": "FRF"
+   },
+   "1965": {
+    "montant": 12240,
+    "unite": "FRF"
+   },
+   "1966": {
+    "montant": 12960,
+    "unite": "FRF"
+   },
+   "1967": {
+    "montant": 13680,
+    "unite": "FRF"
+   },
+   "1968": {
+    "montant": 14400,
+    "unite": "FRF"
+   },
+   "1969": {
+    "montant": 16320,
+    "unite": "FRF"
+   }
+  },
+  "contreValeurEurosSelonCOR": {
+   "1949": 393.59,
+   "1950": 402.47,
+   "1951": 526.21,
+   "1952": 676.97,
+   "1953": 695.17,
+   "1954": 695.17,
+   "1955": 722.83,
+   "1956": 804.93,
+   "1957": 804.93,
+   "1958": 914.69,
+   "1959": 1006.16,
+   "1960": 1042.95,
+   "1961": 1235.46,
+   "1962": 1463.51,
+   "1963": 1591.57,
+   "1964": 1737.92,
+   "1965": 1865.98,
+   "1966": 1975.74,
+   "1967": 2085.5,
+   "1968": 2195.27,
+   "1969": 2487.97
+  },
+  "source": "L'Assurance retraite - Bareme des revenus plafonds annuels (popup 'Salaires regime general') ; contre-valeurs en euros : COR, hypo_Salaires_Prix_PIB_2026.xlsx, onglet PSS ('Plafond de la Securite sociale (en moyenne annuelle)', source indiquee : legislation.cnav)",
+  "url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupSalRG.jsp",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "urlsComplementaires": [
+   "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_Salaires_Prix_PIB_2026.xlsx"
+  ],
+  "fiabilite": "primaire (page Cnav lue en HTML brut par script ; classeur COR lu par script)",
+  "note": "Annees 1947 a 1969, en complement de cnav.json (1970 et apres, meme source). Montants dans la monnaie de la source : anciens francs (AF) de 1947 a 1959, francs de 1960 a 1969 ('Revenus exprimes : en anciens francs avant 1960, en francs de 1960 a 2001'). Il s'agit du 'revenu plafond annuel soumis a cotisations' reportable au compte. La serie du COR commence en 1949 (pas de contre-valeur 1947-1948) ; controle fait par script : la valeur COR est egale au montant Cnav converti (francs / 6,55957) pour toutes les annees 1949-1969 sauf 1949, 1951, 1952, 1955, 1960 et 1961, ou le COR est superieur de moins de 0,1 % (ex. 1949 : 2 581,81 F contre 2 580 F ; origine de l'ecart non documentee, peut-etre le calcul 'en moyenne annuelle'). En cas de doute, retenir la valeur Cnav."
+ },
+ "coefficientsRevalorisation": {
+  "valeurs": {
+   "1947": 170.736,
+   "1948": 119.205,
+   "1949": 100.755,
+   "1950": 88.389,
+   "1951": 62.722,
+   "1952": 52.265,
+   "1953": 51.546,
+   "1954": 48.169,
+   "1955": 44.397,
+   "1956": 39.633,
+   "1957": 36.865,
+   "1958": 32.475,
+   "1959": 29.387
+  },
+  "anneeDeLiquidation": 2026,
+  "dateEffet": "2026-01-01",
+  "valeursCotisationsAvant1947": {
+   "1930-1935 1re a 4e categorie": 64805.725,
+   "1930-1935 5e categorie": 58383.536,
+   "1936": 33281.442,
+   "1937": 23309.1,
+   "1938": 21145.9,
+   "1939": 19409.037,
+   "1940": 19409.037,
+   "1941": 12944.987,
+   "1942": 8318.462,
+   "1943": 8318.462,
+   "1944": 6719.187,
+   "1945": 2219.008,
+   "1946": 1826.6
+  },
+  "ligneSalaires1930A1935": 2592.229,
+  "source": "Cnav - Circulaire n 2025-29 du 22 decembre 2025 'Revalorisation a compter du 1er janvier 2026' (point 1, tableaux 'Cotisations' et 'Salaires')",
+  "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "urlsComplementaires": [
+   "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_param%C3%A8tres_2026.xlsx"
+  ],
+  "fiabilite": "primaire (PDF de la circulaire lu avec pdftotext, tableau extrait par script)",
+  "champ": "Prestations attribuees a compter du 1er janvier 2026 ; revenus ayant donne lieu a un versement de cotisations jusqu'au 31 decembre 2025.",
+  "note": "'valeurs' : tableau 'Salaires' de la circulaire, annees 1947 a 1959 (cle = annee du salaire), dans la continuite de cnav.json (1960 et apres, meme circulaire). Les coefficients s'appliquent aux salaires exprimes dans la monnaie de l'epoque et les ramenent en euros de 2026 : ils integrent donc la conversion monetaire (d'ou les valeurs superieures a 100 avant 1949). 'valeursCotisationsAvant1947' : tableau 'Cotisations' de la meme circulaire (annees 1930 a 1946, a appliquer aux cotisations et non aux salaires ; deux lignes pour 1930-1935 selon la categorie). Le tableau 'Salaires' comporte aussi des lignes 1930-1946 (ex. '1930 a 1935' : 2592,229) non reprises ici hormis 'ligneSalaires1930A1935'. Recoupement : l'onglet Revalo_RB du fichier COR hypo_parametres_2026.xlsx donne exactement les memes valeurs 1947-1959 (controle par script), sous l'intitule 'Coefficient au 01/01/2025' : l'intitule du COR semble ne pas avoir ete mis a jour, les valeurs etant celles de la circulaire applicable au 1er janvier 2026. Ces coefficients ne valent que pour une liquidation en 2026 : voir avertissements."
+ },
+ "validationTrimestre": {
+  "valeurs": {
+   "salaireMinimumPourUnTrimestre": {
+    "1947": {
+     "montant": 1800.0,
+     "unite": "anciens francs",
+     "reunion": 1800.0,
+     "guadeloupeGuyaneMartinique": 1800.0
+    },
+    "1948": {
+     "montant": 1800.0,
+     "unite": "anciens francs",
+     "reunion": 1800.0,
+     "guadeloupeGuyaneMartinique": 1800.0
+    },
+    "1949": {
+     "montant": 8500.0,
+     "unite": "anciens francs",
+     "reunion": 3750.0,
+     "guadeloupeGuyaneMartinique": 3750.0
+    },
+    "1950": {
+     "montant": 11250.0,
+     "unite": "anciens francs",
+     "reunion": 5625.0,
+     "guadeloupeGuyaneMartinique": 5625.0
+    },
+    "1951": {
+     "montant": 13000.0,
+     "unite": "anciens francs",
+     "reunion": 8000.0,
+     "guadeloupeGuyaneMartinique": 8000.0
+    },
+    "1952": {
+     "montant": 14950.0,
+     "unite": "anciens francs",
+     "reunion": 14950.0,
+     "guadeloupeGuyaneMartinique": 14950.0
+    },
+    "1953": {
+     "montant": 14950.0,
+     "unite": "anciens francs",
+     "reunion": 14950.0,
+     "guadeloupeGuyaneMartinique": 14950.0
+    },
+    "1954": {
+     "montant": 16450.0,
+     "unite": "anciens francs",
+     "reunion": 16450.0,
+     "guadeloupeGuyaneMartinique": 16450.0
+    },
+    "1955": {
+     "montant": 16450.0,
+     "unite": "anciens francs",
+     "reunion": 16450.0,
+     "guadeloupeGuyaneMartinique": 16450.0
+    },
+    "1956": {
+     "montant": 18095.0,
+     "unite": "anciens francs",
+     "reunion": 18095.0,
+     "guadeloupeGuyaneMartinique": 18095.0
+    },
+    "1957": {
+     "montant": 18095.0,
+     "unite": "anciens francs",
+     "reunion": 18095.0,
+     "guadeloupeGuyaneMartinique": 18095.0
+    },
+    "1958": {
+     "montant": 18095.0,
+     "unite": "anciens francs",
+     "reunion": 18095.0,
+     "guadeloupeGuyaneMartinique": 18095.0
+    },
+    "1959": {
+     "montant": 18095.0,
+     "unite": "anciens francs",
+     "reunion": 18095.0,
+     "guadeloupeGuyaneMartinique": 18095.0
+    },
+    "1960": {
+     "montant": 180.95,
+     "unite": "FRF",
+     "reunion": 180.95,
+     "guadeloupeGuyaneMartinique": 180.95
+    },
+    "1961": {
+     "montant": 180.95,
+     "unite": "FRF",
+     "reunion": 180.95,
+     "guadeloupeGuyaneMartinique": 180.95
+    },
+    "1962": {
+     "montant": 180.95,
+     "unite": "FRF",
+     "reunion": 180.95,
+     "guadeloupeGuyaneMartinique": 180.95
+    },
+    "1963": {
+     "montant": 200.0,
+     "unite": "FRF",
+     "reunion": 200.0,
+     "guadeloupeGuyaneMartinique": 200.0
+    },
+    "1964": {
+     "montant": 225.0,
+     "unite": "FRF",
+     "reunion": 225.0,
+     "guadeloupeGuyaneMartinique": 225.0
+    },
+    "1965": {
+     "montant": 250.0,
+     "unite": "FRF",
+     "reunion": 250.0,
+     "guadeloupeGuyaneMartinique": 250.0
+    },
+    "1966": {
+     "montant": 287.5,
+     "unite": "FRF",
+     "reunion": 287.5,
+     "guadeloupeGuyaneMartinique": 287.5
+    },
+    "1967": {
+     "montant": 325.0,
+     "unite": "FRF",
+     "reunion": 325.0,
+     "guadeloupeGuyaneMartinique": 325.0
+    },
+    "1968": {
+     "montant": 362.5,
+     "unite": "FRF",
+     "reunion": 362.5,
+     "guadeloupeGuyaneMartinique": 362.5
+    },
+    "1969": {
+     "montant": 387.5,
+     "unite": "FRF",
+     "reunion": 387.5,
+     "guadeloupeGuyaneMartinique": 387.5
+    }
+   }
+  },
+  "source": "L'Assurance retraite - popup 'Trimestres' ('Revenu minimum pour valider un trimestre', colonnes Metropole, Reunion, Guadeloupe/Guyane/Martinique)",
+  "url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupTrimVal.jsp",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "urlsComplementaires": [
+   "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_param%C3%A8tres_2026.xlsx"
+  ],
+  "fiabilite": "primaire (page Cnav lue en HTML brut par script)",
+  "note": "Annees 1947 a 1969 ; 'montant' = colonne Metropole, dans la monnaie de la source (anciens francs jusqu'en 1959, francs ensuite). Les colonnes Reunion et Antilles-Guyane different de la metropole de 1949 a 1951 seulement sur cette periode. Maximum de 4 trimestres par annee civile. La regle de fixation du seuil avant 1972 (il n'etait pas defini en heures de Smic) n'a pas ete lue. Controle par script : l'onglet Sal_valid du fichier COR hypo_parametres_2026.xlsx (en euros, a partir de 1949) est egal au montant Cnav converti."
+ },
+ "smic": {
+  "valeurs": {
+   "smigSmicAnnuelMoyenEUR": {
+    "1951": 281.6,
+    "1952": 317.09,
+    "1953": 317.09,
+    "1954": 364.34,
+    "1955": 395.9,
+    "1956": 399.54,
+    "1957": 409.44,
+    "1958": 464.55,
+    "1959": 492.34,
+    "1960": 510.78,
+    "1961": 520.85,
+    "1962": 546.63,
+    "1963": 584.82,
+    "1964": 600.56,
+    "1965": 626.25,
+    "1966": 651.86,
+    "1967": 681.75,
+    "1968": 850.71,
+    "1969": 1002.96,
+    "1970": 1083.2,
+    "1971": 1192.59
+   },
+   "smigHoraireAvant1972": null
+  },
+  "source": "COR, hypo_Salaires_Prix_PIB_2026.xlsx, onglet SMIC : 'SMIC annuel (en moyenne annuelle)', colonne 'Smig / Smic nominal' ; sources indiquees par le COR : legislation.cnav (smic horaire) et Dares (nombre d'heures mensuelle du travail)",
+  "url": "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_Salaires_Prix_PIB_2026.xlsx",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "fiabilite": "primaire pour le classeur du COR (lu par script), qui est lui-meme une serie reconstituee (Smig/Smic horaire moyen de l'annee x duree legale du travail), convertie en euros",
+  "note": "Annees 1951 a 1971, en euros courants par an (francs convertis par le COR), arrondis a 2 decimales. Onglet INFO : 'Smic horaire en moyenne annuelle * duree legale hebdomadaire du travail'. La serie du COR commence en 1951. Le Smig ou Smic HORAIRE avant 1972 n'a ete lu dans aucune source ouverte (le bareme 'smic_smig' de legislation.lassuranceretraite.fr est une application JavaScript ; la serie Insee commence en 1980) : null. La duree du travail utilisee par le COR pour passer de l'horaire a l'annuel n'est pas donnee dans l'onglet : ne pas en deduire un taux horaire."
+ },
+ "arrcoAvant1962": {
+  "valeurs": {
+   "1957": {
+    "valeurAchatEUR": 0.41053,
+    "valeurServiceAu0101EUR": null,
+    "tauxCotisationObligatoireT1": 0.04,
+    "dontEmployeur": 0.024,
+    "dontSalarie": 0.016,
+    "tauxCotisationMoyenT1": 0.054157,
+    "tauxCotisationObligatoireT2": 0.04,
+    "tauxCotisationMoyenT2": 0.08,
+    "tauxAppel": 1
+   },
+   "1958": {
+    "valeurAchatEUR": 0.460411,
+    "valeurServiceAu0101EUR": null,
+    "tauxCotisationObligatoireT1": 0.04,
+    "dontEmployeur": 0.024,
+    "dontSalarie": 0.016,
+    "tauxCotisationMoyenT1": 0.054157,
+    "tauxCotisationObligatoireT2": 0.04,
+    "tauxCotisationMoyenT2": 0.08,
+    "tauxAppel": 1
+   },
+   "1959": {
+    "valeurAchatEUR": 0.487258,
+    "valeurServiceAu0101EUR": null,
+    "tauxCotisationObligatoireT1": 0.04,
+    "dontEmployeur": 0.024,
+    "dontSalarie": 0.016,
+    "tauxCotisationMoyenT1": 0.054157,
+    "tauxCotisationObligatoireT2": 0.04,
+    "tauxCotisationMoyenT2": 0.08,
+    "tauxAppel": 1
+   },
+   "1960": {
+    "valeurAchatEUR": 0.529455,
+    "valeurServiceAu0101EUR": null,
+    "tauxCotisationObligatoireT1": 0.04,
+    "dontEmployeur": 0.024,
+    "dontSalarie": 0.016,
+    "tauxCotisationMoyenT1": 0.054157,
+    "tauxCotisationObligatoireT2": 0.04,
+    "tauxCotisationMoyenT2": 0.08,
+    "tauxAppel": 1
+   },
+   "1961": {
+    "valeurAchatEUR": 0.571653,
+    "valeurServiceAu0101EUR": 0.074227,
+    "tauxCotisationObligatoireT1": 0.04,
+    "dontEmployeur": 0.024,
+    "dontSalarie": 0.016,
+    "tauxCotisationMoyenT1": 0.054157,
+    "tauxCotisationObligatoireT2": 0.04,
+    "tauxCotisationMoyenT2": 0.08,
+    "tauxAppel": 1
+   }
+  },
+  "prixAchatAvant1949": null,
+  "source": "COR, hypo_parametres_2026.xlsx, onglet ARRCO ('Valeurs du point ARRCO', 'Taux de cotisation' ; source indiquee : AGIRC-ARRCO ; onglet Info : derniere valeur connue 31/12/2018)",
+  "url": "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_param%C3%A8tres_2026.xlsx",
+  "date": "2026-11-21",
+  "dateConsultation": "2026-11-21",
+  "fiabilite": "secondaire (serie reconstituee par le COR a partir de donnees Agirc-Arrco, en euros ; aucun document Agirc-Arrco primaire ouvert pour ces annees)",
+  "avertissement": "CONTRADICTION avec agirc-arrco.json (source IPP) : le COR donne un taux de cotisation obligatoire T1 de 4 % (2,4 % employeur, 1,6 % salarie) des 1957 et constant jusqu'en 1995, alors que l'IPP donne un taux contractuel de 2,5 % du 01/01/1962 au 31/12/1966 puis 4 % a partir de 1967. La serie du COR avant 1962 est vraisemblablement un prolongement retrospectif conventionnel (valeur d'achat UNIRS, taux fige). A utiliser comme hypothese de modele, pas comme taux historique observe.",
+  "note": "Premieres annees presentes dans agirc-arrco.json : prix d'achat UNIRS 1949 (IPP, contre-valeur en euros a null avant 1958), valeur de service UNIRS 1957, taux de cotisation Arrco 1962. Le fichier du COR commence en 1957 : il fournit donc la valeur d'achat en euros pour 1957-1961 et des taux pour 1957-1961, mais rien avant 1957 ; aucune valeur d'achat anterieure a 1949 n'a ete trouvee (prixAchatAvant1949 : null). 'valeurAchatEUR' : colonne 'Valeur d'achat (valeur annuelle)', en euros, arrondie a 6 decimales ; 'valeurServiceAu0101EUR' : vide dans la source avant 1961. 'tauxCotisationMoyenT1' (5,4157 %) et 'tauxCotisationMoyenT2' (8 %) sont des taux moyens estimes par le COR, constants sur la periode. 'tauxAppel' = 1 (100 %). Taux en proportion (0,04 = 4 %). Le recueil ChiffrAA 2026 de l'Agirc-Arrco precise que les series historiques Agirc et Arrco jusqu'a fin 2018 sont 'disponibles a la demande aupres de la Direction Technique'."
+ }
+}

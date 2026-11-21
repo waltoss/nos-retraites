@@ -1,7 +1,8 @@
 # nos-retraites.app
 
 Simulateur citoyen, indépendant et open source (AGPL-3.0) du système de retraite français par répartition.
-Deux questions : effet d'une politique publique sur les distributions des cotisants et des retraités ; pension d'un individu selon sa place et sa carrière.
+Objectif : un outil pour les débats entre citoyens de la présidentielle 2027. Chacun doit pouvoir se faire un avis éclairé sur tous les leviers politiques et voir leurs effets collectifs (société, finances publiques, service public) et individuels (sa place, sa pension).
+Horizon : montrer les effets de long terme et sur les générations futures, pas seulement l'année en cours.
 
 Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer quoi que ce soit.
 
@@ -19,8 +20,7 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 ## Stack
 
 - Bun, TypeScript strict, monorepo. `packages/engine` : fonctions pures, isomorphe (navigateur en Web Worker, scripts Bun, Worker Cloudflare), aucune dépendance au DOM.
-- Front : TanStack Start + React. Hébergement : Cloudflare. Pas de backend requis, pas de mesure d'audience.
-- Tests : `bun test`. Les tolérances de calage sont écrites dans les tests.
+- Front : TanStack Start + React. Hébergement : Cloudflare. Pas de backend requis, pas de mesure d'audience. Tests : `bun test`, tolérances de calage écrites dans les tests.
 
 ## Conventions
 
@@ -45,6 +45,6 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 
 Fait : règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, AVPF simplifiée, générateur calé (`bun scripts/calage.ts --ajuste --ecrit` réécrit `generateur/hypotheses.data.json` et `apps/web/src/calage.json`), pages Accueil, Simuler (15 leviers), Décisions, Carrières, Modèle. Les leviers sont définis une seule fois dans `apps/web/src/leviers.ts`.
 Calage : salaires sur l'Insee 2025, durées sur la Drees (génération 1953) ; les pensions ne sont jamais ciblées, elles vérifient. Écarts actuels : D1 +19 %, médiane -10 %, D9 -15 % (cible tous régimes, modèle privé seul ; critère du projet : ±10 %). Cas types COR (génération 1964) : carrières continues à ±2 % ; carrières interrompues hors tolérance (+12 % chômage, -8 % enfant).
-Reste : bloc résiduel des autres régimes, chômage non indemnisé, carrières longues, poids par cohorte, démographie (natalité, immigration), comportements de départ (décote, surcote).
+Pondération : générations 1930 à 2008, poids = pyramide Insee × part du privé (`bun scripts/build-population.ts`, à relancer après un calage). Totaux à moins de 8 % des chiffres publiés. Reste, par priorité : projection année par année (démographie, long terme), bloc résiduel des autres régimes, comportements de départ, chômage non indemnisé, carrières longues.
 
 `proto/` contient des maquettes jetables à données fictives.

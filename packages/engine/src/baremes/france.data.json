@@ -2,6 +2,27 @@
 	"anneeReference": 2026,
 	"cnav": {
 		"pass": {
+			"1949": 393.59,
+			"1950": 402.47,
+			"1951": 526.21,
+			"1952": 676.97,
+			"1953": 695.17,
+			"1954": 695.17,
+			"1955": 722.83,
+			"1956": 804.93,
+			"1957": 804.93,
+			"1958": 914.69,
+			"1959": 1006.16,
+			"1960": 1042.95,
+			"1961": 1235.46,
+			"1962": 1463.51,
+			"1963": 1591.57,
+			"1964": 1737.92,
+			"1965": 1865.98,
+			"1966": 1975.74,
+			"1967": 2085.5,
+			"1968": 2195.27,
+			"1969": 2487.97,
 			"1970": 2744.08,
 			"1971": 3018.49,
 			"1972": 3347.78,
@@ -61,6 +82,29 @@
 			"2026": 48060
 		},
 		"smicHoraire": {
+			"1947": 0.01372,
+			"1948": 0.01372,
+			"1949": 0.064791,
+			"1950": 0.085753,
+			"1951": 0.099092,
+			"1952": 0.113956,
+			"1953": 0.113956,
+			"1954": 0.125389,
+			"1955": 0.125389,
+			"1956": 0.137928,
+			"1957": 0.137928,
+			"1958": 0.137928,
+			"1959": 0.137928,
+			"1960": 0.137928,
+			"1961": 0.137928,
+			"1962": 0.137928,
+			"1963": 0.152449,
+			"1964": 0.171505,
+			"1965": 0.190561,
+			"1966": 0.219145,
+			"1967": 0.24773,
+			"1968": 0.276314,
+			"1969": 0.29537,
 			"1972": 0.6007,
 			"1973": 0.6936,
 			"1974": 0.8278,
@@ -177,6 +221,19 @@
 			"2026": 1803
 		},
 		"coefficientsRevalorisation": {
+			"1947": 170.736,
+			"1948": 119.205,
+			"1949": 100.755,
+			"1950": 88.389,
+			"1951": 62.722,
+			"1952": 52.265,
+			"1953": 51.546,
+			"1954": 48.169,
+			"1955": 44.397,
+			"1956": 39.633,
+			"1957": 36.865,
+			"1958": 32.475,
+			"1959": 29.387,
 			"1960": 27.287,
 			"1961": 23.726,
 			"1962": 20.453,
@@ -246,6 +303,128 @@
 			"2026": 1
 		},
 		"parGeneration": {
+			"1930": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 10
+			},
+			"1931": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 10
+			},
+			"1932": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 10
+			},
+			"1933": {
+				"ageLegal": 240,
+				"dureeRequise": 150,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 10
+			},
+			"1934": {
+				"ageLegal": 240,
+				"dureeRequise": 151,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 11,
+				"dureeProratisation": 150
+			},
+			"1935": {
+				"ageLegal": 240,
+				"dureeRequise": 152,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 12,
+				"dureeProratisation": 150
+			},
+			"1936": {
+				"ageLegal": 240,
+				"dureeRequise": 153,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 13,
+				"dureeProratisation": 150
+			},
+			"1937": {
+				"ageLegal": 240,
+				"dureeRequise": 154,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 14,
+				"dureeProratisation": 150
+			},
+			"1938": {
+				"ageLegal": 240,
+				"dureeRequise": 155,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 15,
+				"dureeProratisation": 150
+			},
+			"1939": {
+				"ageLegal": 240,
+				"dureeRequise": 156,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 16,
+				"dureeProratisation": 150
+			},
+			"1940": {
+				"ageLegal": 240,
+				"dureeRequise": 157,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 17,
+				"dureeProratisation": 150
+			},
+			"1941": {
+				"ageLegal": 240,
+				"dureeRequise": 158,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 18,
+				"dureeProratisation": 150
+			},
+			"1942": {
+				"ageLegal": 240,
+				"dureeRequise": 159,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 19,
+				"dureeProratisation": 150
+			},
+			"1943": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 20,
+				"dureeProratisation": 150
+			},
+			"1944": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 21,
+				"dureeProratisation": 152
+			},
+			"1945": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 22,
+				"dureeProratisation": 154
+			},
+			"1946": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 23,
+				"dureeProratisation": 156
+			},
+			"1947": {
+				"ageLegal": 240,
+				"dureeRequise": 160,
+				"ageTauxPleinAutomatique": 260,
+				"nbMeilleuresAnnees": 24,
+				"dureeProratisation": 158
+			},
 			"1948": {
 				"ageLegal": 240,
 				"dureeRequise": 160,

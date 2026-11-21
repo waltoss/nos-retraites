@@ -9,6 +9,10 @@ export interface BaremeGeneration {
 	dureeRequise: number;
 	/** Âge du taux plein automatique, en trimestres. */
 	ageTauxPleinAutomatique: number;
+	/** Nombre de meilleures années du salaire annuel moyen, quand il diffère de la règle générale. */
+	nbMeilleuresAnnees?: number;
+	/** Durée de référence de la proratisation, quand elle diffère de la durée requise. */
+	dureeProratisation?: number;
 }
 
 export interface BaremeCnav {

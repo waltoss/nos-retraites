@@ -92,6 +92,8 @@ export function reglesGeneration(
 		ageLegal,
 		dureeRequise: regles.dureeRequise ?? g.dureeRequise,
 		ageTauxPleinAutomatique: Math.max(g.ageTauxPleinAutomatique, ageLegal),
+		nbMeilleuresAnnees: regles.nbMeilleuresAnnees ?? g.nbMeilleuresAnnees,
+		dureeProratisation: regles.dureeRequise ?? g.dureeProratisation,
 	};
 }
 

@@ -7,6 +7,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, entier, euros } from "../format";
+import recoupement from "../recoupement.json";
 import sources from "../sources.json";
 
 export const Route = createFileRoute("/modele")({ component: Modele });
@@ -16,7 +17,7 @@ const ETAPES: { icone: IconName; titre: string; texte: string }[] = [
 		icone: "population",
 		titre: "Inventer des vies",
 		texte:
-			"20 000 personnes nées de 1955 à 2003. Chaque année, un tirage décide si chacune travaille, perd son emploi, s'arrête ou reprend. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
+			"20 000 personnes nées de 1930 à 2008. Chaque année, un tirage décide si chacune travaille, perd son emploi, s'arrête ou reprend. Les salaires sont réglés sur ceux du privé en 2025, les durées de carrière sur celles de la génération 1953. Les tirages sont les mêmes d'un scénario à l'autre : seul ce que vous changez fait bouger le résultat.",
 	},
 	{
 		icone: "carriere",
@@ -221,8 +222,10 @@ const HYPOTHESES: { nom: string; valeur: string }[] = [
 
 const LIMITES = [
 	"Seuls les salariés du privé sont simulés. Ni fonctionnaires, ni indépendants, ni régimes spéciaux.",
-	"Toutes les générations pèsent le même poids et personne ne meurt : la population réelle n'est pas reproduite.",
-	"Les retraités nés avant 1955 sont absents. Les totaux de cotisations et de pensions ne peuvent donc pas être comparés entre eux.",
+	"Les effectifs par âge de fin 2024 sont appliqués à 2026. Avant 24 ans le modèle manque d'apprentis et d'emplois étudiants, et les plus de 96 ans sont absents.",
+	"À âge égal, tous les retraités ont la même chance d'être encore en vie. En réalité les pensions élevées vivent plus longtemps.",
+	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
+	"Pas de pensions de réversion.",
 	"Pas de natalité, pas d'immigration, pas de projection dans le temps : on photographie 2026.",
 	"Personne ne part avec une décote ni ne reste pour une surcote : ces deux réglages existent dans le moteur mais n'auraient aucun effet ici, ils ne sont donc pas proposés.",
 	"Pas de départs anticipés pour carrière longue, invalidité ou pénibilité.",
@@ -267,6 +270,19 @@ const sexes = [
 ] as const;
 
 const COMPARAISONS: Comparaison[] = [
+	{
+		titre: "Effectifs et masses en 2026",
+		texte:
+			"Chaque personne simulée représente les personnes réelles de son âge et de son sexe qui relèvent du privé. La part du privé à chaque âge est réglée sur les cotisants et les retraités de l'Agirc-Arrco : l'accord sur les effectifs est donc voulu. Les masses, elles, sont une vérification.",
+		source:
+			"Insee, pyramide des âges au 1er janvier 2026 ; Agirc-Arrco et Drees pour les effectifs de fin 2024 ; comptes 2025 du régime général et de l'Agirc-Arrco. Les cotisations publiées incluent les indépendants, les pensions publiées datent de 2024.",
+		format: (x) => decimal(x),
+		lignes: recoupement.map((l) => ({
+			nom: `${l.nom}, en ${l.unite}`,
+			modele: l.modele,
+			cible: l.cible,
+		})),
+	},
 	{
 		titre: "Salaires de 2025",
 		texte:

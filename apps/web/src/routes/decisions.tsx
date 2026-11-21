@@ -234,8 +234,8 @@ function Decisions() {
 					sur l'emploi et les carrières refont toutes les vies simulées comme si
 					la situation avait toujours été celle-là. Les cotisations en plus ne
 					changent aucune pension ici, et le modèle ne dit rien de leur effet
-					sur les salaires ou l'emploi. Les totaux portent sur les générations
-					1955 à 2003 seulement.
+					sur les salaires ou l'emploi. Les totaux portent sur les salariés du
+					privé.
 				</p>
 			</aside>
 		</main>

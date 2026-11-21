@@ -110,3 +110,23 @@ describe("simulation", () => {
 		expect(r.effectifs.cotisants).toBeGreaterThan(base.effectifs.cotisants);
 	});
 });
+
+describe("pondération", () => {
+	test("les totaux du scénario de référence recoupent les chiffres publiés", async () => {
+		const { BAREMES_FRANCE, SCENARIO_REFERENCE } = await import("../src/index.ts");
+		const reference = (
+			await import("../../../data/references/population.json", {
+				with: { type: "json" },
+			})
+		).default;
+		const population = generatePopulation(SCENARIO_REFERENCE, BAREMES_FRANCE);
+		const r = runSimulation(population, BAREMES_FRANCE);
+		const cotisants = reference.agircArrco.cotisants.totaux.ensemble;
+		const retraites = reference.agircArrco.retraitesDroitDirect.totaux.ensemble.effectifs;
+		expect(Math.abs(r.effectifs.cotisants / cotisants - 1)).toBeLessThan(0.06);
+		expect(Math.abs(r.effectifs.retraites / retraites - 1)).toBeLessThan(0.1);
+		// Personne ne représente plus de monde qu'il n'en existe à son âge.
+		const total = population.reduce((t, i) => t + i.poids, 0);
+		expect(total).toBeLessThan(reference.pyramideDesAges.france.totauxLus.ensemble);
+	});
+});
