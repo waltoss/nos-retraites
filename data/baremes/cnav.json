@@ -1,0 +1,2114 @@
+{
+  "avertissements": [
+    "Toutes les valeurs proviennent de pages ou PDF officiels ouverts le 2026-11-21. Les PDF de circulaires Cnav ont ete lus directement ; les pages HTML (service-public, popups lassuranceretraite.fr, Legifrance) ont ete lues via un outil de restitution automatique qui reformule : un controle humain par sondage est recommande, en particulier pour les grandes tables 'pass' et 'salaireMinimumPourUnTrimestre'.",
+    "legislation.cnav.fr ne repond plus (domaine remplace par legislation.lassuranceretraite.fr) ; les pages 'bareme' de ce site sont une application JavaScript illisible par l'outil : les baremes ont ete pris dans les circulaires PDF et les popups de lassuranceretraite.fr.",
+    "Texte de la LFSS 2026 (loi n 2025-1403 du 30/12/2025, art. 105) et articles L161-17-2 / L161-17-3 CSS NON lus directement sur Legifrance : le bareme par generation repose sur la circulaire Cnav 2026-07 du 05/03/2026 qui les applique, recoupe avec service-public F14043 / F35063 et lassuranceretraite.fr (concordants). La page vie-publique.fr sur la LFSS 2026 s'est affichee vide.",
+    "Smic horaire 1970-1971 : null. Smic 1972-1979 : uniquement deduit du seuil de validation d'un trimestre (calcul), pas lu directement.",
+    "smicHoraire : source Insee (hors liste demandee, mais officielle).",
+    "Taux de cotisation vieillesse employeur 2026 (8,55 % / 2,11 %) : page Urssaf inaccessible (erreur reseau repetee) ; ventilation vue seulement dans un extrait de recherche, total 17,96 % verifie dans une circulaire Cnav. Historique avant 2012 absent ; annees 2016-2017 deduites de cellules fusionnees.",
+    "Coefficients de revalorisation : seule la table d'effet 01/01/2026 est fournie (pas celle de 2025).",
+    "Coefficients de minoration 1948-1952 et regle des 25 meilleures annees : lus dans une version 2020 du code (Legifrance) ; l'outil a signale que R351-29-1 serait abroge depuis le 01/01/2026 et que R351-27 aurait ete modifie par un decret n 2026-699 du 29/07/2026 : non verifie.",
+    "Surcote : taux historiques avant 2009 non trouves (null). Conditions precises de la regle SAM 24/23 annees pour les parents (LFSS 2026) non verifiees dans la loi.",
+    "Durees d'assurance 1948-1957 : lues sur une popup intitulee 'duree maximale retenue au regime general' et non 'duree requise pour le taux plein'.",
+    "Taux de conversion franc/euro non fourni (non lu dans une source ouverte) ; les montants en francs ne sont pas convertis. Le mode d'application des coefficients de revalorisation aux salaires en francs n'a pas ete verifie.",
+    "Departs anticipes (carriere longue, handicap, inaptitude, penibilite), Mayotte, Saint-Pierre-et-Miquelon et travailleurs independants non couverts."
+  ],
+  "pass": {
+    "valeurs": {
+      "1970": {
+        "montant": 18000,
+        "unite": "FRF"
+      },
+      "1971": {
+        "montant": 19800,
+        "unite": "FRF"
+      },
+      "1972": {
+        "montant": 21960,
+        "unite": "FRF"
+      },
+      "1973": {
+        "montant": 24480,
+        "unite": "FRF"
+      },
+      "1974": {
+        "montant": 27840,
+        "unite": "FRF"
+      },
+      "1975": {
+        "montant": 33000,
+        "unite": "FRF"
+      },
+      "1976": {
+        "montant": 37920,
+        "unite": "FRF"
+      },
+      "1977": {
+        "montant": 43320,
+        "unite": "FRF"
+      },
+      "1978": {
+        "montant": 48000,
+        "unite": "FRF"
+      },
+      "1979": {
+        "montant": 53640,
+        "unite": "FRF"
+      },
+      "1980": {
+        "montant": 60120,
+        "unite": "FRF"
+      },
+      "1981": {
+        "montant": 68760,
+        "unite": "FRF"
+      },
+      "1982": {
+        "montant": 82020,
+        "unite": "FRF"
+      },
+      "1983": {
+        "montant": 91680,
+        "unite": "FRF"
+      },
+      "1984": {
+        "montant": 99600,
+        "unite": "FRF"
+      },
+      "1985": {
+        "montant": 106740,
+        "unite": "FRF"
+      },
+      "1986": {
+        "montant": 112200,
+        "unite": "FRF"
+      },
+      "1987": {
+        "montant": 116820,
+        "unite": "FRF"
+      },
+      "1988": {
+        "montant": 120360,
+        "unite": "FRF"
+      },
+      "1989": {
+        "montant": 125280,
+        "unite": "FRF"
+      },
+      "1990": {
+        "montant": 131040,
+        "unite": "FRF"
+      },
+      "1991": {
+        "montant": 137760,
+        "unite": "FRF"
+      },
+      "1992": {
+        "montant": 144120,
+        "unite": "FRF"
+      },
+      "1993": {
+        "montant": 149820,
+        "unite": "FRF"
+      },
+      "1994": {
+        "montant": 153120,
+        "unite": "FRF"
+      },
+      "1995": {
+        "montant": 155940,
+        "unite": "FRF"
+      },
+      "1996": {
+        "montant": 161220,
+        "unite": "FRF"
+      },
+      "1997": {
+        "montant": 164640,
+        "unite": "FRF"
+      },
+      "1998": {
+        "montant": 169080,
+        "unite": "FRF"
+      },
+      "1999": {
+        "montant": 173640,
+        "unite": "FRF"
+      },
+      "2000": {
+        "montant": 176400,
+        "unite": "FRF"
+      },
+      "2001": {
+        "montant": 179400,
+        "unite": "FRF"
+      },
+      "2002": {
+        "montant": 28224,
+        "unite": "EUR"
+      },
+      "2003": {
+        "montant": 29184,
+        "unite": "EUR"
+      },
+      "2004": {
+        "montant": 29712,
+        "unite": "EUR"
+      },
+      "2005": {
+        "montant": 30192,
+        "unite": "EUR"
+      },
+      "2006": {
+        "montant": 31068,
+        "unite": "EUR"
+      },
+      "2007": {
+        "montant": 32184,
+        "unite": "EUR"
+      },
+      "2008": {
+        "montant": 33276,
+        "unite": "EUR"
+      },
+      "2009": {
+        "montant": 34308,
+        "unite": "EUR"
+      },
+      "2010": {
+        "montant": 34620,
+        "unite": "EUR"
+      },
+      "2011": {
+        "montant": 35352,
+        "unite": "EUR"
+      },
+      "2012": {
+        "montant": 36372,
+        "unite": "EUR"
+      },
+      "2013": {
+        "montant": 37032,
+        "unite": "EUR"
+      },
+      "2014": {
+        "montant": 37548,
+        "unite": "EUR"
+      },
+      "2015": {
+        "montant": 38040,
+        "unite": "EUR"
+      },
+      "2016": {
+        "montant": 38616,
+        "unite": "EUR"
+      },
+      "2017": {
+        "montant": 39228,
+        "unite": "EUR"
+      },
+      "2018": {
+        "montant": 39732,
+        "unite": "EUR"
+      },
+      "2019": {
+        "montant": 40524,
+        "unite": "EUR"
+      },
+      "2020": {
+        "montant": 41136,
+        "unite": "EUR"
+      },
+      "2021": {
+        "montant": 41136,
+        "unite": "EUR"
+      },
+      "2022": {
+        "montant": 41136,
+        "unite": "EUR"
+      },
+      "2023": {
+        "montant": 43992,
+        "unite": "EUR"
+      },
+      "2024": {
+        "montant": 46368,
+        "unite": "EUR"
+      },
+      "2025": {
+        "montant": 47100,
+        "unite": "EUR"
+      },
+      "2026": {
+        "montant": 48060,
+        "unite": "EUR"
+      }
+    },
+    "source": "L'Assurance retraite - Bareme des revenus plafonds annuels (popup 'Salaires regime general')",
+    "url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupSalRG.jsp",
+    "dateConsultation": "2026-11-21",
+    "note": "Montants dans la monnaie de l'epoque, NON convertis : francs (FRF, nouveaux francs) de 1970 a 2001, euros (EUR) a partir de 2002, comme indique par la page. Il s'agit du revenu plafond annuel reportable au compte ; pour les annees ou le plafond a change en cours d'annee, la page donne un montant annuel unique. La page couvre aussi 1947-1969 (anciens francs avant 1960), non repris ici. Ecart releve : l'Abrege statistique 2025 de la Cnav indique 46 369 EUR pour 2024 alors que la page popup donne 46 368 EUR (retenu ; coherent avec le plafond mensuel de 3 864 EUR x 12). Le taux de conversion franc/euro n'est pas fourni : il n'a pas ete lu dans une source officielle ouverte."
+  },
+  "coefficientsRevalorisation": {
+    "valeurs": {
+      "1960": 27.287,
+      "1961": 23.726,
+      "1962": 20.453,
+      "1963": 18.255,
+      "1964": 16.442,
+      "1965": 15.381,
+      "1966": 14.534,
+      "1967": 13.759,
+      "1968": 12.683,
+      "1969": 10.995,
+      "1970": 9.988,
+      "1971": 8.958,
+      "1972": 8.073,
+      "1973": 7.459,
+      "1974": 6.576,
+      "1975": 5.535,
+      "1976": 4.702,
+      "1977": 4.056,
+      "1978": 3.647,
+      "1979": 3.325,
+      "1980": 2.924,
+      "1981": 2.58,
+      "1982": 2.304,
+      "1983": 2.173,
+      "1984": 2.06,
+      "1985": 1.974,
+      "1986": 1.93,
+      "1987": 1.858,
+      "1988": 1.816,
+      "1989": 1.751,
+      "1990": 1.704,
+      "1991": 1.677,
+      "1992": 1.623,
+      "1993": 1.623,
+      "1994": 1.595,
+      "1995": 1.577,
+      "1996": 1.538,
+      "1997": 1.522,
+      "1998": 1.505,
+      "1999": 1.487,
+      "2000": 1.48,
+      "2001": 1.449,
+      "2002": 1.418,
+      "2003": 1.395,
+      "2004": 1.374,
+      "2005": 1.348,
+      "2006": 1.324,
+      "2007": 1.302,
+      "2008": 1.29,
+      "2009": 1.279,
+      "2010": 1.267,
+      "2011": 1.256,
+      "2012": 1.231,
+      "2013": 1.205,
+      "2014": 1.191,
+      "2015": 1.191,
+      "2016": 1.19,
+      "2017": 1.19,
+      "2018": 1.181,
+      "2019": 1.164,
+      "2020": 1.153,
+      "2021": 1.149,
+      "2022": 1.137,
+      "2023": 1.085,
+      "2024": 1.031,
+      "2025": 1.009
+    },
+    "source": "Cnav - Circulaire n 2025-29 du 22 decembre 2025 'Revalorisation a compter du 1er janvier 2026' (tableau 'Salaires', point 1)",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf",
+    "dateConsultation": "2026-11-21",
+    "dateEffet": "2026-01-01",
+    "champ": "Prestations attribuees a compter du 1er janvier 2026 ; revenus ayant donne lieu a cotisations jusqu'au 31 decembre 2025.",
+    "note": "Table lue directement dans le PDF de la circulaire (coefficient general de revalorisation 1,009 au 1er janvier 2026). Cle = annee du salaire. La circulaire regroupe 2014-2015 (1,191) et 2016-2017 (1,19) ; les deux annees ont ete eclatees ici. La table source remonte a 1930 ; seules 1960-2025 sont reprises. La table applicable aux liquidations 2025 (circulaire Cnav 2024-39 du 23/12/2024) n'a pas ete collectee. Aucun coefficient n'est publie pour les salaires de 2026 (liquidation 2026 : annee en cours)."
+  },
+  "parGeneration": {
+    "valeurs": {
+      "1948": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1948-01-01",
+          "neAu": "1948-12-31",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 160,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.875,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1949": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1949-01-01",
+          "neAu": "1949-12-31",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 161,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.75,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1950": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1950-01-01",
+          "neAu": "1950-12-31",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 162,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.625,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1951": [
+        {
+          "periodeNaissance": "1er janvier au 30 juin",
+          "neDu": "1951-01-01",
+          "neAu": "1951-06-30",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 163,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.5,
+          "nombreMaxTrimestresDecote": 20
+        },
+        {
+          "periodeNaissance": "1er juillet au 31 decembre",
+          "neDu": "1951-07-01",
+          "neAu": "1951-12-31",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 4
+          },
+          "dureeAssuranceTauxPlein": 163,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 4
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.5,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1952": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1952-01-01",
+          "neAu": "1952-12-31",
+          "ageLegal": {
+            "ans": 60,
+            "mois": 9
+          },
+          "dureeAssuranceTauxPlein": 164,
+          "ageTauxPleinAutomatique": {
+            "ans": 65,
+            "mois": 9
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.375,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1953": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1953-01-01",
+          "neAu": "1953-12-31",
+          "ageLegal": {
+            "ans": 61,
+            "mois": 2
+          },
+          "dureeAssuranceTauxPlein": 165,
+          "ageTauxPleinAutomatique": {
+            "ans": 66,
+            "mois": 2
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1954": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1954-01-01",
+          "neAu": "1954-12-31",
+          "ageLegal": {
+            "ans": 61,
+            "mois": 7
+          },
+          "dureeAssuranceTauxPlein": 165,
+          "ageTauxPleinAutomatique": {
+            "ans": 66,
+            "mois": 7
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1955": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1955-01-01",
+          "neAu": "1955-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 166,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1956": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1956-01-01",
+          "neAu": "1956-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 166,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1957": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1957-01-01",
+          "neAu": "1957-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 166,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1958": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1958-01-01",
+          "neAu": "1958-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 167,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1959": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1959-01-01",
+          "neAu": "1959-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 167,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1960": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1960-01-01",
+          "neAu": "1960-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 167,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        }
+      ],
+      "1961": [
+        {
+          "periodeNaissance": "1er janvier au 31 aout",
+          "neDu": "1961-01-01",
+          "neAu": "1961-08-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 168,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 20
+        },
+        {
+          "periodeNaissance": "1er septembre au 31 decembre",
+          "neDu": "1961-09-01",
+          "neAu": "1961-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 3
+          },
+          "dureeAssuranceTauxPlein": 169,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 19
+        }
+      ],
+      "1962": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1962-01-01",
+          "neAu": "1962-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 6
+          },
+          "dureeAssuranceTauxPlein": 169,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 18
+        }
+      ],
+      "1963": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1963-01-01",
+          "neAu": "1963-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 9
+          },
+          "dureeAssuranceTauxPlein": 170,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 17
+        }
+      ],
+      "1964": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1964-01-01",
+          "neAu": "1964-12-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 9
+          },
+          "dureeAssuranceTauxPlein": 170,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 17,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 63,
+              "mois": 0
+            },
+            "dureeAssuranceTauxPlein": 171
+          }
+        }
+      ],
+      "1965": [
+        {
+          "periodeNaissance": "1er janvier au 31 mars",
+          "neDu": "1965-01-01",
+          "neAu": "1965-03-31",
+          "ageLegal": {
+            "ans": 62,
+            "mois": 9
+          },
+          "dureeAssuranceTauxPlein": 170,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 17,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 63,
+              "mois": 3
+            },
+            "dureeAssuranceTauxPlein": 172
+          }
+        },
+        {
+          "periodeNaissance": "1er avril au 31 decembre",
+          "neDu": "1965-04-01",
+          "neAu": "1965-12-31",
+          "ageLegal": {
+            "ans": 63,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 171,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 16,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 63,
+              "mois": 3
+            },
+            "dureeAssuranceTauxPlein": 172
+          }
+        }
+      ],
+      "1966": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1966-01-01",
+          "neAu": "1966-12-31",
+          "ageLegal": {
+            "ans": 63,
+            "mois": 3
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 15,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 63,
+              "mois": 6
+            },
+            "dureeAssuranceTauxPlein": 172
+          }
+        }
+      ],
+      "1967": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1967-01-01",
+          "neAu": "1967-12-31",
+          "ageLegal": {
+            "ans": 63,
+            "mois": 6
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 14,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 63,
+              "mois": 9
+            },
+            "dureeAssuranceTauxPlein": 172
+          }
+        }
+      ],
+      "1968": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1968-01-01",
+          "neAu": "1968-12-31",
+          "ageLegal": {
+            "ans": 63,
+            "mois": 9
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 13,
+          "pourRetraitePrenantEffetAvantLe2026-09-01": {
+            "ageLegal": {
+              "ans": 64,
+              "mois": 0
+            },
+            "dureeAssuranceTauxPlein": 172
+          }
+        }
+      ],
+      "1969": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1969-01-01",
+          "neAu": "1969-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1970": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1970-01-01",
+          "neAu": "1970-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1971": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1971-01-01",
+          "neAu": "1971-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1972": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1972-01-01",
+          "neAu": "1972-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1973": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1973-01-01",
+          "neAu": "1973-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1974": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1974-01-01",
+          "neAu": "1974-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ],
+      "1975": [
+        {
+          "periodeNaissance": "annee entiere",
+          "neDu": "1975-01-01",
+          "neAu": "1975-12-31",
+          "ageLegal": {
+            "ans": 64,
+            "mois": 0
+          },
+          "dureeAssuranceTauxPlein": 172,
+          "ageTauxPleinAutomatique": {
+            "ans": 67,
+            "mois": 0
+          },
+          "nombreMeilleuresAnneesSam": 25,
+          "coefficientMinorationParTrimestrePct": 1.25,
+          "nombreMaxTrimestresDecote": 12
+        }
+      ]
+    },
+    "source": "Cnav - Circulaire n 2026-07 du 5 mars 2026 'Age legal de la retraite et duree d'assurance' (tableaux points 1.1, 2.1, 3.1, annexes 1 et 3) ; complements : popup 'Duree d'assurance' de lassuranceretraite.fr (durees 1948-1957), Legifrance art. R351-27 et R351-29-1 CSS version au 28/11/2020 (coefficients de minoration 1948-1952, 25 annees pour les assures nes apres 1947)",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupCommentDuree.jsp",
+      "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173400/2020-11-28/",
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F14043",
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F35063",
+      "https://www.lassuranceretraite.fr/portail-info/home/actif/age-depart/age-depart-retraite.html"
+    ],
+    "droitApplicable": "Retraites prenant effet a compter du 1er septembre 2026 : article 105 de la loi n 2025-1403 du 30 decembre 2025 (LFSS pour 2026), modifiant L161-17-2 et L161-17-3 CSS, apres la reforme de la loi n 2023-270 du 14 avril 2023.",
+    "note": "Chaque generation est une liste de sous-periodes de naissance. Valeurs principales = droit applicable aux retraites prenant effet a compter du 01/09/2026. Pour 1964-1968, le champ 'pourRetraitePrenantEffetAvantLe2026-09-01' donne le bareme de la reforme 2023 (colonne 'au lieu de' de l'annexe 1), qui reste opposable aux retraites prenant effet avant le 01/09/2026. Texte de la circulaire : age legal fixe a 62 ans 9 mois pour les assures nes du 01/01/1963 au 31/03/1965, abaisse d'un trimestre pour ceux nes du 01/04/1965 au 31/12/1968, age cible de 64 ans a compter de la generation 1969 ; duree de 172 trimestres a compter de la generation 1966 ; age du taux plein maintenu a 67 ans. La circulaire ne detaille pas 1970-1975 : valeurs reprises de la ligne 'A partir de 1969'. dureeAssuranceTauxPlein 1948-1957 : lue sur la popup Cnav intitulee 'duree maximale de trimestres retenue au regime general' (meme valeur que la duree taux plein pour ces generations selon la fiche, mais l'intitule differe) ; 1958 et suivantes : circulaire 2026-07. nombreMaxTrimestresDecote : 20 (plafond general, service-public F19666) puis, a partir du 01/09/1961, ecart en trimestres entre age legal et 67 ans (annexe 3 de la circulaire) ; valeurs 1970-1975 = celle de 1969. Pour 1951 (2e semestre) a 1954, l'ecart age legal / age taux plein est de 5 ans soit 20 trimestres. nombreMeilleuresAnneesSam : 25 pour les assures nes apres 1947 ; depuis le 01/09/2026, 24 annees (1 enfant) ou 23 annees (2 enfants ou plus) pour les parents beneficiant de majorations de duree d'assurance pour enfant - voir bloc 'salaireAnnuelMoyen'. Departs anticipes (carriere longue, handicap, inaptitude, etc.) non couverts."
+  },
+  "salaireAnnuelMoyen": {
+    "valeurs": {
+      "nombreMeilleuresAnneesCasGeneral": 25,
+      "nombreMeilleuresAnneesParentUnEnfantAvecMajorationDuree": 24,
+      "nombreMeilleuresAnneesParentDeuxEnfantsOuPlusAvecMajorationDuree": 23,
+      "dateEffetRegleParents": "2026-09-01"
+    },
+    "source": "service-public.gouv.fr fiche F21552 (verifiee le 01/09/2026) et lassuranceretraite.fr 'Calcul de la retraite de base'",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F21552",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.lassuranceretraite.fr/portail-info/portail-info/home/actif/montant-retraite/montant-retraite.html"
+    ],
+    "note": "Selon lassuranceretraite.fr, la regle 24/23 annees s'applique depuis le 1er septembre 2026 mais le nouveau calcul ne sera mis en oeuvre que courant 2027, avec recalcul retroactif automatique. Conditions exactes (quel parent, quelles majorations) non verifiees dans le texte de loi."
+  },
+  "tauxPlein": {
+    "valeurs": {
+      "tauxPleinPct": 50,
+      "formule": "retraite annuelle = salaire annuel moyen x taux x (duree d'assurance au regime general / duree de reference de la generation)",
+      "montantMaximum": "50 % du plafond de la Securite sociale ; 2 002,50 EUR bruts par mois en 2026 (hors surcote)"
+    },
+    "source": "service-public.gouv.fr fiche F21552 (verifiee le 01/09/2026) ; Cnav circulaire 2026-07 point 4.1.1",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F21552",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf"
+    ]
+  },
+  "decote": {
+    "valeurs": {
+      "coefficientMinorationParTrimestrePctDuTauxPlein": {
+        "1948": 1.875,
+        "1949": 1.75,
+        "1950": 1.625,
+        "1951": 1.5,
+        "1952": 1.375,
+        "1953EtSuivantes": 1.25
+      },
+      "pointsDeTauxParTrimestreGenerations1953EtSuivantes": 0.625,
+      "plafondTrimestres": 20,
+      "tauxMinimumPct": {
+        "plafond20Trimestres": 37.5,
+        "ne1961-09-01Au1961-12-31": 38.125,
+        "1962": 38.75,
+        "1963": 39.375,
+        "1964": 39.375,
+        "ne1965-01-01Au1965-03-31": 39.375,
+        "ne1965-04-01Au1965-12-31": 40,
+        "1966": 40.625,
+        "1967": 41.25,
+        "1968": 41.875,
+        "1969": 42.5
+      },
+      "regle": "Nombre de trimestres retenu = le plus petit entre (a) trimestres manquants par rapport a la duree d'assurance requise (tous regimes) et (b) trimestres separant l'age a la date d'effet de l'age du taux plein automatique (67 ans, ou 65 ans pour certaines categories) ; arrondi au chiffre superieur."
+    },
+    "source": "Cnav circulaire 2026-07 (point 4.1.1 et annexe 3) ; Legifrance art. R351-27 CSS (version au 28/11/2020 pour les coefficients 1948-1952) ; service-public.gouv.fr F19666",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000006173400/2020-11-28/",
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F19666",
+      "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000047633296"
+    ],
+    "note": "Le coefficient s'applique au taux plein de 50 % (1,25 % x 50 = 0,625 point par trimestre). Coefficients 1948-1952 lus dans la version 2020 de R351-27 (II), valable pour les pensions prenant effet apres le 31/12/2003 ; la version en vigueur ne mentionne plus que 1,25 %. service-public annonce un plafond de 20 trimestres ; en pratique l'ecart entre age legal et 67 ans limite la decote d'age a moins de 20 trimestres pour les assures nes a compter du 01/09/1961 (annexe 3 : 19, 18, 17, ... 12 pour 1969)."
+  },
+  "surcote": {
+    "valeurs": {
+      "majorationParTrimestrePct": 1.25,
+      "condition": "Trimestres civils entiers cotises apres l'age legal et au-dela de la duree d'assurance requise pour le taux plein de la generation.",
+      "surcoteParentale": "Assures nes a partir du 01/04/1965 atteignant la duree requise avant l'age legal avec au moins 1 trimestre de majoration pour enfant : 1,25 % par trimestre accompli au-dela de la duree requise pendant l'annee precedant l'age legal, dans la limite de 5 %.",
+      "historiqueAvant2009": null
+    },
+    "source": "service-public.gouv.fr fiche F19643 (verifiee le 01/01/2026) ; F16336 pour la surcote parentale ; Cnav circulaire 2026-07 point 4.2",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F19643",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F16336",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf"
+    ],
+    "note": "Taux historiques de surcote avant 2009 non trouves dans les sources ouvertes (null). La fiche F16336 a aussi ete restituee comme mentionnant un 'abaissement d'un an de l'age minimum' pour les parents nes a partir du 01/04/1965 : formulation ambigue, probablement la surcote parentale ; non retenue comme regle distincte."
+  },
+  "majorationEnfants": {
+    "valeurs": {
+      "tauxPct": 10,
+      "nombreMinimumEnfants": 3,
+      "regle": "Majoration de 10 % du montant de la pension pour l'assure ayant eu au moins trois enfants (ou eleves 9 ans avant leur 16e anniversaire) ; due a chaque parent."
+    },
+    "source": "Legifrance - article R351-30 du code de la securite sociale (version en vigueur depuis le 1er decembre 1986)",
+    "url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006750045",
+    "dateConsultation": "2026-11-21",
+    "note": "Taux et seuil lus sur Legifrance. La condition alternative 'eleves 9 ans avant 16 ans' provient d'un extrait de recherche (FAQ lassuranceretraite.fr), page non ouverte."
+  },
+  "mda": {
+    "valeurs": {
+      "maternite": 4,
+      "adoption": 4,
+      "education": 4,
+      "totalMaximumParEnfant": 8,
+      "enfantsNesOuAdoptesAvant2010": "Les 8 trimestres sont attribues automatiquement a la mere (pere seulement dans des cas precis).",
+      "enfantsNesOuAdoptesDepuis2010": "Maternite : 4 trimestres a la mere. Education : 2 trimestres automatiquement a la mere, 2 repartis au choix des parents (choix dans les 6 mois suivant le 4e anniversaire ; a defaut, a la mere ; couple de meme sexe : 2 chacun). Adoption : meme repartition 2 + 2.",
+      "enfantHandicape": "1 trimestre par periode de 30 mois d'education d'un enfant au taux d'incapacite d'au moins 80 %, dans la limite de 8 trimestres, cumulable.",
+      "congeParental": "Majoration egale a la duree du conge parental (1 trimestre par 90 jours), non cumulable avec les majorations maternite/adoption/education : appliquee si plus favorable."
+    },
+    "source": "service-public.gouv.fr fiche F16336 (verifiee le 14/08/2026)",
+    "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16336",
+    "dateConsultation": "2026-11-21",
+    "unite": "trimestres par enfant"
+  },
+  "validationTrimestre": {
+    "valeurs": {
+      "heuresSmicParTrimestre": [
+        {
+          "de": 1972,
+          "a": 2013,
+          "heures": 200,
+          "smicDeReference": "Smic horaire en vigueur (au 1er janvier de l'annee)"
+        },
+        {
+          "de": 2014,
+          "a": null,
+          "heures": 150,
+          "smicDeReference": "Smic horaire brut au 1er janvier de l'annee"
+        }
+      ],
+      "maximumTrimestresParAnneeCivile": 4,
+      "salaireMinimumPourUnTrimestre": {
+        "1970": {
+          "montant": 412.5,
+          "unite": "FRF"
+        },
+        "1971": {
+          "montant": 437.5,
+          "unite": "FRF"
+        },
+        "1972": {
+          "montant": 788.0,
+          "unite": "FRF"
+        },
+        "1973": {
+          "montant": 910.0,
+          "unite": "FRF"
+        },
+        "1974": {
+          "montant": 1086.0,
+          "unite": "FRF"
+        },
+        "1975": {
+          "montant": 1350.0,
+          "unite": "FRF"
+        },
+        "1976": {
+          "montant": 1578.0,
+          "unite": "FRF"
+        },
+        "1977": {
+          "montant": 1788.0,
+          "unite": "FRF"
+        },
+        "1978": {
+          "montant": 2012.0,
+          "unite": "FRF"
+        },
+        "1979": {
+          "montant": 2262.0,
+          "unite": "FRF"
+        },
+        "1980": {
+          "montant": 2586.0,
+          "unite": "FRF"
+        },
+        "1981": {
+          "montant": 2958.0,
+          "unite": "FRF"
+        },
+        "1982": {
+          "montant": 3630.0,
+          "unite": "FRF"
+        },
+        "1983": {
+          "montant": 4058.0,
+          "unite": "FRF"
+        },
+        "1984": {
+          "montant": 4556.0,
+          "unite": "FRF"
+        },
+        "1985": {
+          "montant": 4872.0,
+          "unite": "FRF"
+        },
+        "1986": {
+          "montant": 5208.0,
+          "unite": "FRF"
+        },
+        "1987": {
+          "montant": 5384.0,
+          "unite": "FRF"
+        },
+        "1988": {
+          "montant": 5568.0,
+          "unite": "FRF"
+        },
+        "1989": {
+          "montant": 5752.0,
+          "unite": "FRF"
+        },
+        "1990": {
+          "montant": 5982.0,
+          "unite": "FRF"
+        },
+        "1991": {
+          "montant": 6388.0,
+          "unite": "FRF"
+        },
+        "1992": {
+          "montant": 6532.0,
+          "unite": "FRF"
+        },
+        "1993": {
+          "montant": 6812.0,
+          "unite": "FRF"
+        },
+        "1994": {
+          "montant": 6966.0,
+          "unite": "FRF"
+        },
+        "1995": {
+          "montant": 7112.0,
+          "unite": "FRF"
+        },
+        "1996": {
+          "montant": 7396.0,
+          "unite": "FRF"
+        },
+        "1997": {
+          "montant": 7582.0,
+          "unite": "FRF"
+        },
+        "1998": {
+          "montant": 7886.0,
+          "unite": "FRF"
+        },
+        "1999": {
+          "montant": 8044.0,
+          "unite": "FRF"
+        },
+        "2000": {
+          "montant": 8144.0,
+          "unite": "FRF"
+        },
+        "2001": {
+          "montant": 8404.0,
+          "unite": "FRF"
+        },
+        "2002": {
+          "montant": 1334.0,
+          "unite": "EUR"
+        },
+        "2003": {
+          "montant": 1366.0,
+          "unite": "EUR"
+        },
+        "2004": {
+          "montant": 1438.0,
+          "unite": "EUR"
+        },
+        "2005": {
+          "montant": 1522.0,
+          "unite": "EUR"
+        },
+        "2006": {
+          "montant": 1606.0,
+          "unite": "EUR"
+        },
+        "2007": {
+          "montant": 1654.0,
+          "unite": "EUR"
+        },
+        "2008": {
+          "montant": 1688.0,
+          "unite": "EUR"
+        },
+        "2009": {
+          "montant": 1742.0,
+          "unite": "EUR"
+        },
+        "2010": {
+          "montant": 1772.0,
+          "unite": "EUR"
+        },
+        "2011": {
+          "montant": 1800.0,
+          "unite": "EUR"
+        },
+        "2012": {
+          "montant": 1844.0,
+          "unite": "EUR"
+        },
+        "2013": {
+          "montant": 1886.0,
+          "unite": "EUR"
+        },
+        "2014": {
+          "montant": 1429.5,
+          "unite": "EUR"
+        },
+        "2015": {
+          "montant": 1441.5,
+          "unite": "EUR"
+        },
+        "2016": {
+          "montant": 1450.5,
+          "unite": "EUR"
+        },
+        "2017": {
+          "montant": 1464.0,
+          "unite": "EUR"
+        },
+        "2018": {
+          "montant": 1482.0,
+          "unite": "EUR"
+        },
+        "2019": {
+          "montant": 1504.5,
+          "unite": "EUR"
+        },
+        "2020": {
+          "montant": 1522.5,
+          "unite": "EUR"
+        },
+        "2021": {
+          "montant": 1537.5,
+          "unite": "EUR"
+        },
+        "2022": {
+          "montant": 1585.5,
+          "unite": "EUR"
+        },
+        "2023": {
+          "montant": 1690.5,
+          "unite": "EUR"
+        },
+        "2024": {
+          "montant": 1747.5,
+          "unite": "EUR"
+        },
+        "2025": {
+          "montant": 1782.0,
+          "unite": "EUR"
+        },
+        "2026": {
+          "montant": 1803.0,
+          "unite": "EUR"
+        }
+      }
+    },
+    "source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026) pour la regle ; L'Assurance retraite popup 'Trimestres' pour le bareme annuel (metropole) ; Cnav circulaire 2025-33 (art. R351-9 CSS, 150 h, 1 803 EUR en 2026)",
+    "url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupTrimVal.jsp",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf"
+    ],
+    "note": "Bareme annuel lu sur la popup Cnav (colonne metropole), en francs jusqu'en 2001 puis en euros, non converti. Avant 1972 (1970 : 412,5 F ; 1971 : 437,5 F) le seuil n'etait pas defini en heures de Smic : la regle anterieure n'a pas ete trouvee dans une source ouverte. La popup n'enonce pas elle-meme la regle 200 h / 150 h (elle vient de service-public F1761 et de la circulaire 2025-33). Le plafond mensuel de la Securite sociale limite par ailleurs le salaire retenu (F1761)."
+  },
+  "smicHoraire": {
+    "valeurs": {
+      "revalorisationsParDateEffet": [
+        {
+          "dateEffet": "1980-03-01",
+          "montantFRF": 13.37
+        },
+        {
+          "dateEffet": "1980-05-01",
+          "montantFRF": 13.66
+        },
+        {
+          "dateEffet": "1980-07-01",
+          "montantFRF": 14.0
+        },
+        {
+          "dateEffet": "1980-09-01",
+          "montantFRF": 14.29
+        },
+        {
+          "dateEffet": "1980-12-01",
+          "montantFRF": 14.79
+        },
+        {
+          "dateEffet": "1981-03-01",
+          "montantFRF": 15.2
+        },
+        {
+          "dateEffet": "1981-06-01",
+          "montantFRF": 16.72
+        },
+        {
+          "dateEffet": "1981-09-01",
+          "montantFRF": 17.34
+        },
+        {
+          "dateEffet": "1981-11-01",
+          "montantFRF": 17.76
+        },
+        {
+          "dateEffet": "1982-01-01",
+          "montantFRF": 18.15
+        },
+        {
+          "dateEffet": "1982-03-01",
+          "montantFRF": 18.62
+        },
+        {
+          "dateEffet": "1982-05-01",
+          "montantFRF": 19.03
+        },
+        {
+          "dateEffet": "1982-07-01",
+          "montantFRF": 19.64
+        },
+        {
+          "dateEffet": "1982-12-01",
+          "montantFRF": 20.29
+        },
+        {
+          "dateEffet": "1983-03-01",
+          "montantFRF": 21.02
+        },
+        {
+          "dateEffet": "1983-06-01",
+          "montantFRF": 21.65
+        },
+        {
+          "dateEffet": "1983-07-01",
+          "montantFRF": 21.89
+        },
+        {
+          "dateEffet": "1983-10-01",
+          "montantFRF": 22.33
+        },
+        {
+          "dateEffet": "1984-01-01",
+          "montantFRF": 22.78
+        },
+        {
+          "dateEffet": "1984-05-01",
+          "montantFRF": 23.56
+        },
+        {
+          "dateEffet": "1984-07-01",
+          "montantFRF": 23.84
+        },
+        {
+          "dateEffet": "1984-11-01",
+          "montantFRF": 24.36
+        },
+        {
+          "dateEffet": "1985-04-01",
+          "montantFRF": 24.9
+        },
+        {
+          "dateEffet": "1985-05-01",
+          "montantFRF": 25.54
+        },
+        {
+          "dateEffet": "1985-07-01",
+          "montantFRF": 26.04
+        },
+        {
+          "dateEffet": "1986-06-01",
+          "montantFRF": 26.59
+        },
+        {
+          "dateEffet": "1986-07-07",
+          "montantFRF": 26.92
+        },
+        {
+          "dateEffet": "1987-03-01",
+          "montantFRF": 27.57
+        },
+        {
+          "dateEffet": "1987-07-01",
+          "montantFRF": 27.84
+        },
+        {
+          "dateEffet": "1988-06-01",
+          "montantFRF": 28.48
+        },
+        {
+          "dateEffet": "1988-07-01",
+          "montantFRF": 28.76
+        },
+        {
+          "dateEffet": "1989-03-01",
+          "montantFRF": 29.36
+        },
+        {
+          "dateEffet": "1989-07-01",
+          "montantFRF": 29.91
+        },
+        {
+          "dateEffet": "1990-04-01",
+          "montantFRF": 30.51
+        },
+        {
+          "dateEffet": "1990-07-01",
+          "montantFRF": 31.28
+        },
+        {
+          "dateEffet": "1990-12-01",
+          "montantFRF": 31.94
+        },
+        {
+          "dateEffet": "1991-07-01",
+          "montantFRF": 32.66
+        },
+        {
+          "dateEffet": "1992-03-01",
+          "montantFRF": 33.31
+        },
+        {
+          "dateEffet": "1992-07-01",
+          "montantFRF": 34.06
+        },
+        {
+          "dateEffet": "1993-07-01",
+          "montantFRF": 34.83
+        },
+        {
+          "dateEffet": "1994-07-01",
+          "montantFRF": 35.56
+        },
+        {
+          "dateEffet": "1995-07-01",
+          "montantFRF": 36.98
+        },
+        {
+          "dateEffet": "1996-05-01",
+          "montantFRF": 37.72
+        },
+        {
+          "dateEffet": "1996-07-01",
+          "montantFRF": 37.91
+        },
+        {
+          "dateEffet": "1997-07-01",
+          "montantFRF": 39.43
+        },
+        {
+          "dateEffet": "1998-07-01",
+          "montantFRF": 40.22
+        },
+        {
+          "dateEffet": "1999-07-01",
+          "montantFRF": 40.72
+        },
+        {
+          "dateEffet": "2000-07-01",
+          "montantFRF": 42.02
+        },
+        {
+          "dateEffet": "2001-07-01",
+          "montantFRF": 43.72,
+          "montantEUR": 6.67
+        },
+        {
+          "dateEffet": "2002-07-01",
+          "montantEUR": 6.83
+        },
+        {
+          "dateEffet": "2003-07-01",
+          "montantEUR": 7.19
+        },
+        {
+          "dateEffet": "2004-07-01",
+          "montantEUR": 7.61
+        },
+        {
+          "dateEffet": "2005-07-01",
+          "montantEUR": 8.03
+        },
+        {
+          "dateEffet": "2006-07-01",
+          "montantEUR": 8.27
+        },
+        {
+          "dateEffet": "2007-07-01",
+          "montantEUR": 8.44
+        },
+        {
+          "dateEffet": "2008-05-01",
+          "montantEUR": 8.63
+        },
+        {
+          "dateEffet": "2008-07-01",
+          "montantEUR": 8.71
+        },
+        {
+          "dateEffet": "2009-07-01",
+          "montantEUR": 8.82
+        },
+        {
+          "dateEffet": "2010-01-01",
+          "montantEUR": 8.86
+        },
+        {
+          "dateEffet": "2011-01-01",
+          "montantEUR": 9.0
+        },
+        {
+          "dateEffet": "2011-12-01",
+          "montantEUR": 9.19
+        },
+        {
+          "dateEffet": "2012-01-01",
+          "montantEUR": 9.22
+        },
+        {
+          "dateEffet": "2012-07-01",
+          "montantEUR": 9.4
+        },
+        {
+          "dateEffet": "2013-01-01",
+          "montantEUR": 9.43
+        },
+        {
+          "dateEffet": "2014-01-01",
+          "montantEUR": 9.53
+        },
+        {
+          "dateEffet": "2015-01-01",
+          "montantEUR": 9.61
+        },
+        {
+          "dateEffet": "2016-01-01",
+          "montantEUR": 9.67
+        },
+        {
+          "dateEffet": "2017-01-01",
+          "montantEUR": 9.76
+        },
+        {
+          "dateEffet": "2018-01-01",
+          "montantEUR": 9.88
+        },
+        {
+          "dateEffet": "2019-01-01",
+          "montantEUR": 10.03
+        },
+        {
+          "dateEffet": "2020-01-01",
+          "montantEUR": 10.15
+        },
+        {
+          "dateEffet": "2021-01-01",
+          "montantEUR": 10.25
+        },
+        {
+          "dateEffet": "2021-10-01",
+          "montantEUR": 10.48
+        },
+        {
+          "dateEffet": "2022-01-01",
+          "montantEUR": 10.57
+        },
+        {
+          "dateEffet": "2022-05-01",
+          "montantEUR": 10.85
+        },
+        {
+          "dateEffet": "2022-08-01",
+          "montantEUR": 11.07
+        },
+        {
+          "dateEffet": "2023-01-01",
+          "montantEUR": 11.27
+        },
+        {
+          "dateEffet": "2023-05-01",
+          "montantEUR": 11.52
+        },
+        {
+          "dateEffet": "2024-01-01",
+          "montantEUR": 11.65
+        },
+        {
+          "dateEffet": "2024-11-01",
+          "montantEUR": 11.88
+        },
+        {
+          "dateEffet": "2026-01-01",
+          "montantEUR": 12.02
+        },
+        {
+          "dateEffet": "2026-06-01",
+          "montantEUR": 12.31
+        }
+      ],
+      "auPremierJanvierDeduitDuSeuilTrimestre": {
+        "1970": null,
+        "1971": null,
+        "1972": {
+          "montant": 3.94,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1973": {
+          "montant": 4.55,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1974": {
+          "montant": 5.43,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1975": {
+          "montant": 6.75,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1976": {
+          "montant": 7.89,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1977": {
+          "montant": 8.94,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1978": {
+          "montant": 10.06,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1979": {
+          "montant": 11.31,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1980": {
+          "montant": 12.93,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1981": {
+          "montant": 14.79,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1982": {
+          "montant": 18.15,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1983": {
+          "montant": 20.29,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1984": {
+          "montant": 22.78,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1985": {
+          "montant": 24.36,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1986": {
+          "montant": 26.04,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1987": {
+          "montant": 26.92,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1988": {
+          "montant": 27.84,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1989": {
+          "montant": 28.76,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1990": {
+          "montant": 29.91,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1991": {
+          "montant": 31.94,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1992": {
+          "montant": 32.66,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1993": {
+          "montant": 34.06,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1994": {
+          "montant": 34.83,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1995": {
+          "montant": 35.56,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1996": {
+          "montant": 36.98,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1997": {
+          "montant": 37.91,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1998": {
+          "montant": 39.43,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "1999": {
+          "montant": 40.22,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "2000": {
+          "montant": 40.72,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "2001": {
+          "montant": 42.02,
+          "unite": "FRF",
+          "heuresUtilisees": 200
+        },
+        "2002": {
+          "montant": 6.67,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2003": {
+          "montant": 6.83,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2004": {
+          "montant": 7.19,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2005": {
+          "montant": 7.61,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2006": {
+          "montant": 8.03,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2007": {
+          "montant": 8.27,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2008": {
+          "montant": 8.44,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2009": {
+          "montant": 8.71,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2010": {
+          "montant": 8.86,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2011": {
+          "montant": 9.0,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2012": {
+          "montant": 9.22,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2013": {
+          "montant": 9.43,
+          "unite": "EUR",
+          "heuresUtilisees": 200
+        },
+        "2014": {
+          "montant": 9.53,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2015": {
+          "montant": 9.61,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2016": {
+          "montant": 9.67,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2017": {
+          "montant": 9.76,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2018": {
+          "montant": 9.88,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2019": {
+          "montant": 10.03,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2020": {
+          "montant": 10.15,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2021": {
+          "montant": 10.25,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2022": {
+          "montant": 10.57,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2023": {
+          "montant": 11.27,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2024": {
+          "montant": 11.65,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2025": {
+          "montant": 11.88,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        },
+        "2026": {
+          "montant": 12.02,
+          "unite": "EUR",
+          "heuresUtilisees": 150
+        }
+      }
+    },
+    "source": "Insee - 'Salaire minimum interprofessionnel de croissance (Smic) - Donnees annuelles de 1980 a 2026', fichier marc-salair-smic.xlsx, figure 1 (source : ministere du Travail), France hors Mayotte",
+    "url": "https://www.insee.fr/fr/statistiques/1375188",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://www.insee.fr/fr/statistiques/fichier/1375188/marc-salair-smic.xlsx",
+      "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupTrimVal.jsp",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_16_12062026.pdf"
+    ],
+    "note": "'revalorisationsParDateEffet' : Smic horaire brut a chaque date d'entree en vigueur, du 01/03/1980 au 01/06/2026, lu dans le fichier Insee (francs jusqu'en 2001 ; la ligne du 01/07/2001 donne les deux monnaies). insee.fr ne figurait pas dans la liste de sources demandee mais c'est la seule serie officielle complete qui a pu etre ouverte ; les valeurs 2025-2026 (11,88 ; 12,02 ; 12,31 EUR) sont confirmees par les circulaires Cnav 2025-08, 2025-33 et 2026-16. 'auPremierJanvierDeduitDuSeuilTrimestre' : valeur CALCULEE (non lue telle quelle) = salaire validant un trimestre (popup Cnav) / 200 h (1972-2013) ou / 150 h (2014+), arrondie au centime ; coherente avec la serie Insee la ou elles se recoupent (ex. 1981 : 14,79 F ; 2001 : 42,02 F ; 2002 : 6,67 EUR ; 2026 : 12,02 EUR). 1970 et 1971 : null (Smic horaire non lu dans une source officielle ouverte ; le bareme 'smic_smig_smic_bar' de legislation.lassuranceretraite.fr est une application JavaScript non lisible par l'outil)."
+  },
+  "minimumContributif": {
+    "valeurs": {
+      "2025": {
+        "dateEffet": "2025-01-01",
+        "simpleMensuel": 747.47,
+        "simpleAnnuel": 8969.66,
+        "majoreMensuel": 893.39,
+        "majoreAnnuel": 10720.72,
+        "plafondTousRegimesMensuel": 1394.44,
+        "dateEffetPlafond": "2024-11-01",
+        "coefficientRevalorisation": 1.0197
+      },
+      "2026": {
+        "dateEffet": "2026-01-01",
+        "simpleMensuel": 756.29,
+        "simpleAnnuel": 9075.5,
+        "majoreMensuel": 903.93,
+        "majoreAnnuel": 10847.22,
+        "plafondTousRegimesMensuel": [
+          {
+            "dateEffet": "2026-01-01",
+            "montant": 1410.89
+          },
+          {
+            "dateEffet": "2026-06-01",
+            "montant": 1444.89
+          }
+        ],
+        "coefficientRevalorisation": 1.0118
+      },
+      "seuilTrimestresCotisesPourMajoration": 120,
+      "unite": "EUR bruts"
+    },
+    "source": "Cnav - circulaire n 2025-33 du 23/12/2025 (points 2.4 et 2.5), circulaire n 2026-16 du 12/06/2026 (point 2.2), circulaire n 2025-08 du 05/03/2025 (points 2.4 et 2.5) ; seuil de 120 trimestres : service-public.gouv.fr F15522 et lassuranceretraite.fr",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_16_12062026.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_08_05032025.pdf",
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F15522"
+    ],
+    "note": "Montants lus dans les PDF des circulaires. 2025 : la circulaire 2025-08 REMPLACE la circulaire 2024-40 (qui donnait 747,69 / 893,65 EUR avec un coefficient 1,02) ; valeurs corrigees retenues. Majore 2026 : la circulaire donne 903,93 EUR/mois ; service-public F15522 affiche 903,94 EUR. Plafond tous regimes : indexe sur le Smic, donc releve a 1 444,89 EUR au 01/06/2026 (circulaire 2026-16) ; la fiche service-public F15522 (verifiee le 01/09/2026) affiche encore 1 410,89 EUR. Le plafond applicable est celui en vigueur a la date d'ouverture du droit. Le minimum majore est proratise selon les trimestres cotises ; seuil de 120 trimestres cotises tous regimes de base. Revalorisation des montants selon l'evolution du Smic (L351-10 CSS modifie par la LFRSS 2023)."
+  },
+  "tauxCotisationVieillesse": {
+    "valeurs": {
+      "2026": {
+        "salariePlafonneePct": 6.9,
+        "salarieDeplafonneePct": 0.4,
+        "employeurPlafonneePct": 8.55,
+        "employeurDeplafonneePct": 2.11,
+        "totalSalariePlusEmployeurPct": 17.96,
+        "plafondMensuelEUR": 4005,
+        "niveauVerification": "Part salariale lue sur service-public F2302 (verifiee le 01/01/2026). Total 17,96 % lu dans la circulaire Cnav 2025-33 (decret n 2025-1446 du 31/12/2025). Ventilation employeur 8,55 % / 2,11 % : lue uniquement dans un extrait de moteur de recherche citant urssaf.fr (page Urssaf inaccessible : erreur reseau) ; coherente avec le total (17,96 - 6,90 - 0,40 = 10,66)."
+      },
+      "historique": [
+        {
+          "dateEffet": "2012-01-01",
+          "salariePlafonneePct": 6.75,
+          "salarieDeplafonneePct": 0.1,
+          "employeurPlafonneePct": 8.4,
+          "employeurDeplafonneePct": 1.6
+        },
+        {
+          "dateEffet": "2014-01-01",
+          "salariePlafonneePct": 6.8,
+          "salarieDeplafonneePct": 0.25,
+          "employeurPlafonneePct": 8.45,
+          "employeurDeplafonneePct": 1.75
+        },
+        {
+          "dateEffet": "2015-01-01",
+          "salariePlafonneePct": 6.85,
+          "salarieDeplafonneePct": 0.3,
+          "employeurPlafonneePct": 8.5,
+          "employeurDeplafonneePct": 1.8
+        },
+        {
+          "dateEffet": "2016-01-01",
+          "salariePlafonneePct": 6.9,
+          "salarieDeplafonneePct": 0.35,
+          "employeurPlafonneePct": 8.55,
+          "employeurDeplafonneePct": 1.85
+        },
+        {
+          "dateEffet": "2017-01-01",
+          "salariePlafonneePct": 6.9,
+          "salarieDeplafonneePct": 0.4,
+          "employeurPlafonneePct": 8.55,
+          "employeurDeplafonneePct": 1.9
+        },
+        {
+          "dateEffet": "2024-01-01",
+          "salariePlafonneePct": 6.9,
+          "salarieDeplafonneePct": 0.4,
+          "employeurPlafonneePct": 8.55,
+          "employeurDeplafonneePct": 2.02
+        },
+        {
+          "dateEffet": "2025-01-01",
+          "totalSalariePlusEmployeurPct": 17.87,
+          "note": "Seul le total est lu (circulaire Cnav 2025-08) ; egal a la somme des taux 2024."
+        },
+        {
+          "dateEffet": "2026-01-01",
+          "salariePlafonneePct": 6.9,
+          "salarieDeplafonneePct": 0.4,
+          "employeurPlafonneePct": 8.55,
+          "employeurDeplafonneePct": 2.11
+        }
+      ],
+      "avant2012": null
+    },
+    "source": "Cnav - Abrege statistique 2025 (bareme 'Cotisations des salaries et des employeurs', p. 49) pour 2012-2024 ; Cnav circulaires 2025-08 et 2025-33 (taux cumules 17,87 % et 17,96 %) ; service-public.gouv.fr F2302 (part salariale 2026)",
+    "url": "https://www.lassuranceretraite.fr/portail-info/files/live/sites/pub/files/PDF/abrege-statistique-2025.pdf",
+    "dateConsultation": "2026-11-21",
+    "urlsComplementaires": [
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_08_05032025.pdf",
+      "https://www.service-public.gouv.fr/particuliers/vosdroits/F2302",
+      "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-secteur-prive.html"
+    ],
+    "note": "Le tableau de l'Abrege est intitule 'cotisation vieillesse et veuvage' et comporte des cellules fusionnees : les dates de 2016 et 2017 ont ete deduites de la mise en page (texte extrait du PDF) et sont a confirmer. Historique anterieur a 2012 non collecte (null). Taux de droit commun du regime general, hors taux reduits ou specifiques."
+  },
+  "periodesAssimilees": {
+    "chomageIndemnise": {
+      "valeurs": "1 trimestre valide par periode de 50 jours de chomage indemnise, consecutifs ou non, dans la limite de 4 trimestres par annee civile.",
+      "source": "service-public.gouv.fr fiche F31249 (verifiee le 28/08/2025)",
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F31249",
+      "dateConsultation": "2026-11-21",
+      "note": "Chomage non indemnise : meme regle des 50 jours mais duree limitee (1 an apres indemnisation, 5 ans sous conditions a partir de 55 ans ; premiere periode jamais indemnisee : 6 trimestres depuis 2011, 4 avant)."
+    },
+    "maladie": {
+      "valeurs": "1 trimestre valide par periode de 60 jours d'indemnites journalieres maladie (ou accident du travail), dans la limite de 4 par an.",
+      "source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026)",
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
+      "dateConsultation": "2026-11-21"
+    },
+    "maternite": {
+      "valeurs": "1 trimestre valide par periode de 90 jours d'indemnites journalieres maternite.",
+      "source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026)",
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
+      "dateConsultation": "2026-11-21",
+      "note": "La fiche ne precise pas si le trimestre de l'accouchement est valide d'office lorsque moins de 90 jours sont indemnises : point non verifie."
+    },
+    "autres": {
+      "valeurs": {
+        "invalidite": "1 trimestre par trimestre civil comportant 3 mensualites de pension d'invalidite",
+        "serviceNational": "1 trimestre par 90 jours",
+        "activitePartielle": "1 trimestre par 220 heures indemnisees (depuis le 01/03/2020)",
+        "stagesDemandeursEmploi": "1 trimestre par 50 jours de stage"
+      },
+      "source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026)",
+      "url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F1761",
+      "dateConsultation": "2026-11-21"
+    }
+  }
+}

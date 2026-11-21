@@ -14,7 +14,8 @@ export interface CompteCarriere {
 export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 	const n = carriere.annees.length;
 	const compte: CompteCarriere = {
-		ageDebut: n > 0 ? (carriere.annees[0]?.annee ?? 0) - carriere.anneeNaissance : 0,
+		ageDebut:
+			n > 0 ? (carriere.annees[0]?.annee ?? 0) - carriere.anneeNaissance : 0,
 		trimestresCotises: new Float64Array(n),
 		trimestresAssimiles: new Float64Array(n),
 		salairesRevalorises: new Float64Array(n),
@@ -37,13 +38,12 @@ export function buildCompte(carriere: Carriere, b: Baremes): CompteCarriere {
 					Math.min(a.salaireBrut, pass) *
 					valeur(b.cnav.coefficientsRevalorisation, a.annee);
 			}
-			const tranche1 = Math.min(a.salaireBrut, pass);
-			const plafond2 = aa.plafondTranche2(a.annee, carriere.cadre) * pass;
-			const tranche2 = Math.max(0, Math.min(a.salaireBrut, plafond2) - pass);
-			derniersPoints =
-				(tranche1 * valeur(aa.tauxTranche1, a.annee) +
-					tranche2 * valeur(aa.tauxTranche2, a.annee)) /
-				valeur(aa.prixAchatDuPoint, a.annee);
+			derniersPoints = aa.pointsAnnee(
+				a.annee,
+				a.salaireBrut,
+				pass,
+				carriere.cadre,
+			);
 			compte.points[i] = derniersPoints;
 		} else if (a.etat === "chomage" || a.etat === "maladieMaternite") {
 			// Période assimilée : 4 trimestres validés, points attribués sur la base du dernier salaire.
@@ -76,7 +76,10 @@ export function cumulJusqua(compte: CompteCarriere, age: AgeTrimestres): Cumul {
 	if (fraction > 0 && anneesPleines >= 0 && anneesPleines < n) {
 		const max = age % 4;
 		cotises += Math.min(max, compte.trimestresCotises[anneesPleines] as number);
-		assimiles += Math.min(max, compte.trimestresAssimiles[anneesPleines] as number);
+		assimiles += Math.min(
+			max,
+			compte.trimestresAssimiles[anneesPleines] as number,
+		);
 		points += (compte.points[anneesPleines] as number) * fraction;
 	}
 	return { trimestresCotises: cotises, trimestresAssimiles: assimiles, points };

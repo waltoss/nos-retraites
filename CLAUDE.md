@@ -37,12 +37,14 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 - Incertitude visible : fourchettes, erreur du backtest publiée, « ne remplace pas M@rel ».
 - Vie privée : les saisies individuelles ne quittent pas le navigateur.
 
-## Tranche 0 (en cours) : prouver la microsimulation
+## Commandes
 
-1. Socle monorepo, CI.
-2. Règles CNAV + Agirc-Arrco sur une carrière, générations 1955-1970. Critère : cas types du COR à ±2 %.
-3. Générateur naïf, 5 000 à 10 000 individus.
-4. Distribution des pensions simulées contre Drees. Critère : médiane et déciles extrêmes à ±10 % ; sinon repli sur un modèle par cellules.
-5. Page minimale : deux histogrammes, curseur d'âge légal, mesure de performance sur téléphone.
+`bun test packages`, `bun run dev`, `bun run build`, `bun run check`, `bun scripts/build-baremes.ts` (régénère `france.data.json` depuis `data/baremes`), `bun scripts/compare-drees.ts` (photographie du scénario de référence).
+
+## État de la tranche 0
+
+Fait : socle, règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, générateur naïf, page minimale (deux histogrammes, curseur d'âge légal).
+Reste : test des cas types du COR (il manque la série du salaire moyen par tête), calage du générateur (`generateur/hypotheses.ts` est posé à la main), poids par cohorte.
+Critères : cas types COR à ±2 % ; médiane et déciles extrêmes des pensions à ±10 % de la Drees, sinon repli sur un modèle par cellules.
 
 `proto/` contient des maquettes jetables à données fictives.

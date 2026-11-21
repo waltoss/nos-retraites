@@ -45,6 +45,12 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Décote** : réduction du taux de liquidation pour chaque trimestre manquant.
 - **Surcote** : majoration de la pension pour chaque trimestre travaillé au-delà du taux plein après l'âge légal.
 - **Point** : unité de droit du régime complémentaire, achetée par les cotisations au prix d'achat et convertie en pension à la valeur de service.
+- **Compte de carrière** : droits acquis année par année par un individu (trimestres, salaires revalorisés, points), indépendants des règles du scénario.
+- **Carrière type** : carrière théorique en emploi continu à salaire fixé, utilisée pour vérifier les règles.
+- **Cadre** : salarié qui, avant 2019, acquérait des points Agirc au-dessus du PASS au lieu de points Arrco.
+- **Tranche** : part du salaire entre deux multiples du PASS, à laquelle s'applique un taux de cotisation.
+- **Proratisation** : rapport entre la durée validée et la durée requise, plafonné à 1, qui réduit la pension de base.
+- **Coefficient d'anticipation** : minoration définitive de la pension complémentaire en cas de départ sans le taux plein.
 - **Droits familiaux** : avantages de retraite liés aux enfants (trimestres supplémentaires, majoration de pension).
 - **Revalorisation** : règle d'évolution annuelle des pensions déjà liquidées (prix, salaires, gel).
 - **Polypensionné** : retraité qui perçoit des pensions de plusieurs régimes de base.

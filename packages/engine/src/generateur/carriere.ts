@@ -47,7 +47,9 @@ export function generateCarriere(
 			h.ageEntree.max,
 			Math.max(
 				h.ageEntree.min,
-				h.ageEntree.moyenne + h.ageEntree.effetRang * rang + h.ageEntree.ecartType * rng.normal(),
+				h.ageEntree.moyenne +
+					h.ageEntree.effetRang * rang +
+					h.ageEntree.ecartType * rng.normal(),
 			),
 		),
 	);
@@ -56,13 +58,18 @@ export function generateCarriere(
 	const enfants: number[] = [];
 	let ageNaissance = Math.max(
 		17,
-		Math.round(h.agePremierEnfant.moyenne + h.agePremierEnfant.ecartType * rng.normal() + rang),
+		Math.round(
+			h.agePremierEnfant.moyenne +
+				h.agePremierEnfant.ecartType * rng.normal() +
+				rang,
+		),
 	);
 	for (let i = 0; i < nbEnfants; i++) {
 		enfants.push(anneeNaissance + ageNaissance + (sexe === "H" ? 2 : 0));
 		ageNaissance += Math.max(1, Math.round(h.ecartEntreEnfants + rng.normal()));
 	}
-	const tempsPartiel = sexe === "F" && nbEnfants > 0 && rng.next() < h.tempsPartielMeres.part;
+	const tempsPartiel =
+		sexe === "F" && nbEnfants > 0 && rng.next() < h.tempsPartielMeres.part;
 
 	// Le risque de sortie de l'emploi décroît avec le rang de salaire.
 	const risque = h.risqueRang ** -rang;
@@ -81,7 +88,10 @@ export function generateCarriere(
 
 		if (age > ageEntree) {
 			if (etat === "emploi") {
-				const pChomage = Math.min(0.5, h.depuisEmploi.chomage * risque * sorties);
+				const pChomage = Math.min(
+					0.5,
+					h.depuisEmploi.chomage * risque * sorties,
+				);
 				const pMaladie = h.depuisEmploi.maladie * sorties;
 				const pInactivite = h.depuisEmploi.inactivite * sorties;
 				if (u < pChomage) etat = "chomage";
@@ -107,20 +117,28 @@ export function generateCarriere(
 		}
 		// Une naissance : congé maternité l'année même, puis interruption possible.
 		if (naissance) {
-			if (rng.next() < h.interruptionNaissance.probabilite * Math.min(2, risque)) {
+			if (
+				rng.next() <
+				h.interruptionNaissance.probabilite * Math.min(2, risque)
+			) {
 				etat = "inactivite";
 				interruptionFamiliale = true;
 			} else if (etat === "emploi") {
 				etat = "maladieMaternite";
 			}
-		} else if (etat === "maladieMaternite" && sexe === "F" && enfants.includes(annee - 1)) {
+		} else if (
+			etat === "maladieMaternite" &&
+			sexe === "F" &&
+			enfants.includes(annee - 1)
+		) {
 			etat = "emploi";
 		}
 
 		let salaireBrut = 0;
 		if (etat === "emploi") {
 			const jeuneEnfant = enfants.some((n) => annee >= n && annee - n < 12);
-			const quotite = tempsPartiel && jeuneEnfant ? h.tempsPartielMeres.quotite : 1;
+			const quotite =
+				tempsPartiel && jeuneEnfant ? h.tempsPartielMeres.quotite : 1;
 			const niveau =
 				interpole(h.profilSalaire, age) *
 				Math.exp(
@@ -130,11 +148,37 @@ export function generateCarriere(
 				) *
 				(sexe === "F" ? h.ecartSalaireFemmes : 1);
 			const smicAnnuel = valeur(b.cnav.smicHoraire, annee) * h.heuresAnnuelles;
+			const brut = niveau * valeur(b.cnav.pass, annee);
+			// Plancher au SMIC, étalé juste au-dessus pour ne pas empiler tous les bas salaires au même euro.
 			salaireBrut =
-				Math.max(niveau * valeur(b.cnav.pass, annee), smicAnnuel) * quotite;
+				(brut >= smicAnnuel * (1 + h.etalementSmic)
+					? brut
+					: smicAnnuel *
+						(1 + h.etalementSmic * Math.min(1, Math.abs(choc) / 2))) * quotite;
 		}
 		annees.push({ annee, etat, salaireBrut });
 	}
 
 	return { anneeNaissance, sexe, enfants, cadre: rang > h.seuilCadre, annees };
+}
+
+/** Carrière type : emploi continu entre deux âges, à un salaire constant en part du PASS. */
+export function carriereType(
+	anneeNaissance: number,
+	ageDebut: number,
+	ageFin: number,
+	partDuPass: number,
+	b: Baremes,
+	cadre = partDuPass > 1,
+): Carriere {
+	const annees: AnneeCarriere[] = [];
+	for (let age = ageDebut; age < ageFin; age++) {
+		const annee = anneeNaissance + age;
+		annees.push({
+			annee,
+			etat: "emploi",
+			salaireBrut: partDuPass * valeur(b.cnav.pass, annee),
+		});
+	}
+	return { anneeNaissance, sexe: "H", enfants: [], cadre, annees };
 }

@@ -43,20 +43,33 @@ export interface BaremeCnav {
 }
 
 export interface BaremeAgircArrco {
-	/** Prix d'achat du point (salaire de référence), en euros. */
-	prixAchatDuPoint: SerieAnnuelle;
+	/**
+	 * Points acquis sur une année de salaire, exprimés en points Agirc-Arrco
+	 * (les points Arrco et Agirc d'avant 2019 sont convertis).
+	 */
+	pointsAnnee(
+		annee: number,
+		salaireBrut: number,
+		pass: number,
+		cadre: boolean,
+	): number;
 	/** Valeur de service du point pour l'année de référence, en euros. */
 	valeurDeServiceDuPoint: number;
-	/** Taux contractuel (d'acquisition) sur la tranche 1, jusqu'à 1 PASS. */
-	tauxTranche1: SerieAnnuelle;
-	/** Taux contractuel sur la tranche 2, au-delà de 1 PASS. */
-	tauxTranche2: SerieAnnuelle;
-	/** Limite haute de la tranche 2, en nombre de PASS. */
-	plafondTranche2(annee: number, cadre: boolean): number;
-	/** Taux d'appel de l'année de référence (1,27 = 127 %). */
-	tauxAppel: number;
-	/** Contributions sans points (CEG + CET) sur les tranches 1 et 2, année de référence. */
-	contributions: { tranche1: number; tranche2: number };
+	/** Paramètres de cotisation de l'année de référence. */
+	cotisation: {
+		/** Taux contractuel sur la tranche 1, jusqu'à 1 PASS. */
+		tauxTranche1: number;
+		/** Taux contractuel sur la tranche 2, au-delà de 1 PASS. */
+		tauxTranche2: number;
+		plafondTranche2EnPass: number;
+		/** Taux d'appel (1,27 = 127 %). */
+		tauxAppel: number;
+		/** Contribution d'équilibre général, sans points. */
+		cegTranche1: number;
+		cegTranche2: number;
+		/** Contribution d'équilibre technique, due sur tout le salaire dès qu'il dépasse 1 PASS. */
+		cet: number;
+	};
 	/** Coefficient d'anticipation selon le nombre de trimestres manquants (0 à 20). */
 	coefficientAnticipation(trimestresManquants: number): number;
 	majorationTroisEnfants: number;

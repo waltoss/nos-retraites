@@ -1,5 +1,8 @@
 /** Quantiles d'un échantillon (les poids sont uniformes en tranche 0). */
-export function quantiles(valeurs: ArrayLike<number>, niveaux: number[]): number[] {
+export function quantiles(
+	valeurs: ArrayLike<number>,
+	niveaux: number[],
+): number[] {
 	const tri = Float64Array.from(valeurs).sort();
 	const n = tri.length;
 	return niveaux.map((p) => {
@@ -7,7 +10,10 @@ export function quantiles(valeurs: ArrayLike<number>, niveaux: number[]): number
 		const pos = p * (n - 1);
 		const bas = Math.floor(pos);
 		const haut = Math.min(n - 1, bas + 1);
-		return (tri[bas] as number) + ((tri[haut] as number) - (tri[bas] as number)) * (pos - bas);
+		return (
+			(tri[bas] as number) +
+			((tri[haut] as number) - (tri[bas] as number)) * (pos - bas)
+		);
 	});
 }
 
@@ -23,12 +29,19 @@ export interface Histogramme {
 	classes: number[];
 }
 
-export function histogramme(valeurs: ArrayLike<number>, max: number, nbClasses: number): Histogramme {
+export function histogramme(
+	valeurs: ArrayLike<number>,
+	max: number,
+	nbClasses: number,
+): Histogramme {
 	const classes = new Array<number>(nbClasses).fill(0);
 	const n = valeurs.length;
 	if (n === 0) return { max, classes };
 	for (let i = 0; i < n; i++) {
-		const k = Math.min(nbClasses - 1, Math.max(0, Math.floor(((valeurs[i] as number) / max) * nbClasses)));
+		const k = Math.min(
+			nbClasses - 1,
+			Math.max(0, Math.floor(((valeurs[i] as number) / max) * nbClasses)),
+		);
 		classes[k] = (classes[k] as number) + 1 / n;
 	}
 	return { max, classes };
@@ -43,6 +56,14 @@ export interface Resume {
 }
 
 export function resume(valeurs: ArrayLike<number>): Resume {
-	const deciles = quantiles(valeurs, [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9]);
-	return { effectif: valeurs.length, moyenne: moyenne(valeurs), mediane: deciles[4] as number, deciles };
+	const deciles = quantiles(
+		valeurs,
+		[0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9],
+	);
+	return {
+		effectif: valeurs.length,
+		moyenne: moyenne(valeurs),
+		mediane: deciles[4] as number,
+		deciles,
+	};
 }

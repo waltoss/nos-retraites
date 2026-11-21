@@ -4,9 +4,13 @@ import {
 	baremeGeneration,
 	valeur,
 } from "./baremes/types.ts";
-import { type CompteCarriere, buildCompte, cumulJusqua } from "./compte.ts";
+import { buildCompte, type CompteCarriere, cumulJusqua } from "./compte.ts";
 import { computeAgircArrco } from "./regimes/agircArrco.ts";
-import { computeCnav, trimestresManquants, trimestresMda } from "./regimes/cnav.ts";
+import {
+	computeCnav,
+	trimestresManquants,
+	trimestresMda,
+} from "./regimes/cnav.ts";
 import type { AgeTrimestres, Carriere, Pension } from "./types.ts";
 
 /** Règles d'un scénario qui remplacent le barème de la génération. */
@@ -106,26 +110,20 @@ export function computePension(
 }
 
 /** Cotisations vieillesse annuelles (salarié + employeur, base + complémentaire) aux taux de l'année de référence. */
-export function computeCotisations(
-	salaireBrut: number,
-	cadre: boolean,
-	b: Baremes,
-): number {
-	const annee = b.anneeReference;
-	const pass = valeur(b.cnav.pass, annee);
-	const aa = b.agircArrco;
+export function computeCotisations(salaireBrut: number, b: Baremes): number {
+	const pass = valeur(b.cnav.pass, b.anneeReference);
+	const c = b.agircArrco.cotisation;
 	const tranche1 = Math.min(salaireBrut, pass);
 	const tranche2 = Math.max(
 		0,
-		Math.min(salaireBrut, aa.plafondTranche2(annee, cadre) * pass) - pass,
+		Math.min(salaireBrut, c.plafondTranche2EnPass * pass) - pass,
 	);
 	const base =
 		tranche1 * b.cnav.tauxCotisation.plafonne +
 		salaireBrut * b.cnav.tauxCotisation.deplafonne;
 	const complementaire =
-		tranche1 *
-			(valeur(aa.tauxTranche1, annee) * aa.tauxAppel + aa.contributions.tranche1) +
-		tranche2 *
-			(valeur(aa.tauxTranche2, annee) * aa.tauxAppel + aa.contributions.tranche2);
+		tranche1 * (c.tauxTranche1 * c.tauxAppel + c.cegTranche1) +
+		tranche2 * (c.tauxTranche2 * c.tauxAppel + c.cegTranche2) +
+		(tranche2 > 0 ? (tranche1 + tranche2) * c.cet : 0);
 	return base + complementaire;
 }

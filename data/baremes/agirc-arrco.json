@@ -1,0 +1,3678 @@
+{
+  "avertissements": [
+    "Sources primaires reellement ouvertes : pages 'Baremes' de reglementation.agirc-arrco.fr, circulaire Agirc-Arrco 2025-16-SG-DRJ (parametres 2026), circulaire 2023-11-DRJ + avenant n°17, notice Agirc-Arrco 'coefficients temporaires' (17/05/2022), fiche 'Decrypter la majoration pour enfants' (02-03/2025), guides salaries n°6 (02/2022) et n°7 (03/2016), service-public.gouv.fr F15396.",
+    "TOUTES les series anterieures a 2019 (valeurs de point, salaires de reference, taux de cotisation, taux d'appel, repartition) viennent d'une source SECONDAIRE : les baremes IPP. Aucune n'a pu etre recoupee avec un document Agirc-Arrco primaire.",
+    "Arrco avant 1999 : il n'existait pas de valeur de point unique (une valeur par caisse). Seule la serie UNIRS (principal regime Arrco) est fournie ; elle ne vaut pas pour les autres caisses. Les points des anciennes caisses ont ete convertis en points Arrco en 1999 (coefficient UNIRS 0,387417 selon l'IPP, non verifie ailleurs).",
+    "Unites monetaires d'avant 1960 incertaines dans la source IPP (Agirc en anciens francs ; UNIRS apparemment en nouveaux francs). Contre-valeurs en euros du salaire de reference UNIRS avant 1958 incoherentes dans la source : mises a null.",
+    "Anomalies relevees dans la source IPP : salaire de reference Agirc 2007 nominal saisi '47125' (valeur en euros 4,7125 retenue) ; pas de ligne Agirc de valeur du point entre 1999 et 2001 ni de 1993 a 1996 (valeur inchangee ou lacune : non tranche) ; taux effectifs Agirc 'entreprises creees depuis 1981' a null a partir de 1996 pour la tranche B ; la part salariale Agirc 'avant 1981' n'a pas de palier 1989 alors que la part patronale en a un.",
+    "Taux de cotisation historiques : ce sont les taux de droit commun/minimaux. Des taux contractuels superieurs existent dans certaines entreprises ou branches (la circulaire 2026 precise 'sauf obligation nee anterieurement au 2 janvier 1993' et 'sauf dispositions particulieres applicables dans l'entreprise').",
+    "Taux Agirc-Arrco 2019-2025 : la source officielle ouverte ne donne que 2026 ; la constance des taux depuis le 01/01/2019 vient de l'IPP (secondaire).",
+    "Valeur d'achat du point 2027 et plafond des majorations familiales a compter du 01/11/2026 : non trouves (null). La circulaire 2026-3-DT du 21/10/2026 est citee par la page officielle mais n'a pas ete ouverte.",
+    "Coefficients d'anticipation : les deux tableaux officiels ont ete lus, mais la regle de choix entre le bareme 'age' et le bareme 'trimestres manquants' n'a pas ete lue dans une source ouverte.",
+    "CEG/CET 'sans points' : les taux sont lus dans la circulaire officielle ; le principe d'absence de points est lu sur service-public (difference entre taux de cotisation et taux de calcul des points) mais pas mot pour mot pour la CEG/CET dans un texte officiel ouvert.",
+    "Points chomage : la formule exacte de calcul n'a pas ete lue ; la source ouverte est un guide de mars 2016 (avant fusion, vocabulaire Pole emploi/Arrco/Agirc).",
+    "Coefficient de conversion Agirc 2019 : lu dans deux sources secondaires concordantes (IPP, la-retraite-en-clair.fr) ; la circulaire Agirc-Arrco 2018-7-DT n'a pas ete ouverte.",
+    "Les taux IPP sont publies en fraction ; ils ont ete multiplies par 100 (seule transformation appliquee). AGFF, ancienne CET (1997-2018), cotisation GMP et APEC ne sont pas repris."
+  ],
+  "valeurDeServiceDuPoint": {
+    "valeurs": {
+      "agircArrco": {
+        "monnaie": "euros",
+        "note": "L'exercice N de la page officielle court a partir du 1er novembre N-1. La valeur du 01/11/2018 est celle du point Arrco, reprise par le regime unifie au 01/01/2019.",
+        "serie": [
+          {
+            "exercice": 2019,
+            "dateEffet": "2018-11-01",
+            "valeur": 1.2588
+          },
+          {
+            "exercice": 2020,
+            "dateEffet": "2019-11-01",
+            "valeur": 1.2714
+          },
+          {
+            "exercice": 2021,
+            "dateEffet": "2020-11-01",
+            "valeur": 1.2714
+          },
+          {
+            "exercice": 2022,
+            "dateEffet": "2021-11-01",
+            "valeur": 1.2841
+          },
+          {
+            "exercice": 2023,
+            "dateEffet": "2022-11-01",
+            "valeur": 1.3498
+          },
+          {
+            "exercice": 2024,
+            "dateEffet": "2023-11-01",
+            "valeur": 1.4159
+          },
+          {
+            "exercice": 2025,
+            "dateEffet": "2024-11-01",
+            "valeur": 1.4386
+          },
+          {
+            "exercice": 2026,
+            "dateEffet": "2025-11-01",
+            "valeur": 1.4386
+          },
+          {
+            "exercice": 2027,
+            "dateEffet": "2026-11-01",
+            "valeur": 1.4587,
+            "note": "Valeur en vigueur a la date de consultation (circulaire 2026-3-DT du 21/10/2026 citee par la page)."
+          }
+        ],
+        "source": "Agirc-Arrco, reglementation, bareme 'Valeur de service du point Agirc-Arrco'",
+        "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-de-service-du-point-agirc-arrco.html",
+        "dateConsultation": "2026-11-21"
+      },
+      "arrco": {
+        "periode": "1999-2018",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas de revalorisation de 2014 a octobre 2018.",
+        "serie": [
+          {
+            "dateEffet": "1999-01-01",
+            "valeur": 6.5596,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.0
+          },
+          {
+            "dateEffet": "1999-04-01",
+            "valeur": 6.6186,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.009
+          },
+          {
+            "dateEffet": "2000-04-01",
+            "valeur": 6.6717,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.0171
+          },
+          {
+            "dateEffet": "2001-04-01",
+            "valeur": 1.0364,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.0364
+          },
+          {
+            "dateEffet": "2002-04-01",
+            "valeur": 1.053,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.053
+          },
+          {
+            "dateEffet": "2003-04-01",
+            "valeur": 1.0698,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.0698
+          },
+          {
+            "dateEffet": "2004-04-01",
+            "valeur": 1.0886,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.0886
+          },
+          {
+            "dateEffet": "2005-04-01",
+            "valeur": 1.1104,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.1104
+          },
+          {
+            "dateEffet": "2006-04-01",
+            "valeur": 1.1287,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.1287
+          },
+          {
+            "dateEffet": "2007-04-01",
+            "valeur": 1.148,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.148
+          },
+          {
+            "dateEffet": "2008-04-01",
+            "valeur": 1.1648,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.1648
+          },
+          {
+            "dateEffet": "2009-04-01",
+            "valeur": 1.1799,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.1799
+          },
+          {
+            "dateEffet": "2010-04-01",
+            "valeur": 1.1884,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.1884
+          },
+          {
+            "dateEffet": "2011-04-01",
+            "valeur": 1.2135,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.2135
+          },
+          {
+            "dateEffet": "2012-04-01",
+            "valeur": 1.2414,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.2414
+          },
+          {
+            "dateEffet": "2013-04-01",
+            "valeur": 1.2513,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.2513
+          },
+          {
+            "dateEffet": "2018-11-01",
+            "valeur": 1.2588,
+            "monnaie": "euros",
+            "valeurEnEuros": 1.2588
+          }
+        ],
+        "source": "Baremes IPP - Valeur du point ARRCO (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.arrco.point/table",
+        "dateConsultation": "2026-11-21"
+      },
+      "arrcoUnirsAvant1999": {
+        "periode": "1957-1998",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Valeur du point UNIRS uniquement (plus gros regime Arrco) ; non applicable telle quelle aux autres caisses Arrco.",
+        "serie": [
+          {
+            "dateEffet": "1957-01-01",
+            "valeur": 0.16,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": 0.024392
+          },
+          {
+            "dateEffet": "1958-01-01",
+            "valeur": 0.164,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": 0.025002
+          },
+          {
+            "dateEffet": "1959-01-01",
+            "valeur": 0.176,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": 0.026831
+          },
+          {
+            "dateEffet": "1960-01-01",
+            "valeur": 0.1824,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.027807
+          },
+          {
+            "dateEffet": "1961-01-01",
+            "valeur": 0.1932,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.029453
+          },
+          {
+            "dateEffet": "1961-10-01",
+            "valeur": 0.2056,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.031344
+          },
+          {
+            "dateEffet": "1962-10-01",
+            "valeur": 0.2184,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.033295
+          },
+          {
+            "dateEffet": "1963-10-01",
+            "valeur": 0.2388,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.036405
+          },
+          {
+            "dateEffet": "1964-10-01",
+            "valeur": 0.2608,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.039759
+          },
+          {
+            "dateEffet": "1965-10-01",
+            "valeur": 0.2768,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.042198
+          },
+          {
+            "dateEffet": "1966-10-01",
+            "valeur": 0.2916,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.044454
+          },
+          {
+            "dateEffet": "1967-10-01",
+            "valeur": 0.308,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.046954
+          },
+          {
+            "dateEffet": "1968-04-01",
+            "valeur": 0.32,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.048784
+          },
+          {
+            "dateEffet": "1969-01-01",
+            "valeur": 0.33,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.050308
+          },
+          {
+            "dateEffet": "1969-10-01",
+            "valeur": 0.352,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.053662
+          },
+          {
+            "dateEffet": "1970-10-01",
+            "valeur": 0.384,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.05854
+          },
+          {
+            "dateEffet": "1971-07-01",
+            "valeur": 0.406,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.061894
+          },
+          {
+            "dateEffet": "1972-10-01",
+            "valeur": 0.456,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.069517
+          },
+          {
+            "dateEffet": "1973-10-01",
+            "valeur": 0.504,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.076834
+          },
+          {
+            "dateEffet": "1974-10-01",
+            "valeur": 0.576,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.087811
+          },
+          {
+            "dateEffet": "1975-01-01",
+            "valeur": 0.612,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.093299
+          },
+          {
+            "dateEffet": "1975-10-01",
+            "valeur": 0.636,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.096958
+          },
+          {
+            "dateEffet": "1976-01-01",
+            "valeur": 0.708,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.107934
+          },
+          {
+            "dateEffet": "1976-10-01",
+            "valeur": 0.768,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.117081
+          },
+          {
+            "dateEffet": "1977-01-01",
+            "valeur": 0.8,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.121959
+          },
+          {
+            "dateEffet": "1977-10-01",
+            "valeur": 0.85,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.129582
+          },
+          {
+            "dateEffet": "1978-01-01",
+            "valeur": 0.884,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.134765
+          },
+          {
+            "dateEffet": "1978-10-01",
+            "valeur": 0.936,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.142692
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "valeur": 0.974,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.148485
+          },
+          {
+            "dateEffet": "1979-10-01",
+            "valeur": 1.046,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.159462
+          },
+          {
+            "dateEffet": "1980-01-01",
+            "valeur": 1.108,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.168914
+          },
+          {
+            "dateEffet": "1980-10-01",
+            "valeur": 1.22,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.185988
+          },
+          {
+            "dateEffet": "1981-01-01",
+            "valeur": 1.308,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.199403
+          },
+          {
+            "dateEffet": "1981-10-01",
+            "valeur": 1.388,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.211599
+          },
+          {
+            "dateEffet": "1982-01-01",
+            "valeur": 1.468,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.223795
+          },
+          {
+            "dateEffet": "1982-10-01",
+            "valeur": 1.568,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.23904
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "valeur": 1.596,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.243309
+          },
+          {
+            "dateEffet": "1983-10-01",
+            "valeur": 1.66,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.253065
+          },
+          {
+            "dateEffet": "1984-01-01",
+            "valeur": 1.72,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.262212
+          },
+          {
+            "dateEffet": "1984-10-01",
+            "valeur": 1.788,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.272579
+          },
+          {
+            "dateEffet": "1985-01-01",
+            "valeur": 1.832,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.279287
+          },
+          {
+            "dateEffet": "1985-10-01",
+            "valeur": 1.88,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.286604
+          },
+          {
+            "dateEffet": "1986-01-01",
+            "valeur": 1.928,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.293922
+          },
+          {
+            "dateEffet": "1986-10-01",
+            "valeur": 1.948,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.296971
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "valeur": 1.984,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.302459
+          },
+          {
+            "dateEffet": "1987-10-01",
+            "valeur": 2.06,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.314045
+          },
+          {
+            "dateEffet": "1988-10-01",
+            "valeur": 2.081,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.317246
+          },
+          {
+            "dateEffet": "1989-01-01",
+            "valeur": 2.102,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.320448
+          },
+          {
+            "dateEffet": "1989-10-01",
+            "valeur": 2.124,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.323802
+          },
+          {
+            "dateEffet": "1990-01-01",
+            "valeur": 2.176,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.331729
+          },
+          {
+            "dateEffet": "1990-10-01",
+            "valeur": 2.238,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.341181
+          },
+          {
+            "dateEffet": "1991-01-01",
+            "valeur": 2.276,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.346974
+          },
+          {
+            "dateEffet": "1991-10-01",
+            "valeur": 2.3,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.350633
+          },
+          {
+            "dateEffet": "1992-01-01",
+            "valeur": 2.351,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.358408
+          },
+          {
+            "dateEffet": "1992-10-01",
+            "valeur": 2.387,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.363896
+          },
+          {
+            "dateEffet": "1993-04-01",
+            "valeur": 2.4256,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.36978
+          },
+          {
+            "dateEffet": "1995-04-01",
+            "valeur": 2.4548,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.374232
+          },
+          {
+            "dateEffet": "1996-04-01",
+            "valeur": 2.4916,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.379842
+          },
+          {
+            "dateEffet": "1997-04-01",
+            "valeur": 2.5115,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.382876
+          },
+          {
+            "dateEffet": "1998-04-01",
+            "valeur": 2.5416,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.387464
+          }
+        ],
+        "source": "Baremes IPP - Valeur du point ARRCO, UNIRS (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.unirs.point/table",
+        "dateConsultation": "2026-11-21"
+      },
+      "agirc": {
+        "periode": "1947-2018",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas de revalorisation de 2014 a octobre 2018.",
+        "serie": [
+          {
+            "dateEffet": "1947-04-01",
+            "valeur": 4.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.006098
+          },
+          {
+            "dateEffet": "1948-01-01",
+            "valeur": 5.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.007622
+          },
+          {
+            "dateEffet": "1948-10-01",
+            "valeur": 6.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.009147
+          },
+          {
+            "dateEffet": "1950-07-01",
+            "valeur": 8.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.012196
+          },
+          {
+            "dateEffet": "1951-01-01",
+            "valeur": 9.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.01372
+          },
+          {
+            "dateEffet": "1951-07-01",
+            "valeur": 11.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.016769
+          },
+          {
+            "dateEffet": "1952-01-01",
+            "valeur": 12.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.018294
+          },
+          {
+            "dateEffet": "1952-07-01",
+            "valeur": 12.5,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.019056
+          },
+          {
+            "dateEffet": "1955-01-01",
+            "valeur": 13.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.019818
+          },
+          {
+            "dateEffet": "1956-01-01",
+            "valeur": 14.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.021343
+          },
+          {
+            "dateEffet": "1957-01-01",
+            "valeur": 15.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.022867
+          },
+          {
+            "dateEffet": "1958-01-01",
+            "valeur": 16.5,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.025154
+          },
+          {
+            "dateEffet": "1958-07-01",
+            "valeur": 18.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.027441
+          },
+          {
+            "dateEffet": "1959-01-01",
+            "valeur": 19.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.028965
+          },
+          {
+            "dateEffet": "1959-07-01",
+            "valeur": 20.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.03049
+          },
+          {
+            "dateEffet": "1960-01-01",
+            "valeur": 0.21,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.032014
+          },
+          {
+            "dateEffet": "1960-07-01",
+            "valeur": 0.22,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.033539
+          },
+          {
+            "dateEffet": "1961-01-01",
+            "valeur": 0.23,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.035063
+          },
+          {
+            "dateEffet": "1962-01-01",
+            "valeur": 0.25,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.038112
+          },
+          {
+            "dateEffet": "1962-07-01",
+            "valeur": 0.255,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.038874
+          },
+          {
+            "dateEffet": "1963-07-01",
+            "valeur": 0.27,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.041161
+          },
+          {
+            "dateEffet": "1964-07-01",
+            "valeur": 0.3,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.045735
+          },
+          {
+            "dateEffet": "1965-07-01",
+            "valeur": 0.315,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.048021
+          },
+          {
+            "dateEffet": "1966-01-01",
+            "valeur": 0.32,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.048784
+          },
+          {
+            "dateEffet": "1966-07-01",
+            "valeur": 0.325,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.049546
+          },
+          {
+            "dateEffet": "1967-07-01",
+            "valeur": 0.34,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.051833
+          },
+          {
+            "dateEffet": "1968-07-01",
+            "valeur": 0.365,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.055644
+          },
+          {
+            "dateEffet": "1969-01-01",
+            "valeur": 0.382,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.058236
+          },
+          {
+            "dateEffet": "1969-07-01",
+            "valeur": 0.405,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.061742
+          },
+          {
+            "dateEffet": "1970-07-01",
+            "valeur": 0.435,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.066315
+          },
+          {
+            "dateEffet": "1971-01-01",
+            "valeur": 0.45,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.068602
+          },
+          {
+            "dateEffet": "1971-07-01",
+            "valeur": 0.49,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.0747
+          },
+          {
+            "dateEffet": "1972-07-01",
+            "valeur": 0.545,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.083085
+          },
+          {
+            "dateEffet": "1973-01-01",
+            "valeur": 0.56,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.085371
+          },
+          {
+            "dateEffet": "1973-07-01",
+            "valeur": 0.6,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.091469
+          },
+          {
+            "dateEffet": "1974-01-01",
+            "valeur": 0.62,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.094518
+          },
+          {
+            "dateEffet": "1974-07-01",
+            "valeur": 0.675,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.102903
+          },
+          {
+            "dateEffet": "1975-01-01",
+            "valeur": 0.72,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.109763
+          },
+          {
+            "dateEffet": "1975-07-01",
+            "valeur": 0.756,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.115251
+          },
+          {
+            "dateEffet": "1976-01-01",
+            "valeur": 0.81,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.123484
+          },
+          {
+            "dateEffet": "1976-07-01",
+            "valeur": 0.85,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.129582
+          },
+          {
+            "dateEffet": "1977-01-01",
+            "valeur": 0.884,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.134765
+          },
+          {
+            "dateEffet": "1977-07-01",
+            "valeur": 0.91,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.138729
+          },
+          {
+            "dateEffet": "1978-01-01",
+            "valeur": 0.9524,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.145192
+          },
+          {
+            "dateEffet": "1978-07-01",
+            "valeur": 1.0,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.152449
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "valeur": 1.04,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.158547
+          },
+          {
+            "dateEffet": "1979-07-01",
+            "valeur": 1.094,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.166779
+          },
+          {
+            "dateEffet": "1980-01-01",
+            "valeur": 1.156,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.176231
+          },
+          {
+            "dateEffet": "1980-07-01",
+            "valeur": 1.22,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.185988
+          },
+          {
+            "dateEffet": "1981-01-01",
+            "valeur": 1.312,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.200013
+          },
+          {
+            "dateEffet": "1981-07-01",
+            "valeur": 1.378,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.210075
+          },
+          {
+            "dateEffet": "1982-01-01",
+            "valeur": 1.47,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.2241
+          },
+          {
+            "dateEffet": "1982-07-01",
+            "valeur": 1.52,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.231723
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "valeur": 1.57,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.239345
+          },
+          {
+            "dateEffet": "1983-07-01",
+            "valeur": 1.66,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.253065
+          },
+          {
+            "dateEffet": "1984-01-01",
+            "valeur": 1.72,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.262212
+          },
+          {
+            "dateEffet": "1984-07-01",
+            "valeur": 1.736,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.264651
+          },
+          {
+            "dateEffet": "1985-01-01",
+            "valeur": 1.79,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.272884
+          },
+          {
+            "dateEffet": "1985-07-01",
+            "valeur": 1.839,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.280354
+          },
+          {
+            "dateEffet": "1986-01-01",
+            "valeur": 1.867,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.284622
+          },
+          {
+            "dateEffet": "1986-07-01",
+            "valeur": 1.885,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.287366
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "valeur": 1.914,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.291787
+          },
+          {
+            "dateEffet": "1987-07-01",
+            "valeur": 1.928,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.293922
+          },
+          {
+            "dateEffet": "1988-01-01",
+            "valeur": 1.973,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.300782
+          },
+          {
+            "dateEffet": "1989-01-01",
+            "valeur": 2.019,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.307795
+          },
+          {
+            "dateEffet": "1989-07-01",
+            "valeur": 2.045,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.311758
+          },
+          {
+            "dateEffet": "1990-01-01",
+            "valeur": 2.093,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.319076
+          },
+          {
+            "dateEffet": "1991-01-01",
+            "valeur": 2.179,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.332186
+          },
+          {
+            "dateEffet": "1992-01-01",
+            "valeur": 2.242,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.341791
+          },
+          {
+            "dateEffet": "1993-01-01",
+            "valeur": 2.303,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.35109
+          },
+          {
+            "dateEffet": "1996-01-01",
+            "valeur": 2.3375,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.35635
+          },
+          {
+            "dateEffet": "1997-01-01",
+            "valeur": 2.3492,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.358133
+          },
+          {
+            "dateEffet": "1999-01-01",
+            "valeur": 2.3586,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.359566
+          },
+          {
+            "dateEffet": "2001-04-01",
+            "valeur": 2.4126,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.367798
+          },
+          {
+            "dateEffet": "2002-04-01",
+            "valeur": 0.3737,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.3737
+          },
+          {
+            "dateEffet": "2003-04-01",
+            "valeur": 0.3796,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.3796
+          },
+          {
+            "dateEffet": "2004-04-01",
+            "valeur": 0.3862,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.3862
+          },
+          {
+            "dateEffet": "2005-04-01",
+            "valeur": 0.394,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.394
+          },
+          {
+            "dateEffet": "2006-04-01",
+            "valeur": 0.4005,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4005
+          },
+          {
+            "dateEffet": "2007-04-01",
+            "valeur": 0.4073,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4073
+          },
+          {
+            "dateEffet": "2008-04-01",
+            "valeur": 0.4132,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4132
+          },
+          {
+            "dateEffet": "2009-04-01",
+            "valeur": 0.4186,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4186
+          },
+          {
+            "dateEffet": "2010-04-01",
+            "valeur": 0.4216,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4216
+          },
+          {
+            "dateEffet": "2011-04-01",
+            "valeur": 0.4233,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4233
+          },
+          {
+            "dateEffet": "2012-04-01",
+            "valeur": 0.433,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.433
+          },
+          {
+            "dateEffet": "2013-04-01",
+            "valeur": 0.4352,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4352
+          },
+          {
+            "dateEffet": "2018-11-01",
+            "valeur": 0.4378,
+            "monnaie": "euros",
+            "valeurEnEuros": 0.4378
+          }
+        ],
+        "source": "Baremes IPP - Valeur du point AGIRC (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.agirc.point/table",
+        "dateConsultation": "2026-11-21"
+      }
+    },
+    "source": "Agirc-Arrco (2019+) ; baremes IPP (avant 2019, secondaire)",
+    "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-de-service-du-point-agirc-arrco.html",
+    "dateConsultation": "2026-11-21"
+  },
+  "prixAchatDuPoint": {
+    "valeurs": {
+      "agircArrco": {
+        "monnaie": "euros",
+        "note": "Aussi appele salaire de reference ou valeur d'achat. Applicable du 1er janvier au 31 decembre de l'exercice.",
+        "serie": [
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 17.0571
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 17.3982
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 17.3982
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 17.4316
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 18.7669
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 19.6321
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 20.1877
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 20.1877
+          },
+          {
+            "annee": 2027,
+            "dateEffet": "2027-01-01",
+            "valeur": null,
+            "note": "Non publie sur la page officielle a la date de consultation."
+          }
+        ],
+        "source": "Agirc-Arrco, reglementation, bareme 'Valeur d'achat du point Agirc-Arrco' ; circulaire 2025-16-SG-DRJ",
+        "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-d-achat-du-point-agirc-arrco.html",
+        "dateConsultation": "2026-11-21"
+      },
+      "arrco": {
+        "periode": "1999-2018",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas d'evolution en 2015.",
+        "serie": [
+          {
+            "dateEffet": "1999-01-01",
+            "valeur": 71.8534,
+            "monnaie": "francs",
+            "valeurEnEuros": 10.954
+          },
+          {
+            "dateEffet": "2000-01-01",
+            "valeur": 75.6616,
+            "monnaie": "francs",
+            "valeurEnEuros": 11.5345
+          },
+          {
+            "dateEffet": "2001-01-01",
+            "valeur": 11.7076,
+            "monnaie": "euros",
+            "valeurEnEuros": 11.7076
+          },
+          {
+            "dateEffet": "2002-01-01",
+            "valeur": 11.8949,
+            "monnaie": "euros",
+            "valeurEnEuros": 11.8949
+          },
+          {
+            "dateEffet": "2003-01-01",
+            "valeur": 12.0852,
+            "monnaie": "euros",
+            "valeurEnEuros": 12.0852
+          },
+          {
+            "dateEffet": "2004-01-01",
+            "valeur": 12.3632,
+            "monnaie": "euros",
+            "valeurEnEuros": 12.3632
+          },
+          {
+            "dateEffet": "2005-01-01",
+            "valeur": 12.66,
+            "monnaie": "euros",
+            "valeurEnEuros": 12.66
+          },
+          {
+            "dateEffet": "2006-01-01",
+            "valeur": 13.0271,
+            "monnaie": "euros",
+            "valeurEnEuros": 13.0271
+          },
+          {
+            "dateEffet": "2007-01-01",
+            "valeur": 13.5091,
+            "monnaie": "euros",
+            "valeurEnEuros": 13.5091
+          },
+          {
+            "dateEffet": "2008-01-01",
+            "valeur": 13.9684,
+            "monnaie": "euros",
+            "valeurEnEuros": 13.9684
+          },
+          {
+            "dateEffet": "2009-01-01",
+            "valeur": 14.2198,
+            "monnaie": "euros",
+            "valeurEnEuros": 14.2198
+          },
+          {
+            "dateEffet": "2010-01-01",
+            "valeur": 14.4047,
+            "monnaie": "euros",
+            "valeurEnEuros": 14.4047
+          },
+          {
+            "dateEffet": "2011-01-01",
+            "valeur": 14.7216,
+            "monnaie": "euros",
+            "valeurEnEuros": 14.7216
+          },
+          {
+            "dateEffet": "2012-01-01",
+            "valeur": 15.0528,
+            "monnaie": "euros",
+            "valeurEnEuros": 15.0528
+          },
+          {
+            "dateEffet": "2013-01-01",
+            "valeur": 15.2284,
+            "monnaie": "euros",
+            "valeurEnEuros": 15.2284
+          },
+          {
+            "dateEffet": "2014-01-01",
+            "valeur": 15.2589,
+            "monnaie": "euros",
+            "valeurEnEuros": 15.2589
+          },
+          {
+            "dateEffet": "2016-01-01",
+            "valeur": 15.6556,
+            "monnaie": "euros",
+            "valeurEnEuros": 15.6556
+          },
+          {
+            "dateEffet": "2017-01-01",
+            "valeur": 16.1879,
+            "monnaie": "euros",
+            "valeurEnEuros": 16.1879
+          },
+          {
+            "dateEffet": "2018-01-01",
+            "valeur": 16.7226,
+            "monnaie": "euros",
+            "valeurEnEuros": 16.7226
+          }
+        ],
+        "source": "Baremes IPP - Salaire de reference ARRCO (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.arrco.salaire_de_reference/table",
+        "dateConsultation": "2026-11-21"
+      },
+      "arrcoUnirsAvant1999": {
+        "periode": "1949-1998",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Salaire de reference UNIRS uniquement.",
+        "serie": [
+          {
+            "dateEffet": "1949-01-01",
+            "valeur": 0.415,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1950-01-01",
+            "valeur": 0.51,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1951-01-01",
+            "valeur": 0.635,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1952-01-01",
+            "valeur": 0.745,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1953-01-01",
+            "valeur": 0.755,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1954-01-01",
+            "valeur": 0.825,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1955-01-01",
+            "valeur": 0.925,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1956-01-01",
+            "valeur": 0.99,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1957-01-01",
+            "valeur": 1.065,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": null,
+            "note": "Contre-valeur en euros de la source IPP incoherente avant 1958 : non reprise."
+          },
+          {
+            "dateEffet": "1958-01-01",
+            "valeur": 1.2,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": 0.182939
+          },
+          {
+            "dateEffet": "1959-01-01",
+            "valeur": 1.27,
+            "monnaie": "francs (unite incertaine avant 1960 dans la source)",
+            "valeurEnEuros": 0.19361
+          },
+          {
+            "dateEffet": "1960-01-01",
+            "valeur": 1.38,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.21038
+          },
+          {
+            "dateEffet": "1961-01-01",
+            "valeur": 1.49,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.227149
+          },
+          {
+            "dateEffet": "1962-01-01",
+            "valeur": 1.63,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.248492
+          },
+          {
+            "dateEffet": "1963-01-01",
+            "valeur": 1.78,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.271359
+          },
+          {
+            "dateEffet": "1964-01-01",
+            "valeur": 1.89,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.288129
+          },
+          {
+            "dateEffet": "1965-01-01",
+            "valeur": 1.99,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.303374
+          },
+          {
+            "dateEffet": "1966-01-01",
+            "valeur": 2.12,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.323192
+          },
+          {
+            "dateEffet": "1967-01-01",
+            "valeur": 2.21,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.336912
+          },
+          {
+            "dateEffet": "1968-01-01",
+            "valeur": 2.45,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3735
+          },
+          {
+            "dateEffet": "1969-01-01",
+            "valeur": 2.68,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.408563
+          },
+          {
+            "dateEffet": "1970-01-01",
+            "valeur": 2.91,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.443627
+          },
+          {
+            "dateEffet": "1971-01-01",
+            "valeur": 3.22,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.490886
+          },
+          {
+            "dateEffet": "1972-01-01",
+            "valeur": 3.58,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.545767
+          },
+          {
+            "dateEffet": "1973-01-01",
+            "valeur": 4.06,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.618943
+          },
+          {
+            "dateEffet": "1974-01-01",
+            "valeur": 4.66,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.710412
+          },
+          {
+            "dateEffet": "1975-01-01",
+            "valeur": 5.23,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.797308
+          },
+          {
+            "dateEffet": "1976-01-01",
+            "valeur": 6.02,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.917743
+          },
+          {
+            "dateEffet": "1977-01-01",
+            "valeur": 6.67,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.016835
+          },
+          {
+            "dateEffet": "1978-01-01",
+            "valeur": 7.48,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.140319
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "valeur": 8.41,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.282096
+          },
+          {
+            "dateEffet": "1980-01-01",
+            "valeur": 9.62,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.46656
+          },
+          {
+            "dateEffet": "1981-01-01",
+            "valeur": 10.83,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.651023
+          },
+          {
+            "dateEffet": "1982-01-01",
+            "valeur": 12.23,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.864451
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "valeur": 13.46,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.051964
+          },
+          {
+            "dateEffet": "1984-01-01",
+            "valeur": 14.36,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.189168
+          },
+          {
+            "dateEffet": "1985-01-01",
+            "valeur": 15.44,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.353813
+          },
+          {
+            "dateEffet": "1986-01-01",
+            "valeur": 16.17,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.465101
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "valeur": 16.86,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.57029
+          },
+          {
+            "dateEffet": "1988-01-01",
+            "valeur": 17.58,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.680054
+          },
+          {
+            "dateEffet": "1989-01-01",
+            "valeur": 18.41,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.806586
+          },
+          {
+            "dateEffet": "1990-01-01",
+            "valeur": 19.31,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.943791
+          },
+          {
+            "dateEffet": "1991-01-01",
+            "valeur": 20.17,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.074897
+          },
+          {
+            "dateEffet": "1992-01-01",
+            "valeur": 20.965,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.196094
+          },
+          {
+            "dateEffet": "1993-01-01",
+            "valeur": 21.678,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.30479
+          },
+          {
+            "dateEffet": "1994-01-01",
+            "valeur": 22.025,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.35769
+          },
+          {
+            "dateEffet": "1995-01-01",
+            "valeur": 22.4,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.414858
+          },
+          {
+            "dateEffet": "1996-01-01",
+            "valeur": 23.677,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.609535
+          },
+          {
+            "dateEffet": "1997-01-01",
+            "valeur": 25.027,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.815342
+          },
+          {
+            "dateEffet": "1998-01-01",
+            "valeur": 26.429,
+            "monnaie": "francs",
+            "valeurEnEuros": 4.029075
+          }
+        ],
+        "source": "Baremes IPP - Salaire de reference ARRCO, UNIRS (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.unirs.salaire_de_reference/table",
+        "dateConsultation": "2026-11-21"
+      },
+      "agirc": {
+        "periode": "1947-2018",
+        "note": "Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404). Pas d'evolution en 2015.",
+        "serie": [
+          {
+            "dateEffet": "1947-04-01",
+            "valeur": 26.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.0396
+          },
+          {
+            "dateEffet": "1948-01-01",
+            "valeur": 37.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.0564
+          },
+          {
+            "dateEffet": "1949-01-01",
+            "valeur": 42.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.064
+          },
+          {
+            "dateEffet": "1950-01-01",
+            "valeur": 52.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.0793
+          },
+          {
+            "dateEffet": "1951-01-01",
+            "valeur": 63.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.096
+          },
+          {
+            "dateEffet": "1952-01-01",
+            "valeur": 76.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1159
+          },
+          {
+            "dateEffet": "1953-01-01",
+            "valeur": 78.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1189
+          },
+          {
+            "dateEffet": "1954-01-01",
+            "valeur": 87.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1326
+          },
+          {
+            "dateEffet": "1955-01-01",
+            "valeur": 98.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1494
+          },
+          {
+            "dateEffet": "1956-01-01",
+            "valeur": 107.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1631
+          },
+          {
+            "dateEffet": "1957-01-01",
+            "valeur": 116.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1768
+          },
+          {
+            "dateEffet": "1958-01-01",
+            "valeur": 130.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.1982
+          },
+          {
+            "dateEffet": "1959-01-01",
+            "valeur": 142.0,
+            "monnaie": "anciens francs",
+            "valeurEnEuros": 0.2165
+          },
+          {
+            "dateEffet": "1960-01-01",
+            "valeur": 1.52,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.2317
+          },
+          {
+            "dateEffet": "1961-01-01",
+            "valeur": 1.69,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.2576
+          },
+          {
+            "dateEffet": "1962-01-01",
+            "valeur": 1.86,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.2836
+          },
+          {
+            "dateEffet": "1963-01-01",
+            "valeur": 1.99,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3034
+          },
+          {
+            "dateEffet": "1964-01-01",
+            "valeur": 2.17,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3308
+          },
+          {
+            "dateEffet": "1965-01-01",
+            "valeur": 2.28,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3476
+          },
+          {
+            "dateEffet": "1966-01-01",
+            "valeur": 2.41,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3674
+          },
+          {
+            "dateEffet": "1967-01-01",
+            "valeur": 2.55,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.3887
+          },
+          {
+            "dateEffet": "1968-01-01",
+            "valeur": 2.77,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.4223
+          },
+          {
+            "dateEffet": "1969-01-01",
+            "valeur": 3.0,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.4573
+          },
+          {
+            "dateEffet": "1970-01-01",
+            "valeur": 3.26,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.497
+          },
+          {
+            "dateEffet": "1971-01-01",
+            "valeur": 3.55,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.5412
+          },
+          {
+            "dateEffet": "1972-01-01",
+            "valeur": 3.88,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.5915
+          },
+          {
+            "dateEffet": "1973-01-01",
+            "valeur": 4.25,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.6479
+          },
+          {
+            "dateEffet": "1974-01-01",
+            "valeur": 4.81,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.7333
+          },
+          {
+            "dateEffet": "1975-01-01",
+            "valeur": 5.54,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.8446
+          },
+          {
+            "dateEffet": "1976-01-01",
+            "valeur": 6.12,
+            "monnaie": "francs",
+            "valeurEnEuros": 0.933
+          },
+          {
+            "dateEffet": "1977-01-01",
+            "valeur": 6.74,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.0275
+          },
+          {
+            "dateEffet": "1978-01-01",
+            "valeur": 7.42,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.1312
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "valeur": 8.29,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.2638
+          },
+          {
+            "dateEffet": "1980-01-01",
+            "valeur": 9.42,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.4361
+          },
+          {
+            "dateEffet": "1981-01-01",
+            "valeur": 10.6,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.616
+          },
+          {
+            "dateEffet": "1982-01-01",
+            "valeur": 11.78,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.7958
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "valeur": 13.07,
+            "monnaie": "francs",
+            "valeurEnEuros": 1.9925
+          },
+          {
+            "dateEffet": "1984-01-01",
+            "valeur": 13.88,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.116
+          },
+          {
+            "dateEffet": "1985-01-01",
+            "valeur": 14.82,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.2593
+          },
+          {
+            "dateEffet": "1986-01-01",
+            "valeur": 15.6,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.3782
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "valeur": 16.02,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.4422
+          },
+          {
+            "dateEffet": "1988-01-01",
+            "valeur": 16.68,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.5428
+          },
+          {
+            "dateEffet": "1989-01-01",
+            "valeur": 17.41,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.6541
+          },
+          {
+            "dateEffet": "1990-01-01",
+            "valeur": 18.21,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.7761
+          },
+          {
+            "dateEffet": "1991-01-01",
+            "valeur": 18.8,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.866
+          },
+          {
+            "dateEffet": "1992-01-01",
+            "valeur": 19.23,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.9316
+          },
+          {
+            "dateEffet": "1993-01-01",
+            "valeur": 19.28,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.9392
+          },
+          {
+            "dateEffet": "1994-01-01",
+            "valeur": 19.52,
+            "monnaie": "francs",
+            "valeurEnEuros": 2.9758
+          },
+          {
+            "dateEffet": "1995-01-01",
+            "valeur": 20.03,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.0536
+          },
+          {
+            "dateEffet": "1996-01-01",
+            "valeur": 21.16,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.2258
+          },
+          {
+            "dateEffet": "1997-01-01",
+            "valeur": 22.26,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.3935
+          },
+          {
+            "dateEffet": "1998-01-01",
+            "valeur": 23.1,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.5216
+          },
+          {
+            "dateEffet": "1999-01-01",
+            "valeur": 24.69,
+            "monnaie": "francs",
+            "valeurEnEuros": 3.764
+          },
+          {
+            "dateEffet": "2000-01-01",
+            "valeur": 26.39,
+            "monnaie": "francs",
+            "valeurEnEuros": 4.0231
+          },
+          {
+            "dateEffet": "2001-01-01",
+            "valeur": 26.79,
+            "monnaie": "francs",
+            "valeurEnEuros": 4.0841
+          },
+          {
+            "dateEffet": "2002-01-01",
+            "valeur": 4.1494,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.1494
+          },
+          {
+            "dateEffet": "2003-01-01",
+            "valeur": 4.2158,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.2158
+          },
+          {
+            "dateEffet": "2004-04-01",
+            "valeur": 4.3128,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.3128
+          },
+          {
+            "dateEffet": "2005-04-01",
+            "valeur": 4.4163,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.4163
+          },
+          {
+            "dateEffet": "2006-04-01",
+            "valeur": 4.5444,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.5444
+          },
+          {
+            "dateEffet": "2007-04-01",
+            "valeur": 4.7125,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.7125,
+            "note": "Valeur nominale IPP incoherente (47125.0) : valeur en euros retenue."
+          },
+          {
+            "dateEffet": "2008-04-01",
+            "valeur": 4.8727,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.8727
+          },
+          {
+            "dateEffet": "2009-04-01",
+            "valeur": 4.9604,
+            "monnaie": "euros",
+            "valeurEnEuros": 4.9604
+          },
+          {
+            "dateEffet": "2010-04-01",
+            "valeur": 5.0249,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.0249
+          },
+          {
+            "dateEffet": "2011-04-01",
+            "valeur": 5.1354,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.1354
+          },
+          {
+            "dateEffet": "2012-04-01",
+            "valeur": 5.2509,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.2509
+          },
+          {
+            "dateEffet": "2013-04-01",
+            "valeur": 5.3006,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.3006
+          },
+          {
+            "dateEffet": "2014-04-01",
+            "valeur": 5.3075,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.3075
+          },
+          {
+            "dateEffet": "2016-01-01",
+            "valeur": 5.4455,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.4455
+          },
+          {
+            "dateEffet": "2017-01-01",
+            "valeur": 5.6306,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.6306
+          },
+          {
+            "dateEffet": "2018-01-01",
+            "valeur": 5.8166,
+            "monnaie": "euros",
+            "valeurEnEuros": 5.8166
+          }
+        ],
+        "source": "Baremes IPP - Salaire de reference AGIRC (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_prive.regimes_complementaires.agirc.salaire_de_reference/table",
+        "dateConsultation": "2026-11-21"
+      }
+    },
+    "source": "Agirc-Arrco (2019+) ; baremes IPP (avant 2019, secondaire)",
+    "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-d-achat-du-point-agirc-arrco.html",
+    "dateConsultation": "2026-11-21"
+  },
+  "tauxCotisation": {
+    "valeurs": {
+      "formulePoints": "points = (remuneration de la tranche x taux de calcul des points) / prix d'achat du point. La difference entre taux de cotisation et taux de calcul des points ne donne pas de points (service-public F15396).",
+      "agircArrcoDepuis2019": {
+        "periode": "depuis le 2019-01-01 (tableau officiel lu pour 2026 ; constance 2019-2025 selon IPP, secondaire)",
+        "pourcentageAppel": 127,
+        "tranches": [
+          {
+            "tranche": "tranche1",
+            "assiette": "de 0 a 1 PASS",
+            "tauxContractuelEnPourcent": 6.2,
+            "tauxContractuelPartEmployeur": 3.72,
+            "tauxContractuelPartSalarie": 2.48,
+            "tauxAppeleEnPourcent": 7.87,
+            "tauxAppelePartEmployeur": 4.72,
+            "tauxAppelePartSalarie": 3.15
+          },
+          {
+            "tranche": "tranche2",
+            "assiette": "de 1 a 8 PASS",
+            "tauxContractuelEnPourcent": 17.0,
+            "tauxContractuelPartEmployeur": 10.2,
+            "tauxContractuelPartSalarie": 6.8,
+            "tauxAppeleEnPourcent": 21.59,
+            "tauxAppelePartEmployeur": 12.95,
+            "tauxAppelePartSalarie": 8.64
+          }
+        ],
+        "repartition": "60 % employeur / 40 % salarie, sauf dispositions particulieres applicables dans l'entreprise",
+        "plafonds2026": {
+          "passAnnuel": 48060,
+          "passMensuel": 4005,
+          "huitPassAnnuel": 384480
+        },
+        "note": "Plus de distinction cadres / non-cadres depuis 2019. Taux 'sauf obligation nee anterieurement au 2 janvier 1993'.",
+        "source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ du 30/10/2025 (Parametres 2026)",
+        "url": "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf",
+        "dateConsultation": "2026-11-21"
+      },
+      "arrcoAvant2019": {
+        "periode": "1962-2018",
+        "population": "non-cadres : tranche 1 (jusqu'a 1 PASS) et tranche 2 (de 1 a 3 PASS) ; cadres : tranche A seulement (jusqu'a 1 PASS), meme taux que la tranche 1",
+        "pourcentageAppel": [
+          {
+            "dateEffet": "1962-01-01",
+            "pourcentageAppel": 100.0
+          },
+          {
+            "dateEffet": "1971-01-01",
+            "pourcentageAppel": 102.5
+          },
+          {
+            "dateEffet": "1972-01-01",
+            "pourcentageAppel": 105.0
+          },
+          {
+            "dateEffet": "1973-01-01",
+            "pourcentageAppel": 107.5
+          },
+          {
+            "dateEffet": "1974-01-01",
+            "pourcentageAppel": 110.0
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "pourcentageAppel": 115.0
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "pourcentageAppel": 117.5
+          },
+          {
+            "dateEffet": "1988-01-01",
+            "pourcentageAppel": 120.0
+          },
+          {
+            "dateEffet": "1991-01-01",
+            "pourcentageAppel": 123.0
+          },
+          {
+            "dateEffet": "1992-01-01",
+            "pourcentageAppel": 125.0
+          }
+        ],
+        "tauxContractuelTranche1ouA": [
+          {
+            "dateEffet": "1962-01-01",
+            "tauxEnPourcent": 2.5
+          },
+          {
+            "dateEffet": "1967-01-01",
+            "tauxEnPourcent": 4.0
+          },
+          {
+            "dateEffet": "1996-01-01",
+            "tauxEnPourcent": 4.5
+          },
+          {
+            "dateEffet": "1997-01-01",
+            "tauxEnPourcent": 5.0
+          },
+          {
+            "dateEffet": "1998-01-01",
+            "tauxEnPourcent": 5.5
+          },
+          {
+            "dateEffet": "1999-01-01",
+            "tauxEnPourcent": 6.0
+          },
+          {
+            "dateEffet": "2014-01-01",
+            "tauxEnPourcent": 6.1
+          },
+          {
+            "dateEffet": "2015-01-01",
+            "tauxEnPourcent": 6.2
+          }
+        ],
+        "tauxContractuelTranche2NonCadres": {
+          "entreprisesCreeesAvant1997": [
+            {
+              "dateEffet": "1962-01-01",
+              "tauxEnPourcent": 2.5
+            },
+            {
+              "dateEffet": "1967-01-01",
+              "tauxEnPourcent": 4.0
+            },
+            {
+              "dateEffet": "1996-01-01",
+              "tauxEnPourcent": 4.5
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 5.0
+            },
+            {
+              "dateEffet": "1998-01-01",
+              "tauxEnPourcent": 5.5
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 6.0
+            },
+            {
+              "dateEffet": "2000-01-01",
+              "tauxEnPourcent": 10.0
+            },
+            {
+              "dateEffet": "2002-01-01",
+              "tauxEnPourcent": 12.0
+            },
+            {
+              "dateEffet": "2004-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "2005-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.1
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.2
+            }
+          ],
+          "entreprisesCreeesDepuis1997": [
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 15.0
+            },
+            {
+              "dateEffet": "2000-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.1
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.2
+            }
+          ]
+        },
+        "tauxAppeleRepartition": {
+          "tranche1ouA": {
+            "salarie": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": 1.0
+              },
+              {
+                "dateEffet": "1967-01-01",
+                "tauxEnPourcent": 1.6
+              },
+              {
+                "dateEffet": "1971-01-01",
+                "tauxEnPourcent": 1.64
+              },
+              {
+                "dateEffet": "1972-01-01",
+                "tauxEnPourcent": 1.68
+              },
+              {
+                "dateEffet": "1973-01-01",
+                "tauxEnPourcent": 1.72
+              },
+              {
+                "dateEffet": "1974-01-01",
+                "tauxEnPourcent": 1.76
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 1.84
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 1.88
+              },
+              {
+                "dateEffet": "1988-01-01",
+                "tauxEnPourcent": 1.92
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 1.968
+              },
+              {
+                "dateEffet": "1992-01-01",
+                "tauxEnPourcent": 2.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 2.25
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 2.5
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 2.75
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 3.0
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 3.05
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 3.1
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": 1.5
+              },
+              {
+                "dateEffet": "1967-01-01",
+                "tauxEnPourcent": 2.4
+              },
+              {
+                "dateEffet": "1971-01-01",
+                "tauxEnPourcent": 2.46
+              },
+              {
+                "dateEffet": "1972-01-01",
+                "tauxEnPourcent": 2.52
+              },
+              {
+                "dateEffet": "1973-01-01",
+                "tauxEnPourcent": 2.58
+              },
+              {
+                "dateEffet": "1974-01-01",
+                "tauxEnPourcent": 2.64
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 2.76
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 2.82
+              },
+              {
+                "dateEffet": "1988-01-01",
+                "tauxEnPourcent": 2.88
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 2.952
+              },
+              {
+                "dateEffet": "1992-01-01",
+                "tauxEnPourcent": 3.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 3.375
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 3.75
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 4.125
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 4.5
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 4.575
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 4.65
+              }
+            ]
+          },
+          "tranche2NonCadresEntreprisesAvant1997": {
+            "salarie": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": 1.0
+              },
+              {
+                "dateEffet": "1967-01-01",
+                "tauxEnPourcent": 1.6
+              },
+              {
+                "dateEffet": "1971-01-01",
+                "tauxEnPourcent": 1.64
+              },
+              {
+                "dateEffet": "1972-01-01",
+                "tauxEnPourcent": 1.68
+              },
+              {
+                "dateEffet": "1973-01-01",
+                "tauxEnPourcent": 1.72
+              },
+              {
+                "dateEffet": "1974-01-01",
+                "tauxEnPourcent": 1.76
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 1.84
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 1.88
+              },
+              {
+                "dateEffet": "1988-01-01",
+                "tauxEnPourcent": 1.92
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 1.968
+              },
+              {
+                "dateEffet": "1992-01-01",
+                "tauxEnPourcent": 2.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 2.25
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 2.5
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 2.75
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 3.0
+              },
+              {
+                "dateEffet": "2000-01-01",
+                "tauxEnPourcent": 5.0
+              },
+              {
+                "dateEffet": "2002-01-01",
+                "tauxEnPourcent": 6.0
+              },
+              {
+                "dateEffet": "2004-01-01",
+                "tauxEnPourcent": 7.0
+              },
+              {
+                "dateEffet": "2005-01-01",
+                "tauxEnPourcent": 8.0
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 8.05
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 8.1
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": 1.5
+              },
+              {
+                "dateEffet": "1967-01-01",
+                "tauxEnPourcent": 2.4
+              },
+              {
+                "dateEffet": "1971-01-01",
+                "tauxEnPourcent": 2.46
+              },
+              {
+                "dateEffet": "1972-01-01",
+                "tauxEnPourcent": 2.52
+              },
+              {
+                "dateEffet": "1973-01-01",
+                "tauxEnPourcent": 2.58
+              },
+              {
+                "dateEffet": "1974-01-01",
+                "tauxEnPourcent": 2.64
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 2.76
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 2.82
+              },
+              {
+                "dateEffet": "1988-01-01",
+                "tauxEnPourcent": 2.88
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 2.952
+              },
+              {
+                "dateEffet": "1992-01-01",
+                "tauxEnPourcent": 3.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 3.375
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 3.75
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 4.125
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 4.5
+              },
+              {
+                "dateEffet": "2000-01-01",
+                "tauxEnPourcent": 7.5
+              },
+              {
+                "dateEffet": "2002-01-01",
+                "tauxEnPourcent": 9.0
+              },
+              {
+                "dateEffet": "2004-01-01",
+                "tauxEnPourcent": 10.5
+              },
+              {
+                "dateEffet": "2005-01-01",
+                "tauxEnPourcent": 12.0
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 12.075
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 12.15
+              }
+            ]
+          },
+          "tranche2NonCadresEntreprisesDepuis1997": {
+            "salarie": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": null
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 7.0
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 7.5
+              },
+              {
+                "dateEffet": "2000-01-01",
+                "tauxEnPourcent": 8.0
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 8.05
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 8.1
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1962-01-01",
+                "tauxEnPourcent": null
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 10.5
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 11.25
+              },
+              {
+                "dateEffet": "2000-01-01",
+                "tauxEnPourcent": 12.0
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 12.075
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 12.15
+              }
+            ]
+          }
+        },
+        "note": "Taux minimaux obligatoires ; repartition 'le plus souvent 60/40 comme a l'UNIRS' (note IPP). Au-dela de 3 PASS : pas de cotisation Arrco. Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404).",
+        "source": "Baremes IPP - cotisations ARRCO (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/",
+        "dateConsultation": "2026-11-21"
+      },
+      "agircAvant2019": {
+        "periode": "1948-2018",
+        "population": "cadres uniquement : tranche B (de 1 a 4 PASS) et tranche C (de 4 a 8 PASS, a partir de 1991 dans la source)",
+        "pourcentageAppel": [
+          {
+            "dateEffet": "1948-01-01",
+            "pourcentageAppel": 100.0
+          },
+          {
+            "dateEffet": "1952-01-01",
+            "pourcentageAppel": 78.0
+          },
+          {
+            "dateEffet": "1953-01-01",
+            "pourcentageAppel": 80.0
+          },
+          {
+            "dateEffet": "1955-01-01",
+            "pourcentageAppel": 85.0
+          },
+          {
+            "dateEffet": "1961-01-01",
+            "pourcentageAppel": 90.0
+          },
+          {
+            "dateEffet": "1965-01-01",
+            "pourcentageAppel": 95.0
+          },
+          {
+            "dateEffet": "1966-01-01",
+            "pourcentageAppel": 100.0
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "pourcentageAppel": 103.0
+          },
+          {
+            "dateEffet": "1986-01-01",
+            "pourcentageAppel": 106.0
+          },
+          {
+            "dateEffet": "1987-01-01",
+            "pourcentageAppel": 110.0
+          },
+          {
+            "dateEffet": "1989-01-01",
+            "pourcentageAppel": 113.4
+          },
+          {
+            "dateEffet": "1990-01-01",
+            "pourcentageAppel": 117.0
+          },
+          {
+            "dateEffet": "1994-01-01",
+            "pourcentageAppel": 121.0
+          },
+          {
+            "dateEffet": "1995-01-01",
+            "pourcentageAppel": 125.0
+          }
+        ],
+        "tauxContractuelTrancheB": {
+          "entreprisesCreeesAvant1981": [
+            {
+              "dateEffet": "1948-01-01",
+              "tauxEnPourcent": 8.0
+            },
+            {
+              "dateEffet": "1994-01-01",
+              "tauxEnPourcent": 10.0
+            },
+            {
+              "dateEffet": "1995-01-01",
+              "tauxEnPourcent": 12.0
+            },
+            {
+              "dateEffet": "1996-01-01",
+              "tauxEnPourcent": 13.0
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "1998-01-01",
+              "tauxEnPourcent": 15.0
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2006-01-01",
+              "tauxEnPourcent": 16.24
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.34
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.44
+            }
+          ],
+          "entreprisesCreeesDepuis1981": [
+            {
+              "dateEffet": "1948-01-01",
+              "tauxEnPourcent": null
+            },
+            {
+              "dateEffet": "1981-01-01",
+              "tauxEnPourcent": 8.0
+            },
+            {
+              "dateEffet": "1983-01-01",
+              "tauxEnPourcent": 12.0
+            },
+            {
+              "dateEffet": "1996-01-01",
+              "tauxEnPourcent": 13.0
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "1998-01-01",
+              "tauxEnPourcent": 15.0
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2006-01-01",
+              "tauxEnPourcent": 16.24
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.34
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.44
+            }
+          ]
+        },
+        "tauxContractuelTrancheC": {
+          "entreprisesCreeesAvant1981": [
+            {
+              "dateEffet": "1948-01-01",
+              "tauxEnPourcent": null
+            },
+            {
+              "dateEffet": "1991-01-01",
+              "tauxEnPourcent": 8.0
+            },
+            {
+              "dateEffet": "1994-01-01",
+              "tauxEnPourcent": 10.0
+            },
+            {
+              "dateEffet": "1995-01-01",
+              "tauxEnPourcent": 12.0
+            },
+            {
+              "dateEffet": "1996-01-01",
+              "tauxEnPourcent": 13.0
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "1998-01-01",
+              "tauxEnPourcent": 15.0
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2006-01-01",
+              "tauxEnPourcent": 16.24
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.34
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.44
+            }
+          ],
+          "entreprisesCreeesDepuis1981": [
+            {
+              "dateEffet": "1948-01-01",
+              "tauxEnPourcent": null
+            },
+            {
+              "dateEffet": "1991-01-01",
+              "tauxEnPourcent": 8.0
+            },
+            {
+              "dateEffet": "1994-01-01",
+              "tauxEnPourcent": 12.0
+            },
+            {
+              "dateEffet": "1996-01-01",
+              "tauxEnPourcent": 13.0
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "tauxEnPourcent": 14.0
+            },
+            {
+              "dateEffet": "1998-01-01",
+              "tauxEnPourcent": 15.0
+            },
+            {
+              "dateEffet": "1999-01-01",
+              "tauxEnPourcent": 16.0
+            },
+            {
+              "dateEffet": "2006-01-01",
+              "tauxEnPourcent": 16.24
+            },
+            {
+              "dateEffet": "2014-01-01",
+              "tauxEnPourcent": 16.34
+            },
+            {
+              "dateEffet": "2015-01-01",
+              "tauxEnPourcent": 16.44
+            }
+          ]
+        },
+        "tauxAppeleRepartition": {
+          "trancheBEntreprisesAvant1981": {
+            "salarie": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": 2.0
+              },
+              {
+                "dateEffet": "1952-01-01",
+                "tauxEnPourcent": 1.56
+              },
+              {
+                "dateEffet": "1953-01-01",
+                "tauxEnPourcent": 1.56
+              },
+              {
+                "dateEffet": "1955-01-01",
+                "tauxEnPourcent": 1.7
+              },
+              {
+                "dateEffet": "1961-01-01",
+                "tauxEnPourcent": 1.8
+              },
+              {
+                "dateEffet": "1965-01-01",
+                "tauxEnPourcent": 1.9
+              },
+              {
+                "dateEffet": "1966-01-01",
+                "tauxEnPourcent": 2.0
+              },
+              {
+                "dateEffet": "1979-01-01",
+                "tauxEnPourcent": 2.06
+              },
+              {
+                "dateEffet": "1986-01-01",
+                "tauxEnPourcent": 2.12
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 2.2
+              },
+              {
+                "dateEffet": "1990-01-01",
+                "tauxEnPourcent": 2.34
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 3.63
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 5.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 5.625
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 6.25
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 6.875
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 7.5
+              },
+              {
+                "dateEffet": "2006-01-01",
+                "tauxEnPourcent": 7.7
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 7.75
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 7.8
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": 6.0
+              },
+              {
+                "dateEffet": "1952-01-01",
+                "tauxEnPourcent": 4.68
+              },
+              {
+                "dateEffet": "1953-01-01",
+                "tauxEnPourcent": 4.8
+              },
+              {
+                "dateEffet": "1955-01-01",
+                "tauxEnPourcent": 5.1
+              },
+              {
+                "dateEffet": "1961-01-01",
+                "tauxEnPourcent": 5.4
+              },
+              {
+                "dateEffet": "1965-01-01",
+                "tauxEnPourcent": 5.7
+              },
+              {
+                "dateEffet": "1966-01-01",
+                "tauxEnPourcent": 6.0
+              },
+              {
+                "dateEffet": "1979-01-01",
+                "tauxEnPourcent": 6.18
+              },
+              {
+                "dateEffet": "1986-01-01",
+                "tauxEnPourcent": 6.36
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 6.6
+              },
+              {
+                "dateEffet": "1989-01-01",
+                "tauxEnPourcent": 6.804
+              },
+              {
+                "dateEffet": "1990-01-01",
+                "tauxEnPourcent": 7.02
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 8.43
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 10.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 10.625
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 11.25
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 11.875
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 12.5
+              },
+              {
+                "dateEffet": "2006-01-01",
+                "tauxEnPourcent": 12.6
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 12.68
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 12.75
+              }
+            ]
+          },
+          "trancheBEntreprisesDepuis1981": {
+            "salarie": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": null
+              },
+              {
+                "dateEffet": "1981-01-01",
+                "tauxEnPourcent": 2.06
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 4.12
+              },
+              {
+                "dateEffet": "1986-01-01",
+                "tauxEnPourcent": 4.24
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 4.4
+              },
+              {
+                "dateEffet": "1989-01-01",
+                "tauxEnPourcent": 4.536
+              },
+              {
+                "dateEffet": "1990-01-01",
+                "tauxEnPourcent": 4.68
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 4.84
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 5.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": null
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": null
+              },
+              {
+                "dateEffet": "1981-01-01",
+                "tauxEnPourcent": 6.18
+              },
+              {
+                "dateEffet": "1983-01-01",
+                "tauxEnPourcent": 8.24
+              },
+              {
+                "dateEffet": "1986-01-01",
+                "tauxEnPourcent": 8.48
+              },
+              {
+                "dateEffet": "1987-01-01",
+                "tauxEnPourcent": 8.8
+              },
+              {
+                "dateEffet": "1989-01-01",
+                "tauxEnPourcent": 9.072
+              },
+              {
+                "dateEffet": "1990-01-01",
+                "tauxEnPourcent": 9.36
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 9.68
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 10.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": null
+              }
+            ]
+          },
+          "trancheC": {
+            "salarie": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": null
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 2.34
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 3.63
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 5.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 5.625
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 6.25
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 6.875
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 7.5
+              },
+              {
+                "dateEffet": "2006-01-01",
+                "tauxEnPourcent": 7.7
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 7.75
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 7.8
+              }
+            ],
+            "employeur": [
+              {
+                "dateEffet": "1948-01-01",
+                "tauxEnPourcent": 0.0
+              },
+              {
+                "dateEffet": "1991-01-01",
+                "tauxEnPourcent": 7.02
+              },
+              {
+                "dateEffet": "1994-01-01",
+                "tauxEnPourcent": 8.47
+              },
+              {
+                "dateEffet": "1995-01-01",
+                "tauxEnPourcent": 10.0
+              },
+              {
+                "dateEffet": "1996-01-01",
+                "tauxEnPourcent": 10.625
+              },
+              {
+                "dateEffet": "1997-01-01",
+                "tauxEnPourcent": 11.25
+              },
+              {
+                "dateEffet": "1998-01-01",
+                "tauxEnPourcent": 11.875
+              },
+              {
+                "dateEffet": "1999-01-01",
+                "tauxEnPourcent": 12.5
+              },
+              {
+                "dateEffet": "2006-01-01",
+                "tauxEnPourcent": 12.6
+              },
+              {
+                "dateEffet": "2014-01-01",
+                "tauxEnPourcent": 12.68
+              },
+              {
+                "dateEffet": "2015-01-01",
+                "tauxEnPourcent": 12.75
+              }
+            ]
+          }
+        },
+        "garantieMinimaleDePoints": {
+          "valeurs": [
+            {
+              "dateEffet": "1947-01-01",
+              "pointsAgircParAn": 144
+            },
+            {
+              "dateEffet": "1997-01-01",
+              "pointsAgircParAn": 120
+            }
+          ],
+          "note": "GMP supprimee a la fusion de 2019, droits acquis conserves (IPP, secondaire). Cotisation GMP et salaire charniere non repris ici."
+        },
+        "note": "Taux minimaux obligatoires selon la source. Serie 'depuis 1981' a null a partir de 1996 pour la tranche B dans la source : utiliser alors la serie 'avant 1981' (taux contractuels identiques). Tranche C : repartition libre par accord d'entreprise jusqu'a 20 % selon la note IPP. Source secondaire : baremes IPP (Institut des politiques publiques), fichiers YAML du depot gitlab.com/ipp/partage-public-ipp/baremes-ipp/baremes-ipp-yaml lus le 2026-11-21 ; l'IPP cite les circulaires Arrco/Agirc et le service de documentation Agirc-Arrco. Non recoupe avec une source Agirc-Arrco primaire (le PDF officiel 'Historique valeur du point / salaire de reference' n'est plus en ligne : 404).",
+        "source": "Baremes IPP - cotisations AGIRC (secondaire)",
+        "url": "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/",
+        "dateConsultation": "2026-11-21"
+      }
+    },
+    "source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ (2026) ; baremes IPP (historique, secondaire)",
+    "url": "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf",
+    "dateConsultation": "2026-11-21"
+  },
+  "conversion2019": {
+    "valeurs": {
+      "dateEffet": "2019-01-01",
+      "coefficientPointsAgircVersAgircArrco": 0.347791548,
+      "formule": "valeur du point Agirc (0,4378 EUR, novembre 2018) / valeur du point Arrco (1,2588 EUR, novembre 2018)",
+      "reglePointsArrco": "1 point Arrco = 1 point Agirc-Arrco (pas de conversion)",
+      "reglePointsAgirc": "points Agirc-Arrco = points Agirc x 0,347791548"
+    },
+    "note": "Sources secondaires concordantes ; circulaire Agirc-Arrco 2018-7-DT non ouverte.",
+    "source": "la-retraite-en-clair.fr (secondaire) ; note du bareme IPP 'Valeur du point AGIRC' (secondaire)",
+    "url": "https://www.la-retraite-en-clair.fr/parcours-professionnel-regimes-retraite/retraite-salaries-prive/fusion-caisses-retraite-complementaire-consequences-points-agirc-arrco",
+    "dateConsultation": "2026-11-21"
+  },
+  "contributions": {
+    "valeurs": {
+      "annee": 2026,
+      "donnentDesPoints": false,
+      "ceg": {
+        "libelle": "Contribution d'equilibre general",
+        "tranche1": {
+          "tauxGlobal": 2.15,
+          "partEmployeur": 1.29,
+          "partSalarie": 0.86
+        },
+        "tranche2": {
+          "tauxGlobal": 2.7,
+          "partEmployeur": 1.62,
+          "partSalarie": 1.08
+        }
+      },
+      "cet": {
+        "libelle": "Contribution d'equilibre technique",
+        "assiette": "tranche 1 + tranche 2 (de 0 a 8 PASS), due uniquement si le salaire excede la tranche 1",
+        "tauxGlobal": 0.35,
+        "partEmployeur": 0.21,
+        "partSalarie": 0.14
+      },
+      "unite": "pourcent du salaire de la tranche"
+    },
+    "note": "Taux lus dans la circulaire officielle (inchanges depuis 2019 selon IPP). Les points sont calcules sur le seul taux de calcul des points (6,20 % / 17 %) ; l'absence de points pour CEG/CET n'a pas ete lue mot pour mot dans un texte officiel ouvert (reprise de l'ANI du 17/11/2017 art. 37 par des sources secondaires).",
+    "source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ du 30/10/2025 ; page 'Cotisations au regime Agirc-Arrco en 2026'",
+    "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/cotisations-au-regime-agirc-arrco-en-2026.html",
+    "dateConsultation": "2026-11-21"
+  },
+  "coefficientsAnticipation": {
+    "valeurs": {
+      "nature": "minoration definitive (viagere) de la retraite complementaire en cas de depart sans le taux plein au regime de base",
+      "selonAgeALaDateEffet": [
+        {
+          "age": "66 ans et 9 mois",
+          "coefficient": 0.99
+        },
+        {
+          "age": "66 ans et 6 mois",
+          "coefficient": 0.98
+        },
+        {
+          "age": "66 ans et 3 mois",
+          "coefficient": 0.97
+        },
+        {
+          "age": "66 ans",
+          "coefficient": 0.96
+        },
+        {
+          "age": "65 ans et 9 mois",
+          "coefficient": 0.95
+        },
+        {
+          "age": "65 ans et 6 mois",
+          "coefficient": 0.94
+        },
+        {
+          "age": "65 ans et 3 mois",
+          "coefficient": 0.93
+        },
+        {
+          "age": "65 ans",
+          "coefficient": 0.92
+        },
+        {
+          "age": "64 ans et 9 mois",
+          "coefficient": 0.91
+        },
+        {
+          "age": "64 ans et 6 mois",
+          "coefficient": 0.9
+        },
+        {
+          "age": "64 ans et 3 mois",
+          "coefficient": 0.89
+        },
+        {
+          "age": "64 ans",
+          "coefficient": 0.88
+        },
+        {
+          "age": "63 ans et 9 mois",
+          "coefficient": 0.8675
+        },
+        {
+          "age": "63 ans et 6 mois",
+          "coefficient": 0.855
+        },
+        {
+          "age": "63 ans et 3 mois",
+          "coefficient": 0.8425
+        },
+        {
+          "age": "63 ans",
+          "coefficient": 0.83
+        },
+        {
+          "age": "62 ans et 9 mois",
+          "coefficient": 0.8175
+        },
+        {
+          "age": "62 ans et 6 mois",
+          "coefficient": 0.805
+        },
+        {
+          "age": "62 ans et 3 mois",
+          "coefficient": 0.7925
+        },
+        {
+          "age": "62 ans",
+          "coefficient": 0.78
+        },
+        {
+          "age": "61 ans et 9 mois",
+          "coefficient": 0.7625
+        },
+        {
+          "age": "61 ans et 6 mois",
+          "coefficient": 0.745
+        },
+        {
+          "age": "61 ans et 3 mois",
+          "coefficient": 0.7275
+        },
+        {
+          "age": "61 ans",
+          "coefficient": 0.71
+        },
+        {
+          "age": "60 ans et 9 mois",
+          "coefficient": 0.6925
+        },
+        {
+          "age": "60 ans et 6 mois",
+          "coefficient": 0.675
+        },
+        {
+          "age": "60 ans et 3 mois",
+          "coefficient": 0.6575
+        },
+        {
+          "age": "60 ans",
+          "coefficient": 0.64
+        },
+        {
+          "age": "59 ans et 9 mois",
+          "coefficient": 0.6225
+        },
+        {
+          "age": "59 ans et 6 mois",
+          "coefficient": 0.605
+        },
+        {
+          "age": "59 ans et 3 mois",
+          "coefficient": 0.5875
+        },
+        {
+          "age": "59 ans",
+          "coefficient": 0.57
+        },
+        {
+          "age": "58 ans et 9 mois",
+          "coefficient": 0.5525
+        },
+        {
+          "age": "58 ans et 6 mois",
+          "coefficient": 0.535
+        },
+        {
+          "age": "58 ans et 3 mois",
+          "coefficient": 0.5175
+        },
+        {
+          "age": "58 ans",
+          "coefficient": 0.5
+        },
+        {
+          "age": "57 ans et 9 mois",
+          "coefficient": 0.4825
+        },
+        {
+          "age": "57 ans et 6 mois",
+          "coefficient": 0.465
+        },
+        {
+          "age": "57 ans et 3 mois",
+          "coefficient": 0.4475
+        },
+        {
+          "age": "57 ans",
+          "coefficient": 0.43
+        }
+      ],
+      "selonTrimestresManquants": [
+        {
+          "trimestresManquants": 1,
+          "coefficient": 0.99
+        },
+        {
+          "trimestresManquants": 2,
+          "coefficient": 0.98
+        },
+        {
+          "trimestresManquants": 3,
+          "coefficient": 0.97
+        },
+        {
+          "trimestresManquants": 4,
+          "coefficient": 0.96
+        },
+        {
+          "trimestresManquants": 5,
+          "coefficient": 0.95
+        },
+        {
+          "trimestresManquants": 6,
+          "coefficient": 0.94
+        },
+        {
+          "trimestresManquants": 7,
+          "coefficient": 0.93
+        },
+        {
+          "trimestresManquants": 8,
+          "coefficient": 0.92
+        },
+        {
+          "trimestresManquants": 9,
+          "coefficient": 0.91
+        },
+        {
+          "trimestresManquants": 10,
+          "coefficient": 0.9
+        },
+        {
+          "trimestresManquants": 11,
+          "coefficient": 0.89
+        },
+        {
+          "trimestresManquants": 12,
+          "coefficient": 0.88
+        },
+        {
+          "trimestresManquants": 13,
+          "coefficient": 0.8675
+        },
+        {
+          "trimestresManquants": 14,
+          "coefficient": 0.855
+        },
+        {
+          "trimestresManquants": 15,
+          "coefficient": 0.8425
+        },
+        {
+          "trimestresManquants": 16,
+          "coefficient": 0.83
+        },
+        {
+          "trimestresManquants": 17,
+          "coefficient": 0.8175
+        },
+        {
+          "trimestresManquants": 18,
+          "coefficient": 0.805
+        },
+        {
+          "trimestresManquants": 19,
+          "coefficient": 0.7925
+        },
+        {
+          "trimestresManquants": 20,
+          "coefficient": 0.78
+        }
+      ],
+      "lecture": "Bareme age : 1 point par trimestre de 67 a 64 ans, 1,25 de 64 a 62 ans, 1,75 en dessous (constate sur le tableau). Bareme carriere courte : memes pas, limite a 20 trimestres."
+    },
+    "note": "Tableaux officiels lus integralement. La regle de choix entre les deux baremes n'a PAS ete lue dans une source ouverte. Le bareme par age s'arrete a 66 ans et 9 mois : age de reference de 67 ans (deduction du tableau, non lue explicitement).",
+    "source": "Agirc-Arrco, reglementation, baremes 'Coefficients d'anticipation pour age' et 'pour carriere courte'",
+    "url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/coefficients-d-anticipation-pour-age.html",
+    "urlsComplementaires": [
+      "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/coefficients-d-anticipation-pour-carriere-courte.html"
+    ],
+    "dateConsultation": "2026-11-21"
+  },
+  "coefficientDeSolidarite": {
+    "valeurs": {
+      "regle2019": {
+        "populations": "assures nes a compter du 1er janvier 1957 liquidant leur retraite de base a taux plein des qu'ils en remplissent les conditions (pensions prenant effet a partir de 2019)",
+        "coefficient": 0.9,
+        "minorationEnPourcent": 10,
+        "dureeMaximaleEnAnnees": 3,
+        "ageLimite": 67,
+        "minorationReduiteEnPourcent": 5,
+        "conditionMinorationReduite": "assujetti a la CSG au taux reduit de 3,8 %",
+        "annulation": "aucune minoration si la liquidation de la complementaire est decalee d'au moins 4 trimestres apres la date du taux plein au regime de base",
+        "principalesExonerations": [
+          "liquidation a 67 ans ou plus",
+          "exoneration de CSG",
+          "versement unique",
+          "retraite avec coefficient de minoration viager (age ou trimestres manquants)",
+          "taux plein pour inaptitude, handicap, amiante, ancien combattant, etc.",
+          "conditions du taux plein remplies avant 2019",
+          "ASS a la veille de la retraite",
+          "incapacite permanente >= 20 % (AT/MP)",
+          "invalidite 2e ou 3e categorie",
+          "AAH"
+        ]
+      },
+      "coefficientsMajorants": {
+        "dureeEnAnnees": 1,
+        "bareme": [
+          {
+            "decalageMinimalEnTrimestres": 8,
+            "majorationEnPourcent": 10
+          },
+          {
+            "decalageMinimalEnTrimestres": 12,
+            "majorationEnPourcent": 20
+          },
+          {
+            "decalageMinimalEnTrimestres": 16,
+            "majorationEnPourcent": 30
+          }
+        ],
+        "reference": "decalage compte a partir de la date a laquelle les conditions du taux plein au regime de base sont remplies"
+      },
+      "suppression": {
+        "texte": "ANI du 5 octobre 2023 (art. 2), avenant n°17 du 22/11/2023 a l'ANI du 17/11/2017",
+        "coefficientDeSolidarite": [
+          {
+            "dateEffet": "2023-12-01",
+            "population": "pensions prenant effet a compter du 1er decembre 2023 : plus de minoration"
+          },
+          {
+            "dateEffet": "2024-04-01",
+            "population": "pensions ayant pris effet avant le 1er decembre 2023 : la minoration cesse sur les allocations dues a compter du 1er avril 2024"
+          }
+        ],
+        "coefficientsMajorants": "supprimes pour les assures nes a compter du 1er septembre 1961 dont la retraite prend effet a compter du 1er decembre 2023 ; maintenus pour ceux qui remplissaient les conditions du taux plein avant le 1er decembre 2023 et pour les majorations en cours",
+        "generationsConcerneesParLeMalus": "deduction des textes lus (non citee telle quelle) : assures nes a partir de 1957 dont la pension a pris effet entre 2019 et le 30 novembre 2023"
+      }
+    },
+    "source": "Circulaire Agirc-Arrco 2023-11-DRJ du 14/12/2023 (avenant n°17) ; notice Agirc-Arrco 'coefficients temporaires' du 17/05/2022",
+    "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/12/2023-11-DRJ_Suppression_des_coefficients_temporaires.pdf",
+    "urlsComplementaires": [
+      "https://www.agirc-arrco.fr/storage/2021/10/Notice_coefficients_temporaires.pdf"
+    ],
+    "dateConsultation": "2026-11-21"
+  },
+  "majorationsFamiliales": {
+    "valeurs": {
+      "enfantsNesOuEleves": {
+        "condition": "avoir eu ou eleve 3 enfants ou plus (enfant eleve : au moins 9 ans avant ses 16 ans)",
+        "tauxParPeriodeAcquisitionDesPoints": [
+          {
+            "regime": "arrco",
+            "periode": "avant 1999",
+            "taux": {
+              "3": 10,
+              "4": 15,
+              "5": 20,
+              "6": 25,
+              "7etPlus": 30
+            },
+            "note": "seulement si le reglement de la caisse Arrco prevoyait une majoration ; certaines caisses n'en accordaient pas"
+          },
+          {
+            "regime": "arrco",
+            "periode": "1999-2011",
+            "tauxEnPourcent": 5
+          },
+          {
+            "regime": "agirc",
+            "periode": "avant 2012",
+            "taux": {
+              "3": 8,
+              "4": 12,
+              "5": 16,
+              "6": 20,
+              "7etPlus": 24
+            }
+          },
+          {
+            "regime": "arrco et agirc",
+            "periode": "2012-2018",
+            "tauxEnPourcent": 10
+          },
+          {
+            "regime": "agircArrco",
+            "periode": "depuis 2019",
+            "tauxEnPourcent": 10
+          }
+        ],
+        "plafondAnnuelBrut": [
+          {
+            "dateEffet": "2024-11-01",
+            "montantEnEuros": 2367.48
+          },
+          {
+            "dateEffet": "2025-11-01",
+            "montantEnEuros": 2367.48
+          },
+          {
+            "dateEffet": "2026-11-01",
+            "montantEnEuros": null,
+            "note": "non trouve dans une source ouverte"
+          }
+        ],
+        "calcul": "somme, periode par periode, de : points de la periode x taux x valeur du point au depart"
+      },
+      "enfantsACharge": {
+        "tauxEnPourcentParEnfant": 5,
+        "assiette": "totalite des points Agirc-Arrco",
+        "duree": "tant que l'enfant est a charge (moins de 18 ans, ou moins de 25 ans etudiant/apprenti/demandeur d'emploi non indemnise, ou invalide)"
+      },
+      "nonCumul": "les deux majorations ne se cumulent pas : seule la plus elevee est versee"
+    },
+    "note": "Le perimetre exact des droits soumis au plafond n'est pas detaille dans les sources ouvertes ('la majoration pour 3 enfants ou plus est plafonnee').",
+    "source": "Agirc-Arrco, fiche 'Decrypter - La majoration pour enfants' (02-03/2025) ; circulaire 2025-16-SG-DRJ pour le plafond au 01/11/2025",
+    "url": "https://www.agirc-arrco.fr/storage/2025/03/Decrypter_Majoration-pour-enfants.pdf",
+    "urlsComplementaires": [
+      "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf"
+    ],
+    "dateConsultation": "2026-11-21"
+  },
+  "pointsGratuits": {
+    "valeurs": {
+      "chomageIndemnise": {
+        "regle": "Des points sont attribues sans cotisation pour chaque jour de chomage indemnise (ARE, ASS, etc.) faisant suite a un emploi ayant donne lieu a cotisations de retraite complementaire ; ils sont calcules a partir du salaire journalier de reference de l'assurance chomage. Le chomage non indemnise ne donne pas de points.",
+        "source": "Guide salaries Agirc et Arrco n°7 'Chomage et points de retraite complementaire' (mars 2016)",
+        "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/chomage_et_points.pdf",
+        "dateConsultation": "2026-11-21",
+        "note": "Guide anterieur a la fusion ; taux et formule exacts non lus."
+      },
+      "maladie": {
+        "regle": "Des points sont attribues sans cotisation pour un arret de travail de plus de 60 jours consecutifs indemnise par la Securite sociale (indemnites journalieres, pension d'invalidite, rente AT d'au moins 2/3), en l'absence de maintien de salaire. Ils sont calcules pour que le total des points de l'annee (cotises + gratuits) ne depasse pas celui de l'annee precedant l'arret.",
+        "source": "Guide salaries Agirc-Arrco n°6 'Maternite, maladie et points de retraite complementaire' (fevrier 2022), heberge par Klesia",
+        "url": "https://www.klesia.fr/sites/default/files/media/documents/2022/03/Maladie%2C%20maternit%C3%A9%20et%20points%20de%20retraite%20compl%C3%A9mentaire.pdf",
+        "dateConsultation": "2026-11-21"
+      },
+      "maternite": {
+        "regle": "La maternite (ou l'adoption pleniere) est une des quatre situations d'incapacite de travail : memes regles que la maladie (arret de plus de 60 jours consecutifs indemnise par la Securite sociale, points reference a l'annee precedente). En cas de maintien de salaire, les points sont cotises normalement.",
+        "source": "Guide salaries Agirc-Arrco n°6 (fevrier 2022), heberge par Klesia",
+        "url": "https://www.klesia.fr/sites/default/files/media/documents/2022/03/Maladie%2C%20maternit%C3%A9%20et%20points%20de%20retraite%20compl%C3%A9mentaire.pdf",
+        "dateConsultation": "2026-11-21"
+      }
+    },
+    "source": "Guides salaries Agirc-Arrco n°6 (2022) et n°7 (2016)",
+    "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/chomage_et_points.pdf",
+    "dateConsultation": "2026-11-21"
+  }
+}

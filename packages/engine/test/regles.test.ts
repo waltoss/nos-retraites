@@ -142,12 +142,16 @@ describe("scénario", () => {
 	});
 
 	test("cotisations de l'année de référence", () => {
-		expect(computeCotisations(30000, false, B)).toBeCloseTo(
+		expect(computeCotisations(30000, B)).toBeCloseTo(
 			30000 * 0.15 + 30000 * 0.02 + 30000 * (0.06 * 1.25 + 0.02),
 			6,
 		);
-		expect(computeCotisations(60000, false, B)).toBeCloseTo(
-			40000 * 0.15 + 60000 * 0.02 + 40000 * (0.06 * 1.25 + 0.02) + 20000 * (0.16 * 1.25 + 0.03),
+		expect(computeCotisations(60000, B)).toBeCloseTo(
+			40000 * 0.15 +
+				60000 * 0.02 +
+				40000 * (0.06 * 1.25 + 0.02) +
+				20000 * (0.16 * 1.25 + 0.03) +
+				60000 * 0.004,
 			6,
 		);
 	});

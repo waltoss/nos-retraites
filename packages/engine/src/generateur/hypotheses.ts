@@ -9,7 +9,13 @@ export interface Hypotheses {
 	/** Part de femmes dans une génération. */
 	partFemmes: number;
 	/** Âge d'entrée dans la vie active : moyenne, écart-type, effet du rang de salaire (années par écart-type). */
-	ageEntree: { moyenne: number; ecartType: number; effetRang: number; min: number; max: number };
+	ageEntree: {
+		moyenne: number;
+		ecartType: number;
+		effetRang: number;
+		min: number;
+		max: number;
+	};
 	/** Salaire à temps plein, en part du PASS, pour un individu médian : points (âge, part du PASS). */
 	profilSalaire: ReadonlyArray<readonly [age: number, partDuPass: number]>;
 	/** Dispersion du niveau permanent de salaire (écart-type du logarithme). */
@@ -38,14 +44,26 @@ export interface Hypotheses {
 	/** Part des mères en emploi qui travaillent à temps partiel tant qu'un enfant a moins de 12 ans, et leur quotité. */
 	tempsPartielMeres: { part: number; quotite: number };
 	/** Après cet âge, les sorties de l'emploi sont multipliées et les retours divisés. */
-	seniors: { age: number; multiplicateurSorties: number; diviseurRetours: number };
+	seniors: {
+		age: number;
+		multiplicateurSorties: number;
+		diviseurRetours: number;
+	};
+	/** Largeur de la zone juste au-dessus du SMIC où sont étalés les salaires que le modèle placerait dessous. */
+	etalementSmic: number;
 	/** Heures annuelles d'un temps plein, pour le plancher au SMIC. */
 	heuresAnnuelles: number;
 }
 
 export const HYPOTHESES_TRANCHE_0: Hypotheses = {
 	partFemmes: 0.5,
-	ageEntree: { moyenne: 20.5, ecartType: 2.2, effetRang: 1.6, min: 16, max: 28 },
+	ageEntree: {
+		moyenne: 20.5,
+		ecartType: 2.2,
+		effetRang: 1.6,
+		min: 16,
+		max: 28,
+	},
 	profilSalaire: [
 		[16, 0.36],
 		[22, 0.46],
@@ -71,5 +89,6 @@ export const HYPOTHESES_TRANCHE_0: Hypotheses = {
 	interruptionNaissance: { probabilite: 0.3, retourAnnuel: 0.22 },
 	tempsPartielMeres: { part: 0.3, quotite: 0.7 },
 	seniors: { age: 55, multiplicateurSorties: 1.8, diviseurRetours: 2.5 },
+	etalementSmic: 0.2,
 	heuresAnnuelles: 1820,
 };

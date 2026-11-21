@@ -1,15 +1,18 @@
 import type { Baremes } from "./baremes/types.ts";
-import { type CompteCarriere, buildCompte } from "./compte.ts";
+import { buildCompte, type CompteCarriere } from "./compte.ts";
 import { generateCarriere } from "./generateur/carriere.ts";
-import { HYPOTHESES_TRANCHE_0, type Hypotheses } from "./generateur/hypotheses.ts";
 import {
-	type ReglesScenario,
+	HYPOTHESES_TRANCHE_0,
+	type Hypotheses,
+} from "./generateur/hypotheses.ts";
+import {
 	computeCotisations,
 	computePension,
+	type ReglesScenario,
 	reglesGeneration,
 } from "./liquidation.ts";
 import { createRng, graineIndividu } from "./rng.ts";
-import { type Histogramme, type Resume, histogramme, resume } from "./stats.ts";
+import { type Histogramme, histogramme, type Resume, resume } from "./stats.ts";
 import type { Individu, Pension } from "./types.ts";
 
 export interface Scenario {
@@ -37,23 +40,36 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 	for (let id = 0; id < scenario.taille; id++) {
 		const anneeNaissance = debut + (id % nbGenerations);
 		const rng = createRng(graineIndividu(scenario.graine, id));
-		population.push({ id, poids: 1, carriere: generateCarriere(anneeNaissance, rng, h, b) });
+		population.push({
+			id,
+			poids: 1,
+			carriere: generateCarriere(anneeNaissance, rng, h, b),
+		});
 	}
 	return population;
 }
 
 /** Comptes de carrière de la population : indépendants des règles du scénario, à calculer une seule fois. */
-export function buildComptes(population: Individu[], b: Baremes): CompteCarriere[] {
+export function buildComptes(
+	population: Individu[],
+	b: Baremes,
+): CompteCarriere[] {
 	return population.map((i) => buildCompte(i.carriere, b));
 }
 
 export interface Resultat {
 	anneeReference: number;
 	/** Cotisations vieillesse annuelles des individus en emploi l'année de référence. */
-	cotisations: { valeurs: Float64Array; resume: Resume; histogramme: Histogramme };
+	cotisations: {
+		valeurs: Float64Array;
+		resume: Resume;
+		histogramme: Histogramme;
+	};
 	/** Pensions mensuelles brutes des individus déjà partis l'année de référence. */
 	pensions: { valeurs: Float64Array; resume: Resume; histogramme: Histogramme };
 	effectifs: { cotisants: number; retraites: number; autres: number };
+	/** Part des individus de 60 à 69 ans déjà partis à la retraite l'année de référence. */
+	partRetraitesSexagenaires: number;
 	/** Âge moyen de départ des retraités, en années. */
 	ageMoyenDepart: number;
 	dureeMs: number;
@@ -76,6 +92,8 @@ export function runSimulation(
 	const pensions: number[] = [];
 	let autres = 0;
 	let sommeAges = 0;
+	let sexagenaires = 0;
+	let sexagenairesRetraites = 0;
 
 	for (let i = 0; i < population.length; i++) {
 		const individu = population[i] as Individu;
@@ -85,17 +103,26 @@ export function runSimulation(
 		let pension: Pension | null = null;
 		// Personne ne part avant l'âge légal : inutile de calculer la pension des plus jeunes.
 		if (age * 4 >= g.ageLegal) {
-			const p = computePension(c, b, { regles, compte: comptes?.[i] ?? buildCompte(c, b) });
+			const p = computePension(c, b, {
+				regles,
+				compte: comptes?.[i] ?? buildCompte(c, b),
+			});
 			if (p.liquidation.annee <= annee) pension = p;
 		}
+		const sexagenaire = age >= 60 && age < 70;
+		if (sexagenaire) sexagenaires++;
 		if (pension) {
+			if (sexagenaire) sexagenairesRetraites++;
 			pensions.push(pension.mensuelleBrute);
 			sommeAges += pension.liquidation.age / 4;
 			continue;
 		}
-		const a = c.annees[age - (c.annees[0] ? c.annees[0].annee - c.anneeNaissance : age)];
+		const a =
+			c.annees[
+				age - (c.annees[0] ? c.annees[0].annee - c.anneeNaissance : age)
+			];
 		if (a && a.etat === "emploi" && a.salaireBrut > 0) {
-			cotisations.push(computeCotisations(a.salaireBrut, c.cadre, b));
+			cotisations.push(computeCotisations(a.salaireBrut, b));
 		} else {
 			autres++;
 		}
@@ -105,9 +132,20 @@ export function runSimulation(
 	const vp = Float64Array.from(pensions);
 	return {
 		anneeReference: annee,
-		cotisations: { valeurs: vc, resume: resume(vc), histogramme: histogramme(vc, MAX_COTISATION, NB_CLASSES) },
-		pensions: { valeurs: vp, resume: resume(vp), histogramme: histogramme(vp, MAX_PENSION, NB_CLASSES) },
+		cotisations: {
+			valeurs: vc,
+			resume: resume(vc),
+			histogramme: histogramme(vc, MAX_COTISATION, NB_CLASSES),
+		},
+		pensions: {
+			valeurs: vp,
+			resume: resume(vp),
+			histogramme: histogramme(vp, MAX_PENSION, NB_CLASSES),
+		},
 		effectifs: { cotisants: vc.length, retraites: vp.length, autres },
+		partRetraitesSexagenaires: sexagenaires
+			? sexagenairesRetraites / sexagenaires
+			: 0,
 		ageMoyenDepart: vp.length ? sommeAges / vp.length : 0,
 		dureeMs: performance.now() - debut,
 	};
