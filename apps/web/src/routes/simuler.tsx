@@ -36,7 +36,7 @@ function Simuler() {
 						<section className="bloc">
 							<h2>Dans le temps, jusqu'en 2070</h2>
 							<p className="sub">
-								La population suit la projection de l'Insee, les salaires
+								La population suit les projections de l'Insee, les salaires
 								progressent de 0,7 % par an au-dessus des prix. Tous les
 								montants sont en euros de 2026. Le trait vertical marque 2028
 								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
@@ -150,9 +150,9 @@ function Simuler() {
 					<p>
 						<strong>Des ordres de grandeur, pas une prévision.</strong> Les
 						carrières sont inventées, réglées sur les salaires et les durées
-						publiés. Seuls les salariés du privé sont simulés. La natalité et
-						l'immigration suivent le scénario central de l'Insee et ne sont pas
-						encore réglables.
+						publiés. Seuls les salariés du privé sont simulés. La natalité et le
+						solde migratoire se règlent entre les variantes basse et haute de
+						l'Insee.
 					</p>
 				</aside>
 			</div>

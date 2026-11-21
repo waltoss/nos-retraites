@@ -1,6 +1,8 @@
 import {
+	type Demographie,
 	type Facteurs,
 	HYPOTHESES,
+	NIVEAUX_DEMOGRAPHIE,
 	type ReglesScenario,
 } from "@nos-retraites/engine";
 import type { IconName } from "./components/Icons";
@@ -22,7 +24,9 @@ export type LevierId =
 	| "seniors"
 	| "interruptions"
 	| "tempsPartiel"
-	| "salaireFemmes";
+	| "salaireFemmes"
+	| "natalite"
+	| "immigration";
 
 /** Les quatre termes de l'équation qu'un levier peut déplacer. */
 export type Terme = "cotisants" | "cotisation" | "retraites" | "pension";
@@ -49,7 +53,13 @@ export const TERMES: Record<
 	pension: { label: "Pension moyenne", icone: "pension", cote: "depenses" },
 };
 
-export type GroupeId = "age" | "calcul" | "famille" | "financement" | "emploi";
+export type GroupeId =
+	| "age"
+	| "calcul"
+	| "famille"
+	| "financement"
+	| "emploi"
+	| "population";
 
 export const GROUPES: {
 	id: GroupeId;
@@ -66,6 +76,12 @@ export const GROUPES: {
 		label: "Emploi et carrières",
 		icone: "emploi",
 		note: "Ces réglages ne changent les carrières qu'à partir de 2028. Leur effet sur les pensions met donc des décennies à se voir.",
+	},
+	{
+		id: "population",
+		label: "Population",
+		icone: "population",
+		note: "Ces deux réglages restent dans les bornes des projections de l'Insee. Ils ne disent pas quelle politique permettrait d'y arriver.",
 	},
 ];
 
@@ -290,6 +306,31 @@ export const LEVIERS: Levier[] = [
 		termes: ["cotisation", "pension"],
 		aide: "À poste et carrière identiques dans le modèle. À 100 %, l'écart de pension qui reste vient des interruptions et du temps partiel.",
 	},
+	{
+		id: "natalite",
+		groupe: "population",
+		label: "Natalité",
+		min: Math.round(NIVEAUX_DEMOGRAPHIE.fecondite.bas * 100),
+		max: Math.round(NIVEAUX_DEMOGRAPHIE.fecondite.haut * 100),
+		pas: 5,
+		defaut: Math.round(NIVEAUX_DEMOGRAPHIE.fecondite.central * 100),
+		affiche: (v) =>
+			`${(v / 100).toLocaleString("fr-FR", { minimumFractionDigits: 2 })} enfant par femme`,
+		termes: ["cotisants"],
+		aide: "Nombre moyen d'enfants par femme dans les années qui viennent. Un enfant né en 2030 commence à cotiser vers 2052 : l'effet n'apparaît qu'en fin de trajectoire, et grandit ensuite.",
+	},
+	{
+		id: "immigration",
+		groupe: "population",
+		label: "Solde migratoire",
+		min: NIVEAUX_DEMOGRAPHIE.soldeMigratoire.bas / 1000,
+		max: NIVEAUX_DEMOGRAPHIE.soldeMigratoire.haut / 1000,
+		pas: 10,
+		defaut: NIVEAUX_DEMOGRAPHIE.soldeMigratoire.central / 1000,
+		affiche: (v) => `${v} 000 entrées nettes par an`,
+		termes: ["cotisants", "retraites"],
+		aide: "Entrées moins sorties du territoire, chaque année. On arrive surtout à l'âge de travailler : l'effet sur les cotisants est rapide, celui sur les retraités vient trente ans plus tard. Le modèle prête aux arrivants la carrière des personnes de leur âge.",
+	},
 ];
 
 export const LEVIER: Record<LevierId, Levier> = Object.fromEntries(
@@ -302,11 +343,16 @@ export type Reglages = Partial<Record<LevierId, number>>;
 export interface ScenarioMoteur {
 	regles: ReglesScenario;
 	facteurs: Facteurs;
+	demographie: Demographie;
 }
 
 export function versScenario(r: Reglages): ScenarioMoteur {
 	const regles: ReglesScenario = {};
 	const facteurs: Facteurs = {};
+	const demographie: Demographie = {};
+	if (r.natalite !== undefined) demographie.fecondite = r.natalite / 100;
+	if (r.immigration !== undefined)
+		demographie.soldeMigratoire = r.immigration * 1000;
 	if (r.ageLegal !== undefined) regles.ageLegal = r.ageLegal;
 	if (r.dureeRequise !== undefined) regles.dureeRequise = r.dureeRequise;
 	if (r.meilleuresAnnees !== undefined)
@@ -331,7 +377,7 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 		facteurs.tempsPartielMeres = r.tempsPartiel / 100;
 	if (r.salaireFemmes !== undefined)
 		facteurs.ecartSalaireFemmes = r.salaireFemmes / 100;
-	return { regles, facteurs };
+	return { regles, facteurs, demographie };
 }
 
 /** Lit des réglages depuis les paramètres d'une URL, en écartant tout ce qui est hors bornes. */
@@ -427,6 +473,26 @@ export const DECISIONS: Decision[] = [
 		levier: "salaireFemmes",
 		valeur: 100,
 		label: "Égalité de salaire entre femmes et hommes",
+	},
+	{
+		levier: "natalite",
+		valeur: 170,
+		label: "Natalité à 1,70 enfant par femme",
+	},
+	{
+		levier: "natalite",
+		valeur: 120,
+		label: "Natalité à 1,20 enfant par femme",
+	},
+	{
+		levier: "immigration",
+		valeur: 230,
+		label: "Solde migratoire à 230 000 par an",
+	},
+	{
+		levier: "immigration",
+		valeur: 70,
+		label: "Solde migratoire à 70 000 par an",
 	},
 ];
 

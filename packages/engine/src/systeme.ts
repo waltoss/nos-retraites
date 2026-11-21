@@ -42,7 +42,7 @@ export interface AnneeSysteme {
  * Avec la loi actuelle, les totaux sont ceux du cadrage : le bloc résiduel est ce qui manque au privé.
  * Dans un scénario, le privé bouge comme le moteur le calcule, et le bloc résiduel est supposé réagir
  * comme le régime de base du privé (mêmes variations relatives de pensions et de cotisations).
- * Les autres ressources, dont les versements de l'État, restent celles de la loi actuelle.
+ * Les autres ressources, dont les versements de l'État, et le PIB suivent la masse des salaires du privé.
  */
 export function computeSysteme(
 	reference: Projection,
@@ -69,11 +69,17 @@ export function computeSysteme(
 			cotisationsReference +
 			(s.cotisations - r.cotisations) +
 			residuelCotisations * (rapport(s.cotisationsBase, r.cotisationsBase) - 1);
-		const autresRessources = c.ressources - cotisationsReference;
+		// Les autres ressources (CSG, impôts affectés) et le PIB suivent la masse des salaires :
+		// plus de monde au travail, c'est aussi plus d'impôts et plus de richesse produite.
+		const activite = rapport(
+			s.cotisants * s.salaireMoyen,
+			r.cotisants * r.salaireMoyen,
+		);
+		const autresRessources = (c.ressources - cotisationsReference) * activite;
 		const ressources = cotisations + autresRessources;
 		resultat.push({
 			annee: s.annee,
-			pib: c.pib,
+			pib: c.pib * activite,
 			depenses,
 			cotisations,
 			autresRessources,

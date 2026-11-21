@@ -17,10 +17,10 @@ import {
 	type Pension,
 	type Preparation,
 	type Projection,
-	PYRAMIDES_PROJETEES,
 	photographier,
 	prepareProjection,
 	projeter,
+	pyramidesProjetees,
 	type Resultat,
 	SCENARIO_REFERENCE,
 	valeur,
@@ -150,7 +150,7 @@ let taille = SCENARIO_REFERENCE.taille;
 const mondes = new Map<string, Monde>();
 const scenes = new Map<string, Scene>();
 let pensionsReference: Pension[] | null = null;
-const DROIT: ScenarioMoteur = { regles: {}, facteurs: {} };
+const DROIT: ScenarioMoteur = { regles: {}, facteurs: {}, demographie: {} };
 
 /** Une population par jeu de facteurs ; ils ne changent les carrières qu'à partir de l'année d'effet. */
 function monde(facteurs: Facteurs): Monde {
@@ -185,7 +185,7 @@ function scene(s: ScenarioMoteur): Scene {
 			preparation: prepareProjection(m.population, B, s.regles, {
 				debut: B.anneeReference,
 				fin: FIN_PROJECTION,
-				pyramides: PYRAMIDES_PROJETEES,
+				pyramides: pyramidesProjetees(s.demographie),
 				champ: CHAMP_PRIVE,
 				anneeEffet: ANNEE_EFFET,
 				comptes: m.comptes,

@@ -169,29 +169,77 @@ await Bun.write(
 	`${JSON.stringify(sortie, null, "\t")}\n`,
 );
 // Pyramides projetées : même convention d'âge, même regroupement des plus âgés.
-const central = projections.populationProjetee.scenarios.central.population;
+// Le scénario central, plus l'écart au central des variantes de fécondité et de solde migratoire.
+const scenarios = projections.populationProjetee.scenarios;
 const FIN = 2070;
-const projetees: Record<string, { femmes: number[]; hommes: number[] }> = {};
-for (let annee = ANNEE; annee <= FIN; annee++) {
-	const k = annee - central.anneeDebut;
-	const ligne = (table: number[][]) => {
-		const insee = table[k] as number[];
-		const v: number[] = [];
-		for (let age = AGE_MIN; age <= AGE_MAX; age++) {
-			const a = age - DECALAGE_AGE;
-			v.push(
-				age === AGE_MAX
-					? insee.slice(a).reduce((t, x) => t + x, 0)
-					: (insee[a] as number),
-			);
-		}
-		return v;
-	};
-	projetees[annee] = {
-		femmes: ligne(central.femmes),
-		hommes: ligne(central.hommes),
-	};
+type Tables = { anneeDebut: number; femmes: number[][]; hommes: number[][] };
+function pyramidesDe(population: Tables) {
+	const annees: Record<string, { femmes: number[]; hommes: number[] }> = {};
+	for (let annee = ANNEE; annee <= FIN; annee++) {
+		const k = annee - population.anneeDebut;
+		const ligne = (table: number[][]) => {
+			const insee = table[k] as number[];
+			const v: number[] = [];
+			for (let age = AGE_MIN; age <= AGE_MAX; age++) {
+				const a = age - DECALAGE_AGE;
+				v.push(
+					age === AGE_MAX
+						? insee.slice(a).reduce((t, x) => t + x, 0)
+						: (insee[a] as number),
+				);
+			}
+			return v;
+		};
+		annees[annee] = {
+			femmes: ligne(population.femmes),
+			hommes: ligne(population.hommes),
+		};
+	}
+	return annees;
 }
+const centrale = pyramidesDe(scenarios.central.population as Tables);
+/** Écart au scénario central, pour interpoler entre les variantes. */
+function ecarts(population: Tables) {
+	const variante = pyramidesDe(population);
+	return Object.fromEntries(
+		Object.entries(variante).map(([annee, p]) => [
+			annee,
+			{
+				femmes: p.femmes.map(
+					(n, i) => n - (centrale[annee]?.femmes[i] as number),
+				),
+				hommes: p.hommes.map(
+					(n, i) => n - (centrale[annee]?.hommes[i] as number),
+				),
+			},
+		]),
+	);
+}
+/** Premier nombre d'un libellé de l'Insee : « 1,70 à partir de 2030 », « +230 000 par an ». */
+const nombre = (libelle: string) => {
+	const m = libelle
+		.replace(/[\u202f\u00a0 ](?=\d{3})/g, "")
+		.match(/\d+(?:,\d+)?/);
+	if (!m) throw new Error(`Pas de nombre dans « ${libelle} »`);
+	return Number(m[0].replace(",", "."));
+};
+const niveaux = {
+	fecondite: {
+		bas: nombre(scenarios.feconditeBasse.hypotheses.fecondite.libelleInsee),
+		central: nombre(scenarios.central.hypotheses.fecondite.libelleInsee),
+		haut: nombre(scenarios.feconditeHaute.hypotheses.fecondite.libelleInsee),
+	},
+	soldeMigratoire: {
+		bas: nombre(
+			scenarios.soldeMigratoireBas.hypotheses.soldeMigratoire.libelleInsee,
+		),
+		central: nombre(scenarios.central.hypotheses.soldeMigratoire.libelleInsee),
+		haut: nombre(
+			scenarios.soldeMigratoireHaut.hypotheses.soldeMigratoire.libelleInsee,
+		),
+	},
+};
+console.log("niveaux des variantes Insee :", JSON.stringify(niveaux));
 await Bun.write(
 	new URL(
 		"../packages/engine/src/population/projection.data.json",
@@ -203,7 +251,18 @@ await Bun.write(
 		url: projections.populationProjetee.url,
 		date: projections.populationProjetee.date,
 		scenario: "central",
-		annees: projetees,
+		niveaux,
+		annees: centrale,
+		ecarts: {
+			feconditeBasse: ecarts(scenarios.feconditeBasse.population as Tables),
+			feconditeHaute: ecarts(scenarios.feconditeHaute.population as Tables),
+			soldeMigratoireBas: ecarts(
+				scenarios.soldeMigratoireBas.population as Tables,
+			),
+			soldeMigratoireHaut: ecarts(
+				scenarios.soldeMigratoireHaut.population as Tables,
+			),
+		},
 	})}\n`,
 );
 
