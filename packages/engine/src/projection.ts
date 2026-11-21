@@ -5,8 +5,17 @@ import {
 	computeCotisations,
 	computePension,
 	type ReglesScenario,
+	reglesGeneration,
 } from "./liquidation.ts";
 import type { Champ, Pyramide } from "./ponderation.ts";
+import {
+	type GroupeSexe,
+	MAX_COTISATION,
+	MAX_PENSION,
+	NB_CLASSES,
+	type Resultat,
+} from "./simulation.ts";
+import { histogramme, resume } from "./stats.ts";
 import type { Individu, Pension } from "./types.ts";
 
 /** Population réelle projetée, année par année. Une année absente reprend la dernière connue. */
@@ -74,38 +83,49 @@ export function computePensions(
 	);
 }
 
+/** Un scénario préparé : la pension effective de chacun, une fois pour toutes les années. */
+export interface Preparation {
+	population: Individu[];
+	b: Baremes;
+	/** Barèmes avec les règles du scénario. */
+	be: Baremes;
+	regles: ReglesScenario;
+	options: OptionsProjection;
+	/** Pension effective : celle du droit en vigueur pour ceux qui sont partis avant l'année d'effet. */
+	pensions: Pension[];
+	avantReforme: Uint8Array;
+	/** Individus simulés par génération et par sexe : le dénominateur des poids. */
+	simules: Map<string, number>;
+}
+
+const cle = (individu: Individu) =>
+	`${individu.carriere.sexe}${individu.carriere.anneeNaissance}`;
+
 /**
- * Projette le système année par année. Les carrières sont déjà écrites jusqu'à 70 ans ;
- * on regarde chaque année qui cotise, qui perçoit, et combien de personnes réelles chacun représente.
+ * Prépare un scénario : calcule la pension de chacun avec les règles qui lui reviennent.
+ * Ceux qui sont partis avant l'année d'effet gardent leur pension ; les autres relèvent des
+ * nouvelles règles et ne peuvent pas partir avant cette année au titre de celles-ci.
  */
-export function runProjection(
+export function prepareProjection(
 	population: Individu[],
 	b: Baremes,
 	regles: ReglesScenario,
 	options: OptionsProjection,
-): Projection {
-	const depart = performance.now();
-	const { debut, fin, anneeEffet, champ } = options;
-	const ageMin = options.ageMin ?? 18;
-	const ageMax = options.ageMax ?? 96;
+): Preparation {
+	const { anneeEffet } = options;
 	const be = appliquerRegles(b, regles);
 	const comptes =
 		options.comptes ?? population.map((i) => buildCompte(i.carriere, b));
 	const reference =
 		options.pensionsReference ?? computePensions(population, b, {}, comptes);
 	const inchange = Object.keys(regles).length === 0;
-	const multiplicateurPoint = regles.valeurDuPoint ?? 1;
-	const revalorisation = 1 + (regles.revalorisationReelle ?? 0);
-
-	// Pension effective de chacun : celle du droit en vigueur s'il est parti avant la réforme.
 	const n = population.length;
-	const anneeDepart = new Int32Array(n);
-	const ageDepart = new Float64Array(n);
-	const base = new Float64Array(n);
-	const complementaire = new Float64Array(n);
+	const pensions: Pension[] = new Array(n);
 	const avantReforme = new Uint8Array(n);
+	const simules = new Map<string, number>();
 	for (let k = 0; k < n; k++) {
 		const individu = population[k] as Individu;
+		simules.set(cle(individu), (simules.get(cle(individu)) ?? 0) + 1);
 		const p0 = reference[k] as Pension;
 		let p = p0;
 		if (p0.liquidation.annee < anneeEffet) {
@@ -120,29 +140,96 @@ export function runProjection(
 					ageLiquidation: (anneeEffet - c.anneeNaissance) * 4,
 				});
 		}
-		anneeDepart[k] = p.liquidation.annee;
-		ageDepart[k] = p.liquidation.age / 4;
-		base[k] = p.cnav.pensionAnnuelle;
-		complementaire[k] = p.agircArrco.pensionAnnuelle;
+		pensions[k] = p;
 	}
+	return {
+		population,
+		b,
+		be,
+		regles,
+		options,
+		pensions,
+		avantReforme,
+		simules,
+	};
+}
 
-	// Individus simulés par génération et par sexe : le dénominateur des poids.
-	const simules = new Map<string, number>();
-	const cle = (individu: Individu) =>
-		`${individu.carriere.sexe}${individu.carriere.anneeNaissance}`;
-	for (const individu of population)
-		simules.set(cle(individu), (simules.get(cle(individu)) ?? 0) + 1);
+/** Ce qu'il faut savoir d'un individu une année donnée : son poids et, s'il est retraité, sa pension. */
+function lecteur(prep: Preparation, annee: number) {
+	const { options, b, regles } = prep;
 	const anneesConnues = Object.keys(options.pyramides).map(Number);
-	const derniere = Math.max(...anneesConnues);
-	const premiere = Math.min(...anneesConnues);
+	const pyramide = options.pyramides[
+		Math.max(
+			Math.min(...anneesConnues),
+			Math.min(Math.max(...anneesConnues), annee),
+		)
+	] as Pyramide;
+	const ageMin = options.ageMin ?? 18;
+	const ageMax = options.ageMax ?? 96;
+	const depuisEffet = Math.max(0, annee - options.anneeEffet + 1);
+	const revalorisation = 1 + (regles.revalorisationReelle ?? 0);
+	// La valeur du point vaut pour toutes les pensions complémentaires en cours.
+	const service = b.agircArrco.indiceValeurDeService
+		? valeur(b.agircArrco.indiceValeurDeService, annee)
+		: 1;
+	const point = regles.valeurDuPoint ?? 1;
+	return {
+		poids(k: number): number {
+			const individu = prep.population[k] as Individu;
+			const c = individu.carriere;
+			const age = annee - c.anneeNaissance;
+			if (age < ageMin || age > ageMax) return 0;
+			const reels = (c.sexe === "F" ? pyramide.femmes : pyramide.hommes)[
+				Math.min(age, pyramide.femmes.length - 1)
+			];
+			return (
+				((reels ?? 0) * options.champ.part(age, c.sexe)) /
+				(prep.simules.get(cle(individu)) ?? 1)
+			);
+		},
+		/** Pension annuelle versée cette année-là, ou null si l'individu n'est pas encore parti. */
+		pensionAnnuelle(k: number): number | null {
+			const p = prep.pensions[k] as Pension;
+			const partiDepuis = annee - p.liquidation.annee;
+			if (partiDepuis < 0) return null;
+			// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
+			const indexation =
+				revalorisation === 1
+					? 1
+					: revalorisation ** Math.min(depuisEffet, partiDepuis);
+			const pointApplique =
+				prep.avantReforme[k] && annee >= options.anneeEffet ? point : 1;
+			return (
+				indexation *
+				(p.cnav.pensionAnnuelle +
+					p.agircArrco.pensionAnnuelle * pointApplique * service)
+			);
+		},
+		/** Salaire de l'année, 0 hors emploi. */
+		salaire(k: number): number {
+			const c = (prep.population[k] as Individu).carriere;
+			const premiere = c.annees[0]?.annee ?? annee + 1;
+			return c.annees[annee - premiere]?.salaireBrut ?? 0;
+		},
+		cotisation(salaire: number): number {
+			return computeCotisations(
+				salaire,
+				annee >= options.anneeEffet ? prep.be : b,
+				annee,
+			);
+		},
+	};
+}
 
+/** Trajectoires année par année et par génération d'un scénario préparé. */
+export function projeter(prep: Preparation): Projection {
+	const depart = performance.now();
+	const { population, options } = prep;
+	const n = population.length;
 	const annees: AnneeProjetee[] = [];
-	for (let annee = debut; annee <= fin; annee++) {
-		const pyramide = options.pyramides[
-			Math.max(premiere, Math.min(derniere, annee))
-		] as Pyramide;
+	for (let annee = options.debut; annee <= options.fin; annee++) {
+		const lit = lecteur(prep, annee);
 		const ligne = {
-			annee,
 			cotisants: 0,
 			retraites: 0,
 			cotisations: 0,
@@ -151,56 +238,25 @@ export function runProjection(
 			departs: 0,
 			ages: 0,
 		};
-		const depuisEffet = Math.max(0, annee - anneeEffet + 1);
-		// La valeur du point vaut pour toutes les pensions complémentaires en cours.
-		const service = b.agircArrco.indiceValeurDeService
-			? valeur(b.agircArrco.indiceValeurDeService, annee)
-			: 1;
 		for (let k = 0; k < n; k++) {
-			const individu = population[k] as Individu;
-			const c = individu.carriere;
-			const age = annee - c.anneeNaissance;
-			if (age < ageMin || age > ageMax) continue;
-			const reels = (c.sexe === "F" ? pyramide.femmes : pyramide.hommes)[
-				Math.min(age, pyramide.femmes.length - 1)
-			];
-			const poids =
-				((reels ?? 0) * champ.part(age, c.sexe)) /
-				(simules.get(cle(individu)) ?? 1);
+			const poids = lit.poids(k);
 			if (poids === 0) continue;
-			const partiDepuis = annee - (anneeDepart[k] as number);
-			if (partiDepuis >= 0) {
-				// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
-				const indexation =
-					revalorisation === 1
-						? 1
-						: revalorisation ** Math.min(depuisEffet, partiDepuis);
-				const pointApplique =
-					avantReforme[k] && annee >= anneeEffet ? multiplicateurPoint : 1;
+			const pension = lit.pensionAnnuelle(k);
+			if (pension !== null) {
 				ligne.retraites += poids;
-				ligne.pensions +=
-					poids *
-					indexation *
-					((base[k] as number) +
-						(complementaire[k] as number) * pointApplique * service);
-				if (partiDepuis === 0) {
+				ligne.pensions += poids * pension;
+				const p = prep.pensions[k] as Pension;
+				if (p.liquidation.annee === annee) {
 					ligne.departs += poids;
-					ligne.ages += poids * (ageDepart[k] as number);
+					ligne.ages += (poids * p.liquidation.age) / 4;
 				}
 				continue;
 			}
-			const premiereAnnee = c.annees[0]?.annee ?? annee + 1;
-			const a = c.annees[annee - premiereAnnee];
-			if (a && a.salaireBrut > 0) {
+			const salaire = lit.salaire(k);
+			if (salaire > 0) {
 				ligne.cotisants += poids;
-				ligne.salaires += poids * a.salaireBrut;
-				ligne.cotisations +=
-					poids *
-					computeCotisations(
-						a.salaireBrut,
-						annee >= anneeEffet ? be : b,
-						annee,
-					);
+				ligne.salaires += poids * salaire;
+				ligne.cotisations += poids * lit.cotisation(salaire);
 			}
 		}
 		annees.push({
@@ -224,14 +280,15 @@ export function runProjection(
 	>();
 	for (let k = 0; k < n; k++) {
 		const g = (population[k] as Individu).carriere.anneeNaissance;
+		const p = prep.pensions[k] as Pension;
 		let x = parGeneration.get(g);
 		if (!x) {
 			x = { n: 0, age: 0, pension: 0 };
 			parGeneration.set(g, x);
 		}
 		x.n++;
-		x.age += ageDepart[k] as number;
-		x.pension += ((base[k] as number) + (complementaire[k] as number)) / 12;
+		x.age += p.liquidation.age / 4;
+		x.pension += p.mensuelleBrute;
 	}
 	const generations = [...parGeneration.entries()]
 		.sort(([x], [y]) => x - y)
@@ -240,6 +297,142 @@ export function runProjection(
 			ageMoyenDepart: x.age / x.n,
 			pensionMoyenne: x.pension / x.n,
 		}));
-
 	return { annees, generations, dureeMs: performance.now() - depart };
+}
+
+/** Projette le système année par année : préparation puis trajectoires. */
+export function runProjection(
+	population: Individu[],
+	b: Baremes,
+	regles: ReglesScenario,
+	options: OptionsProjection,
+): Projection {
+	return projeter(prepareProjection(population, b, regles, options));
+}
+
+/**
+ * Photographie d'une année de la projection : qui cotise combien, qui perçoit combien,
+ * avec les règles du scénario appliquées depuis l'année d'effet seulement.
+ */
+export function photographier(prep: Preparation, annee: number): Resultat {
+	const depart = performance.now();
+	const { population, b, regles } = prep;
+	const lit = lecteur(prep, annee);
+	const n = population.length;
+	const cotisations: number[] = [];
+	const poidsCotisations: number[] = [];
+	const pensions: number[] = [];
+	const poidsPensions: number[] = [];
+	const parSexe = {
+		F: { valeurs: [] as number[], poids: [] as number[] },
+		H: { valeurs: [] as number[], poids: [] as number[] },
+	};
+	const ages = { F: 0, H: 0 };
+	const pensionParIndividu = new Float64Array(n).fill(Number.NaN);
+	const poidsParIndividu = new Float64Array(n);
+	let autres = 0;
+	let sexagenaires = 0;
+	let sexagenairesRetraites = 0;
+	let minimum = 0;
+	let decote = 0;
+	let surcote = 0;
+	let parAge = 0;
+	for (let k = 0; k < n; k++) {
+		const w = lit.poids(k);
+		if (w === 0) continue;
+		poidsParIndividu[k] = w;
+		const c = (population[k] as Individu).carriere;
+		const age = annee - c.anneeNaissance;
+		const sexagenaire = age >= 60 && age < 70;
+		if (sexagenaire) sexagenaires += w;
+		const annuelle = lit.pensionAnnuelle(k);
+		if (annuelle !== null) {
+			const p = prep.pensions[k] as Pension;
+			const mensuelle = annuelle / 12;
+			if (sexagenaire) sexagenairesRetraites += w;
+			pensions.push(mensuelle);
+			poidsPensions.push(w);
+			pensionParIndividu[k] = mensuelle;
+			parSexe[c.sexe].valeurs.push(mensuelle);
+			parSexe[c.sexe].poids.push(w);
+			ages[c.sexe] += (p.liquidation.age / 4) * w;
+			if (p.cnav.minimumContributifApplique) minimum += w;
+			if (p.cnav.trimestresDecote > 0) decote += w;
+			if (p.cnav.trimestresSurcote > 0) surcote += w;
+			const g = reglesGeneration(
+				c.anneeNaissance,
+				b,
+				prep.avantReforme[k] ? {} : regles,
+			);
+			if (
+				p.liquidation.age >= g.ageTauxPleinAutomatique &&
+				p.cnav.trimestresValides < g.dureeRequise
+			)
+				parAge += w;
+			continue;
+		}
+		const salaire = lit.salaire(k);
+		if (salaire > 0) {
+			cotisations.push(lit.cotisation(salaire));
+			poidsCotisations.push(w);
+		} else autres += w;
+	}
+	const vc = Float64Array.from(cotisations);
+	const vp = Float64Array.from(pensions);
+	const resumeCotisations = resume(vc, poidsCotisations);
+	const resumePensions = resume(vp, poidsPensions);
+	const total = Math.max(1e-9, resumePensions.effectif);
+	const groupe = (sexe: "F" | "H"): GroupeSexe => {
+		const v = parSexe[sexe];
+		const r = resume(v.valeurs, v.poids);
+		return {
+			effectif: r.effectif,
+			pensionMoyenne: r.moyenne,
+			pensionMediane: r.mediane,
+			ageMoyenDepart: r.effectif ? ages[sexe] / r.effectif : 0,
+		};
+	};
+	return {
+		anneeReference: annee,
+		cotisations: {
+			valeurs: vc,
+			resume: resumeCotisations,
+			histogramme: histogramme(
+				vc,
+				MAX_COTISATION,
+				NB_CLASSES,
+				poidsCotisations,
+			),
+		},
+		pensions: {
+			valeurs: vp,
+			resume: resumePensions,
+			histogramme: histogramme(vp, MAX_PENSION, NB_CLASSES, poidsPensions),
+		},
+		effectifs: {
+			cotisants: resumeCotisations.effectif,
+			retraites: resumePensions.effectif,
+			autres,
+		},
+		masses: {
+			cotisations: resumeCotisations.moyenne * resumeCotisations.effectif,
+			pensions: resumePensions.moyenne * resumePensions.effectif * 12,
+		},
+		parSexe: { F: groupe("F"), H: groupe("H") },
+		parts: {
+			minimumContributif: minimum / total,
+			decote: decote / total,
+			surcote: surcote / total,
+			tauxPleinParAge: parAge / total,
+		},
+		partRetraitesSexagenaires: sexagenaires
+			? sexagenairesRetraites / sexagenaires
+			: 0,
+		ageMoyenDepart: resumePensions.effectif
+			? (ages.F + ages.H) / resumePensions.effectif
+			: 0,
+		pensionParIndividu,
+		poidsParIndividu,
+		dureeMs: performance.now() - depart,
+	};
 }

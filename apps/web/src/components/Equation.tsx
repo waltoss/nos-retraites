@@ -135,9 +135,9 @@ export function Equation({
 							{Math.abs(effet).toLocaleString("fr-FR", {
 								maximumFractionDigits: 1,
 							})}{" "}
-							milliards d'euros par an
-						</strong>
-						.
+							milliards d'euros
+						</strong>{" "}
+						cette année-là.
 					</>
 				)}
 			</p>

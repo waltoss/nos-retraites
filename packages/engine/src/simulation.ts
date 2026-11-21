@@ -94,8 +94,9 @@ export interface GroupeSexe {
 }
 
 export interface Resultat {
+	/** Année photographiée. */
 	anneeReference: number;
-	/** Cotisations vieillesse annuelles des individus en emploi l'année de référence. */
+	/** Cotisations vieillesse annuelles des individus en emploi l'année photographiée. */
 	cotisations: {
 		valeurs: Float64Array;
 		resume: Resume;
@@ -122,6 +123,8 @@ export interface Resultat {
 	ageMoyenDepart: number;
 	/** Pension mensuelle de chaque individu, dans l'ordre de la population ; NaN s'il n'est pas retraité. */
 	pensionParIndividu: Float64Array;
+	/** Poids de chaque individu l'année regardée, dans l'ordre de la population. */
+	poidsParIndividu?: Float64Array;
 	dureeMs: number;
 }
 

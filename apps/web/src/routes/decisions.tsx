@@ -1,8 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ChoixAnnee } from "../components/ChoixAnnee";
 import { Icon } from "../components/Icons";
 import type { ResultatLeger } from "../engine.worker";
-import { decimal, euros } from "../format";
+import { decimal, entier, euros } from "../format";
 import { DECISIONS, GROUPES, LEVIER, TERMES, versScenario } from "../leviers";
 import { useScenario } from "../scenario";
 
@@ -88,17 +89,26 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Équilibre",
-		aide: "cotisations moins pensions, en milliards par an",
+		aide: "cotisations moins pensions, en milliards cette année-là",
 		valeur: (r) => (r.masses.cotisations - r.masses.pensions) / 1e9,
 		mode: "absolu",
 		format: (e) => `${decimal(Math.abs(e))} Md€`,
 		plein: 25,
 		seuil: 0.1,
 	},
+	{
+		titre: "Cumul d'ici 2070",
+		aide: "en milliards d'euros de 2026",
+		valeur: (r) => r.cumulEquilibre / 1e9,
+		mode: "absolu",
+		format: (e) => `${entier(Math.abs(e))} Md€`,
+		plein: 800,
+		seuil: 1,
+	},
 ];
 
 function Decisions() {
-	const { pret, demander, remplacer } = useScenario();
+	const { pret, demander, remplacer, annee } = useScenario();
 	const navigate = useNavigate();
 	const [donnees, setDonnees] = useState<{
 		reference: ResultatLeger;
@@ -111,13 +121,14 @@ function Decisions() {
 		demander({
 			type: "decisions",
 			scenarios: DECISIONS.map((d) => versScenario({ [d.levier]: d.valeur })),
+			annee,
 		}).then((r) => {
 			if (actif) setDonnees({ reference: r.reference, resultats: r.resultats });
 		});
 		return () => {
 			actif = false;
 		};
-	}, [pret, demander]);
+	}, [pret, demander, annee]);
 
 	const essayer = (i: number) => {
 		const d = DECISIONS[i];
@@ -131,11 +142,13 @@ function Decisions() {
 			<div className="titre-page">
 				<h1>Chaque décision, une par une</h1>
 				<p className="sub">
-					Chaque ligne applique une seule décision au droit en vigueur et mesure
-					ce qui bouge. Une jauge vers la droite est une hausse, vers la gauche
-					une baisse. Aucune n'est « bonne » ou « mauvaise » en soi : tout
-					dépend de ce qu'on cherche.
+					Chaque ligne applique une seule décision à partir de 2028 et mesure ce
+					qui a bougé en {annee}, face à la loi actuelle la même année. Une
+					jauge vers la droite est une hausse, vers la gauche une baisse. Aucune
+					n'est « bonne » ou « mauvaise » en soi : tout dépend de ce qu'on
+					cherche.
 				</p>
+				<ChoixAnnee />
 			</div>
 
 			{donnees ? (
@@ -240,8 +253,8 @@ function Decisions() {
 				<Icon name="attention" />
 				<p>
 					<strong>À lire comme des ordres de grandeur.</strong> Les décisions
-					sur l'emploi et les carrières refont toutes les vies simulées comme si
-					la situation avait toujours été celle-là. Les cotisations en plus ne
+					sur l'emploi ne changent les carrières qu'à partir de 2028 : leur
+					effet sur les pensions est donc lent. Les cotisations en plus ne
 					changent aucune pension ici, et le modèle ne dit rien de leur effet
 					sur les salaires ou l'emploi. Les totaux portent sur les salariés du
 					privé.

@@ -46,7 +46,8 @@ const SUITES: {
 ];
 
 function Home() {
-	const { reference, courant, reglages, regler, modifies } = useScenario();
+	const { reference, courant, reglages, regler, modifies, annee } =
+		useScenario();
 	const ageLegal = reglages.ageLegal ?? null;
 	const autres = modifies - (ageLegal === null ? 0 : 1);
 
@@ -62,7 +63,7 @@ function Home() {
 				</h1>
 				<p className="lede">
 					C'est tout le principe de la répartition. Changez l'âge légal de
-					départ et regardez ce que ça déplace.
+					départ à partir de 2028 et regardez où en serait le pays en {annee}.
 				</p>
 				<div className="glass" aria-live="polite">
 					<Chiffre
@@ -78,7 +79,7 @@ function Home() {
 									)
 								: ""
 						}
-						legende="âge moyen de départ"
+						legende={`âge moyen de départ des retraités de ${annee}`}
 					/>
 					<Chiffre
 						icone="retraite"
@@ -127,7 +128,7 @@ function Home() {
 					<small>
 						{ageLegal === null
 							? "62 à 64 ans selon la génération"
-							: "pour tout le monde"}
+							: "pour ceux qui partent dès 2028"}
 					</small>
 				</output>
 				<input

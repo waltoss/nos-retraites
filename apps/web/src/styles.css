@@ -330,3 +330,8 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .courbe svg { cursor: crosshair; }
 .courbe .vise line { stroke: var(--ink); stroke-width: 1; opacity: 0.45; }
 .courbe .vise circle { fill: var(--muted); stroke: var(--card); stroke-width: 1.5; }
+.choix-annee { border: 0; padding: 0; margin: 12px 0 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.choix-annee legend { float: left; padding: 0; margin-right: 10px; font-size: 14px; color: var(--muted); }
+.detail-annee { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; margin-top: 48px; }
+.detail-annee h2 { margin: 0; }
+.detail-annee .choix-annee { margin: 0; }

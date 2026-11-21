@@ -65,7 +65,7 @@ export const GROUPES: {
 		id: "emploi",
 		label: "Emploi et carrières",
 		icone: "emploi",
-		note: "Dans la photographie de 2026, ces réglages refont toutes les carrières comme si la situation avait toujours été celle-là. Dans les trajectoires, ils ne changent les carrières qu'à partir de 2028.",
+		note: "Ces réglages ne changent les carrières qu'à partir de 2028. Leur effet sur les pensions met donc des décennies à se voir.",
 	},
 ];
 
@@ -429,3 +429,11 @@ export const DECISIONS: Decision[] = [
 		label: "Égalité de salaire entre femmes et hommes",
 	},
 ];
+
+/** Années de la projection que l'on peut regarder. */
+export const ANNEES = [2030, 2040, 2050, 2070] as const;
+export const ANNEE_DEFAUT = 2040;
+export function lireAnnee(search: Record<string, unknown>): number {
+	const v = Number(search.annee);
+	return (ANNEES as readonly number[]).includes(v) ? v : ANNEE_DEFAUT;
+}

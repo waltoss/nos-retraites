@@ -8,12 +8,24 @@ import {
 import "@fontsource-variable/figtree";
 import "@fontsource-variable/fraunces";
 import { Icon, type IconName } from "../components/Icons";
-import { lireReglages } from "../leviers";
+import {
+	ANNEE_DEFAUT,
+	lireAnnee,
+	lireReglages,
+	type Reglages,
+} from "../leviers";
 import { ScenarioProvider, useScenario } from "../scenario";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
-	validateSearch: (search: Record<string, unknown>) => lireReglages(search),
+	validateSearch: (
+		search: Record<string, unknown>,
+	): Reglages & { annee?: number } => {
+		const annee = lireAnnee(search);
+		return annee === ANNEE_DEFAUT
+			? lireReglages(search)
+			: { ...lireReglages(search), annee };
+	},
 	head: () => ({
 		meta: [
 			{ charSet: "utf-8" },

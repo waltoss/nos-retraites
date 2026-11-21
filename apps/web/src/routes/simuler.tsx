@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ChoixAnnee } from "../components/ChoixAnnee";
 import { Distributions } from "../components/Distributions";
 import { Equation } from "../components/Equation";
 import { GainsPertes } from "../components/GainsPertes";
@@ -15,7 +16,8 @@ const points = (n: number) => `${entier(n)} ${n >= 2 ? "points" : "point"}`;
 const annees = (n: number) => `${decimal(n)} ${n >= 2 ? "ans" : "an"}`;
 
 function Simuler() {
-	const { reference, courant, ecarts, reglages, modifies } = useScenario();
+	const { reference, courant, ecarts, reglages, modifies, annee } =
+		useScenario();
 	return (
 		<main className="atelier">
 			<PanneauLeviers />
@@ -23,15 +25,32 @@ function Simuler() {
 				<div className="titre-page">
 					<h1>Simuler</h1>
 					<p className="sub">
-						Chaque réglage part du droit en vigueur en 2026. Tout ce qui
-						s'affiche à droite est comparé à cette situation.
+						Votre scénario s'applique à partir de 2028, à ceux qui ne sont pas
+						encore partis à la retraite. Tout est comparé à ce que donnerait la
+						loi actuelle la même année.
 					</p>
 				</div>
 
 				{reference && courant ? (
 					<>
 						<section className="bloc">
-							<h2>Ce que votre scénario déplace dans l'équation</h2>
+							<h2>Dans le temps, jusqu'en 2070</h2>
+							<p className="sub">
+								La population suit la projection de l'Insee, les salaires
+								progressent de 0,7 % par an au-dessus des prix. Tous les
+								montants sont en euros de 2026. Le trait vertical marque 2028
+								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
+							</p>
+							<Trajectoires />
+						</section>
+
+						<div className="detail-annee">
+							<h2>Une année en détail</h2>
+							<ChoixAnnee />
+						</div>
+
+						<section className="bloc">
+							<h2>L'équation en {annee}</h2>
 							<p className="sub">
 								D'un côté ceux qui cotisent, de l'autre ceux qui perçoivent. Les
 								termes encadrés sont ceux que vos réglages visent.
@@ -65,28 +84,9 @@ function Simuler() {
 							/>
 						</section>
 
-						<section className="bloc">
-							<h2>Dans le temps, jusqu'en 2070</h2>
-							<p className="sub">
-								Ici la réforme ne s'applique qu'à partir de 2028, à ceux qui ne
-								sont pas encore partis. La population suit la projection de
-								l'Insee, les salaires progressent de 0,7 % par an au-dessus des
-								prix. Le trait vertical marque 2028
-								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
-							</p>
-							<Trajectoires />
-						</section>
-
-						<h2 className="intertitre">La photographie de 2026</h2>
-						<p className="sub">
-							Ici vos réglages sont appliqués à tout le monde, comme s'ils
-							avaient toujours existé. C'est utile pour comprendre un mécanisme,
-							pas pour dater ses effets.
-						</p>
-
 						<div className="duo">
 							<section className="bloc card pleine">
-								<h3>Qui gagne, qui perd parmi les retraités</h3>
+								<h3>Qui gagne, qui perd parmi les retraités de {annee}</h3>
 								{ecarts && <GainsPertes ecarts={ecarts} />}
 							</section>
 							<section className="bloc card pleine">
@@ -96,7 +96,7 @@ function Simuler() {
 						</div>
 
 						<section className="bloc">
-							<h2>Comment les gens partent</h2>
+							<h2>Les retraités de {annee}</h2>
 							<div className="faits">
 								<Fait
 									valeur={`${decimal(courant.ageMoyenDepart)} ans`}

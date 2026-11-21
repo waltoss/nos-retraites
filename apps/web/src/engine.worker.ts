@@ -1,13 +1,11 @@
 /// <reference lib="webworker" />
 import {
-	appliquerRegles,
 	BAREMES_FRANCE as B,
 	buildComptes,
 	type Carriere,
 	CHAMP_PRIVE,
 	type CompteCarriere,
 	compareScenarios,
-	computePension,
 	computePensions,
 	type EcartDecile,
 	type Facteurs,
@@ -15,11 +13,13 @@ import {
 	type Individu,
 	moisParEtat,
 	type Pension,
+	type Preparation,
 	type Projection,
 	PYRAMIDES_PROJETEES,
+	photographier,
+	prepareProjection,
+	projeter,
 	type Resultat,
-	runProjection,
-	runSimulation,
 	SCENARIO_REFERENCE,
 	valeur,
 } from "@nos-retraites/engine";
@@ -27,15 +27,23 @@ import type { ScenarioMoteur } from "./leviers";
 
 export type ResultatLeger = Omit<
 	Resultat,
-	"cotisations" | "pensions" | "pensionParIndividu"
+	"cotisations" | "pensions" | "pensionParIndividu" | "poidsParIndividu"
 > & {
 	cotisations: Omit<Resultat["cotisations"], "valeurs">;
 	pensions: Omit<Resultat["pensions"], "valeurs">;
+	/**
+	 * Cotisations en plus et pensions en moins face à la loi actuelle, cumulées
+	 * de l'année d'effet à la fin de la projection, en euros de l'année de référence.
+	 */
+	cumulEquilibre: number;
 };
+
+export type TrancheAge = "seniors" | "actifs" | "jeunes";
 
 export interface FiltrePortraits {
 	sexe: "F" | "H" | "tous";
 	niveau: "tous" | "bas" | "milieu" | "haut" | "touches";
+	ages: TrancheAge;
 }
 
 export interface ResumePortrait {
@@ -63,8 +71,13 @@ export interface DetailPortrait {
 
 export type Requete =
 	| { type: "init"; taille: number }
-	| { type: "run"; id: number; scenario: ScenarioMoteur }
-	| { type: "decisions"; id: number; scenarios: ScenarioMoteur[] }
+	| { type: "run"; id: number; scenario: ScenarioMoteur; annee: number }
+	| {
+			type: "decisions";
+			id: number;
+			scenarios: ScenarioMoteur[];
+			annee: number;
+	  }
 	| {
 			type: "portraits";
 			id: number;
@@ -111,26 +124,39 @@ export type Reponse =
 			anneeEffet: number;
 	  };
 
+/** Première année d'application d'une réforme votée après l'élection de 2027. */
+export const ANNEE_EFFET = 2028;
+const FIN_PROJECTION = 2070;
+
 interface Monde {
 	population: Individu[];
 	comptes: CompteCarriere[];
 }
 
+/** Un scénario prêt à être regardé : sa population, ses pensions, ses trajectoires. */
+interface Scene {
+	monde: Monde;
+	preparation: Preparation;
+	projection: Projection | null;
+}
+
 let taille = SCENARIO_REFERENCE.taille;
 const mondes = new Map<string, Monde>();
-let reference: Resultat | null = null;
+const scenes = new Map<string, Scene>();
+let pensionsReference: Pension[] | null = null;
+const DROIT: ScenarioMoteur = { regles: {}, facteurs: {} };
 
-/** Une population par jeu de facteurs : les règles, elles, ne changent pas les carrières. */
-function monde(facteurs: Facteurs, anneeEffet?: number): Monde {
-	const cle = JSON.stringify(facteurs) + (anneeEffet ?? "");
+/** Une population par jeu de facteurs ; ils ne changent les carrières qu'à partir de l'année d'effet. */
+function monde(facteurs: Facteurs): Monde {
+	const cle = JSON.stringify(facteurs);
 	let m = mondes.get(cle);
 	if (!m) {
 		const population = generatePopulation(
-			{ ...SCENARIO_REFERENCE, taille, facteurs, anneeEffet },
+			{ ...SCENARIO_REFERENCE, taille, facteurs, anneeEffet: ANNEE_EFFET },
 			B,
 		);
 		m = { population, comptes: buildComptes(population, B) };
-		if (mondes.size >= 6) {
+		if (mondes.size >= 4) {
 			const ancienne = [...mondes.keys()].find((k) => k !== "{}");
 			if (ancienne) mondes.delete(ancienne);
 		}
@@ -139,18 +165,63 @@ function monde(facteurs: Facteurs, anneeEffet?: number): Monde {
 	return m;
 }
 
-function simuler(s: ScenarioMoteur): Resultat {
-	const m = monde(s.facteurs);
-	return runSimulation(m.population, B, s.regles, m.comptes);
+function scene(s: ScenarioMoteur): Scene {
+	const cle = JSON.stringify(s);
+	let sc = scenes.get(cle);
+	if (!sc) {
+		const base = monde({});
+		if (!pensionsReference)
+			pensionsReference = computePensions(base.population, B, {}, base.comptes);
+		const sansFacteur = Object.keys(s.facteurs).length === 0;
+		const m = sansFacteur ? base : monde(s.facteurs);
+		sc = {
+			monde: m,
+			preparation: prepareProjection(m.population, B, s.regles, {
+				debut: B.anneeReference,
+				fin: FIN_PROJECTION,
+				pyramides: PYRAMIDES_PROJETEES,
+				champ: CHAMP_PRIVE,
+				anneeEffet: ANNEE_EFFET,
+				comptes: m.comptes,
+				// Avant la réforme les carrières sont les mêmes : les pensions déjà liquidées aussi.
+				pensionsReference: sansFacteur ? pensionsReference : undefined,
+			}),
+			projection: null,
+		};
+		if (scenes.size >= 4) {
+			const ancienne = [...scenes.keys()].find(
+				(k) => k !== JSON.stringify(DROIT),
+			);
+			if (ancienne) scenes.delete(ancienne);
+		}
+		scenes.set(cle, sc);
+	}
+	return sc;
 }
 
-function referenceCourante(): Resultat {
-	if (!reference) reference = simuler({ regles: {}, facteurs: {} });
-	return reference;
+function trajectoires(sc: Scene): Projection {
+	if (!sc.projection) sc.projection = projeter(sc.preparation);
+	return sc.projection;
 }
 
-function leger(r: Resultat): ResultatLeger {
-	const { pensionParIndividu: _p, cotisations, pensions, ...reste } = r;
+function cumulEquilibre(sc: Scene): number {
+	const reference = trajectoires(scene(DROIT));
+	return trajectoires(sc).annees.reduce((t, a, i) => {
+		const r = reference.annees[i];
+		return r
+			? t + (a.cotisations - r.cotisations) - (a.pensions - r.pensions)
+			: t;
+	}, 0);
+}
+
+function leger(r: Resultat, cumul: number): ResultatLeger {
+	const {
+		pensionParIndividu: _p,
+		poidsParIndividu: _w,
+		cotisations,
+		pensions,
+		...reste
+	} = r;
 	return {
 		...reste,
 		cotisations: {
@@ -158,48 +229,8 @@ function leger(r: Resultat): ResultatLeger {
 			histogramme: cotisations.histogramme,
 		},
 		pensions: { resume: pensions.resume, histogramme: pensions.histogramme },
+		cumulEquilibre: cumul,
 	};
-}
-
-/** Première année d'application d'une réforme votée après l'élection de 2027. */
-const ANNEE_EFFET = 2028;
-const FIN_PROJECTION = 2070;
-let projectionReference: Projection | null = null;
-let pensionsReference: Pension[] | null = null;
-
-/** Trajectoire d'un scénario : les règles et les facteurs ne s'appliquent qu'à partir de l'année d'effet. */
-function projeter(s: ScenarioMoteur): Projection {
-	const base = monde({});
-	if (!pensionsReference)
-		pensionsReference = computePensions(base.population, B, {}, base.comptes);
-	const sansFacteur = Object.keys(s.facteurs).length === 0;
-	const m = sansFacteur ? base : monde(s.facteurs, ANNEE_EFFET);
-	return runProjection(m.population, B, s.regles, {
-		debut: B.anneeReference,
-		fin: FIN_PROJECTION,
-		pyramides: PYRAMIDES_PROJETEES,
-		champ: CHAMP_PRIVE,
-		anneeEffet: ANNEE_EFFET,
-		comptes: m.comptes,
-		// Les carrières d'avant la réforme sont les mêmes : les pensions déjà liquidées aussi.
-		pensionsReference: sansFacteur ? pensionsReference : undefined,
-	});
-}
-
-const AGE_MIN_PORTRAIT = 60;
-
-function pensionDans(
-	s: ScenarioMoteur,
-	i: number,
-): { carriere: Carriere; compte: CompteCarriere; pension: Pension } {
-	const m = monde(s.facteurs);
-	const carriere = (m.population[i] as Individu).carriere;
-	const compte = m.comptes[i] as CompteCarriere;
-	const pension = computePension(carriere, appliquerRegles(B, s.regles), {
-		regles: s.regles,
-		compte,
-	});
-	return { carriere, compte, pension };
 }
 
 /** Niveau de salaire et durée d'emploi d'une carrière avant le départ, pour l'habillage des portraits. */
@@ -221,21 +252,29 @@ function profil(
 	return { niveauSalaire: mois ? somme / mois : 0, anneesEmploi: mois / 12 };
 }
 
+const TRANCHES: Record<TrancheAge, [min: number, max: number]> = {
+	seniors: [60, 96],
+	actifs: [40, 59],
+	jeunes: [20, 39],
+};
+
 function portraits(
 	s: ScenarioMoteur,
 	filtre: FiltrePortraits,
 	nombre: number,
 ): { portraits: ResumePortrait[]; total: number } {
-	const base = monde({});
+	const reference = scene(DROIT);
+	const courant = scene(s);
+	const [ageMin, ageMax] = TRANCHES[filtre.ages];
 	const tous: ResumePortrait[] = [];
-	const droit = { regles: {}, facteurs: {} };
-	for (let i = 0; i < base.population.length; i++) {
-		const individu = base.population[i] as Individu;
+	for (let i = 0; i < reference.monde.population.length; i++) {
+		const individu = reference.monde.population[i] as Individu;
 		const c = individu.carriere;
-		if (B.anneeReference - c.anneeNaissance < AGE_MIN_PORTRAIT) continue;
+		const age = B.anneeReference - c.anneeNaissance;
+		if (age < ageMin || age > ageMax || individu.poids === 0) continue;
 		if (filtre.sexe !== "tous" && c.sexe !== filtre.sexe) continue;
-		const r = pensionDans(droit, i).pension;
-		const p = pensionDans(s, i).pension;
+		const r = reference.preparation.pensions[i] as Pension;
+		const p = courant.preparation.pensions[i] as Pension;
 		tous.push({
 			id: i,
 			sexe: c.sexe,
@@ -294,6 +333,14 @@ function portraits(
 	};
 }
 
+function detail(sc: Scene, i: number) {
+	return {
+		carriere: (sc.monde.population[i] as Individu).carriere,
+		compte: sc.monde.comptes[i] as CompteCarriere,
+		pension: sc.preparation.pensions[i] as Pension,
+	};
+}
+
 const envoyer = (r: Reponse) => self.postMessage(r);
 
 self.onmessage = (e: MessageEvent<Requete>) => {
@@ -302,24 +349,24 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 		case "init":
 			taille = m.taille;
 			mondes.clear();
-			reference = null;
-			projectionReference = null;
+			scenes.clear();
 			pensionsReference = null;
-			referenceCourante();
+			scene(DROIT);
 			envoyer({ type: "ready" });
 			break;
 		case "run": {
-			const ref = referenceCourante();
-			const courant = simuler(m.scenario);
+			const sc = scene(m.scenario);
+			const reference = photographier(scene(DROIT).preparation, m.annee);
+			const courant = photographier(sc.preparation, m.annee);
 			envoyer({
 				type: "result",
 				id: m.id,
-				reference: leger(ref),
-				courant: leger(courant),
+				reference: leger(reference, 0),
+				courant: leger(courant, cumulEquilibre(sc)),
 				ecarts: compareScenarios(
-					ref.pensionParIndividu,
+					reference.pensionParIndividu,
 					courant.pensionParIndividu,
-					monde({}).population.map((i) => i.poids),
+					reference.poidsParIndividu,
 				),
 			});
 			break;
@@ -328,8 +375,14 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			envoyer({
 				type: "decisions",
 				id: m.id,
-				reference: leger(referenceCourante()),
-				resultats: m.scenarios.map((s) => leger(simuler(s))),
+				reference: leger(photographier(scene(DROIT).preparation, m.annee), 0),
+				resultats: m.scenarios.map((s) => {
+					const sc = scene(s);
+					return leger(
+						photographier(sc.preparation, m.annee),
+						cumulEquilibre(sc),
+					);
+				}),
 			});
 			break;
 		case "portraits":
@@ -340,13 +393,11 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			});
 			break;
 		case "projection":
-			if (!projectionReference)
-				projectionReference = projeter({ regles: {}, facteurs: {} });
 			envoyer({
 				type: "projection",
 				id: m.id,
-				reference: projectionReference,
-				courant: projeter(m.scenario),
+				reference: trajectoires(scene(DROIT)),
+				courant: trajectoires(scene(m.scenario)),
 				anneeEffet: ANNEE_EFFET,
 			});
 			break;
@@ -356,8 +407,8 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				id: m.id,
 				detail: {
 					id: m.individu,
-					reference: pensionDans({ regles: {}, facteurs: {} }, m.individu),
-					scenario: pensionDans(m.scenario, m.individu),
+					reference: detail(scene(DROIT), m.individu),
+					scenario: detail(scene(m.scenario), m.individu),
 				},
 			});
 			break;

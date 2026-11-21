@@ -36,7 +36,7 @@ export function GainsPertes({ ecarts }: { ecarts: EcartDecile[] }) {
 			>
 				{ecarts.map((_, i) => {
 					const p = pourcents[i] ?? 0;
-					const hauteur = (Math.abs(p) / echelle) * 50;
+					const hauteur = (Math.abs(p) / echelle) * 38;
 					return (
 						<div
 							className={i === survol ? "gain vise" : "gain"}
@@ -105,7 +105,7 @@ export function GainsPertes({ ecarts }: { ecarts: EcartDecile[] }) {
 					? "Votre scénario ne change la pension d'aucun de ces retraités."
 					: "Écart de pension en %, pour les personnes qui sont retraitées dans les deux cas."}
 				{sorties > 0.001 &&
-					` ${(sorties * 100).toLocaleString("fr-FR", { maximumFractionDigits: 0 })} % des retraités d'aujourd'hui ne le seraient pas encore dans votre scénario.`}
+					` ${(sorties * 100).toLocaleString("fr-FR", { maximumFractionDigits: 0 })} % d'entre eux ne seraient pas encore partis dans votre scénario.`}
 			</p>
 		</figure>
 	);

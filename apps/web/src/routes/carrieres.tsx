@@ -25,6 +25,11 @@ const SEXES: { id: FiltrePortraits["sexe"]; label: string }[] = [
 	{ id: "F", label: "Femmes" },
 	{ id: "H", label: "Hommes" },
 ];
+const AGES: { id: FiltrePortraits["ages"]; label: string; texte: string }[] = [
+	{ id: "seniors", label: "60 ans et plus", texte: "de 60 ans et plus" },
+	{ id: "actifs", label: "40 à 59 ans", texte: "de 40 à 59 ans" },
+	{ id: "jeunes", label: "20 à 39 ans", texte: "de 20 à 39 ans" },
+];
 const NIVEAUX: { id: FiltrePortraits["niveau"]; label: string }[] = [
 	{ id: "tous", label: "Toutes les pensions" },
 	{ id: "bas", label: "Petites" },
@@ -40,6 +45,7 @@ function Carrieres() {
 	const [filtre, setFiltre] = useState<FiltrePortraits>({
 		sexe: "tous",
 		niveau: "tous",
+		ages: "seniors",
 	});
 	const [liste, setListe] = useState<{
 		portraits: ResumePortrait[];
@@ -87,7 +93,7 @@ function Carrieres() {
 					{modifies > 0
 						? ", avec la loi actuelle puis avec votre scénario"
 						: ""}
-					.
+					. Un scénario ne change rien pour ceux qui sont partis avant 2028.
 				</p>
 			</div>
 
@@ -102,6 +108,19 @@ function Carrieres() {
 							onClick={() => setFiltre({ ...filtre, sexe: s.id })}
 						>
 							{s.label}
+						</button>
+					))}
+				</fieldset>
+				<fieldset>
+					<legend>Âge en 2026</legend>
+					{AGES.map((a) => (
+						<button
+							type="button"
+							key={a.id}
+							className={filtre.ages === a.id ? "puce actif" : "puce"}
+							onClick={() => setFiltre({ ...filtre, ages: a.id })}
+						>
+							{a.label}
 						</button>
 					))}
 				</fieldset>
@@ -170,9 +189,11 @@ function Carrieres() {
 						<p className="reserve">
 							{entier(liste.portraits.length)} carrières, de la plus petite
 							pension à la plus grande. Chacune tient lieu d'une part égale des{" "}
-							{personnes(liste.total)} de salariés et anciens salariés du privé
-							de 60 ans et plus. Les prénoms et les métiers sont des exemples :
-							le modèle ne connaît que les salaires et les périodes d'emploi.
+							{personnes(liste.total)} de salariés et anciens salariés du privé{" "}
+							{AGES.find((a) => a.id === filtre.ages)?.texte}. Pour ceux qui ne
+							sont pas encore partis, c'est la pension qu'ils auront, en euros
+							de 2026. Les prénoms et les métiers sont des exemples : le modèle
+							ne connaît que les salaires et les périodes d'emploi.
 						</p>
 					)}
 				</div>
@@ -357,7 +378,7 @@ function Fiche({
 								? `Par exemple ${qui.metier}${c.cadre && !qui.metier.startsWith("cadre") ? ", cadre" : ""}.`
 								: "A peu travaillé en France."}{" "}
 							{resume.represente !== null &&
-								`Dans la population, environ ${personnes(Math.round(resume.represente / 1e5) * 1e5)} de personnes de 60 ans et plus ont une situation voisine.`}
+								`Dans la population, environ ${personnes(Math.round(resume.represente / 1e5) * 1e5)} de personnes de sa tranche d'âge ont une situation voisine.`}
 						</p>
 					</div>
 				</div>

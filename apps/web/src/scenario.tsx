@@ -12,8 +12,10 @@ import {
 } from "react";
 import type { Reponse, Requete, ResultatLeger } from "./engine.worker";
 import {
+	ANNEE_DEFAUT,
 	LEVIER,
 	type LevierId,
+	lireAnnee,
 	lireReglages,
 	type Reglages,
 	type ScenarioMoteur,
@@ -31,6 +33,9 @@ interface Contexte {
 	scenario: ScenarioMoteur;
 	/** Nombre de leviers qui s'écartent du droit en vigueur. */
 	modifies: number;
+	/** Année de la projection que l'on regarde. */
+	annee: number;
+	setAnnee: (annee: number) => void;
 	regler: (id: LevierId, valeur: number | null) => void;
 	remplacer: (r: Reglages) => void;
 	reference: ResultatLeger | null;
@@ -58,6 +63,9 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 	const [reglages, setReglages] = useState<Reglages>(() =>
 		lireReglages(search),
 	);
+	const [annee, setAnnee] = useState(() => lireAnnee(search));
+	const anneeCourante = useRef(annee);
+	anneeCourante.current = annee;
 	const [pret, setPret] = useState(false);
 	const [resultat, setResultat] = useState<{
 		reference: ResultatLeger;
@@ -72,13 +80,14 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 	const scenarioCourant = useRef(scenario);
 	scenarioCourant.current = scenario;
 
-	const lancer = useCallback((s: ScenarioMoteur) => {
+	const lancer = useCallback((s: ScenarioMoteur, a: number) => {
 		compteur.current += 1;
 		dernierRun.current = compteur.current;
 		worker.current?.postMessage({
 			type: "run",
 			id: compteur.current,
 			scenario: s,
+			annee: a,
 		} satisfies Requete);
 	}, []);
 
@@ -91,7 +100,7 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 			const m = e.data;
 			if (m.type === "ready") {
 				setPret(true);
-				lancer(scenarioCourant.current);
+				lancer(scenarioCourant.current, anneeCourante.current);
 				return;
 			}
 			if (m.type === "result") {
@@ -112,20 +121,22 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 
 	// Chaque changement de scénario relance le calcul et met l'URL à jour, sans empiler l'historique.
 	useEffect(() => {
-		if (pret) lancer(scenario);
-	}, [scenario, pret, lancer]);
+		if (pret) lancer(scenario, annee);
+	}, [scenario, annee, pret, lancer]);
 
 	useEffect(() => {
 		const t = setTimeout(() => {
 			navigate({
 				to: ".",
-				search: reglages as never,
+				search: (annee === ANNEE_DEFAUT
+					? reglages
+					: { ...reglages, annee }) as never,
 				replace: true,
 				resetScroll: false,
 			});
 		}, 250);
 		return () => clearTimeout(t);
-	}, [reglages, navigate]);
+	}, [reglages, annee, navigate]);
 
 	const regler = useCallback((id: LevierId, valeur: number | null) => {
 		setReglages((r) => {
@@ -149,6 +160,8 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 		reglages,
 		scenario,
 		modifies: Object.keys(reglages).length,
+		annee,
+		setAnnee,
 		regler,
 		remplacer: setReglages,
 		reference: resultat?.reference ?? null,
