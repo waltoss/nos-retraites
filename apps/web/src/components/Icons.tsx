@@ -44,6 +44,12 @@ const PATHS = {
 	),
 	modele: <path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17.500l9 5 9-5" />,
 	curseurs: <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4" />,
+	info: (
+		<>
+			<circle cx="12" cy="12" r="9" />
+			<path d="M12 11v5.500M12 7.500v.300" />
+		</>
+	),
 	attention: <path d="M12 4l9 16H3zM12 10v4.500M12 17.200v.300" />,
 } as const;
 

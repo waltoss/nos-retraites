@@ -2,9 +2,10 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { ChoixAnnee } from "../components/ChoixAnnee";
 import { Icon } from "../components/Icons";
+import { PastillesTermes, TermesEnClair } from "../components/Termes";
 import type { ResultatLeger } from "../engine.worker";
 import { decimal, entier, euros } from "../format";
-import { DECISIONS, GROUPES, LEVIER, TERMES, versScenario } from "../leviers";
+import { DECISIONS, GROUPES, LEVIER, versScenario } from "../leviers";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/decisions")({ component: Decisions });
@@ -26,7 +27,7 @@ const pct = (n: number) => `${decimal(Math.abs(n))} %`;
 const COLONNES: Colonne[] = [
 	{
 		titre: "Âge moyen de départ",
-		aide: "en années",
+		aide: "",
 		valeur: (r) => r.ageMoyenDepart,
 		mode: "absolu",
 		format: (e) => `${decimal(Math.abs(e))} an`,
@@ -35,7 +36,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "60 à 69 ans à la retraite",
-		aide: "en points",
+		aide: "part, en points",
 		valeur: (r) => r.partRetraitesSexagenaires * 100,
 		mode: "absolu",
 		format: (e) => `${decimal(Math.abs(e))} pt`,
@@ -71,7 +72,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Pensions versées",
-		aide: "total, en %",
+		aide: "total",
 		valeur: (r) => r.masses.pensions,
 		mode: "relatif",
 		format: pct,
@@ -80,7 +81,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Cotisations versées",
-		aide: "total, en %",
+		aide: "total",
 		valeur: (r) => r.masses.cotisations,
 		mode: "relatif",
 		format: pct,
@@ -89,7 +90,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Solde tous régimes",
-		aide: "en milliards cette année-là",
+		aide: "cette année-là",
 		valeur: (r) => r.systeme.solde / 1e9,
 		mode: "absolu",
 		format: (e) => `${decimal(Math.abs(e))} Md€`,
@@ -98,7 +99,7 @@ const COLONNES: Colonne[] = [
 	},
 	{
 		titre: "Cumul d'ici 2070",
-		aide: "solde tous régimes, milliards d'euros de 2026",
+		aide: "solde, euros de 2026",
 		valeur: (r) => r.cumulEquilibre / 1e9,
 		mode: "absolu",
 		format: (e) => `${entier(Math.abs(e))} Md€`,
@@ -151,16 +152,22 @@ function Decisions() {
 				<ChoixAnnee />
 			</div>
 
+			<p className="legende-termes">
+				<span>Chaque décision agit sur</span>
+				<TermesEnClair />
+			</p>
+
 			{donnees ? (
 				<div className="defile">
 					<table className="table decisions">
 						<thead>
 							<tr>
 								<th>Décision</th>
+								<th>Agit sur</th>
 								{COLONNES.map((c) => (
 									<th key={c.titre}>
 										{c.titre}
-										<small>{c.aide}</small>
+										{c.aide && <small>{c.aide}</small>}
 									</th>
 								))}
 								<th />
@@ -174,7 +181,7 @@ function Decisions() {
 							return (
 								<tbody key={g.id}>
 									<tr className="groupe">
-										<th colSpan={COLONNES.length + 2}>
+										<th colSpan={COLONNES.length + 3}>
 											<Icon name={g.icone} size={18} />
 											{g.label}
 										</th>
@@ -184,20 +191,10 @@ function Decisions() {
 										if (!r) return null;
 										return (
 											<tr key={d.label}>
-												<th>
-													{d.label}
-													<span className="termes">
-														{LEVIER[d.levier].termes.map((t) => (
-															<span
-																key={t}
-																className={`terme ${TERMES[t].cote}`}
-															>
-																<Icon name={TERMES[t].icone} size={14} />
-																{TERMES[t].label.toLowerCase()}
-															</span>
-														))}
-													</span>
-												</th>
+												<th>{d.label}</th>
+												<td className="agit">
+													<PastillesTermes termes={LEVIER[d.levier].termes} />
+												</td>
 												{COLONNES.map((c) => {
 													const ref = c.valeur(donnees.reference);
 													const e =

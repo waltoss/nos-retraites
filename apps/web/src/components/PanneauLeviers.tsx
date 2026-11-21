@@ -1,6 +1,8 @@
-import { GROUPES, LEVIERS, type Levier, TERMES } from "../leviers";
+import { useEffect, useState } from "react";
+import { GROUPES, type GroupeId, LEVIERS, type Levier } from "../leviers";
 import { useScenario } from "../scenario";
 import { Icon } from "./Icons";
+import { TermesEnClair } from "./Termes";
 
 function CurseurLevier({ levier }: { levier: Levier }) {
 	const { reglages, regler } = useScenario();
@@ -12,6 +14,8 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 			? levier.affiche(position)
 			: "Loi actuelle";
 	const id = `levier-${levier.id}`;
+	// L'aide ne s'ouvre qu'à la demande : rien ne bouge au survol ni pendant un réglage.
+	const [aide, setAide] = useState(false);
 	return (
 		<div className={modifie ? "levier modifie" : "levier"}>
 			<div className="levier-tete">
@@ -34,6 +38,16 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 				<button
 					type="button"
 					className="mini"
+					onClick={() => setAide(!aide)}
+					aria-expanded={aide}
+					aria-controls={`${id}-aide`}
+					aria-label={`Explication de « ${levier.label} »`}
+				>
+					<Icon name="info" size={18} />
+				</button>
+				<button
+					type="button"
+					className="mini"
 					onClick={() => regler(levier.id, null)}
 					disabled={!modifie}
 					aria-label={`Remettre « ${levier.label} » à la loi actuelle`}
@@ -41,18 +55,9 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 					<Icon name="retour" size={16} />
 				</button>
 			</div>
-			<p className="levier-aide">
+			<p className="levier-aide" id={`${id}-aide`} hidden={!aide}>
 				{levier.aide}
-				{levier.termes.length > 0 && (
-					<span className="termes">
-						{levier.termes.map((t) => (
-							<span key={t} className={`terme ${TERMES[t].cote}`}>
-								<Icon name={TERMES[t].icone} size={14} />
-								{TERMES[t].label.toLowerCase()}
-							</span>
-						))}
-					</span>
-				)}
+				{levier.termes.length > 0 && <TermesEnClair termes={levier.termes} />}
 			</p>
 		</div>
 	);
@@ -60,6 +65,18 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 
 export function PanneauLeviers() {
 	const { reglages, remplacer, modifies } = useScenario();
+	const touches = GROUPES.filter((g) =>
+		LEVIERS.some((l) => l.groupe === g.id && reglages[l.id] !== undefined),
+	).map((g) => g.id);
+	// Un groupe s'ouvre quand un de ses leviers est réglé, mais seul l'utilisateur le referme.
+	const [ouverts, setOuverts] = useState<GroupeId[]>(() => ["age", ...touches]);
+	const cle = touches.join(" ");
+	useEffect(() => {
+		const ids = cle ? (cle.split(" ") as GroupeId[]) : [];
+		setOuverts((o) =>
+			ids.every((id) => o.includes(id)) ? o : [...new Set([...o, ...ids])],
+		);
+	}, [cle]);
 	return (
 		<aside className="panneau" aria-label="Leviers du scénario">
 			<div className="panneau-tete">
@@ -80,7 +97,20 @@ export function PanneauLeviers() {
 					(l) => reglages[l.id] !== undefined,
 				).length;
 				return (
-					<details key={g.id} open={g.id === "age" || changes > 0}>
+					<details
+						key={g.id}
+						open={ouverts.includes(g.id)}
+						onToggle={(e) => {
+							const ouvert = e.currentTarget.open;
+							setOuverts((o) =>
+								o.includes(g.id) === ouvert
+									? o
+									: ouvert
+										? [...o, g.id]
+										: o.filter((id) => id !== g.id),
+							);
+						}}
+					>
 						<summary>
 							<Icon name={g.icone} size={20} />
 							<span>{g.label}</span>

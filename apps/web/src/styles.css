@@ -140,16 +140,16 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .levier { padding: 10px 18px 12px; border-left: 3px solid transparent; }
 .levier.modifie { border-left-color: var(--besoin); background: color-mix(in srgb, var(--besoin) 5%, transparent); }
 .levier-tete { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
-.levier-tete label { font-size: 15px; }
+.levier-tete label { font-size: 15px; min-width: 0; }
 .levier-tete output { font-size: 14px; font-weight: 600; white-space: nowrap; color: var(--muted); }
 .levier.modifie .levier-tete output { color: var(--besoin); }
-.levier-corps { display: flex; align-items: center; gap: 8px; }
+.levier-corps { display: flex; align-items: center; gap: 6px; }
 .levier-corps input[type="range"] { flex: 1; min-width: 0; height: 32px; margin: 0; accent-color: var(--muted); cursor: pointer; }
 .levier.modifie input[type="range"] { accent-color: var(--besoin); }
 .mini { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: transparent; color: var(--ink); display: grid; place-items: center; cursor: pointer; }
 .mini:disabled { visibility: hidden; }
-.levier-aide { display: none; margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
-.levier.modifie .levier-aide, .levier:focus-within .levier-aide, .levier:hover .levier-aide { display: block; }
+.mini[aria-expanded="true"] { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.levier-aide { margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: var(--muted); }
 .termes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
 .terme { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; padding: 2px 8px; border-radius: 999px; }
 .terme.ressources { color: var(--cotisants); background: color-mix(in srgb, var(--cotisants) 10%, transparent); }
@@ -207,10 +207,16 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 
 /* Décisions */
 .defile { overflow-x: auto; margin-top: 24px; border-radius: 12px; }
-.decisions { min-width: 1100px; }
-.decisions tbody th:first-child { min-width: 260px; }
+.decisions { border-collapse: separate; border-spacing: 0; overflow: visible; }
+.decisions th, .decisions td { padding: 8px; }
+.decisions tr > :first-child { padding-left: 14px; }
+.decisions .agit { width: 1%; }
+.decisions tr:not(.groupe) > th:first-child { position: sticky; left: 0; z-index: 1; background: var(--card); }
+.decisions tbody th:first-child { min-width: 190px; }
+.decisions tbody tr:not(.groupe) > * { vertical-align: middle; }
+.decisions thead th { text-wrap: balance; }
 .decisions thead th { position: sticky; top: 0; background: var(--card); }
-.jauge { min-width: 110px; }
+.jauge { min-width: 76px; }
 .piste { position: relative; height: 8px; border-radius: 4px; background: var(--paper); margin-bottom: 4px; }
 .piste::after { content: ""; position: absolute; left: 50%; top: -2px; bottom: -2px; border-left: 1px solid var(--ink); opacity: 0.35; }
 .piste i { position: absolute; top: 0; bottom: 0; background: var(--ink); }
@@ -226,18 +232,23 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .puce { height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: 500 14px var(--text); cursor: pointer; }
 .puce.actif { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .portraits { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; margin-top: 20px; align-items: start; }
-.liste { display: grid; gap: 8px; }
+.liste { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
 .portrait { display: flex; justify-content: space-between; align-items: center; gap: 12px; text-align: left; padding: 12px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); color: var(--ink); font: inherit; cursor: pointer; }
 .portrait.actif { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
-.portrait small { display: block; font-size: 13px; color: var(--muted); font-weight: 400; }
+.portrait small { display: flex; align-items: center; gap: 4px; font-size: 13px; color: var(--muted); font-weight: 400; white-space: nowrap; }
+.portrait .nom, .portrait .qui small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.portrait .qui small.represente { display: flex; }
+.portrait .combien { flex: none; white-space: nowrap; }
+.portrait .combien small { justify-content: flex-end; }
+.portrait .combien em { margin-right: 8px; font: 600 13px/1.3 var(--text); font-style: normal; color: var(--besoin); }
 .portrait .combien { text-align: right; font-family: var(--display); font-weight: 650; font-size: 20px; line-height: 1.1; }
 .portrait .combien small { font-family: var(--text); }
 .fiche { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; min-width: 0; }
 .recit { font-family: var(--display); font-weight: 500; font-size: 20px; line-height: 1.35; margin: 0 0 20px; max-width: 60ch; }
 .frise { margin: 0 0 20px; }
-.frise-zone { position: relative; height: 150px; border-bottom: 1px solid var(--line); }
-.frise-plafond { position: absolute; left: 0; right: 0; bottom: 50%; border-top: 1px dashed var(--line); }
-.frise-plafond span { position: absolute; right: 0; bottom: 2px; font-size: 11px; color: var(--muted); }
+.frise-zone { position: relative; height: 130px; margin-top: 28px; border-bottom: 1px solid var(--line); }
+.frise-plafond { position: absolute; left: 0; right: 0; border-top: 1px dashed var(--line); }
+.frise-plafond span { position: absolute; left: 0; bottom: 2px; font-size: 11px; color: var(--muted); }
 .frise-barres { position: absolute; inset: 0; display: flex; align-items: flex-end; gap: 2px; }
 .frise-col { position: relative; flex: 1; height: 100%; display: flex; align-items: flex-end; }
 .frise-pile { width: 100%; height: 100%; display: flex; flex-direction: column-reverse; gap: 1px; }
@@ -245,7 +256,7 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .frise-col.vise i { filter: brightness(0.8); }
 .frise-barres { touch-action: pan-y; cursor: crosshair; }
 .frise-col b, .legende b { width: 8px; height: 8px; border-radius: 50%; background: var(--ink); }
-.frise-col b { position: absolute; left: 50%; top: 4px; transform: translateX(-50%); }
+.frise-pile b { flex: none; align-self: center; margin-bottom: 3px; }
 .frise-depart { position: absolute; top: -6px; bottom: 0; border-left: 2px solid var(--ink); }
 .frise-depart.autre { border-left-style: dashed; opacity: 0.5; }
 .frise-axe { position: relative; height: 20px; font-size: 12px; color: var(--muted); }
@@ -290,7 +301,8 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .comparaison { margin-top: 28px; }
 .comparaison h3 { font-family: var(--display); font-size: 20px; margin: 0 0 4px; }
 .avatar { flex: none; border-radius: 50%; }
-.portrait .qui { flex: 1; min-width: 0; font-weight: 600; }
+.portrait { min-width: 0; }
+.portrait .qui { flex: 1; min-width: 0; overflow: hidden; font-weight: 600; }
 .portrait .represente { color: var(--cotisants); }
 .identite { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
 .identite h2 { font-family: var(--display); font-size: 26px; margin: 0 0 2px; }
@@ -355,3 +367,19 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .solde .sub { margin: 8px 0 0; }
 .cumul strong + small { margin-top: 10px; }
 .groupe-resume { margin: 0; padding: 10px 20px; font-weight: 600; font-size: 14px; background: color-mix(in srgb, var(--cotisants) 9%, transparent); color: var(--ink); }
+
+/* Retouches : rien ne bouge sans un geste, tout se lit sans retour à la ligne. */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+:where(a, button, summary, input):focus-visible { outline: 2px solid var(--cotisants); outline-offset: 2px; }
+.indep { min-height: 36px; display: inline-flex; align-items: center; }
+.pastilles { display: inline-grid; grid-template-columns: repeat(4, 22px); gap: 3px; vertical-align: middle; }
+.pastilles .terme { width: 22px; height: 22px; padding: 0; justify-content: center; }
+.legende-termes { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 20px 0 0; font-size: 14px; color: var(--muted); }
+.legende-termes .termes { margin: 0; }
+.legende-termes + .defile { margin-top: 12px; }
+.systeme-piste { position: relative; }
+.systeme-barre { touch-action: pan-y; }
+.systeme-barre i.vise { filter: brightness(0.85); }
+.mark { display: inline-flex; align-items: center; gap: 8px; }
+.mark b { font-weight: inherit; }
+@media (max-width: 760px) { .decisions tbody th:first-child { min-width: 130px; max-width: 150px; font-size: 14px; } }

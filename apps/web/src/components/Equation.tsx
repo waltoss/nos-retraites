@@ -1,3 +1,4 @@
+import { useState } from "react";
 import type { ResultatLeger } from "../engine.worker";
 import { euros, milliards, personnes } from "../format";
 import {
@@ -7,6 +8,7 @@ import {
 	TERMES,
 	type Terme,
 } from "../leviers";
+import { cadrer } from "./Histogram";
 import { Icon } from "./Icons";
 
 const signe = (x: number) =>
@@ -65,8 +67,20 @@ export function Equation({
 	const effet = (sys.solde - sysReference.solde) / 1e9;
 	const besoin = Math.max(0, -sys.solde);
 	const excedent = Math.max(0, sys.solde);
-	const largeur = (x: number) =>
-		`${(x / Math.max(sys.depenses, sys.ressources)) * 100}%`;
+	const pleine = Math.max(sys.depenses, sys.ressources);
+	const largeur = (x: number) => `${(x / pleine) * 100}%`;
+	const [survol, setSurvol] = useState<number | null>(null);
+	const segments = [
+		{ cle: "cot", nom: "Cotisations", montant: sys.cotisations },
+		{ cle: "autres", nom: "Autres ressources", montant: sys.autresRessources },
+		...(besoin > 0
+			? [{ cle: "besoin", nom: "Besoin de financement", montant: besoin }]
+			: []),
+	];
+	const vise = survol === null ? undefined : segments[survol];
+	const avant = segments
+		.slice(0, survol ?? 0)
+		.reduce((s, x) => s + x.montant, 0);
 	return (
 		<div className="equation">
 			<div className="cote">
@@ -132,18 +146,38 @@ export function Equation({
 				<p className="unit">
 					{milliards(sys.depenses)} de dépenses de retraite, à payer avec :
 				</p>
-				<div
-					className="systeme-barre"
-					role="img"
-					aria-label="Ce qui finance les retraites"
-				>
-					<i className="cot" style={{ width: largeur(sys.cotisations) }} />
-					<i
-						className="autres"
-						style={{ width: largeur(sys.autresRessources) }}
-					/>
-					{besoin > 0 && (
-						<i className="besoin" style={{ width: largeur(besoin) }} />
+				<div className="systeme-piste">
+					<div
+						className="systeme-barre"
+						role="img"
+						aria-label="Ce qui finance les retraites"
+						onPointerLeave={() => setSurvol(null)}
+					>
+						{segments.map((x, k) => (
+							<i
+								key={x.cle}
+								className={k === survol ? `${x.cle} vise` : x.cle}
+								style={{ width: largeur(x.montant) }}
+								onPointerEnter={() => setSurvol(k)}
+								onPointerDown={() => setSurvol(k)}
+							/>
+						))}
+					</div>
+					{vise && (
+						<div
+							className="bulle num"
+							style={{
+								left: cadrer(((avant + vise.montant / 2) / pleine) * 100),
+								bottom: "calc(100% + 6px)",
+							}}
+						>
+							<strong>{vise.nom}</strong>
+							<span>{milliards(vise.montant)}</span>
+							<span className="avant">
+								{Math.round((vise.montant / sys.depenses) * 100)} % des dépenses
+								de retraite
+							</span>
+						</div>
 					)}
 				</div>
 				<ul className="systeme-legende">

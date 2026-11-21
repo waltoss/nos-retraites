@@ -14,7 +14,14 @@ import type {
 	FiltrePortraits,
 	ResumePortrait,
 } from "../engine.worker";
-import { ageEnClair, decimal, entier, euros, personnes } from "../format";
+import {
+	ageEnClair,
+	decimal,
+	ecart,
+	entier,
+	euros,
+	personnes,
+} from "../format";
 import { persona } from "../personas";
 import { useScenario } from "../scenario";
 
@@ -142,14 +149,13 @@ function Carrieres() {
 			</div>
 
 			<div className="portraits">
-				<div className="liste" role="listbox" aria-label="Carrières simulées">
+				<div className="liste">
 					{liste ? (
 						liste.portraits.map((p) => (
 							<button
 								type="button"
 								key={p.id}
-								role="option"
-								aria-selected={p.id === choisi}
+								aria-pressed={p.id === choisi}
 								className={p.id === choisi ? "portrait actif" : "portrait"}
 								onClick={() => setChoisi(p.id)}
 							>
@@ -159,25 +165,49 @@ function Carrieres() {
 									age={BAREMES_FRANCE.anneeReference - p.anneeNaissance}
 								/>
 								<span className="qui">
-									{persona(p).prenom},{" "}
-									{BAREMES_FRANCE.anneeReference - p.anneeNaissance} ans
+									<span className="nom">
+										{persona(p).prenom},{" "}
+										{BAREMES_FRANCE.anneeReference - p.anneeNaissance} ans
+									</span>
 									<small>
 										{persona(p).metier ?? "a peu travaillé en France"}
 									</small>
 									{p.represente !== null && (
-										<small className="represente">
-											comme {p.sexe === "F" ? "elle" : "lui"},{" "}
+										<small
+											className="represente"
+											title={`Environ ${personnes(Math.round(p.represente / 1e5) * 1e5)} personnes de sa tranche d'âge ont une situation voisine`}
+										>
+											<Icon name="population" size={14} />
 											{personnes(Math.round(p.represente / 1e5) * 1e5)}
+											<span className="sr">
+												{" "}
+												personnes dans une situation voisine
+											</span>
 										</small>
 									)}
 								</span>
 								<span className="num combien">
-									{euros(p.scenario.mensuelle)}
-									<small>
-										{modifies > 0 &&
-										Math.abs(p.scenario.mensuelle - p.reference.mensuelle) >= 5
-											? `${euros(p.reference.mensuelle)} avec la loi actuelle`
-											: `départ à ${ageEnClair(p.scenario.age)}`}
+									{modifies > 0 &&
+										ecart(
+											p.scenario.mensuelle,
+											p.reference.mensuelle,
+											euros,
+											5,
+										) && (
+											<em title="Écart avec la loi actuelle">
+												{ecart(
+													p.scenario.mensuelle,
+													p.reference.mensuelle,
+													euros,
+													5,
+												)}
+											</em>
+										)}
+									<span className="montant">{euros(p.scenario.mensuelle)}</span>
+									<small title="Âge de départ à la retraite">
+										<Icon name="age" size={14} />
+										<span className="sr">départ à </span>
+										{ageEnClair(p.scenario.age)}
 									</small>
 								</span>
 							</button>
@@ -188,7 +218,9 @@ function Carrieres() {
 					{liste && (
 						<p className="reserve">
 							{entier(liste.portraits.length)} carrières, de la plus petite
-							pension à la plus grande. Chacune tient lieu d'une part égale des{" "}
+							pension à la plus grande. Sous chaque métier, le nombre de
+							personnes dans une situation voisine ; sous la pension, l'âge de
+							départ. Chacune tient lieu d'une part égale des{" "}
 							{personnes(liste.total)} de salariés et anciens salariés du privé{" "}
 							{AGES.find((a) => a.id === filtre.ages)?.texte}. Pour ceux qui ne
 							sont pas encore partis, c'est la pension qu'ils auront, en euros

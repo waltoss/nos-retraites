@@ -155,7 +155,7 @@ export const LEVIERS: Levier[] = [
 		pas: 1,
 		defaut: null,
 		repos: 172,
-		affiche: (v) => `${v} trimestres (${(v / 4).toLocaleString("fr-FR")} ans)`,
+		affiche: (v) => `${(v / 4).toLocaleString("fr-FR")} ans (${v} trim.)`,
 		termes: ["retraites", "pension"],
 		aide: "Il faut cette durée pour partir sans décote avant 67 ans. L'allonger retarde les départs et réduit la pension de ceux qui partent quand même.",
 	},
@@ -203,10 +203,7 @@ export const LEVIERS: Levier[] = [
 		max: 10,
 		pas: 1,
 		defaut: 0,
-		affiche: (v) =>
-			v === 0
-				? "comme les prix"
-				: `${signe(v / 10)} point par an par rapport aux prix`,
+		affiche: (v) => (v === 0 ? "comme les prix" : `prix ${signe(v / 10)} pt`),
 		termes: ["pension"],
 		aide: "Une pension déjà versée suit les prix. La revaloriser moins vite la fait baisser un peu chaque année en pouvoir d'achat, pour tous les retraités. C'est le levier le plus souvent utilisé, et son effet ne se voit que dans le temps : regardez les trajectoires jusqu'en 2070.",
 	},
@@ -392,7 +389,7 @@ export const LEVIERS: Levier[] = [
 		affiche: (v) =>
 			v === 0
 				? "comme aujourd'hui"
-				: `+${(v / 10).toLocaleString("fr-FR")} point de PIB par an`,
+				: `+${(v / 10).toLocaleString("fr-FR")} pt de PIB par an`,
 		termes: ["cotisants"],
 		aide: "Allocations, primes de naissance, avantages fiscaux. Un point de PIB, c'est environ 30 milliards d'euros par an. Les primes font monter les naissances tant qu'elles sont récentes ; l'effet durable est discuté, de nul à modeste.",
 	},

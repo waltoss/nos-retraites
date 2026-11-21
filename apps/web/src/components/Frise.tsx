@@ -59,7 +59,14 @@ export function Frise({
 		const part = a ? salaire / valeur(BAREMES_FRANCE.cnav.pass, a.annee) : 0;
 		return { a, retraite, mois, salaire, part };
 	};
+	// L'échelle suit la carrière : le plafond reste visible, et rien ne laisse la moitié du cadre vide.
+	let partMax = 0;
+	for (let age = AGE_DEBUT; age < AGE_FIN; age++)
+		partMax = Math.max(partMax, lire(age).part);
+	const echelle = Math.max(1.15, partMax * 1.05);
 	const colonnes = [];
+	/** Hauteur de la pile de chaque âge, pour poser la bulle juste au-dessus. */
+	const sommets = new Map<number, string>();
 	for (let age = AGE_DEBUT; age < AGE_FIN; age++) {
 		const { a, retraite, mois, part } = lire(age);
 		const naissance = carriere.enfants.includes(carriere.anneeNaissance + age);
@@ -69,19 +76,25 @@ export function Frise({
 			if (mois.emploi > 0)
 				blocs.push({
 					etat: "emploi",
-					hauteur: Math.max(8, Math.min(100, (part / 2) * 100)),
+					hauteur: Math.max(8, (part / echelle) * 100),
 				});
 			// Les autres états de l'année se posent en petits blocs au-dessus de l'emploi.
 			for (const etat of ["chomage", "maladieMaternite", "inactivite"] as const)
 				if (mois[etat] > 0)
 					blocs.push({ etat, hauteur: mois.emploi > 0 ? 5 : 8 });
 		}
+		sommets.set(
+			age,
+			`calc(${Math.min(
+				100,
+				blocs.reduce((h, b) => h + b.hauteur, 0),
+			)}% + ${naissance ? 24 : 10}px)`,
+		);
 		colonnes.push(
 			<div
 				className={age === survol ? "frise-col vise" : "frise-col"}
 				key={age}
 			>
-				{naissance && <b aria-hidden="true" />}
 				<div className="frise-pile">
 					{blocs.map((bloc) => (
 						<i
@@ -93,6 +106,7 @@ export function Frise({
 							}}
 						/>
 					))}
+					{naissance && <b aria-hidden="true" />}
 				</div>
 			</div>,
 		);
@@ -112,7 +126,7 @@ export function Frise({
 	return (
 		<figure className="frise">
 			<div className="frise-zone">
-				<div className="frise-plafond">
+				<div className="frise-plafond" style={{ bottom: `${100 / echelle}%` }}>
 					<span>Plafond de la Sécurité sociale</span>
 				</div>
 				<div
@@ -128,7 +142,7 @@ export function Frise({
 						className="bulle num"
 						style={{
 							left: cadrer(((survol - AGE_DEBUT + 0.5) / nbColonnes) * 100),
-							bottom: "calc(100% + 6px)",
+							bottom: sommets.get(survol),
 						}}
 					>
 						<strong>

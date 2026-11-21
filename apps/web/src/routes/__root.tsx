@@ -38,7 +38,17 @@ export const Route = createRootRoute({
 			},
 			{ name: "theme-color", content: "#FAF7F2" },
 		],
-		links: [{ rel: "stylesheet", href: appCss }],
+		links: [
+			{ rel: "stylesheet", href: appCss },
+			{ rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+			{
+				rel: "icon",
+				type: "image/png",
+				sizes: "32x32",
+				href: "/favicon-32.png",
+			},
+			{ rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+		],
 	}),
 	shellComponent: RootDocument,
 	component: Racine,
@@ -68,7 +78,18 @@ function Entete() {
 	return (
 		<header className="top">
 			<Link to="/" search={(s) => s} className="mark">
-				nos-retraites<span>.app</span>
+				<svg width="26" height="26" viewBox="5 5 22 22" aria-hidden="true">
+					<g fill="none" strokeWidth="6" strokeLinecap="round">
+						<path
+							d="M10 16a6.500 6.500 0 0 1 13 0v7.500"
+							stroke="var(--retraites)"
+						/>
+						<path d="M10 11v12.500" stroke="var(--cotisants)" />
+					</g>
+				</svg>
+				<b>
+					nos-retraites<span>.app</span>
+				</b>
 			</Link>
 			<nav aria-label="Pages">
 				{PAGES.map((p) => (

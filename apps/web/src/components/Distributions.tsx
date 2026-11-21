@@ -22,7 +22,7 @@ export function Distributions({
 					<img
 						src="/photos/cotisants.jpg"
 						alt="Une boulangère surveille la cuisson du pain dans un four professionnel"
-						style={{ objectPosition: "50% 55%" }}
+						style={{ objectPosition: "50% 70%" }}
 					/>
 				)}
 				<div className="body">
@@ -60,7 +60,7 @@ export function Distributions({
 					<img
 						src="/photos/retraites.jpg"
 						alt="Une femme âgée lance sa boule de pétanque, entourée de deux autres joueurs"
-						style={{ objectPosition: "50% 30%" }}
+						style={{ objectPosition: "50% 10%" }}
 					/>
 				)}
 				<div className="body">
