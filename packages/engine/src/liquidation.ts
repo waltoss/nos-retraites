@@ -13,12 +13,72 @@ import {
 } from "./regimes/cnav.ts";
 import type { AgeTrimestres, Carriere, Pension } from "./types.ts";
 
-/** Règles d'un scénario qui remplacent le barème de la génération. */
+/** Règles d'un scénario. Tout champ absent garde la valeur du droit en vigueur. */
 export interface ReglesScenario {
 	/** Âge légal imposé à toutes les générations, en trimestres. */
 	ageLegal?: AgeTrimestres;
 	/** Durée requise imposée à toutes les générations, en trimestres. */
 	dureeRequise?: number;
+	/** Nombre de meilleures années retenues pour le salaire annuel moyen. */
+	nbMeilleuresAnnees?: number;
+	/** Taux plein du régime général (0,5 = 50 %). */
+	tauxPlein?: number;
+	/** Points de taux perdus par trimestre manquant. */
+	decoteParTrimestre?: number;
+	/** Majoration de pension par trimestre de surcote. */
+	surcoteParTrimestre?: number;
+	/** Multiplicateur de la valeur de service du point de retraite complémentaire. */
+	valeurDuPoint?: number;
+	/** Multiplicateur du minimum contributif (0 le supprime). */
+	minimumContributif?: number;
+	/** Trimestres accordés à la mère par enfant. */
+	mdaParEnfant?: number;
+	/** Majoration de pension pour trois enfants, dans les deux régimes. */
+	majorationTroisEnfants?: number;
+	/** Points ajoutés au taux de cotisation vieillesse plafonné (0,01 = 1 point). */
+	cotisationBase?: number;
+	/** Taux d'appel des cotisations de retraite complémentaire (1,27 = 127 %). */
+	tauxAppel?: number;
+}
+
+/** Barèmes d'un scénario : le droit en vigueur, modifié par les règles du scénario. */
+export function appliquerRegles(b: Baremes, r: ReglesScenario = {}): Baremes {
+	const m = b.cnav.minimumContributif;
+	const k = r.minimumContributif;
+	return {
+		...b,
+		cnav: {
+			...b.cnav,
+			nbMeilleuresAnnees: r.nbMeilleuresAnnees ?? b.cnav.nbMeilleuresAnnees,
+			tauxPlein: r.tauxPlein ?? b.cnav.tauxPlein,
+			decoteParTrimestre: r.decoteParTrimestre ?? b.cnav.decoteParTrimestre,
+			surcoteParTrimestre: r.surcoteParTrimestre ?? b.cnav.surcoteParTrimestre,
+			mdaParEnfant: r.mdaParEnfant ?? b.cnav.mdaParEnfant,
+			majorationTroisEnfants:
+				r.majorationTroisEnfants ?? b.cnav.majorationTroisEnfants,
+			minimumContributif:
+				m && k !== undefined
+					? k === 0
+						? null
+						: { ...m, annuel: m.annuel * k, annuelMajore: m.annuelMajore * k }
+					: m,
+			tauxCotisation: {
+				...b.cnav.tauxCotisation,
+				plafonne: b.cnav.tauxCotisation.plafonne + (r.cotisationBase ?? 0),
+			},
+		},
+		agircArrco: {
+			...b.agircArrco,
+			valeurDeServiceDuPoint:
+				b.agircArrco.valeurDeServiceDuPoint * (r.valeurDuPoint ?? 1),
+			majorationTroisEnfants:
+				r.majorationTroisEnfants ?? b.agircArrco.majorationTroisEnfants,
+			cotisation: {
+				...b.agircArrco.cotisation,
+				tauxAppel: r.tauxAppel ?? b.agircArrco.cotisation.tauxAppel,
+			},
+		},
+	};
 }
 
 export function reglesGeneration(
@@ -64,7 +124,10 @@ export interface OptionsPension {
 	compte?: CompteCarriere;
 }
 
-/** Calcule la pension d'une carrière, en euros de l'année de référence des barèmes. */
+/**
+ * Calcule la pension d'une carrière, en euros de l'année de référence des barèmes.
+ * Les barèmes doivent déjà porter les règles du scénario (voir appliquerRegles).
+ */
 export function computePension(
 	carriere: Carriere,
 	b: Baremes,

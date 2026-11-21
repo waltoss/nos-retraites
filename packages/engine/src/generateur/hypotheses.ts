@@ -92,3 +92,48 @@ export const HYPOTHESES_TRANCHE_0: Hypotheses = {
 	etalementSmic: 0.2,
 	heuresAnnuelles: 1820,
 };
+
+/**
+ * Facteurs d'un scénario : multiplicateurs appliqués aux hypothèses du générateur.
+ * Ils valent pour toute la carrière de toutes les générations, comme si la situation
+ * avait toujours été celle-là : c'est une comparaison d'états, pas une projection.
+ */
+export interface Facteurs {
+	/** Multiplicateur du risque annuel de chômage. */
+	chomage?: number;
+	/** Multiplicateur de la probabilité d'interruption d'activité après une naissance. */
+	interruptionsNaissance?: number;
+	/** Multiplicateur de la part de mères à temps partiel. */
+	tempsPartielMeres?: number;
+	/** Multiplicateur des sorties de l'emploi après 55 ans. */
+	sortiesSeniors?: number;
+	/** Rapport du salaire des femmes à celui des hommes. */
+	ecartSalaireFemmes?: number;
+}
+
+export function appliquerFacteurs(h: Hypotheses, f: Facteurs = {}): Hypotheses {
+	return {
+		...h,
+		depuisEmploi: {
+			...h.depuisEmploi,
+			chomage: h.depuisEmploi.chomage * (f.chomage ?? 1),
+		},
+		interruptionNaissance: {
+			...h.interruptionNaissance,
+			probabilite: Math.min(
+				1,
+				h.interruptionNaissance.probabilite * (f.interruptionsNaissance ?? 1),
+			),
+		},
+		tempsPartielMeres: {
+			...h.tempsPartielMeres,
+			part: Math.min(1, h.tempsPartielMeres.part * (f.tempsPartielMeres ?? 1)),
+		},
+		seniors: {
+			...h.seniors,
+			multiplicateurSorties:
+				h.seniors.multiplicateurSorties * (f.sortiesSeniors ?? 1),
+		},
+		ecartSalaireFemmes: f.ecartSalaireFemmes ?? h.ecartSalaireFemmes,
+	};
+}

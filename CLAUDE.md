@@ -41,10 +41,10 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 
 `bun test packages`, `bun run dev`, `bun run build`, `bun run check`, `bun scripts/build-baremes.ts` (régénère `france.data.json` depuis `data/baremes`), `bun scripts/compare-drees.ts` (photographie du scénario de référence).
 
-## État de la tranche 0
+## État
 
-Fait : socle, règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, générateur naïf, page minimale (deux histogrammes, curseur d'âge légal).
-Reste : test des cas types du COR (il manque la série du salaire moyen par tête), calage du générateur (`generateur/hypotheses.ts` est posé à la main), poids par cohorte.
-Critères : cas types COR à ±2 % ; médiane et déciles extrêmes des pensions à ±10 % de la Drees, sinon repli sur un modèle par cellules.
+Fait : règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, générateur naïf, pages Accueil, Simuler (15 leviers), Décisions, Carrières, Modèle. Les leviers sont définis une seule fois dans `apps/web/src/leviers.ts`.
+Reste : cas types du COR (il manque le salaire moyen par tête), calage du générateur (`generateur/hypotheses.ts` est posé à la main), poids par cohorte, démographie (natalité, immigration), comportements de départ (décote, surcote).
+Critères : cas types COR à ±2 % ; médiane et déciles extrêmes des pensions à ±10 % de la Drees (échec actuel sur le 1er décile), sinon repli sur un modèle par cellules.
 
 `proto/` contient des maquettes jetables à données fictives.

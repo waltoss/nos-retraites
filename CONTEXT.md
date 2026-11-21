@@ -62,6 +62,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Facteur** : terme de la décomposition de l'équation, modifiable directement (fécondité, solde migratoire, taux d'emploi, chômage, âge de départ).
 - **Politique** : mesure publique décrite comme un jeu de déplacements de facteurs, avec élasticités, délai d'effet et sources.
 - **Levier** : toute commande de l'interface, facteur ou politique.
+- **Réglage** : valeur donnée à un levier par l'utilisateur quand elle s'écarte du droit en vigueur.
+- **Décision** : réglage type d'un seul levier, appliqué seul pour mesurer son effet.
+- **Terme** : l'un des quatre facteurs de l'équation qu'un levier déplace (cotisants, cotisation moyenne, retraités, pension moyenne).
 - **Élasticité** : ampleur supposée de l'effet d'une politique sur un facteur, donnée en fourchette basse, centrale, haute.
 - **Délai d'effet** : temps entre la mise en place d'une politique et son effet sur l'équation.
 - **Scénario** : jeu complet de valeurs de leviers et de financement, encodable dans une URL.

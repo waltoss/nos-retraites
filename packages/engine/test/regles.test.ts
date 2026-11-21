@@ -1,5 +1,5 @@
 import { describe, expect, test } from "bun:test";
-import { buildCompte, computeCotisations, computePension, cumulJusqua } from "../src/index.ts";
+import { appliquerRegles, buildCompte, computeCotisations, computePension, cumulJusqua } from "../src/index.ts";
 import { BAREMES_FICTIFS as B, carriereContinue } from "./fixture.ts";
 
 describe("régime général", () => {
@@ -154,5 +154,18 @@ describe("scénario", () => {
 				60000 * 0.004,
 			6,
 		);
+	});
+
+	test("les règles de calcul du scénario s'appliquent", () => {
+		const c = carriereContinue(25, 61, 30000);
+		const dur = appliquerRegles(B, { decoteParTrimestre: 0.01, tauxPlein: 0.6, nbMeilleuresAnnees: 10 });
+		const p = computePension(c, dur, { ageLiquidation: 62 * 4 });
+		expect(p.cnav.tauxLiquidation).toBeCloseTo(0.6 - 20 * 0.01, 9);
+		const sansEnfants = appliquerRegles(B, { mdaParEnfant: 0, majorationTroisEnfants: 0 });
+		const mere = carriereContinue(24, 61, 30000, { sexe: "F", enfants: [1985, 1988, 1991] });
+		const q = computePension(mere, sansEnfants, { ageLiquidation: 62 * 4 });
+		expect(q.cnav.trimestresMda).toBe(0);
+		expect(q.cnav.majorationEnfants).toBe(0);
+		expect(q.agircArrco.majorationEnfants).toBe(0);
 	});
 });

@@ -81,21 +81,27 @@ export interface Baremes {
 	agircArrco: BaremeAgircArrco;
 }
 
+const BORNES = new WeakMap<object, { min: number; max: number }>();
+
 /** Lit une série annuelle ; hors plage, renvoie la valeur de l'année connue la plus proche. */
 export function valeur(serie: SerieAnnuelle, annee: number): number {
 	const v = serie[annee];
 	if (v !== undefined) return v;
-	let proche = Number.NaN;
-	let ecart = Number.POSITIVE_INFINITY;
-	for (const k in serie) {
-		const d = Math.abs(Number(k) - annee);
-		if (d < ecart) {
-			ecart = d;
-			proche = serie[k] as number;
-		}
+	let bornes = BORNES.get(serie);
+	if (!bornes) {
+		const annees = Object.keys(serie).map(Number);
+		if (annees.length === 0) throw new Error("Série annuelle vide");
+		bornes = { min: Math.min(...annees), max: Math.max(...annees) };
+		BORNES.set(serie, bornes);
 	}
-	if (Number.isNaN(proche)) throw new Error("Série annuelle vide");
-	return proche;
+	if (annee >= bornes.max) return serie[bornes.max] as number;
+	if (annee <= bornes.min) return serie[bornes.min] as number;
+	// Trou à l'intérieur de la série : on prend l'année connue précédente.
+	for (let a = annee - 1; a >= bornes.min; a--) {
+		const precedente = serie[a];
+		if (precedente !== undefined) return precedente;
+	}
+	return serie[bornes.min] as number;
 }
 
 export function baremeGeneration(

@@ -2,6 +2,7 @@ import { describe, expect, test } from "bun:test";
 import {
 	type Scenario,
 	buildComptes,
+	compareScenarios,
 	createRng,
 	generateCarriere,
 	generatePopulation,
@@ -69,5 +70,43 @@ describe("simulation", () => {
 		const r = runSimulation(population, B, {}, comptes);
 		const total = r.pensions.histogramme.classes.reduce((t, x) => t + x, 0);
 		expect(total).toBeCloseTo(1, 9);
+	});
+
+	test("un scénario sans règle reproduit la référence", () => {
+		const a = runSimulation(population, B, {}, comptes);
+		const ecarts = compareScenarios(a.pensionParIndividu, a.pensionParIndividu);
+		for (const e of ecarts) {
+			expect(e.scenario).toBeCloseTo(e.reference, 9);
+			expect(e.partSortie).toBe(0);
+		}
+	});
+
+	test("baisser la valeur du point baisse toutes les pensions", () => {
+		const a = runSimulation(population, B, {}, comptes);
+		const b = runSimulation(population, B, { valeurDuPoint: 0.9 }, comptes);
+		expect(b.effectifs.retraites).toBe(a.effectifs.retraites);
+		for (const e of compareScenarios(a.pensionParIndividu, b.pensionParIndividu)) {
+			expect(e.scenario).toBeLessThan(e.reference);
+		}
+	});
+
+	test("monter les cotisations ne touche pas les pensions", () => {
+		const a = runSimulation(population, B, {}, comptes);
+		const b = runSimulation(population, B, { cotisationBase: 0.01 }, comptes);
+		expect(b.masses.pensions).toBeCloseTo(a.masses.pensions, 6);
+		expect(b.masses.cotisations).toBeGreaterThan(a.masses.cotisations);
+	});
+
+	test("les masses sont cohérentes avec les moyennes", () => {
+		const r = runSimulation(population, B, {}, comptes);
+		expect(r.masses.pensions).toBeCloseTo(r.pensions.resume.moyenne * r.effectifs.retraites * 12, 3);
+		expect(r.parSexe.F.effectif + r.parSexe.H.effectif).toBe(r.effectifs.retraites);
+	});
+
+	test("moins de chômage, plus de cotisants", () => {
+		const base = runSimulation(population, B, {}, comptes);
+		const p = generatePopulation({ ...SCENARIO, facteurs: { chomage: 0.5 } }, B);
+		const r = runSimulation(p, B, {});
+		expect(r.effectifs.cotisants).toBeGreaterThan(base.effectifs.cotisants);
 	});
 });

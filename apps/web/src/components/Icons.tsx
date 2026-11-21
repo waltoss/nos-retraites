@@ -19,6 +19,31 @@ const PATHS = {
 			<path d="M3 20c0-3.300 2.700-6 6-6s6 2.700 6 6M16 5.500a3 3 0 0 1 0 5M17.500 14.500c2 .800 3.500 2.900 3.500 5.500" />
 		</>
 	),
+	pension: (
+		<>
+			<circle cx="7" cy="7" r="2.5" />
+			<circle cx="17" cy="17" r="2.5" />
+			<path d="M19 5L5 19" />
+		</>
+	),
+	famille: (
+		<>
+			<circle cx="8" cy="7" r="2.5" />
+			<circle cx="17" cy="9" r="2" />
+			<path d="M3 20v-2a5 5 0 0 1 10 0v2M14 20v-1.500a3.500 3.500 0 0 1 7 0V20" />
+		</>
+	),
+	emploi: <path d="M3 21V10l6 4v-4l6 4V5h6v16z" />,
+	fleche: <path d="M5 12h14M13 6l6 6-6 6" />,
+	carriere: <path d="M3 18h4v-5h4v-4h4V5h6M3 21h18" />,
+	tableau: (
+		<>
+			<rect x="3" y="4" width="18" height="16" rx="2" />
+			<path d="M3 10h18M3 15h18M10 4v16" />
+		</>
+	),
+	modele: <path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17.500l9 5 9-5" />,
+	curseurs: <path d="M4 7h10M18 7h2M4 17h2M10 17h10M14 5v4M6 15v4" />,
 	attention: <path d="M12 4l9 16H3zM12 10v4.500M12 17.200v.300" />,
 } as const;
 

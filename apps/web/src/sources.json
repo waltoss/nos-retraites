@@ -1,0 +1,74 @@
+{
+	"pass": {
+		"source": "L'Assurance retraite - Bareme des revenus plafonds annuels (popup 'Salaires regime general')",
+		"url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupSalRG.jsp"
+	},
+	"coefficientsRevalorisation": {
+		"source": "Cnav - Circulaire n 2025-29 du 22 decembre 2025 'Revalorisation a compter du 1er janvier 2026' (tableau 'Salaires', point 1)",
+		"url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf"
+	},
+	"parGeneration": {
+		"source": "Cnav - Circulaire n 2026-07 du 5 mars 2026 'Age legal de la retraite et duree d'assurance' (tableaux points 1.1, 2.1, 3.1, annexes 1 et 3) ; complements : popup 'Duree d'assurance' de lassuranceretraite.fr (durees 1948-1957), Legifrance art. R351-27 et R351-29-1 CSS version au 28/11/2020 (coefficients de minoration 1948-1952, 25 annees pour les assures nes apres 1947)",
+		"url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf"
+	},
+	"salaireAnnuelMoyen": {
+		"source": "service-public.gouv.fr fiche F21552 (verifiee le 01/09/2026) et lassuranceretraite.fr 'Calcul de la retraite de base'",
+		"url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F21552"
+	},
+	"tauxPlein": {
+		"source": "service-public.gouv.fr fiche F21552 (verifiee le 01/09/2026) ; Cnav circulaire 2026-07 point 4.1.1",
+		"url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F21552"
+	},
+	"decote": {
+		"source": "Cnav circulaire 2026-07 (point 4.1.1 et annexe 3) ; Legifrance art. R351-27 CSS (version au 28/11/2020 pour les coefficients 1948-1952) ; service-public.gouv.fr F19666",
+		"url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_07_05032026.pdf"
+	},
+	"surcote": {
+		"source": "service-public.gouv.fr fiche F19643 (verifiee le 01/01/2026) ; F16336 pour la surcote parentale ; Cnav circulaire 2026-07 point 4.2",
+		"url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F19643"
+	},
+	"mda": {
+		"source": "service-public.gouv.fr fiche F16336 (verifiee le 14/08/2026)",
+		"url": "https://www.service-public.gouv.fr/particuliers/vosdroits/F16336"
+	},
+	"majorationEnfants": {
+		"source": "Legifrance - article R351-30 du code de la securite sociale (version en vigueur depuis le 1er decembre 1986)",
+		"url": "https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000006750045"
+	},
+	"validationTrimestre": {
+		"source": "service-public.gouv.fr fiche F1761 (verifiee le 01/01/2026) pour la regle ; L'Assurance retraite popup 'Trimestres' pour le bareme annuel (metropole) ; Cnav circulaire 2025-33 (art. R351-9 CSS, 150 h, 1 803 EUR en 2026)",
+		"url": "https://www.lassuranceretraite.fr/sarn/jsp/acsarEstPopupTrimVal.jsp"
+	},
+	"minimumContributif": {
+		"source": "Cnav - circulaire n 2025-33 du 23/12/2025 (points 2.4 et 2.5), circulaire n 2026-16 du 12/06/2026 (point 2.2), circulaire n 2025-08 du 05/03/2025 (points 2.4 et 2.5) ; seuil de 120 trimestres : service-public.gouv.fr F15522 et lassuranceretraite.fr",
+		"url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf"
+	},
+	"tauxCotisationVieillesse": {
+		"source": "Cnav - Abrege statistique 2025 (bareme 'Cotisations des salaries et des employeurs', p. 49) pour 2012-2024 ; Cnav circulaires 2025-08 et 2025-33 (taux cumules 17,87 % et 17,96 %) ; service-public.gouv.fr F2302 (part salariale 2026)",
+		"url": "https://www.lassuranceretraite.fr/portail-info/files/live/sites/pub/files/PDF/abrege-statistique-2025.pdf"
+	},
+	"valeurDeServiceDuPoint": {
+		"source": "Agirc-Arrco, reglementation, bareme 'Valeur de service du point Agirc-Arrco'",
+		"url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-de-service-du-point-agirc-arrco.html"
+	},
+	"prixAchatDuPoint": {
+		"source": "Agirc-Arrco, reglementation, bareme 'Valeur d'achat du point Agirc-Arrco' ; circulaire 2025-16-SG-DRJ",
+		"url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/valeur-d-achat-du-point-agirc-arrco.html"
+	},
+	"tauxAgircArrco": {
+		"source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ du 30/10/2025 (Parametres 2026)",
+		"url": "https://www.agirc-arrco.fr/storage/CirculaireAgircArrco2025-16sg-drj.pdf"
+	},
+	"historiqueArrco": {
+		"source": "Baremes IPP - cotisations ARRCO (secondaire)",
+		"url": "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/"
+	},
+	"coefficientsAnticipation": {
+		"source": "Agirc-Arrco, reglementation, baremes 'Coefficients d'anticipation pour age' et 'pour carriere courte'",
+		"url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/coefficients-d-anticipation-pour-age.html"
+	},
+	"contributions": {
+		"source": "Circulaire Agirc-Arrco 2025-16-SG-DRJ du 30/10/2025 ; page 'Cotisations au regime Agirc-Arrco en 2026'",
+		"url": "https://reglementation.agirc-arrco.fr/home/baremes/listes-area/baremes-1/cotisations-au-regime-agirc-arrco-en-2026.html"
+	}
+}

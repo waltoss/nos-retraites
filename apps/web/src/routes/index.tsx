@@ -1,36 +1,57 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Histogram } from "../components/Histogram";
-import { Icon } from "../components/Icons";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { Distributions } from "../components/Distributions";
+import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, ecart, entier, euros } from "../format";
-import { useSimulation } from "../useSimulation";
+import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/")({ component: Home });
 
 const AGE_MIN = 60 * 4;
 const AGE_MAX = 67 * 4;
-const AGE_DEPART_CURSEUR = 64 * 4;
-const TAILLE = 20000;
+const AGE_REPOS = 64 * 4;
+
+const SUITES: {
+	to: "/simuler" | "/decisions" | "/carrieres" | "/modele";
+	icone: IconName;
+	titre: string;
+	texte: string;
+}[] = [
+	{
+		to: "/simuler",
+		icone: "curseurs",
+		titre: "Tous les leviers",
+		texte:
+			"Durée, décote, calcul de la pension, cotisations, emploi, droits liés aux enfants.",
+	},
+	{
+		to: "/decisions",
+		icone: "tableau",
+		titre: "Chaque décision, une par une",
+		texte:
+			"Le même tableau pour toutes : ce que chacune déplace, et de combien.",
+	},
+	{
+		to: "/carrieres",
+		icone: "carriere",
+		titre: "Des vies, année par année",
+		texte:
+			"Ouvrez une carrière et suivez le calcul de sa pension ligne à ligne.",
+	},
+	{
+		to: "/modele",
+		icone: "modele",
+		titre: "Sous le capot",
+		texte: "Les règles, leurs sources, ce qui est supposé et ce qui manque.",
+	},
+];
 
 function Home() {
-	const sim = useSimulation(TAILLE);
-	const [ageLegal, setAgeLegal] = useState<number | null>(null);
-	const { reference, courant } = sim;
-
-	const choisir = (age: number | null) => {
-		setAgeLegal(age);
-		sim.run(age === null ? {} : { ageLegal: age });
-	};
+	const { reference, courant, reglages, regler, modifies } = useScenario();
+	const ageLegal = reglages.ageLegal ?? null;
+	const autres = modifies - (ageLegal === null ? 0 : 1);
 
 	return (
-		<div className="wrap">
-			<header className="top">
-				<div className="mark">
-					nos-retraites<span>.app</span>
-				</div>
-				<div className="indep">Un projet citoyen, indépendant de l'État</div>
-			</header>
-
+		<main className="wrap">
 			<section className="hero">
 				<img
 					src="/photos/generations.jpg"
@@ -119,9 +140,9 @@ function Home() {
 					min={AGE_MIN}
 					max={AGE_MAX}
 					step={1}
-					value={ageLegal ?? AGE_DEPART_CURSEUR}
+					value={Math.min(AGE_MAX, ageLegal ?? AGE_REPOS)}
 					className={ageLegal === null ? "neutre" : ""}
-					onChange={(e) => choisir(Number(e.target.value))}
+					onChange={(e) => regler("ageLegal", Number(e.target.value))}
 					aria-valuetext={
 						ageLegal === null ? "Loi actuelle" : ageEnClair(ageLegal)
 					}
@@ -129,7 +150,7 @@ function Home() {
 				<button
 					type="button"
 					className="reset"
-					onClick={() => choisir(null)}
+					onClick={() => regler("ageLegal", null)}
 					disabled={ageLegal === null}
 				>
 					<Icon name="retour" size={18} />
@@ -141,76 +162,30 @@ function Home() {
 				<h2>Qui paie combien, qui touche combien</h2>
 				<p className="sub">
 					Plus une barre est haute, plus il y a de monde à ce niveau.
-					{ageLegal !== null &&
+					{modifies > 0 &&
 						" Le trait noir rappelle la situation avec la loi actuelle."}
+					{autres > 0 &&
+						` Votre scénario modifie aussi ${autres} ${autres > 1 ? "autres réglages" : "autre réglage"}.`}
 				</p>
-				<div className={ageLegal === null ? "grid sans-reference" : "grid"}>
-					<article className="card">
-						<img
-							src="/photos/cotisants.jpg"
-							alt="Une boulangère surveille la cuisson du pain dans un four professionnel"
-							style={{ objectPosition: "50% 55%" }}
-						/>
-						<div className="body">
-							<h3 style={{ color: "var(--cotisants)" }}>
-								<Icon name="cotisant" size={26} />
-								Ceux qui cotisent
-							</h3>
-							<p className="unit">
-								Cotisation retraite par an, part salariale et patronale
-								{courant && (
-									<span className="effectif num">
-										{", "}
-										{entier(courant.effectifs.cotisants)} personnes
-									</span>
-								)}
-							</p>
-							{courant && reference ? (
-								<Histogram
-									courant={courant.cotisations.histogramme}
-									reference={reference.cotisations.histogramme}
-									mediane={courant.cotisations.resume.mediane}
-									couleur="var(--cotisants)"
-									description="Répartition des cotisations retraite annuelles des salariés du privé"
-								/>
-							) : (
-								<div className="histo attente" />
-							)}
-						</div>
-					</article>
-					<article className="card">
-						<img
-							src="/photos/retraites.jpg"
-							alt="Une femme âgée lance sa boule de pétanque, entourée de deux autres joueurs"
-							style={{ objectPosition: "50% 30%" }}
-						/>
-						<div className="body">
-							<h3 style={{ color: "var(--retraites-text)" }}>
-								<Icon name="retraite" size={26} />
-								Ceux qui perçoivent
-							</h3>
-							<p className="unit">
-								Pension brute par mois, base et complémentaire
-								{courant && (
-									<span className="effectif num">
-										{", "}
-										{entier(courant.effectifs.retraites)} personnes
-									</span>
-								)}
-							</p>
-							{courant && reference ? (
-								<Histogram
-									courant={courant.pensions.histogramme}
-									reference={reference.pensions.histogramme}
-									mediane={courant.pensions.resume.mediane}
-									couleur="var(--retraites)"
-									description="Répartition des pensions mensuelles brutes des retraités du privé"
-								/>
-							) : (
-								<div className="histo attente" />
-							)}
-						</div>
-					</article>
+				<Distributions
+					reference={reference}
+					courant={courant}
+					compare={modifies > 0}
+					photos
+				/>
+			</section>
+
+			<section>
+				<h2>L'âge n'est qu'un levier parmi d'autres</h2>
+				<div className="suites">
+					{SUITES.map((s) => (
+						<Link key={s.to} to={s.to} search={(p) => p} className="suite">
+							<Icon name={s.icone} size={26} />
+							<strong>{s.titre}</strong>
+							<span>{s.texte}</span>
+							<Icon name="fleche" size={18} />
+						</Link>
+					))}
 				</div>
 			</section>
 
@@ -223,23 +198,12 @@ function Home() {
 					publiques. Seuls les salariés du privé sont simulés.
 				</p>
 			</aside>
-
-			<footer>
-				<p>
-					Ce site n'est pas un service public et ne remplace pas votre relevé de
-					carrière. Le code est libre :{" "}
-					<a href="https://github.com/waltoss/nos-retraites">
-						github.com/waltoss/nos-retraites
-					</a>
-					.
-				</p>
-			</footer>
-		</div>
+		</main>
 	);
 }
 
 function Chiffre(props: {
-	icone: "age" | "retraite" | "population";
+	icone: IconName;
 	valeur: string;
 	ecart: string;
 	legende: string;
