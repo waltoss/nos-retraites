@@ -1,0 +1,670 @@
+{
+ "meta": {
+  "objet": "Recoupements pour le simulateur : sensibilité du système de retraite aux variantes démographiques (COR, juin 2026), coûts des politiques familiales (accueil du jeune enfant, congé parental), PIB 2025, effectifs projetés de cotisants et de retraités.",
+  "methode": "Valeurs lues le 2026-11-21 dans les sources indiquées : classeurs Excel téléchargés puis extraits par script (openpyxl), PDF lus avec pdftotext. Aucune valeur citée de mémoire. Les rares valeurs calculées (sommes, divisions) sont signalées comme telles dans les notes et ne figurent pas dans des champs de valeur lue, sauf moinsDe3AnsSomme et unPointDePIBMdEUR. Une valeur introuvable vaut null et est expliquée dans une note.",
+  "conventions": "Chaque bloc porte source, url, date (de consultation), fiabilite. Clés en français sans accents. Parts et taux en fraction (0,01 = 1 %) sauf mention « pour100 ». Séries par horizon : objets { année: valeur }.",
+  "date": "2026-11-21"
+ },
+ "variantesDemographiquesCOR": {
+  "source": "Conseil d'orientation des retraites (COR), rapport annuel « Évolutions et perspectives des retraites en France », juin 2026 (13e édition) : figures 2.18, 2.19 et 2.20 (classeur « Données_RA2026_P2.xlsx »), tableau 2.7, texte de la partie 2 (chapitre sur la sensibilité aux hypothèses démographiques) et classeur « Données complémentaires » (feuille PIB).",
+  "url": "https://www.cor-retraites.fr/sites/default/files/2026-06/Donn%C3%A9es_RA2026_P2.xlsx",
+  "urls": {
+   "classeurPartie2": "https://www.cor-retraites.fr/sites/default/files/2026-06/Donn%C3%A9es_RA2026_P2.xlsx",
+   "rapportPDF": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+   "donneesComplementaires": "https://www.cor-retraites.fr/sites/default/files/2026-10/Donn%C3%A9es_compl%C3%A9mentaires.xlsx",
+   "classeurPartie1": "https://www.cor-retraites.fr/sites/default/files/2026-07/Donn%C3%A9es_RA2026_P1.xlsx"
+  },
+  "date": "2026-11-21",
+  "fiabilite": "primaire",
+  "edition": "Rapport annuel du COR de juin 2026 (les variantes démographiques y figurent : pas de recours aux éditions 2025 ou 2023).",
+  "hypothesesCentrales": "Scénario de référence : hypothèses démographiques centrales de l'Insee (projections 2026 : fécondité de 1,45 enfant par femme à partir de 2028, solde migratoire net de +150 000 par an à partir de 2026, espérance de vie à 65 ans en 2070 de 26,3 ans pour les femmes et 24,4 ans pour les hommes), croissance annuelle de la productivité horaire du travail de 0,7 % et taux de chômage de 7,0 % (cibles atteintes en 2040).",
+  "champ": "Ensemble des régimes de retraite français légalement obligatoires, y compris FSV, hors RAFP. Données hors produits et charges financières, hors dotations et reprises sur provisions. Convention conforme à la législation (contributions et subventions d'équilibre équilibrant chaque année les régimes concernés).",
+  "unite": "Parts du PIB en fraction (0,153 = 15,3 % du PIB). Valeurs lues dans les feuilles « Fig 2.18 », « Fig 2.19 », « Fig 2.20 », arrondies à 6 décimales. Horizons retenus : 2025, 2030, 2040, 2045, 2050, 2060, 2070 (les séries annuelles 2025-2070 existent dans le classeur).",
+  "hypothesesDesVariantes": {
+   "feuille": "Tab 2.7",
+   "sourceIndiquee": "Insee, projections de population 2026",
+   "fecondite": {
+    "reference": "1,45 à partir de 2028",
+    "basse": "1,20 à partir de 2030",
+    "haute": "1,70 à partir de 2030"
+   },
+   "esperanceDeVieA65AnsEn2070": {
+    "femmes": {
+     "reference": 26.3,
+     "basse": 24.0,
+     "haute": 28.8
+    },
+    "hommes": {
+     "reference": 24.4,
+     "basse": 22.2,
+     "haute": 26.8
+    }
+   },
+   "soldeMigratoireAnnuel": {
+    "reference": 150000,
+    "bas": 70000,
+    "haut": 230000,
+    "depuis": 2026
+   }
+  },
+  "reference": {
+   "libelleCOR": "Sc. Ref",
+   "depensesPartPIB": {
+    "2025": 0.141164,
+    "2030": 0.140744,
+    "2040": 0.140439,
+    "2045": 0.141647,
+    "2050": 0.143652,
+    "2060": 0.147366,
+    "2070": 0.153
+   },
+   "soldePartPIB": {
+    "2025": -0.001695,
+    "2030": -0.001994,
+    "2040": -0.006095,
+    "2045": -0.008851,
+    "2050": -0.012183,
+    "2060": -0.017689,
+    "2070": -0.023895
+   }
+  },
+  "fecondite": {
+   "haute_1_70": {
+    "libelleCOR": "Var fécondité haute",
+    "depensesPartPIB": {
+     "2025": 0.141164,
+     "2030": 0.140723,
+     "2040": 0.140372,
+     "2045": 0.14108,
+     "2050": 0.141855,
+     "2060": 0.141945,
+     "2070": 0.143408
+    },
+    "soldePartPIB": {
+     "2025": -0.001698,
+     "2030": -0.001973,
+     "2040": -0.005848,
+     "2045": -0.007998,
+     "2050": -0.010066,
+     "2060": -0.012389,
+     "2070": -0.01474
+    }
+   },
+   "basse_1_20": {
+    "libelleCOR": "Var fécondité basse",
+    "depensesPartPIB": {
+     "2025": 0.141164,
+     "2030": 0.140734,
+     "2040": 0.140462,
+     "2045": 0.142036,
+     "2050": 0.145369,
+     "2060": 0.153226,
+     "2070": 0.163398
+    },
+    "soldePartPIB": {
+     "2025": -0.001671,
+     "2030": -0.001984,
+     "2040": -0.006117,
+     "2045": -0.009414,
+     "2050": -0.014049,
+     "2060": -0.023176,
+     "2070": -0.03361
+    }
+   }
+  },
+  "esperanceDeVie": {
+   "basse": {
+    "libelleCOR": "Var mortalité haute (EV basse)",
+    "depensesPartPIB": {
+     "2025": 0.141051,
+     "2030": 0.140126,
+     "2040": 0.137809,
+     "2045": 0.137692,
+     "2050": 0.138493,
+     "2060": 0.139463,
+     "2070": 0.143049
+    },
+    "soldePartPIB": {
+     "2025": -0.001588,
+     "2030": -0.001376,
+     "2040": -0.003787,
+     "2045": -0.005237,
+     "2050": -0.0074,
+     "2060": -0.010407,
+     "2070": -0.014726
+    }
+   },
+   "haute": {
+    "libelleCOR": "Var mortalité basse (EV haute)",
+    "depensesPartPIB": {
+     "2025": 0.141164,
+     "2030": 0.141471,
+     "2040": 0.143549,
+     "2045": 0.146273,
+     "2050": 0.149572,
+     "2060": 0.155656,
+     "2070": 0.163498
+    },
+    "soldePartPIB": {
+     "2025": -0.001678,
+     "2030": -0.002721,
+     "2040": -0.008835,
+     "2045": -0.012983,
+     "2050": -0.017505,
+     "2060": -0.025234,
+     "2070": -0.033501
+    }
+   }
+  },
+  "soldeMigratoire": {
+   "haut_230000": {
+    "libelleCOR": "Var smi haut",
+    "depensesPartPIB": {
+     "2025": 0.141164,
+     "2030": 0.139944,
+     "2040": 0.136849,
+     "2045": 0.136773,
+     "2050": 0.136611,
+     "2060": 0.137002,
+     "2070": 0.141638
+    },
+    "soldePartPIB": {
+     "2025": -0.001716,
+     "2030": -0.001194,
+     "2040": -0.003122,
+     "2045": -0.004457,
+     "2050": -0.005742,
+     "2060": -0.008238,
+     "2070": -0.0134
+    }
+   },
+   "bas_70000": {
+    "libelleCOR": "Var smi bas",
+    "depensesPartPIB": {
+     "2025": 0.141164,
+     "2030": 0.141642,
+     "2040": 0.144223,
+     "2045": 0.146849,
+     "2050": 0.150685,
+     "2060": 0.158112,
+     "2070": 0.163964
+    },
+    "soldePartPIB": {
+     "2025": -0.001549,
+     "2030": -0.002892,
+     "2040": -0.009307,
+     "2045": -0.013574,
+     "2050": -0.018626,
+     "2060": -0.02733,
+     "2070": -0.033606
+    }
+   }
+  },
+  "ecartsCitesDansLeTexte": {
+   "fecondite": "1,2 : écart nul jusqu'au milieu des années 2040, puis croissant, « pour s'établir à 1 point de PIB à l'horizon 2070 » ; 1,7 : part des dépenses « moins élevée de 1 point » en 2070. Solde dégradé ou amélioré « dans les mêmes amplitudes ».",
+   "esperanceDeVie": "Ralentissement durable des gains d'espérance de vie : effet immédiat et persistant à la baisse sur la part des dépenses, « évalué à 1,0 point de PIB en 2070 » (synthèse).",
+   "soldeMigratoire": "+230 000 : dépenses « de l'ordre de - 1,1 point de PIB à l'horizon 2070 » ; +70 000 : « augmenterait les dépenses de 1,1 point de PIB ». « L'écart sur le solde serait positif ou négatif, quasiment à due concurrence. »"
+  },
+  "pib": {
+   "source": "COR, « Données complémentaires » au rapport de juin 2026, feuille « PIB » ; tableau 1.2 du rapport (classeur partie 1).",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2026-10/Donn%C3%A9es_compl%C3%A9mentaires.xlsx",
+   "convention": "Le PIB varie avec la population active. Le COR déduit la croissance du PIB « à partir de la croissance de la productivité apparente du travail par tête et de celle de l'emploi (ou de la population active, lorsque le taux de chômage est stable) », durée du travail et partage de la valeur ajoutée stables. Pour la fécondité basse : « la masse des dépenses continuerait de croitre au même rythme que dans le scénario de référence [...] ; en revanche, du côté du dénominateur, le niveau du PIB serait plus faible en raison d'une population active moins dynamique associée aux moindres naissances ». Pour le solde migratoire haut : « un niveau de PIB plus élevé en raison d'une offre de travail et d'un nombre de cotisants plus importants ». La part des ressources dans le PIB est « quasiment identique, quelle que soit l'hypothèse retenue » (note 107).",
+   "pibSousVariantesDemographiques": null,
+   "note": "PIB non publié sous les variantes démographiques : dans la feuille « PIB », les lignes [1,0_féc_haute], [1,0_Smi_haut], [1,0_EV_basse], [1,0_féc_Basse], [1,0_Smi_bas], [1,0_EV_haute] portent « nd » sur toute la période (en valeur comme en volume). Seuls le scénario de référence et les variantes économiques (productivité 0,4 % et 1,0 %, chômage 5 % et 10 %) sont chiffrés. Pour la fécondité, le rapport indique que les dépenses en niveau sont inchangées jusqu'en 2070 : le rapport PIB variante / PIB référence peut donc se déduire du rapport des parts de dépenses (calcul à faire par l'utilisateur, non publié par le COR). Ce raccourci ne vaut pas pour le solde migratoire ni l'espérance de vie, où les dépenses en niveau changent.",
+   "unitePIB": "Milliards d'euros ; « en valeur » = euros courants ; « en volume » = libellé du COR (base non précisée dans la feuille, PIB 2020 identique en valeur et en volume : 2 318,28).",
+   "pibValeurMdEUR": {
+    "productivite_1_0": {
+     "2025": 2991.06,
+     "2030": 3421.18,
+     "2040": 4594.79,
+     "2045": 5246.98,
+     "2050": 5920.85,
+     "2060": 7477.41,
+     "2070": 9367.41
+    },
+    "reference_0_7": {
+     "2025": 2991.06,
+     "2030": 3420.16,
+     "2040": 4513.69,
+     "2045": 5078.72,
+     "2050": 5646.66,
+     "2060": 6922.7,
+     "2070": 8417.11
+    },
+    "productivite_0_4": {
+     "2025": 2991.06,
+     "2030": 3419.15,
+     "2040": 4433.86,
+     "2045": 4914.97,
+     "2050": 5383.43,
+     "2060": 6405.86,
+     "2070": 7559.42
+    },
+    "chomage_5": {
+     "2025": 2991.06,
+     "2030": 3426.91,
+     "2040": 4611.55,
+     "2045": 5188.83,
+     "2050": 5769.09,
+     "2060": 7072.78,
+     "2070": 8599.6
+    },
+    "chomage_10": {
+     "2025": 2991.06,
+     "2030": 3410.04,
+     "2040": 4367.62,
+     "2045": 4914.36,
+     "2050": 5463.93,
+     "2060": 6698.67,
+     "2070": 8144.72
+    }
+   },
+   "pibVolumeMdEUR": {
+    "productivite_1_0": {
+     "2025": 2646.75,
+     "2030": 2801.07,
+     "2040": 3162.79,
+     "2045": 3311.63,
+     "2050": 3426.45,
+     "2060": 3638.03,
+     "2070": 3831.7
+    },
+    "reference_0_7": {
+     "2025": 2646.75,
+     "2030": 2800.24,
+     "2040": 3106.96,
+     "2045": 3205.43,
+     "2050": 3267.77,
+     "2060": 3368.15,
+     "2070": 3442.98
+    },
+    "productivite_0_4": {
+     "2025": 2646.75,
+     "2030": 2799.41,
+     "2040": 3052.01,
+     "2045": 3102.08,
+     "2050": 3115.44,
+     "2060": 3116.69,
+     "2070": 3092.15
+    },
+    "chomage_5": {
+     "2025": 2646.75,
+     "2030": 2805.77,
+     "2040": 3174.32,
+     "2045": 3274.93,
+     "2050": 3338.62,
+     "2060": 3441.17,
+     "2070": 3517.63
+    },
+    "chomage_10": {
+     "2025": 2646.75,
+     "2030": 2791.95,
+     "2040": 3006.42,
+     "2045": 3101.7,
+     "2050": 3162.02,
+     "2060": 3259.15,
+     "2070": 3331.56
+    }
+   },
+   "croissanceAnnuelleMoyenne": {
+    "feuille": "Tab 1.2 (Données_RA2026_P1.xlsx)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/Donn%C3%A9es_RA2026_P1.xlsx",
+    "unite": "fraction par an",
+    "champ": "France entière",
+    "valeurs": {
+     "PIB scénario de référence 0,7%": {
+      "2012-2022": 0.011056,
+      "2023-2033": 0.011739,
+      "2034-2044": 0.008079,
+      "2045-2055": 0.00348,
+      "2056-2066": 0.00253
+     },
+     "PIB variante 1%": {
+      "2012-2022": null,
+      "2023-2033": 0.011999,
+      "2034-2044": 0.010669,
+      "2045-2055": 0.00647,
+      "2056-2066": 0.00551
+     },
+     "PIB variante 0,4%": {
+      "2012-2022": null,
+      "2023-2033": 0.011459,
+      "2034-2044": 0.005498,
+      "2045-2055": 0.00049,
+      "2056-2066": -0.00046
+     },
+     "Population active": {
+      "2012-2022": 0.004542,
+      "2023-2033": 0.004853,
+      "2034-2044": 0.000639,
+      "2045-2055": -0.003506,
+      "2056-2066": -0.004438
+     }
+    }
+   }
+  }
+ },
+ "coutsPolitiquesFamiliales": {
+  "coutPlaceAccueil": {
+   "source": "Rapport d'évaluation des politiques de sécurité sociale (REPSS) Famille, édition 2026, annexe 1 du PLACSS 2025 (indicateurs 1.7.1 et 1.7.2, producteurs Cnaf et DSS) ; Cour des comptes, « La politique d'accueil du jeune enfant », rapport public thématique, décembre 2024.",
+   "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1112999/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Famille%202026.pdf",
+   "urls": {
+    "repssFamille2026": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1112999/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Famille%202026.pdf",
+    "courDesComptes2024": "https://www.vie-publique.fr/files/rapport/pdf/296579.pdf"
+   },
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "prixDeRevientEAJETempsPlein": {
+    "valeurEURParMois": 1893,
+    "annee": 2024,
+    "source": "REPSS Famille 2026, indicateur 1.7.1, note de lecture du graphique",
+    "citation": "« en 2024, pour un couple biactif disposant d'un revenu équivalent à 3 SMIC et ayant un enfant de moins de 3 ans à charge, un accueil à temps plein en EAJE (1 893€ mensuel) est financé à hauteur 29 % par la CNAF au titre de la PSU [...] de 7% par l'Etat. Le reste à charge s'élève à 12 % pour la famille. »",
+    "note": "Coût total tous financeurs (familles comprises), temps complet conventionnel de 36 heures par semaine, prix de revient des équipements collectifs et multi-accueil de métropole ; rupture de série en 2021. Soit 22 716 EUR par an (1 893 × 12, calcul et non lecture) ; la part publique dépend du revenu de la famille (88 % dans ce cas type)."
+   },
+   "depensesPubliquesEAJE2024MEUR": {
+    "source": "REPSS Famille 2026, indicateur 1.7.2, tableau 1 « Dépenses en 2024 pour les modes de garde formels (en M€) », colonne 0 à 3 ans",
+    "champ": "France entière, tous régimes ; communes de plus de 10 000 habitants seulement pour les collectivités",
+    "etablissementsAccueilJeunesEnfants": 7936,
+    "dontFonctionnement": 7259,
+    "dontFonctionnementCommunes": 2449,
+    "dontInvestissement": 676,
+    "dontPlansCreches": 415,
+    "dontInvestissementCommunes": 192,
+    "accueilIndividuel": 5693,
+    "depensesFiscales": 2249,
+    "ecolePreelementaire": 539,
+    "totalMoinsDe3Ans": 16417,
+    "dontBrancheFamille": 10917,
+    "dontCollectivites": 2909,
+    "dontEtat": 2591,
+    "note": "Rapporté aux 495 600 places d'EAJE de 2023 (même rapport, années différentes), le fonctionnement public représente environ 14 600 EUR par place et par an : ordre de grandeur calculé, non publié. Dépenses des EPCI et des départements non comptées ; hors participations des familles et des employeurs."
+   },
+   "coutPublicAnnuelPlaceAccueilFormel": {
+    "valeurEUR": 13000,
+    "annee": 2022,
+    "source": "Cour des comptes, décembre 2024, annexe n° 13 et note 211",
+    "citation": "« Le coût annuel public de l'accueil formel (hors préscolarisation et investissement), évalué à 13 000 € par place » ; note 211 : « 13,99 Md€ pour 1 076 900 enfants reçus en accueil formel. »",
+    "note": "Moyenne tous modes formels (crèches, assistantes maternelles, garde à domicile), pas la seule crèche ; la Cour précise que la crèche coûte « près de 50 % » de plus qu'une assistante maternelle."
+   },
+   "coutPublicNouvellesPlacesCreche": {
+    "source": "Cour des comptes, décembre 2024, note 168",
+    "citation": "« Le coût public pour 100 000 places est estimé par la Cour à 1,5 Md€ par an : 695 M€ pour 35 000 places en crèches tels que provisionnés dans la convention d'objectifs et de gestion ; 816 M€ pour 65 000 places d'assistantes maternelles [...]. Le coût pour 200 000 places supplémentaires s'élèverait à 3 Md€ par an environ »",
+    "montantMEUR": 695,
+    "places": 35000,
+    "note": "Soit environ 19 900 EUR par place de crèche et par an (695 M€ / 35 000, calcul) et 12 600 EUR par place d'assistante maternelle (816 M€ / 65 000, calcul)."
+   },
+   "coutInvestissementParPlace": {
+    "secteurMarchandEUR": 30000,
+    "secteurPublicEUR": 50000,
+    "source": "Cour des comptes, décembre 2024, chapitre II",
+    "citation": "« un coût d'investissement plus faible (30 000 € par place contre 50 000 €) » pour le secteur marchand par rapport au secteur public, « en raison notamment de l'optimisation des surfaces utilisées ».",
+    "note": "Année et source d'origine non précisées par la Cour."
+   },
+   "notes": [
+    "caf.fr affichait « Site en maintenance » le 2026-11-21 : le rapport annuel de l'Onape (« L'accueil du jeune enfant ») et le barème des aides de la Cnaf n'ont pas pu être lus ; les chiffres de l'Onape sont repris via le REPSS, qui les cite.",
+    "hcfea.fr redirige vers hcfea.gouv.fr sans les anciens PDF : rapports du HCFEA non lus, sauf celui du Conseil de l'enfance d'avril 2023 (copie vie-publique.fr), où aucun coût par place n'a été repéré."
+   ]
+  },
+  "enfantsEtCouverture": {
+   "source": "REPSS Famille 2026, indicateur 2.6 « Améliorer le taux de couverture par une offre d'accueil formel » (données Onape-Cnaf) ; Insee, population au 1er janvier par sexe et âge détaillé (estimations de population).",
+   "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1112999/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Famille%202026.pdf",
+   "urls": {
+    "repssFamille2026": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1112999/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Famille%202026.pdf",
+    "inseePopulationParAge": "https://www.insee.fr/fr/statistiques/fichier/8999013/3_Pop1janv_age.xlsx"
+   },
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "tauxDeCouverture": {
+    "annee": 2023,
+    "champ": "France, hors Mayotte",
+    "placesPour100EnfantsDeMoinsDe3Ans": 60.9,
+    "placesTotal": 1285900,
+    "parMode": {
+     "assistantesMaternelles": {
+      "places": 674300,
+      "pour100": 31.9
+     },
+     "EAJE": {
+      "places": 495600,
+      "pour100": 23.5
+     },
+     "dontEAJEPSU": {
+      "places": 420400,
+      "pour100": 19.9
+     },
+     "dontEAJEPaje": {
+      "places": 72400,
+      "pour100": 3.4
+     },
+     "ecolePreelementaire": {
+      "places": 68700,
+      "pour100": 3.3
+     },
+     "salarieesADomicile": {
+      "places": 47300,
+      "pour100": 2.2
+     }
+    },
+    "annee2022": {
+     "placesPour100": 59.5,
+     "placesTotal": 1293100,
+     "note": "Série révisée (méthode 2023 rétropolée) ; 60,3 et 1 311 800 avant révision."
+    },
+    "citation": "« L'offre d'accueil formel représente 60,9 places pour 100 enfants de moins de 3 ans en 2023 [...] en progression de 1,4 point par rapport à 2022. Cet accroissement s'explique principalement par la baisse du nombre d'enfants de moins de 3 ans (-62 600 en 2023) »",
+    "note": "Dernière année disponible dans le REPSS 2026 : 2023. Capacité théorique (places offertes), pas un taux d'usage."
+   },
+   "enfantsDeMoinsDe3Ans": {
+    "inseeFranceAu1erJanvier": {
+     "2024": {
+      "age0": 628888,
+      "age1": 678174,
+      "age2": 700666,
+      "moinsDe3AnsSomme": 2007728
+     },
+     "2025": {
+      "age0": 613622,
+      "age1": 632768,
+      "age2": 680568,
+      "moinsDe3AnsSomme": 1926958
+     },
+     "2026": {
+      "age0": 598115,
+      "age1": 617912,
+      "age2": 635580,
+      "moinsDe3AnsSomme": 1851607
+     }
+    },
+    "noteInsee": "Âges 0, 1 et 2 ans révolus, colonne « France », lus dans les feuilles 2024, 2025 et 2026 ; la somme est calculée. Estimations provisoires pour les années récentes.",
+    "denominateurDuTauxDeCouverture": null,
+    "noteDenominateur": "Le nombre d'enfants utilisé par l'Onape n'est pas publié dans le REPSS : c'est l'estimation de la Depp au 1er janvier N+1, « plus élevé que le nombre d'enfants de moins de 3 ans issu directement des recensements ». Implicitement 1 285 900 / 0,609 = environ 2,11 millions au 1er janvier 2024 (calcul), contre 2,008 millions selon l'Insee à la même date.",
+    "conversion": "Avec le dénominateur implicite de l'Onape, 10 points de couverture représentent environ 211 000 places ; avec la population Insee au 1er janvier 2026 (1,852 million), environ 185 000 places (calculs)."
+   }
+  },
+  "congeParental": {
+   "source": "Drees, « La protection sociale en France et en Europe en 2024 », édition 2025, fiche 08 « Le risque famille » ; REPSS Famille 2026 ; Cour des comptes, décembre 2024 ; Assemblée nationale, rapport n° 2057 de la commission des affaires sociales sur le PLFSS 2026 (tome II, commentaire de l'article sur le congé supplémentaire de naissance) ; rapport Damon-Heydemann (2021).",
+   "url": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2026-03/CPS2025%20-%20Fiche%2008%20-%20Le%20risque%20famille.pdf",
+   "urls": {
+    "dreesFiche08": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2026-03/CPS2025%20-%20Fiche%2008%20-%20Le%20risque%20famille.pdf",
+    "repssFamille2026": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1112999/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Famille%202026.pdf",
+    "courDesComptes2024": "https://www.vie-publique.fr/files/rapport/pdf/296579.pdf",
+    "rapportAN2057": "https://questions.assemblee-nationale.fr/dyn/opendata/RAPPANR5L17B2057-tII.html",
+    "damonHeydemann2021": "https://www.vie-publique.fr/files/rapport/pdf/281835.pdf"
+   },
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "depensePreParE": {
+    "dreesMdEUR": {
+     "2019": 0.9,
+     "2022": 0.8,
+     "2023": 0.7,
+     "2024": 0.7,
+     "evolution2024": -0.031,
+     "libelle": "Prepare et Prepare majorée (CLCA et Colca)",
+     "note": "Tableau 1 de la fiche, arrondi à 0,1 Md€ (colonnes 2019, 2022, 2023, 2024)."
+    },
+    "courDesComptes2022MEUR": 770,
+    "citationCour": "« La Prepare a représenté une charge pour les finances publiques de 770 M€ en 2022. Elle a néanmoins permis d'éviter le recours à environ 170 000 places d'accueil formel à temps plein par an, représentant un coût annuel de 2,2 Md€. »",
+    "damonHeydemann2019MEUR": 922,
+    "noteDamonHeydemann": "Tableau des congés du rapport de 2021 : congé parental, 922 M€ (2019), 265 255 bénéficiaires.",
+    "famillesBeneficiaires2024": 192000,
+    "dontTauxPlein": 100955,
+    "sourceBeneficiaires": "REPSS Famille 2026 : « En 2024, 192 000 familles sont bénéficiaires de la Prepare, dont plus de la moitié (100 955) à taux plein. »"
+   },
+   "reformeCourDesComptes": {
+    "fiabilite": "primaire",
+    "coutNouveauDispositifMEUR": 2041,
+    "economiePreParESupprimeeMEUR": -770,
+    "economiePlacesLibereesMEUR": -910,
+    "coutNetMEUR": 361,
+    "beneficiaires": 189000,
+    "montantMoyenEURParAn": 10800,
+    "placesLiberees": 70000,
+    "citation": "Tableau n° 13 ; note 209 : « Le montant de la nouvelle prestation varierait de 600 € minimum par mois à 1 400 € maximum. [...] le montant moyen versé peut-être estimé à 900 € par mois soit 10 800 € par an. Avec 104 000 nouveaux bénéficiaires s'ajoutant aux 85 000 bénéficiaires de l'actuelle Prepare, le coût s'élèverait à 189 000 × 10 800 = 2,041 Md€. »",
+    "autreMesure": "Un mois de congé de maternité en plus : « libérer 35 000 places d'accueil. Le coût net d'une telle mesure a été évalué par la Cour à 350 M€ par an. »"
+   },
+   "congeSupplementaireDeNaissanceLFSS2026": {
+    "fiabilite": "secondaire",
+    "coutBrancheFamilleMEUR": {
+     "2027": 300,
+     "2028": 400,
+     "2029": 500,
+     "2030": 600
+    },
+    "citation": "« Le coût pour la branche famille serait de l'ordre de 300 millions d'euros en 2027, 400 millions d'euros en 2028, 500 millions d'euros en 2029 et 600 millions d'euros en 2030. Pour estimer ces montants, l'étude d'impact s'est fondée sur la distribution par décile des indemnités journalières de maternité en 2021, en corrigeant le coût brut des dépenses de complément de libre choix du mode de garde évitées ainsi que des recettes de [CSG] et de [CRDS] »",
+    "note": "Chiffres de l'étude d'impact du PLFSS 2026 repris par le rapport de la commission des affaires sociales de l'Assemblée nationale (1er novembre 2025) ; l'étude d'impact elle-même n'a pas été lue. Coût net, chiffré sur le projet de loi initial ; le texte a été amendé pendant la navette et aucun chiffrage actualisé n'a été lu."
+   },
+   "damonHeydemannChiffrageReforme": null,
+   "noteDamonHeydemann": "Le rapport Damon-Heydemann (2021) propose une PreParE « plus courte et proportionnelle au revenu antérieur » (six mois à un an) mais ne publie aucun chiffrage : « du côté des finances publiques, l'impact peut être considérable » ; « les modélisations et prévisions buttent sur des comportements dont on ne saurait prévoir exactement les directions ».",
+   "hcfeaEtIgas": null,
+   "noteHcfeaEtIgas": "Chiffrages du HCFEA (rapport de 2019 sur les congés parentaux) et de l'IGAS non lus : hcfea.fr ne sert plus les PDF (redirection vers hcfea.gouv.fr)."
+  },
+  "pib2025": {
+   "source": "Insee, « Les comptes de la Nation en 2025 », Insee Première n° 2105, mai 2026, tableau 1 (comptes nationaux annuels, base 2020).",
+   "url": "https://www.insee.fr/fr/statistiques/fichier/version-html/8996855/IP2105.pdf",
+   "date": "2026-11-21",
+   "fiabilite": "primaire",
+   "pibEurosCourantsMdEUR": 2991.1,
+   "croissanceVolume": 0.008,
+   "evolutionPrix": 0.011,
+   "evolutionValeur": 0.019,
+   "unPointDePIBMdEUR": 29.911,
+   "citation": "« Le PIB augmente de 0,8 % en 2025 en volume et atteint 2 991,1 milliards d'euros. »",
+   "note": "Compte provisoire 2025, publié le 29 mai 2026. Le COR retient la même valeur (2 991,06 Md€). Un point de PIB = 29,9 Md€ (2 991,1 / 100, calcul)."
+  }
+ },
+ "retraitesFutursPrive": {
+  "source": "COR, rapport annuel de juin 2026 : « Données complémentaires » (feuille « Cotisants_Retraités »), figure 2.7 (classeur partie 2), texte de la partie 2 ; hypothèses de cotisants par régime (classeur « hypo_cotisants_chômage_2026 », mis à jour le 23 avril 2026).",
+  "url": "https://www.cor-retraites.fr/sites/default/files/2026-10/Donn%C3%A9es_compl%C3%A9mentaires.xlsx",
+  "urls": {
+   "donneesComplementaires": "https://www.cor-retraites.fr/sites/default/files/2026-10/Donn%C3%A9es_compl%C3%A9mentaires.xlsx",
+   "classeurPartie2": "https://www.cor-retraites.fr/sites/default/files/2026-06/Donn%C3%A9es_RA2026_P2.xlsx",
+   "hypothesesCotisants": "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_cotisants_ch%C3%B4mage_2026_0.xlsx",
+   "rapportPDF": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf"
+  },
+  "date": "2026-11-21",
+  "fiabilite": "primaire",
+  "scenario": "Scénario de référence (démographie centrale Insee 2026, productivité 0,7 %, chômage 7 %).",
+  "tousRegimes": {
+   "champ": "Ensemble des régimes de retraite français légalement obligatoires, y compris FSV, hors RAFP.",
+   "unite": "millions de personnes",
+   "cotisantsMillions": {
+    "2025": 30.6382,
+    "2030": 31.1127,
+    "2040": 32.0583,
+    "2045": 31.943,
+    "2050": 31.4447,
+    "2060": 30.2275,
+    "2070": 28.8191
+   },
+   "retraitesMillions": {
+    "2025": 17.3111,
+    "2030": 17.775,
+    "2040": 19.5525,
+    "2045": 20.0577,
+    "2050": 20.4275,
+    "2060": 20.9292,
+    "2070": 22.0912
+   },
+   "retraitesResidantEnFranceMillions": {
+    "2025": 16.4467,
+    "2030": 17.0327,
+    "2040": 18.4972,
+    "2045": 18.7959,
+    "2050": 19.0014,
+    "2060": 19.402,
+    "2070": 20.7667
+   },
+   "rapportCotisantsRetraites": {
+    "2025": 1.7699,
+    "2030": 1.7504,
+    "2040": 1.6396,
+    "2045": 1.5926,
+    "2050": 1.5393,
+    "2060": 1.4443,
+    "2070": 1.3045
+   },
+   "texteDuRapport": "« Le nombre de cotisants, évalué à 30,6 millions en 2025, continuerait d'augmenter jusqu'à la fin des années 2030 et diminuerait ensuite à partir de 2040 pour s'établir à 28,9 millions en 2070. Le nombre de retraités de droit direct [...] passerait ainsi de 17,4 millions en 2025 à 22,1 millions en 2070. »",
+   "note": "La feuille intitule la série « Nombre de retraités (tous retraités) », mais c'est elle qui sert de dénominateur au rapport « Cotisants / retraités de droit direct » de la figure 2.3 (30,6382 / 17,3111 = 1,7699 en 2025) : elle correspond donc aux retraités de droit direct, résidents en France et à l'étranger. Léger écart d'arrondi avec le texte (17,31 contre « 17,4 » en 2025 ; 28,82 contre « 28,9 » cotisants en 2070). Les lignes des variantes démographiques sont « nd »."
+  },
+  "parRegime": {
+   "rapportCotisantsRetraites": {
+    "feuille": "Fig 2.7 (Données_RA2026_P2.xlsx), bloc « Ratio cotisant/retraités »",
+    "CNAV": {
+     "2025": 1.4103,
+     "2030": 1.3757,
+     "2040": 1.3548,
+     "2045": 1.3162,
+     "2050": 1.268,
+     "2060": 1.1612,
+     "2070": 1.0507
+    },
+    "AGIRC_ARRCO": {
+     "2025": 1.5581,
+     "2030": 1.4323,
+     "2040": 1.2753,
+     "2045": 1.1994,
+     "2050": 1.1139,
+     "2060": 0.9882,
+     "2070": 0.8688
+    }
+   },
+   "cotisantsMilliers": {
+    "feuille": "Chô_7% (hypo_cotisants_chômage_2026_0.xlsx), colonnes en niveau",
+    "unite": "milliers (« Tous les effectifs sont exprimés en milliers »)",
+    "note": "Hypothèses de cotisants du cahier des charges des projections (scénario démographique central Insee 2026, chômage 7 %), pas un résultat du rapport.",
+    "emploiTotal": {
+     "2025": 30687.6,
+     "2030": 31162.8,
+     "2040": 32110.0,
+     "2045": 31994.6,
+     "2050": 31495.4,
+     "2060": 30276.2,
+     "2070": 28865.5
+    },
+    "CNAV": {
+     "2025": 21318.3,
+     "2030": 21425.6,
+     "2040": 22468.0,
+     "2045": 22437.7,
+     "2050": 22114.4,
+     "2060": 21303.2,
+     "2070": 20310.8
+    },
+    "AGIRC_ARRCO": {
+     "2025": 19239.0,
+     "2030": 19335.9,
+     "2040": 20409.4,
+     "2045": 20390.8,
+     "2050": 20100.5,
+     "2060": 19369.0,
+     "2070": 18466.8
+    }
+   },
+   "retraitesDroitDirect": {
+    "CNAV": null,
+    "AGIRC_ARRCO": null,
+    "note": "Introuvable : ni le rapport ni les classeurs P1, P2, P4 et « Données complémentaires » ne publient le nombre de retraités de droit direct projeté par régime (seul le rapport cotisants/retraités par régime l'est). Le classeur de la partie 3 (Données_RA2026_P3_2.xlsx) n'a pas pu être ouvert par openpyxl (nom défini invalide) et n'a pas été dépouillé."
+   }
+  }
+ }
+}

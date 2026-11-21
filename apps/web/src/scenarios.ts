@@ -73,7 +73,7 @@ export const SCENARIOS: ScenarioType[] = [
 		id: "familles-immigration",
 		titre: "Miser sur les naissances et l'immigration",
 		texte:
-			"L'âge ne bouge pas. Plus de places de crèche, un congé parental mieux payé, des aides aux familles, et un solde migratoire de 230 000 personnes par an. Le coût de ces politiques n'est pas compté.",
+			"L'âge ne bouge pas. Plus de places de crèche, un congé parental mieux payé, des aides aux familles, et un solde migratoire de 230 000 personnes par an.",
 		reglages: {
 			creches: 30,
 			congeParental: 1,

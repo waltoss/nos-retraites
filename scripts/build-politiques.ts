@@ -7,6 +7,31 @@ import reference from "../data/references/elasticites.json" with {
 	type: "json",
 };
 
+import recoupements from "../data/references/recoupements.json" with {
+	type: "json",
+};
+
+const c = recoupements.coutsPolitiquesFamiliales;
+/** Ce qu'il faut pour chiffrer le coût public annuel de chaque politique. */
+const couts = {
+	placeAccueilEUR:
+		c.coutPlaceAccueil.coutPublicAnnuelPlaceAccueilFormel.valeurEUR,
+	enfantsDeMoinsDe3Ans:
+		c.enfantsEtCouverture.enfantsDeMoinsDe3Ans.inseeFranceAu1erJanvier["2026"]
+			.moinsDe3AnsSomme,
+	congeParentalBrutMdEUR:
+		c.congeParental.reformeCourDesComptes.coutNouveauDispositifMEUR / 1000,
+	congeParentalNetMdEUR:
+		c.congeParental.reformeCourDesComptes.coutNetMEUR / 1000,
+	pointDePibMdEUR: c.pib2025.pibEurosCourantsMdEUR / 100,
+	sources: [
+		c.coutPlaceAccueil.coutPublicAnnuelPlaceAccueilFormel.source,
+		"Insee, enfants de moins de 3 ans au 1er janvier 2026",
+		"Cour des comptes, décembre 2024, tableau n° 13 : congé parental mieux indemnisé",
+		c.pib2025.source,
+	],
+};
+
 const FAMILLES = ["accueilJeunesEnfants", "congeParental", "aidesFinancieres"];
 const familles = reference.synthese.familles
 	.filter((f) => FAMILLES.includes(f.famille))
@@ -39,7 +64,7 @@ const etudes = reference.estimations
 	}));
 await Bun.write(
 	new URL("../apps/web/src/politiques.json", import.meta.url),
-	`${JSON.stringify({ date: reference.date, familles, etudes }, null, "\t")}\n`,
+	`${JSON.stringify({ date: reference.date, familles, couts, etudes }, null, "\t")}\n`,
 );
 console.log(
 	`${familles.length} familles, ${etudes.length} études lues en texte complet`,

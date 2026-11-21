@@ -9,6 +9,8 @@ import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, entier, euros } from "../format";
 import politiques from "../politiques.json";
 import recoupement from "../recoupement.json";
+import recoupementDemographie from "../recoupement-demographie.json";
+import recoupementProjection from "../recoupement-projection.json";
 import sources from "../sources.json";
 
 export const Route = createFileRoute("/modele")({ component: Modele });
@@ -232,8 +234,8 @@ const LIMITES = [
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
 	"La population suit les projections de l'Insee de 2026. Natalité et solde migratoire se règlent entre ses variantes basse et haute, par interpolation ; leurs effets sont supposés s'additionner. Les arrivants reçoivent la carrière des personnes de leur âge. Les salaires suivent l'hypothèse du COR : +0,7 % par an au-dessus des prix.",
-	"Dans la projection, la part de chaque âge qui relève du privé reste celle d'aujourd'hui. Les générations futures de retraités, presque toutes passées par le privé, sont donc sous-comptées.",
-	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR et suppose que, dans un scénario, les autres régimes réagissent comme le régime de base du privé. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde (environ un point de PIB en 2070 entre le scénario central et une variante de l'Insee) n'a pas encore été recoupé avec les variantes du COR et est sans doute surestimé.",
+	"Dans la projection, la part des retraités qui relève du privé suit la génération : les futurs retraités gardent la part des jeunes retraités d'aujourd'hui. C'est encore trop peu, voir la comparaison avec le COR plus haut.",
+	"Le système entier n'est pas simulé : le modèle prend les totaux projetés par le COR et suppose que, dans un scénario, les autres régimes réagissent comme le régime de base du privé. Les autres ressources, dont les versements de l'État, et le PIB sont supposés suivre la masse des salaires du privé. Avec cette hypothèse, l'effet de la natalité et des migrations sur le solde retombe près des variantes du COR en 2070, un peu en dessous en 2050.",
 	"Un nouvel âge légal ou une nouvelle durée s'appliquent par étapes de trois mois par génération, à partir de celle qui atteint son âge légal en 2028. C'est le rythme de la réforme de 2023 ; il se règle.",
 	"Les départs pour carrière longue suivent les règles de la Cnav de septembre 2026. Dans un scénario, ils gardent leur avance sur l'âge légal : c'est une hypothèse, aucune loi ne le dit.",
 	"Qui part quand il a le choix ? Le modèle tire au sort : 45 % de ceux qui n'ont ni emploi ni durée suffisante à l'âge légal partent pour inaptitude ou invalidité, un cinquième des autres accepte une décote, et six sur dix de ceux qui ont le taux plein en emploi continuent un peu. Ces parts sont réglées sur les départs de 2021 à 2023 au régime général, et ne changent pas quand les règles changent.",
@@ -292,6 +294,30 @@ const COMPARAISONS: Comparaison[] = [
 			modele: l.modele,
 			cible: l.cible,
 		})),
+	},
+	{
+		titre: "La projection face au COR",
+		texte:
+			"Nombre de salariés du privé qui cotisent pour un retraité. Le modèle voit le rapport se dégrader moins vite que le COR : il lui manque des retraités futurs, ceux qui n'auront passé que quelques années dans le privé et les plus de 96 ans.",
+		source:
+			"Conseil d'orientation des retraites, rapport de juin 2026, figure 2.7, Agirc-Arrco.",
+		format: (x) =>
+			x.toLocaleString("fr-FR", {
+				minimumFractionDigits: 2,
+				maximumFractionDigits: 2,
+			}),
+		lignes: recoupementProjection,
+	},
+	{
+		titre: "Natalité et migrations face au COR",
+		texte:
+			"Écart de solde de tous les régimes avec le scénario central, en points de PIB, quand la natalité ou le solde migratoire changent. Le modèle n'est pas réglé sur ces chiffres : c'est une vérification.",
+		source:
+			"Conseil d'orientation des retraites, rapport de juin 2026, figures 2.18 à 2.20 : variantes démographiques de l'Insee.",
+		format: (x) =>
+			`${x > 0 ? "+" : x < 0 ? "−" : ""}${Math.abs(x).toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`,
+		enPoints: true,
+		lignes: recoupementDemographie,
 	},
 	{
 		titre: "Salaires de 2025",
@@ -449,7 +475,13 @@ function Modele() {
 											<td className="num">{c.format(l.modele)}</td>
 											<td className="num">
 												{e >= 0 ? "+" : "−"}
-												{entier(Math.abs(e))} {c.enPoints ? "pt" : "%"}
+												{c.enPoints && Math.abs(e) < 1
+													? Math.abs(e).toLocaleString("fr-FR", {
+															minimumFractionDigits: 2,
+															maximumFractionDigits: 2,
+														})
+													: entier(Math.abs(e))}{" "}
+												{c.enPoints ? "pt" : "%"}
 											</td>
 										</tr>
 									);
@@ -552,11 +584,14 @@ function Modele() {
 					</tbody>
 				</table>
 				<p className="reserve">
-					Le coût de ces politiques n'est pas compté, et leur effet sur l'emploi
-					des mères non plus. Pour l'égalité entre femmes et hommes et pour
-					l'immigration, aucune étude lue ne donne d'effet chiffrable sur la
-					natalité ou le solde migratoire : il n'y a donc pas de réglage. Le
-					détail des études, avec leurs citations, est dans{" "}
+					Le coût de ces politiques est affiché à côté de leur effet, sans être
+					déduit du solde des retraites : 13 000 euros par an et par place
+					d'accueil, 2 milliards pour un congé parental mieux indemnisé (Cour
+					des comptes, 2024), 30 milliards par point de PIB d'aides. Leur effet
+					sur l'emploi des mères n'est pas compté. Pour l'égalité entre femmes
+					et hommes et pour l'immigration, aucune étude lue ne donne d'effet
+					chiffrable sur la natalité ou le solde migratoire : il n'y a donc pas
+					de réglage. Le détail des études, avec leurs citations, est dans{" "}
 					<a href="https://github.com/waltoss/nos-retraites/blob/main/data/references/elasticites.json">
 						le fichier des sources
 					</a>

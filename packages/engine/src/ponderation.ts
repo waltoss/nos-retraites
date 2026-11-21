@@ -14,7 +14,8 @@ export interface Pyramide {
  */
 export interface Champ {
 	nom: string;
-	part(age: number, sexe: Sexe): number;
+	/** L'année compte quand la part suit la génération plutôt que l'âge ; absente, c'est l'année de la pyramide de référence. */
+	part(age: number, sexe: Sexe, annee?: number): number;
 }
 
 /**

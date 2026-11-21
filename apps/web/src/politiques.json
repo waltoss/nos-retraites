@@ -57,6 +57,19 @@
 			]
 		}
 	],
+	"couts": {
+		"placeAccueilEUR": 13000,
+		"enfantsDeMoinsDe3Ans": 1851607,
+		"congeParentalBrutMdEUR": 2.041,
+		"congeParentalNetMdEUR": 0.361,
+		"pointDePibMdEUR": 29.910999999999998,
+		"sources": [
+			"Cour des comptes, décembre 2024, annexe n° 13 et note 211",
+			"Insee, enfants de moins de 3 ans au 1er janvier 2026",
+			"Cour des comptes, décembre 2024, tableau n° 13 : congé parental mieux indemnisé",
+			"Insee, « Les comptes de la Nation en 2025 », Insee Première n° 2105, mai 2026, tableau 1 (comptes nationaux annuels, base 2020)."
+		]
+	},
 	"etudes": [
 		{
 			"famille": "accueilJeunesEnfants",

@@ -3,7 +3,12 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Icon } from "../components/Icons";
 import { decimal, entier, euros } from "../format";
-import { LEVIER, type LevierId, versScenario } from "../leviers";
+import {
+	coutPolitiquesFamiliales,
+	LEVIER,
+	type LevierId,
+	versScenario,
+} from "../leviers";
 import { useScenario } from "../scenario";
 import { SCENARIOS, type ScenarioType } from "../scenarios";
 
@@ -108,6 +113,14 @@ function Carte({ s, donnees }: { s: ScenarioType; donnees: Donnees | null }) {
 						),
 					)}
 				</ul>
+				{coutPolitiquesFamiliales(s.reglages) > 0 && (
+					<p className="cout">
+						Ces politiques coûtent environ{" "}
+						{entier(coutPolitiquesFamiliales(s.reglages))} Md€ par an dès 2028,
+						payés hors du système de retraite. Ce coût n'est pas déduit du solde
+						ci-dessous.
+					</p>
+				)}
 			</header>
 			{donnees ? (
 				<>
@@ -273,8 +286,8 @@ function Scenarios() {
 					<strong>Des ordres de grandeur, pas des chiffrages.</strong> Seuls les
 					salariés du privé sont simulés ; les autres régimes sont supposés
 					réagir de la même façon. Le modèle ne dit rien de l'effet d'une hausse
-					de cotisations sur l'emploi, ni de ce que coûtent les politiques qui
-					feraient reculer le chômage ou remonter la natalité.
+					de cotisations sur l'emploi, ni de ce que coûteraient les politiques
+					qui feraient reculer le chômage.
 				</p>
 			</aside>
 		</main>

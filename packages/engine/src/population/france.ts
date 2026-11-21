@@ -20,15 +20,32 @@ const parts = {
 	H: decale(data.partPrive.hommes),
 };
 
+/** Âge à partir duquel presque tous ceux qui ont des droits sont retraités. */
+const AGE_TOUS_RETRAITES = 68;
+const DERNIER_AGE_DU_PALIER = 75;
+const palier = (v: number[]) => {
+	const ages = v.slice(AGE_TOUS_RETRAITES, DERNIER_AGE_DU_PALIER + 1);
+	return ages.reduce((t, x) => t + x, 0) / ages.length;
+};
+const paliers = { F: palier(parts.F), H: palier(parts.H) };
+
 /**
  * Salariés et anciens salariés du privé : part de chaque âge qui relève du champ,
  * réglée sur les cotisants et les retraités de l'Agirc-Arrco.
+ * Chez les retraités la part suit la génération : celle qui a 85 ans en 2060 garde la part
+ * qu'avaient en 2026 les jeunes retraités, et non celle des personnes de 85 ans en 2026,
+ * moins souvent passées par le salariat.
  */
 export const CHAMP_PRIVE: Champ = {
 	nom: "Salariés du privé",
-	part: (age, sexe) => {
+	part: (age, sexe, annee = data.annee) => {
 		const v = parts[sexe];
-		return v[Math.max(0, Math.min(v.length - 1, age))] ?? 0;
+		const borne = (a: number) => v[Math.max(0, Math.min(v.length - 1, a))] ?? 0;
+		if (age < AGE_TOUS_RETRAITES || annee <= data.annee) return borne(age);
+		const ageDeReference = age - (annee - data.annee);
+		return ageDeReference >= AGE_TOUS_RETRAITES
+			? borne(ageDeReference)
+			: paliers[sexe];
 	},
 };
 

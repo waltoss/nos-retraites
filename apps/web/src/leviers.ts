@@ -96,17 +96,22 @@ export const GROUPES: {
 		id: "politiquesFamiliales",
 		label: "Politiques familiales",
 		icone: "famille",
-		note: "Ici on règle une politique, et le modèle en déduit une natalité d'après les réformes évaluées dans d'autres pays. Les études ne s'accordent pas : choisissez l'hypothèse basse, centrale ou haute. Le coût de ces politiques, hors du système de retraite, n'est pas compté.",
+		note: "Ici on règle une politique, et le modèle en déduit une natalité d'après les réformes évaluées dans d'autres pays. Les études ne s'accordent pas : choisissez l'hypothèse basse, centrale ou haute. Leur coût est payé hors du système de retraite : il est indiqué ci-dessous mais pas déduit du solde.",
 		resume: (r) => {
 			const effet = effetPolitiquesFamiliales(r);
 			const base = (r.natalite ?? DEFAUT_NATALITE) / 100;
 			const nombre = (x: number) =>
 				x.toLocaleString("fr-FR", { minimumFractionDigits: 2 });
+			const cout = coutPolitiquesFamiliales(r);
+			const facture =
+				cout > 0
+					? ` Coût public : environ ${cout.toLocaleString("fr-FR", { maximumFractionDigits: cout < 10 ? 1 : 0 })} milliards d'euros par an, dès la première année.`
+					: "";
 			if (effet === 0)
-				return `Natalité retenue : ${nombre(base)} enfant par femme, aucune politique ajoutée.`;
+				return `Natalité retenue : ${nombre(base)} enfant par femme, ${cout > 0 ? "sans effet des politiques dans l'hypothèse basse" : "aucune politique ajoutée"}.${facture}`;
 			const retenue = feconditeRetenue(r);
 			const plafonnee = Math.abs(base + effet - retenue) > 0.001;
-			return `Natalité retenue : ${nombre(base)} + ${nombre(effet)} = ${nombre(base + effet)} enfant par femme${plafonnee ? `, ramenée à ${nombre(retenue)}, la limite des projections de l'Insee` : ""}.`;
+			return `Natalité retenue : ${nombre(base)} + ${nombre(effet)} = ${nombre(base + effet)} enfant par femme${plafonnee ? `, ramenée à ${nombre(retenue)}, la limite des projections de l'Insee` : ""}.${facture}`;
 		},
 	},
 ];
@@ -453,6 +458,21 @@ export function effetPolitiquesFamiliales(r: Reglages): number {
 		(r.congeParental ?? 0) * effetFamille("congeParental", r) +
 		// Fourchette donnée pour +1 point de PIB ; le curseur est en dixièmes de point.
 		((r.aidesFamilles ?? 0) / 10) * effetFamille("aidesFinancieres", r)
+	);
+}
+
+/**
+ * Coût public annuel des politiques familiales réglées, en milliards d'euros d'aujourd'hui.
+ * Places d'accueil au coût public moyen d'une place, congé parental au coût brut chiffré par
+ * la Cour des comptes, aides en part de PIB. Ce coût est hors du système de retraite.
+ */
+export function coutPolitiquesFamiliales(r: Reglages): number {
+	const c = politiques.couts;
+	return (
+		(((r.creches ?? 0) / 100) * c.enfantsDeMoinsDe3Ans * c.placeAccueilEUR) /
+			1e9 +
+		(r.congeParental ?? 0) * c.congeParentalBrutMdEUR +
+		((r.aidesFamilles ?? 0) / 10) * c.pointDePibMdEUR
 	);
 }
 

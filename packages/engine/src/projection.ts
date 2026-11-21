@@ -190,7 +190,7 @@ function lecteur(prep: Preparation, annee: number) {
 				Math.min(age, pyramide.femmes.length - 1)
 			];
 			return (
-				((reels ?? 0) * options.champ.part(age, c.sexe)) /
+				((reels ?? 0) * options.champ.part(age, c.sexe, annee)) /
 				(prep.simules.get(cle(individu)) ?? 1)
 			);
 		},
