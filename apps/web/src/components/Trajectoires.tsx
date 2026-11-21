@@ -14,7 +14,7 @@ const H = 170;
 const MARGE = { haut: 14, droite: 14, bas: 22, gauche: 14 };
 
 /** Une courbe du scénario, et en pointillé celle de la loi actuelle quand elle diffère. */
-function Courbe({
+export function Courbe({
 	titre,
 	aide,
 	reference,
