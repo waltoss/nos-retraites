@@ -104,11 +104,13 @@ describe("simulation", () => {
 		expect(r.parSexe.F.effectif + r.parSexe.H.effectif).toBe(r.effectifs.retraites);
 	});
 
-	test("moins de chômage, plus de cotisants", () => {
+	test("moins de chômage, plus de cotisations", () => {
 		const base = runSimulation(population, B, {}, comptes);
 		const p = generatePopulation({ ...SCENARIO, facteurs: { chomage: 0.5 } }, B);
 		const r = runSimulation(p, B, {});
-		expect(r.effectifs.cotisants).toBeGreaterThan(base.effectifs.cotisants);
+		// Plus de mois travaillés dans l'année ; le nombre de personnes ayant cotisé bouge peu, parce que
+		// des carrières plus complètes ouvrent aussi des départs plus tôt.
+		expect(r.masses.cotisations).toBeGreaterThan(base.masses.cotisations);
 	});
 });
 

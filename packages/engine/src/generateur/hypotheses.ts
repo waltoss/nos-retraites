@@ -109,11 +109,17 @@ export interface Hypotheses {
 	 * Les deux sont choisis pour que l'ensemble retrouve la part publiée ; le premier est une hypothèse.
 	 */
 	tempsPartielFemmes: { meres: number; autres: number };
-	/** Après cet âge, les sorties de l'emploi sont plus fréquentes et les périodes hors emploi plus longues. */
+	/**
+	 * Après cet âge, les sorties de l'emploi sont plus fréquentes et les périodes hors emploi plus longues.
+	 * Les multiplicateurs valent pour 2010 et avant, l'époque de la génération qui sert au réglage ;
+	 * il n'en reste que la part `effetFinal` la dernière année connue, le recul suivant la hausse
+	 * du taux d'emploi des 55-59 ans (Insee).
+	 */
 	seniors: {
 		age: number;
 		multiplicateurSorties: number;
 		multiplicateurDurees: number;
+		effetFinal: number;
 	};
 	depart: ComportementDepart;
 	/** Largeur de la zone juste au-dessus du SMIC où sont étalés les salaires que le modèle placerait dessous. */

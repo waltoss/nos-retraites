@@ -237,6 +237,7 @@ const LIMITES = [
 	"Le temps partiel suit la part de salariés à temps partiel publiée chaque année pour les femmes et pour les hommes. Les mères de jeunes enfants y sont supposées une fois et demie plus exposées que les autres femmes : c'est une hypothèse.",
 	"Les salaires d'autrefois suivent le salaire moyen de l'économie, pas le plafond de la Sécurité sociale, qui a monté plus vite depuis 1980.",
 	"Le minimum contributif des départs passés est celui de leur année. Pour ceux qui ont aussi cotisé ailleurs, son plafond tous régimes utilise une estimation de leur autre pension.",
+	"L'emploi après 55 ans suit la hausse observée depuis 2010 (62 % des 55-59 ans en emploi en 2010, 79 % en 2025) et reste ensuite à ce niveau. Si la hausse continue, un relèvement de l'âge rapporte davantage que ce que le modèle affiche.",
 	"Il manque un demi-million de cotisants de moins de 25 ans : apprentis, emplois d'été, petits contrats.",
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
@@ -354,10 +355,17 @@ const BACKTEST: Record<
 		source: EACR,
 		format: deuxDecimales,
 	},
+	"Situation avant la retraite en 2023, en % de la classe d'âge": {
+		texte:
+			"Ce que font les gens juste avant l'âge légal décide de ce que rapporte son relèvement. L'emploi après 55 ans a beaucoup monté depuis 2010 : le modèle suit cette hausse et la suppose acquise ensuite. L'enquête couvre toute la population, le modèle les seuls salariés du privé.",
+		source: "Insee, enquête Emploi 2023.",
+		format: (x) => entier(x),
+		enPoints: true,
+	},
 	"Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %":
 		{
 			texte:
-				"Quand l'âge légal est passé de 60 à 62 ans, que sont devenus à 60 ans ceux qui seraient partis ? Le modèle n'est pas réglé sur cette évaluation. Il en envoie moins vers l'emploi et le chômage, et davantage vers l'inactivité : il est prudent sur ce que rapporte un relèvement de l'âge.",
+				"Quand l'âge légal est passé de 60 à 62 ans, que sont devenus à 60 ans ceux qui seraient partis ? Le modèle n'est pas réglé sur cette évaluation. Il retrouve la part restée en emploi, mais classe sans activité une partie de ceux qu'elle trouve au chômage.",
 			source:
 				"Rabaté et Rochut, évaluation sur un échantillon de la Cnav, présentée au Conseil d'orientation des retraites en 2016.",
 			format: (x) => entier(x),

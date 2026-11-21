@@ -18,7 +18,7 @@ const relatif = (l: { modele: number; observe: number }) =>
 describe("backtest 2010-2024", () => {
 	test("âge moyen de départ au régime général à moins de 0,6 an", () => {
 		for (const l of groupe("Âge moyen de départ"))
-			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.6);
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.5);
 	});
 
 	test("départs par an à moins de 15 %, effectifs à moins de 8 %", () => {
@@ -33,10 +33,16 @@ describe("backtest 2010-2024", () => {
 			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.03);
 	});
 
-	// Le modèle laisse trop de monde sans activité : il est prudent sur le gain d'un relèvement de l'âge.
-	test("réforme de 2010 : chaque situation à moins de 18 points de l'évaluation", () => {
-		for (const l of groupe("Réforme de 2010"))
-			expect(Math.abs(l.modele - l.observe)).toBeLessThan(18);
+	// La part qui reste en emploi colle ; le modèle classe en inactivité une partie de ceux
+	// que l'évaluation trouve au chômage, ce qui pèse peu sur les comptes des retraites.
+	test("réforme de 2010 : part en emploi à moins de 5 points de l'évaluation", () => {
+		const emploi = groupe("Réforme de 2010").find((l) => l.nom === "en emploi");
+		expect(Math.abs((emploi?.modele ?? 0) - (emploi?.observe ?? 100))).toBeLessThan(5);
+	});
+
+	test("situation avant la retraite en 2023 à moins de 10 points de l'enquête Emploi", () => {
+		for (const l of groupe("Situation avant la retraite"))
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(10);
 	});
 
 	test("part au minimum contributif à moins de 9 points", () => {

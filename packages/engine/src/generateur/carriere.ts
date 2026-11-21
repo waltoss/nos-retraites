@@ -2,6 +2,7 @@ import { type Baremes, valeur } from "../baremes/types.ts";
 import { quantileNormal, type Rng } from "../rng.ts";
 import type { AnneeCarriere, Carriere, Etat, Sexe } from "../types.ts";
 import ecartSalaire from "./ecartSalaire.data.json" with { type: "json" };
+import emploiSeniors from "./emploiSeniors.data.json" with { type: "json" };
 import type { Hypotheses } from "./hypotheses.ts";
 import salaireMoyen from "./salaireMoyen.data.json" with { type: "json" };
 import tempsPartielData from "./tempsPartiel.data.json" with { type: "json" };
@@ -9,6 +10,15 @@ import tempsPartielData from "./tempsPartiel.data.json" with { type: "json" };
 /** Le salaire des femmes rapporté à celui des hommes, en indice de la dernière année connue (Insee). */
 const INDICE_ECART = ecartSalaire.indice as Record<string, number>;
 const PREMIERE_ANNEE_ECART = Math.min(...Object.keys(INDICE_ECART).map(Number));
+/** Part du chemin parcouru par le taux d'emploi des 55-59 ans depuis la première année connue. */
+const PROGRESSION_SENIORS = emploiSeniors.progression as Record<string, number>;
+const progressionSeniors = (annee: number): number =>
+	annee <= emploiSeniors.debut
+		? 0
+		: annee >= emploiSeniors.fin
+			? 1
+			: (PROGRESSION_SENIORS[annee] ?? 1);
+
 /** Part des salariés à temps partiel par sexe et par année, et quotité moyenne (Dares, Insee). */
 const PARTS_TEMPS_PARTIEL = {
 	F: tempsPartielData.femmes as Record<string, number>,
@@ -193,8 +203,14 @@ export function generateCarriere(
 		// Le risque de sortie de l'emploi décroît avec le rang de salaire.
 		const risque = hy.risqueRang ** -rang;
 		const senior = age >= hy.seniors.age;
-		const sorties = senior ? hy.seniors.multiplicateurSorties : 1;
-		const durees = senior ? hy.seniors.multiplicateurDurees : 1;
+		// L'emploi des seniors a beaucoup monté depuis 2010 : l'effet de l'âge recule d'autant.
+		const reste = 1 - (1 - hy.seniors.effetFinal) * progressionSeniors(annee);
+		const sorties = senior
+			? 1 + (hy.seniors.multiplicateurSorties - 1) * reste
+			: 1;
+		const durees = senior
+			? 1 + (hy.seniors.multiplicateurDurees - 1) * reste
+			: 1;
 		const mois = { emploi: 0, chomage: 0, maladie: 0, inactivite: 0 };
 		let moisFamiliaux = 0;
 		let curseur = 0;

@@ -2,31 +2,31 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2012",
-		"modele": 62.3,
+		"modele": 62.36,
 		"observe": 62.4
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2012",
-		"modele": 62.1,
+		"modele": 62.24,
 		"observe": 62
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2014",
-		"modele": 62.39,
+		"modele": 62.35,
 		"observe": 62.6
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2014",
-		"modele": 62.01,
+		"modele": 62.09,
 		"observe": 62.2
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2016",
-		"modele": 62.7,
+		"modele": 62.72,
 		"observe": 63.1
 	},
 	{
@@ -38,211 +38,259 @@
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2018",
-		"modele": 62.98,
+		"modele": 63.06,
 		"observe": 63.2
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2018",
-		"modele": 62.67,
+		"modele": 62.79,
 		"observe": 62.8
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2020",
-		"modele": 63.3,
+		"modele": 63.52,
 		"observe": 63.3
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2020",
-		"modele": 62.84,
+		"modele": 63.01,
 		"observe": 63
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2022",
-		"modele": 63.31,
+		"modele": 63.67,
 		"observe": 63.4
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2022",
-		"modele": 63,
+		"modele": 63.28,
 		"observe": 63.3
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "femmes, 2024",
-		"modele": 63.63,
+		"modele": 63.99,
 		"observe": 63.7
 	},
 	{
 		"groupe": "Âge moyen de départ au régime général, en années",
 		"nom": "hommes, 2024",
-		"modele": 63.29,
+		"modele": 63.7,
 		"observe": 63.5
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, fin 2019",
-		"modele": 757.4,
+		"modele": 750.9,
 		"observe": 642.7
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2019",
-		"modele": 312.6,
+		"modele": 313.1,
 		"observe": 348.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, fin 2024",
-		"modele": 335.3,
+		"modele": 332.8,
 		"observe": 362.1
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, fin 2019",
-		"modele": 922.6,
+		"modele": 922.1,
 		"observe": 859.5
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2019",
-		"modele": 617,
+		"modele": 625.4,
 		"observe": 768
 	},
 	{
 		"groupe": "Pension moyenne des retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, fin 2024",
-		"modele": 621,
+		"modele": 627.9,
 		"observe": 758.7
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2010-2013",
-		"modele": 756.7,
+		"modele": 743,
 		"observe": 675.6
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, régime général, 2016-2019",
-		"modele": 799.9,
+		"modele": 809.8,
 		"observe": 719.4
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "femmes, Agirc-Arrco, 2019-2023",
-		"modele": 390.6,
+		"modele": 384.7,
 		"observe": 343.5
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, 2010-2013",
-		"modele": 908.9,
+		"modele": 890.7,
 		"observe": 881.8
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, régime général, 2016-2019",
-		"modele": 910.3,
+		"modele": 971.4,
 		"observe": 944.8
 	},
 	{
 		"groupe": "Pension moyenne des nouveaux retraités, euros de 2026 par mois",
 		"nom": "hommes, Agirc-Arrco, 2019-2023",
-		"modele": 577.8,
+		"modele": 575.3,
 		"observe": 645.3
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "ensemble, 2015-2019",
-		"modele": 29.52,
+		"modele": 28.63,
 		"observe": 21.92
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "femmes, 2022-2024",
-		"modele": 26.75,
+		"modele": 29.45,
 		"observe": 24.13
 	},
 	{
 		"groupe": "Part des nouveaux retraités au minimum contributif, en % (régime général)",
 		"nom": "hommes, 2022-2024",
-		"modele": 11.86,
+		"modele": 8.532,
 		"observe": 10.9
 	},
 	{
 		"groupe": "Coefficient de proratisation au régime général, génération 1953",
 		"nom": "femmes",
-		"modele": 0.7323,
+		"modele": 0.7277,
 		"observe": 0.73
 	},
 	{
 		"groupe": "Coefficient de proratisation au régime général, génération 1953",
 		"nom": "hommes",
-		"modele": 0.7033,
+		"modele": 0.7068,
 		"observe": 0.72
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2012-2015",
-		"modele": 565.1,
+		"modele": 546.4,
 		"observe": 525.5
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2016-2019",
-		"modele": 567.5,
+		"modele": 512.7,
 		"observe": 572.7
 	},
 	{
 		"groupe": "Départs à la retraite par an à l'Agirc-Arrco, en milliers",
 		"nom": "2020-2024",
-		"modele": 605.3,
+		"modele": 561.3,
 		"observe": 624.9
 	},
 	{
 		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
 		"nom": "2020",
-		"modele": 18.4,
+		"modele": 18.42,
 		"observe": 18.87
 	},
 	{
 		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
 		"nom": "2020",
-		"modele": 11.58,
+		"modele": 11.41,
 		"observe": 12.01
 	},
 	{
 		"groupe": "Cotisants de l'Agirc-Arrco, en millions",
 		"nom": "2024",
-		"modele": 18.97,
+		"modele": 19.2,
 		"observe": 20.06
 	},
 	{
 		"groupe": "Retraités de droit direct de l'Agirc-Arrco, en millions",
 		"nom": "2024",
-		"modele": 12.35,
+		"modele": 12.09,
 		"observe": 12.8
 	},
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "en emploi",
-		"modele": 27.27,
+		"modele": 33.97,
 		"observe": 33.58
 	},
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "au chômage",
-		"modele": 27.6,
+		"modele": 22.96,
 		"observe": 33.08
 	},
 	{
 		"groupe": "Réforme de 2010 : situation à 60 ans de ceux qui ne peuvent plus partir, en %",
 		"nom": "en invalidité, en maladie ou sans activité",
-		"modele": 45.13,
+		"modele": 43.07,
 		"observe": 29.1
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "en emploi à 55 ans",
+		"modele": 75.33,
+		"observe": 80.2
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "ni en emploi ni à la retraite à 55 ans",
+		"modele": 24.67,
+		"observe": 18.1
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "en emploi à 57 ans",
+		"modele": 71.37,
+		"observe": 77.6
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "ni en emploi ni à la retraite à 57 ans",
+		"modele": 28.63,
+		"observe": 18.9
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "en emploi à 59 ans",
+		"modele": 72.59,
+		"observe": 72.7
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "ni en emploi ni à la retraite à 59 ans",
+		"modele": 27.41,
+		"observe": 22.2
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "en emploi à 61 ans",
+		"modele": 53.1,
+		"observe": 49
+	},
+	{
+		"groupe": "Situation avant la retraite en 2023, en % de la classe d'âge",
+		"nom": "ni en emploi ni à la retraite à 61 ans",
+		"modele": 24.82,
+		"observe": 24.3
 	}
 ]

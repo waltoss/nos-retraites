@@ -375,6 +375,44 @@ for (const [nom, modele, observe] of [
 		observe: (100 * observe) / totalObserve,
 	});
 
+// 7. Situation à chaque âge avant la retraite, moyenne 2022-2024 (Insee, enquête Emploi 2023).
+// Champ différent : l'enquête couvre toute la population, le modèle les salariés du privé.
+const situations = historique.emploiSeniors.situationParAgeDetaille2023
+	.parAge as Record<
+	string,
+	{ emploiHorsCumul: number; chomage: number; inactiviteHorsRetraite: number }
+>;
+for (const age of [55, 57, 59, 61]) {
+	const t = { n: 0, emploi: 0, sansEmploi: 0 };
+	population.forEach((individu, k) => {
+		const c = individu.carriere;
+		for (const annee of [2022, 2023, 2024]) {
+			if (annee - c.anneeNaissance !== age) continue;
+			const w = individu.poids || 1;
+			t.n += w;
+			if ((pensions[k] as Pension).liquidation.annee <= annee) continue;
+			const a = c.annees[annee - (c.annees[0]?.annee ?? annee)];
+			const mois = a ? moisParEtat(a).emploi : 0;
+			t.emploi += (w * mois) / 12;
+			t.sansEmploi += (w * (12 - mois)) / 12;
+		}
+	});
+	const observe = situations[age];
+	if (!observe) throw new Error(`Âge ${age} absent de l'enquête Emploi`);
+	lignes.push({
+		groupe: "Situation avant la retraite en 2023, en % de la classe d'âge",
+		nom: `en emploi à ${age} ans`,
+		modele: (100 * t.emploi) / t.n,
+		observe: observe.emploiHorsCumul,
+	});
+	lignes.push({
+		groupe: "Situation avant la retraite en 2023, en % de la classe d'âge",
+		nom: `ni en emploi ni à la retraite à ${age} ans`,
+		modele: (100 * t.sansEmploi) / t.n,
+		observe: observe.chomage + observe.inactiviteHorsRetraite,
+	});
+}
+
 export const BACKTEST = lignes;
 if (import.meta.main) {
 	await Bun.write(

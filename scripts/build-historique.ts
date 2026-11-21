@@ -11,6 +11,9 @@
 import reference from "../data/references/complementaire-historique.json" with {
 	type: "json",
 };
+import historique from "../data/references/historique.json" with {
+	type: "json",
+};
 import minimum from "../data/references/minimum-contributif.json" with {
 	type: "json",
 };
@@ -204,6 +207,43 @@ await Bun.write(
 		femmes: fraction(tp.femmes as Serie),
 		hommes: fraction(tp.hommes as Serie),
 		quotite: { F: quotite("femmes"), H: quotite("hommes") },
+	})}\n`,
+);
+
+// Emploi des seniors : chemin parcouru par le taux d'emploi des 55-59 ans entre la première
+// et la dernière année connue (0 au début, 1 à la fin).
+const seniors = historique.emploiSeniors.tauxEmploiQuinquennal;
+const taux5559 = propre(
+	(seniors.ensemble as Record<string, Serie>)["55-59"] as Serie,
+);
+const anneesSeniors = Object.keys(taux5559).map(Number);
+const debutSeniors = Math.min(...anneesSeniors);
+const finSeniors = Math.max(...anneesSeniors);
+await Bun.write(
+	new URL(
+		"../packages/engine/src/generateur/emploiSeniors.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify({
+		source: seniors.source,
+		url: (seniors as { url?: string }).url ?? null,
+		date: "2026-11-21",
+		note: "Taux d'emploi des 55-59 ans, et part du chemin parcouru entre la première et la dernière année. Le générateur s'en sert pour faire reculer les sorties de l'emploi après 55 ans.",
+		debut: debutSeniors,
+		fin: finSeniors,
+		tauxEmploi: taux5559,
+		progression: Object.fromEntries(
+			anneesSeniors.map((a) => [
+				a,
+				Number(
+					(
+						((taux5559[a] as number) - (taux5559[debutSeniors] as number)) /
+						((taux5559[finSeniors] as number) -
+							(taux5559[debutSeniors] as number))
+					).toFixed(4),
+				),
+			]),
+		),
 	})}\n`,
 );
 console.log(
