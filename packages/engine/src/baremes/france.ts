@@ -91,11 +91,18 @@ export const BAREMES_FRANCE: Baremes = {
 		joursParTrimestreAssimile: { chomage: 50, maladie: 60 },
 		heuresSmicParTrimestre: (annee) => (annee >= 2014 ? 150 : 200),
 		minimumContributif: data.cnav.minimumContributif,
+		// Le minimum contributif suit le SMIC (hypothèse du COR) : en euros constants, il monte avec lui.
+		indiceMinimumContributif: (annee) =>
+			annee <= data.anneeReference
+				? 1
+				: valeur(serie(data.cnav.smicHoraire), annee) /
+					valeur(serie(data.cnav.smicHoraire), data.anneeReference),
 		tauxCotisation: data.cnav.tauxCotisation,
 	},
 	agircArrco: {
 		pointsAnnee,
 		valeurDeServiceDuPoint: a.valeurDeServiceDuPoint,
+		indiceValeurDeService: serie(a.indiceValeurDeService),
 		cotisation: {
 			tauxTranche1: a.tauxContractuel.tranche1,
 			tauxTranche2: a.tauxContractuel.tranche2,

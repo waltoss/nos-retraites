@@ -39,9 +39,9 @@ const ETAPES: { icone: IconName; titre: string; texte: string }[] = [
 	},
 	{
 		icone: "tableau",
-		titre: "Photographier 2026",
+		titre: "Photographier, puis projeter",
 		texte:
-			"On regarde qui cotise et qui perçoit cette année-là, avec la loi actuelle puis avec votre scénario, et on compare personne par personne.",
+			"On regarde qui cotise et qui perçoit en 2026, puis chaque année jusqu'en 2070 : la population suit la projection de l'Insee, les salaires celle du COR. Une réforme ne touche que ceux qui partent à partir de 2028.",
 	},
 ];
 
@@ -230,7 +230,9 @@ const LIMITES = [
 	"À âge égal, tous les retraités ont la même chance d'être encore en vie. En réalité les pensions élevées vivent plus longtemps.",
 	"Les pensions des retraités les plus âgés sont recalculées avec les barèmes d'aujourd'hui, pas avec ceux de l'année de leur départ.",
 	"Pas de pensions de réversion.",
-	"Pas de natalité, pas d'immigration, pas de projection dans le temps : on photographie 2026.",
+	"La projection suit le scénario central de l'Insee (1,45 enfant par femme, 150 000 entrées nettes par an) et les hypothèses du COR (salaires à +0,7 % par an au-dessus des prix). Natalité, immigration et croissance ne sont pas encore réglables.",
+	"Dans la projection, la part de chaque âge qui relève du privé reste celle d'aujourd'hui. Les générations futures de retraités, presque toutes passées par le privé, sont donc sous-comptées.",
+	"Une réforme s'applique d'un coup en 2028 à tous ceux qui ne sont pas partis, sans montée en charge par génération.",
 	"Personne ne part avec une décote ni ne reste pour une surcote : ces deux réglages existent dans le moteur mais n'auraient aucun effet ici, ils ne sont donc pas proposés.",
 	"Pas de départs anticipés pour carrière longue, invalidité ou pénibilité.",
 	"Le chômage est toujours indemnisé, donc toujours validé. Les fins de droits n'existent pas.",

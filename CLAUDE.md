@@ -43,8 +43,8 @@ Le vocabulaire métier est défini dans `CONTEXT.md`. Le lire avant de nommer qu
 
 ## État
 
-Fait : règles CNAV + Agirc-Arrco sur barèmes 2026 sourcés, AVPF simplifiée, générateur calé (`bun scripts/calage.ts --ajuste --ecrit` réécrit `generateur/hypotheses.data.json` et `apps/web/src/calage.json`), pages Accueil, Simuler (15 leviers), Décisions, Carrières, Modèle. Les leviers sont définis une seule fois dans `apps/web/src/leviers.ts`.
-Calage : salaires sur l'Insee 2025, durées sur la Drees (génération 1953) ; les pensions ne sont jamais ciblées, elles vérifient. Écarts actuels : D1 +19 %, médiane -10 %, D9 -15 % (cible tous régimes, modèle privé seul ; critère du projet : ±10 %). Cas types COR (génération 1964) : carrières continues à ±2 % ; carrières interrompues hors tolérance (+12 % chômage, -8 % enfant).
-Pondération : générations 1930 à 2008, poids = pyramide Insee × part du privé (`bun scripts/build-population.ts`, à relancer après un calage). Totaux à moins de 8 % des chiffres publiés. Reste, par priorité : projection année par année (démographie, long terme), bloc résiduel des autres régimes, comportements de départ, chômage non indemnisé, carrières longues.
+Fait : règles CNAV + Agirc-Arrco sur barèmes sourcés (générations 1930 à 2052, séries en euros constants jusqu'en 2130 selon le COR), carrières en mois par état, générateur calé (`bun scripts/calage.ts --ajuste --ecrit`), pondération Insee × part du privé (`bun scripts/build-population.ts`, à relancer après un calage), projection 2026-2070 (`projection.ts`, année d'effet 2028), pages Accueil, Simuler, Décisions, Carrières, Modèle. Leviers définis une seule fois dans `apps/web/src/leviers.ts`.
+Écarts connus : pensions de la génération 1953 face à la Drees D1 +25 %, médiane -14 %, D9 -15 % (cible tous régimes, critère ±10 %) ; cas types COR à ±2 % en carrière continue seulement ; totaux 2026 à moins de 8 % des chiffres publiés.
+Reste, par priorité : système entier (autres régimes en bloc, autres ressources, déficit et dette, recoupement COR), leviers du débat (carrières longues, natalité, immigration, montée en charge par génération, scénarios tout faits), « Et moi ? », comportements de départ.
 
 `proto/` contient des maquettes jetables à données fictives.

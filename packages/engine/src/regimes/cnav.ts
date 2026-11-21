@@ -83,7 +83,9 @@ export function computeCnav(
 		const plancher =
 			(cumul.trimestresCotises >= mico.trimestresCotisesPourMajoration
 				? mico.annuelMajore
-				: mico.annuel) * proratisation;
+				: mico.annuel) *
+			(b.indiceMinimumContributif?.(anneeLiquidation) ?? 1) *
+			proratisation;
 		if (plancher > pension) {
 			pension = plancher;
 			minimumApplique = true;

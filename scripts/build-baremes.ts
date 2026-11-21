@@ -183,6 +183,64 @@ const anticipation = [
 ];
 const contributions = v(aa.contributions);
 
+// --- Projection en euros constants ---
+// Après l'année de référence, les séries suivent les hypothèses du COR (scénario 0,7 %),
+// déflatées par son indice des prix : tout reste exprimé en euros de l'année de référence.
+// Au-delà de 2070, la dernière croissance réelle est prolongée.
+const FIN_PROJECTION = 2130;
+const hypotheses = JSON.parse(
+	await Bun.file(`${racine}data/references/salaires.json`).text(),
+).remunerationMoyenneParTete;
+const prixCor = hypotheses.autresSeriesDuMemeFichier
+	.indicePrixConsommationYComprisTabac_sc0_7.valeurs as Record<string, number>;
+/** Indice réel d'une série nominale du COR, base 1 l'année de référence. */
+function indiceReel(
+	nominal: Record<string, number>,
+): (annee: number) => number {
+	const reel = (a: number) => (nominal[a] as number) / (prixCor[a] as number);
+	const derniere = Math.max(
+		...Object.keys(nominal)
+			.map(Number)
+			.filter((a) => prixCor[a] !== undefined),
+	);
+	const croissance = reel(derniere) / reel(derniere - 1);
+	return (annee) =>
+		annee <= derniere
+			? reel(annee) / reel(ANNEE_REFERENCE)
+			: (reel(derniere) / reel(ANNEE_REFERENCE)) *
+				croissance ** (annee - derniere);
+}
+const indicePass = indiceReel(
+	hypotheses.autresSeriesDuMemeFichier.plafondSecuriteSocialeAnnuel_sc0_7
+		.valeurs,
+);
+const indiceSmic = indiceReel(
+	hypotheses.autresSeriesDuMemeFichier.smicAnnuelBrut_sc0_7.valeurs,
+);
+// Point Agirc-Arrco : hypothèses du COR (accord de 2023 jusqu'en 2037, puis rendement constant).
+const point = JSON.parse(
+	await Bun.file(`${racine}data/references/projections.json`).text(),
+).hypothesesReglementairesCOR.pointAgircArrco;
+const enSerie = (x: { anneeDebut: number; valeurs: number[] }) =>
+	Object.fromEntries(x.valeurs.map((valeur, i) => [x.anneeDebut + i, valeur]));
+const indicePrixAchat = indiceReel(enSerie(point.valeurAchat));
+const indiceService = indiceReel(enSerie(point.valeurServiceMoyenneAnnuelle));
+/** Valeur de service du point en euros constants, base 1 l'année de référence : elle vaut pour toutes les pensions en cours. */
+const indiceValeurDeService: Serie = {};
+for (let a = ANNEE_REFERENCE; a <= FIN_PROJECTION; a++) {
+	indiceValeurDeService[a] = arrondi(indiceService(a), 5);
+	if (a === ANNEE_REFERENCE) continue;
+	pass[a] = arrondi((pass[ANNEE_REFERENCE] as number) * indicePass(a), 2);
+	smicHoraire[a] = arrondi(
+		(smicHoraire[ANNEE_REFERENCE] as number) * indiceSmic(a),
+		4,
+	);
+	prixAgircArrco[a] = arrondi(
+		(prixAgircArrco[ANNEE_REFERENCE] as number) * indicePrixAchat(a),
+		4,
+	);
+}
+
 const sortie = {
 	anneeReference: ANNEE_REFERENCE,
 	cnav: {
@@ -260,6 +318,7 @@ const sortie = {
 			unirs: 0.387417,
 		},
 		valeurDeServiceDuPoint: valeurDeService,
+		indiceValeurDeService,
 		tauxAppel: t.agircArrcoDepuis2019.pourcentageAppel / 100,
 		cegTranche1: contributions.ceg.tranche1.tauxGlobal / 100,
 		cegTranche2: contributions.ceg.tranche2.tauxGlobal / 100,

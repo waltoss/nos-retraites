@@ -20,7 +20,7 @@ import {
 	versScenario,
 } from "./leviers";
 
-const TAILLE = 20000;
+const TAILLE = 30000;
 
 type SansId<T> = T extends { id: number } ? Omit<T, "id"> : never;
 type Demande = SansId<Exclude<Requete, { type: "init" } | { type: "run" }>>;

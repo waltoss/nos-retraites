@@ -4,16 +4,21 @@ import {
 	BAREMES_FRANCE as B,
 	buildComptes,
 	type Carriere,
+	CHAMP_PRIVE,
 	type CompteCarriere,
 	compareScenarios,
 	computePension,
+	computePensions,
 	type EcartDecile,
 	type Facteurs,
 	generatePopulation,
 	type Individu,
 	moisParEtat,
 	type Pension,
+	type Projection,
+	PYRAMIDES_PROJETEES,
 	type Resultat,
+	runProjection,
 	runSimulation,
 	SCENARIO_REFERENCE,
 	valeur,
@@ -72,7 +77,8 @@ export type Requete =
 			id: number;
 			scenario: ScenarioMoteur;
 			individu: number;
-	  };
+	  }
+	| { type: "projection"; id: number; scenario: ScenarioMoteur };
 
 export type Reponse =
 	| { type: "ready" }
@@ -96,7 +102,14 @@ export type Reponse =
 			/** Personnes réelles représentées par l'ensemble où les portraits sont tirés. */
 			total: number;
 	  }
-	| { type: "portrait"; id: number; detail: DetailPortrait };
+	| { type: "portrait"; id: number; detail: DetailPortrait }
+	| {
+			type: "projection";
+			id: number;
+			reference: Projection;
+			courant: Projection;
+			anneeEffet: number;
+	  };
 
 interface Monde {
 	population: Individu[];
@@ -108,12 +121,12 @@ const mondes = new Map<string, Monde>();
 let reference: Resultat | null = null;
 
 /** Une population par jeu de facteurs : les règles, elles, ne changent pas les carrières. */
-function monde(facteurs: Facteurs): Monde {
-	const cle = JSON.stringify(facteurs);
+function monde(facteurs: Facteurs, anneeEffet?: number): Monde {
+	const cle = JSON.stringify(facteurs) + (anneeEffet ?? "");
 	let m = mondes.get(cle);
 	if (!m) {
 		const population = generatePopulation(
-			{ ...SCENARIO_REFERENCE, taille, facteurs },
+			{ ...SCENARIO_REFERENCE, taille, facteurs, anneeEffet },
 			B,
 		);
 		m = { population, comptes: buildComptes(population, B) };
@@ -146,6 +159,31 @@ function leger(r: Resultat): ResultatLeger {
 		},
 		pensions: { resume: pensions.resume, histogramme: pensions.histogramme },
 	};
+}
+
+/** Première année d'application d'une réforme votée après l'élection de 2027. */
+const ANNEE_EFFET = 2028;
+const FIN_PROJECTION = 2070;
+let projectionReference: Projection | null = null;
+let pensionsReference: Pension[] | null = null;
+
+/** Trajectoire d'un scénario : les règles et les facteurs ne s'appliquent qu'à partir de l'année d'effet. */
+function projeter(s: ScenarioMoteur): Projection {
+	const base = monde({});
+	if (!pensionsReference)
+		pensionsReference = computePensions(base.population, B, {}, base.comptes);
+	const sansFacteur = Object.keys(s.facteurs).length === 0;
+	const m = sansFacteur ? base : monde(s.facteurs, ANNEE_EFFET);
+	return runProjection(m.population, B, s.regles, {
+		debut: B.anneeReference,
+		fin: FIN_PROJECTION,
+		pyramides: PYRAMIDES_PROJETEES,
+		champ: CHAMP_PRIVE,
+		anneeEffet: ANNEE_EFFET,
+		comptes: m.comptes,
+		// Les carrières d'avant la réforme sont les mêmes : les pensions déjà liquidées aussi.
+		pensionsReference: sansFacteur ? pensionsReference : undefined,
+	});
 }
 
 const AGE_MIN_PORTRAIT = 60;
@@ -265,6 +303,8 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			taille = m.taille;
 			mondes.clear();
 			reference = null;
+			projectionReference = null;
+			pensionsReference = null;
 			referenceCourante();
 			envoyer({ type: "ready" });
 			break;
@@ -297,6 +337,17 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				type: "portraits",
 				id: m.id,
 				...portraits(m.scenario, m.filtre, m.nombre),
+			});
+			break;
+		case "projection":
+			if (!projectionReference)
+				projectionReference = projeter({ regles: {}, facteurs: {} });
+			envoyer({
+				type: "projection",
+				id: m.id,
+				reference: projectionReference,
+				courant: projeter(m.scenario),
+				anneeEffet: ANNEE_EFFET,
 			});
 			break;
 		case "portrait":

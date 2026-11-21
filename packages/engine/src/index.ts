@@ -7,6 +7,7 @@ export * from "./generateur/hypotheses.ts";
 export * from "./liquidation.ts";
 export * from "./ponderation.ts";
 export * from "./population/france.ts";
+export * from "./projection.ts";
 export * from "./regimes/agircArrco.ts";
 export * from "./regimes/cnav.ts";
 export * from "./rng.ts";

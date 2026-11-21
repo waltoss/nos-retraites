@@ -72,6 +72,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Délai d'effet** : temps entre la mise en place d'une politique et son effet sur l'équation.
 - **Scénario** : jeu complet de valeurs de leviers et de financement, encodable dans une URL.
 - **Scénario de référence** : scénario du droit en vigueur, auquel tous les autres sont comparés.
+- **Projection** : suite des années de l'année de référence à 2070, où l'on regarde chaque année qui cotise et qui perçoit, en euros constants.
+- **Année d'effet** : première année où les règles d'un scénario s'appliquent ; ceux qui sont partis avant gardent leur pension.
+- **Trajectoire** : évolution d'une grandeur au fil de la projection, pour le droit en vigueur et pour un scénario.
 - **Calage** : ajustement des hypothèses du générateur pour que salaires et durées de carrière simulés reproduisent les données observées.
 - **Cas type** : carrière type publiée par le COR avec son taux de remplacement, utilisée pour vérifier les règles de calcul.
 - **Backtest** : simulation partant d'une année passée avec les données observées de l'époque, comparée au présent.

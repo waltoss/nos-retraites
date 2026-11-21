@@ -44,6 +44,8 @@ export interface BaremeCnav {
 		/** Plafond annuel de la pension totale, tous régimes, au-delà duquel le minimum est écrêté. */
 		plafondTousRegimesAnnuel: number | null;
 	} | null;
+	/** Évolution du minimum contributif en euros constants selon l'année de départ, base 1 l'année de référence. */
+	indiceMinimumContributif?(annee: number): number;
 	/** Taux de cotisation vieillesse (salarié + employeur) de l'année de référence. */
 	tauxCotisation: { plafonne: number; deplafonne: number };
 }
@@ -61,6 +63,8 @@ export interface BaremeAgircArrco {
 	): number;
 	/** Valeur de service du point pour l'année de référence, en euros. */
 	valeurDeServiceDuPoint: number;
+	/** Évolution de la valeur de service en euros constants, base 1 l'année de référence. Absente, elle suit les prix. */
+	indiceValeurDeService?: SerieAnnuelle;
 	/** Paramètres de cotisation de l'année de référence. */
 	cotisation: {
 		/** Taux contractuel sur la tranche 1, jusqu'à 1 PASS. */

@@ -28,16 +28,20 @@ export interface Scenario {
 	generations: readonly [debut: number, fin: number];
 	regles?: ReglesScenario;
 	facteurs?: Facteurs;
+	/** Année à partir de laquelle les facteurs s'appliquent ; absente, ils valent pour toute la carrière. */
+	anneeEffet?: number;
 	hypotheses?: Hypotheses;
 	/** Sans pondération, chaque individu compte pour une personne. */
 	ponderation?: { pyramide: Pyramide; champ: Champ };
 }
 
-/** De 96 ans à 18 ans l'année de référence. */
-export const GENERATIONS_REFERENCE = [1930, 2008] as const;
+/** Générations qui ont de 96 à 18 ans l'année de référence : celles que la pondération couvre. */
+export const GENERATIONS_PONDEREES = [1930, 2008] as const;
+/** S'y ajoutent les générations qui auront 18 ans d'ici la fin de la projection. */
+export const GENERATIONS_REFERENCE = [1930, 2052] as const;
 
 export const SCENARIO_REFERENCE: Scenario = {
-	taille: 20000,
+	taille: 30000,
 	graine: 2025,
 	generations: GENERATIONS_REFERENCE,
 	ponderation: { pyramide: PYRAMIDE_FRANCE, champ: CHAMP_PRIVE },
@@ -47,10 +51,14 @@ export const SCENARIO_REFERENCE: Scenario = {
 export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 	const [debut, fin] = scenario.generations;
 	const nbGenerations = fin - debut + 1;
-	const h = appliquerFacteurs(
-		scenario.hypotheses ?? HYPOTHESES,
-		scenario.facteurs,
-	);
+	const base = scenario.hypotheses ?? HYPOTHESES;
+	const modifiees = appliquerFacteurs(base, scenario.facteurs);
+	// Avec une année d'effet, les carrières suivent les hypothèses de base puis les hypothèses modifiées.
+	const h = scenario.anneeEffet === undefined ? modifiees : base;
+	const bascule =
+		scenario.anneeEffet === undefined
+			? undefined
+			: { annee: scenario.anneeEffet, hypotheses: modifiees };
 	const population: Individu[] = [];
 	for (let id = 0; id < scenario.taille; id++) {
 		const anneeNaissance = debut + (id % nbGenerations);
@@ -58,7 +66,7 @@ export function generatePopulation(scenario: Scenario, b: Baremes): Individu[] {
 		population.push({
 			id,
 			poids: 1,
-			carriere: generateCarriere(anneeNaissance, rng, h, b),
+			carriere: generateCarriere(anneeNaissance, rng, h, b, bascule),
 		});
 	}
 	return scenario.ponderation
@@ -161,8 +169,8 @@ export function runSimulation(
 		const age = annee - c.anneeNaissance;
 		const g = reglesGeneration(c.anneeNaissance, b, regles);
 		let pension: Pension | null = null;
-		// Personne ne part avant l'âge légal : inutile de calculer la pension des plus jeunes.
-		if (age * 4 >= g.ageLegal) {
+		// Personne ne part avant l'âge légal : inutile de calculer la pension de ceux qui ne l'atteignent pas dans l'année.
+		if ((age + 1) * 4 > g.ageLegal) {
 			const p = computePension(c, be, {
 				regles,
 				compte: comptes?.[i] ?? buildCompte(c, b),

@@ -1,5 +1,6 @@
 import type { Champ, Pyramide } from "../ponderation.ts";
 import data from "./france.data.json" with { type: "json" };
+import projection from "./projection.data.json" with { type: "json" };
 
 /** Généré par scripts/build-population.ts à partir de data/references/population.json. */
 const decale = (v: number[]): number[] => [
@@ -30,3 +31,16 @@ export const CHAMP_PRIVE: Champ = {
 		return v[Math.max(0, Math.min(v.length - 1, age))] ?? 0;
 	},
 };
+
+/** Population projetée par l'Insee (scénario central, celui du COR), de l'année de référence à 2070. */
+export const PYRAMIDES_PROJETEES: Readonly<Record<number, Pyramide>> =
+	Object.fromEntries(
+		Object.entries(projection.annees).map(([annee, p]) => [
+			Number(annee),
+			{
+				annee: Number(annee),
+				femmes: decale(p.femmes),
+				hommes: decale(p.hommes),
+			},
+		]),
+	);

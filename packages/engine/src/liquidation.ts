@@ -39,6 +39,11 @@ export interface ReglesScenario {
 	cotisationBase?: number;
 	/** Taux d'appel des cotisations de retraite complémentaire (1,27 = 127 %). */
 	tauxAppel?: number;
+	/**
+	 * Revalorisation annuelle des pensions déjà liquidées, en écart aux prix (-0,01 = un point de moins que l'inflation).
+	 * N'a d'effet que dans une projection.
+	 */
+	revalorisationReelle?: number;
 }
 
 /** Barèmes d'un scénario : le droit en vigueur, modifié par les règles du scénario. */
@@ -174,9 +179,16 @@ export function computePension(
 	};
 }
 
-/** Cotisations vieillesse annuelles (salarié + employeur, base + complémentaire) aux taux de l'année de référence. */
-export function computeCotisations(salaireBrut: number, b: Baremes): number {
-	const pass = valeur(b.cnav.pass, b.anneeReference);
+/**
+ * Cotisations vieillesse annuelles (salarié + employeur, base + complémentaire),
+ * aux taux de l'année de référence et au plafond de l'année du salaire.
+ */
+export function computeCotisations(
+	salaireBrut: number,
+	b: Baremes,
+	annee: number = b.anneeReference,
+): number {
+	const pass = valeur(b.cnav.pass, annee);
 	const c = b.agircArrco.cotisation;
 	const tranche1 = Math.min(salaireBrut, pass);
 	const tranche2 = Math.max(

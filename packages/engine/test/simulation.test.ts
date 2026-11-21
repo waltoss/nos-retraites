@@ -131,3 +131,58 @@ describe("pondération", () => {
 		expect(total).toBeLessThan(reference.pyramideDesAges.france.totauxLus.ensemble);
 	});
 });
+
+describe("projection", () => {
+	test("trajectoires cohérentes avec la photographie et avec la date d'effet", async () => {
+		const {
+			BAREMES_FRANCE,
+			CHAMP_PRIVE,
+			computePensions,
+			PYRAMIDES_PROJETEES,
+			runProjection,
+			SCENARIO_REFERENCE,
+		} = await import("../src/index.ts");
+		const population = generatePopulation(
+			{ ...SCENARIO_REFERENCE, taille: 12000 },
+			BAREMES_FRANCE,
+		);
+		const comptes = buildComptes(population, BAREMES_FRANCE);
+		const options = {
+			debut: 2026,
+			fin: 2070,
+			pyramides: PYRAMIDES_PROJETEES,
+			champ: CHAMP_PRIVE,
+			anneeEffet: 2028,
+			comptes,
+			pensionsReference: computePensions(population, BAREMES_FRANCE, {}, comptes),
+		};
+		const reference = runProjection(population, BAREMES_FRANCE, {}, options);
+		const photo = runSimulation(population, BAREMES_FRANCE, {}, comptes);
+		const premiere = reference.annees[0];
+		expect(premiere?.annee).toBe(2026);
+		// La première année de la projection est la photographie de l'année de référence.
+		expect((premiere?.retraites ?? 0) / photo.effectifs.retraites).toBeCloseTo(1, 2);
+		expect((premiere?.pensions ?? 0) / photo.masses.pensions).toBeCloseTo(1, 2);
+		expect((premiere?.cotisations ?? 0) / photo.masses.cotisations).toBeCloseTo(1, 2);
+
+		const reforme = runProjection(
+			population,
+			BAREMES_FRANCE,
+			{ ageLegal: 260, revalorisationReelle: -0.01 },
+			options,
+		);
+		// Rien ne change avant l'année d'effet.
+		for (const k of [0, 1]) {
+			expect(reforme.annees[k]?.pensions).toBeCloseTo(reference.annees[k]?.pensions ?? 0, 0);
+			expect(reforme.annees[k]?.retraites).toBeCloseTo(reference.annees[k]?.retraites ?? 0, 0);
+		}
+		// Ensuite : moins de retraités, des pensions qui décrochent des prix.
+		const fin = reforme.annees.at(-1);
+		const finReference = reference.annees.at(-1);
+		expect(fin?.retraites ?? 0).toBeLessThan(finReference?.retraites ?? 0);
+		expect((fin?.pensions ?? 0) / (finReference?.pensions ?? 1)).toBeLessThan(0.95);
+		// Les générations déjà parties ne voient pas leur âge de départ bouger.
+		const g1950 = (p: typeof reference) => p.generations.find((g) => g.generation === 1950);
+		expect(g1950(reforme)?.ageMoyenDepart).toBeCloseTo(g1950(reference)?.ageMoyenDepart ?? 0, 6);
+	});
+});

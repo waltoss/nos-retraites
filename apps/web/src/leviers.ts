@@ -12,6 +12,7 @@ export type LevierId =
 	| "meilleuresAnnees"
 	| "tauxPlein"
 	| "valeurPoint"
+	| "revalorisation"
 	| "minimum"
 	| "trimestresEnfant"
 	| "majorationEnfants"
@@ -64,7 +65,7 @@ export const GROUPES: {
 		id: "emploi",
 		label: "Emploi et carrières",
 		icone: "emploi",
-		note: "Ces réglages refont toutes les carrières, comme si la situation avait toujours été celle-là. C'est une comparaison, pas une prévision dans le temps.",
+		note: "Dans la photographie de 2026, ces réglages refont toutes les carrières comme si la situation avait toujours été celle-là. Dans les trajectoires, ils ne changent les carrières qu'à partir de 2028.",
 	},
 ];
 
@@ -152,6 +153,21 @@ export const LEVIERS: Levier[] = [
 		affiche: (v) => (v === 100 ? "inchangée" : `${signe(v - 100)} %`),
 		termes: ["pension"],
 		aide: "Chaque point acquis pendant la carrière vaut tant d'euros de pension. Geler ou sous-indexer cette valeur baisse la pension complémentaire de tout le monde, surtout des salaires élevés.",
+	},
+	{
+		id: "revalorisation",
+		groupe: "calcul",
+		label: "Revalorisation des pensions versées",
+		min: -20,
+		max: 10,
+		pas: 1,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0
+				? "comme les prix"
+				: `${signe(v / 10)} point par an par rapport aux prix`,
+		termes: ["pension"],
+		aide: "Une pension déjà versée suit les prix. La revaloriser moins vite la fait baisser un peu chaque année en pouvoir d'achat, pour tous les retraités. C'est le levier le plus souvent utilisé, et son effet ne se voit que dans le temps : regardez les trajectoires jusqu'en 2070.",
 	},
 	{
 		id: "minimum",
@@ -297,6 +313,8 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 		regles.nbMeilleuresAnnees = r.meilleuresAnnees;
 	if (r.tauxPlein !== undefined) regles.tauxPlein = r.tauxPlein / 100;
 	if (r.valeurPoint !== undefined) regles.valeurDuPoint = r.valeurPoint / 100;
+	if (r.revalorisation !== undefined)
+		regles.revalorisationReelle = r.revalorisation / 1000;
 	if (r.minimum !== undefined) regles.minimumContributif = r.minimum / 100;
 	if (r.trimestresEnfant !== undefined)
 		regles.mdaParEnfant = r.trimestresEnfant;
@@ -358,6 +376,11 @@ export const DECISIONS: Decision[] = [
 		levier: "valeurPoint",
 		valeur: 95,
 		label: "Point complémentaire baissé de 5 %",
+	},
+	{
+		levier: "revalorisation",
+		valeur: -10,
+		label: "Pensions revalorisées un point sous les prix",
 	},
 	{
 		levier: "minimum",

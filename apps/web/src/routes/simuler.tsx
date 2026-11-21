@@ -4,6 +4,7 @@ import { Equation } from "../components/Equation";
 import { GainsPertes } from "../components/GainsPertes";
 import { Icon } from "../components/Icons";
 import { PanneauLeviers } from "../components/PanneauLeviers";
+import { Trajectoires } from "../components/Trajectoires";
 import type { ResultatLeger } from "../engine.worker";
 import { decimal, ecart, entier, euros } from "../format";
 import { useScenario } from "../scenario";
@@ -63,6 +64,25 @@ function Simuler() {
 								photos={false}
 							/>
 						</section>
+
+						<section className="bloc">
+							<h2>Dans le temps, jusqu'en 2070</h2>
+							<p className="sub">
+								Ici la réforme ne s'applique qu'à partir de 2028, à ceux qui ne
+								sont pas encore partis. La population suit la projection de
+								l'Insee, les salaires progressent de 0,7 % par an au-dessus des
+								prix. Le trait vertical marque 2028
+								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
+							</p>
+							<Trajectoires />
+						</section>
+
+						<h2 className="intertitre">La photographie de 2026</h2>
+						<p className="sub">
+							Ici vos réglages sont appliqués à tout le monde, comme s'ils
+							avaient toujours existé. C'est utile pour comprendre un mécanisme,
+							pas pour dater ses effets.
+						</p>
 
 						<div className="duo">
 							<section className="bloc card pleine">
@@ -128,11 +148,11 @@ function Simuler() {
 				<aside className="note">
 					<Icon name="attention" />
 					<p>
-						<strong>Ce n'est pas encore une prévision.</strong> Les carrières
-						sont inventées, réglées sur les salaires et les durées publiés. La
-						natalité et l'immigration ne sont pas simulées : elles demandent de
-						suivre la population année après année, ce que le modèle ne fait pas
-						encore.
+						<strong>Des ordres de grandeur, pas une prévision.</strong> Les
+						carrières sont inventées, réglées sur les salaires et les durées
+						publiés. Seuls les salariés du privé sont simulés. La natalité et
+						l'immigration suivent le scénario central de l'Insee et ne sont pas
+						encore réglables.
 					</p>
 				</aside>
 			</div>

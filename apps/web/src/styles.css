@@ -296,3 +296,26 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .equilibre strong { font-family: var(--display); font-weight: 650; font-size: 20px; white-space: nowrap; }
 .equilibre.mieux strong { color: var(--cotisants); }
 .equilibre.pire strong { color: var(--besoin); }
+.courbes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 16px; }
+.courbes.deux { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.courbe { margin: 0; background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.courbe figcaption strong { display: block; font-size: 15px; line-height: 1.25; }
+.courbe figcaption small { display: block; color: var(--muted); font-size: 13px; line-height: 1.35; margin-top: 2px; }
+.courbe svg { width: 100%; height: auto; display: block; }
+.courbe path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.courbe .scenario { stroke-width: 2.5; }
+.courbe .reference { stroke: var(--muted); stroke-width: 1.5; stroke-dasharray: 4 4; }
+.courbe .effet, .courbe .zero { stroke: var(--line); stroke-width: 1; }
+.courbe .axe { font-size: 11px; fill: var(--muted); font-family: var(--text); }
+.courbe p { margin: 0; font-size: 14px; color: var(--muted); }
+.courbe p strong { color: var(--ink); }
+.courbe p em { display: block; font-style: normal; }
+.cumul { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 20px; display: grid; gap: 6px; align-content: center; }
+.cumul small { color: var(--muted); font-size: 14px; }
+.cumul strong { font-family: var(--display); font-weight: 650; font-size: 40px; line-height: 1.05; }
+.cumul strong.mieux { color: var(--cotisants); }
+.cumul strong.pire { color: var(--besoin); }
+.cumul p { margin: 0; color: var(--muted); font-size: 14px; max-width: 46ch; }
+.intertitre { margin-top: 48px; }
+@media (max-width: 1100px) { .courbes { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .courbes, .courbes.deux { grid-template-columns: 1fr; } }

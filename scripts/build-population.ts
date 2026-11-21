@@ -15,10 +15,13 @@
 import reference from "../data/references/population.json" with {
 	type: "json",
 };
+import projections from "../data/references/projections.json" with {
+	type: "json",
+};
 import {
 	BAREMES_FRANCE as B,
 	buildComptes,
-	GENERATIONS_REFERENCE,
+	GENERATIONS_PONDEREES,
 	generatePopulation,
 	ponderer,
 	runSimulation,
@@ -26,7 +29,7 @@ import {
 } from "../packages/engine/src/index.ts";
 
 const ANNEE = B.anneeReference;
-const [premiere, derniere] = GENERATIONS_REFERENCE;
+const [premiere, derniere] = GENERATIONS_PONDEREES;
 const AGE_MIN = ANNEE - derniere;
 const AGE_MAX = ANNEE - premiere;
 const AGE_FIN_COTISANTS = 57;
@@ -46,7 +49,23 @@ function lire(table: Table, age: number, dernier: boolean): number {
 	return total;
 }
 
-const pyramide = reference.pyramideDesAges.france;
+/**
+ * L'Insee compte l'âge révolu au 1er janvier ; le moteur compte l'âge atteint dans l'année.
+ * Une personne d'âge A pour le moteur a donc l'âge A - 1 dans la pyramide.
+ */
+const DECALAGE_AGE = 1;
+const estimee = reference.pyramideDesAges.france;
+const decaler = (table: Table): Table =>
+	Object.fromEntries(
+		Object.entries(table).map(([cle, n]) => {
+			const a = Number.parseInt(cle, 10);
+			return [/plus/i.test(cle) ? cle : String(a + DECALAGE_AGE), n];
+		}),
+	);
+const pyramide = {
+	femmes: decaler(estimee.femmes as Table),
+	hommes: decaler(estimee.hommes as Table),
+};
 const cotisants = reference.agircArrco.cotisants.parSexeEtAge;
 const retraites = reference.agircArrco.retraitesDroitDirect.parSexeEtAge;
 
@@ -149,6 +168,45 @@ await Bun.write(
 	),
 	`${JSON.stringify(sortie, null, "\t")}\n`,
 );
+// Pyramides projetées : même convention d'âge, même regroupement des plus âgés.
+const central = projections.populationProjetee.scenarios.central.population;
+const FIN = 2070;
+const projetees: Record<string, { femmes: number[]; hommes: number[] }> = {};
+for (let annee = ANNEE; annee <= FIN; annee++) {
+	const k = annee - central.anneeDebut;
+	const ligne = (table: number[][]) => {
+		const insee = table[k] as number[];
+		const v: number[] = [];
+		for (let age = AGE_MIN; age <= AGE_MAX; age++) {
+			const a = age - DECALAGE_AGE;
+			v.push(
+				age === AGE_MAX
+					? insee.slice(a).reduce((t, x) => t + x, 0)
+					: (insee[a] as number),
+			);
+		}
+		return v;
+	};
+	projetees[annee] = {
+		femmes: ligne(central.femmes),
+		hommes: ligne(central.hommes),
+	};
+}
+await Bun.write(
+	new URL(
+		"../packages/engine/src/population/projection.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify({
+		ageMin: AGE_MIN,
+		source: projections.populationProjetee.source,
+		url: projections.populationProjetee.url,
+		date: projections.populationProjetee.date,
+		scenario: "central",
+		annees: projetees,
+	})}\n`,
+);
+
 // Recoupement : totaux pondérés du scénario de référence face aux chiffres publiés.
 const indice = (age: number) => Math.max(0, Math.min(AGE_MAX, age) - AGE_MIN);
 const ponderee = ponderer(
