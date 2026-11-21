@@ -354,3 +354,4 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .solde-tete .choix-annee { margin: 0; }
 .solde .sub { margin: 8px 0 0; }
 .cumul strong + small { margin-top: 10px; }
+.groupe-resume { margin: 0; padding: 10px 20px; font-weight: 600; font-size: 14px; background: color-mix(in srgb, var(--cotisants) 9%, transparent); color: var(--ink); }

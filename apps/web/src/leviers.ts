@@ -7,6 +7,7 @@ import {
 } from "@nos-retraites/engine";
 import type { IconName } from "./components/Icons";
 import { ageEnClair } from "./format";
+import politiques from "./politiques.json";
 
 export type LevierId =
 	| "ageLegal"
@@ -26,7 +27,11 @@ export type LevierId =
 	| "tempsPartiel"
 	| "salaireFemmes"
 	| "natalite"
-	| "immigration";
+	| "immigration"
+	| "creches"
+	| "congeParental"
+	| "aidesFamilles"
+	| "hypotheseNatalite";
 
 /** Les quatre termes de l'équation qu'un levier peut déplacer. */
 export type Terme = "cotisants" | "cotisation" | "retraites" | "pension";
@@ -59,13 +64,16 @@ export type GroupeId =
 	| "famille"
 	| "financement"
 	| "emploi"
-	| "population";
+	| "population"
+	| "politiquesFamiliales";
 
 export const GROUPES: {
 	id: GroupeId;
 	label: string;
 	icone: IconName;
 	note?: string;
+	/** Ce que les réglages du groupe donnent, en une phrase. */
+	resume?: (r: Reglages) => string;
 }[] = [
 	{ id: "age", label: "Âge et durée", icone: "age" },
 	{ id: "calcul", label: "Calcul de la pension", icone: "pension" },
@@ -82,6 +90,23 @@ export const GROUPES: {
 		label: "Population",
 		icone: "population",
 		note: "Ces deux réglages restent dans les bornes des projections de l'Insee. Ils ne disent pas quelle politique permettrait d'y arriver.",
+	},
+	{
+		id: "politiquesFamiliales",
+		label: "Politiques familiales",
+		icone: "famille",
+		note: "Ici on règle une politique, et le modèle en déduit une natalité d'après les réformes évaluées dans d'autres pays. Les études ne s'accordent pas : choisissez l'hypothèse basse, centrale ou haute. Le coût de ces politiques, hors du système de retraite, n'est pas compté.",
+		resume: (r) => {
+			const effet = effetPolitiquesFamiliales(r);
+			const base = (r.natalite ?? DEFAUT_NATALITE) / 100;
+			const nombre = (x: number) =>
+				x.toLocaleString("fr-FR", { minimumFractionDigits: 2 });
+			if (effet === 0)
+				return `Natalité retenue : ${nombre(base)} enfant par femme, aucune politique ajoutée.`;
+			const retenue = feconditeRetenue(r);
+			const plafonnee = Math.abs(base + effet - retenue) > 0.001;
+			return `Natalité retenue : ${nombre(base)} + ${nombre(effet)} = ${nombre(base + effet)} enfant par femme${plafonnee ? `, ramenée à ${nombre(retenue)}, la limite des projections de l'Insee` : ""}.`;
+		},
 	},
 ];
 
@@ -331,6 +356,59 @@ export const LEVIERS: Levier[] = [
 		termes: ["cotisants", "retraites"],
 		aide: "Entrées moins sorties du territoire, chaque année. On arrive surtout à l'âge de travailler : l'effet sur les cotisants est rapide, celui sur les retraités vient trente ans plus tard. Le modèle prête aux arrivants la carrière des personnes de leur âge.",
 	},
+	{
+		id: "creches",
+		groupe: "politiquesFamiliales",
+		label: "Places d'accueil des moins de 3 ans",
+		min: 0,
+		max: 30,
+		pas: 5,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0 ? "comme aujourd'hui" : `+${v} places pour 100 enfants`,
+		termes: ["cotisants"],
+		aide: "Crèches et assistantes maternelles. C'est la politique dont l'effet durable sur les naissances est le mieux établi, en Allemagne et en Norvège. La France part déjà d'un niveau élevé : le gain y est sans doute plus faible.",
+	},
+	{
+		id: "congeParental",
+		groupe: "politiquesFamiliales",
+		label: "Congé parental mieux indemnisé",
+		min: 0,
+		max: 1,
+		pas: 1,
+		defaut: 0,
+		affiche: (v) => (v === 0 ? "comme aujourd'hui" : "réforme d'ampleur"),
+		termes: ["cotisants"],
+		aide: "Un congé plus long ou payé en proportion du salaire. Les études y voient surtout des naissances avancées, pas forcément plus d'enfants au total, et parfois un effet négatif.",
+	},
+	{
+		id: "aidesFamilles",
+		groupe: "politiquesFamiliales",
+		label: "Aides financières aux familles",
+		min: 0,
+		max: 10,
+		pas: 1,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0
+				? "comme aujourd'hui"
+				: `+${(v / 10).toLocaleString("fr-FR")} point de PIB par an`,
+		termes: ["cotisants"],
+		aide: "Allocations, primes de naissance, avantages fiscaux. Un point de PIB, c'est environ 30 milliards d'euros par an. Les primes font monter les naissances tant qu'elles sont récentes ; l'effet durable est discuté, de nul à modeste.",
+	},
+	{
+		id: "hypotheseNatalite",
+		groupe: "politiquesFamiliales",
+		label: "Efficacité de ces politiques",
+		min: 0,
+		max: 2,
+		pas: 1,
+		defaut: 1,
+		affiche: (v) =>
+			["hypothèse basse", "hypothèse centrale", "hypothèse haute"][v] ?? "",
+		termes: [],
+		aide: "Basse : ces politiques ne changent pas le nombre d'enfants. Centrale et haute : elles le font monter, d'après les évaluations les plus favorables. Ce réglage ne change rien tant qu'aucune politique n'est activée.",
+	},
 ];
 
 export const LEVIER: Record<LevierId, Levier> = Object.fromEntries(
@@ -346,11 +424,46 @@ export interface ScenarioMoteur {
 	demographie: Demographie;
 }
 
+const DEFAUT_NATALITE = Math.round(NIVEAUX_DEMOGRAPHIE.fecondite.central * 100);
+const FOURCHETTES = ["bas", "central", "haut"] as const;
+const effetFamille = (id: string, r: Reglages): number => {
+	const f = politiques.familles.find((x) => x.id === id);
+	return f?.effet[FOURCHETTES[r.hypotheseNatalite ?? 1] ?? "central"] ?? 0;
+};
+
+/**
+ * Enfants par femme en plus attendus des politiques familiales réglées, selon l'hypothèse choisie.
+ * Les fourchettes viennent de data/references/elasticites.json (lecture de la littérature, extrapolée à la France).
+ */
+export function effetPolitiquesFamiliales(r: Reglages): number {
+	return (
+		// Fourchette donnée pour +10 places pour 100 enfants.
+		((r.creches ?? 0) / 10) * effetFamille("accueilJeunesEnfants", r) +
+		(r.congeParental ?? 0) * effetFamille("congeParental", r) +
+		// Fourchette donnée pour +1 point de PIB ; le curseur est en dixièmes de point.
+		((r.aidesFamilles ?? 0) / 10) * effetFamille("aidesFinancieres", r)
+	);
+}
+
+/** Natalité transmise au moteur : le réglage direct plus l'effet des politiques, dans les bornes de l'Insee. */
+export function feconditeRetenue(r: Reglages): number {
+	const n = NIVEAUX_DEMOGRAPHIE.fecondite;
+	return Math.max(
+		n.bas,
+		Math.min(
+			n.haut,
+			(r.natalite ?? DEFAUT_NATALITE) / 100 + effetPolitiquesFamiliales(r),
+		),
+	);
+}
+
 export function versScenario(r: Reglages): ScenarioMoteur {
 	const regles: ReglesScenario = {};
 	const facteurs: Facteurs = {};
 	const demographie: Demographie = {};
-	if (r.natalite !== undefined) demographie.fecondite = r.natalite / 100;
+	const fecondite = feconditeRetenue(r);
+	if (fecondite !== NIVEAUX_DEMOGRAPHIE.fecondite.central)
+		demographie.fecondite = fecondite;
 	if (r.immigration !== undefined)
 		demographie.soldeMigratoire = r.immigration * 1000;
 	if (r.ageLegal !== undefined) regles.ageLegal = r.ageLegal;
@@ -493,6 +606,16 @@ export const DECISIONS: Decision[] = [
 		levier: "immigration",
 		valeur: 70,
 		label: "Solde migratoire à 70 000 par an",
+	},
+	{
+		levier: "creches",
+		valeur: 20,
+		label: "20 places d'accueil de plus pour 100 jeunes enfants",
+	},
+	{
+		levier: "aidesFamilles",
+		valeur: 10,
+		label: "Un point de PIB d'aides aux familles en plus",
 	},
 ];
 

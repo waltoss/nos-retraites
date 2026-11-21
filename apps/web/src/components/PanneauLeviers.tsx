@@ -43,14 +43,16 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 			</div>
 			<p className="levier-aide">
 				{levier.aide}
-				<span className="termes">
-					{levier.termes.map((t) => (
-						<span key={t} className={`terme ${TERMES[t].cote}`}>
-							<Icon name={TERMES[t].icone} size={14} />
-							{TERMES[t].label.toLowerCase()}
-						</span>
-					))}
-				</span>
+				{levier.termes.length > 0 && (
+					<span className="termes">
+						{levier.termes.map((t) => (
+							<span key={t} className={`terme ${TERMES[t].cote}`}>
+								<Icon name={TERMES[t].icone} size={14} />
+								{TERMES[t].label.toLowerCase()}
+							</span>
+						))}
+					</span>
+				)}
 			</p>
 		</div>
 	);
@@ -85,6 +87,9 @@ export function PanneauLeviers() {
 							{changes > 0 && <em className="num">{changes}</em>}
 						</summary>
 						{g.note && <p className="groupe-note">{g.note}</p>}
+						{g.resume && (
+							<p className="groupe-resume num">{g.resume(reglages)}</p>
+						)}
 						{leviers.map((l) => (
 							<CurseurLevier key={l.id} levier={l} />
 						))}

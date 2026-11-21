@@ -7,6 +7,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
 import { ageEnClair, decimal, entier, euros } from "../format";
+import politiques from "../politiques.json";
 import recoupement from "../recoupement.json";
 import sources from "../sources.json";
 
@@ -360,6 +361,34 @@ const COMPARAISONS: Comparaison[] = [
 	},
 ];
 
+const FAMILLES_POLITIQUES: Record<
+	string,
+	{ nom: string; unite: string; nature: string }
+> = {
+	accueilJeunesEnfants: {
+		nom: "Places d'accueil des moins de 3 ans",
+		unite: "pour 10 places de plus pour 100 enfants",
+		nature:
+			"Effet durable, le mieux établi (Allemagne, Norvège). Nul dans d'autres études.",
+	},
+	congeParental: {
+		nom: "Congé parental mieux indemnisé",
+		unite: "pour une réforme d'ampleur",
+		nature:
+			"Surtout des naissances avancées. Effet parfois négatif (Espagne, congé de paternité).",
+	},
+	aidesFinancieres: {
+		nom: "Aides financières aux familles",
+		unite: "pour un point de PIB par an",
+		nature:
+			"Hausse des naissances tant que l'aide est récente ; effet durable discuté.",
+	},
+};
+const enfants = (x: number) =>
+	x === 0
+		? "aucun"
+		: `+${x.toLocaleString("fr-FR", { minimumFractionDigits: 2 })}`;
+
 function Modele() {
 	return (
 		<main className="wrap large">
@@ -480,6 +509,57 @@ function Modele() {
 					Les séries d'avant 2019 de la retraite complémentaire viennent des
 					barèmes de l'Institut des politiques publiques, une source secondaire
 					: l'historique officiel n'était pas accessible.
+				</p>
+			</section>
+
+			<section className="bloc">
+				<h2>Politiques familiales et natalité</h2>
+				<p className="sub">
+					Le groupe « Politiques familiales » du simulateur traduit une
+					politique en enfants par femme. Ces chiffres viennent de{" "}
+					{politiques.etudes.length} évaluations de réformes menées à
+					l'étranger, lues une à une. Aucune ne porte sur la France, où la
+					natalité et l'accueil des jeunes enfants sont déjà parmi les plus
+					élevés d'Europe : la transposition est une hypothèse, pas un résultat.
+				</p>
+				<table className="table">
+					<thead>
+						<tr>
+							<th />
+							<th>Basse</th>
+							<th>Centrale</th>
+							<th>Haute</th>
+							<th>Ce que disent les études</th>
+						</tr>
+					</thead>
+					<tbody>
+						{politiques.familles.map((f) => {
+							const texte = FAMILLES_POLITIQUES[f.id];
+							return (
+								<tr key={f.id}>
+									<th>
+										{texte?.nom}
+										<small>enfants par femme, {texte?.unite}</small>
+									</th>
+									<td className="num">{enfants(f.effet.bas)}</td>
+									<td className="num">{enfants(f.effet.central)}</td>
+									<td className="num">{enfants(f.effet.haut)}</td>
+									<td>{texte?.nature}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+				<p className="reserve">
+					Le coût de ces politiques n'est pas compté, et leur effet sur l'emploi
+					des mères non plus. Pour l'égalité entre femmes et hommes et pour
+					l'immigration, aucune étude lue ne donne d'effet chiffrable sur la
+					natalité ou le solde migratoire : il n'y a donc pas de réglage. Le
+					détail des études, avec leurs citations, est dans{" "}
+					<a href="https://github.com/waltoss/nos-retraites/blob/main/data/references/elasticites.json">
+						le fichier des sources
+					</a>
+					.
 				</p>
 			</section>
 

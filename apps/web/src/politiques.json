@@ -1,0 +1,312 @@
+{
+	"date": "2026-11-21",
+	"familles": [
+		{
+			"id": "accueilJeunesEnfants",
+			"unite": "+10 points de taux de couverture des moins de 3 ans",
+			"effet": {
+				"bas": 0,
+				"central": 0.04,
+				"haut": 0.1
+			},
+			"nature": "niveau durable, d'apres les deux revues (Bergsvik et al. 2020 ; UNFPA 2019)",
+			"delai": "progressif : quelques annees apres l'ouverture des places (Allemagne) ; plein effet sur la descendance finale en 15 a 25 ans (Norvege)",
+			"base": "bas = 0 : taux d'accueil non significatifs dans le panel OCDE 2002-2019, pas d'effet clair en Autriche ni en Coree. central = 0,04 : Allemagne, 0,12 enfant pour 30 points (seule quasi-experience donnant un chiffre en enfants par femme). haut = 0,10 : Norvege 1973-1998 (0,10 a 0,12) et panel OCDE 1982-2007 (0,08).",
+			"reserves": [
+				"Les estimations hautes viennent de pays partant d'une couverture tres basse (Norvege des annees 1970, Allemagne de l'Ouest de 2005). La France est deja a environ 60 places pour 100 enfants de moins de 3 ans (A. Solaz, audition du 9 juillet 2025) : le rendement d'un point supplementaire y est vraisemblablement plus faible.",
+				"Aucune evaluation de l'effet des plans creches francais sur la fecondite n'a ete trouvee ; l'evaluation Insee de leur effet sur l'emploi des meres conclut a un effet non significatif.",
+				"L'effet sur l'emploi des meres est fort au Quebec (+7,6 a +7,7 points), nul en Norvege (1975) et en France (2007-2015) : il depend de ce que l'accueil public remplace.",
+				"Cout eleve : la Norvege consacre 1,4 % du PIB a l'accueil (UNFPA 2019)."
+			]
+		},
+		{
+			"id": "congeParental",
+			"unite": "reforme substantielle de la duree ou de l'indemnisation du conge (par exemple +100 jours pleinement indemnises, ou passage a une indemnite proportionnelle au salaire)",
+			"effet": {
+				"bas": 0,
+				"central": 0.03,
+				"haut": 0.1
+			},
+			"nature": "calendrier surtout ; niveau durable conteste",
+			"delai": "immediat sur le calendrier (1 a 3 ans) ; l'effet sur la descendance finale, quand il existe, ne se lit qu'a 10 ans ou plus",
+			"base": "bas = 0 : reformes nordiques (aucun effet sur le nombre total d'enfants), Kalwij (aucun effet sur la descendance finale), descendance finale suedoise presque inchangee apres le 'speed premium'. central = 0,03 : arbitrage entre +0,039 enfant par mere a 10 ans en Autriche (Lalive et Zweimuller, pour +12 mois de conge) et +0,06 pour 100 jours pleinement indemnises dans le panel OCDE (Luci-Greulich et Thevenon). haut = 0,10 : arrondi entre les 12 enfants pour 100 femmes resumes par Bergsvik et al. pour l'Autriche et les +0,09 a +0,24 de Baizan et al. pour un passage de 10 a 75 semaines.",
+			"reserves": [
+				"Risque d'effet negatif : le conge de paternite espagnol de 2007 a retarde les naissances suivantes et reduit de 1 a 5 % la probabilite d'un autre enfant a 6 ans ; l'Elterngeld allemand a reduit la fecondite des meres a bas revenus.",
+				"Les regles de type 'speed premium' produisent des pics puis des creux de naissances (Suede : 1,61 en 1983, 2,14 en 1990, 1,5 a la fin des annees 1990), ce qui compte pour un simulateur annuel de retraites mais ne change presque pas la taille des generations sur longue periode.",
+				"Les conges longs faiblement indemnises eloignent les meres de l'emploi (France, APE 1994 : 100 000 a 150 000 retraits d'activite), ce qui joue en sens inverse sur les cotisations.",
+				"La version publiee de la revue de Bergsvik et al. (2021), non ouverte, juge d'apres son resume les effets du conge plus forts que la version de travail lue ici."
+			]
+		},
+		{
+			"id": "aidesFinancieres",
+			"unite": "+1 point de PIB de transferts en especes aux familles, maintenu durablement",
+			"effet": {
+				"bas": 0,
+				"central": 0.05,
+				"haut": 0.15
+			},
+			"nature": "calendrier surtout, d'apres les deux revues et l'OCDE ('transitory effects at best') ; niveau durable defendu par certaines etudes (Russie, Hongrie, Espagne en partie)",
+			"delai": "hausse des naissances visible en 1 a 2 ans, maximale tant que la mesure est recente ou menacee de suppression ; l'effet durable, s'il existe, est plus faible que l'effet initial",
+			"base": "bas = 0 : Quebec en descendance des generations (Parent et Wang), Russie selon Frejka et Zakharov, Pologne selon l'OCDE, Kalwij. central = 0,05 : entre +0,02 (Luci-Greulich et Thevenon, par point de depense par enfant en part du PIB par tete, unite differente) et +0,069 par point de PIB (Zhang et al. 2023, cite par Gauthier et Gietel-Basten). haut = 0,15 : Slonimczyk et Yurko pour le capital maternite russe (+0,15) et milieu de la fourchette 0,09-0,18 de l'Institute for Family Studies ; ces deux chiffres ne sont pas rapportes a un point de PIB dans les sources.",
+			"reserves": [
+				"Cout par naissance supplementaire tres eleve : environ 15 500 dollars canadiens (Quebec, annees 1990), 126 000 dollars australiens (Australie), 50 000 dollars (Russie).",
+				"Effets concentres sur certains groupes (rangs 3 et plus, menages modestes ou au contraire aises selon la conception) et parfois de signes opposes selon l'age (Pologne).",
+				"La suppression d'une aide peut couter plus de naissances que son introduction n'en a apporte (Espagne : +3 % puis -6 %).",
+				"Pour la France, les reformes de 2013-2015 n'expliqueraient que quelques centiemes de point de la baisse d'environ 0,45 point observee depuis 2014 (Geerolf 2026, document non publie dans une revue) ; l'APE de 1994 au plus 20 a 30 % de la hausse de 1994-2001 (Piketty).",
+				"La France depense deja beaucoup et sa fecondite reste parmi les plus hautes d'Europe : les effets mesures dans des pays partant de 1,2-1,3 (Russie, Hongrie, Pologne) ne s'y transposent pas directement."
+			]
+		}
+	],
+	"etudes": [
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Allemagne (Ouest)",
+			"politique": "Extension des places d'accueil public pour les moins de 3 ans",
+			"annee": "2005-2009",
+			"effet": "+10 points de taux de couverture : +1,2 naissance pour 1 000 femmes, soit +2,8 % ; +30 points : environ +0,12 enfant par femme (hypothese de linearite des auteurs). Effet plus fort sur les 2es (+4 %) et 3es naissances (+7 %).",
+			"nature": "niveau durable (selon les auteurs : pas de naissances simplement avancees)",
+			"source": "Bauernschuster, Hener, Rainer, 'Children of a (Policy) Revolution: The Introduction of Universal Child Care and its Effect on Fertility', Journal of the European Economic Association 14(4), 2016 (version preprint)",
+			"url": "https://www.wiwi.uni-passau.de/fileadmin/dokumente/fakultaeten/wiwi/lehrstuehle/bauernschuster/Publikationen/ba_he_ra_JEEA_preprint.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Norvege",
+			"politique": "Montee en charge des places d'accueil prescolaire",
+			"annee": "1973-1998",
+			"effet": "Un peu plus de +0,1 enfant par femme (descendance a 35 ans) pour +10 points de taux de couverture ; de 0 a 60 % : +0,5 a +0,7 enfant selon la vitesse de montee en charge (simulation : 1,51 a 0 %, 2,18 a 60 %).",
+			"nature": "niveau durable (descendance atteinte a 35 ans)",
+			"source": "Rindfuss, Guilkey, Morgan, Kravdal, 'Child-Care Availability and Fertility in Norway', Population and Development Review 36(4), 2010",
+			"url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3099220"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Suede",
+			"politique": "Plafonnement des tarifs de garde ('maxtaxa')",
+			"annee": "2002",
+			"effet": "+3 a 5 naissances pour 1 000 femmes sur 18 mois, soit +4 a 6 % du taux de natalite ; effet le plus fort sur les premieres et troisiemes naissances.",
+			"nature": "incertain (les auteurs jugent un effet sur la descendance finale plausible, sans pouvoir l'observer)",
+			"source": "Mork, Sjogren, Svaleryd, 'Cheaper childcare, more children', IFAU Working Paper 2008:29 (publie dans Journal of Population Economics, 2013)",
+			"url": "https://www.ifau.se/globalassets/pdf/se/2008/wp08-29.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "26 pays de l'OCDE",
+			"politique": "Depense publique d'accueil et taux d'accueil (panel OCDE recent)",
+			"annee": "2002-2019",
+			"effet": "Association positive et significative entre depense publique d'accueil par enfant et indice conjoncturel ; les taux d'accueil eux-memes ne sont significatifs dans aucune regression. L'extension de l'accueil en Autriche ou en Coree n'a pas eu d'effet clair.",
+			"nature": "incertain",
+			"source": "OCDE, Society at a Glance 2024, chapitre 1 (d'apres Fluchtmann, van Veen, Adema, 'Fertility, employment and family policy: A cross-country panel analysis', OECD SEM Working Paper 299, 2023)",
+			"url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/06/society-at-a-glance-2024_08001b73/918d8db3-en.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Coree du Sud",
+			"politique": "Extension massive de l'accueil des jeunes enfants",
+			"annee": "2000-2014",
+			"effet": "Depense d'accueil portee de 0,1 % a 0,9 % du PIB, taux d'accueil des 0-2 ans de 9 % a 36 % ; l'indice conjoncturel a continue de baisser (sous 1 en 2018, 0,72 en 2023).",
+			"nature": "incertain (pas de contrefactuel)",
+			"source": "Sobotka et al. (UNFPA 2019) pour la depense et la couverture ; OCDE, Society at a Glance 2024 pour la fecondite",
+			"url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/06/society-at-a-glance-2024_08001b73/918d8db3-en.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Canada (Quebec)",
+			"politique": "Services de garde a tarif reduit ('5 dollars par jour')",
+			"annee": "1997-2000",
+			"effet": "EMPLOI DES MERES : +7,6 points de taux d'activite des meres d'enfants d'age prescolaire (Lefebvre et Merrigan) ; +7,7 points d'emploi des meres en couple (Baker, Gruber, Milligan). Aucune evaluation de l'effet sur la fecondite n'a ete ouverte.",
+			"nature": "niveau durable pour l'emploi (Haeck, Lefebvre, Merrigan 2013 : effets 'long lasting') ; fecondite non evaluee dans les textes lus",
+			"source": "Lefebvre, Merrigan, 'Low-fee ($5/day/child) Regulated Childcare Policy and the Labor Supply of Mothers with Young Children', CIRANO 2005s-09 (publie dans Journal of Labor Economics 2008) ; Baker, Gruber, Milligan, 'Universal Childcare, Maternal Labor Supply and Family Well-Being', NBER WP 11832, 2005",
+			"url": "https://cirano.qc.ca/files/publications/2005s-09.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "Norvege",
+			"politique": "Accueil subventionne universel (reforme de 1975)",
+			"annee": "non relevee dans le resume",
+			"effet": "EMPLOI DES MERES : effet causal faible ou nul ; l'accueil subventionne a surtout remplace des gardes informelles.",
+			"nature": "sans objet pour la fecondite",
+			"source": "Havnes, Mogstad, 'Money for Nothing? Universal Child Care and Maternal Employment', IZA DP 4504, 2009 (Journal of Public Economics 2011)",
+			"url": "https://docs.iza.org/dp4504.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "France",
+			"politique": "Plans creches (places en etablissements d'accueil du jeune enfant)",
+			"annee": "2000-2016",
+			"effet": "EMPLOI DES MERES : pas d'effet significatif ; effet moyen estime -1,7 point de taux d'emploi salarie, intervalle de confiance a 95 % de -8,7 a +5,3 points. Aucune evaluation de l'effet des plans creches francais sur la fecondite n'a ete trouvee.",
+			"nature": "sans objet pour la fecondite",
+			"source": "Pora, 'Hausse de l'accueil en creche : un effet limite sur l'emploi des meres' (titre a verifier), Insee Analyses n° 55, 2020",
+			"url": "https://www.insee.fr/fr/statistiques/fichier/version-html/4652808/IA-55.pdf"
+		},
+		{
+			"famille": "accueilJeunesEnfants",
+			"pays": "France",
+			"politique": "Prestation d'accueil du jeune enfant (PAJE), hausse des aides a la garde",
+			"annee": "2004",
+			"effet": "EMPLOI DES MERES : hausse significative du recours a la garde payante ; effet significatif mais plus faible sur l'activite des meres. Fecondite non etudiee.",
+			"nature": "sans objet pour la fecondite",
+			"source": "Givord, Marbot, 'Does the cost of child care affect female labor market participation? An evaluation of a French reform of childcare subsidies', Insee, document de travail G2013/04 (titre a verifier)",
+			"url": "https://www.insee.fr/en/statistiques/fichier/1380941/G2013-04bis.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "Autriche",
+			"politique": "Allongement du conge parental de 1 a 2 ans (1990), puis reduction a 18 mois (1996)",
+			"annee": "1990 et 1996",
+			"effet": "1990 : +4,9 points (+15 %) de probabilite d'un enfant supplementaire dans les 3 ans, +3,9 points a 10 ans. 1996 : aucun changement de la fecondite. Bergsvik et al. (2020) resument : environ 12 enfants de plus pour 100 femmes. Contestation : Stastna et Sobotka (2009) ne trouvent pas d'effet sur les probabilites d'agrandissement par cohorte.",
+			"nature": "incertain (durable selon Lalive et Zweimuller ; calendrier seulement selon Stastna et Sobotka)",
+			"source": "Lalive, Zweimuller, 'Does Parental Leave Affect Fertility and Return-to-Work? Evidence from a True Natural Experiment', IZA DP 1613, 2005 (Quarterly Journal of Economics 2009)",
+			"url": "https://docs.iza.org/dp1613.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "Allemagne",
+			"politique": "Elterngeld (indemnite de conge parental proportionnelle au salaire)",
+			"annee": "2007",
+			"effet": "Hausse de la fecondite des femmes diplomees du superieur par rapport aux peu diplomees allant jusqu'a 22 % ; +7,2 naissances par an pour 1 000 femmes au-dessus du salaire median (base 41 pour 1 000) ; +2,1 % de fecondite annuelle par tranche de 1 000 euros de prestations. Effet negatif et persistant pour les meres aux plus bas revenus, perdantes de la reforme (Cygan-Rehm, lu dans Bergsvik et al. 2020). Pas d'estimation de l'effet agrege sur l'indice conjoncturel dans les textes lus.",
+			"nature": "incertain (5 ans d'observation seulement ; descendance finale non observee)",
+			"source": "Raute, 'Can Financial Incentives Reduce the Baby Gap? Evidence from a Reform in Maternity Leave Benefits', NBER WP 23793, 2017 (Journal of Public Economics 2019)",
+			"url": "https://www.nber.org/system/files/working_papers/w23793/w23793.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "Suede",
+			"politique": "'Speed premium' (maintien du niveau d'indemnite si la naissance suivante survient dans les 24, puis 30 mois)",
+			"annee": "1980 et 1986",
+			"effet": "Indice conjoncturel de 1,61 (1983) a 2,14 (1990), puis chute a 1,5 a la fin des annees 1990 ; l'indice corrige du calendrier et du rang n'a augmente que d'environ 0,2 ; la descendance finale des generations concernees n'a presque pas change.",
+			"nature": "calendrier seulement, pour l'essentiel",
+			"source": "Sobotka, Matysiak, Brzozowska (UNFPA 2019), encadre 3, d'apres Andersson, Hoem, Duvander (2006), Demographic Research 14(4)",
+			"url": "https://asiapacific.unfpa.org/sites/default/files/pub-pdf/policy_responses_to_low_fertility.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "Espagne",
+			"politique": "Conge de paternite de deux semaines",
+			"annee": "2007",
+			"effet": "Naissance suivante retardee de 16 a 38 jours ; probabilite d'un autre enfant reduite de 7 a 15 % a 2 ans, de 1 a 6 % a 4 ans, de 1 a 5 % a 6 ans (estimations moins precises au-dela de 2 ans). EMPLOI DES MERES : +2,5 a 4 points d'emploi 6 mois apres la naissance.",
+			"nature": "incertain (retard net ; baisse durable seulement suggeree pour les couples plus ages)",
+			"source": "Farre, Gonzalez, 'Does Paternity Leave Reduce Fertility?', IZA DP 12023, 2018 (Journal of Public Economics 2019)",
+			"url": "https://docs.iza.org/dp12023.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "Estonie",
+			"politique": "Conge parental indemnise a 100 % du salaire",
+			"annee": "2004-2008",
+			"effet": "Indice conjoncturel de 1,37 (2003) a 1,72 (2010) ; indice corrige du calendrier et du rang en legere hausse seulement ; descendance des generations stabilisee.",
+			"nature": "calendrier pour l'essentiel ; arret de la baisse de la descendance finale",
+			"source": "Sobotka, Matysiak, Brzozowska (UNFPA 2019), encadre 4",
+			"url": "https://asiapacific.unfpa.org/sites/default/files/pub-pdf/policy_responses_to_low_fertility.pdf"
+		},
+		{
+			"famille": "congeParental",
+			"pays": "France",
+			"politique": "Allocation parentale d'education (APE) etendue au 2e enfant",
+			"annee": "1994",
+			"effet": "Fecondite : effets difficiles a isoler, au maximum 20 a 30 % de la hausse de la fecondite observee entre 1994 et 2001. EMPLOI DES MERES : 100 000 a 150 000 retraits du marche du travail en 3 ans.",
+			"nature": "incertain",
+			"source": "Piketty, 'L'impact de l'allocation parentale d'education sur l'activite feminine et la fecondite, 1982-2002', Cepremap, document de travail 2003-09",
+			"url": "https://cepremap.fr/depot/couv_orange/co0309.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Canada (Quebec)",
+			"politique": "Allocation a la naissance (Allowance for Newborn Children)",
+			"annee": "1988-1997",
+			"effet": "+12 % de fecondite en moyenne chez les familles eligibles, +25 % pour celles eligibles au montant maximal ; +16,9 % pour 1 000 dollars de prestation la premiere annee. Mais Parent et Wang (2007) ne trouvent aucun effet sur la descendance des generations, et Kim (2014) conclut de meme pour une allocation anterieure (lus dans Bergsvik et al. 2020).",
+			"nature": "calendrier seulement selon les etudes de cohorte ; niveau durable selon l'UNFPA ('also had a positive impact on completed fertility') : desaccord",
+			"source": "Milligan, 'Subsidizing the Stork: New Evidence on Tax Incentives and Fertility', NBER WP 8845, 2002 (Review of Economics and Statistics 2005)",
+			"url": "https://www.nber.org/system/files/working_papers/w8845/w8845.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Espagne",
+			"politique": "Prime universelle a la naissance de 2 500 euros ('cheque bebe')",
+			"annee": "2007-2010",
+			"effet": "Introduction : +3 % de taux de natalite ; annonce de la suppression : +4 % transitoire ; suppression : -6 %. Indices a la fois d'un effet de calendrier et d'un effet de niveau.",
+			"nature": "incertain (calendrier et niveau, selon les autrices)",
+			"source": "Gonzalez, Trommlerova, 'Cash Transfers and Fertility: How the Introduction and Cancellation of a Child Benefit Affected Births and Abortions', Journal of Human Resources 58(3), 2023",
+			"url": "https://repositori.upf.edu/server/api/core/bitstreams/ad826ccf-8b6b-425c-8fb0-a42d6cbd2adc/content"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Pologne",
+			"politique": "Rodzina 500+ (Famille 500+)",
+			"annee": "2016",
+			"effet": "A court terme, +1,5 point de probabilite annuelle de naissance, avec des effets opposes selon les groupes : +0,7 a +1,8 point pour les femmes de 31-40 ans, -2,2 a -2,6 points pour les 21-30 ans, -1 point pour les menages aises. L'OCDE conclut que le programme a reduit la pauvrete des enfants mais 'failed to raise fertility rates'.",
+			"nature": "calendrier seulement ou nul (l'autrice parle d'effet de court terme ; l'OCDE d'echec)",
+			"source": "Bokun, 'Cash transfers and fertility: Evidence from Poland's Family 500+ Policy', Demographic Research 51(28), 2024",
+			"url": "https://www.demographic-research.org/volumes/vol51/28/51-28.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Russie",
+			"politique": "Capital maternite (federal 2007, regional 2012)",
+			"annee": "2007 et 2012",
+			"effet": "+10 % de fecondite a court terme, plus de +20 % a long terme selon Sorvachev et Yakovlev ; cout d'environ 50 000 dollars par naissance supplementaire.",
+			"nature": "niveau durable selon les auteurs (hausse de la descendance finale simulee pour une large generation)",
+			"source": "Sorvachev, Yakovlev, 'Short- and Long-Run Effects of a Sizable Child Subsidy: Evidence from Russia', IZA DP 13019, 2020",
+			"url": "https://docs.iza.org/dp13019.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Hongrie",
+			"politique": "Extension de l'abattement fiscal familial",
+			"annee": "2011",
+			"effet": "Descendance finale +0,8 % environ pour les familles ayant deja au moins deux enfants, +5,6 % environ pour celles en ayant moins de deux. Dans le modele structurel de long terme : -4,8 points d'emploi des meres.",
+			"nature": "niveau durable (descendance finale de cohortes en fin de vie feconde)",
+			"source": "Szabo, 'The Effect of Tax Incentives on Completed Fertility' (titre a verifier), document de travail, Universite Bocconi, 2022",
+			"url": "https://economics.unibocconi.eu/sites/default/files/files/media/attachments/benceszabofertilitytaxation22091920220920122002.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "Hongrie",
+			"politique": "Ensemble des mesures 2010-2020 (abattements, conges tres indemnises, aides au logement CSOK, creches)",
+			"annee": "2010-2020",
+			"effet": "Indice conjoncturel passe d'un minimum de 1,25 en 2010-2011 a environ 1,5 en 2020, soit son niveau de 1995 ; l'OCDE juge que les mesures y ont 'probablement contribue'. Estimation plus ancienne : +1 % de prestations familiales, +0,2 % d'indice conjoncturel (Gabos et al. 2009).",
+			"nature": "incertain",
+			"source": "OCDE, Society at a Glance 2024, chapitre 1 ; Gabos, Gal, Kezdi (2009) lu dans Sobotka et al. (UNFPA 2019)",
+			"url": "https://www.oecd.org/content/dam/oecd/en/publications/reports/2024/06/society-at-a-glance-2024_08001b73/918d8db3-en.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "France",
+			"politique": "Simulation d'une allocation universelle de 150 euros par mois et par enfant",
+			"annee": "publication 2008 et 2014 (annees des donnees non relevees)",
+			"effet": "+0,3 point d'indice de fecondite pour un cout direct de 0,3 % du PIB ; -0,5 point de participation des femmes. Dans l'echantillon : taux de fecondite annuel de 15,5 % a 17,7 %.",
+			"nature": "incertain (simulation ; les auteurs presentent la reforme comme 'an upper bound of realistic policy changes')",
+			"source": "Laroque, Salanie, 'Does Fertility Respond to Financial Incentives?', IZA DP 3575, 2008 (publie sous le titre 'Identifying the Response of Fertility to Financial Incentives', Journal of Applied Econometrics 29(2), 2014)",
+			"url": "https://docs.iza.org/dp3575.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "France",
+			"politique": "Reformes de 2013-2015 visant les familles aisees (plafonnement du quotient familial, reforme de la PAJE, modulation des allocations familiales)",
+			"annee": "2013-2015",
+			"effet": "OCDE (d'apres El-Mallakh 2021) : la restriction de l'eligibilite a l'allocation de base de la PAJE a fait baisser la fecondite par report des naissances. Geerolf (2026) : ces reformes expliquent au plus quelques milliers de naissances par an, soit quelques centiemes de point d'indice conjoncturel, pour une baisse totale d'environ 0,45 point. Inspection des finances et Igas (audition de 2025) : la courbe en U de la fecondite selon le revenu est restee stable apres les reformes.",
+			"nature": "calendrier pour partie (report des naissances selon El-Mallakh)",
+			"source": "OCDE, Society at a Glance 2024 (citant El-Mallakh 2021) ; Geerolf, 'Politiques familiales, fecondite et inegalites : quels ordres de grandeur ?', document personnel, octobre 2026 ; Assemblee nationale, mission d'information sur la baisse de la natalite, compte rendu n° 38, 1er decembre 2025",
+			"url": "https://fgeerolf.com/politiques-familiales.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "France",
+			"politique": "Quotient familial",
+			"annee": "1929-1981",
+			"effet": "Resultats 'mitiges' sur trois experiences naturelles (Chen 2011). L'etude de Landais (2003) sur les reformes de 1980-1981 n'a pas pu etre ouverte.",
+			"nature": "incertain",
+			"source": "Chen, 'Can countries reverse fertility decline? Evidence from France's marriage and baby bonuses, 1929-1981', International Tax and Public Finance 18, 2011",
+			"url": "https://users.nber.org/~dlchen/papers/Can_Countries_Reverse_Fertility_Decline_IntlTaxPF.pdf"
+		},
+		{
+			"famille": "aidesFinancieres",
+			"pays": "RDA, Tchecoslovaquie",
+			"politique": "Paquets natalistes des annees 1970 (conges allonges, allocations, logement)",
+			"annee": "1968-1976",
+			"effet": "Effets durables modestes, de l'ordre de 0,10 a 0,25 naissance par femme, une fois ote l'effet de calendrier ; pour la RDA, Buttner et Lutz (1990) : +15 % d'indice conjoncturel, environ 0,2 enfant.",
+			"nature": "niveau durable mais modeste, apres des vagues de naissances surtout dues au calendrier",
+			"source": "Sobotka, Matysiak, Brzozowska (UNFPA 2019), section 4.7 ; Gauthier, Gietel-Basten (2025)",
+			"url": "https://asiapacific.unfpa.org/sites/default/files/pub-pdf/policy_responses_to_low_fertility.pdf"
+		}
+	]
+}
