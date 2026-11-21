@@ -11,10 +11,12 @@ import {
 	type Facteurs,
 	generatePopulation,
 	type Individu,
+	moisParEtat,
 	type Pension,
 	type Resultat,
 	runSimulation,
 	SCENARIO_REFERENCE,
+	valeur,
 } from "@nos-retraites/engine";
 import type { ScenarioMoteur } from "./leviers";
 
@@ -41,6 +43,11 @@ export interface ResumePortrait {
 	scenario: { mensuelle: number; age: number };
 	/** Nombre de personnes réelles que cet individu représente. */
 	poids: number;
+	/** Personnes réelles dont ce portrait tient lieu dans la liste affichée ; null si le tirage n'est pas représentatif. */
+	represente: number | null;
+	/** Salaire moyen à temps plein sur la carrière, en part du plafond. */
+	niveauSalaire: number;
+	anneesEmploi: number;
 }
 
 export interface DetailPortrait {
@@ -157,6 +164,25 @@ function pensionDans(
 	return { carriere, compte, pension };
 }
 
+/** Niveau de salaire et durée d'emploi d'une carrière avant le départ, pour l'habillage des portraits. */
+function profil(
+	c: Carriere,
+	anneeDepart: number,
+): { niveauSalaire: number; anneesEmploi: number } {
+	let mois = 0;
+	let somme = 0;
+	for (const a of c.annees) {
+		if (a.annee >= anneeDepart) break;
+		const m = moisParEtat(a).emploi;
+		if (m === 0 || a.salaireBrut <= 0) continue;
+		mois += m;
+		// Salaire ramené à un temps plein sur l'année, en part du plafond de l'époque.
+		somme +=
+			(a.salaireBrut / (a.quotite ?? 1) / valeur(B.cnav.pass, a.annee)) * 12;
+	}
+	return { niveauSalaire: mois ? somme / mois : 0, anneesEmploi: mois / 12 };
+}
+
 function portraits(
 	s: ScenarioMoteur,
 	filtre: FiltrePortraits,
@@ -181,6 +207,8 @@ function portraits(
 			reference: { mensuelle: r.mensuelleBrute, age: r.liquidation.age },
 			scenario: { mensuelle: p.mensuelleBrute, age: p.liquidation.age },
 			poids: individu.poids,
+			represente: null,
+			...profil(c, r.liquidation.annee),
 		});
 	}
 	tous.sort((x, y) => x.reference.mensuelle - y.reference.mensuelle);
@@ -221,7 +249,11 @@ function portraits(
 			k++;
 		}
 	}
-	return { portraits: pris, total };
+	const part = filtre.niveau === "touches" ? null : total / pris.length;
+	return {
+		portraits: pris.map((p) => ({ ...p, represente: part })),
+		total,
+	};
 }
 
 const envoyer = (r: Reponse) => self.postMessage(r);

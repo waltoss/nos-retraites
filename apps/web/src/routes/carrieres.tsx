@@ -1,6 +1,12 @@
-import type { Carriere, Pension } from "@nos-retraites/engine";
+import {
+	BAREMES_FRANCE,
+	type Carriere,
+	moisParEtat,
+	type Pension,
+} from "@nos-retraites/engine";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { Avatar } from "../components/Avatar";
 import { Frise } from "../components/Frise";
 import { Icon } from "../components/Icons";
 import type {
@@ -9,6 +15,7 @@ import type {
 	ResumePortrait,
 } from "../engine.worker";
 import { ageEnClair, decimal, entier, euros, personnes } from "../format";
+import { persona } from "../personas";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/carrieres")({ component: Carrieres });
@@ -127,14 +134,23 @@ function Carrieres() {
 								className={p.id === choisi ? "portrait actif" : "portrait"}
 								onClick={() => setChoisi(p.id)}
 							>
+								<Avatar
+									id={p.id}
+									sexe={p.sexe}
+									age={BAREMES_FRANCE.anneeReference - p.anneeNaissance}
+								/>
 								<span className="qui">
-									{p.sexe === "F" ? "Née" : "Né"} en {p.anneeNaissance}
+									{persona(p).prenom},{" "}
+									{BAREMES_FRANCE.anneeReference - p.anneeNaissance} ans
 									<small>
-										{p.enfants === 0
-											? "sans enfant"
-											: pluriel(p.enfants, "enfant")}
-										{p.cadre ? ", cadre" : ""}
+										{persona(p).metier ?? "a peu travaillé en France"}
 									</small>
+									{p.represente !== null && (
+										<small className="represente">
+											comme {p.sexe === "F" ? "elle" : "lui"},{" "}
+											{personnes(Math.round(p.represente / 1e5) * 1e5)}
+										</small>
+									)}
 								</span>
 								<span className="num combien">
 									{euros(p.scenario.mensuelle)}
@@ -153,16 +169,21 @@ function Carrieres() {
 					{liste && (
 						<p className="reserve">
 							{entier(liste.portraits.length)} carrières, de la plus petite
-							pension à la plus grande. Elles sont tirées pour représenter à
-							parts égales les {personnes(liste.total)} de personnes de 60 ans
-							et plus concernées en 2026.
+							pension à la plus grande. Chacune tient lieu d'une part égale des{" "}
+							{personnes(liste.total)} de salariés et anciens salariés du privé
+							de 60 ans et plus. Les prénoms et les métiers sont des exemples :
+							le modèle ne connaît que les salaires et les périodes d'emploi.
 						</p>
 					)}
 				</div>
 
 				<div className="fiche">
 					{detail && detail.id === choisi ? (
-						<Fiche detail={detail} compare={modifies > 0} />
+						<Fiche
+							detail={detail}
+							resume={liste?.portraits.find((p) => p.id === choisi)}
+							compare={modifies > 0}
+						/>
 					) : (
 						<div className="histo attente" style={{ height: 520 }} />
 					)}
@@ -172,18 +193,27 @@ function Carrieres() {
 	);
 }
 
+const duree = (mois: number) =>
+	mois >= 12 ? pluriel(Math.round(mois / 12), "an") : `${mois} mois`;
+
 function recit(c: Carriere, ageDepart: number): string {
 	const avant = c.annees.filter(
 		(a) => a.annee - c.anneeNaissance < Math.floor(ageDepart / 4),
 	);
-	const compte = (etat: string) => avant.filter((a) => a.etat === etat).length;
+	const mois = { emploi: 0, chomage: 0, maladie: 0, inactivite: 0 };
+	for (const a of avant) {
+		const m = moisParEtat(a);
+		mois.emploi += m.emploi;
+		mois.chomage += m.chomage;
+		mois.maladie += m.maladie;
+		mois.inactivite += 12 - m.emploi - m.chomage - m.maladie;
+	}
 	const debut = (avant[0]?.annee ?? c.anneeNaissance) - c.anneeNaissance;
-	const morceaux = [`${pluriel(compte("emploi"), "année")} en emploi`];
-	if (compte("chomage")) morceaux.push(`${compte("chomage")} au chômage`);
-	if (compte("maladieMaternite"))
-		morceaux.push(`${compte("maladieMaternite")} en maladie ou maternité`);
-	if (compte("inactivite"))
-		morceaux.push(`${compte("inactivite")} sans activité`);
+	const morceaux = [`${duree(mois.emploi)} en emploi`];
+	if (mois.chomage) morceaux.push(`${duree(mois.chomage)} au chômage`);
+	if (mois.maladie)
+		morceaux.push(`${duree(mois.maladie)} en maladie ou maternité`);
+	if (mois.inactivite) morceaux.push(`${duree(mois.inactivite)} sans activité`);
 	return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. Premier emploi à ${debut} ans. Avant son départ : ${morceaux.join(", ")}.`;
 }
 
@@ -297,14 +327,41 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 
 function Fiche({
 	detail,
+	resume,
 	compare,
 }: {
 	detail: DetailPortrait;
+	resume: ResumePortrait | undefined;
 	compare: boolean;
 }) {
 	const { reference, scenario } = detail;
+	const qui = resume ? persona(resume) : null;
+	const c = scenario.carriere;
 	return (
 		<>
+			{resume && qui && (
+				<div className="identite">
+					<Avatar
+						id={resume.id}
+						sexe={c.sexe}
+						age={BAREMES_FRANCE.anneeReference - c.anneeNaissance}
+						size={72}
+					/>
+					<div>
+						<h2>
+							{qui.prenom}, {BAREMES_FRANCE.anneeReference - c.anneeNaissance}{" "}
+							ans
+						</h2>
+						<p>
+							{qui.metier
+								? `Par exemple ${qui.metier}${c.cadre && !qui.metier.startsWith("cadre") ? ", cadre" : ""}.`
+								: "A peu travaillé en France."}{" "}
+							{resume.represente !== null &&
+								`Dans la population, environ ${personnes(Math.round(resume.represente / 1e5) * 1e5)} de personnes de 60 ans et plus ont une situation voisine.`}
+						</p>
+					</div>
+				</div>
+			)}
 			<p className="recit">
 				{recit(scenario.carriere, scenario.pension.liquidation.age)}
 			</p>

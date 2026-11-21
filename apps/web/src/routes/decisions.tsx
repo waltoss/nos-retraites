@@ -86,6 +86,15 @@ const COLONNES: Colonne[] = [
 		plein: 12,
 		seuil: 0.05,
 	},
+	{
+		titre: "Équilibre",
+		aide: "cotisations moins pensions, en milliards par an",
+		valeur: (r) => (r.masses.cotisations - r.masses.pensions) / 1e9,
+		mode: "absolu",
+		format: (e) => `${decimal(Math.abs(e))} Md€`,
+		plein: 25,
+		seuil: 0.1,
+	},
 ];
 
 function Decisions() {

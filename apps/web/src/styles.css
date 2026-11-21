@@ -286,3 +286,13 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .bandeau a { color: inherit; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
 .comparaison { margin-top: 28px; }
 .comparaison h3 { font-family: var(--display); font-size: 20px; margin: 0 0 4px; }
+.avatar { flex: none; border-radius: 50%; }
+.portrait .qui { flex: 1; min-width: 0; font-weight: 600; }
+.portrait .represente { color: var(--cotisants); }
+.identite { display: flex; gap: 16px; align-items: center; margin-bottom: 16px; }
+.identite h2 { font-family: var(--display); font-size: 26px; margin: 0 0 2px; }
+.identite p { margin: 0; color: var(--muted); max-width: 60ch; }
+.equilibre { grid-column: 1 / -1; margin: 0; padding: 14px 18px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font-size: 17px; }
+.equilibre strong { font-family: var(--display); font-weight: 650; font-size: 20px; white-space: nowrap; }
+.equilibre.mieux strong { color: var(--cotisants); }
+.equilibre.pire strong { color: var(--besoin); }

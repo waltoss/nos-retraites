@@ -43,8 +43,10 @@ function Simuler() {
 							<p className="reserve">
 								Ces totaux portent sur les salariés du privé de 18 à 96 ans :
 								régime général et Agirc-Arrco, pensions de droit direct, sans
-								les pensions de réversion. Chaque personne simulée en représente
-								quelques milliers de son âge et de son sexe.
+								les pensions de réversion. L'écart entre cotisations et pensions
+								n'est pas le déficit du système : il manque les autres
+								ressources (CSG, impôts affectés, transferts) et les autres
+								régimes. Seule sa variation se lit ici.
 							</p>
 						</section>
 

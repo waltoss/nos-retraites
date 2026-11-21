@@ -56,6 +56,12 @@ export function Equation({
 		courant.masses.pensions,
 		reference.masses.pensions,
 	);
+	/** Écart de cotisations moins écart de pensions, en milliards par an : positif, le système a besoin de moins d'argent. */
+	const effet =
+		(courant.masses.cotisations -
+			reference.masses.cotisations -
+			(courant.masses.pensions - reference.masses.pensions)) /
+		1e9;
 	return (
 		<div className="equation">
 			<div className="cote">
@@ -116,6 +122,25 @@ export function Equation({
 					{ecartPensions && <em className="num"> {ecartPensions}</em>}
 				</p>
 			</div>
+			<p
+				className={`equilibre${effet > 0 ? " mieux" : effet < 0 ? " pire" : ""}`}
+			>
+				{Math.abs(effet) < 0.05 ? (
+					"Votre scénario ne change pas l'équilibre entre cotisations et pensions."
+				) : (
+					<>
+						Votre scénario {effet > 0 ? "améliore" : "dégrade"} l'équilibre
+						entre cotisations et pensions de{" "}
+						<strong className="num">
+							{Math.abs(effet).toLocaleString("fr-FR", {
+								maximumFractionDigits: 1,
+							})}{" "}
+							milliards d'euros par an
+						</strong>
+						.
+					</>
+				)}
+			</p>
 		</div>
 	);
 }
