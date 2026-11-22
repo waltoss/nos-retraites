@@ -697,7 +697,69 @@ function exemples(s: ScenarioMoteur): Exemple[] {
 			},
 		});
 	}
+	const fonctionnaire = exempleFonctionnaire(s);
+	if (fonctionnaire) choisis.push(fonctionnaire);
 	return choisis;
+}
+
+/**
+ * Un fonctionnaire de l'État pour montrer le calcul : sédentaire, sans invalidité, au moins trente
+ * ans de services, le plus proche de la pension médiane de ses semblables.
+ */
+function exempleFonctionnaire(s: ScenarioMoteur): Exemple | null {
+	const reference = vue(scene(DROIT), "public");
+	const courant = vue(scene(s), "public");
+	const candidats: number[] = [];
+	reference.population.forEach((individu, i) => {
+		const c = individu.carriere;
+		const f = c.fonctionPublique;
+		const p = reference.pensions[i] as Pension;
+		if (!f || f.regime !== "sre" || f.categorie !== "sedentaire") return;
+		if (f.ageInvalidite !== undefined) return;
+		if (c.anneeNaissance < 1958 || c.anneeNaissance > 1962) return;
+		if ((reference.poids[i] as number) === 0) return;
+		if ((detailFonctionPublique(p)?.services ?? 0) < 120) return;
+		candidats.push(i);
+	});
+	candidats.sort(
+		(x, y) =>
+			(reference.pensions[x] as Pension).mensuelleBrute -
+			(reference.pensions[y] as Pension).mensuelleBrute,
+	);
+	const i = candidats[Math.floor(candidats.length / 2)];
+	if (i === undefined) return null;
+	const c = (reference.population[i] as Individu).carriere;
+	const r = reference.pensions[i] as Pension;
+	const p = courant.pensions[i] as Pension;
+	return {
+		resume: {
+			id: i,
+			sexe: c.sexe,
+			anneeNaissance: c.anneeNaissance,
+			enfants: c.enfants.length,
+			cadre: c.cadre,
+			reference: { mensuelle: r.mensuelleBrute, age: r.liquidation.age },
+			scenario: { mensuelle: p.mensuelleBrute, age: p.liquidation.age },
+			poids: reference.poids[i] as number,
+			represente: null,
+			...profil(c, r.liquidation.annee),
+			regimes: regimesVerseurs(r),
+			...(c.fonctionPublique
+				? {
+						fonctionPublique: {
+							...c.fonctionPublique,
+							partPrimes: partPrimes(c, r.liquidation.annee),
+						},
+					}
+				: {}),
+		},
+		detail: {
+			id: i,
+			champ: "public",
+			reference: detail(scene(DROIT), i, "public"),
+			scenario: detail(scene(s), i, "public"),
+		},
+	};
 }
 
 function detail(sc: Scene, i: number, champ?: ChampSimule) {

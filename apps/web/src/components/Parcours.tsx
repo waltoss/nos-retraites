@@ -9,7 +9,7 @@ import {
 } from "@nos-retraites/engine";
 import { useEffect, useMemo, useState } from "react";
 import type { Exemple } from "../engine.worker";
-import { ageEnClair, entier, euros } from "../format";
+import { ageEnClair, decimal, entier, euros } from "../format";
 import { persona } from "../personas";
 import {
 	affiliationDe,
@@ -85,7 +85,11 @@ function derouler(exemple: Exemple): Pas[] {
 					const acquis =
 						etage === "complementaire"
 							? (c.points[i] ?? 0)
-							: (c.trimestresCotises[i] ?? 0) + (c.trimestresAssimiles[i] ?? 0);
+							: etage === "integre"
+								? // Fonction publique : seuls les services comptent dans le taux de la pension.
+									(c.trimestresCotises[i] ?? 0)
+								: (c.trimestresCotises[i] ?? 0) +
+									(c.trimestresAssimiles[i] ?? 0);
 					cumuls[r] = (cumuls[r] ?? 0) + acquis;
 					regimes[r] = {
 						cotisation:
@@ -193,12 +197,14 @@ export function Parcours() {
 	const pronom = carriere.sexe === "F" ? "elle" : "il";
 	const regimes = regimesDe(carriere, pension);
 	const lignes = regimes.lignes.filter((l) => !l.jointe);
+	// La retraite additionnelle n'est pas suivie année par année : elle n'a pas de carte, seulement sa ligne au départ.
+	const cartes = lignes.filter((l) => l.id !== "rafp");
 	const { anneesNonSimulees } = regimes;
 	const cotisations = Object.values(p.regimes).reduce(
 		(t, r) => t + r.cotisation,
 		0,
 	);
-	const caisses = lignes.filter((l) => (p.regimes[l.id]?.cotisation ?? 0) > 0);
+	const caisses = cartes.filter((l) => (p.regimes[l.id]?.cotisation ?? 0) > 0);
 	const partMax = Math.max(1.1, ...pas.map((x) => x.part));
 
 	const recit = p.retraite
@@ -206,9 +212,11 @@ export function Parcours() {
 			? `À ${ageEnClair(pension.liquidation.age)}, ${qui.prenom} prend sa retraite. Chaque régime transforme les droits acquis en pension : ${euros(pension.mensuelleBrute)} par mois au total.`
 			: `En ${p.annee}, ${qui.prenom} a ${p.age} ans. Ses ${euros(pension.mensuelleBrute)} par mois sont payés par les cotisations de celles et ceux qui travaillent cette année-là.`
 		: p.statut && cotisations === 0
-			? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille dans un régime que le modèle ne simule pas encore : l'année compte pour sa durée de carrière, sans cotisation ni pension calculée ici.`
+			? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille ${carriere.fonctionPublique ? "hors de la fonction publique" : "hors du salariat privé"} : le modèle ne retient de cette année que sa durée, sans cotisation ni pension calculée.`
 			: p.statut
-				? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille comme ${p.statut.court}. Sur ${euros(p.salaire)} de ${p.statut.court.startsWith("salarié") ? "salaire brut" : "revenu"}, ${euros(cotisations)} de cotisations retraite partent vers ${caisses.length > 1 ? `${caisses.length} régimes` : "son régime"}, qui les reversent aussitôt aux retraités de ${p.annee}. En échange, ${pronom} acquiert des droits.`
+				? carriere.fonctionPublique
+					? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille comme ${p.statut.court}, pour ${euros(p.salaire)} de traitement et de primes. Une retenue est prise sur son traitement, et son employeur verse ce qu'il faut en plus pour payer les fonctionnaires retraités de ${p.annee}. En échange, ${pronom} acquiert des trimestres de services.`
+					: `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille comme ${p.statut.court}. Sur ${euros(p.salaire)} de ${/^(artisan|commerçant)/.test(p.statut.court) ? "revenu" : "salaire brut"}, ${euros(cotisations)} de cotisations retraite partent vers ${caisses.length > 1 ? `${caisses.length} régimes` : "son régime"}, qui les reversent aussitôt aux retraités de ${p.annee}. En échange, ${pronom} acquiert des droits.`
 				: `En ${p.annee}, ${qui.prenom} a ${p.age} ans et ne travaille pas : aucune cotisation${p.assimiles > 0 ? `, mais ${entier(p.assimiles)} trimestre${p.assimiles > 1 ? "s lui sont comptés" : " lui est compté"} quand même (chômage, maladie ou maternité)` : ""}.`;
 
 	return (
@@ -227,9 +235,11 @@ export function Parcours() {
 							}}
 						>
 							{persona(e.resume).prenom},{" "}
-							{e.resume.regimes.includes("rci")
-								? `salarié${e.resume.sexe === "F" ? "e" : ""} et indépendant${e.resume.sexe === "F" ? "e" : ""}`
-								: `salarié${e.resume.sexe === "F" ? "e" : ""} du privé`}
+							{e.resume.fonctionPublique
+								? "fonctionnaire de l'État"
+								: e.resume.regimes.includes("rci")
+									? `salarié${e.resume.sexe === "F" ? "e" : ""} et indépendant${e.resume.sexe === "F" ? "e" : ""}`
+									: `salarié${e.resume.sexe === "F" ? "e" : ""} du privé`}
 						</button>
 					))}
 				</div>
@@ -290,7 +300,7 @@ export function Parcours() {
 				</div>
 
 				<div className="caisses">
-					{lignes.map((l) => (
+					{cartes.map((l) => (
 						<Caisse
 							key={l.id}
 							ligne={l}
@@ -366,9 +376,12 @@ export function Parcours() {
 								<th>
 									Autres régimes
 									<small>
-										{entier(anneesNonSimulees)} années dans un régime que le
-										modèle ne simule pas encore : elles comptent pour la durée,
-										leur pension s'ajouterait à ce total
+										{entier(anneesNonSimulees)} années{" "}
+										{carriere.fonctionPublique
+											? "hors de la fonction publique"
+											: "hors du salariat privé"}{" "}
+										: le modèle n'en connaît que la durée, leur pension
+										s'ajouterait à ce total
 									</small>
 								</th>
 								<td className="num">non calculée</td>
@@ -380,12 +393,12 @@ export function Parcours() {
 
 			<p className="reserve">
 				<Icon name="attention" size={16} /> {qui.prenom} n'existe pas : c'est
-				l'une des 30 000 vies inventées par le modèle, choisie parce que sa
-				pension est au milieu de celles des carrières du même type. Le modèle
-				refait ce calcul pour chacune, la pèse selon la population réelle, puis
-				additionne chaque année les cotisations et les pensions. Salaires et
-				cotisations en euros de l'époque, part de l'employeur comprise ;
-				pensions en euros de 2026.
+				l'une des vies inventées par le modèle, choisie parce que sa pension est
+				au milieu de celles des carrières du même type. Le modèle refait ce
+				calcul pour chacune, la pèse selon la population réelle, puis additionne
+				chaque année les cotisations et les pensions. Salaires et cotisations en
+				euros de l'époque, part de l'employeur comprise ; pensions en euros de
+				2026.
 			</p>
 		</div>
 	);
@@ -422,7 +435,13 @@ function Caisse({
 			</div>
 			<div className="caisse-carte">
 				<strong>{ligne.label}</strong>
-				<small>{points ? "complémentaire" : "base"}</small>
+				<small>
+					{points
+						? "complémentaire"
+						: etageDe(ligne.id) === "integre"
+							? "base et complémentaire en une pension"
+							: "base"}
+				</small>
 				<span className="num droits">
 					{entier(etat?.cumul ?? 0)} {unite}
 				</span>
@@ -441,7 +460,9 @@ function Caisse({
 								? `verse ${euros(ligne.pensionAnnuelle / 12)} par mois`
 								: "ne verse rien"
 						: (etat?.cotisation ?? 0) > 0
-							? `reçoit ${euros(etat?.cotisation ?? 0)}, +${entier(etat?.acquis ?? 0)} ${unite}`
+							? etageDe(ligne.id) === "integre"
+								? `+${entier(etat?.acquis ?? 0)} ${unite} de services`
+								: `reçoit ${euros(etat?.cotisation ?? 0)}, +${entier(etat?.acquis ?? 0)} ${unite}`
 							: (etat?.acquis ?? 0) > 0
 								? `+${entier(etat?.acquis ?? 0)} ${unite} sans cotisation`
 								: "rien cette année"}
@@ -474,6 +495,27 @@ function formule(
 			.filter(Boolean)
 			.join(", ");
 	}
+	if (regime === "sre" || regime === "cnracl" || regime === "militaire") {
+		const d = pension.parRegime[regime];
+		if (!d) return "";
+		return [
+			`traitement des six derniers mois ${euros(d.traitementDeReference / 12)} par mois × ${decimal(d.tauxLiquidation * 100)} % (75 % pour une carrière complète, ici ${entier(d.services + d.bonifications)} trimestres de services${d.bonifications ? " et de bonifications pour enfants" : ""} sur ${entier(d.dureeRequise)})`,
+			d.trimestresDecote
+				? `décote pour ${entier(d.trimestresDecote)} trimestres manquants`
+				: "",
+			d.trimestresSurcote
+				? `surcote pour ${entier(d.trimestresSurcote)} trimestres en plus`
+				: "",
+			d.minimumGarantiApplique ? "porté au minimum garanti" : "",
+			d.majorationEnfants
+				? `+${entier(d.majorationEnfants * 100)} % pour enfants`
+				: "",
+		]
+			.filter(Boolean)
+			.join(", ");
+	}
+	if (regime === "rafp")
+		return "points acquis sur les primes, convertis en rente ou versés en capital";
 	if (regime === "agircArrco") {
 		const d = pension.parRegime.agircArrco;
 		if (!d) return "";

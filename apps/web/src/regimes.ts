@@ -38,8 +38,8 @@ export const AFFILIATIONS: Record<
 	artisan: { label: "Artisan", court: "artisan", couleur: "#b5542d" },
 	commercant: { label: "Commerçant", court: "commerçant", couleur: "#b5542d" },
 	autre: {
-		label: "Autre régime, non simulé",
-		court: "dans un régime non simulé",
+		label: "Hors du salariat privé, pension non calculée",
+		court: "hors du salariat privé",
 		couleur: "#b9b2a6",
 	},
 };

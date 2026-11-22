@@ -792,10 +792,8 @@ function Regimes({
 							Autres régimes
 							<small>
 								{carriere.fonctionPublique
-									? "secteur privé, autres régimes"
-									: "fonction publique, agriculture, professions libérales…"}{" "}
-								: non simulés pour cette personne, leurs années comptent
-								seulement pour la durée
+									? "années dans le privé ou un autre régime : le modèle n'en connaît que la durée, pas la pension qu'elles donnent"
+									: "années hors du salariat privé (fonctionnaire, exploitant agricole, profession libérale…) : le modèle n'en connaît que la durée. Il sait calculer une pension de fonctionnaire, mais pas encore pour une carrière qui passe du privé au public"}
 							</small>
 						</th>
 						<td className="num">{entier(anneesNonSimulees)}</td>
