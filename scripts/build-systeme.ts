@@ -89,6 +89,55 @@ await Bun.write(
 		"\t",
 	)}\n`,
 );
+// Postes des ressources hors cotisations (tableau 2.2), hors produits financiers : leur part de
+// l'ensemble sert à suivre chacun séparément dans un scénario.
+const POSTES: [id: string, debut: string][] = [
+	["contributionsEquilibre", "Contributions d'équilibre"],
+	["subventionsEquilibre", "Subventions équilibre"],
+	["csg", "CSG"],
+	["itafActivite", "ITAF sur revenus d'activité"],
+	["itafConsommation", "ITAF sur la consommation"],
+	["autresItaf", "Autres ITAF"],
+	["transfertsCnaf", "Dont CNAF"],
+	["transfertsUnedic", "Dont Unédic"],
+	["autresTransferts", "Autres transferts externes"],
+	["autresProduits", "Autres produits"],
+];
+const horsCotisations =
+	ligne("TOTAL ressources") -
+	ligne("Produits financiers") -
+	ligne("Cotisations hors contribution");
+const postes = POSTES.map(([id, debut]) => ({
+	id,
+	libelleSource: (lignes.find(([nom]) => nom.startsWith(debut)) as [string])[0],
+	milliards: ligne(debut),
+	part: Number((ligne(debut) / horsCotisations).toFixed(5)),
+}));
+const sommePostes = postes.reduce((t, x) => t + x.milliards, 0);
+if (Math.abs(sommePostes - horsCotisations) > 0.01)
+	throw new Error(
+		`Les postes (${sommePostes}) ne retombent pas sur les ressources hors cotisations (${horsCotisations})`,
+	);
+await Bun.write(
+	new URL(
+		"../packages/engine/src/systeme/ressources.data.json",
+		import.meta.url,
+	),
+	`${JSON.stringify(
+		{
+			source: `${f.source} Tableau 2.2, structure des ressources en 2025 ; source du tableau : rapport à la CCSS 2025, calculs SG-COR.`,
+			url: f.url,
+			date: f.date,
+			annee: 2025,
+			note: "Hors produits financiers, comme les ressources en part de PIB de la figure 2.8. Les ITAF comprennent la compensation des allègements généraux de cotisations employeur.",
+			cotisationsMilliards: ligne("Cotisations hors contribution"),
+			postes,
+		},
+		null,
+		"\t",
+	)}\n`,
+);
+
 const a = annees[ANNEE];
 const z = annees[FIN];
 const md = (x: number) => (x / 1e9).toFixed(0);

@@ -11,6 +11,14 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Ratio démographique** : nombre de cotisants divisé par le nombre de retraités.
 - **Pension relative** : pension moyenne divisée par le revenu d'activité moyen.
 - **Autres ressources** : recettes du système hors cotisations (CSG, impôts affectés, transferts de l'État et d'autres branches).
+- **Poste de ressources** : ligne des autres ressources telle que le COR la publie (contributions d'équilibre, CSG, impôts et taxes affectés, transferts).
+- **Assiette** : ce qu'un poste de ressources suit dans un scénario (masse des salaires, masse des pensions) ; une fonction du moteur par assiette.
+- **Ressource nouvelle** : ressource hors cotisations qu'un scénario ajoute ou retire, décrite par un objet de données et calculée par la fonction de son type.
+- **Capitalisation** : mode de financement où chacun accumule un compte, placé, qui paie sa propre rente ; ici un étage en plus de la répartition.
+- **Versement** : somme portée chaque année sur le compte de capitalisation d'un individu, en part de son salaire brut.
+- **Rendement réel** : ce que le fonds rapporte par an au-dessus des prix, net de frais ; hypothèse en fourchette basse, centrale, haute.
+- **Rente** : revenu viager tiré du compte de capitalisation au départ, en plus de la pension.
+- **Encours** : total des comptes des actifs et des réserves des rentes en cours.
 - **Solde** : ressources moins dépenses sur une année ; lecture officielle avec les versements d'équilibre de l'État en ressources, ou lecture sans eux.
 - **Besoin de financement** : montant annuel qui manque pour fermer l'équation ; l'opposé du solde quand il est négatif.
 - **Dette cumulée** : somme des besoins de financement non comblés depuis l'année de base, avec ou sans intérêts.
@@ -38,7 +46,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 
 - **Régime** : ensemble de règles de cotisation et de calcul de pension propre à une population (un module du moteur).
 - **Bloc résiduel** : ce qui manque au privé et aux fonctionnaires simulés pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario, les régimes alignés sur le régime général suivent toutes ses règles, les autres seulement les règles communes à tous.
-- **Règle commune** : règle d'un scénario qui vaut pour tous les régimes (âge légal, durée requise, décote et surcote, droits familiaux, revalorisation), par opposition aux règles propres au privé (meilleures années, taux plein, minimum contributif, valeur du point, taux de cotisation).
+- **Règle commune** : règle d'un scénario qui vaut pour tous les régimes (âge légal, durée requise, âge du taux plein automatique, avance pour début précoce, décote et surcote, droits familiaux, revalorisation), par opposition aux règles propres au privé (meilleures années, taux plein, minimum contributif, valeur du point, taux de cotisation).
 - **Régime aligné** : régime de base qui applique les règles de calcul du régime général (indépendants, salariés agricoles).
 - **Cadrage** : totaux publiés du système entier, année par année, sur lesquels le bloc résiduel est calé (projections du COR).
 - **Barème** : table versionnée des paramètres légaux par génération ou par année (âge légal, durée requise, taux).
@@ -56,6 +64,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Minimum garanti** : plancher de la pension d'un fonctionnaire, fonction de sa durée de services ; l'équivalent du minimum contributif.
 - **Liquidation** : moment où un individu fait calculer et verser sa pension ; elle clôt sa carrière.
 - **Montée en charge** : application progressive d'un nouvel âge légal ou d'une nouvelle durée requise, d'un pas par génération à partir de la première concernée.
+- **Avance pour début précoce** : baisse de l'âge légal et de la durée requise d'un individu selon l'âge auquel il a commencé à cotiser, par paliers et dans une limite ; règle de scénario, absente du droit en vigueur.
 - **Carrière longue** : départ anticipé avant l'âge légal, ouvert à ceux qui ont commencé à cotiser jeunes et réunissent la durée cotisée.
 - **Trimestre réputé cotisé** : trimestre non cotisé qui compte quand même pour une carrière longue, dans la limite d'un plafond par type de période.
 - **Inaptitude** : motif de départ qui donne le taux plein dès l'âge légal quelle que soit la durée ; regroupe ici les anciens invalides.
@@ -74,7 +83,8 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Proratisation** : rapport entre la durée validée et la durée requise, plafonné à 1, qui réduit la pension de base.
 - **Coefficient d'anticipation** : minoration définitive de la pension complémentaire en cas de départ sans le taux plein.
 - **Droits familiaux** : avantages de retraite liés aux enfants (trimestres supplémentaires, majoration de pension).
-- **Revalorisation** : règle d'évolution annuelle des pensions déjà liquidées (prix, salaires, gel).
+- **Revalorisation** : règle d'évolution annuelle des pensions déjà liquidées (prix, salaires, gel). Dans un scénario : un écart aux prix, sa durée, et le seuil de pension en dessous duquel il ne s'applique pas.
+- **Suite de la pension** : ce que la première pension d'un individu devient d'année en année après son départ, en euros constants.
 - **Polypensionné** : retraité qui perçoit des pensions de plusieurs régimes de base.
 - **Taux de remplacement** : première pension divisée par le dernier revenu d'activité d'un individu.
 - **Euros constants** : montants exprimés au pouvoir d'achat de l'année de base ; seule unité affichée.

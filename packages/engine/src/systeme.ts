@@ -1,4 +1,5 @@
 import type { Projection } from "./projection.ts";
+import { type PosteId, repartirRessources } from "./ressources.ts";
 import data from "./systeme/cor.data.json" with { type: "json" };
 
 /** Totaux publiés du système entier, une année : la cible du bloc résiduel. */
@@ -33,7 +34,14 @@ export interface AnneeSysteme {
 	pib: number;
 	depenses: number;
 	cotisations: number;
+	/** Ressources hors cotisations, ressources nouvelles du scénario comprises. */
 	autresRessources: number;
+	/** Les ressources hors cotisations de la loi actuelle, poste par poste, chacun suivant son assiette. */
+	postes: Record<PosteId, number>;
+	/** Ressources ajoutées par le scénario, comprises dans les autres ressources. */
+	ressourcesNouvelles: number;
+	/** Cotisations parties vers un étage par capitalisation, déjà retirées des cotisations. */
+	cotisationsDetournees: number;
 	ressources: number;
 	/** Ressources moins dépenses, en convention officielle : négatif, c'est un besoin de financement. */
 	solde: number;
@@ -110,7 +118,13 @@ export function computeSysteme(
 			s.cotisants * s.salaireMoyen,
 			r.cotisants * r.salaireMoyen,
 		);
-		const autresRessources = (c.ressources - cotisationsReference) * activite;
+		// Chaque poste suit son assiette ; aujourd'hui tous suivent la masse des salaires.
+		const postes = repartirRessources(c.ressources - cotisationsReference, {
+			annee: s.annee,
+			masseSalariale: activite,
+			pensions: rapport(depenses, c.depenses),
+		});
+		const autresRessources = Object.values(postes).reduce((t, x) => t + x, 0);
 		const ressources = cotisations + autresRessources;
 		resultat.push({
 			annee: s.annee,
@@ -118,6 +132,9 @@ export function computeSysteme(
 			depenses,
 			cotisations,
 			autresRessources,
+			postes,
+			ressourcesNouvelles: 0,
+			cotisationsDetournees: 0,
 			ressources,
 			solde: ressources - depenses,
 			soldeHorsEtat: ressources - depenses - c.contributionsEtat,

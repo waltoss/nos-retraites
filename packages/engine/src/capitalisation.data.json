@@ -1,0 +1,33 @@
+{
+	"date": "2026-11-22",
+	"note": "Rendements réels annuels, nets des frais de gestion financière mais pas des frais administratifs. Pages de l'OCDE lues dans leurs copies archivées (Wayback Machine, 4 septembre et 20 octobre 2026), le site refusant la lecture automatique.",
+	"sources": {
+		"ocdeHypotheses": {
+			"titre": "OCDE, Panorama des pensions 2025, « Methodology and assumptions »",
+			"url": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/methodology-and-assumptions_21329d69.html",
+			"date": "2025-11-27"
+		},
+		"ocdePerformance": {
+			"titre": "OCDE, Panorama des pensions 2025, « Investment performance », tableaux 9.3 et 9.4",
+			"url": "https://www.oecd.org/en/publications/pensions-at-a-glance-2025_e40274c1-en/full-report/investment-performance_5d403c48.html",
+			"date": "2025-11-27"
+		}
+	},
+	"rendementReel": {
+		"bas": {
+			"valeur": 0.02,
+			"source": "ocdePerformance",
+			"base": "Ce qu'a rapporté le Fonds de réserve pour les retraites français sur vingt ans, de fin 2004 à fin 2024 (tableau 9.4)."
+		},
+		"central": {
+			"valeur": 0.025,
+			"source": "ocdeHypotheses",
+			"base": "L'hypothèse de long terme que l'OCDE retient pour ses propres simulations de retraites par capitalisation."
+		},
+		"haut": {
+			"valeur": 0.043,
+			"source": "ocdePerformance",
+			"base": "Ce qu'ont rapporté les fonds de pension du Canada sur vingt ans, de fin 2004 à fin 2024, le meilleur résultat du tableau 9.3."
+		}
+	}
+}

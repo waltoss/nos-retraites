@@ -1,6 +1,8 @@
 /// <reference lib="webworker" />
 import {
 	type AnneeSysteme,
+	ajouterRessources,
+	appliquerCapitalisation,
 	BAREMES_FRANCE as B,
 	buildComptes,
 	type Carriere,
@@ -19,10 +21,13 @@ import {
 	type Pension,
 	type Preparation,
 	type Projection,
+	type ProjectionCapitalisation,
+	pensionVersee,
 	photographier,
 	poidsDeLAnnee,
 	prepareProjection,
 	projeter,
+	projeterCapitalisation,
 	pyramidesProjetees,
 	type RegimeFonctionPublique,
 	type Resultat,
@@ -32,7 +37,7 @@ import {
 	SURVIE_SELON_PENSION,
 	valeur,
 } from "@nos-retraites/engine";
-import type { ScenarioMoteur } from "./leviers";
+import { ANNEE_EFFET, type ScenarioMoteur } from "./leviers";
 
 export type ResultatLeger = Omit<
 	Resultat,
@@ -131,7 +136,16 @@ export interface ResultatMoi {
 	scenario: { age: Fourchette; pension: Fourchette };
 	/** Écart moyen, personne par personne, entre le scénario et la loi actuelle ; l'âge en trimestres entiers. */
 	ecart: { age: number; pension: number };
+	/** Ce que la pension devient après le départ, en euros constants. */
+	suite: { reference: SuitePension; scenario: SuitePension };
 }
+
+/** Pension mensuelle du milieu à chaque âge, de l'âge de départ du milieu à 80 ans. */
+export interface SuitePension {
+	ageDebut: number;
+	pensions: number[];
+}
+const AGE_FIN_SUITE = 80;
 
 export type Requete =
 	| { type: "init"; taille: number }
@@ -189,11 +203,12 @@ export type Reponse =
 			reference: Projection;
 			courant: Projection;
 			systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
+			/** L'étage par capitalisation du scénario, s'il en a un. */
+			capitalisation: ProjectionCapitalisation | null;
 			anneeEffet: number;
 	  };
 
-/** Première année d'application d'une réforme votée après l'élection de 2027. */
-export const ANNEE_EFFET = 2028;
+export { ANNEE_EFFET };
 const FIN_PROJECTION = 2070;
 
 interface Monde {
@@ -210,6 +225,8 @@ interface Scene {
 	/** Les fonctionnaires du même scénario, préparés à la demande. */
 	fonctionPublique: { preparation: Preparation; projection: Projection } | null;
 	systeme: AnneeSysteme[] | null;
+	/** Projections de la capitalisation déjà calculées, par réglage. */
+	capitalisations: Map<string, ProjectionCapitalisation>;
 }
 
 let taille = SCENARIO_REFERENCE.taille;
@@ -237,7 +254,18 @@ function monde(facteurs: Facteurs): Monde {
 	return m;
 }
 
-function scene(s: ScenarioMoteur): Scene {
+/**
+ * Ce qui change les carrières et les pensions. Les ressources nouvelles et la capitalisation
+ * s'ajoutent après coup : les régler ne recalcule pas la population.
+ */
+const coeur = (s: ScenarioMoteur): ScenarioMoteur => ({
+	regles: s.regles,
+	facteurs: s.facteurs,
+	demographie: s.demographie,
+});
+
+function scene(complet: ScenarioMoteur): Scene {
+	const s = coeur(complet);
 	const cle = JSON.stringify(s);
 	let sc = scenes.get(cle);
 	if (!sc) {
@@ -263,6 +291,7 @@ function scene(s: ScenarioMoteur): Scene {
 			projection: null,
 			fonctionPublique: null,
 			systeme: null,
+			capitalisations: new Map(),
 		};
 		if (scenes.size >= 4) {
 			const ancienne = [...scenes.keys()].find(
@@ -337,9 +366,33 @@ function systeme(sc: Scene): AnneeSysteme[] {
 	return sc.systeme;
 }
 
-function cumulEquilibre(sc: Scene): number {
+/** L'étage par capitalisation d'un scénario, projeté sur les salariés du privé. */
+function capitalisation(s: ScenarioMoteur): ProjectionCapitalisation | null {
+	const c = s.capitalisation;
+	if (!c || c.taux <= 0) return null;
+	const sc = scene(s);
+	const cle = JSON.stringify(c);
+	let p = sc.capitalisations.get(cle);
+	if (!p) {
+		p = projeterCapitalisation(sc.preparation, c);
+		if (sc.capitalisations.size >= 4) sc.capitalisations.clear();
+		sc.capitalisations.set(cle, p);
+	}
+	return p;
+}
+
+/** Le système entier d'un scénario complet : ses règles, puis ses ressources nouvelles et sa capitalisation. */
+function systemeDe(s: ScenarioMoteur): AnneeSysteme[] {
+	let annees = ajouterRessources(systeme(scene(s)), s.ressources);
+	const p = capitalisation(s);
+	if (p && s.capitalisation)
+		annees = appliquerCapitalisation(annees, p, s.capitalisation);
+	return annees;
+}
+
+function cumulEquilibre(s: ScenarioMoteur): number {
 	const reference = systeme(scene(DROIT));
-	return systeme(sc).reduce(
+	return systemeDe(s).reduce(
 		(t, a, i) => t + a.solde - (reference[i]?.solde ?? a.solde),
 		0,
 	);
@@ -391,7 +444,8 @@ function faitsFonctionPublique(
 	};
 }
 
-function leger(r: Resultat, sc: Scene): ResultatLeger {
+function leger(r: Resultat, s: ScenarioMoteur): ResultatLeger {
+	const sc = scene(s);
 	const {
 		pensionParIndividu: _p,
 		poidsParIndividu: _w,
@@ -407,10 +461,10 @@ function leger(r: Resultat, sc: Scene): ResultatLeger {
 		},
 		pensions: { resume: pensions.resume, histogramme: pensions.histogramme },
 		fonctionPublique: faitsFonctionPublique(sc, r.anneeReference),
-		systeme: systeme(sc).find(
+		systeme: systemeDe(s).find(
 			(a) => a.annee === r.anneeReference,
 		) as AnneeSysteme,
-		cumulEquilibre: cumulEquilibre(sc),
+		cumulEquilibre: cumulEquilibre(s),
 	};
 }
 
@@ -579,6 +633,8 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 	const champ: ChampSimule = profil.regime ? "public" : "prive";
 	const reference = vue(scene(DROIT), champ);
 	const courant = vue(scene(s), champ);
+	const preparationDe = (sc: Scene) =>
+		champ === "public" ? fonctionPublique(sc).preparation : sc.preparation;
 	// Les fonctionnaires simulés sont moins nombreux : on élargit un peu la génération.
 	const ecartMax = profil.regime ? 3 : 2;
 	const minimum = profil.regime ? 25 : MIN_RESSEMBLANTS;
@@ -620,6 +676,29 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 			pension: p.mensuelleBrute - r.mensuelleBrute,
 		};
 	});
+	// La pension de chacun à un âge donné : sa première pension, puis ce que la revalorisation
+	// et la valeur du point en font. Qui n'est pas encore parti compte pour sa première pension.
+	const suite = (prep: Preparation, ageDepart: number): SuitePension => {
+		const ageDebut = Math.min(AGE_FIN_SUITE, Math.ceil(ageDepart / 4));
+		const pensions: number[] = [];
+		for (let age = ageDebut; age <= AGE_FIN_SUITE; age++)
+			pensions.push(
+				quartiles(
+					retenus.map((c) => {
+						const p = prep.pensions[c.i] as Pension;
+						const naissance = (prep.population[c.i] as Individu).carriere
+							.anneeNaissance;
+						const depart = pensionVersee(prep, c.i, p.liquidation.annee);
+						const versee = pensionVersee(prep, c.i, naissance + age);
+						return depart && versee !== null
+							? (p.mensuelleBrute * versee) / depart
+							: p.mensuelleBrute;
+					}),
+				)[1],
+			);
+		return { ageDebut, pensions };
+	};
+	const lus = { reference: lire(reference), scenario: lire(courant) };
 	const generations = retenus.map(
 		(c) => (reference.population[c.i] as Individu).carriere.anneeNaissance,
 	);
@@ -628,8 +707,11 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 		effectif: retenus.length,
 		salaires: [Math.min(...salaires), Math.max(...salaires)],
 		generations: [Math.min(...generations), Math.max(...generations)],
-		reference: lire(reference),
-		scenario: lire(courant),
+		...lus,
+		suite: {
+			reference: suite(preparationDe(scene(DROIT)), lus.reference.age[1]),
+			scenario: suite(preparationDe(scene(s)), lus.scenario.age[1]),
+		},
 		ecart: {
 			age: Math.round(ecarts.reduce((t, e) => t + e.age, 0) / ecarts.length),
 			pension: ecarts.reduce((t, e) => t + e.pension, 0) / ecarts.length,
@@ -657,8 +739,8 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 			envoyer({
 				type: "result",
 				id: m.id,
-				reference: leger(reference, scene(DROIT)),
-				courant: leger(courant, sc),
+				reference: leger(reference, DROIT),
+				courant: leger(courant, m.scenario),
 				ecarts: compareScenarios(
 					reference.pensionParIndividu,
 					courant.pensionParIndividu,
@@ -673,12 +755,11 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				id: m.id,
 				reference: leger(
 					photographier(scene(DROIT).preparation, m.annee),
-					scene(DROIT),
+					DROIT,
 				),
-				resultats: m.scenarios.map((s) => {
-					const sc = scene(s);
-					return leger(photographier(sc.preparation, m.annee), sc);
-				}),
+				resultats: m.scenarios.map((s) =>
+					leger(photographier(scene(s).preparation, m.annee), s),
+				),
 			});
 			break;
 		case "portraits":
@@ -696,8 +777,9 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				courant: trajectoires(scene(m.scenario)),
 				systeme: {
 					reference: systeme(scene(DROIT)),
-					courant: systeme(scene(m.scenario)),
+					courant: systemeDe(m.scenario),
 				},
+				capitalisation: capitalisation(m.scenario),
 				anneeEffet: ANNEE_EFFET,
 			});
 			break;

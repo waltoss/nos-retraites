@@ -5,8 +5,8 @@ import { Avatar } from "../components/Avatar";
 import { Distributions } from "../components/Distributions";
 import { Icon, type IconName } from "../components/Icons";
 import { Courbe } from "../components/Trajectoires";
-import type { ProfilMoi, ResultatMoi } from "../engine.worker";
-import { ageEnClair, decimal, ecart, entier, euros } from "../format";
+import type { ProfilMoi, ResultatMoi, SuitePension } from "../engine.worker";
+import { decimal, ecart, entier, euros } from "../format";
 import type { Reglages } from "../leviers";
 import { useScenario } from "../scenario";
 import { SCENARIOS } from "../scenarios";
@@ -86,6 +86,34 @@ interface Projections {
 	courant: Projection;
 	systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
 	anneeEffet: number;
+}
+
+/** Part de la première pension à partir de laquelle on montre ce qu'elle devient. */
+const SEUIL_SUITE = 0.02;
+
+/**
+ * Ce que la pension devient après le départ, à mi-chemin et à 80 ans, en euros constants.
+ * N'apparaît que si elle s'écarte de la première pension : la carte ne change pas pour les autres choix.
+ */
+function Apres({ depart, suite }: { depart: number; suite: SuitePension }) {
+	const fin = suite.pensions.at(-1);
+	if (fin === undefined || depart <= 0) return null;
+	if (Math.abs(fin - depart) < SEUIL_SUITE * depart) return null;
+	const milieu = Math.floor((suite.pensions.length - 1) / 2);
+	const etapes = [milieu, suite.pensions.length - 1].filter(
+		(i, k, t) => i > 0 && t.indexOf(i) === k,
+	);
+	return (
+		<div className="apres">
+			<dt>Puis, en euros d'aujourd'hui</dt>
+			{etapes.map((i) => (
+				<dd key={i} className="num">
+					{euros(suite.pensions[i] as number)}
+					<small> à {suite.ageDebut + i} ans</small>
+				</dd>
+			))}
+		</div>
+	);
 }
 
 function Home() {
@@ -295,7 +323,12 @@ function Home() {
 										<div>
 											<dt>Départ à</dt>
 											<dd className="num">
-												{ageEnClair(m.scenario.age[1])}
+												<span className="age">
+													{Math.floor(m.scenario.age[1] / 4)} ans
+													{m.scenario.age[1] % 4 > 0 && (
+														<small> {(m.scenario.age[1] % 4) * 3} mois</small>
+													)}
+												</span>
 												{m.ecart.age !== 0 && (
 													<em>
 														{m.ecart.age > 0 ? "+" : "−"}
@@ -316,6 +349,10 @@ function Home() {
 												)}
 											</dd>
 										</div>
+										<Apres
+											depart={m.scenario.pension[1]}
+											suite={m.suite.scenario}
+										/>
 									</dl>
 								) : (
 									<div className="histo attente" style={{ height: 64 }} />

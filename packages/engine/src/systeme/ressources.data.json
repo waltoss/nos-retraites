@@ -1,0 +1,70 @@
+{
+	"source": "Conseil d'orientation des retraites, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026 : fichier de données de la partie 2 (figures 2.2 à 2.15, tableau 2.2), fichier « Données complémentaires » et fichier d'hypothèses de cotisants. Tableau 2.2, structure des ressources en 2025 ; source du tableau : rapport à la CCSS 2025, calculs SG-COR.",
+	"url": "https://www.cor-retraites.fr/sites/default/files/2026-06/Donn%C3%A9es_RA2026_P2.xlsx",
+	"date": "2026-11-21",
+	"annee": 2025,
+	"note": "Hors produits financiers, comme les ressources en part de PIB de la figure 2.8. Les ITAF comprennent la compensation des allègements généraux de cotisations employeur.",
+	"cotisationsMilliards": 277.0452,
+	"postes": [
+		{
+			"id": "contributionsEquilibre",
+			"libelleSource": "Contributions d'équilibre (dont cotisations imputées au sens de la CN)*",
+			"milliards": 49.3013,
+			"part": 0.35328
+		},
+		{
+			"id": "subventionsEquilibre",
+			"libelleSource": "Subventions équilibre",
+			"milliards": 7.6865,
+			"part": 0.05508
+		},
+		{
+			"id": "csg",
+			"libelleSource": "CSG",
+			"milliards": 21.9417,
+			"part": 0.15723
+		},
+		{
+			"id": "itafActivite",
+			"libelleSource": "ITAF sur revenus d'activité (forfait social et taxe sur les salaires)**",
+			"milliards": 17.9351,
+			"part": 0.12852
+		},
+		{
+			"id": "itafConsommation",
+			"libelleSource": "ITAF sur la consommation (dont transferts de TVA à l'Agirc-Arrco)**",
+			"milliards": 17.4277,
+			"part": 0.12488
+		},
+		{
+			"id": "autresItaf",
+			"libelleSource": "Autres ITAF",
+			"milliards": 7.3904,
+			"part": 0.05296
+		},
+		{
+			"id": "transfertsCnaf",
+			"libelleSource": "Dont CNAF",
+			"milliards": 11.2465,
+			"part": 0.08059
+		},
+		{
+			"id": "transfertsUnedic",
+			"libelleSource": "Dont Unédic",
+			"milliards": 3.878,
+			"part": 0.02779
+		},
+		{
+			"id": "autresTransferts",
+			"libelleSource": "Autres transferts externes",
+			"milliards": 1.336,
+			"part": 0.00957
+		},
+		{
+			"id": "autresProduits",
+			"libelleSource": "Autres produits",
+			"milliards": 1.409,
+			"part": 0.0101
+		}
+	]
+}

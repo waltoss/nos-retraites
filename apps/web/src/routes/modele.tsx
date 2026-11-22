@@ -4,7 +4,7 @@ import {
 	HYPOTHESES as H,
 	HYPOTHESES_PUBLIQUES,
 } from "@nos-retraites/engine";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import backtest from "../backtest.json";
 import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
@@ -736,6 +736,13 @@ function Modele() {
 					fausse, elle l'est peut-être.
 				</p>
 			</div>
+
+			<p className="suite-lien">
+				<Link to="/ressources" search={(x) => x}>
+					Voir le détail des ressources hors cotisations et de la capitalisation
+					<Icon name="fleche" size={18} />
+				</Link>
+			</p>
 
 			<section className="bloc">
 				<h2>Cinq étapes</h2>

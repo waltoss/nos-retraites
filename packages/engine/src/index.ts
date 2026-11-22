@@ -1,6 +1,7 @@
 export * from "./baremes/fictifs.ts";
 export * from "./baremes/france.ts";
 export * from "./baremes/types.ts";
+export * from "./capitalisation.ts";
 export * from "./compte.ts";
 export * from "./generateur/carriere.ts";
 export * from "./generateur/fonctionPublique.ts";
@@ -14,6 +15,7 @@ export * from "./projection.ts";
 export * from "./regimes/agircArrco.ts";
 export * from "./regimes/cnav.ts";
 export * from "./regimes/fonctionPublique.ts";
+export * from "./ressources.ts";
 export * from "./rng.ts";
 export * from "./simulation.ts";
 export * from "./stats.ts";

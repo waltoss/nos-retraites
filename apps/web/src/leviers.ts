@@ -1,9 +1,14 @@
 import {
+	BAREMES_FRANCE,
+	baremeGeneration,
+	type Capitalisation,
 	type Demographie,
 	type Facteurs,
 	HYPOTHESES,
 	NIVEAUX_DEMOGRAPHIE,
+	RENDEMENTS_CAPITALISATION,
 	type ReglesScenario,
+	type RessourceNouvelle,
 } from "@nos-retraites/engine";
 import type { IconName } from "./components/Icons";
 import { ageEnClair } from "./format";
@@ -13,15 +18,25 @@ export type LevierId =
 	| "ageLegal"
 	| "dureeRequise"
 	| "rythme"
+	| "ageTauxPlein"
+	| "avanceDebut"
+	| "debutSansAvance"
 	| "meilleuresAnnees"
 	| "tauxPlein"
 	| "valeurPoint"
+	| "decote"
 	| "revalorisation"
+	| "revalorisationDuree"
+	| "revalorisationSeuil"
 	| "minimum"
 	| "trimestresEnfant"
 	| "majorationEnfants"
 	| "cotisationBase"
 	| "tauxAppel"
+	| "ressourcesNouvelles"
+	| "capitalisation"
+	| "capitalisationOrigine"
+	| "hypotheseRendement"
 	| "traitementFonctionnaires"
 	| "primesFonctionnaires"
 	| "categoriesActives"
@@ -67,6 +82,7 @@ export type GroupeId =
 	| "calcul"
 	| "famille"
 	| "financement"
+	| "capitalisation"
 	| "fonctionPublique"
 	| "emploi"
 	| "population"
@@ -83,7 +99,17 @@ export const GROUPES: {
 	{ id: "age", label: "Âge et durée", icone: "age" },
 	{ id: "calcul", label: "Calcul de la pension", icone: "pension" },
 	{ id: "famille", label: "Droits liés aux enfants", icone: "famille" },
-	{ id: "financement", label: "Cotisations", icone: "cotisant" },
+	{
+		id: "financement",
+		label: "Cotisations et autres ressources",
+		icone: "cotisant",
+	},
+	{
+		id: "capitalisation",
+		label: "Capitalisation",
+		icone: "carriere",
+		note: "Un étage en plus de la répartition, pour les salariés du privé : chacun verse une part de son salaire sur un compte, qui devient une rente à vie au départ. Version très simple : un rendement fixe chaque année, sans krach ni frais variables, et des pensions par répartition inchangées. Le détail est sur la page Ressources.",
+	},
 	{
 		id: "fonctionPublique",
 		label: "Fonction publique",
@@ -146,6 +172,23 @@ export interface Levier {
 const pourcent = (v: number) => `${v.toLocaleString("fr-FR")} %`;
 const signe = (v: number) =>
 	`${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toLocaleString("fr-FR")}`;
+/** Décote du droit en vigueur, en pourcentage de la pension de base par année manquante. */
+const DECOTE = Math.round(
+	(4 * 100 * BAREMES_FRANCE.cnav.decoteParTrimestre) /
+		BAREMES_FRANCE.cnav.tauxPlein,
+);
+const FOURCHETTES = ["bas", "central", "haut"] as const;
+/** Première année d'application d'une réforme votée après l'élection de 2027. */
+export const ANNEE_EFFET = 2028;
+const SANS_LIMITE = 11;
+/** Dernière porte des carrières longues du droit en vigueur : un début avant cet âge. */
+const DEBUT_SANS_AVANCE = Math.max(
+	...(baremeGeneration(BAREMES_FRANCE.cnav, 1975).carriereLongue ?? []).map(
+		(c) => c.debutAvant,
+	),
+);
+const ansDe = (trimestres: number) =>
+	`${(trimestres / 4).toLocaleString("fr-FR")} ${trimestres >= 8 ? "ans" : "an"}`;
 const ECART_FEMMES = Math.round(HYPOTHESES.ecartSalaireFemmes * 100);
 
 export const LEVIERS: Levier[] = [
@@ -188,6 +231,42 @@ export const LEVIERS: Levier[] = [
 		aide: "Un nouvel âge légal ou une nouvelle durée ne s'appliquent pas d'un coup : chaque génération fait un pas de plus que la précédente, à partir de celle qui atteint l'âge légal en 2028. La réforme de 2023 avance de trois mois par génération.",
 	},
 	{
+		id: "ageTauxPlein",
+		groupe: "age",
+		label: "Âge du taux plein automatique",
+		min: 256,
+		max: 272,
+		pas: 1,
+		defaut: 268,
+		affiche: ageEnClair,
+		termes: ["retraites", "pension"],
+		aide: "À cet âge, la décote disparaît même si la durée de cotisation n'est pas atteinte. L'avancer fait partir plus tôt ceux qui l'attendent, surtout des femmes aux carrières interrompues, et réduit la décote de ceux qui partent avant. Il ne descend jamais sous l'âge légal et s'applique peu à peu, comme lui.",
+	},
+	{
+		id: "avanceDebut",
+		groupe: "age",
+		label: "Avance pour un début de carrière précoce",
+		min: 0,
+		max: 16,
+		pas: 2,
+		defaut: 0,
+		affiche: (v) => (v === 0 ? "aucune" : `jusqu'à ${ansDe(v)}`),
+		termes: ["retraites", "cotisants", "pension"],
+		aide: "L'âge légal et la durée requise baissent de six mois pour chaque année de début de carrière plus précoce, jusqu'à cette limite. Avec deux ans d'avance et un âge légal de 62 ans, qui a commencé très tôt part à 60 ans avec deux années de cotisation en moins. Les départs pour carrière longue d'aujourd'hui restent ouverts quand ils sont plus favorables.",
+	},
+	{
+		id: "debutSansAvance",
+		groupe: "age",
+		label: "Début de carrière qui n'ouvre plus d'avance",
+		min: 18,
+		max: 25,
+		pas: 1,
+		defaut: DEBUT_SANS_AVANCE,
+		affiche: (v) => `après ${v} ans`,
+		termes: ["retraites", "cotisants"],
+		aide: "Sert avec le réglage précédent. Qui a cotisé cinq trimestres avant la fin de l'année de cet âge gagne six mois, un an plus tôt un an, et ainsi de suite. Aujourd'hui, la dernière porte des carrières longues s'ouvre à ceux qui ont commencé avant 21 ans.",
+	},
+	{
 		id: "meilleuresAnnees",
 		groupe: "calcul",
 		label: "Années de salaire retenues",
@@ -224,6 +303,19 @@ export const LEVIERS: Levier[] = [
 		aide: "Chaque point acquis pendant la carrière vaut tant d'euros de pension. Geler ou sous-indexer cette valeur baisse la pension complémentaire de tout le monde, surtout des salaires élevés.",
 	},
 	{
+		id: "decote",
+		groupe: "calcul",
+		label: "Décote par année manquante",
+		min: 0,
+		max: 10,
+		pas: 0.5,
+		defaut: DECOTE,
+		affiche: (v) =>
+			v === 0 ? "supprimée" : `${v.toLocaleString("fr-FR")} % de la pension`,
+		termes: ["pension"],
+		aide: "Partir sans la durée requise et avant l'âge du taux plein automatique réduit la pension de base pour chaque année manquante, en plus du calcul au prorata de la durée. Le modèle garde les mêmes âges de départ : il ne dit pas combien de personnes partiraient plus tôt si la décote baissait, ou plus tard si elle montait.",
+	},
+	{
 		id: "revalorisation",
 		groupe: "calcul",
 		label: "Revalorisation des pensions versées",
@@ -234,6 +326,34 @@ export const LEVIERS: Levier[] = [
 		affiche: (v) => (v === 0 ? "comme les prix" : `prix ${signe(v / 10)} pt`),
 		termes: ["pension"],
 		aide: "Une pension déjà versée suit les prix. La revaloriser moins vite la fait baisser un peu chaque année en pouvoir d'achat, pour tous les retraités. C'est le levier le plus souvent utilisé, et son effet ne se voit que dans le temps : regardez les trajectoires jusqu'en 2070.",
+	},
+	{
+		id: "revalorisationDuree",
+		groupe: "calcul",
+		label: "Durée de l'écart aux prix",
+		min: 1,
+		max: SANS_LIMITE,
+		pas: 1,
+		defaut: SANS_LIMITE,
+		affiche: (v) =>
+			v >= SANS_LIMITE ? "sans limite" : v === 1 ? "un an" : `${v} ans`,
+		termes: ["pension"],
+		aide: "Sert avec le réglage précédent. Un gel d'un an, par exemple, est un écart aux prix égal à la hausse des prix de l'année, pendant un an. Passé ce délai les pensions suivent de nouveau les prix, mais ce qui a été perdu n'est pas rattrapé.",
+	},
+	{
+		id: "revalorisationSeuil",
+		groupe: "calcul",
+		label: "Pensions concernées par l'écart aux prix",
+		min: 0,
+		max: 3000,
+		pas: 100,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0
+				? "toutes"
+				: `à partir de ${v.toLocaleString("fr-FR")} € par mois`,
+		termes: ["pension"],
+		aide: "Sert avec les deux réglages précédents. En dessous de ce montant brut, tous régimes simulés confondus, la pension continue de suivre les prix. Le modèle applique le seuil d'un coup, sans lissage, et ne connaît pas les pensions versées par d'autres régimes à la même personne.",
 	},
 	{
 		id: "minimum",
@@ -296,6 +416,61 @@ export const LEVIERS: Levier[] = [
 		affiche: pourcent,
 		termes: ["cotisation"],
 		aide: "À 127 %, on cotise 1,27 € pour 1 € qui donne des points. Le monter fait payer plus sans donner plus de droits.",
+	},
+	{
+		id: "ressourcesNouvelles",
+		groupe: "financement",
+		label: "Ressources nouvelles hors cotisations",
+		min: -20,
+		max: 40,
+		pas: 1,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0 ? "aucune" : `${signe(v)} milliards d'euros par an`,
+		termes: [],
+		aide: "Un impôt affecté aux retraites, une cotisation sur d'autres revenus que les salaires, des exonérations supprimées, ou à l'inverse un allègement. Le montant est celui de 2028 ; il garde ensuite la même part de la richesse du pays. Le modèle prend ce montant tel quel : il ne calcule ni ce que l'impôt rapporterait vraiment, ni qui le paie, ni son effet sur l'emploi.",
+	},
+	{
+		id: "capitalisation",
+		groupe: "capitalisation",
+		label: "Versement sur un compte de retraite",
+		min: 0,
+		max: 6,
+		pas: 0.5,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0 ? "aucun" : `${v.toLocaleString("fr-FR")} % du salaire brut`,
+		termes: [],
+		aide: "Part du salaire brut versée chaque année sur le compte de chaque salarié du privé, à partir de 2028. Ceux qui partent peu après n'auront presque rien accumulé : la rente ne pèse vraiment que pour ceux qui auront versé pendant toute leur carrière.",
+	},
+	{
+		id: "capitalisationOrigine",
+		groupe: "capitalisation",
+		label: "Part prise sur les cotisations actuelles",
+		min: 0,
+		max: 100,
+		pas: 25,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0 ? "aucune : versement en plus" : v === 100 ? "tout" : pourcent(v),
+		termes: ["cotisation"],
+		aide: "À 0 %, le versement s'ajoute aux cotisations : il baisse le salaire net ou renchérit le travail, ce que le modèle ne chiffre pas. À 100 %, il est pris sur les cotisations qui paient les pensions d'aujourd'hui : cet argent manque tout de suite au système, alors que les rentes n'arrivent que des décennies plus tard.",
+	},
+	{
+		id: "hypotheseRendement",
+		groupe: "capitalisation",
+		label: "Rendement du fonds",
+		min: 0,
+		max: 2,
+		pas: 1,
+		defaut: 1,
+		affiche: (v) => {
+			const r =
+				RENDEMENTS_CAPITALISATION[FOURCHETTES[v] ?? "central"].valeur * 100;
+			return `${["bas", "central", "haut"][v] ?? ""} : ${r.toLocaleString("fr-FR")} % par an au-dessus des prix`;
+		},
+		termes: [],
+		aide: "Ce que le fonds rapporte chaque année en plus de la hausse des prix, frais déduits. Personne ne le connaît à l'avance : les trois valeurs viennent de fonds existants et de rapports publics, cités sur la page Ressources.",
 	},
 	{
 		id: "traitementFonctionnaires",
@@ -490,10 +665,12 @@ export interface ScenarioMoteur {
 	regles: ReglesScenario;
 	facteurs: Facteurs;
 	demographie: Demographie;
+	/** Ressources ajoutées au système entier, hors cotisations. */
+	ressources?: RessourceNouvelle[];
+	capitalisation?: Capitalisation;
 }
 
 const DEFAUT_NATALITE = Math.round(NIVEAUX_DEMOGRAPHIE.fecondite.central * 100);
-const FOURCHETTES = ["bas", "central", "haut"] as const;
 const effetFamille = (id: string, r: Reglages): number => {
 	const f = politiques.familles.find((x) => x.id === id);
 	return f?.effet[FOURCHETTES[r.hypotheseNatalite ?? 1] ?? "central"] ?? 0;
@@ -552,17 +729,36 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 	if (r.ageLegal !== undefined) regles.ageLegal = r.ageLegal;
 	if (r.dureeRequise !== undefined) regles.dureeRequise = r.dureeRequise;
 	// La vitesse n'a de sens que s'il y a quelque chose à appliquer ; 8 pas valent une application immédiate.
+	if (r.ageTauxPlein !== undefined) regles.ageTauxPlein = r.ageTauxPlein;
+	if (r.avanceDebut)
+		regles.avanceDebut = {
+			maximum: r.avanceDebut,
+			ageSansAvance: r.debutSansAvance ?? DEBUT_SANS_AVANCE,
+			parAnnee: 2,
+		};
 	if (
 		r.rythme !== undefined &&
-		(r.ageLegal !== undefined || r.dureeRequise !== undefined)
+		(r.ageLegal !== undefined ||
+			r.dureeRequise !== undefined ||
+			r.ageTauxPlein !== undefined ||
+			r.avanceDebut)
 	)
 		regles.rythme = r.rythme >= 8 ? 80 : r.rythme;
 	if (r.meilleuresAnnees !== undefined)
 		regles.nbMeilleuresAnnees = r.meilleuresAnnees;
 	if (r.tauxPlein !== undefined) regles.tauxPlein = r.tauxPlein / 100;
 	if (r.valeurPoint !== undefined) regles.valeurDuPoint = r.valeurPoint / 100;
-	if (r.revalorisation !== undefined)
+	if (r.decote !== undefined)
+		regles.decoteParTrimestre =
+			(BAREMES_FRANCE.cnav.decoteParTrimestre * r.decote) / DECOTE;
+	// La durée et le seuil n'ont de sens que s'il y a un écart aux prix.
+	if (r.revalorisation !== undefined) {
 		regles.revalorisationReelle = r.revalorisation / 1000;
+		if (r.revalorisationDuree !== undefined)
+			regles.revalorisationDuree = r.revalorisationDuree;
+		if (r.revalorisationSeuil)
+			regles.revalorisationSeuil = r.revalorisationSeuil;
+	}
 	if (r.minimum !== undefined) regles.minimumContributif = r.minimum / 100;
 	if (r.trimestresEnfant !== undefined)
 		regles.mdaParEnfant = r.trimestresEnfant;
@@ -584,7 +780,25 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 		facteurs.tempsPartielMeres = r.tempsPartiel / 100;
 	if (r.salaireFemmes !== undefined)
 		facteurs.ecartSalaireFemmes = r.salaireFemmes / 100;
-	return { regles, facteurs, demographie };
+	const scenario: ScenarioMoteur = { regles, facteurs, demographie };
+	if (r.ressourcesNouvelles)
+		scenario.ressources = [
+			{
+				type: "forfait",
+				montant: r.ressourcesNouvelles * 1e9,
+				anneeEffet: ANNEE_EFFET,
+			},
+		];
+	if (r.capitalisation)
+		scenario.capitalisation = {
+			taux: r.capitalisation / 100,
+			rendement:
+				RENDEMENTS_CAPITALISATION[
+					FOURCHETTES[r.hypotheseRendement ?? 1] ?? "central"
+				].valeur,
+			partDetournee: (r.capitalisationOrigine ?? 0) / 100,
+		};
+	return scenario;
 }
 
 /** Lit des réglages depuis les paramètres d'une URL, en écartant tout ce qui est hors bornes. */

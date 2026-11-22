@@ -169,3 +169,47 @@ describe("scénario", () => {
 		expect(q.agircArrco.majorationEnfants).toBe(0);
 	});
 });
+
+describe("âge du taux plein automatique et début précoce", () => {
+	test("avancer l'âge du taux plein automatique avance le départ sans décote", () => {
+		const c = carriereContinue(25, 61, 30000);
+		const p = computePension(c, B, { regles: { ageTauxPlein: 65 * 4 } });
+		expect(p.liquidation.age).toBe(65 * 4);
+		expect(p.cnav.trimestresDecote).toBe(0);
+		// Un départ à l'âge légal compte moins de trimestres manquants.
+		const q = computePension(c, B, { regles: { ageTauxPlein: 65 * 4 }, ageLiquidation: 62 * 4 });
+		expect(q.cnav.trimestresDecote).toBe(12);
+	});
+
+	test("l'âge du taux plein automatique ne passe pas sous l'âge légal", () => {
+		const c = carriereContinue(25, 61, 30000);
+		const p = computePension(c, B, { regles: { ageTauxPlein: 60 * 4, ageLegal: 63 * 4 } });
+		expect(p.liquidation.age).toBe(63 * 4);
+		expect(p.cnav.trimestresDecote).toBe(0);
+	});
+
+	test("un début précoce avance l'âge légal et réduit la durée requise", async () => {
+		const { BAREMES_FRANCE, avanceDebut, buildCompte: compteDe } = await import("../src/index.ts");
+		const regles = { ageLegal: 64 * 4, avanceDebut: { maximum: 8, ageSansAvance: 23, parAnnee: 2 } };
+		const avance = (debut: number) => {
+			const c = carriereContinue(debut, 66, 30000, { anneeNaissance: 1990 });
+			return avanceDebut(c, compteDe(c, BAREMES_FRANCE), BAREMES_FRANCE, regles);
+		};
+		// Cinq trimestres cotisés avant la fin de l'année des 23 ans : il faut avoir commencé à 22 ans.
+		expect(avance(24)).toBe(0);
+		expect(avance(22)).toBe(2);
+		expect(avance(20)).toBe(6);
+		expect(avance(17)).toBe(8);
+		const tot = carriereContinue(19, 66, 30000, { anneeNaissance: 1990 });
+		const sans = computePension(tot, BAREMES_FRANCE, { regles: { ageLegal: 64 * 4 }, ageLiquidation: 64 * 4 });
+		const avec = computePension(tot, BAREMES_FRANCE, { regles, ageLiquidation: 64 * 4 });
+		expect(avec.cnav.dureeRequise).toBe(sans.cnav.dureeRequise - 8);
+		expect(avec.cnav.trimestresSurcote).toBe(8);
+		// Avec une année d'effet, l'avance monte en charge génération après génération.
+		const date = { ...regles, anneeEffet: 2028 };
+		const ancien = carriereContinue(17, 66, 30000, { anneeNaissance: 1950 });
+		expect(avanceDebut(ancien, compteDe(ancien, BAREMES_FRANCE), BAREMES_FRANCE, date)).toBe(0);
+		const jeune = carriereContinue(17, 66, 30000, { anneeNaissance: 1990 });
+		expect(avanceDebut(jeune, compteDe(jeune, BAREMES_FRANCE), BAREMES_FRANCE, date)).toBe(8);
+	});
+});

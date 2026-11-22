@@ -14,6 +14,7 @@ import { Route as CarrieresRouteImport } from './routes/carrieres'
 import { Route as DecisionsRouteImport } from './routes/decisions'
 import { Route as ModeleRouteImport } from './routes/modele'
 import { Route as MoiRouteImport } from './routes/moi'
+import { Route as RessourcesRouteImport } from './routes/ressources'
 import { Route as ScenariosRouteImport } from './routes/scenarios'
 import { Route as SimulerRouteImport } from './routes/simuler'
 
@@ -42,6 +43,11 @@ const MoiRoute = MoiRouteImport.update({
   path: '/moi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RessourcesRoute = RessourcesRouteImport.update({
+  id: '/ressources',
+  path: '/ressources',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ScenariosRoute = ScenariosRouteImport.update({
   id: '/scenarios',
   path: '/scenarios',
@@ -59,6 +65,7 @@ export interface FileRoutesByFullPath {
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
   '/moi': typeof MoiRoute
+  '/ressources': typeof RessourcesRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
@@ -68,6 +75,7 @@ export interface FileRoutesByTo {
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
   '/moi': typeof MoiRoute
+  '/ressources': typeof RessourcesRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
@@ -78,6 +86,7 @@ export interface FileRoutesById {
   '/decisions': typeof DecisionsRoute
   '/modele': typeof ModeleRoute
   '/moi': typeof MoiRoute
+  '/ressources': typeof RessourcesRoute
   '/scenarios': typeof ScenariosRoute
   '/simuler': typeof SimulerRoute
 }
@@ -89,6 +98,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/modele'
     | '/moi'
+    | '/ressources'
     | '/scenarios'
     | '/simuler'
   fileRoutesByTo: FileRoutesByTo
@@ -98,6 +108,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/modele'
     | '/moi'
+    | '/ressources'
     | '/scenarios'
     | '/simuler'
   id:
@@ -107,6 +118,7 @@ export interface FileRouteTypes {
     | '/decisions'
     | '/modele'
     | '/moi'
+    | '/ressources'
     | '/scenarios'
     | '/simuler'
   fileRoutesById: FileRoutesById
@@ -117,6 +129,7 @@ export interface RootRouteChildren {
   DecisionsRoute: typeof DecisionsRoute
   ModeleRoute: typeof ModeleRoute
   MoiRoute: typeof MoiRoute
+  RessourcesRoute: typeof RessourcesRoute
   ScenariosRoute: typeof ScenariosRoute
   SimulerRoute: typeof SimulerRoute
 }
@@ -158,6 +171,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MoiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ressources': {
+      id: '/ressources'
+      path: '/ressources'
+      fullPath: '/ressources'
+      preLoaderRoute: typeof RessourcesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/scenarios': {
       id: '/scenarios'
       path: '/scenarios'
@@ -181,6 +201,7 @@ const rootRouteChildren: RootRouteChildren = {
   DecisionsRoute: DecisionsRoute,
   ModeleRoute: ModeleRoute,
   MoiRoute: MoiRoute,
+  RessourcesRoute: RessourcesRoute,
   ScenariosRoute: ScenariosRoute,
   SimulerRoute: SimulerRoute,
 }

@@ -194,9 +194,64 @@ export function prepareProjection(
 	};
 }
 
+/** Valeur de service du point complémentaire une année donnée, base 1 l'année de référence. */
+const valeurDeService = (b: Baremes, annee: number) =>
+	b.agircArrco.indiceValeurDeService
+		? valeur(b.agircArrco.indiceValeurDeService, annee)
+		: 1;
+
+/**
+ * Ce que la revalorisation du scénario a fait d'une pension, une année donnée : 1 quand elle a
+ * suivi les prix. L'écart aux prix court de l'année d'effet, ou de l'année qui suit le départ,
+ * jusqu'à la fin de sa durée ; les pensions sous le seuil suivent les prix.
+ */
+export function indexation(
+	prep: Preparation,
+	k: number,
+	annee: number,
+): number {
+	const { regles, options } = prep;
+	const ecart = regles.revalorisationReelle ?? 0;
+	if (ecart === 0) return 1;
+	const p = prep.pensions[k] as Pension;
+	if (p.mensuelleBrute < (regles.revalorisationSeuil ?? 0)) return 1;
+	const debut = Math.max(options.anneeEffet, p.liquidation.annee + 1);
+	const fin =
+		regles.revalorisationDuree === undefined
+			? annee
+			: Math.min(annee, options.anneeEffet + regles.revalorisationDuree - 1);
+	return (1 + ecart) ** Math.max(0, fin - debut + 1);
+}
+
+/**
+ * Pension annuelle versée à un individu une année donnée, en euros de l'année de référence,
+ * ou null s'il n'est pas encore parti.
+ */
+export function pensionVersee(
+	prep: Preparation,
+	k: number,
+	annee: number,
+	service: number = valeurDeService(prep.b, annee),
+): number | null {
+	const p = prep.pensions[k] as Pension;
+	if (annee < p.liquidation.annee) return null;
+	// La valeur du point vaut pour toutes les pensions complémentaires en cours.
+	const point =
+		prep.avantReforme[k] && annee >= prep.options.anneeEffet
+			? (prep.regles.valeurDuPoint ?? 1)
+			: 1;
+	// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
+	return (
+		indexation(prep, k, annee) *
+		(p.cnav.pensionAnnuelle +
+			p.agircArrco.pensionAnnuelle * point * service +
+			(p.fonctionPublique?.pensionAnnuelle ?? 0))
+	);
+}
+
 /** Ce qu'il faut savoir d'un individu une année donnée : son poids et, s'il est retraité, sa pension. */
 function lecteur(prep: Preparation, annee: number) {
-	const { options, b, regles } = prep;
+	const { options, b } = prep;
 	const cle = cleDe(options.champ);
 	const fp = b.fonctionPublique;
 	const anneesConnues = Object.keys(options.pyramides).map(Number);
@@ -208,13 +263,7 @@ function lecteur(prep: Preparation, annee: number) {
 	] as Pyramide;
 	const ageMin = options.ageMin ?? 18;
 	const ageMax = options.ageMax ?? 96;
-	const depuisEffet = Math.max(0, annee - options.anneeEffet + 1);
-	const revalorisation = 1 + (regles.revalorisationReelle ?? 0);
-	// La valeur du point vaut pour toutes les pensions complémentaires en cours.
-	const service = b.agircArrco.indiceValeurDeService
-		? valeur(b.agircArrco.indiceValeurDeService, annee)
-		: 1;
-	const point = regles.valeurDuPoint ?? 1;
+	const service = valeurDeService(b, annee);
 	// Somme des chances de survie de chaque génération : les poids d'un âge gardent le même total.
 	const survie = options.survie;
 	const survies = new Map<string, number>();
@@ -260,32 +309,11 @@ function lecteur(prep: Preparation, annee: number) {
 		/** Part du régime de base dans la pension annuelle versée cette année-là. */
 		pensionBase(k: number): number {
 			const p = prep.pensions[k] as Pension;
-			const partiDepuis = annee - p.liquidation.annee;
-			return (
-				(revalorisation === 1
-					? 1
-					: revalorisation ** Math.min(depuisEffet, Math.max(0, partiDepuis))) *
-				p.cnav.pensionAnnuelle
-			);
+			return indexation(prep, k, annee) * p.cnav.pensionAnnuelle;
 		},
 		/** Pension annuelle versée cette année-là, ou null si l'individu n'est pas encore parti. */
 		pensionAnnuelle(k: number): number | null {
-			const p = prep.pensions[k] as Pension;
-			const partiDepuis = annee - p.liquidation.annee;
-			if (partiDepuis < 0) return null;
-			// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
-			const indexation =
-				revalorisation === 1
-					? 1
-					: revalorisation ** Math.min(depuisEffet, partiDepuis);
-			const pointApplique =
-				prep.avantReforme[k] && annee >= options.anneeEffet ? point : 1;
-			return (
-				indexation *
-				(p.cnav.pensionAnnuelle +
-					p.agircArrco.pensionAnnuelle * pointApplique * service +
-					(p.fonctionPublique?.pensionAnnuelle ?? 0))
-			);
+			return pensionVersee(prep, k, annee, service);
 		},
 		/** Salaire de l'année, 0 hors emploi. */
 		salaire(k: number): number {
@@ -482,7 +510,7 @@ export function photographier(prep: Preparation, annee: number): Resultat {
 			);
 			if (
 				p.liquidation.age >= g.ageTauxPleinAutomatique &&
-				p.cnav.trimestresValides < g.dureeRequise
+				p.cnav.trimestresValides < p.cnav.dureeRequise
 			)
 				parAge += w;
 			continue;

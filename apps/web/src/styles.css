@@ -199,6 +199,10 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .table tr.fort > * { font-weight: 700; }
 .table a { color: var(--cotisants); }
 
+.table.ressources td.barre { position: relative; min-width: 140px; white-space: nowrap; }
+.table.ressources td.barre span { position: absolute; left: 0; top: 6px; bottom: 6px; background: color-mix(in srgb, var(--cotisants) 18%, transparent); border-radius: 0 4px 4px 0; }
+.etabli .bloc > h3 { margin-top: 28px; }
+ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--muted); font-size: 15px; display: grid; gap: 6px; }
 .faits { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .fait { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 6px; align-content: start; }
 .fait strong { font-family: var(--display); font-weight: 650; font-size: 28px; line-height: 1; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -488,6 +492,12 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 .personne dt { font-size: 13px; color: var(--muted); }
 .personne dd { margin: 0; font-family: var(--display); font-weight: 650; font-size: 24px; line-height: 1.15; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .personne dd em { font: 600 13px var(--text); font-style: normal; padding: 2px 8px; border-radius: 999px; background: color-mix(in srgb, var(--besoin) 12%, var(--card)); color: var(--besoin); }
+.personne dd .age { white-space: nowrap; }
+.personne dd .age small { font-size: 0.62em; }
+.personne dl .apres { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 16px; row-gap: 2px; padding-top: 10px; border-top: 1px solid var(--line); }
+.personne dl .apres dt { flex-basis: 100%; }
+.personne dl .apres dd { font-size: 18px; gap: 0; white-space: nowrap; }
+.personne dl .apres dd small { font: 400 13px var(--text); color: var(--muted); margin-left: 5px; }
 .personne.vous { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .personne.vous header small { color: color-mix(in srgb, var(--paper) 75%, transparent); }
 .personne .rond { flex: none; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, var(--paper) 16%, transparent); }
@@ -501,6 +511,6 @@ h2 { font-family: var(--display); font-weight: 650; font-size: clamp(26px, 3.4vw
 	.control.choix label { grid-column: 1 / -1; font-size: 14px; }
 	.control.choix { padding-bottom: 10px; }
 }
-@media (max-width: 560px) { .personnes { grid-template-columns: 1fr; } .personne dl { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .personnes { grid-template-columns: 1fr; } .personne dl { grid-template-columns: 1fr 1fr; } .personne dl .apres { grid-column: 1 / -1; } }
 .moi-saisie fieldset.statut { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
 .moi-saisie fieldset.statut legend { width: 100%; }

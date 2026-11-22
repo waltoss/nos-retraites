@@ -48,6 +48,14 @@ export interface ReglesScenario {
 	anneeEffet?: number;
 	/** Pas de la montée en charge, en trimestres par génération (1 par défaut). */
 	rythme?: number;
+	/** Âge du taux plein automatique visé, en trimestres ; il monte en charge comme l'âge légal. */
+	ageTauxPlein?: AgeTrimestres;
+	/**
+	 * Avance pour début précoce : l'âge légal et la durée requise d'un individu baissent de
+	 * `parAnnee` trimestres pour chaque année de début de carrière avant `ageSansAvance`,
+	 * dans la limite de `maximum` trimestres. Le début se juge comme pour une carrière longue.
+	 */
+	avanceDebut?: { maximum: number; ageSansAvance: number; parAnnee: number };
 	/** Faux : les départs anticipés pour carrière longue sont supprimés. */
 	carriereLongue?: boolean;
 	/** Nombre de meilleures années retenues pour le salaire annuel moyen. */
@@ -75,6 +83,13 @@ export interface ReglesScenario {
 	 * N'a d'effet que dans une projection.
 	 */
 	revalorisationReelle?: number;
+	/** Nombre d'années, à partir de l'année d'effet, où cet écart aux prix s'applique ; absent, sans limite. */
+	revalorisationDuree?: number;
+	/**
+	 * Pension mensuelle brute à la liquidation, en euros de l'année de référence, en dessous de
+	 * laquelle la pension suit les prix quel que soit l'écart choisi.
+	 */
+	revalorisationSeuil?: number;
 	/** Fonctionnaires : nombre de meilleures années de traitement retenues ; absent, les six derniers mois. */
 	anneesTraitement?: number;
 	/** Fonctionnaires : vrai, les primes entrent dans la base de la pension. */
@@ -98,12 +113,16 @@ export function reglesUniverselles(r: ReglesScenario): ReglesScenario {
 		"dureeRequise",
 		"anneeEffet",
 		"rythme",
+		"ageTauxPlein",
+		"avanceDebut",
 		"carriereLongue",
 		"decoteParTrimestre",
 		"surcoteParTrimestre",
 		"mdaParEnfant",
 		"majorationTroisEnfants",
 		"revalorisationReelle",
+		"revalorisationDuree",
+		"revalorisationSeuil",
 	] as const;
 	for (const cle of communes)
 		if (r[cle] !== undefined) (u as Record<string, unknown>)[cle] = r[cle];
@@ -208,18 +227,21 @@ export function premiereGenerationConcernee(
 	return generation;
 }
 
-const MONTEES = new WeakMap<
-	ReglesScenario,
-	Map<number, { ageLegal: number; dureeRequise: number }>
->();
+interface Vise {
+	ageLegal: number;
+	dureeRequise: number;
+	ageTauxPlein: number;
+}
 
-/** Âge légal et durée requise d'une génération pendant la montée en charge d'une réforme datée. */
+const MONTEES = new WeakMap<ReglesScenario, Map<number, Vise>>();
+
+/** Âge légal, durée requise et âge du taux plein automatique d'une génération pendant la montée en charge d'une réforme datée. */
 function monteeEnCharge(
 	anneeNaissance: number,
 	b: Baremes,
 	regles: ReglesScenario,
 	anneeEffet: number,
-): { ageLegal: number; dureeRequise: number } {
+): Vise {
 	let connues = MONTEES.get(regles);
 	if (!connues) {
 		connues = new Map();
@@ -232,10 +254,12 @@ function monteeEnCharge(
 	const avant = baremeGeneration(b.cnav, premiere - 1);
 	let ageLegal = avant.ageLegal;
 	let dureeRequise = avant.dureeRequise;
+	let ageTauxPlein = avant.ageTauxPleinAutomatique;
 	const droit = baremeGeneration(b.cnav, anneeNaissance);
 	if (anneeNaissance < premiere) {
 		ageLegal = droit.ageLegal;
 		dureeRequise = droit.dureeRequise;
+		ageTauxPlein = droit.ageTauxPleinAutomatique;
 	}
 	for (let g = premiere; g <= anneeNaissance; g++) {
 		const d = baremeGeneration(b.cnav, g);
@@ -251,10 +275,36 @@ function monteeEnCharge(
 			regles.dureeRequise ?? d.dureeRequise,
 			pas,
 		);
+		ageTauxPlein = avancer(
+			ageTauxPlein,
+			d.ageTauxPleinAutomatique,
+			regles.ageTauxPlein ?? d.ageTauxPleinAutomatique,
+			pas,
+		);
 	}
-	const resultat = { ageLegal, dureeRequise };
+	const resultat = { ageLegal, dureeRequise, ageTauxPlein };
 	connues.set(anneeNaissance, resultat);
 	return resultat;
+}
+
+/** Ce qu'un scénario vise pour une génération, avant que l'âge légal ne borne l'âge du taux plein automatique. */
+function viseGeneration(
+	anneeNaissance: number,
+	b: Baremes,
+	regles: ReglesScenario,
+): Vise {
+	const g = baremeGeneration(b.cnav, anneeNaissance);
+	const modifie =
+		regles.ageLegal !== undefined ||
+		regles.dureeRequise !== undefined ||
+		regles.ageTauxPlein !== undefined;
+	return modifie && regles.anneeEffet !== undefined
+		? monteeEnCharge(anneeNaissance, b, regles, regles.anneeEffet)
+		: {
+				ageLegal: regles.ageLegal ?? g.ageLegal,
+				dureeRequise: regles.dureeRequise ?? g.dureeRequise,
+				ageTauxPlein: regles.ageTauxPlein ?? g.ageTauxPleinAutomatique,
+			};
 }
 
 export function reglesGeneration(
@@ -263,15 +313,7 @@ export function reglesGeneration(
 	regles: ReglesScenario = {},
 ): BaremeGeneration {
 	const g = baremeGeneration(b.cnav, anneeNaissance);
-	const modifie =
-		regles.ageLegal !== undefined || regles.dureeRequise !== undefined;
-	const vise =
-		modifie && regles.anneeEffet !== undefined
-			? monteeEnCharge(anneeNaissance, b, regles, regles.anneeEffet)
-			: {
-					ageLegal: regles.ageLegal ?? g.ageLegal,
-					dureeRequise: regles.dureeRequise ?? g.dureeRequise,
-				};
+	const vise = viseGeneration(anneeNaissance, b, regles);
 	const dureeModifiee = vise.dureeRequise !== g.dureeRequise;
 	// Hypothèse : les départs pour carrière longue gardent leur avance sur l'âge légal et suivent la durée requise.
 	const ecartAge = vise.ageLegal - g.ageLegal;
@@ -289,12 +331,63 @@ export function reglesGeneration(
 						})),
 		ageLegal: vise.ageLegal,
 		dureeRequise: vise.dureeRequise,
-		ageTauxPleinAutomatique: Math.max(g.ageTauxPleinAutomatique, vise.ageLegal),
+		ageTauxPleinAutomatique: Math.max(vise.ageTauxPlein, vise.ageLegal),
 		nbMeilleuresAnnees: regles.nbMeilleuresAnnees ?? g.nbMeilleuresAnnees,
 		dureeProratisation: dureeModifiee
 			? vise.dureeRequise
 			: g.dureeProratisation,
 	};
+}
+
+const PREMIERES = new WeakMap<ReglesScenario, number>();
+
+/**
+ * Avance d'un individu pour début précoce, en trimestres. Avec une année d'effet, elle monte
+ * en charge d'un pas par génération à partir de la première concernée.
+ */
+export function avanceDebut(
+	carriere: Carriere,
+	compte: CompteCarriere,
+	b: Baremes,
+	regles: ReglesScenario = {},
+): number {
+	const r = regles.avanceDebut;
+	const debut = b.cnav.carriereLongue?.trimestresDebut;
+	if (!r || debut === undefined || r.maximum <= 0 || r.parAnnee <= 0) return 0;
+	let maximum = r.maximum;
+	if (regles.anneeEffet !== undefined) {
+		let premiere = PREMIERES.get(regles);
+		if (premiere === undefined) {
+			premiere = premiereGenerationConcernee(b, regles.anneeEffet);
+			PREMIERES.set(regles, premiere);
+		}
+		maximum = Math.min(
+			maximum,
+			(carriere.anneeNaissance - premiere + 1) * (regles.rythme ?? 1),
+		);
+	}
+	let avance = 0;
+	for (
+		let age = r.ageSansAvance;
+		avance < maximum && trimestresCotisesAvant(compte, age) >= debut;
+		age--
+	)
+		avance += r.parAnnee;
+	return Math.max(0, Math.min(avance, maximum));
+}
+
+/** Les règles d'une génération pour un individu qui a une avance pour début précoce. */
+function avecAvance<G extends { ageLegal: number; dureeRequise: number }>(
+	g: G,
+	avance: number,
+): G {
+	return avance > 0
+		? {
+				...g,
+				ageLegal: g.ageLegal - avance,
+				dureeRequise: g.dureeRequise - avance,
+			}
+		: g;
 }
 
 export interface Depart {
@@ -436,6 +529,15 @@ export function computePension(
 		return computePensionFonctionPublique(carriere, b, options);
 	const compte = options.compte ?? buildCompte(carriere, b);
 	let g = reglesGeneration(carriere.anneeNaissance, b, options.regles);
+	const avance = avanceDebut(carriere, compte, b, options.regles);
+	if (avance > 0)
+		g = {
+			...avecAvance(g, avance),
+			dureeProratisation:
+				g.dureeProratisation === undefined
+					? undefined
+					: g.dureeProratisation - avance,
+		};
 	const depart: Depart =
 		options.ageLiquidation !== undefined
 			? { age: options.ageLiquidation }
@@ -562,6 +664,10 @@ export function reglesGenerationFonctionPublique(
 	const vise = reglesGeneration(naissance, b, regles);
 	const ecartAge = vise.ageLegal - prive.ageLegal;
 	const ecartDuree = vise.dureeRequise - prive.dureeRequise;
+	// L'âge d'annulation de la décote bouge du même écart que celui du privé.
+	const ecartTauxPlein =
+		viseGeneration(naissance, b, regles).ageTauxPlein -
+		prive.ageTauxPleinAutomatique;
 	// Réduction de l'avance des catégories actives, en trimestres.
 	let reduction = 0;
 	const conservee = regles.avanceCategoriesActives;
@@ -592,19 +698,25 @@ export function reglesGenerationFonctionPublique(
 			);
 		}
 	}
+	// L'avance pour début précoce vaut pour les sédentaires, comme la carrière longue.
+	const avance =
+		categorie === "sedentaire" ? avanceDebut(carriere, compte, b, regles) : 0;
 	const ageLegal = droit.ageLegal + ecartAge + reduction;
-	return {
-		ageLegal,
-		dureeRequise: droit.dureeRequise + ecartDuree,
-		ageTauxPleinAutomatique: Math.max(
-			droit.ageAnnulationDecote + reduction,
+	return avecAvance(
+		{
 			ageLegal,
-		),
-		carriereLongue:
-			categorie === "sedentaire" ? vise.carriereLongue : undefined,
-		ageSurcote: sedentaire.ageLegal + ecartAge,
-		anneeOuverture: naissance + Math.floor(droit.ageLegal / 4),
-	};
+			dureeRequise: droit.dureeRequise + ecartDuree,
+			ageTauxPleinAutomatique: Math.max(
+				droit.ageAnnulationDecote + ecartTauxPlein + reduction,
+				ageLegal,
+			),
+			carriereLongue:
+				categorie === "sedentaire" ? vise.carriereLongue : undefined,
+			ageSurcote: sedentaire.ageLegal + ecartAge - avance,
+			anneeOuverture: naissance + Math.floor(droit.ageLegal / 4),
+		},
+		avance,
+	);
 }
 
 const CNAV_VIDE: DetailCnav = {

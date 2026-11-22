@@ -1,0 +1,65 @@
+{
+	"meta": {
+		"objet": "Mesures de retraite annoncées par des candidats déclarés ou probables à la présidentielle de 2027, et leur traduction en réglages des scénarios types (apps/web/src/scenarios.ts). Ce fichier n'est pas lu par l'application : les scénarios n'y portent aucun nom.",
+		"dateConsultation": "2026-11-22",
+		"fiabilite": "Lecture par recherche web le 2026-11-22, en grande partie dans des articles de presse qui résument les programmes, pas dans les programmes eux-mêmes. À relire dans les sources avant publication. « a » : déclaration ou programme du candidat en 2026 ; « b » : source secondaire ou position plus ancienne.",
+		"aRevoir": "Primaire de la droite et du centre envisagée en janvier 2027, vote des Écologistes le 13 décembre 2026, chiffrages de l'Institut Montaigne annoncés pour le premier trimestre 2027."
+	},
+	"scenarios": {
+		"62-ans": {
+			"candidats": ["Raphaël Glucksmann (Place publique, PS)", "Marine Tondelier (Écologistes), première étape"],
+			"repris": { "ageLegal": "62 ans (a)", "dureeRequise": "43 ans, projet du PS (b)" },
+			"laisseDeCote": ["Âge modulé selon la pénibilité et l'espérance de vie en bonne santé : aucun barème publié", "Retour sur environ 10 % des exonérations de cotisations patronales (Tondelier) : se règle avec « Ressources nouvelles », non repris faute de candidature arrêtée"],
+			"sources": [
+				{ "url": "https://www.senioractu.com/Raphael-Glucksmann-remporte-la-primaire-au-premier-tour-ce-qu-il-prevoit-pour-votre-depart-a-la-retraite-votre-pension_a28149.html", "date": "2026-10" },
+				{ "url": "https://www.franceinfo.fr/economie/retraite/reforme-des-retraites/changement-de-systeme-passage-a-60-ou-a-65-ans-capitalisation-que-proposent-les-principaux-candidats-a-l-election-presidentielle-pour-les-retraites_8215784.html", "date": "2026-09-30" }
+			]
+		},
+		"60-ans": {
+			"candidats": ["Jean-Luc Mélenchon (LFI)", "Fabien Roussel (PCF) et Nathalie Arthaud (LO) pour l'âge et la durée"],
+			"repris": { "ageLegal": "60 ans (a)", "dureeRequise": "40 annuités (a)", "decote": "supprimée (a)", "minimum": "pension minimale au niveau du Smic pour une carrière complète (a) : approché par le maximum du curseur, +50 %, sans calcul du rapport exact" },
+			"laisseDeCote": ["Passage par 62 ans d'abord", "Indexation sur les salaires (le programme) ou sur les prix (le document budgétaire) : contradictoire", "Hausse progressive des cotisations et cotisation sur les dividendes : aucun taux annoncé", "Trimestres validés pour les périodes de RSA"],
+			"sources": [
+				{ "url": "https://www.adag01.fr/news/programme-lfi-melenchon-retraites-pension-smic-minimum-vieillesse-simulateur/", "date": "2026-11" },
+				{ "url": "https://melenchon2027.fr/wp-content/uploads/2026/10/Comment-nous-allons-remettre-de-l-ordre-dans-les-comptes-publics.pdf", "date": "2026-10-14" },
+				{ "url": "https://selectra.info/finance/actualites/marche/age-depart-retraite-propositions-candidats", "date": "2026-10" }
+			]
+		},
+		"premier-emploi": {
+			"candidats": ["Marine Le Pen (RN)"],
+			"repris": { "ageLegal": "62 ans au plus tard (a)", "dureeRequise": "42 annuités pour un début après 23 ans (a)", "avanceDebut": "cinq paliers de six mois de 60 à 62 ans, 40 annuités pour un début avant 20 ans (a) ; les paliers intermédiaires ne sont pas publiés, ils sont supposés réguliers", "capitalisation": "second pilier obligatoire financé par des prélèvements existants hors retraite ; « au moins 12 milliards d'euros par an » rapporté par un seul agrégateur (b), soit environ 1,5 % de la masse des salaires du privé simulée en 2028 (770 milliards)" },
+			"laisseDeCote": ["Validation d'un trimestre par un mi-temps au lieu de 150 heures au Smic, droits réduits pour le chômage", "Décote annoncée à 5 % par trimestre plafonnée à 50 % : chiffre à vérifier, non repris", "Majoration pour trois enfants portée à 12 % pour les mères et supprimée pour les pères", "Moitié des excédents de l'Unédic, suspension de l'Aspa et de l'APA au-dessus de 3 000 € de pension", "Le dispositif ne concernerait d'abord que les 52 ans et moins"],
+			"sources": [
+				{ "url": "https://publicsenat.fr/actualites/politique/presidentielle-2027-que-contient-la-reforme-des-retraites-presentee-par-marine-le-pen", "date": "2026-11-18" }
+			]
+		},
+		"63-65": {
+			"candidats": ["Bruno Retailleau (LR)"],
+			"repris": { "ageLegal": "63 ans (a)", "ageTauxPlein": "65 ans au lieu de 67 (a)", "decote": "7 % par an (a) ; les sources divergent sur son champ", "capitalisation": "une piste : 1 % du salaire brut partagé entre salarié et employeur (a)" },
+			"laisseDeCote": ["Âge du taux plein indexé ensuite sur l'espérance de vie", "Capitalisation réservée aux jeunes entrants, pour 25 à 30 % de leur pension", "Exonérations de cotisations pour rester jusqu'à 65 ans"],
+			"sources": [
+				{ "url": "https://lcp.fr/actualites/retraites-bruno-retailleau-veut-un-age-minimal-de-depart-a-63-ans-et-un-taux-plein-a-65", "date": "2026-09-22" }
+			]
+		},
+		"65-ans": {
+			"candidats": ["Édouard Philippe (Horizons)", "David Lisnard (Nouvelle Énergie) pour l'âge et la capitalisation (b)"],
+			"repris": { "ageLegal": "65 ans (a)", "dureeRequise": "45 ans (a)", "capitalisation": "collective et généralisée (a) ; aucun taux annoncé, 2 % est une valeur d'illustration" },
+			"laisseDeCote": ["Calendrier : « en moins de dix ans », sans barème par génération", "Départs anticipés pour un tiers des assurés, critères de pénibilité à négocier", "500 € versés par l'État au premier emploi", "Désindexation des pensions au-dessus de 2 000 € (Lisnard)"],
+			"sources": [
+				{ "url": "https://www.edouardphilippe.fr/programme/retraites", "date": "2026-11-18" },
+				{ "url": "https://lcp.fr/actualites/retraites-edouard-philippe-veut-porter-l-age-de-depart-a-65-ans-et-la-duree-de", "date": "2026-09-29" },
+				{ "url": "https://www.unenouvelleenergie.fr/questions/quel-age-de-depart-a-la-retraite-david-lisnard-defend-il/", "date": "2026-10-16" }
+			]
+		},
+		"gel": {
+			"candidats": ["Gabriel Attal (Renaissance)"],
+			"repris": { "revalorisation": "gel d'un an en 2028 (a) : hausse des prix de 2028 selon le COR, 1,75 %, arrondie à 1,8 point par le curseur", "revalorisationSeuil": "petites pensions épargnées (a) ; seuil non annoncé, 1 500 € est une valeur d'illustration" },
+			"laisseDeCote": ["Suppression de l'âge légal, la durée seule comptant : pas modélisée, ni durée ni taux annoncés", "Moitié de la participation et de l'intéressement vers l'épargne retraite, 1 000 € de l'État à chaque naissance"],
+			"sources": [
+				{ "url": "https://www.senioractu.com/Gabriel-Attal-supprimerait-l-age-legal-de-votre-retraite-et-gelerait-un-an-les-pensions-hors-petites-retraites-ce-que_a28256.html", "date": "2026-11-01" },
+				{ "url": "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_Salaires_Prix_PIB_2026.xlsx", "date": "2026-04-23" }
+			]
+		}
+	},
+	"sansScenario": ["Éric Zemmour : « 64, voire 65 ans » et sortie progressive de la répartition, sans chiffres", "Dominique de Villepin : conférence sociale, pas de paramètres"]
+}

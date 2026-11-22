@@ -253,6 +253,77 @@ describe("système entier", () => {
 		const ecartPrive = (reference.annees[fin]?.pensions ?? 0) * 0.05;
 		expect((loi[fin]?.depenses ?? 0) - (point[fin]?.depenses ?? 0)).toBeLessThan(ecartPrive);
 
+		// Un écart aux prix limité dans le temps ou aux pensions élevées économise moins qu'un écart général.
+		const { prepareProjection, pensionVersee, indexation } = await import("../src/index.ts");
+		const depenses = (r: object) => runProjection(population, BAREMES_FRANCE, r, options).annees.at(-1)?.pensions ?? 0;
+		const general = depenses({ revalorisationReelle: -0.01 });
+		const unAn = depenses({ revalorisationReelle: -0.01, revalorisationDuree: 1 });
+		const hauts = depenses({ revalorisationReelle: -0.01, revalorisationSeuil: 2000 });
+		const sans = reference.annees.at(-1)?.pensions ?? 0;
+		expect(general).toBeLessThan(hauts);
+		expect(hauts).toBeLessThan(sans);
+		// En 2070, presque plus personne n'était retraité l'année du gel.
+		expect(unAn).toBeGreaterThan(general);
+		expect(unAn).toBeLessThanOrEqual(sans);
+		const gel = prepareProjection(population, BAREMES_FRANCE, { revalorisationReelle: -0.01, revalorisationDuree: 3 }, options);
+		const k = gel.pensions.findIndex((p) => p.liquidation.annee === 2020 && p.mensuelleBrute > 0);
+		expect(indexation(gel, k, 2027)).toBe(1);
+		expect(indexation(gel, k, 2029)).toBeCloseTo(0.99 ** 2, 9);
+		expect(indexation(gel, k, 2060)).toBeCloseTo(0.99 ** 3, 9);
+		const tard = gel.pensions.findIndex((p) => p.liquidation.annee === 2029);
+		expect(indexation(gel, tard, 2060)).toBeCloseTo(0.99, 9);
+		expect(pensionVersee(gel, tard, 2028)).toBeNull();
+		const seuil = prepareProjection(population, BAREMES_FRANCE, { revalorisationReelle: -0.01, revalorisationSeuil: 2000 }, options);
+		const petit = seuil.pensions.findIndex((p) => p.liquidation.annee === 2030 && p.mensuelleBrute < 2000);
+		const grand = seuil.pensions.findIndex((p) => p.liquidation.annee === 2030 && p.mensuelleBrute >= 2000);
+		expect(indexation(seuil, petit, 2050)).toBe(1);
+		expect(indexation(seuil, grand, 2050)).toBeCloseTo(0.99 ** 20, 9);
+
+		// Les postes de ressources retombent sur le total, et une ressource nouvelle s'ajoute au solde.
+		const { ajouterRessources, appliquerCapitalisation, projeterCapitalisation, facteurDeRente } = await import(
+			"../src/index.ts"
+		);
+		const an2040 = loi.find((a) => a.annee === 2040);
+		expect(Object.values(an2040?.postes ?? {}).reduce((t, x) => t + x, 0)).toBeCloseTo(an2040?.autresRessources ?? 0, 0);
+		const dotee = ajouterRessources(loi, [{ type: "forfait", montant: 10e9, anneeEffet: 2028 }]);
+		expect(dotee[0]?.solde).toBe(loi[0]?.solde);
+		const de = (s: typeof loi, annee: number) => s.find((a) => a.annee === annee);
+		expect((de(dotee, 2028)?.solde ?? 0) - (de(loi, 2028)?.solde ?? 0)).toBeCloseTo(10e9, 0);
+		expect(de(dotee, 2028)?.ressourcesNouvelles).toBeCloseTo(10e9, 0);
+		// Elle garde ensuite la même part du PIB.
+		expect((de(dotee, 2060)?.ressourcesNouvelles ?? 0) / (de(dotee, 2060)?.pib ?? 1)).toBeCloseTo(
+			10e9 / (de(dotee, 2028)?.pib ?? 1),
+			9,
+		);
+
+		// Capitalisation : 2 % des salaires versés dès 2028, des rentes qui montent lentement.
+		const prep = prepareProjection(population, BAREMES_FRANCE, {}, options);
+		const fonds = { taux: 0.02, rendement: 0.025, partDetournee: 1 };
+		const capi = projeterCapitalisation(prep, fonds);
+		const c2027 = capi.annees.find((a) => a.annee === 2027);
+		const c2028 = capi.annees.find((a) => a.annee === 2028);
+		const c2070 = capi.annees.find((a) => a.annee === 2070);
+		const r2028 = reference.annees.find((a) => a.annee === 2028);
+		expect(c2027?.versements).toBe(0);
+		expect(c2028?.versements ?? 0).toBeGreaterThan(0.019 * (r2028?.cotisants ?? 0) * (r2028?.salaireMoyen ?? 0));
+		expect(c2028?.versements ?? 0).toBeLessThan(0.021 * (r2028?.cotisants ?? 0) * (r2028?.salaireMoyen ?? 0));
+		expect(c2028?.rentes).toBe(0);
+		expect(c2070?.rentes ?? 0).toBeGreaterThan(c2028?.versements ?? 0);
+		expect(c2070?.encours ?? 0).toBeGreaterThan(10 * (c2070?.versements ?? 0));
+		// Un meilleur rendement donne une rente plus élevée, et la rente coûte moins cher à un âge plus avancé.
+		const mieux = projeterCapitalisation(prep, { ...fonds, rendement: 0.043 });
+		const rente = (p: typeof capi) => p.generations.find((g) => g.generation === 2000)?.renteMoyenne ?? 0;
+		expect(rente(mieux)).toBeGreaterThan(rente(capi) * 1.2);
+		expect(facteurDeRente(PYRAMIDES_PROJETEES, 2040, 70, 0.025)).toBeLessThan(
+			facteurDeRente(PYRAMIDES_PROJETEES, 2040, 62, 0.025),
+		);
+		expect(facteurDeRente(PYRAMIDES_PROJETEES, 2040, 65, 0)).toBeGreaterThan(20);
+		expect(facteurDeRente(PYRAMIDES_PROJETEES, 2040, 65, 0)).toBeLessThan(30);
+		// Les cotisations détournées manquent au système dès la première année.
+		const ampute = appliquerCapitalisation(loi, capi, fonds);
+		expect((de(loi, 2028)?.solde ?? 0) - (de(ampute, 2028)?.solde ?? 0)).toBeCloseTo(c2028?.versements ?? 0, 0);
+		expect(appliquerCapitalisation(loi, capi, { ...fonds, partDetournee: 0 })[10]?.solde).toBe(loi[10]?.solde);
+
 		// Une règle propre au régime général ne touche pas la fonction publique : son effet tous régimes
 		// est plus petit quand le bloc résiduel ne suit que les règles communes.
 		const { reglesUniverselles } = await import("../src/index.ts");
