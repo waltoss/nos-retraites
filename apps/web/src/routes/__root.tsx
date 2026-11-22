@@ -138,7 +138,7 @@ function Entete() {
 					</span>
 				</button>
 			) : (
-				<div className="indep">Un projet citoyen, indépendant de l'État</div>
+				<div className="indep">Un projet citoyen</div>
 			)}
 		</header>
 	);
