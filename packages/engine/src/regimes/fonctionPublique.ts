@@ -4,36 +4,37 @@ import {
 	type Baremes,
 	valeur,
 } from "../baremes/types.ts";
-import type { CompteCarriere, Cumul } from "../compte.ts";
+import { type CompteCarriere, type Cumul, ouvrirCompte } from "../compte.ts";
 import {
 	type AgeTrimestres,
 	type Carriere,
 	type DetailFonctionPublique,
 	moisParEtat,
+	type RegimeFonctionPublique,
 } from "../types.ts";
 
 /** Règles d'une génération de fonctionnaires, dans la forme commune à tous les régimes. */
-export interface GenerationFonctionnaire extends BaremeGeneration {
+export type GenerationFonctionnaire = BaremeGeneration & {
 	/** Âge à partir duquel un trimestre de plus donne une surcote : l'âge légal des sédentaires. */
 	ageSurcote: number;
 	/** Année d'atteinte de l'âge d'ouverture du droit en vigueur, qui fixe le taux de la décote. */
 	anneeOuverture: number;
 	/** Trimestres de bonification propres au métier, en plus de ceux pour enfants. */
 	bonifications?: number;
-}
+};
 
 /** Ce qu'un scénario change au calcul de la pension des fonctionnaires. */
-export interface ReglesFonctionPublique {
+export type ReglesFonctionPublique = {
 	/** Nombre de meilleures années retenues ; absent, le traitement des six derniers mois. */
 	anneesTraitement?: number;
 	/** Vrai : les primes s'ajoutent au traitement dans la base de la pension. */
 	primesComptees?: boolean;
 	/** Première année où ces règles s'appliquent : les primes n'acquièrent alors plus de points de retraite additionnelle. */
 	anneeEffet?: number;
-}
+};
 
 /**
- * Compte d'une carrière de fonctionnaire : les trimestres cotisés sont les services,
+ * Compte d'un fonctionnaire dans son régime : les trimestres cotisés sont les services,
  * les salaires portés au compte sont les traitements, les points sont ceux de la retraite additionnelle.
  * Le temps partiel compte au prorata dans les services et en entier dans la durée d'assurance ;
  * le traitement retenu est celui d'un temps plein.
@@ -41,42 +42,35 @@ export interface ReglesFonctionPublique {
 export function buildCompteFonctionPublique(
 	carriere: Carriere,
 	b: Baremes,
+	regime: RegimeFonctionPublique,
 ): CompteCarriere {
 	const fp = b.fonctionPublique as BaremeFonctionPublique;
 	const n = carriere.annees.length;
-	const compte: CompteCarriere = {
-		ageDebut:
-			n > 0 ? (carriere.annees[0]?.annee ?? 0) - carriere.anneeNaissance : 0,
-		trimestresCotises: new Float64Array(n),
-		trimestresAssimiles: new Float64Array(n),
-		trimestresAutresRegimes: new Uint8Array(n),
-		trimestresReputes: new Uint8Array(n),
-		salairesRevalorises: new Float64Array(n),
-		primesRevalorisees: new Float64Array(n),
-		points: new Float64Array(n),
-	};
+	const compte = ouvrirCompte(regime, carriere);
+	compte.primesRevalorisees = new Float64Array(n);
 	for (let i = 0; i < n; i++) {
 		const a = carriere.annees[i];
 		if (!a) continue;
 		const mois = moisParEtat(a);
 		if (mois.emploi === 0) continue;
 		const trimestres = Math.min(4, Math.floor(mois.emploi / 3));
-		if (a.primes === undefined) {
-			if (a.autreRegime) compte.trimestresAutresRegimes[i] = trimestres;
+		if (a.affiliation !== regime) {
+			compte.trimestresAutresRegimes[i] = trimestres;
 		} else {
+			const primes = a.primes ?? 0;
 			const coefficient = valeur(b.cnav.coefficientsRevalorisation, a.annee);
 			const quotite = a.quotite ?? 1;
-			const traitement = a.salaireBrut - a.primes;
+			const traitement = a.salaireBrut - primes;
 			compte.trimestresCotises[i] = trimestres * quotite;
 			// Le reste de l'année compte pour la durée d'assurance, pas pour les services.
 			compte.trimestresAssimiles[i] = trimestres * (1 - quotite);
 			compte.salairesRevalorises[i] = (traitement / quotite) * coefficient;
 			(compte.primesRevalorisees as Float64Array)[i] =
-				(a.primes / quotite) * coefficient;
+				(primes / quotite) * coefficient;
 			if (a.annee >= fp.rafp.premiereAnnee)
 				compte.points[i] =
 					(fp.rafp.taux *
-						Math.min(a.primes, fp.rafp.plafondAssiette * traitement)) /
+						Math.min(primes, fp.rafp.plafondAssiette * traitement)) /
 					valeur(fp.rafp.valeurAcquisition, a.annee);
 		}
 		compte.trimestresReputes[i] = trimestres;

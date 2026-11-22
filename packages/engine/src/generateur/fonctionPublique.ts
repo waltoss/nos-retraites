@@ -1,11 +1,12 @@
 import { type Baremes, valeur } from "../baremes/types.ts";
 import type { Rng } from "../rng.ts";
-import type {
-	AnneeCarriere,
-	Carriere,
-	CategorieFonctionnaire,
-	RegimeFonctionPublique,
-	Sexe,
+import {
+	type AnneeCarriere,
+	type Carriere,
+	type CategorieFonctionnaire,
+	profilDepuis,
+	type RegimeFonctionPublique,
+	type Sexe,
 } from "../types.ts";
 import type { HypothesesPubliques } from "./hypothesesPubliques.ts";
 import tempsPartielData from "./tempsPartielPublic.data.json" with {
@@ -189,14 +190,15 @@ export function generateCarriereFonctionPublique(
 		const tirage = rng.next();
 		if (age < ageEntree) {
 			const valide = tirage < h.partValideeAvantEntree;
+			// Avant l'entrée : un autre régime, que le modèle ne simule pas.
 			annees.push({
 				annee,
+				affiliation: "autre",
 				etat: valide ? "emploi" : "inactivite",
 				salaireBrut: 0,
 				moisEmploi: valide ? 12 : 0,
 				moisChomage: 0,
 				moisMaladie: 0,
-				...(valide ? { autreRegime: true } : {}),
 			});
 			continue;
 		}
@@ -206,6 +208,7 @@ export function generateCarriereFonctionPublique(
 		) {
 			annees.push({
 				annee,
+				affiliation: regime,
 				etat: "inactivite",
 				salaireBrut: 0,
 				moisEmploi: 0,
@@ -228,6 +231,7 @@ export function generateCarriereFonctionPublique(
 		const primes = traitement * partPrimes * quotite;
 		annees.push({
 			annee,
+			affiliation: regime,
 			etat: "emploi",
 			salaireBrut: traitement * quotite + primes,
 			primes,
@@ -240,7 +244,7 @@ export function generateCarriereFonctionPublique(
 		enfants,
 		cadre: false,
 		annees,
-		tirageDepart: (Math.abs(rang) * 7919.123) % 1,
+		profil: profilDepuis((Math.abs(rang) * 7919.123) % 1),
 		fonctionPublique: {
 			regime,
 			categorie,

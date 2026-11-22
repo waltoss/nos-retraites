@@ -31,7 +31,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Cohorte** : effectif réel d'une génération par sexe, suivi d'année en année par la démographie.
 - **Poids** : nombre de personnes réelles qu'un individu représente : la population de son âge et de son sexe dans le champ, partagée entre les individus simulés de cette cellule.
 - **Pyramide** : population réelle par sexe et âge une année donnée, d'après l'Insee.
-- **Champ** : partie de la population réelle qu'une population simulée représente (les salariés du privé, les fonctionnaires civils), définie par une part à chaque âge ou à chaque génération.
+- **Champ** : partie de la population réelle qu'une population simulée représente (les salariés du privé, les fonctionnaires civils), définie par une part à chaque âge ou à chaque génération. Il dit aussi quelles affiliations font un cotisant et quels régimes versent les pensions du champ ; ce que les mêmes individus cotisent et perçoivent ailleurs est compté à part (`autres`).
+- **Indépendant** : artisan ou commerçant, pendant une partie de sa vie active. Le modèle ne simule que ceux qui ont aussi été salariés du privé ; les deux métiers partagent un régime mais pas l'histoire de leur complémentaire.
+- **Auto-entrepreneur** : indépendant au régime simplifié créé en 2009, aux revenus bien plus faibles ; il fait baisser le revenu moyen des indépendants depuis cette date.
 - **Population synthétique** : ensemble des individus simulés, construit à partir d'agrégats publics et non de données personnelles.
 - **Carrière** : suite annuelle des états, salaires et événements d'un individu, de l'entrée dans la vie active à la liquidation.
 - **État** : situation d'un individu sur une année : emploi cotisant, chômage, maladie ou maternité, inactivité, retraite. Chaque état dit combien on cotise et combien on valide.
@@ -44,7 +46,11 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 
 ## Les règles
 
-- **Régime** : ensemble de règles de cotisation et de calcul de pension propre à une population (un module du moteur).
+- **Régime** : caisse qui verse une pension selon ses propres règles (Cnav, Agirc-Arrco, SRE, CNRACL). Une politique peut s'adresser à un seul régime.
+- **Affiliation** : statut sous lequel une année est travaillée (`prive`, `sre`, `cnracl`, `militaire`), qui ouvre des droits dans un ou plusieurs régimes ; un module du moteur. `autre` désigne un régime que le modèle ne simule pas : l'année ne compte que pour la durée tous régimes.
+- **Affiliation principale** : celle où l'individu a le plus travaillé ; elle décide de son départ, et ses règles propres s'appliquent à lui.
+- **Étage** : place d'un régime, base, complémentaire, ou intégré quand il tient lieu des deux (fonction publique).
+- **Modèle** : les affiliations simulées, leurs régimes et les décisions des individus (`MODELE`). Ajouter un régime, c'est y ajouter une entrée.
 - **Bloc résiduel** : ce qui manque au privé et aux fonctionnaires simulés pour retrouver les totaux publiés du système entier (autres régimes, réversion, autres ressources) ; dans un scénario, les régimes alignés sur le régime général suivent toutes ses règles, les autres seulement les règles communes à tous.
 - **Règle commune** : règle d'un scénario qui vaut pour tous les régimes (âge légal, durée requise, âge du taux plein automatique, avance pour début précoce, décote et surcote, droits familiaux, revalorisation), par opposition aux règles propres au privé (meilleures années, taux plein, minimum contributif, valeur du point, taux de cotisation).
 - **Régime aligné** : régime de base qui applique les règles de calcul du régime général (indépendants, salariés agricoles).
@@ -68,7 +74,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Carrière longue** : départ anticipé avant l'âge légal, ouvert à ceux qui ont commencé à cotiser jeunes et réunissent la durée cotisée.
 - **Trimestre réputé cotisé** : trimestre non cotisé qui compte quand même pour une carrière longue, dans la limite d'un plafond par type de période.
 - **Inaptitude** : motif de départ qui donne le taux plein dès l'âge légal quelle que soit la durée ; regroupe ici les anciens invalides.
-- **Comportement de départ** : ce que fait un individu quand il a le choix (accepter une décote, continuer après le taux plein), fixé par un tirage qui lui est propre.
+- **Profil** : penchants d'un individu (santé, attachement au travail, ampleur), tirés une fois entre 0 et 1 et identiques dans tous les scénarios.
+- **Décision** : ce que fait un individu quand il a le choix, selon son profil, sa situation et les règles ; un penchant y est comparé à un seuil. Seul le départ est une décision pour l'instant.
+- **Comportement de départ** : seuils de la décision de départ (part de ceux qui acceptent une décote, qui continuent après le taux plein), réglés sur les départs observés.
 - **Trimestre validé** : unité de durée d'assurance acquise par le travail (trimestre cotisé) ou par une période assimilée.
 - **Période assimilée** : période sans cotisation qui valide quand même des trimestres (chômage indemnisé, maladie, maternité).
 - **Durée requise** : nombre de trimestres validés nécessaire à une génération pour le taux plein.
@@ -76,7 +84,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Décote** : réduction du taux de liquidation pour chaque trimestre manquant.
 - **Surcote** : majoration de la pension pour chaque trimestre travaillé au-delà du taux plein après l'âge légal.
 - **Point** : unité de droit du régime complémentaire, achetée par les cotisations au prix d'achat et convertie en pension à la valeur de service.
-- **Compte de carrière** : droits acquis année par année par un individu (trimestres, salaires revalorisés, points), indépendants des règles du scénario.
+- **Compte de carrière** : droits acquis année par année au titre d'une affiliation (trimestres, salaires revalorisés, points), indépendants des règles du scénario. Une carrière qui change d'affiliation a un compte par affiliation.
 - **Carrière type** : carrière théorique en emploi continu à salaire fixé, utilisée pour vérifier les règles.
 - **Cadre** : salarié qui, avant 2019, acquérait des points Agirc au-dessus du PASS au lieu de points Arrco.
 - **Tranche** : part du salaire entre deux multiples du PASS, à laquelle s'applique un taux de cotisation.
@@ -136,3 +144,6 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **SMIC** : salaire minimum interprofessionnel de croissance.
 - **SRE** : Service des retraites de l'État, régime des fonctionnaires de l'État et des militaires.
 - **TZCLD** : Territoires zéro chômeur de longue durée, dispositif d'embauche en CDI de chômeurs de longue durée.
+- **Lura** : liquidation unique des régimes alignés ; depuis juillet 2017, une seule pension de base pour qui a relevé de plusieurs régimes alignés. Le modèle calcule encore une pension par régime, comme avant.
+- **RCI** : retraite complémentaire des indépendants, par points, créée en 2013 par la fusion des régimes des artisans (1979) et des commerçants (2004).
+- **SSI** : Sécurité sociale des indépendants ; ici, la retraite de base des artisans et commerçants (`ssi`), calculée comme celle du régime général sur leurs seuls revenus d'indépendant.

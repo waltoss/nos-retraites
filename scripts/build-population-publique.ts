@@ -19,6 +19,7 @@ import {
 	BAREMES_FRANCE as B,
 	buildComptes,
 	computePensions,
+	detailFonctionPublique,
 	generatePopulationPublique,
 	type Pension,
 } from "../packages/engine/src/index.ts";
@@ -99,7 +100,7 @@ interface Cible {
  * des sédentaires, et pas parmi les nouveaux retraités : même convention ici.
  */
 const invalide = (k: number) =>
-	(pensions[k] as Pension).fonctionPublique?.motif === "invalidite";
+	detailFonctionPublique(pensions[k] as Pension)?.motif === "invalidite";
 const anneeDOuverture = (k: number) => {
 	const g = population[k]?.carriere.anneeNaissance ?? 0;
 	const table = B.fonctionPublique?.parGeneration.sedentaire ?? {};

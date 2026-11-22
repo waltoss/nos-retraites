@@ -19,6 +19,7 @@ import {
 	type Carriere,
 	computePension,
 	valeur,
+	detail,
 } from "../src/index.ts";
 
 const GENERATION = 1964;
@@ -65,7 +66,12 @@ function tauxRemplacementNet(cas: Cas) {
 	for (let age = 17; age < 68; age++) {
 		const salaireBrut = (cas.profil[age] ?? 0) * rmpt(GENERATION + age);
 		if (salaireBrut > 0)
-			annees.push({ annee: GENERATION + age, etat: "emploi", salaireBrut });
+			annees.push({
+				annee: GENERATION + age,
+				affiliation: "prive",
+				etat: "emploi",
+				salaireBrut,
+			});
 	}
 	const carriere: Carriere = {
 		anneeNaissance: GENERATION,
@@ -86,11 +92,11 @@ function tauxRemplacementNet(cas: Cas) {
 		salaireNet(brut, valeur(B.cnav.pass, dernier)) / rmpt(dernier);
 	const maladie = p.cotisationMaladieRetraiteComplementaire.taux;
 	const cnav =
-		(pension.cnav.pensionAnnuelle * (1 - cas.prelevements)) /
+		(detail(pension, "cnav").pensionAnnuelle * (1 - cas.prelevements)) /
 		rmpt(anneeDepart) /
 		denominateur;
 	const complementaire =
-		(pension.agircArrco.pensionAnnuelle * (1 - cas.prelevements - maladie)) /
+		(detail(pension, "agircArrco").pensionAnnuelle * (1 - cas.prelevements - maladie)) /
 		rmpt(anneeDepart) /
 		denominateur;
 	return { pension, cnav, complementaire, total: cnav + complementaire };
@@ -110,7 +116,7 @@ describe("cas types du COR, génération 1964, à ±3 %", () => {
 			age: tableau.casType2.ageTauxPlein.age,
 			prelevements: p.tauxMedian.total,
 		});
-		expect(r.pension.cnav.trimestresDecote).toBe(0);
+		expect(detail(r.pension, "cnav").trimestresDecote).toBe(0);
 		const cible = tableau.casType2.ageTauxPlein.tauxRemplacementNet;
 		expect(Math.abs(r.total / cible - 1)).toBeLessThan(0.03);
 	});
@@ -180,13 +186,13 @@ describe("montée en charge et carrière longue", () => {
 	test("une carrière commencée à 17 ans part avant l'âge légal, au taux plein", () => {
 		const carriere = carriereType(1975, 17, 68, 0.8, B);
 		const p = computePension(carriere, B);
-		expect(p.cnav.motif).toBe("carriereLongue");
+		expect(detail(p, "cnav").motif).toBe("carriereLongue");
 		// 172 trimestres cotisés à 60 ans, l'âge ouvert à ceux qui ont commencé avant 18 ans.
 		expect(p.liquidation.age).toBe(60 * 4);
-		expect(p.cnav.trimestresDecote).toBe(0);
+		expect(detail(p, "cnav").trimestresDecote).toBe(0);
 		// Commencée à 22 ans, elle attend l'âge légal.
 		const tardive = computePension(carriereType(1975, 22, 68, 0.8, B), B);
-		expect(tardive.cnav.motif).toBeUndefined();
+		expect(detail(tardive, "cnav").motif).toBeUndefined();
 		expect(tardive.liquidation.age).toBeGreaterThanOrEqual(64 * 4);
 	});
 });

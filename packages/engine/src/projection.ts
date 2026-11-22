@@ -1,14 +1,25 @@
-import { type Baremes, valeur } from "./baremes/types.ts";
-import { buildCompte, type CompteCarriere } from "./compte.ts";
+import type { Modele, Regime } from "./affiliation.ts";
+import type { Baremes } from "./baremes/types.ts";
+import type { CompteCarriere } from "./compte.ts";
 import {
-	appliquerRegles,
+	buildCompte,
 	computePension,
-	detailCotisations,
+	cotisationsAnnee,
+} from "./liquidation.ts";
+import { MODELE } from "./modele.ts";
+import {
+	anneeDuChamp,
+	type Champ,
+	dureeDuChamp,
+	type Pyramide,
+	pensionDuChamp,
+} from "./ponderation.ts";
+import {
+	baremesPour,
 	type ReglesScenario,
 	reglesGeneration,
-} from "./liquidation.ts";
-import type { Champ, Pyramide } from "./ponderation.ts";
-import { cotisationsFonctionPublique } from "./regimes/fonctionPublique.ts";
+	reglesPour,
+} from "./regles.ts";
 import {
 	type GroupeSexe,
 	MAX_COTISATION,
@@ -43,6 +54,8 @@ export interface OptionsProjection {
 	 * et les basses moins, sans changer le nombre total de personnes de cet âge.
 	 */
 	survie?: (sexe: "F" | "H", vingtieme: number, age: number) => number;
+	/** Affiliations, régimes et décisions ; absent, le modèle de la France. */
+	modele?: Modele;
 }
 
 export interface AnneeProjetee {
@@ -63,6 +76,17 @@ export interface AnneeProjetee {
 	ageMoyenDepart: number;
 	/** Nombre de départs dans l'année. */
 	departs: number;
+	/**
+	 * Ce que les mêmes individus cotisent et perçoivent dans les autres régimes simulés, hors du
+	 * champ : les années d'artisan ou de commerçant d'un salarié du privé, et les pensions qu'elles lui valent.
+	 */
+	autres: {
+		cotisants: number;
+		cotisations: number;
+		cotisationsBase: number;
+		pensions: number;
+		pensionsBase: number;
+	};
 }
 
 export interface GenerationProjetee {
@@ -84,14 +108,17 @@ export function computePensions(
 	b: Baremes,
 	regles: ReglesScenario = {},
 	comptes?: CompteCarriere[],
+	modele: Modele = MODELE,
 ): Pension[] {
-	const be = appliquerRegles(b, regles);
-	return population.map((i, k) =>
-		computePension(i.carriere, be, {
-			regles,
-			compte: comptes?.[k] ?? buildCompte(i.carriere, b),
-		}),
-	);
+	return population.map((i, k) => {
+		const compte = comptes?.[k] ?? buildCompte(i.carriere, b, modele);
+		const r = reglesPour(regles, i.carriere.anneeNaissance, compte.affiliation);
+		return computePension(i.carriere, baremesPour(b, r), {
+			regles: r,
+			compte,
+			modele,
+		});
+	});
 }
 
 /** Un scénario préparé : la pension effective de chacun, une fois pour toutes les années. */
@@ -101,14 +128,61 @@ export interface Preparation {
 	/** Barèmes avec les règles du scénario. */
 	be: Baremes;
 	regles: ReglesScenario;
+	/** Règles et barèmes de chacun, quand le scénario en a de propres à une génération ou à une affiliation. */
+	reglesDe: ReglesScenario[];
+	baremesDe: Baremes[];
 	options: OptionsProjection;
+	modele: Modele;
 	/** Pension effective : celle du droit en vigueur pour ceux qui sont partis avant l'année d'effet. */
 	pensions: Pension[];
+	/** Les mêmes pensions rangées pour la projection, calculées une fois (voir `rangerPensions`). */
+	montants: Montants;
+	/** Les pensions des autres régimes simulés, hors du champ. */
+	montantsAutres: Montants;
+	/** 1 pour qui a travaillé ou perçoit une pension hors du champ : les autres n'ont rien à y compter. */
+	horsChamp: Uint8Array;
 	avantReforme: Uint8Array;
 	/** Individus simulés par génération et par sexe : le dénominateur des poids. */
 	simules: Map<string, number>;
 	/** Vingtième de pension de chacun dans sa génération et son sexe, avec le droit en vigueur. */
 	vingtiemes: Uint8Array;
+}
+
+/**
+ * Pensions annuelles de chacun, rangées selon ce qu'elles deviennent après le départ : celles qui
+ * ne suivent que la revalorisation, sommées ; celles des régimes dont la valeur de service ou les
+ * pensions en cours bougent, une colonne par régime ; et la part des régimes de base.
+ */
+type Montants = {
+	stables: Float64Array;
+	bases: Float64Array;
+	/** Par régime mouvant : sa place dans le modèle et la pension de chacun. */
+	mouvants: { rang: number; regime: Regime; pensions: Float64Array }[];
+};
+
+function rangerPensions(
+	pensions: Pension[],
+	modele: Modele,
+	retenu: (regime: Regime) => boolean,
+): Montants {
+	const n = pensions.length;
+	const stables = new Float64Array(n);
+	const bases = new Float64Array(n);
+	const mouvants: Montants["mouvants"] = [];
+	modele.regimes.forEach((regime, rang) => {
+		if (!retenu(regime)) return;
+		const mouvant = regime.service || regime.pensionsEnCours;
+		const colonne = mouvant ? new Float64Array(n) : stables;
+		if (mouvant) mouvants.push({ rang, regime, pensions: colonne });
+		for (let k = 0; k < n; k++) {
+			const detail = (pensions[k] as Pension).parRegime[regime.id];
+			if (!detail) continue;
+			(colonne[k] as number) += detail.pensionAnnuelle;
+			if (regime.etage === "base")
+				(bases[k] as number) += detail.pensionAnnuelle;
+		}
+	});
+	return { stables, bases, mouvants };
 }
 
 const cleDe = (champ: Champ) => (individu: Individu) =>
@@ -126,35 +200,53 @@ export function prepareProjection(
 	options: OptionsProjection,
 ): Preparation {
 	const { anneeEffet } = options;
+	const modele = options.modele ?? MODELE;
+	// Une pension dont le régime n'est pas déclaré ne serait jamais versée.
+	const declares = new Set(modele.regimes.map((r) => r.id));
+	for (const a of Object.values(modele.affiliations))
+		for (const id of a.regimes)
+			if (!declares.has(id))
+				throw new Error(
+					`Régime absent du modèle : ${id} (affiliation ${a.id})`,
+				);
 	const cle = cleDe(options.champ);
 	const inchange = Object.keys(reglesVisees).length === 0;
 	// L'âge légal et la durée requise montent en charge par génération depuis l'année d'effet.
 	const regles: ReglesScenario = inchange
 		? reglesVisees
 		: { anneeEffet, ...reglesVisees };
-	const be = appliquerRegles(b, regles);
+	const be = baremesPour(b, regles);
 	const comptes =
-		options.comptes ?? population.map((i) => buildCompte(i.carriere, b));
+		options.comptes ??
+		population.map((i) => buildCompte(i.carriere, b, modele));
 	const reference =
-		options.pensionsReference ?? computePensions(population, b, {}, comptes);
+		options.pensionsReference ??
+		computePensions(population, b, {}, comptes, modele);
 	const n = population.length;
 	const pensions: Pension[] = new Array(n);
+	const reglesDe: ReglesScenario[] = new Array(n);
+	const baremesDe: Baremes[] = new Array(n);
 	const avantReforme = new Uint8Array(n);
 	const simules = new Map<string, number>();
 	for (let k = 0; k < n; k++) {
 		const individu = population[k] as Individu;
 		simules.set(cle(individu), (simules.get(cle(individu)) ?? 0) + 1);
 		const p0 = reference[k] as Pension;
+		const c = individu.carriere;
+		const r = reglesPour(regles, c.anneeNaissance, p0.affiliation);
+		const bek = r === regles ? be : baremesPour(b, r);
+		reglesDe[k] = r;
+		baremesDe[k] = bek;
 		let p = p0;
 		if (p0.liquidation.annee < anneeEffet) {
 			avantReforme[k] = 1;
 		} else if (!inchange) {
-			const c = individu.carriere;
-			p = computePension(c, be, { regles, compte: comptes[k] });
+			p = computePension(c, bek, { regles: r, compte: comptes[k], modele });
 			if (p.liquidation.annee < anneeEffet)
-				p = computePension(c, be, {
-					regles,
+				p = computePension(c, bek, {
+					regles: r,
 					compte: comptes[k],
+					modele,
 					ageLiquidation: (anneeEffet - c.anneeNaissance) * 4,
 				});
 		}
@@ -173,32 +265,55 @@ export function prepareProjection(
 		for (const membres of cellules.values()) {
 			membres.sort(
 				(x, y) =>
-					(reference[x] as Pension).mensuelleBrute -
-					(reference[y] as Pension).mensuelleBrute,
+					pensionDuChamp(options.champ, reference[x] as Pension) -
+					pensionDuChamp(options.champ, reference[y] as Pension),
 			);
 			membres.forEach((k, rang) => {
 				vingtiemes[k] = Math.floor((rang * 20) / membres.length);
 			});
 		}
 	}
+	const regimesDuChamp = options.champ.regimes;
+	const duChamp = (r: Regime) =>
+		!regimesDuChamp || regimesDuChamp.includes(r.id);
+	// Hors du champ : qui a un compte sous une affiliation que le champ ne retient pas.
+	const horsChamp = new Uint8Array(n);
+	const retenues = options.champ.affiliations;
+	if (retenues)
+		for (let k = 0; k < n; k++) {
+			const compte = comptes[k] as CompteCarriere;
+			if (
+				!retenues.includes(compte.affiliation) ||
+				compte.autres?.some((c) => !retenues.includes(c.affiliation))
+			)
+				horsChamp[k] = 1;
+		}
 	return {
 		population,
 		b,
 		be,
 		regles,
+		reglesDe,
+		baremesDe,
 		options,
+		modele,
 		pensions,
+		montants: rangerPensions(pensions, modele, duChamp),
+		montantsAutres: rangerPensions(pensions, modele, (r) => !duChamp(r)),
+		horsChamp,
 		avantReforme,
 		simules,
 		vingtiemes,
 	};
 }
 
-/** Valeur de service du point complémentaire une année donnée, base 1 l'année de référence. */
-const valeurDeService = (b: Baremes, annee: number) =>
-	b.agircArrco.indiceValeurDeService
-		? valeur(b.agircArrco.indiceValeurDeService, annee)
-		: 1;
+/**
+ * Valeur de service de chaque régime du modèle une année donnée, base 1 l'année de référence :
+ * elle ne bouge que pour les régimes en points.
+ */
+export function servicesDeLAnnee(prep: Preparation, annee: number): number[] {
+	return prep.modele.regimes.map((r) => r.service?.(prep.b, annee) ?? 1);
+}
 
 /**
  * Ce que la revalorisation du scénario a fait d'une pension, une année donnée : 1 quand elle a
@@ -210,7 +325,8 @@ export function indexation(
 	k: number,
 	annee: number,
 ): number {
-	const { regles, options } = prep;
+	const { options } = prep;
+	const regles = prep.reglesDe[k] as ReglesScenario;
 	const ecart = regles.revalorisationReelle ?? 0;
 	if (ecart === 0) return 1;
 	const p = prep.pensions[k] as Pension;
@@ -223,37 +339,60 @@ export function indexation(
 	return (1 + ecart) ** Math.max(0, fin - debut + 1);
 }
 
+/** Pensions annuelles d'un jeu de régimes versées à un individu une année donnée. */
+function verse(
+	prep: Preparation,
+	montants: Montants,
+	k: number,
+	annee: number,
+	services: number[],
+): number {
+	// Ce que le scénario fait aux pensions déjà en cours, régime par régime.
+	const enCours = prep.avantReforme[k] && annee >= prep.options.anneeEffet;
+	let total = montants.stables[k] as number;
+	for (const m of montants.mouvants) {
+		const pension = m.pensions[k] as number;
+		if (pension === 0) continue;
+		const point = enCours
+			? (m.regime.pensionsEnCours?.(prep.reglesDe[k] as ReglesScenario) ?? 1)
+			: 1;
+		total += pension * point * (services[m.rang] as number);
+	}
+	// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
+	return indexation(prep, k, annee) * total;
+}
+
 /**
- * Pension annuelle versée à un individu une année donnée, en euros de l'année de référence,
- * ou null s'il n'est pas encore parti.
+ * Pension annuelle versée à un individu une année donnée par les régimes du champ, en euros de
+ * l'année de référence, ou null s'il n'est pas encore parti.
  */
 export function pensionVersee(
 	prep: Preparation,
 	k: number,
 	annee: number,
-	service: number = valeurDeService(prep.b, annee),
+	services: number[] = servicesDeLAnnee(prep, annee),
 ): number | null {
 	const p = prep.pensions[k] as Pension;
 	if (annee < p.liquidation.annee) return null;
-	// La valeur du point vaut pour toutes les pensions complémentaires en cours.
-	const point =
-		prep.avantReforme[k] && annee >= prep.options.anneeEffet
-			? (prep.regles.valeurDuPoint ?? 1)
-			: 1;
-	// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
-	return (
-		indexation(prep, k, annee) *
-		(p.cnav.pensionAnnuelle +
-			p.agircArrco.pensionAnnuelle * point * service +
-			(p.fonctionPublique?.pensionAnnuelle ?? 0))
-	);
+	return verse(prep, prep.montants, k, annee, services);
+}
+
+/** La même chose pour les autres régimes simulés, hors du champ ; 0 avant le départ. */
+export function pensionVerseeHorsChamp(
+	prep: Preparation,
+	k: number,
+	annee: number,
+	services: number[] = servicesDeLAnnee(prep, annee),
+): number {
+	const p = prep.pensions[k] as Pension;
+	if (annee < p.liquidation.annee) return 0;
+	return verse(prep, prep.montantsAutres, k, annee, services);
 }
 
 /** Ce qu'il faut savoir d'un individu une année donnée : son poids et, s'il est retraité, sa pension. */
 function lecteur(prep: Preparation, annee: number) {
-	const { options, b } = prep;
+	const { options, b, modele } = prep;
 	const cle = cleDe(options.champ);
-	const fp = b.fonctionPublique;
 	const anneesConnues = Object.keys(options.pyramides).map(Number);
 	const pyramide = options.pyramides[
 		Math.max(
@@ -263,7 +402,7 @@ function lecteur(prep: Preparation, annee: number) {
 	] as Pyramide;
 	const ageMin = options.ageMin ?? 18;
 	const ageMax = options.ageMax ?? 96;
-	const service = valeurDeService(b, annee);
+	const services = servicesDeLAnnee(prep, annee);
 	// Somme des chances de survie de chaque génération : les poids d'un âge gardent le même total.
 	const survie = options.survie;
 	const survies = new Map<string, number>();
@@ -306,43 +445,61 @@ function lecteur(prep: Preparation, annee: number) {
 				(prep.simules.get(cle(individu)) ?? 1)
 			);
 		},
-		/** Part du régime de base dans la pension annuelle versée cette année-là. */
+		/** Part des régimes de base dans la pension annuelle versée cette année-là. */
 		pensionBase(k: number): number {
-			const p = prep.pensions[k] as Pension;
-			return indexation(prep, k, annee) * p.cnav.pensionAnnuelle;
+			return indexation(prep, k, annee) * (prep.montants.bases[k] as number);
 		},
 		/** Pension annuelle versée cette année-là, ou null si l'individu n'est pas encore parti. */
 		pensionAnnuelle(k: number): number | null {
-			return pensionVersee(prep, k, annee, service);
+			return pensionVersee(prep, k, annee, services);
 		},
-		/** Salaire de l'année, 0 hors emploi. */
+		/** Salaire de l'année dans le champ, 0 hors emploi ou sous une autre affiliation. */
 		salaire(k: number): number {
 			const c = (prep.population[k] as Individu).carriere;
 			const premiere = c.annees[0]?.annee ?? annee + 1;
-			return c.annees[annee - premiere]?.salaireBrut ?? 0;
+			const a = c.annees[annee - premiere];
+			if (!a) return 0;
+			// Presque tous n'ont que des années du champ : inutile d'y regarder de plus près.
+			return !prep.horsChamp[k] || anneeDuChamp(options.champ, a)
+				? a.salaireBrut
+				: 0;
 		},
-		/** Cotisations de l'année ; pour un fonctionnaire, celles de son régime sur son traitement. */
-		cotisation(
-			salaire: number,
-			k: number,
-		): { base: number; complementaire: number } {
+		/** Vrai quand l'individu travaille cette année-là sous une affiliation simulée hors du champ. */
+		travailleHorsChamp(k: number): boolean {
+			if (!prep.horsChamp[k]) return false;
 			const c = (prep.population[k] as Individu).carriere;
-			if (c.fonctionPublique && fp) {
-				const premiere = c.annees[0]?.annee ?? annee + 1;
-				const primes = c.annees[annee - premiere]?.primes ?? 0;
-				return {
-					base: cotisationsFonctionPublique(
-						salaire - primes,
-						c.fonctionPublique.regime,
-						fp,
-					),
-					complementaire: 0,
-				};
-			}
-			return detailCotisations(
-				salaire,
-				annee >= options.anneeEffet ? prep.be : b,
+			const premiere = c.annees[0]?.annee ?? annee + 1;
+			const a = c.annees[annee - premiere];
+			return (
+				a !== undefined &&
+				a.salaireBrut > 0 &&
+				!anneeDuChamp(options.champ, a) &&
+				a.affiliation in modele.affiliations
+			);
+		},
+		/** Pension annuelle versée cette année-là par les autres régimes simulés. */
+		pensionHorsChamp(k: number): number {
+			return prep.horsChamp[k]
+				? pensionVerseeHorsChamp(prep, k, annee, services)
+				: 0;
+		},
+		/** Part des régimes de base dans cette pension. */
+		pensionBaseHorsChamp(k: number): number {
+			return prep.horsChamp[k]
+				? indexation(prep, k, annee) * (prep.montantsAutres.bases[k] as number)
+				: 0;
+		},
+		/** Cotisations de l'année, selon l'affiliation de l'individu cette année-là. */
+		cotisation(k: number): { base: number; complementaire: number } {
+			const c = (prep.population[k] as Individu).carriere;
+			const premiere = c.annees[0]?.annee ?? annee + 1;
+			const a = c.annees[annee - premiere];
+			if (!a) return { base: 0, complementaire: 0 };
+			return cotisationsAnnee(
+				a,
+				annee >= options.anneeEffet ? (prep.baremesDe[k] as Baremes) : b,
 				annee,
+				modele,
 			);
 		},
 	};
@@ -375,6 +532,13 @@ export function projeter(prep: Preparation): Projection {
 			departs: 0,
 			ages: 0,
 		};
+		const autres = {
+			cotisants: 0,
+			cotisations: 0,
+			cotisationsBase: 0,
+			pensions: 0,
+			pensionsBase: 0,
+		};
 		for (let k = 0; k < n; k++) {
 			const poids = lit.poids(k);
 			if (poids === 0) continue;
@@ -383,6 +547,10 @@ export function projeter(prep: Preparation): Projection {
 				ligne.retraites += poids;
 				ligne.pensions += poids * pension;
 				ligne.pensionsBase += poids * lit.pensionBase(k);
+				if (prep.horsChamp[k]) {
+					autres.pensions += poids * lit.pensionHorsChamp(k);
+					autres.pensionsBase += poids * lit.pensionBaseHorsChamp(k);
+				}
 				const p = prep.pensions[k] as Pension;
 				if (p.liquidation.annee === annee) {
 					ligne.departs += poids;
@@ -394,10 +562,16 @@ export function projeter(prep: Preparation): Projection {
 			if (salaire > 0) {
 				ligne.cotisants += poids;
 				ligne.salaires += poids * salaire;
-				const cotisation = lit.cotisation(salaire, k);
+				const cotisation = lit.cotisation(k);
 				ligne.cotisations +=
 					poids * (cotisation.base + cotisation.complementaire);
 				ligne.cotisationsBase += poids * cotisation.base;
+			} else if (lit.travailleHorsChamp(k)) {
+				const cotisation = lit.cotisation(k);
+				autres.cotisants += poids;
+				autres.cotisations +=
+					poids * (cotisation.base + cotisation.complementaire);
+				autres.cotisationsBase += poids * cotisation.base;
 			}
 		}
 		annees.push({
@@ -414,6 +588,7 @@ export function projeter(prep: Preparation): Projection {
 			salaireMoyen: ligne.cotisants ? ligne.salaires / ligne.cotisants : 0,
 			ageMoyenDepart: ligne.departs ? ligne.ages / ligne.departs : 0,
 			departs: ligne.departs,
+			autres,
 		});
 	}
 
@@ -432,7 +607,7 @@ export function projeter(prep: Preparation): Projection {
 		}
 		x.n++;
 		x.age += p.liquidation.age / 4;
-		x.pension += p.mensuelleBrute;
+		x.pension += pensionDuChamp(options.champ, p);
 	}
 	const generations = [...parGeneration.entries()]
 		.sort(([x], [y]) => x - y)
@@ -460,7 +635,7 @@ export function runProjection(
  */
 export function photographier(prep: Preparation, annee: number): Resultat {
 	const depart = performance.now();
-	const { population, b, regles } = prep;
+	const { population, b } = prep;
 	const lit = lecteur(prep, annee);
 	const n = population.length;
 	const cotisations: number[] = [];
@@ -500,24 +675,25 @@ export function photographier(prep: Preparation, annee: number): Resultat {
 			parSexe[c.sexe].valeurs.push(mensuelle);
 			parSexe[c.sexe].poids.push(w);
 			ages[c.sexe] += (p.liquidation.age / 4) * w;
-			if (p.cnav.minimumContributifApplique) minimum += w;
-			if (p.cnav.trimestresDecote > 0) decote += w;
-			if (p.cnav.trimestresSurcote > 0) surcote += w;
+			const duree = dureeDuChamp(prep.options.champ, p);
+			if (duree.minimumApplique) minimum += w;
+			if (duree.trimestresDecote > 0) decote += w;
+			if (duree.trimestresSurcote > 0) surcote += w;
 			const g = reglesGeneration(
 				c.anneeNaissance,
 				b,
-				prep.avantReforme[k] ? {} : regles,
+				prep.avantReforme[k] ? {} : (prep.reglesDe[k] as ReglesScenario),
 			);
 			if (
 				p.liquidation.age >= g.ageTauxPleinAutomatique &&
-				p.cnav.trimestresValides < p.cnav.dureeRequise
+				duree.trimestresValides < duree.dureeRequise
 			)
 				parAge += w;
 			continue;
 		}
 		const salaire = lit.salaire(k);
 		if (salaire > 0) {
-			const cotisation = lit.cotisation(salaire, k);
+			const cotisation = lit.cotisation(k);
 			cotisations.push(cotisation.base + cotisation.complementaire);
 			poidsCotisations.push(w);
 		} else autres += w;

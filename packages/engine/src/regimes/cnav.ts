@@ -53,12 +53,18 @@ export function computeCnav(
 	age: AgeTrimestres,
 	g: BaremeGeneration,
 	b: BaremeCnav,
+	/** Faux quand un autre régime aligné porte les trimestres pour enfants : ils ne comptent alors que pour la durée tous régimes. */
+	mdaAuRegime = true,
 ): DetailCnav {
 	const anneeLiquidation = carriere.anneeNaissance + Math.floor(age / 4);
 	const mda = trimestresMda(carriere, b, anneeLiquidation);
 	// Durée au régime général, qui fixe la proratisation, et durée tous régimes, qui fixe le taux.
-	const auRegime = cumul.trimestresCotises + cumul.trimestresAssimiles + mda;
-	const valides = auRegime + cumul.trimestresAutresRegimes;
+	const auRegime =
+		cumul.trimestresCotises +
+		cumul.trimestresAssimiles +
+		(mdaAuRegime ? mda : 0);
+	const valides =
+		auRegime + cumul.trimestresAutresRegimes + (mdaAuRegime ? 0 : mda);
 	const manquants = Math.min(
 		b.decoteTrimestresMax,
 		trimestresManquants(valides, age, g),

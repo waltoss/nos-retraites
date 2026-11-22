@@ -12,7 +12,9 @@ import {
 	compareScenarios,
 	computePensions,
 	computeSysteme,
+	detailFonctionPublique,
 	type EcartDecile,
+	estIndependant,
 	type Facteurs,
 	generatePopulation,
 	generatePopulationPublique,
@@ -415,7 +417,7 @@ function faitsFonctionPublique(
 		const c = individu.carriere;
 		if (
 			c.fonctionPublique?.regime === "militaire" ||
-			p.fonctionPublique?.motif === "invalidite" ||
+			detailFonctionPublique(p)?.motif === "invalidite" ||
 			p.mensuelleBrute === 0
 		)
 			return;
@@ -478,7 +480,8 @@ function profil(
 	for (const a of c.annees) {
 		if (a.annee >= anneeDepart) break;
 		const m = moisParEtat(a).emploi;
-		if (m === 0 || a.salaireBrut <= 0) continue;
+		// Les années d'artisan ou de commerçant ne sont pas des années de salaire.
+		if (m === 0 || a.salaireBrut <= 0 || estIndependant(a)) continue;
 		mois += m;
 		// Salaire ramené à un temps plein sur l'année, en part du plafond de l'époque.
 		somme +=
@@ -645,7 +648,7 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 		if (profil.regime && c.fonctionPublique?.regime !== profil.regime) return;
 		if (Math.abs(c.anneeNaissance - profil.anneeNaissance) > ecartMax) return;
 		const a = c.annees[B.anneeReference - (c.annees[0]?.annee ?? 0)];
-		if (!a || a.salaireBrut <= 0) return;
+		if (!a || a.salaireBrut <= 0 || estIndependant(a)) return;
 		const mois = moisParEtat(a).emploi;
 		if (mois < 6) return;
 		const salaire = a.salaireBrut / (a.quotite ?? 1) / mois;

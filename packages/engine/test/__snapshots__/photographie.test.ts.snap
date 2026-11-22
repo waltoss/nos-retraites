@@ -1,0 +1,1468 @@
+// Bun Snapshot v1, https://bun.sh/docs/test/snapshots
+
+exports[`photographie du moteur carrières générées 1`] = `
+{
+  "prive": {
+    "annees": 297802,
+    "empreinte": "1716c37ae304bdde",
+    "individus": 6000,
+  },
+  "publique": {
+    "annees": 147541,
+    "empreinte": "ecd961cc6bec845f",
+    "individus": 3000,
+  },
+}
+`;
+
+exports[`photographie du moteur comptes de carrière 1`] = `
+{
+  "prive": "f3820148fd98aeaf",
+  "publique": "d1bd8120e18d65e8",
+}
+`;
+
+exports[`photographie du moteur pensions, droitEnVigueur 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, ageLegal65 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.61758333333333,
+    "empreinte": "c77ac69fe40fe8cd",
+    "pensionMoyenne": 1901.613187329012,
+  },
+  "prive, toujours": {
+    "ageMoyen": 65.52641666666666,
+    "empreinte": "74ac8ecea49b31a3",
+    "pensionMoyenne": 1929.4351067601738,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.935,
+    "empreinte": "702a45c055c8ccb0",
+    "pensionMoyenne": 2507.971785778018,
+  },
+  "publique, toujours": {
+    "ageMoyen": 62.69316666666667,
+    "empreinte": "d7882ca9ccf12709",
+    "pensionMoyenne": 2551.408866839493,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, ageLegal60Duree42 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 63.20425,
+    "empreinte": "a769aed0dd5426ef",
+    "pensionMoyenne": 1845.6419915119359,
+  },
+  "prive, toujours": {
+    "ageMoyen": 63.19866666666667,
+    "empreinte": "6106e3b51cefe261",
+    "pensionMoyenne": 1840.4782446961347,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.24316666666667,
+    "empreinte": "6794b9d6b2a5b73",
+    "pensionMoyenne": 2466.8898757995926,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.355666666666664,
+    "empreinte": "219b80b2be41ab94",
+    "pensionMoyenne": 2453.323929965787,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, duree44 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.495875,
+    "empreinte": "de92b7d6de4f7a5d",
+    "pensionMoyenne": 1878.9624104828831,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.7955,
+    "empreinte": "2b61519163e840d1",
+    "pensionMoyenne": 1877.4567300805315,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 62.03625,
+    "empreinte": "d97bfa552eb70e4f",
+    "pensionMoyenne": 2473.1447856790037,
+  },
+  "publique, toujours": {
+    "ageMoyen": 62.352,
+    "empreinte": "ad81ef4442d3f518",
+    "pensionMoyenne": 2448.048534522207,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, ageTauxPlein66 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.084625,
+    "empreinte": "2a609e9a53c80c53",
+    "pensionMoyenne": 1873.708863241707,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.09454166666667,
+    "empreinte": "39aab79396f04a48",
+    "pensionMoyenne": 1873.6872834955298,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.596333333333334,
+    "empreinte": "4548b92873c0ba0e",
+    "pensionMoyenne": 2466.3087910958243,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.601166666666664,
+    "empreinte": "f74f4dd8a4e34334",
+    "pensionMoyenne": 2467.187529171294,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, avanceDebut 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 63.767916666666665,
+    "empreinte": "724b4777581b059e",
+    "pensionMoyenne": 1861.5974414884022,
+  },
+  "prive, toujours": {
+    "ageMoyen": 63.850875,
+    "empreinte": "2a769f059eb73fe2",
+    "pensionMoyenne": 1866.9910667726717,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.56766666666667,
+    "empreinte": "7644a7317ed8ee1",
+    "pensionMoyenne": 2476.6348021940034,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.714416666666665,
+    "empreinte": "1ed7c3a62b9893d1",
+    "pensionMoyenne": 2488.98619546597,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, sansCarriereLongue 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.71458333333334,
+    "empreinte": "8d1a6f170431ec4b",
+    "pensionMoyenne": 1904.560307886029,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.71458333333334,
+    "empreinte": "8d1a6f170431ec4b",
+    "pensionMoyenne": 1904.560307886029,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 62.13133333333333,
+    "empreinte": "751a2d3af68b49c4",
+    "pensionMoyenne": 2527.2006384387973,
+  },
+  "publique, toujours": {
+    "ageMoyen": 62.13133333333333,
+    "empreinte": "751a2d3af68b49c4",
+    "pensionMoyenne": 2527.2006384387973,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, meilleuresAnnees30 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "af385c5518b272b4",
+    "pensionMoyenne": 1840.8697797891543,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "af385c5518b272b4",
+    "pensionMoyenne": 1840.8697797891543,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, tauxPlein48 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "d37f261b311ba8b4",
+    "pensionMoyenne": 1838.8301554311613,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "d37f261b311ba8b4",
+    "pensionMoyenne": 1838.8301554311613,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, decote 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "b503d586b74e95d",
+    "pensionMoyenne": 1888.1579983537968,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "b503d586b74e95d",
+    "pensionMoyenne": 1888.1579983537968,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "ee72a2ccd7f92c73",
+    "pensionMoyenne": 2487.268727841434,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "ee72a2ccd7f92c73",
+    "pensionMoyenne": 2487.268727841434,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, surcote 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "f364a71651b481f2",
+    "pensionMoyenne": 1903.6041542869407,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "f364a71651b481f2",
+    "pensionMoyenne": 1903.6041542869407,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "2143a7c2a0580163",
+    "pensionMoyenne": 2532.222301458397,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "2143a7c2a0580163",
+    "pensionMoyenne": 2532.222301458397,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, valeurDuPoint 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "8273a4900b4408da",
+    "pensionMoyenne": 1854.4861457357524,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "8273a4900b4408da",
+    "pensionMoyenne": 1854.4861457357524,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, minimumContributifPlus 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "ad896fcf765ee3a8",
+    "pensionMoyenne": 1899.3547769391555,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "ad896fcf765ee3a8",
+    "pensionMoyenne": 1899.3547769391555,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, sansMinimumContributif 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "44b4286b028cfe3d",
+    "pensionMoyenne": 1841.8205039430507,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "44b4286b028cfe3d",
+    "pensionMoyenne": 1841.8205039430507,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, mda4 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.33879166666667,
+    "empreinte": "b95e6434fee3fb46",
+    "pensionMoyenne": 1867.0699927522764,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.33879166666667,
+    "empreinte": "b95e6434fee3fb46",
+    "pensionMoyenne": 1867.0699927522764,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.80458333333333,
+    "empreinte": "10138f0bd8bb9b97",
+    "pensionMoyenne": 2475.610594086598,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.80458333333333,
+    "empreinte": "10138f0bd8bb9b97",
+    "pensionMoyenne": 2475.610594086598,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, majorationEnfants 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "3198f2db3a573a7b",
+    "pensionMoyenne": 1858.7694571626766,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "3198f2db3a573a7b",
+    "pensionMoyenne": 1858.7694571626766,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "30a8aed28ba5a010",
+    "pensionMoyenne": 2454.137029414927,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "30a8aed28ba5a010",
+    "pensionMoyenne": 2454.137029414927,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, cotisationBase 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, tauxAppel 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, revalorisation 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "1b7eeb6ed9fb9446",
+    "pensionMoyenne": 2483.6483481131568,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, traitementEtPrimes 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.73125,
+    "empreinte": "c7773d04780b3008",
+    "pensionMoyenne": 3145.994065522288,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.73125,
+    "empreinte": "8d6e5267eca75b3",
+    "pensionMoyenne": 3134.836065123791,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, categoriesActives 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "prive, toujours": {
+    "ageMoyen": 64.25891666666666,
+    "empreinte": "4a19b994c6fc887e",
+    "pensionMoyenne": 1883.7986380827244,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 61.788833333333336,
+    "empreinte": "6cc797e4f42400d4",
+    "pensionMoyenne": 2491.0103309393253,
+  },
+  "publique, toujours": {
+    "ageMoyen": 61.91491666666667,
+    "empreinte": "e73764cea35bcbc4",
+    "pensionMoyenne": 2502.3394310069916,
+  },
+}
+`;
+
+exports[`photographie du moteur pensions, toutEnsemble 1`] = `
+{
+  "prive, depuis2028": {
+    "ageMoyen": 64.93175,
+    "empreinte": "e75c4043e6bcbdd2",
+    "pensionMoyenne": 1789.6145282362302,
+  },
+  "prive, toujours": {
+    "ageMoyen": 66.04666666666667,
+    "empreinte": "e3d11da215dd95a6",
+    "pensionMoyenne": 1809.1154598210007,
+  },
+  "publique, depuis2028": {
+    "ageMoyen": 62.35366666666667,
+    "empreinte": "8d7dd44d6f1b763",
+    "pensionMoyenne": 2917.370601571476,
+  },
+  "publique, toujours": {
+    "ageMoyen": 63.50625,
+    "empreinte": "a7b677c03f11980b",
+    "pensionMoyenne": 2948.838701712795,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, droitEnVigueur 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "df83752bf6059c42",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "9abeea5fa118f683",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "f26a64cc81f8f72f",
+    "solde2070": -93875801915,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, ageLegal65 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21733475.931652505,
+    "parts": {
+      "decote": 0.10872108438830574,
+      "minimumContributif": 0.2182524144234657,
+      "surcote": 0.19601009000227035,
+      "tauxPleinParAge": 0.19196779323181926,
+    },
+    "pensions": "6245a94251a898a5",
+    "retraites": 14504836.152056,
+  },
+  "prive": {
+    "annees": "4625e6b967b3a208",
+    "autres": "a4fdb67492dcf87c",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16547678740.103788,
+      "pensionsBase": 12726671236.787428,
+    },
+    "cotisations2070": 257183237578.8164,
+    "generations": "fa9dabb6b913f2e4",
+    "pensions2070": 385015528555.2481,
+  },
+  "publique": {
+    "annees": "c9a995ecc3b625f7",
+    "generations": "526a8b2d5f4b2366",
+    "pensions2070": 80738836550.59975,
+  },
+  "systeme": {
+    "annees": "4c9b7766b09fab44",
+    "solde2070": -72769763832.1471,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, ageLegal60Duree42 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21076960.032311164,
+    "parts": {
+      "decote": 0.13413997300945685,
+      "minimumContributif": 0.2059580663043033,
+      "surcote": 0.22105534085281084,
+      "tauxPleinParAge": 0.16571495264152003,
+    },
+    "pensions": "521d771523c0cea2",
+    "retraites": 15594283.8421891,
+  },
+  "prive": {
+    "annees": "85aa8934c4aeb411",
+    "autres": "2444a0c2cb0e61f6",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 17838333003.537636,
+      "pensionsBase": 13699931113.925344,
+    },
+    "cotisations2070": 237378030307.79422,
+    "generations": "e195038448c19922",
+    "pensions2070": 401865839378.717,
+  },
+  "publique": {
+    "annees": "a99d2c41d9473a7e",
+    "generations": "782ee15bafb653ae",
+    "pensions2070": 81930846351.68825,
+  },
+  "systeme": {
+    "annees": "ceefc98ff071cda2",
+    "solde2070": -137850751743.70386,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, duree44 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21651503.903625272,
+    "parts": {
+      "decote": 0.1229066180923748,
+      "minimumContributif": 0.20952174766423168,
+      "surcote": 0.19019574592793637,
+      "tauxPleinParAge": 0.19680202609201733,
+    },
+    "pensions": "c4bbed6d8e13073d",
+    "retraites": 14665363.23348626,
+  },
+  "prive": {
+    "annees": "c212422ea9939a1",
+    "autres": "69d17b50479c90dc",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16274716566.853249,
+      "pensionsBase": 12396921589.441652,
+    },
+    "cotisations2070": 253177035563.46802,
+    "generations": "8717e0b1fde4e686",
+    "pensions2070": 385189786224.77716,
+  },
+  "publique": {
+    "annees": "bba9e1ccef39ff88",
+    "generations": "f7e46b922886550a",
+    "pensions2070": 78750331010.33946,
+  },
+  "systeme": {
+    "annees": "fa31f4f5b9fb81b4",
+    "solde2070": -78405373924.11194,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, ageTauxPlein66 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21380725.0779618,
+    "parts": {
+      "decote": 0.11725671787341045,
+      "minimumContributif": 0.2133505701284292,
+      "surcote": 0.18848858955982037,
+      "tauxPleinParAge": 0.20259600488234772,
+    },
+    "pensions": "1c04ca02e2f6381",
+    "retraites": 15042536.722956656,
+  },
+  "prive": {
+    "annees": "19f6169cc2efaabb",
+    "autres": "47a8dda5769b60",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 17245207857.52817,
+      "pensionsBase": 13201029867.227903,
+    },
+    "cotisations2070": 248089764080.65518,
+    "generations": "365ed3358d99c863",
+    "pensions2070": 392848828918.96216,
+  },
+  "publique": {
+    "annees": "1a0b4084888c06ec",
+    "generations": "18f6fd25226c6b93",
+    "pensions2070": 80608935400.67961,
+  },
+  "systeme": {
+    "annees": "50feabdac9200de3",
+    "solde2070": -101809556102.87268,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, avanceDebut 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21330565.99385714,
+    "parts": {
+      "decote": 0.1318569822772521,
+      "minimumContributif": 0.20963401353209407,
+      "surcote": 0.21163255789931412,
+      "tauxPleinParAge": 0.18496416607981267,
+    },
+    "pensions": "c77a8281c93f9d2a",
+    "retraites": 15225204.08886018,
+  },
+  "prive": {
+    "annees": "cc2149f9fbca1b1c",
+    "autres": "14ff14b631530a71",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 17545727569.587944,
+      "pensionsBase": 13477188952.131775,
+    },
+    "cotisations2070": 243956468924.1818,
+    "generations": "c8327e559f8be751",
+    "pensions2070": 396908404700.8387,
+  },
+  "publique": {
+    "annees": "f364fd73e4742314",
+    "generations": "de084768cfdebcf5",
+    "pensions2070": 80911331297.9774,
+  },
+  "systeme": {
+    "annees": "4c20140fcca84350",
+    "solde2070": -115906113760.11975,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, sansCarriereLongue 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21664876.631327637,
+    "parts": {
+      "decote": 0.11694803545516316,
+      "minimumContributif": 0.21392317255356785,
+      "surcote": 0.19702704472702148,
+      "tauxPleinParAge": 0.18962652292751025,
+    },
+    "pensions": "1cd495759b4ff8f4",
+    "retraites": 14683923.663799588,
+  },
+  "prive": {
+    "annees": "e1f3d280746db460",
+    "autres": "37c08ababaf2e332",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16137853150.817575,
+      "pensionsBase": 12406184228.032207,
+    },
+    "cotisations2070": 260844279656.70892,
+    "generations": "fb8f9b650063ec18",
+    "pensions2070": 377913994941.2642,
+  },
+  "publique": {
+    "annees": "d2e7019321d3b7d",
+    "generations": "ca4cd63c89697473",
+    "pensions2070": 81039705245.87906,
+  },
+  "systeme": {
+    "annees": "888dc7e656ad889f",
+    "solde2070": -56225882304.63281,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, meilleuresAnnees30 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.22058065064182608,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "417027abef2fbf62",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "828ab3bf08f1eac1",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "37a1b9d26148e8ee",
+    "pensions2070": 382503250776.7634,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "50e89c247aed56ca",
+    "solde2070": -84421813549.54321,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, tauxPlein48 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.2245501340667456,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "673fb78a4a8570e4",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "4c2fbed4e21b4e54",
+    "autres": "8cc1256b01bd68c7",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16749691794.811676,
+      "pensionsBase": 12808084725.361418,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "a94a69691100d94a",
+    "pensions2070": 380615998734.3958,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "adaab313c7db6f22",
+    "solde2070": -82147286648.71155,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, decote 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "2eaf00e4368dc740",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "6e8d62498b21beb5",
+    "autres": "cd44775f4944010e",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16916234885.577435,
+      "pensionsBase": 12974627816.127172,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "143bb457fca7a3c",
+    "pensions2070": 391945933911.68475,
+  },
+  "publique": {
+    "annees": "9a409ef604b4ea96",
+    "generations": "9be0386bf15ab973",
+    "pensions2070": 80702734928.15573,
+  },
+  "systeme": {
+    "annees": "3c6fb77a00332028",
+    "solde2070": -95618066244.03906,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, surcote 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "ad230cf226c0f4a0",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "67e7696eefa5cb54",
+    "autres": "6ede9af255e233ce",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 17137937667.975355,
+      "pensionsBase": 13196330598.525085,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "45c2e9bd0cda76bd",
+    "pensions2070": 395372665156.8249,
+  },
+  "publique": {
+    "annees": "4b8d4558de8cce71",
+    "generations": "13b4a22032f948d8",
+    "pensions2070": 81940909163.07014,
+  },
+  "systeme": {
+    "annees": "33730613467458c2",
+    "solde2070": -101945396993.90771,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, valeurDuPoint 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "31a7ec010bc422b1",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "b46d3a4d4046b8e4",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "f392f3925a074754",
+    "pensions2070": 384756061273.15674,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "e82a2929dc03ca19",
+    "solde2070": -87792278579.37292,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, minimumContributifPlus 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.3053124804446965,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "e24ff834634279aa",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "7d23585e08837998",
+    "autres": "98807d01ec353d70",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 18891208467.064575,
+      "pensionsBase": 14949601397.61432,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "13540f869fd4dfb2",
+    "pensions2070": 392986108081.23914,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "a296ea8e9c741e26",
+    "solde2070": -98308708850.03833,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, sansMinimumContributif 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.12304782015769049,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "b98866cf18abddfe",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "c16c174b4b5764ad",
+    "autres": "facfc0677a811fa",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 12942232010.775396,
+      "pensionsBase": 9000624941.32513,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "5d23803760f3d90b",
+    "pensions2070": 387816614114.4146,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "e2d090810c0c57b6",
+    "solde2070": -86500785232.0177,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, mda4 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21574742.293488346,
+    "parts": {
+      "decote": 0.11938594180809456,
+      "minimumContributif": 0.21262164595183916,
+      "surcote": 0.18606544861449625,
+      "tauxPleinParAge": 0.19841462237649435,
+    },
+    "pensions": "8eb76076ff6ec86b",
+    "retraites": 14755958.476015914,
+  },
+  "prive": {
+    "annees": "ae39972dfec34ab6",
+    "autres": "b5fb825acd5a83",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16757435009.625296,
+      "pensionsBase": 12817885840.554264,
+    },
+    "cotisations2070": 251691084958.3863,
+    "generations": "52bfaca78d5fa320",
+    "pensions2070": 385170536568.58276,
+  },
+  "publique": {
+    "annees": "226a4ce7a981c3d2",
+    "generations": "8a462e4d429b69bb",
+    "pensions2070": 80262665754.46495,
+  },
+  "systeme": {
+    "annees": "b99a2837a7a110ba",
+    "solde2070": -83268632457.02606,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, majorationEnfants 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "3d2119e6fb26516d",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "6b461761763efef6",
+    "autres": "4edcd9d436a5984b",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16716865869.561922,
+      "pensionsBase": 12775258800.111666,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "e29c0d1ed63f90f7",
+    "pensions2070": 385478783705.27075,
+  },
+  "publique": {
+    "annees": "7b18f16bacf91b2d",
+    "generations": "a7389f8af48e0a5f",
+    "pensions2070": 79559015913.6671,
+  },
+  "systeme": {
+    "annees": "707720a2a5c938e8",
+    "solde2070": -85775800508.87207,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, cotisationBase 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "df83752bf6059c42",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "bd7f82ebe799253f",
+    "autres": "88a12c7c4f67921",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11672960601.983664,
+      "cotisationsBase": 8117709251.804913,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 258261505968.16956,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "acdf18f044ec5dae",
+    "solde2070": -85714155931.95117,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, tauxAppel 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "df83752bf6059c42",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "e5f1aa1b8079b29a",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 252612729145.02942,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "57e4528f0be26907",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80555618854.88467,
+  },
+  "systeme": {
+    "annees": "33ac4ad24293e343",
+    "solde2070": -91792817152.22974,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, revalorisation 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "8cf663455bb67e66",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "8ab8647842aac80c",
+    "autres": "e72617aaa9758b20",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "2a1664d0fa84bba6",
+    "generations": "1d3736a901c191ca",
+    "pensions2070": 80540538308.28763,
+  },
+  "systeme": {
+    "annees": "963d3816262bf38d",
+    "solde2070": -93860721368.40295,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, traitementEtPrimes 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "df83752bf6059c42",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "9abeea5fa118f683",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "9616f9dd0f2f9d7e",
+    "generations": "61d03713909afb34",
+    "pensions2070": 102510489129.19508,
+  },
+  "systeme": {
+    "annees": "7b54ce604028baf1",
+    "solde2070": -115830672189.31042,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, categoriesActives 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21541113.69479849,
+    "parts": {
+      "decote": 0.11597058146927693,
+      "minimumContributif": 0.21310119464038382,
+      "surcote": 0.19538028880293715,
+      "tauxPleinParAge": 0.18804162071052255,
+    },
+    "pensions": "df83752bf6059c42",
+    "retraites": 14807686.600328734,
+  },
+  "prive": {
+    "annees": "9abeea5fa118f683",
+    "autres": "a81184f284986790",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11243076204.845304,
+      "cotisationsBase": 7687824854.666556,
+      "pensions": 16885264657.189465,
+      "pensionsBase": 12943657587.739199,
+    },
+    "cotisations2070": 250529744382.25916,
+    "generations": "6a05d29d3a4129e1",
+    "pensions2070": 390844738499.485,
+  },
+  "publique": {
+    "annees": "a63737d2a72c9305",
+    "generations": "e357197cd867100a",
+    "pensions2070": 80696721538.35393,
+  },
+  "systeme": {
+    "annees": "1eae88aeaf278b1",
+    "solde2070": -94016904598.46924,
+  },
+}
+`;
+
+exports[`photographie du moteur projection, toutEnsemble 1`] = `
+{
+  "photo2040": {
+    "cotisants": 21909784.41449413,
+    "parts": {
+      "decote": 0.11810726346776823,
+      "minimumContributif": 0.2936454011719721,
+      "surcote": 0.1929083758865818,
+      "tauxPleinParAge": 0.18581682466459348,
+    },
+    "pensions": "949f5924d437d187",
+    "retraites": 14161393.880133823,
+  },
+  "prive": {
+    "annees": "2991841cda95790c",
+    "autres": "8c3a1d184b9a40f4",
+    "autres2070": {
+      "cotisants": 1951986.6268852658,
+      "cotisations": 11458018403.414484,
+      "cotisationsBase": 7902767053.235739,
+      "pensions": 15667139664.866972,
+      "pensionsBase": 12143793265.343172,
+    },
+    "cotisations2070": 264805540511.0769,
+    "generations": "59e6551503826025",
+    "pensions2070": 336036516437.7325,
+  },
+  "publique": {
+    "annees": "8ba930640fe3ba77",
+    "generations": "433a712f9ee80137",
+    "pensions2070": 85491117230.50642,
+  },
+  "systeme": {
+    "annees": "23f1472bdac676b2",
+    "solde2070": -6208025253.512451,
+  },
+}
+`;
+
+exports[`photographie du moteur photographie de l'année de référence 1`] = `
+{
+  "ageMoyenDepart": 62.143698682523265,
+  "cotisations": 14135630.353745887,
+  "effectifs": {
+    "autres": 12532040.990063818,
+    "cotisants": 20481982.590287577,
+    "retraites": 12517645.714348594,
+  },
+  "masses": {
+    "cotisations": 209529681004.23193,
+    "pensions": 191222537813.4478,
+  },
+  "parSexe": {
+    "F": {
+      "ageMoyenDepart": 62.25586165824511,
+      "effectif": 6303531.614022271,
+      "pensionMediane": 991.9031085084675,
+      "pensionMoyenne": 1070.4702653496752,
+    },
+    "H": {
+      "ageMoyenDepart": 62.02992174634661,
+      "effectif": 6214114.100326354,
+      "pensionMediane": 1300.661289226265,
+      "pensionMoyenne": 1478.4840086005138,
+    },
+  },
+  "parts": {
+    "decote": 0.0906194869260023,
+    "minimumContributif": 0.29802794243562114,
+    "surcote": 0.11642286037019532,
+    "tauxPleinParAge": 0.1372351290422437,
+  },
+  "pensions": "262778f6e75f518d",
+}
+`;

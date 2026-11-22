@@ -1,4 +1,5 @@
 import {
+	type AnneeCarriere,
 	BAREMES_FRANCE,
 	type Carriere,
 	type Etat,
@@ -22,6 +23,10 @@ const AILLEURS = {
 	label: "Dans un autre régime",
 	couleur: "color-mix(in srgb, var(--cotisants) 38%, var(--card))",
 };
+
+/** Vrai pour une année travaillée dans un régime que le modèle ne simule pas. */
+const ailleurs = (a: AnneeCarriere) =>
+	a.affiliation === "autre" && moisParEtat(a).emploi > 0;
 
 const AGE_DEBUT = 16;
 const AGE_FIN = 70;
@@ -82,8 +87,8 @@ export function Frise({
 			if (mois.emploi > 0)
 				blocs.push({
 					etat: "emploi",
-					hauteur: a.autreRegime ? 30 : Math.max(8, (part / echelle) * 100),
-					ailleurs: a.autreRegime,
+					hauteur: ailleurs(a) ? 30 : Math.max(8, (part / echelle) * 100),
+					ailleurs: ailleurs(a),
 				});
 			// Les autres états de l'année se posent en petits blocs au-dessus de l'emploi.
 			for (const etat of ["chomage", "maladieMaternite", "inactivite"] as const)
@@ -122,11 +127,15 @@ export function Frise({
 	}
 	const vise = survol === null ? null : lire(survol);
 	const libelle = (etat: Etat) =>
-		etat === "emploi" && vise?.a?.autreRegime
+		etat === "emploi" && vise?.a && ailleurs(vise.a)
 			? "en emploi dans un autre régime"
-			: etat === "emploi" && vise?.a?.alternance
-				? "en apprentissage ou en alternance"
-				: ETATS[etat].label;
+			: etat === "emploi" && vise?.a?.affiliation === "artisan"
+				? "artisan"
+				: etat === "emploi" && vise?.a?.affiliation === "commercant"
+					? "commerçant"
+					: etat === "emploi" && vise?.a?.alternance
+						? "en apprentissage ou en alternance"
+						: ETATS[etat].label;
 	const detailMois = vise?.mois
 		? (Object.entries(vise.mois) as [Etat, number][])
 				.filter(([, n]) => n > 0)
@@ -212,7 +221,7 @@ export function Frise({
 						{ETATS[e].label}
 					</span>
 				))}
-				{carriere.annees.some((a) => a.autreRegime) && (
+				{carriere.annees.some(ailleurs) && (
 					<span>
 						<i style={{ background: AILLEURS.couleur }} />
 						{AILLEURS.label}

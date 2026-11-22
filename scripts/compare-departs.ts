@@ -5,8 +5,11 @@
 import {
 	BAREMES_FRANCE as B,
 	buildComptes,
+	CHAMP_PRIVE,
 	computePensions,
+	detail,
 	generatePopulation,
+	pensionDuChamp,
 	SCENARIO_REFERENCE,
 } from "../packages/engine/src/index.ts";
 
@@ -35,19 +38,24 @@ for (const annee of annees.length ? annees : [2019, 2023, 2026, 2035, 2050]) {
 	population.forEach((individu, k) => {
 		const p = pensions[k];
 		// Seuls ceux qui ont des droits comptent comme nouveaux retraités.
-		if (!p || p.liquidation.annee !== annee || p.mensuelleBrute <= 0) return;
+		if (
+			!p ||
+			p.liquidation.annee !== annee ||
+			pensionDuChamp(CHAMP_PRIVE, p) <= 0
+		)
+			return;
 		const w = individu.poids || 1;
 		t.n += w;
 		t.age += (w * p.liquidation.age) / 4;
-		if (p.cnav.motif === "carriereLongue") t.longue += w;
-		if (p.cnav.motif === "inaptitude") t.inaptitude += w;
-		if (p.cnav.trimestresDecote > 0) {
+		if (detail(p, "cnav").motif === "carriereLongue") t.longue += w;
+		if (detail(p, "cnav").motif === "inaptitude") t.inaptitude += w;
+		if (detail(p, "cnav").trimestresDecote > 0) {
 			t.decote += w;
-			t.trimestresDecote += w * p.cnav.trimestresDecote;
+			t.trimestresDecote += w * detail(p, "cnav").trimestresDecote;
 		}
-		if (p.cnav.trimestresSurcote > 0) {
+		if (detail(p, "cnav").trimestresSurcote > 0) {
 			t.surcote += w;
-			t.trimestresSurcote += w * p.cnav.trimestresSurcote;
+			t.trimestresSurcote += w * detail(p, "cnav").trimestresSurcote;
 		}
 		const a = Math.floor(p.liquidation.age / 4);
 		if (a >= 67) t.tard += w;

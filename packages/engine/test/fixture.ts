@@ -12,7 +12,7 @@ export function carriereContinue(
 	const anneeNaissance = options.anneeNaissance ?? 1960;
 	const annees = [];
 	for (let age = ageDebut; age <= ageFin; age++) {
-		annees.push({ annee: anneeNaissance + age, etat: options.etat ?? ("emploi" as Etat), salaireBrut });
+		annees.push({ annee: anneeNaissance + age, affiliation: "prive" as const, etat: options.etat ?? ("emploi" as Etat), salaireBrut });
 	}
 	return { anneeNaissance, sexe: options.sexe ?? "H", enfants: options.enfants ?? [], cadre: false, annees };
 }

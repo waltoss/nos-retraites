@@ -23,10 +23,12 @@ import {
 	buildComptes,
 	CHAMP_PRIVE,
 	computePensions,
+	detail,
 	generatePopulation,
 	moisParEtat,
 	type Pension,
 	type Pyramide,
+	pensionDuChamp,
 	poidsDeLAnnee,
 	prepareProjection,
 	projeter,
@@ -50,7 +52,7 @@ const pensions = computePensions(population, B, {}, comptes);
 /** Seuls ceux qui ont des droits comptent : c'est le champ des statistiques de retraités. */
 const retraites = population
 	.map((individu, k) => ({ individu, pension: pensions[k] as Pension }))
-	.filter((x) => x.pension.mensuelleBrute > 0);
+	.filter((x) => pensionDuChamp(CHAMP_PRIVE, x.pension) > 0);
 const lignes: LigneBacktest[] = [];
 const moyenne = (v: number[]) => v.reduce((t, x) => t + x, 0) / v.length;
 
@@ -158,9 +160,13 @@ const passe = projeter(preparation);
 // 2. Pension moyenne de droit direct des retraités en fin d'année, par régime (Drees, EACR).
 // La statistique publiée exclut les majorations pour enfants : on les retire aussi du modèle.
 const base = (p: Pension) =>
-	p.cnav.pensionAnnuelle / (1 + p.cnav.majorationEnfants) / 12;
+	detail(p, "cnav").pensionAnnuelle /
+	(1 + detail(p, "cnav").majorationEnfants) /
+	12;
 const complementaire = (p: Pension) =>
-	p.agircArrco.pensionAnnuelle / (1 + p.agircArrco.majorationEnfants) / 12;
+	detail(p, "agircArrco").pensionAnnuelle /
+	(1 + detail(p, "agircArrco").majorationEnfants) /
+	12;
 // Le modèle ne simule pas les générations nées avant 1930 : on ne regarde que les années récentes.
 const e = historique.effectifs;
 /** Les retraités d'une fin d'année, avec le poids qu'ils ont cette année-là (mortalité selon la pension comprise). */
@@ -173,7 +179,7 @@ const stock = (annee: number) => {
 		}))
 		.filter(
 			(x) =>
-				x.pension.mensuelleBrute > 0 &&
+				pensionDuChamp(CHAMP_PRIVE, x.pension) > 0 &&
 				x.pension.liquidation.annee <= annee &&
 				x.individu.poids > 0,
 		);
@@ -243,7 +249,10 @@ for (const [sexe, cle] of SEXES) {
 		const t = { n: 0, arrco: 0, nAgirc: 0, agirc: 0 };
 		for (const x of stock(2018)) {
 			const c = x.individu.carriere;
-			if (c.sexe !== sexe || x.pension.agircArrco.pensionAnnuelle <= 0)
+			if (
+				c.sexe !== sexe ||
+				detail(x.pension, "agircArrco").pensionAnnuelle <= 0
+			)
 				continue;
 			// Part des points acquis à l'Arrco : recalculée année par année sur les années d'emploi.
 			let arrco = 0;
@@ -251,7 +260,8 @@ for (const [sexe, cle] of SEXES) {
 			for (const a of c.annees) {
 				if (a.annee >= x.pension.liquidation.annee) break;
 				const mois = moisParEtat(a).emploi;
-				if (mois === 0 || a.salaireBrut <= 0 || a.autreRegime) continue;
+				if (mois === 0 || a.salaireBrut <= 0 || a.affiliation !== "prive")
+					continue;
 				const pass = valeur(B.cnav.pass, a.annee);
 				const plein = (a.salaireBrut * 12) / mois;
 				const points =
@@ -272,7 +282,8 @@ for (const [sexe, cle] of SEXES) {
 					: points;
 			}
 			const part = total > 0 ? arrco / total : 1;
-			const pension = x.pension.agircArrco.pensionAnnuelle * enEurosDe2018;
+			const pension =
+				detail(x.pension, "agircArrco").pensionAnnuelle * enEurosDe2018;
 			t.n += x.individu.poids;
 			t.arrco += x.individu.poids * pension * part;
 			if (part < 0.999) {
@@ -361,7 +372,7 @@ for (const [debut, fin, cles] of [
 			modele:
 				(100 *
 					groupeDeDeparts.filter(
-						(x) => x.pension.cnav.minimumContributifApplique,
+						(x) => detail(x.pension, "cnav").minimumContributifApplique,
 					).length) /
 				groupeDeDeparts.length,
 			observe: observe / (fin - debut + 1),
@@ -383,7 +394,7 @@ for (const [sexe, cle] of SEXES)
 						x.individu.carriere.sexe === sexe &&
 						Math.abs(x.individu.carriere.anneeNaissance - 1953) <= 2,
 				)
-				.map((x) => x.pension.cnav.proratisation),
+				.map((x) => detail(x.pension, "cnav").proratisation),
 		),
 		observe: proratisation[cle],
 	});
@@ -441,7 +452,7 @@ population.forEach((individu, k) => {
 	if (c.anneeNaissance < 1954 || c.anneeNaissance > 1956) return;
 	const avec = pensions[k] as Pension;
 	const sans = sansReforme[k] as Pension;
-	if (avec.mensuelleBrute <= 0) return;
+	if (pensionDuChamp(CHAMP_PRIVE, avec) <= 0) return;
 	if (sans.liquidation.age >= 61 * 4 || avec.liquidation.age < 61 * 4) return;
 	const a = c.annees[60 - ((c.annees[0]?.annee ?? 0) - c.anneeNaissance)];
 	const mois = a ? moisParEtat(a) : { emploi: 0, chomage: 0, maladie: 0 };

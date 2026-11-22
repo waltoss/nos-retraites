@@ -1,5 +1,6 @@
 import fp from "./fonctionPublique.data.json" with { type: "json" };
 import data from "./france.data.json" with { type: "json" };
+import { BAREME_INDEPENDANTS } from "./independants.ts";
 import micoPasse from "./minimumContributif.data.json" with { type: "json" };
 import moyens from "./tauxMoyens.data.json" with { type: "json" };
 import {
@@ -93,6 +94,7 @@ function pointsAnnee(
 
 export const BAREMES_FRANCE: Baremes = {
 	anneeReference: data.anneeReference,
+	independants: BAREME_INDEPENDANTS,
 	cnav: {
 		pass: serie(data.cnav.pass),
 		smicHoraire: serie(data.cnav.smicHoraire),

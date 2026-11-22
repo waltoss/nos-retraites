@@ -17,6 +17,8 @@ import {
 	cumulJusqua,
 	type GenerationFonctionnaire,
 	reglesGenerationFonctionPublique,
+	detailFonctionPublique,
+	profilDepuis,
 } from "../src/index.ts";
 
 const fp = B.fonctionPublique as BaremeFonctionPublique;
@@ -38,12 +40,13 @@ function fonctionnaire(
 	for (let age = options.debut ?? ageEntree; age < 70; age++) {
 		const annee = anneeNaissance + age;
 		if (age < ageEntree) {
-			annees.push({ annee, etat: "emploi", salaireBrut: 0, autreRegime: true });
+			annees.push({ annee, affiliation: "autre", etat: "emploi", salaireBrut: 0 });
 			continue;
 		}
 		const primes = traitement(age) * (options.primes ?? 0);
 		annees.push({
 			annee,
+			affiliation: "sre",
 			etat: "emploi",
 			salaireBrut: traitement(age) + primes,
 			primes,
@@ -167,14 +170,20 @@ describe("invalidité et militaires", () => {
 		if (c.fonctionPublique) c.fonctionPublique.ageInvalidite = 52;
 		c.annees = c.annees.map((a) =>
 			a.annee - 1975 >= 52
-				? { annee: a.annee, etat: "inactivite", salaireBrut: 0, moisEmploi: 0 }
+				? {
+						annee: a.annee,
+						affiliation: "sre" as const,
+						etat: "inactivite" as const,
+						salaireBrut: 0,
+						moisEmploi: 0,
+					}
 				: a,
 		);
 		const p = computePension(c, B);
 		expect(p.liquidation.age).toBe(52 * 4);
-		expect(p.fonctionPublique?.motif).toBe("invalidite");
-		expect(p.fonctionPublique?.trimestresDecote).toBe(0);
-		expect(p.fonctionPublique?.services).toBe(27 * 4);
+		expect(detailFonctionPublique(p)?.motif).toBe("invalidite");
+		expect(detailFonctionPublique(p)?.trimestresDecote).toBe(0);
+		expect(detailFonctionPublique(p)?.services).toBe(27 * 4);
 	});
 
 	test("un militaire part à l'âge que fixent ses services, avec un cinquième de services en plus, et un nouvel âge légal n'y change rien", () => {
@@ -188,9 +197,9 @@ describe("invalidité et militaires", () => {
 		const p = computePension(c, B);
 		expect(p.liquidation.age).toBe(45 * 4);
 		// 25 ans de services : 100 trimestres, 20 de bonification du cinquième, 10 de campagne.
-		expect(p.fonctionPublique?.services).toBe(100);
-		expect(p.fonctionPublique?.bonifications).toBe(30);
-		expect(p.fonctionPublique?.trimestresDecote).toBe(0);
+		expect(detailFonctionPublique(p)?.services).toBe(100);
+		expect(detailFonctionPublique(p)?.bonifications).toBe(30);
+		expect(detailFonctionPublique(p)?.trimestresDecote).toBe(0);
 		const regles = { ageLegal: 268, anneeEffet: 2028 };
 		const q = computePension(c, appliquerRegles(B, regles), { regles });
 		expect(q.liquidation.age).toBe(45 * 4);
@@ -217,8 +226,8 @@ describe("leviers propres à la fonction publique", () => {
 	});
 
 	test("primes comptées : la base de la pension monte de la part des primes", () => {
-		const d0 = pension().fonctionPublique;
-		const d1 = pension({ primesComptees: true }).fonctionPublique;
+		const d0 = detailFonctionPublique(pension());
+		const d1 = detailFonctionPublique(pension({ primesComptees: true }));
 		expect((d1?.traitementDeReference ?? 0) / (d0?.traitementDeReference ?? 1)).toBeCloseTo(1.3, 2);
 	});
 
@@ -246,7 +255,7 @@ describe("leviers propres à la fonction publique", () => {
 		const be = appliquerRegles(B, regles);
 		for (const entree of [20, 24, 30, 40]) {
 			const x = fonctionnaire(1975, entree, () => 30000, { debut: 19 });
-			x.tirageDepart = 0.9;
+			x.profil = profilDepuis(0.9);
 			const compte = buildCompte(x, B);
 			expect(
 				computePension(x, be, { regles, compte }).liquidation.age,

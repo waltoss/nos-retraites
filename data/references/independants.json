@@ -1,0 +1,1184 @@
+{
+ "meta": {
+  "objet": "Ordres de grandeur observés pour caler le régime des travailleurs indépendants (artisans, commerçants, professions libérales non réglementées) : retraite de base au régime général (ex-RSI, ex-SSI) et retraite complémentaire des indépendants (RCI). Cotisants, revenus, retraités, pensions moyennes, masses financières, réserves, polyaffiliation, âges de départ.",
+  "methode": "Valeurs lues le 2026-11-22 dans les sources indiquées : PDF téléchargés (curl) et convertis avec pdftotext -layout, puis lus en texte. Aucune valeur citée de mémoire ni estimée. Une valeur introuvable est décrite dans « manquants » avec les essais faits. Aucun calcul n'a été fait sur les valeurs : tout nombre des blocs figure tel quel dans la citation ou la ligne de tableau recopiée (les commentaires de « desaccordsEntreSources » rapprochent ces nombres sans en créer).",
+  "conventions": "Chaque bloc porte source, url, date (de lecture), annee (des données), fiabilite, citation (phrase ou ligne de tableau lue), champ et unite. « urlLue » est donnée quand la page d'origine a refusé la lecture et qu'une copie archivée (web.archive.org) a été lue. Montants en euros courants. Les lignes de tableau recopiées gardent l'ordre des colonnes du document.",
+  "date": "2026-11-22",
+  "plan": {
+   "population": "cotisants (comptes Urssaf, cotisants du RCI), revenus (moyennes, distribution), polyaffiliation",
+   "cibles": "retraités et pensions (base et RCI), flux et âges de départ, masses financières et réserves du RCI"
+  },
+  "dejaDansLeDepot": {
+   "note": "Séries déjà présentes ailleurs dans data/references, non recopiées ici.",
+   "contenu": [
+    "projections.json : projections financières du COR par groupes de régimes ; le groupe « Lura » comprend « Cnav y compris artisans et commerçants (SSI) » et le groupe « régimes complémentaires » comprend le RCI (pas de série propre au RCI ni aux indépendants).",
+    "population.json : mentionne les colonnes « Régime général des non salariés » et « Auto-entrepreneurs SSI » d'un classeur d'effectifs de cotisants.",
+    "historique.json, minimum-contributif.json, validation.json : séries du régime général dont le champ inclut les indépendants de l'ex-SSI à partir de 2020 (ruptures de série signalées dans ces fichiers)."
+   ]
+  },
+  "limites": [
+   "Depuis la liquidation unique (Lura, 2017) et l'intégration de la SSI au régime général (2020), les fiches de la Cnav comptent les « retraités ayant un droit lié à une carrière d'indépendant » : leurs effectifs et leurs pensions de base mêlent les droits d'indépendant et de salarié (« en tant qu'ancien indépendant ou salarié »). La pension de base moyenne de 939 € n'est donc PAS la pension tirée des seules périodes d'indépendant.",
+   "Les effectifs de l'Urssaf sont des comptes de cotisants, non des personnes, et comprennent les auto-entrepreneurs sans chiffre d'affaires ; les cotisants du RCI au sens du COR (au moins un point acquis dans l'année) sont bien moins nombreux.",
+   "Les revenus de l'Urssaf sont les revenus déclarés (assiette sociale d'avant la réforme de 2025-2026, nette de cotisations), déficits comptés pour zéro, hors taxations d'office.",
+   "Les éditions 2025 et 2026 du panorama de la Drees n'ont pas pu être lues (protection anti-robot, y compris sur les copies archivées) : les chiffres Drees viennent de l'édition 2024 (données 2020 à 2022)."
+  ]
+ },
+ "population": {
+  "cotisants": {
+   "comptesUrssafFin2025": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "comptes de cotisants au 31 décembre 2025 ; évolution 2025/2024 en %",
+    "champ": "France entière. Comptes de cotisants (un même cotisant peut avoir plusieurs comptes, environ 1 % des actifs). Données brutes observées fin mai 2026. « Ensemble » inclut les comptes de groupe professionnel indéterminé. Tableau « Les comptes de cotisants travailleurs indépendants au 31 décembre 2025 – données brutes », page 9.",
+    "citation": "Cotisants auto-entrepreneurs hors conjoints collaborateurs : 1 055 231 6,0 % | 897 648 6,1 % | 209 843 -5,6 % | 859 521 3,5 % | - | 3 022 243 4,4 % ; dont auto-entrepreneurs économiquement actifs : 775 938 4,3 % | 512 717 3,1 % | 186 655 -5,2 % | 580 254 4,9 % | - | 2 055 564 3,2 % ; Cotisants TI « classiques » hors conjoints collaborateurs : 485 245 0,2 % | 556 086 -0,3 % | 345 507 -1,1 % | 78 841 21,1 % | 426 447 2,6 % | 1 892 657 1,1 % ; Cotisants conjoints collaborateurs : 9 630 | 11 589 | 927 | 1 067 | 1 073 | 24 286 ; Ensemble : 1 550 106 4,1 % | 1 465 323 3,5 % | 556 277 -2,9 % | 939 429 4,8 % | 427 520 2,6 % | 4 939 186 3,1 % ; Ensemble hors PAMC : 4 511 666 3,1 % (colonnes : Artisans | Commerçants | Professions libérales réglementées | Professions libérales non réglementées | PAMC | Ensemble)",
+    "valeurs": {
+     "artisans": {
+      "autoEntrepreneurs": 1055231,
+      "dontAutoEntrepreneursEconomiquementActifs": 775938,
+      "classiques": 485245,
+      "conjointsCollaborateurs": 9630,
+      "ensemble": 1550106
+     },
+     "commercants": {
+      "autoEntrepreneurs": 897648,
+      "dontAutoEntrepreneursEconomiquementActifs": 512717,
+      "classiques": 556086,
+      "conjointsCollaborateurs": 11589,
+      "ensemble": 1465323
+     },
+     "professionsLiberalesReglementees": {
+      "autoEntrepreneurs": 209843,
+      "dontAutoEntrepreneursEconomiquementActifs": 186655,
+      "classiques": 345507,
+      "conjointsCollaborateurs": 927,
+      "ensemble": 556277
+     },
+     "professionsLiberalesNonReglementees": {
+      "autoEntrepreneurs": 859521,
+      "dontAutoEntrepreneursEconomiquementActifs": 580254,
+      "classiques": 78841,
+      "conjointsCollaborateurs": 1067,
+      "ensemble": 939429
+     },
+     "pamc": {
+      "classiques": 426447,
+      "conjointsCollaborateurs": 1073,
+      "ensemble": 427520
+     },
+     "ensemble": {
+      "autoEntrepreneurs": 3022243,
+      "dontAutoEntrepreneursEconomiquementActifs": 2055564,
+      "classiques": 1892657,
+      "conjointsCollaborateurs": 24286,
+      "ensemble": 4939186,
+      "ensembleHorsPamc": 4511666
+     }
+    },
+    "partDesAutoEntrepreneurs": {
+     "citation": "67 % des travailleurs indépendants (hors PAMC) sont auto-entrepreneurs fin 2025 (61 % y compris PAMC), en augmentation de 0,8 point sur un an. Par rapport à 2024, la proportion d'auto-entrepreneurs progresse de 1,2 et 1,5 points chez les artisans et les commerçants (respectivement 68,1 % et 61,3 % fin 2025)",
+     "artisansPourcent": 68.1,
+     "commercantsPourcent": 61.3,
+     "ensembleHorsPamcPourcent": 67
+    },
+    "note": "Affiliés au RCI : artisans, commerçants et professions libérales non réglementées (les professions libérales réglementées relèvent de la CNAVPL ou de la CNBF)."
+   },
+   "structureParSexeEtAge": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "% et années",
+    "champ": "France entière, hors PAMC (âges : hors conjoints collaborateurs). Pages 10-11.",
+    "citation": "60 % des travailleurs indépendants (hors PAMC) sont des hommes fin 2025 (60,9 % fin 2024) [...] avant la mise en place du statut de l'auto-entreprise, 70 % des cotisants étaient des hommes (2008). | Âge moyen des cotisants par groupe professionnel et par genre en 2025 : Hommes 42,5 44,3 46,9 39,8 42,9 ; Femmes 44,5 42,5 51,0 39,3 43,6 ; Ensemble 43,8 43,1 48,9 39,6 43,3 (colonnes : Artisans | Commerçants | Professions libérales réglementées | Professions libérales non réglementées | Total)",
+    "partDesHommesPourcent": 60,
+    "ageMoyen": {
+     "artisans": {
+      "ensemble": 43.8,
+      "hommes": 42.5,
+      "femmes": 44.5
+     },
+     "commercants": {
+      "ensemble": 43.1,
+      "hommes": 44.3,
+      "femmes": 42.5
+     },
+     "total": {
+      "ensemble": 43.3,
+      "hommes": 42.9,
+      "femmes": 43.6
+     }
+    }
+   },
+   "statutDesDeclarantsDeRevenu2024": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "%",
+    "champ": "France entière, cotisants actifs fin 2024 ayant déclaré un revenu au titre de 2024, hors PAMC.",
+    "citation": "Parmi les cotisants ayant déclaré un revenu positif au titre de 2024, 56 % des travailleurs indépendants sont sous le statut de l'auto-entreprise, 26 % relèvent du régime de l'impôt sur les sociétés, 16 % sont des entrepreneurs individuels et des gérants de sociétés soumises à l'impôt sur le revenu, et 2 % des cotisants relèvent du régime micro-fiscal.",
+    "valeurs": {
+     "autoEntrepreneurs": 56,
+     "geransRelevantDeLImpotSurLesSocietes": 26,
+     "entrepreneursIndividuelsEtGerantsALImpotSurLeRevenu": 16,
+     "microFiscal": 2
+    }
+   },
+   "cotisantsDuRciSelonLeCor": {
+    "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "millions de personnes acquérant au moins un point dans l'année",
+    "champ": "RCI ; hors professions libérales, hors cotisants à revenu nul ou insuffisant pour acquérir un point, hors micro-entrepreneurs en BNC.",
+    "citation": "Les effectifs de travailleurs indépendants qui acquièrent au moins un point au cours de l'année s'élèveraient à 1,7 million en 2023. En projection, les effectifs continueraient de progresser jusqu'en 2040 pour atteindre 1,9 million ; ils seraient quasiment stables jusqu'en 2070. En 2023, 70 % des cotisants sont des hommes, cette proportion est supposée constante en projection.",
+    "valeurMillions": 1.7,
+    "partDesHommesPourcent": 70,
+    "projection2040Millions": 1.9,
+    "noteDeLaSource": "Ces effectifs sont inférieurs à l'ensemble de la population des travailleurs indépendants, car ils ne comprennent pas les professions libérales, les cotisants dont le revenu est nul ou ne permettant pas d'acquérir au moins un point, ni les cotisants micro-entrepreneurs relevant du régime d'imposition des bénéfices non commerciaux BNC [...]"
+   },
+   "nonSalariesSelonLInsee": {
+    "source": "Insee, « Emploi et revenus des indépendants », Insee Références, édition 2025",
+    "url": "https://www.insee.fr/fr/statistiques/fichier/8376600/ERI2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2022,
+    "unite": "milliers de personnes au 31 décembre ; % ; euros par mois",
+    "champ": "France hors Mayotte, personnes exerçant une activité non salariée au 31 décembre, hors agriculture ; hors taxés d'office pour les revenus. Fiche 1.2, figure 1. Classement par secteur d'activité (et non par statut artisan ou commerçant) ; comprend les professions libérales et de santé. Revenus négatifs comptés pour zéro.",
+    "citation": "Secteur : Effectifs ensemble | non-salariés classiques | micro-entrepreneurs | part des ME (%) | revenu mensuel moyen ensemble | classiques | ME — Industrie (hors artisanat commercial) 187 66 121 64,5 1 390 3 200 380 ; Construction 433 235 198 45,7 2 020 2 940 920 ; Commerce et artisanat commercial 541 321 220 40,7 2 070 3 140 520 ; Transports et entreposage 154 62 92 60,1 980 2 060 270 ; Services aux entreprises et services mixtes 944 394 550 58,2 2 740 5 220 860 ; Services aux particuliers 790 297 492 62,3 1 070 1 910 550 ; Santé et action sociale 567 474 93 16,3 4 970 5 770 770 ; Ensemble 3 615 1 850 1 766 48,8 2 420 4 030 670",
+    "valeurs": [
+     {
+      "secteur": "Industrie (hors artisanat commercial)",
+      "effectifsMilliers": 187,
+      "classiquesMilliers": 66,
+      "microEntrepreneursMilliers": 121,
+      "revenuMensuelMoyen": 1390,
+      "revenuMensuelMoyenClassiques": 3200,
+      "revenuMensuelMoyenMicroEntrepreneurs": 380
+     },
+     {
+      "secteur": "Construction",
+      "effectifsMilliers": 433,
+      "classiquesMilliers": 235,
+      "microEntrepreneursMilliers": 198,
+      "revenuMensuelMoyen": 2020,
+      "revenuMensuelMoyenClassiques": 2940,
+      "revenuMensuelMoyenMicroEntrepreneurs": 920
+     },
+     {
+      "secteur": "Commerce et artisanat commercial",
+      "effectifsMilliers": 541,
+      "classiquesMilliers": 321,
+      "microEntrepreneursMilliers": 220,
+      "revenuMensuelMoyen": 2070,
+      "revenuMensuelMoyenClassiques": 3140,
+      "revenuMensuelMoyenMicroEntrepreneurs": 520
+     },
+     {
+      "secteur": "Transports et entreposage",
+      "effectifsMilliers": 154,
+      "classiquesMilliers": 62,
+      "microEntrepreneursMilliers": 92,
+      "revenuMensuelMoyen": 980,
+      "revenuMensuelMoyenClassiques": 2060,
+      "revenuMensuelMoyenMicroEntrepreneurs": 270
+     },
+     {
+      "secteur": "Services aux entreprises et services mixtes",
+      "effectifsMilliers": 944,
+      "classiquesMilliers": 394,
+      "microEntrepreneursMilliers": 550,
+      "revenuMensuelMoyen": 2740,
+      "revenuMensuelMoyenClassiques": 5220,
+      "revenuMensuelMoyenMicroEntrepreneurs": 860
+     },
+     {
+      "secteur": "Services aux particuliers",
+      "effectifsMilliers": 790,
+      "classiquesMilliers": 297,
+      "microEntrepreneursMilliers": 492,
+      "revenuMensuelMoyen": 1070,
+      "revenuMensuelMoyenClassiques": 1910,
+      "revenuMensuelMoyenMicroEntrepreneurs": 550
+     },
+     {
+      "secteur": "Santé et action sociale",
+      "effectifsMilliers": 567,
+      "classiquesMilliers": 474,
+      "microEntrepreneursMilliers": 93,
+      "revenuMensuelMoyen": 4970,
+      "revenuMensuelMoyenClassiques": 5770,
+      "revenuMensuelMoyenMicroEntrepreneurs": 770
+     },
+     {
+      "secteur": "Ensemble",
+      "effectifsMilliers": 3615,
+      "classiquesMilliers": 1850,
+      "microEntrepreneursMilliers": 1766,
+      "revenuMensuelMoyen": 2420,
+      "revenuMensuelMoyenClassiques": 4030,
+      "revenuMensuelMoyenMicroEntrepreneurs": 670
+     }
+    ]
+   }
+  },
+  "revenus": {
+   "revenuMoyenParGroupeProfessionnelCpsti": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "euros par an (revenu annuel net déclaré)",
+    "champ": "Travailleurs indépendants « classiques » (hors auto-entrepreneurs, hors PAMC) en activité au 31 décembre 2025 ayant déclaré un revenu au titre de 2024, y compris revenus nuls. Page 15.",
+    "citation": "Le revenu annuel net moyen déclaré au titre de 2024 par les travailleurs indépendants en activité au 31 décembre 2025, hors auto-entrepreneurs et hors PAMC, est de 40 200 euros (29 110 euros pour les artisans, 32 410 euros pour les commerçants, 70 180 euros pour les professions libérales hors praticiens et auxiliaires médicaux conventionnés – PAMC, et 30 460 euros pour les professions libérales non réglementées). Ce revenu moyen masque des disparités importantes avec 15 % de travailleurs indépendants ayant des revenus nuls ou déficitaires [...] et 14,4 % ayant en revanche des revenus supérieurs à 70 000 euros.",
+    "valeurs": {
+     "ensemble": 40200,
+     "artisans": 29110,
+     "commercants": 32410,
+     "professionsLiberalesHorsPamc": 70180,
+     "professionsLiberalesNonReglementees": 30460
+    },
+    "partRevenusNulsOuDeficitairesPourcent": 15,
+    "partRevenusSuperieursA70000Pourcent": 14.4,
+    "partSousVingtMilleEuros": {
+     "citation": "Deux tiers des cotisants ont des revenus moyens inférieurs à 20 000 € : 48 % parmi les travailleurs indépendants « classiques » et près de 90 % parmi les auto-entrepreneurs",
+     "classiquesPourcent": 48
+    },
+    "evolution2024Sur2023": "Revenu moyen des « classiques » en hausse de 3 % (artisans +2,2 %, commerçants +4,4 %) en euros courants."
+   },
+   "revenuMoyenDesAutoEntrepreneurs": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "euros par an, hors revenus nuls",
+    "champ": "Auto-entrepreneurs ayant déclaré un chiffre d'affaires positif, en activité au 31 décembre 2025 et ayant un revenu reconstitué positif. Page 16.",
+    "citation": "En 2025, le revenu annuel moyen s'établit à 7 709 euros. Il varie fortement selon les groupes professionnels (6 430 euros pour les commerçants, 7 010 euros pour les artisans, 9 270 euros pour les professions libérales). La proportion de revenus nuls ou non déclarés reste forte en 2025 (32 %).",
+    "valeurs": {
+     "ensemble": 7709,
+     "commercants": 6430,
+     "artisans": 7010,
+     "professionsLiberales": 9270
+    },
+    "partRevenusNulsOuNonDeclaresPourcent": 32
+   },
+   "revenuDesClassiquesUrssaf": {
+    "source": "Urssaf, Stat'ur n° 416, avril 2026, « En 2024, le revenu moyen des travailleurs indépendants classiques rebondit »",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/Stat_Ur_416.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "euros par an ; effectifs en milliers de déclarants",
+    "champ": "Travailleurs indépendants classiques (hors auto-entrepreneurs), y compris professions libérales et de santé ; revenus 2024 arrêtés à fin décembre 2025 ; hors taxations d'office ; déficits comptés pour zéro. Tableau 1.",
+    "citation": "TI classiques 1 908 0,3 45 531 45 571 46 897 0,1 2,9 -4,6 1,1 ; Artisans-Commerçants 1 067 -0,7 30 236 30 235 31 114 0,0 2,9 -4,7 1,1 ; Professions libérales 841 1,7 65 796 65 512 66 931 -0,4 2,2 -5,1 0,4 ; Hommes 1 172 -0,2 49 547 49 370 50 730 ; Femmes 735 1,1 38 957 39 437 40 788 (colonnes : effectifs déclarants 2024 en milliers | évolution annuelle des effectifs % | revenus annuels moyens 2022 | 2023 | 2024 | évolutions)",
+    "artisansCommercants": {
+     "effectifsDeclarantsMilliers": 1067,
+     "revenuAnnuelMoyen": {
+      "2022": 30236,
+      "2023": 30235,
+      "2024": 31114
+     }
+    },
+    "ensembleClassiques": {
+     "effectifsDeclarantsMilliers": 1908,
+     "revenuAnnuelMoyen": {
+      "2022": 45531,
+      "2023": 45571,
+      "2024": 46897
+     },
+     "hommes2024": 50730,
+     "femmes2024": 40788
+    },
+    "parAge2024": {
+     "citation": "Moins de 30 ans 118 2,3 24 418 25 291 26 239 ; Entre 30 et 40 ans 423 1,1 39 473 40 168 41 547 ; Entre 40 et 50 ans 500 0,7 49 182 49 069 50 345 ; Entre 50 et 60 ans 525 -1,9 51 534 51 591 53 402 ; Plus de 60 ans 342 1,7 44 858 44 530 45 643",
+     "note": "Ensemble des classiques (professions libérales comprises), pas les seuls artisans et commerçants.",
+     "moinsDe30Ans": 26239,
+     "de30A40Ans": 41547,
+     "de40A50Ans": 50345,
+     "de50A60Ans": 53402,
+     "plusDe60Ans": 45643
+    },
+    "masseDesRevenus": {
+     "citation": "Le revenu global déclaré par les travailleurs indépendants classiques est de 89,5 milliards d'euros en 2024 et progresse de 3,2 % en euros courants.",
+     "milliardsEuros": 89.5
+    }
+   },
+   "distributionDesClassiquesUrssaf": {
+    "source": "Urssaf, Stat'ur n° 416, avril 2026, « En 2024, le revenu moyen des travailleurs indépendants classiques rebondit »",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/Stat_Ur_416.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "% des travailleurs indépendants classiques par tranche de revenu annuel ; euros",
+    "champ": "Ensemble des travailleurs indépendants classiques (professions libérales et de santé comprises) ; pas de distribution publiée pour les seuls artisans et commerçants. Graphique 2 et texte.",
+    "citation": "La moitié des travailleurs indépendants classiques déclarent un revenu inférieur à 29 531 euros en 2024. Un quart d'entre eux déclarent un revenu supérieur à 56 412 euros, et un quart un revenu inférieur à 10 000 euros. | En 2024, la moitié des travailleurs indépendants classiques ont un revenu inférieur à 29 530 euros (revenu médian, graphique 2) et 10 % ont un revenu supérieur à 101 910 euros. | La part des revenus nuls ou déficitaires dans l'ensemble des revenus des travailleurs indépendants classiques est de 11,8 % en 2024 | Graphique 2 : nul ou déficitaire 11,8% ; ]0;10 000[ 13,1% ; [10 000;20 000[ 12,8% ; [20 000;30 000[ 12,8% ; [30 000;40 000[ 11,3% ; [40 000;50 000[ 8,8% ; [50 000;60 000[ 6,3% ; [60 000;70 000[ 4,6% ; [70 000;80 000[ 3,4% ; [80 000;90 000[ 2,6% ; [90 000;100 000[ 2,0% ; [100 000;110 000[ 1,6% ; [110 000;120 000[ 1,2% ; [120 000;130 000[ 1,1% ; [130 000;140 000[ 0,9% ; [140 000;150 000[ 0,7%",
+    "quantiles": {
+     "premierQuartile": 10000,
+     "mediane": 29531,
+     "troisiemeQuartile": 56412,
+     "neuviemeDecile": 101910
+    },
+    "tranches": [
+     {
+      "de": null,
+      "a": 0,
+      "libelle": "nul ou déficitaire",
+      "pourcent": 11.8
+     },
+     {
+      "de": 0,
+      "a": 10000,
+      "pourcent": 13.1
+     },
+     {
+      "de": 10000,
+      "a": 20000,
+      "pourcent": 12.8
+     },
+     {
+      "de": 20000,
+      "a": 30000,
+      "pourcent": 12.8
+     },
+     {
+      "de": 30000,
+      "a": 40000,
+      "pourcent": 11.3
+     },
+     {
+      "de": 40000,
+      "a": 50000,
+      "pourcent": 8.8
+     },
+     {
+      "de": 50000,
+      "a": 60000,
+      "pourcent": 6.3
+     },
+     {
+      "de": 60000,
+      "a": 70000,
+      "pourcent": 4.6
+     },
+     {
+      "de": 70000,
+      "a": 80000,
+      "pourcent": 3.4
+     },
+     {
+      "de": 80000,
+      "a": 90000,
+      "pourcent": 2.6
+     },
+     {
+      "de": 90000,
+      "a": 100000,
+      "pourcent": 2.0
+     },
+     {
+      "de": 100000,
+      "a": 110000,
+      "pourcent": 1.6
+     },
+     {
+      "de": 110000,
+      "a": 120000,
+      "pourcent": 1.2
+     },
+     {
+      "de": 120000,
+      "a": 130000,
+      "pourcent": 1.1
+     },
+     {
+      "de": 130000,
+      "a": 140000,
+      "pourcent": 0.9
+     },
+     {
+      "de": 140000,
+      "a": 150000,
+      "pourcent": 0.7
+     }
+    ],
+    "note": "Les tranches au-delà de 150 000 euros du graphique 2 sont illisibles dans le texte extrait (valeurs non reprises). La médiane est écrite 29 531 euros en première page et 29 530 euros en page 5."
+   },
+   "dispersionParSecteurInsee": {
+    "source": "Insee, « Emploi et revenus des indépendants », Insee Références, édition 2025",
+    "url": "https://www.insee.fr/fr/statistiques/fichier/8376600/ERI2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2022,
+    "unite": "euros par mois ; effectifs en milliers ; %",
+    "champ": "France hors Mayotte, non-salariés classiques (hors micro-entrepreneurs, hors agriculture) au 31 décembre 2022, hors taxés d'office ; dispersion hors revenus nuls ou déficitaires. Fiche 1.3, figure 1.",
+    "citation": "Secteur : effectifs au 31/12 (milliers) | part des revenus nuls ou déficitaires (%) | 1er décile | 1er quartile | médiane | 3e quartile | 9e décile | 99e centile — Industrie (hors artisanat commercial) 66 13,8 440 1 140 2 480 4 510 7 760 22 020 ; Construction 235 8,7 800 1 610 2 560 3 880 5 940 14 800 ; Commerce et artisanat commercial 321 13,9 460 1 170 2 400 4 380 7 630 21 770 ; Transports et entreposage 62 12,4 500 950 1 670 2 790 4 520 13 230 ; Services aux entreprises et services mixtes 394 13,4 710 1 870 3 740 6 850 12 290 39 730 ; Services aux particuliers 297 15,5 350 850 1 610 2 660 4 370 12 680 ; Santé et action sociale 474 2,5 1 460 2 550 4 050 6 940 12 080 31 070 ; Ensemble 1 850 10,6 650 1 520 2 900 5 190 9 320 27 950",
+    "valeurs": [
+     {
+      "secteur": "Industrie (hors artisanat commercial)",
+      "effectifsMilliers": 66,
+      "partRevenusNulsPourcent": 13.8,
+      "d1": 440,
+      "q1": 1140,
+      "mediane": 2480,
+      "q3": 4510,
+      "d9": 7760,
+      "c99": 22020
+     },
+     {
+      "secteur": "Construction",
+      "effectifsMilliers": 235,
+      "partRevenusNulsPourcent": 8.7,
+      "d1": 800,
+      "q1": 1610,
+      "mediane": 2560,
+      "q3": 3880,
+      "d9": 5940,
+      "c99": 14800
+     },
+     {
+      "secteur": "Commerce et artisanat commercial",
+      "effectifsMilliers": 321,
+      "partRevenusNulsPourcent": 13.9,
+      "d1": 460,
+      "q1": 1170,
+      "mediane": 2400,
+      "q3": 4380,
+      "d9": 7630,
+      "c99": 21770
+     },
+     {
+      "secteur": "Transports et entreposage",
+      "effectifsMilliers": 62,
+      "partRevenusNulsPourcent": 12.4,
+      "d1": 500,
+      "q1": 950,
+      "mediane": 1670,
+      "q3": 2790,
+      "d9": 4520,
+      "c99": 13230
+     },
+     {
+      "secteur": "Services aux entreprises et services mixtes",
+      "effectifsMilliers": 394,
+      "partRevenusNulsPourcent": 13.4,
+      "d1": 710,
+      "q1": 1870,
+      "mediane": 3740,
+      "q3": 6850,
+      "d9": 12290,
+      "c99": 39730
+     },
+     {
+      "secteur": "Services aux particuliers",
+      "effectifsMilliers": 297,
+      "partRevenusNulsPourcent": 15.5,
+      "d1": 350,
+      "q1": 850,
+      "mediane": 1610,
+      "q3": 2660,
+      "d9": 4370,
+      "c99": 12680
+     },
+     {
+      "secteur": "Santé et action sociale",
+      "effectifsMilliers": 474,
+      "partRevenusNulsPourcent": 2.5,
+      "d1": 1460,
+      "q1": 2550,
+      "mediane": 4050,
+      "q3": 6940,
+      "d9": 12080,
+      "c99": 31070
+     },
+     {
+      "secteur": "Ensemble",
+      "effectifsMilliers": 1850,
+      "partRevenusNulsPourcent": 10.6,
+      "d1": 650,
+      "q1": 1520,
+      "mediane": 2900,
+      "q3": 5190,
+      "d9": 9320,
+      "c99": 27950
+     }
+    ]
+   }
+  },
+  "polyaffiliationEtDureeAuRegime": {
+   "polyaffiliationGeneration1955": {
+    "source": "Drees, « Les retraités et les retraites », édition 2024 (EIR 2020, EACR, annuaire du GIP Union Retraite)",
+    "url": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "urlLue": "https://web.archive.org/web/20260622144107id_/https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "% des affiliés de la génération 1955",
+    "champ": "Affiliés à un régime obligatoire de retraite français, nés en 1955 et vivants au 1er janvier 2024 (GIP Union Retraite, annuaire au 1er janvier 2024). « Indépendants » = SSI et MSA non-salariés ; la SSI est considérée avant son intégration au régime général. Tableau 1 de la fiche sur la polyaffiliation, page 119.",
+    "citation": "Monoaffiliés — Indépendants 0,3 0,5 0,4 | Polyaffiliés — Salariés du secteur privé + Artisans ou commerçants 7,8 16,1 11,8 (colonnes : Femmes | Hommes | Ensemble)",
+    "monoaffiliesIndependants": {
+     "femmes": 0.3,
+     "hommes": 0.5,
+     "ensemble": 0.4
+    },
+    "salariesDuPriveEtArtisansOuCommercants": {
+     "femmes": 7.8,
+     "hommes": 16.1,
+     "ensemble": 11.8
+    },
+    "note": "La ligne des monoaffiliés « Indépendants » regroupe SSI et MSA non-salariés. Presque tous les anciens artisans et commerçants ont aussi été salariés."
+   },
+   "coefficientDeProratisationSsiBase": {
+    "source": "Drees, « Les retraités et les retraites », édition 2024 (EIR 2020, EACR, annuaire du GIP Union Retraite)",
+    "url": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "urlLue": "https://web.archive.org/web/20260622144107id_/https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "coefficient de proratisation moyen (durée validée au régime rapportée à la durée d'une carrière complète)",
+    "champ": "Génération née en 1953 résidant en France, par régime de base (EIR 2020). Tableau 1 de la fiche sur les durées validées.",
+    "citation": "SSI base 0,26 0,34 0,32 (colonnes : Femmes | Hommes | Ensemble) ; CNAV 0,73 0,72 0,73 ; Ensemble, tous régimes 0,90 0,96 0,93 | Le coefficient de proratisation moyen est faible dans les régimes tels que la Mutualité sociale agricole (MSA) salariés ou la Sécurité sociale des indépendants (SSI), où les durées validées sont généralement courtes",
+    "valeurs": {
+     "femmes": 0.26,
+     "hommes": 0.34,
+     "ensemble": 0.32
+    },
+    "note": "Meilleure mesure trouvée de la durée moyenne validée au régime : un tiers de carrière environ pour la génération 1953. Aucune durée moyenne en trimestres au seul régime des indépendants n'a été trouvée."
+   },
+   "effectifsEnEquivalentCarriereComplete": {
+    "source": "Drees, « Les retraités et les retraites », édition 2024 (EIR 2020, EACR, annuaire du GIP Union Retraite)",
+    "url": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "urlLue": "https://web.archive.org/web/20260622144107id_/https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "milliers de retraités de droit direct ; part en %",
+    "champ": "Retraités de droit direct d'un régime de base résidant en France fin 2020, en personnes physiques et en équivalent carrière complète (EQCC). Tableau 2.",
+    "citation": "SSI base 528 993 1 521 158 2,2 413 5,8 570 4,0 (colonnes : personnes physiques Femmes | Hommes | Ensemble ; EQCC Femmes niveau | part | Hommes niveau | part | Ensemble niveau | part)",
+    "personnesPhysiquesMilliers": {
+     "ensemble": 1521,
+     "hommes": 993,
+     "femmes": 528
+    },
+    "equivalentCarriereCompleteMilliers": {
+     "ensemble": 570,
+     "hommes": 413,
+     "femmes": 158
+    }
+   },
+   "dureeTousRegimesDesAnciensArtisansCommercants": {
+    "source": "Insee, « Emploi et revenus des indépendants », Insee Références, édition 2025",
+    "url": "https://www.insee.fr/fr/statistiques/fichier/8376600/ERI2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "années",
+    "champ": "Retraités de droit direct résidant en France au 31 décembre 2020 classés selon leur régime principal (Drees, EIR 2020). Fiche 1.11, figure 3 (graphique : seule la valeur de la note de lecture est lisible).",
+    "citation": "Lecture : Les anciens artisans et commerçants nés en 1940 ont validé en moyenne une durée totale de 39,6 années lors de leur départ à la retraite. | Pour les artisans‑commerçants, où les femmes sont sous‑représentées mais dont la proportion a légèrement augmenté, la durée de carrière validée moyenne a diminué.",
+    "dureeTotaleValideeGeneration1940Annees": 39.6
+   }
+  }
+ },
+ "cibles": {
+  "retraitesEtPensions": {
+   "baseStockFin2025": {
+    "source": "Cnav, direction statistiques, prospective et recherche, fiche « Retraités ayant un droit lié à une carrière d'indépendants au 31 décembre 2025 » (régime de base), source SNSP-TSTI",
+    "url": "https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-de-base-_TI_2025.pdf",
+    "urlLue": "https://web.archive.org/web/2026id_/https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-de-base-_TI_2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "retraités en paiement au 31 décembre 2025 ; euros bruts par mois",
+    "champ": "Retraités (de droit direct et/ou dérivé) ayant au moins un droit lié à une carrière d'indépendant au titre du régime de base (artisan, commerçant, profession libérale non réglementée). Les droits et montants sont ceux servis par le régime général « en tant qu'ancien indépendant ou salarié » : ils incluent la part salariée. Montants bruts, hors régimes complémentaires.",
+    "citation": "Nombre total de retraités (droits directs et droits dérivés) 2 399 163 1 304 753 1 094 410 ; Droits directs au régime général (en tant qu'ancien indépendant ou salarié) 2 332 853 1 302 403 1 030 450 ; dont droits directs servis seuls 1 768 393 1 238 932 529 461 ; Droits dérivés au régime général 630 770 65 821 564 949 ; dont droits dérivés servis seuls 66 310 2 350 63 960 | Montant mensuel moyen de la pension de base après application des règles de minimum et maximum (y compris ME 10 %) : Montant du droit direct (servi avec ou sans droit dérivé) : 2 332 853 939 € 1 102 € 733 € ; Montant du droit dérivé (servi seul ou avec un droit direct) : 630 770 448 € 304 € 464 € | Montant global mensuel moyen : Ensemble des retraités : 2 399 163 1 060 € 1 150 € 952 € ; Bénéficiaires de droits directs : 2 332 853 1 078 € 1 152 € 985 € (colonnes : Hommes et Femmes | Hommes | Femmes)",
+    "effectifs": {
+     "ensemble": {
+      "ensemble": 2399163,
+      "hommes": 1304753,
+      "femmes": 1094410
+     },
+     "droitsDirects": {
+      "ensemble": 2332853,
+      "hommes": 1302403,
+      "femmes": 1030450
+     },
+     "droitsDirectsServisSeuls": {
+      "ensemble": 1768393,
+      "hommes": 1238932,
+      "femmes": 529461
+     },
+     "droitsDerives": {
+      "ensemble": 630770,
+      "hommes": 65821,
+      "femmes": 564949
+     },
+     "droitsDerivesServisSeuls": {
+      "ensemble": 66310,
+      "hommes": 2350,
+      "femmes": 63960
+     }
+    },
+    "pensionDeBaseMensuelleMoyenne": {
+     "droitDirect": {
+      "ensemble": 939,
+      "hommes": 1102,
+      "femmes": 733
+     },
+     "droitDerive": {
+      "ensemble": 448,
+      "hommes": 304,
+      "femmes": 464
+     }
+    },
+    "montantGlobalMensuelMoyen": {
+     "ensembleDesRetraites": {
+      "ensemble": 1060,
+      "hommes": 1150,
+      "femmes": 952
+     },
+     "beneficiairesDeDroitsDirects": {
+      "ensemble": 1078,
+      "hommes": 1152,
+      "femmes": 985
+     }
+    },
+    "ageMoyenDesRetraites": {
+     "ensemble": 75.2,
+     "hommes": 73.8,
+     "femmes": 77.0
+    },
+    "departsAnticipes": {
+     "citation": "Retraites anticipées longue carrière 347 128 296 657 50 471 ; Retraites anticipées des assurés handicapés 2 539 2 034 505",
+     "longueCarriere": {
+      "ensemble": 347128,
+      "hommes": 296657,
+      "femmes": 50471
+     },
+     "handicap": {
+      "ensemble": 2539,
+      "hommes": 2034,
+      "femmes": 505
+     }
+    },
+    "minimumContributif": {
+     "citation": "Effectif 698 510 341 303 357 207 ; Proportion parmi les droits directs contributifs 29,9 % 26,2 % 34,7 %",
+     "effectif": {
+      "ensemble": 698510,
+      "hommes": 341303,
+      "femmes": 357207
+     },
+     "proportionPourcent": {
+      "ensemble": 29.9,
+      "hommes": 26.2,
+      "femmes": 34.7
+     }
+    },
+    "residenceALEtranger": {
+     "citation": "Étranger 43 137 1,8%",
+     "effectif": 43137,
+     "pourcent": 1.8
+    }
+   },
+   "rciStockFin2025": {
+    "source": "Cnav, direction statistiques, prospective et recherche, fiche « Régime complémentaire des indépendants au 31 décembre 2025 », sources SNSP-TI et Sinergi",
+    "url": "https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "urlLue": "https://web.archive.org/web/20260508122313/https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "retraités en paiement au 31 décembre 2025 ; euros bruts par mois",
+    "champ": "Retraités du régime complémentaire des indépendants en paiement au 31/12/2025 (y compris anciens régimes complémentaires des artisans et des commerçants et, depuis 2023, RCE-BTP) ; hors versements forfaitaires uniques (VFU).",
+    "citation": "Nombre de retraités du régime complémentaire (RCI) 1 551 187 896 870 654 317 ; Droits directs du RCI 1 222 864 884 672 338 192 ; dont droits directs servis seuls 1 181 276 877 453 303 823 ; Droits dérivés du RCI (réversion) 369 911 19 417 350 494 ; dont droits dérivés servis seuls 328 323 12 198 316 125 | Ensemble des retraités du RCI (droits propres et droits dérivés) : 1 551 187 138 € 171 € 93 € ; Montant de pension de droit direct : 1 222 864 149 € 172 € 88 € ; Montant de pension droit dérivé : 369 911 87 € 59 € 89 € (colonnes : Hommes et Femmes | Hommes | Femmes)",
+    "effectifs": {
+     "ensemble": {
+      "ensemble": 1551187,
+      "hommes": 896870,
+      "femmes": 654317
+     },
+     "droitsDirects": {
+      "ensemble": 1222864,
+      "hommes": 884672,
+      "femmes": 338192
+     },
+     "droitsDirectsServisSeuls": {
+      "ensemble": 1181276,
+      "hommes": 877453,
+      "femmes": 303823
+     },
+     "droitsDerives": {
+      "ensemble": 369911,
+      "hommes": 19417,
+      "femmes": 350494
+     },
+     "droitsDerivesServisSeuls": {
+      "ensemble": 328323,
+      "hommes": 12198,
+      "femmes": 316125
+     }
+    },
+    "pensionMensuelleMoyenne": {
+     "ensemble": {
+      "ensemble": 138,
+      "hommes": 171,
+      "femmes": 93
+     },
+     "droitDirect": {
+      "ensemble": 149,
+      "hommes": 172,
+      "femmes": 88
+     },
+     "droitDerive": {
+      "ensemble": 87,
+      "hommes": 59,
+      "femmes": 89
+     }
+    },
+    "ageMoyenDesRetraites": {
+     "ensemble": 75.5,
+     "hommes": 74.1,
+     "femmes": 77.4
+    },
+    "evolution2025Sur2024": {
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+     "citation": "le nombre de retraités percevant une pension de droit direct au 31 décembre a progressé de 2,8 % sur entre 2024 et 2025, alors que le montant de la pension moyenne n'a augmenté que de 0,6 %."
+    },
+    "note": "L'intitulé du tableau des montants dans la fiche RCI est « Montant mensuel moyen de la pension de base » : c'est une coquille de la source, les montants sont ceux du RCI (confirmé par le recueil du CPSTI : « Le montant mensuel moyen de pension servi au titre du RCI est relativement modéré (138 € fin 2025) »)."
+   },
+   "rciRetraitesSelonLeCor": {
+    "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "millions de retraités de droit direct ; %",
+    "champ": "RCI.",
+    "citation": "À fin 2023, le RCI compte un peu plus de 1,1 million de retraités bénéficiant d'une pension de droit direct dont 27 % de femmes. Les effectifs de pensionnés de droit direct sont en constante progression depuis la création du régime en 2013 avec des progressions annuelles comprises entre 4,7 % en 2014 et 2,7 % en 2023.",
+    "retraitesDeDroitDirectMillions": 1.1,
+    "partDesFemmesPourcent": 27,
+    "rapportDemographique": {
+     "citation": "Le rapport démographique corrigé est de 23 cotisants pour un retraité en 2023. En projection, il baisserait pour atteindre 10 cotisants pour un retraité en 2070",
+     "note": "Défini par le COR comme les cotisants de l'ensemble de l'économie rapportés aux retraités de droit direct plus la moitié des retraités de droit dérivé : ce n'est pas un ratio cotisants du RCI sur retraités du RCI.",
+     "valeur2023": 23,
+     "valeur2070": 10
+    }
+   },
+   "rciRetraites2024SelonLaCourDesComptes": {
+    "source": "Cour des comptes, « Certification des comptes du Conseil de la protection sociale des travailleurs indépendants (CPSTI), exercice 2024 », mai 2025, annexes (états financiers résumés)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "retraités ; milliards d'euros",
+    "champ": "Régime complémentaire d'assurance vieillesse obligatoire des travailleurs indépendants.",
+    "citation": "En 2024, il a versé 2,5 Md€ de prestations légales (+5,9 % par rapport à 2023) à un peu plus de 1 514 000 retraités (+2,3 % par rapport à 2023), ainsi que 26,4 M€ de prestations d'action sociale.",
+    "retraites": 1514000,
+    "prestationsLegalesMilliards": 2.5
+   },
+   "ssiBaseFin2020Drees": {
+    "renvoi": "population.polyaffiliationEtDureeAuRegime.effectifsEnEquivalentCarriereComplete",
+    "resume": "1 521 milliers de retraités de droit direct de la SSI base fin 2020 (993 hommes, 528 femmes), soit 570 milliers en équivalent carrière complète."
+   },
+   "pensionTousRegimesDesAnciensArtisansCommercants": {
+    "source": "Insee, « Emploi et revenus des indépendants », Insee Références, édition 2025",
+    "url": "https://www.insee.fr/fr/statistiques/fichier/8376600/ERI2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "euros bruts par mois (pension totale de droit direct, tous régimes) ; effectifs en milliers",
+    "champ": "Retraités de droit direct résidant en France au 31 décembre 2020, classés une seule fois dans le régime où ils ont effectué la plus grande partie de leur carrière ; pension totale de droit direct tous régimes, y compris majoration pour 3 enfants ou plus. Source citée : Drees, EIR 2020. Fiche 1.11, figure 1.",
+    "citation": "Artisans et commerçants 500 1 230 870 1 300 1 720 2,0 ; Femmes 140 820 520 870 1 230 2,4 ; Hommes 360 1 380 1 030 1 440 1 800 1,7 ; Ensemble des retraités 15 650 1 540 920 1 440 2 050 2,2 (colonnes : effectifs au 31/12 en milliers | moyenne | Q1 | médiane | Q3 | Q3/Q1)",
+    "artisansEtCommercants": {
+     "ensemble": {
+      "effectifsMilliers": 500,
+      "moyenne": 1230,
+      "q1": 870,
+      "mediane": 1300,
+      "q3": 1720
+     },
+     "femmes": {
+      "effectifsMilliers": 140,
+      "moyenne": 820,
+      "q1": 520,
+      "mediane": 870,
+      "q3": 1230
+     },
+     "hommes": {
+      "effectifsMilliers": 360,
+      "moyenne": 1380,
+      "q1": 1030,
+      "mediane": 1440,
+      "q3": 1800
+     }
+    },
+    "ensembleDesRetraites": {
+     "effectifsMilliers": 15650,
+     "moyenne": 1540,
+     "q1": 920,
+     "mediane": 1440,
+     "q3": 2050
+    },
+    "note": "Seuls 500 000 retraités ont le régime des artisans et commerçants pour régime principal, contre 1,5 million de pensionnés de la SSI base à la même date : la plupart des pensionnés du régime y ont fait une carrière minoritaire."
+   },
+   "pensionParGenerationRegimePrincipalSsi": {
+    "source": "Drees, « Les retraités et les retraites », édition 2024 (EIR 2020, EACR, annuaire du GIP Union Retraite)",
+    "url": "https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "urlLue": "https://web.archive.org/web/20260622144107id_/https://drees.solidarites-sante.gouv.fr/sites/default/files/2024-10/RR24.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "euros bruts par mois, droit direct tous régimes, selon le régime principal",
+    "champ": "Générations 1936, 1942, 1946, 1950 et 1953 ; retraités dont le régime principal est la SSI ; y compris éventuelle majoration pour trois enfants ou plus. Tableau 1 de la fiche sur les pensions par génération.",
+    "citation": "SSI 1 120 1 230 1 290 1 260 1 220 (colonnes : 1936 | 1942 | 1946 | 1950 | 1953)",
+    "valeurs": {
+     "1936": 1120,
+     "1942": 1230,
+     "1946": 1290,
+     "1950": 1260,
+     "1953": 1220
+    }
+   }
+  },
+  "fluxEtAgesDeDepart": {
+   "rciAttributions2025": {
+    "source": "Cnav, direction statistiques, prospective et recherche, fiche « Régime complémentaire des indépendants au 31 décembre 2025 », sources SNSP-TI et Sinergi",
+    "url": "https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "urlLue": "https://web.archive.org/web/20260508122313/https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "attributions dans l'année ; euros bruts par mois ; années",
+    "champ": "Attributions de retraites de droit direct ou dérivé (y compris VFU) au titre du régime complémentaire au cours de l'année 2025, quel que soit le point de départ de la pension.",
+    "citation": "Nombre d'attributions du régime complémentaire (RCI) 129 171 68 371 60 800 ; Attributions de droits directs du RCI 96 307 65 261 31 046 ; dont nombre de droits directs hors VFU 75 137 53 049 22 088 | 21 % des droits au titre du RCI attribuées au cours de l'année 2025 sont versées sous forme de versement forfaitaire unique (VFU). | Montant mensuel moyen du droit direct attribué hors VFU : 75 137 140 € 162 € 87 € | Âge moyen au départ à la retraite : Ensemble des attributions de droits directs (y c. VFU) 64,6 ans 64,4 ans 64,9 ans (colonnes : Hommes et Femmes | Hommes | Femmes)",
+    "attributionsDeDroitsDirects": {
+     "ensemble": 96307,
+     "hommes": 65261,
+     "femmes": 31046
+    },
+    "dontHorsVfu": {
+     "ensemble": 75137,
+     "hommes": 53049,
+     "femmes": 22088
+    },
+    "partVerseeEnVfuPourcent": 21,
+    "montantMensuelMoyenDuDroitDirectHorsVfu": {
+     "ensemble": 140,
+     "hommes": 162,
+     "femmes": 87
+    },
+    "ageMoyenAuDepartDroitsDirects": {
+     "ensemble": 64.6,
+     "hommes": 64.4,
+     "femmes": 64.9
+    }
+   },
+   "rciAgeDeDepartSelonLeCor": {
+    "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "années (âge conjoncturel de départ)",
+    "champ": "RCI.",
+    "citation": "L'âge moyen de départ à la retraite est passé de 63,2 ans en 2013 à 64,4 ans en 2023, il continuerait à augmenter progressivement pour atteindre 65 ans après 2030. Les femmes partaient à la retraite un an plus tard en moyenne que les hommes en 2013",
+    "valeurs": {
+     "2013": 63.2,
+     "2023": 64.4
+    }
+   },
+   "ageDeLiquidationDesAnciensArtisansCommercants": {
+    "source": "Insee, « Emploi et revenus des indépendants », Insee Références, édition 2025",
+    "url": "https://www.insee.fr/fr/statistiques/fichier/8376600/ERI2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "unite": "années",
+    "champ": "Âge de liquidation dans le régime principal, par génération (Drees, EIR 2020). Fiche 1.11, figure 2 (graphique : seule la valeur de la note de lecture est lisible).",
+    "citation": "Lecture : Les anciens artisans et commerçants nés en 1940 ont liquidé leur retraite dans leur régime principal à 61,8 ans en moyenne. | In fine, l'âge moyen de liquidation des droits est resté plus élevé pour les anciens non‑salariés (62 ans et 6 mois pour la génération 1953) que celui de l'ensemble des retraités (61 ans et 4 mois).",
+    "artisansCommercantsGeneration1940": 61.8,
+    "note": "62 ans et 6 mois vaut pour l'ensemble des anciens non-salariés (agriculteurs et professions libérales compris), pas pour les seuls artisans et commerçants."
+   }
+  },
+  "massesFinancieres": {
+   "rciPrestations2025": {
+    "source": "Cnav, direction statistiques, prospective et recherche, fiche « Régime complémentaire des indépendants au 31 décembre 2025 », sources SNSP-TI et Sinergi",
+    "url": "https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "urlLue": "https://web.archive.org/web/20260508122313/https://www.statistiques-recherche.lassuranceretraite.fr/app/uploads/2026/02/Fiche-stock_Regime-complementaire-_TI_2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "millions d'euros ; évolution 2025/2024",
+    "champ": "Dépenses en prestations légales du RCI, données comptables en euros courants (Sinergi, y compris RCE-BTP). Même tableau dans le recueil du CPSTI, page 39.",
+    "citation": "Total droits directs (y compris VFU, divers) 2 213 3,4% ; dont pensions de droit direct 2 206 3,4% ; Total droits dérivés (y compris VFU, divers) 399 2,1% ; dont pensions de droit dérivé 397 2,1% ; Régime Complémentaire des Indépendants 2 612 3,2%",
+    "droitsDirects": 2213,
+    "dontPensionsDeDroitDirect": 2206,
+    "droitsDerives": 399,
+    "dontPensionsDeDroitDerive": 397,
+    "total": 2612
+   },
+   "rciCompteDeResultat2024": {
+    "source": "Cour des comptes, « Certification des comptes du Conseil de la protection sociale des travailleurs indépendants (CPSTI), exercice 2024 », mai 2025, annexes (états financiers résumés)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "millions d'euros (2024 puis 2023)",
+    "champ": "Comptes combinés du régime complémentaire d'assurance vieillesse des travailleurs indépendants pour 2024, compte de résultat résumé.",
+    "citation": "Cotisations, impôts et produits affectés 3 013,2 2 808,0 7,3 ; Cotisations sociales 2 990,6 2 789,8 7,2 ; Cotisations prises en charge par l'État 13,4 6,4 ; PRODUITS FINANCIERS 141,2 177,6 ; Prestations sociales 2 556,6 2 409,8 6,1 ; Prestations légales 2530,2 2 388,2 5,9 ; Prestations d'action sociale 26,4 21,6 ; TOTAL CHARGES DE GESTION TECHNIQUE 2 710,7 2 532,0 ; RÉSULTAT NET DE L'EXERCICE 730,7 742,6 -1,6",
+    "valeurs": {
+     "2024": {
+      "cotisationsSociales": 2990.6,
+      "cotisationsPrisesEnChargeParLEtat": 13.4,
+      "cotisationsImpotsEtProduitsAffectes": 3013.2,
+      "produitsFinanciers": 141.2,
+      "prestationsLegales": 2530.2,
+      "prestationsDActionSociale": 26.4,
+      "resultatNet": 730.7
+     },
+     "2023": {
+      "cotisationsSociales": 2789.8,
+      "cotisationsPrisesEnChargeParLEtat": 6.4,
+      "cotisationsImpotsEtProduitsAffectes": 2808.0,
+      "produitsFinanciers": 177.6,
+      "prestationsLegales": 2388.2,
+      "prestationsDActionSociale": 21.6,
+      "resultatNet": 742.6
+     }
+    }
+   },
+   "rciResultat2025": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "millions d'euros",
+    "champ": "RCI (y compris RCE-BTP), comptes annuels 2025 du CPSTI. Pages 42-44.",
+    "citation": "Le régime d'Assurance vieillesse complémentaire (RCI) affiche, en 2025, un résultat net de 1 251,2 M€, en augmentation de 520,5 M€ par rapport à l'exercice 2024 (730,7 M€). | Résultat d'exploitation 1 164,7 ; dont gestion technique 763,3 ; dont gestion courante 401,4 ; Résultat financier 97,0 ; Impôts -10,5 ; Résultat net 1 251,2",
+    "resultatNet": 1251.2,
+    "resultatDExploitation": 1164.7,
+    "dontGestionTechnique": 763.3,
+    "resultatFinancier": 97.0,
+    "cotisationsRciEtInvaliditeDecesEnsemble": {
+     "citation": "Les cotisations sociales s'élèvent au total à 3 867,8 M€ (en 2025) contre 3 483,2 M€ en 2024, soit une augmentation de 384,6 M€ (+11 %).",
+     "note": "Total des deux régimes gérés par le CPSTI (RCI et invalidité-décès) ; les cotisations 2025 du seul RCI ne sont pas isolées dans la version synthétique.",
+     "2025": 3867.8,
+     "2024": 3483.2
+    }
+   },
+   "rciEnPartDePibSelonLeCor": {
+    "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "% du PIB ; % des dépenses ou des ressources",
+    "champ": "RCI ; ressources = ensemble des produits hors charges et produits exceptionnels.",
+    "citation": "Les dépenses totales sont principalement constituées des masses de pensions de droit direct (84 % en 2023) et dérivé (15 %). [...] La part des dépenses dans le PIB progresserait régulièrement sur la période, passant de 0,08 % du PIB en 2023 à 0,15 % du PIB en 2070 | La part des ressources s'élève à 0,11 % du PIB en 2023 et se stabiliserait par la suite à ce niveau à partir de 2027. | En 2023, 84,5 % du financement du régime provient des cotisations, 14,9 % des produits de gestion et 0,6 % des ITAF et de l'État. | Le solde technique représente 0,01 % du PIB en 2023.",
+    "depensesPartPib": {
+     "2023": 0.08,
+     "2070": 0.15
+    },
+    "ressourcesPartPib2023": 0.11,
+    "soldeTechniquePartPib2023": 0.01,
+    "structureDesDepenses2023": {
+     "droitDirectPourcent": 84,
+     "droitDerivePourcent": 15
+    },
+    "structureDuFinancement2023": {
+     "cotisationsPourcent": 84.5,
+     "produitsDeGestionPourcent": 14.9,
+     "itafEtEtatPourcent": 0.6
+    }
+   },
+   "cotisationsEncaisseesTousRisques": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "milliards d'euros",
+    "champ": "Cotisations encaissées auprès des artisans, commerçants et professions libérales hors PAMC, tous risques (maladie-maternité, invalidité-décès, famille, vieillesse de base, formation, CSG-CRDS, vieillesse complémentaire). Pas de ventilation par risque dans la version synthétique.",
+    "citation": "28 milliards d'euros de cotisations ont été encaissées en 2025 (hors PAMC), montant en augmentation par rapport à 2024 (27 Md€, soit +3 %).",
+    "valeur2025": 28,
+    "valeur2024": 27
+   }
+  },
+  "reservesDuRci": {
+   "placementsFin2025": {
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "millions d'euros au 31 décembre 2025 ; structure et évolution en %",
+    "champ": "Actifs de placement des régimes complémentaire vieillesse (RCI) et invalidité-décès (RID). Tableau « Structure et évolution des réserves », page 44 ; source citée : Urssaf, 2026.",
+    "citation": "Immobilier 2 364 10,1 % 22,0 % | 30 | 2 395 ; Actions 8 032 34,3 % 7,3 % | 482 | 8 514 ; Obligations / Taux 9 667 41,3 % 13,6 % | 1 026 | 10 693 ; Monétaire 3 365 14,4 % 3,9 % | 399 | 3 763 ; Total 23 428 100,0 % 10,6 % | 1 937 100,0 % 11,9 % | 25 365 100,0 % 10,7 % (colonnes : régime complémentaire vieillesse montant, structure, évolution | invalidité-décès | total) | Décomposition de la variation : RCI 669 3,2 % 1 585 7,5 % 2 254 7,4 % (excédent technique | performance financière | variation d'actif globale)",
+    "rci": {
+     "total": 23428,
+     "immobilier": 2364,
+     "actions": 8032,
+     "obligationsEtTaux": 9667,
+     "monetaire": 3365,
+     "evolutionSurUnAnPourcent": 10.6
+    },
+    "invaliditeDeces": {
+     "total": 1937
+    },
+    "ensemble": {
+     "total": 25365
+    },
+    "variation2025Rci": {
+     "excedentTechnique": 669,
+     "performanceFinanciere": 1585,
+     "performanceFinancierePourcent": 7.5,
+     "variationDActifGlobale": 2254
+    },
+    "rendementHistorique": {
+     "citation": "Les performances financières cumulées depuis la création des régimes sont de 3,4 % par an pour le RCI et 2,9 % pour le RID. [...] Sur les cinq dernières années, la performance s'établit, en moyenne annuelle, à 3,4 % pour le RCI et à 2,2 % pour le RID soit respectivement 0,5 % et -0,7 % nets de l'inflation.",
+     "rciDepuisLaCreationPourcentParAn": 3.4,
+     "rciCinqDernieresAnneesPourcentParAn": 3.4,
+     "rciCinqDernieresAnneesNetDInflationPourcentParAn": 0.5
+    },
+    "note": "Dans la ligne « Décomposition de la variation », la variation d'actif globale du RCI est donnée à 7,4 % dans ce tableau et à 10,6 % dans le tableau de structure : incohérence de la source, non tranchée."
+   },
+   "bilan2024": {
+    "source": "Cour des comptes, « Certification des comptes du Conseil de la protection sociale des travailleurs indépendants (CPSTI), exercice 2024 », mai 2025, annexes (états financiers résumés)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "millions d'euros (2024 puis 2023)",
+    "champ": "Comptes combinés du régime complémentaire d'assurance vieillesse des travailleurs indépendants pour 2024, bilan résumé (valeurs comptables, non valeurs de marché).",
+    "citation": "Immobilisations financières 13 465,8 49,0 13 416,9 13 153,8 2,0 ; TRÉSORERIE ACTIVE 2 874,4 2 874,4 2 249,8 27,8 ; TOTAL ACTIF 20 073,6 2 255,4 17 818,2 16 858,1 5,7 ; Réserves 15 959,0 15 216,3 4,9 ; Résultat de l'exercice 730,7 742,6 -1,6 ; TOTAL DES FONDS PROPRES 16 788 16 057,3 4,6",
+    "valeurs": {
+     "2024": {
+      "reserves": 15959.0,
+      "fondsPropres": 16788,
+      "immobilisationsFinancieresNettes": 13416.9,
+      "tresorerieActive": 2874.4,
+      "totalActifNet": 17818.2
+     },
+     "2023": {
+      "reserves": 15216.3,
+      "fondsPropres": 16057.3,
+      "immobilisationsFinancieresNettes": 13153.8,
+      "tresorerieActive": 2249.8,
+      "totalActifNet": 16858.1
+     }
+    }
+   },
+   "enPartDePibSelonLeCor": {
+    "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "% du PIB ; % des prestations",
+    "champ": "RCI.",
+    "citation": "La réserve financière du RCI s'élève à 0,7 % du PIB en 2023 et représente 816 % des prestations servies. Elle continuerait à progresser jusqu'en 2040 puis se réduirait pour s'éteindre au-delà de 2070",
+    "partPibPourcent": 0.7,
+    "enPourcentDesPrestations": 816
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  {
+   "grandeur": "Nombre de cotisants",
+   "explication": "Urssaf : 1 550 106 comptes d'artisans et 1 465 323 comptes de commerçants fin 2025, dont 1 055 231 et 897 648 auto-entrepreneurs (775 938 et 512 717 économiquement actifs) ; COR : 1,7 million de personnes acquérant au moins un point au RCI en 2023 ; Urssaf Stat'ur 416 : 1 067 milliers d'artisans-commerçants classiques déclarant un revenu 2024. Trois champs différents (comptes, cotisants effectifs, déclarants classiques), pas une contradiction."
+  },
+  {
+   "grandeur": "Revenu moyen des artisans et commerçants classiques au titre de 2024",
+   "explication": "CPSTI : 29 110 euros (artisans) et 32 410 euros (commerçants), champ des actifs au 31 décembre 2025, données observées en mai 2026 ; Stat'ur 416 : 31 114 euros pour l'ensemble artisans-commerçants, données arrêtées à fin décembre 2025. Le Stat'ur précise que les extractions tardives font « légèrement diminuer le revenu moyen »."
+  },
+  {
+   "grandeur": "Revenu moyen de l'ensemble des classiques",
+   "explication": "46 897 euros (Stat'ur 416, y compris PAMC) contre 40 200 euros (CPSTI, hors PAMC) : écart de champ. Insee : 4 030 euros par mois en 2022 pour les non-salariés classiques (champ plus large : gérants, santé)."
+  },
+  {
+   "grandeur": "Retraités de droit direct de la base",
+   "explication": "2 332 853 fin 2025 (Cnav, retraités ayant un droit lié à une carrière d'indépendant, après Lura) contre 1 521 milliers fin 2020 (Drees, SSI base, avant intégration). Le champ de la Cnav n'est pas documenté plus finement dans la fiche ; la hausse ne peut pas venir des seuls nouveaux retraités et tient vraisemblablement à une différence de définition, non élucidée."
+  },
+  {
+   "grandeur": "Retraités de droit direct du RCI",
+   "explication": "« un peu plus de 1,1 million » fin 2023 (COR) et 1 222 864 fin 2025 (Cnav) ; progressions annuelles lues : 2,7 % en 2023 (COR), 2,8 % en 2025 (CPSTI). Pas de contradiction apparente."
+  },
+  {
+   "grandeur": "Réserves du RCI",
+   "explication": "23 428 M€ d'actifs de placement fin 2025 (CPSTI, vraisemblablement en valeur de marché) ; 15 959 M€ de réserves comptables et 16 788 M€ de fonds propres fin 2024 (Cour des comptes) ; 816 % des prestations en 2023 (COR). Conventions différentes."
+  }
+ ],
+ "manquants": [
+  {
+   "quoi": "Masse annuelle des prestations de retraite de base versées au titre des périodes d'indépendant",
+   "essais": [
+    "recueil du CPSTI édition 2026 (version synthétique)",
+    "fiche Cnav régime de base TI 2025",
+    "certification des comptes du CPSTI 2024"
+   ],
+   "raison": "Depuis 2020 ces prestations sont comptabilisées dans la branche vieillesse du régime général (« Ces activités ne sont pas isolées dans les comptes des branches », CPSTI) ; avec la Lura, la pension est unique et la part « indépendant » n'est pas publiée. Pistes non ouvertes : rapports de la Commission des comptes de la sécurité sociale d'avant 2018 (RSI vieillesse de base), annexes du PLFSS."
+  },
+  {
+   "quoi": "Cotisations du RCI en 2025 (seul RCI) et cotisations vieillesse de base des indépendants",
+   "essais": [
+    "recueil du CPSTI édition 2026, version synthétique (seul le total RCI + invalidité-décès, 3 867,8 M€, y figure)",
+    "version intégrale du recueil : https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20int%c3%a9grale.pdf (HTTP 404, adresse devinée)"
+   ],
+   "raison": "Valeur 2024 du seul RCI disponible (2 990,6 M€, Cour des comptes). La certification des comptes 2025 du CPSTI n'a pas été cherchée."
+  },
+  {
+   "quoi": "Pension moyenne de base tirée des seules périodes d'indépendant, et distribution des pensions de base et du RCI",
+   "essais": [
+    "fiche Cnav régime de base TI 2025",
+    "recueil du CPSTI édition 2026"
+   ],
+   "raison": "Les fiches donnent des moyennes par sexe, sans distribution, et la pension de base inclut la part salariée (Lura)."
+  },
+  {
+   "quoi": "Part des polypensionnés parmi les retraités des indépendants et durée moyenne validée au régime en trimestres",
+   "essais": [
+    "Drees, panorama édition 2024 (lu) : seuls la polyaffiliation de la génération 1955 (11,8 %) et le coefficient de proratisation de la SSI base (0,32) sont disponibles",
+    "Drees, panorama éditions 2025 et 2026 : https://www.drees.solidarites-sante.gouv.fr/sites/default/files/2025-07/Les%20retrait%C3%A9s%20et%20les%20retraites%20-%20%C3%89dition%202025.pdf et https://drees.solidarites-sante.gouv.fr/sites/default/files/2026-10/RR2026%20-%20Fiche%2005%20-%20Le%20niveau%20des%20pensions.pdf (page de contrôle anti-robot à la place du PDF, y compris sur les copies de web.archive.org)",
+    "fiche Cnav « Attributions de retraites au cours de l'année 2025 » (lue) : durées d'assurance pour l'ensemble du régime général seulement (127 trimestres au régime général, 156 tous régimes), sans distinction des indépendants"
+   ],
+   "raison": "Non publié dans les documents lus. Les classeurs Excel associés aux fiches de la Drees et l'EIR n'ont pas été ouverts."
+  },
+  {
+   "quoi": "Distribution des revenus des seuls artisans et commerçants (déciles), et revenus par âge des seuls artisans et commerçants",
+   "essais": [
+    "Stat'ur n° 416 (distribution de l'ensemble des classiques seulement)",
+    "recueil du CPSTI édition 2026 : courbes de répartition cumulée par groupe professionnel, en graphique sans valeurs",
+    "Insee, Emploi et revenus des indépendants 2025 : dispersion par secteur d'activité, pas par statut"
+   ],
+   "raison": "Les valeurs par groupe professionnel ne sont publiées qu'en graphique ; les secteurs « Construction » et « Commerce et artisanat commercial » de l'Insee en donnent une approximation."
+  },
+  {
+   "quoi": "Tranches de revenu au-delà de 150 000 euros du graphique 2 du Stat'ur n° 416",
+   "essais": [
+    "texte extrait par pdftotext -layout"
+   ],
+   "raison": "Étiquettes et valeurs désalignées dans le texte extrait ; non reprises."
+  },
+  {
+   "quoi": "Séries historiques (2010-2024) des effectifs, pensions moyennes et masses du RSI puis de la SSI",
+   "essais": [
+    "site statistiques-recherche.lassuranceretraite.fr (HTTP 503, « Le site est momentanément indisponible », le 2026-11-22) ; seules deux fiches 2025 ont été lues via web.archive.org",
+    "« Suivi trimestriel du flux et du stock du RCI à fin décembre 2025 » et « La protection sociale des indépendants en chiffres » 2022 et 2023 : absents de web.archive.org (HTTP 404)"
+   ],
+   "raison": "Site de la Cnav en maintenance ; à reprendre pour le backtest (recueils annuels « L'essentiel du RSI en chiffres » et éditions antérieures du recueil du CPSTI)."
+  },
+  {
+   "quoi": "Stat'ur n° 423 (travailleurs indépendants fin 2025) et n° 409 (fin 2024)",
+   "essais": [
+    "PDF téléchargés (https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/Stat_Ur_423.pdf) mais non dépouillés"
+   ],
+   "raison": "Les effectifs de fin 2025 ont été pris dans le recueil du CPSTI, qui reprend les mêmes données de l'Urssaf."
+  }
+ ]
+}

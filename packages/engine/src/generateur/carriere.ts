@@ -1,10 +1,20 @@
 import { type Baremes, valeur } from "../baremes/types.ts";
 import { quantileNormal, type Rng } from "../rng.ts";
-import type { AnneeCarriere, Carriere, Etat, Sexe } from "../types.ts";
+import {
+	type AnneeCarriere,
+	type Carriere,
+	type Etat,
+	profilDepuis,
+	type Sexe,
+} from "../types.ts";
 import alternanceData from "./alternance.data.json" with { type: "json" };
 import ecartSalaire from "./ecartSalaire.data.json" with { type: "json" };
 import emploiSeniors from "./emploiSeniors.data.json" with { type: "json" };
 import type { Hypotheses } from "./hypotheses.ts";
+import {
+	HYPOTHESES_INDEPENDANTS,
+	revenuRelatif,
+} from "./hypothesesIndependants.ts";
 import salaireMoyen from "./salaireMoyen.data.json" with { type: "json" };
 import tempsPartielData from "./tempsPartiel.data.json" with { type: "json" };
 
@@ -180,6 +190,21 @@ export function generateCarriere(
 		(ailleursDabord
 			? age < ageEntree + anneesAilleurs
 			: age >= 62 - anneesAilleurs);
+	// Artisan ou commerçant : une partie de ces années, celles qui touchent à la période salariée.
+	const hi = h.independants ?? HYPOTHESES_INDEPENDANTS;
+	// Sans barème des indépendants, ces années restent celles d'un régime non simulé.
+	const independant =
+		b.independants !== undefined &&
+		ailleurs &&
+		derive(71003.447) * h.autreRegime.part[sexe] < hi.part[sexe];
+	const metier = derive(93179.611) < hi.partArtisans ? "artisan" : "commercant";
+	const anneesIndependant = independant
+		? Math.round(hi.dureeRelative * anneesAilleurs)
+		: 0;
+	const enIndependant = (age: number) =>
+		ailleursDabord
+			? age >= ageEntree + anneesAilleurs - anneesIndependant
+			: age < 62 - anneesAilleurs + anneesIndependant;
 
 	const annees: AnneeCarriere[] = [];
 	let periode: Periode | null = null;
@@ -208,6 +233,7 @@ export function generateCarriere(
 			commence = true;
 			annees.push({
 				annee,
+				affiliation: "prive",
 				etat: "emploi",
 				salaireBrut:
 					interpole(
@@ -237,6 +263,7 @@ export function generateCarriere(
 		if (!present(age)) {
 			annees.push({
 				annee,
+				affiliation: "prive",
 				etat: "inactivite",
 				salaireBrut: 0,
 				moisEmploi: 0,
@@ -386,20 +413,27 @@ export function generateCarriere(
 					: mois.maladie >= mois.inactivite
 						? "maladieMaternite"
 						: "inactivite";
+		const autreRegime = dansUnAutreRegime(age) && mois.emploi > 0;
 		const ligne: AnneeCarriere = {
 			annee,
+			affiliation: !autreRegime
+				? "prive"
+				: enIndependant(age)
+					? metier
+					: "autre",
 			etat,
 			salaireBrut,
 			moisEmploi: mois.emploi,
 			moisChomage: mois.chomage,
 			moisMaladie: mois.maladie,
 		};
-		if (dansUnAutreRegime(age) && mois.emploi > 0) {
-			ligne.salaireBrut = 0;
-			ligne.autreRegime = true;
-		}
+		// Hors du salariat : pas de salaire porté au compte, ou le revenu d'un indépendant.
+		if (autreRegime)
+			ligne.salaireBrut = enIndependant(age)
+				? salaireBrut * revenuRelatif(hi, annee)
+				: 0;
 		if (avpf) ligne.avpf = true;
-		if (quotite < 1 && !ligne.autreRegime) ligne.quotite = quotite;
+		if (quotite < 1 && !autreRegime) ligne.quotite = quotite;
 		annees.push(ligne);
 	}
 
@@ -411,7 +445,7 @@ export function generateCarriere(
 			rang > quantileNormal(1 - interpole(h.partCadres[sexe], anneeNaissance)),
 		annees,
 		// Dérivé du rang pour ne consommer aucun tirage : la population reste la même qu'avant.
-		tirageDepart: (Math.abs(rang) * 7919.123) % 1,
+		profil: profilDepuis((Math.abs(rang) * 7919.123) % 1),
 	};
 }
 
@@ -429,6 +463,7 @@ export function carriereType(
 		const annee = anneeNaissance + age;
 		annees.push({
 			annee,
+			affiliation: "prive",
 			etat: "emploi",
 			salaireBrut: partDuPass * valeur(b.cnav.pass, annee),
 		});

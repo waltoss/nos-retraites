@@ -2,9 +2,12 @@
 import {
 	BAREMES_FRANCE,
 	buildComptes,
+	CHAMP_PRIVE,
 	carriereType,
 	computePension,
+	detail,
 	generatePopulation,
+	pensionDuChamp,
 	runSimulation,
 	SCENARIO_REFERENCE,
 } from "../packages/engine/src/index.ts";
@@ -44,7 +47,10 @@ for (const sexe of ["F", "H"] as const) {
 	population.forEach((i, k) => {
 		if (i.carriere.sexe !== sexe || i.carriere.anneeNaissance > 1962) return;
 		pensions.push(
-			computePension(i.carriere, b, { compte: comptes[k] }).mensuelleBrute,
+			pensionDuChamp(
+				CHAMP_PRIVE,
+				computePension(i.carriere, b, { compte: comptes[k] }),
+			),
 		);
 	});
 	pensions.sort((x, y) => x - y);
@@ -61,6 +67,6 @@ for (const part of [0.5, 1, 2]) {
 	const p = computePension(carriereType(1962, 20, 68, part, b), b);
 	const dernier = part * (b.cnav.pass[2024] ?? 0);
 	console.log(
-		`  ${part} PASS : départ ${(p.liquidation.age / 4).toFixed(2)} ans, CNAV ${f(p.cnav.pensionAnnuelle / 12)} + complémentaire ${f(p.agircArrco.pensionAnnuelle / 12)} = ${f(p.mensuelleBrute)} €/mois, taux de remplacement brut ${(((p.mensuelleBrute * 12) / dernier) * 100).toFixed(0)} %`,
+		`  ${part} PASS : départ ${(p.liquidation.age / 4).toFixed(2)} ans, CNAV ${f(detail(p, "cnav").pensionAnnuelle / 12)} + complémentaire ${f(detail(p, "agircArrco").pensionAnnuelle / 12)} = ${f(p.mensuelleBrute)} €/mois, taux de remplacement brut ${(((p.mensuelleBrute * 12) / dernier) * 100).toFixed(0)} %`,
 	);
 }

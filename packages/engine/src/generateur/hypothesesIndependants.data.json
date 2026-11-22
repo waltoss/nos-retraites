@@ -1,0 +1,35 @@
+{
+	"note": "Qui passe une partie de sa vie active comme artisan ou commerçant, combien de temps et pour quel revenu. `part` et `dureeRelative` sont réglées à la main sur scripts/backtest-independants.ts ; le reste est écrit par scripts/build-independants.ts.",
+	"part": {
+		"F": 0.2,
+		"H": 0.2175
+	},
+	"dureeRelative": 0.45,
+	"partArtisans": 0.5141,
+	"revenuRelatif": {
+		"avant": 2009,
+		"classiques": 0.7487,
+		"depuis": 2024,
+		"avecAutoEntrepreneurs": 0.4203
+	},
+	"sources": {
+		"revenuRelatif": {
+			"regle": "revenu annuel moyen des artisans et commerçants hors auto-entrepreneurs en 2024 (31114 €), rapporté à la rémunération moyenne par tête du COR la même année (41555.87 €)",
+			"source": "Urssaf, Stat'ur n° 416, avril 2026, « En 2024, le revenu moyen des travailleurs indépendants classiques rebondit »",
+			"url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/Stat_Ur_416.pdf",
+			"date": "2026-11-22"
+		},
+		"revenuRelatifAvecAutoEntrepreneurs": {
+			"regle": "le même rapport en 2024, auto-entrepreneurs compris : 56 % des déclarants, au revenu moyen de 6743 € (artisans et commerçants, 2025) ; entre 2009, création du statut, et 2024, le rapport passe de l'un à l'autre en ligne droite",
+			"source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+			"url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+			"date": "2026-11-22"
+		},
+		"partArtisans": {
+			"regle": "comptes de cotisants artisans / (artisans + commerçants), auto-entrepreneurs compris, fin 2025",
+			"source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique (observatoire statistique des travailleurs indépendants ; données Urssaf, Cnav, comptes du CPSTI)",
+			"url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+			"date": "2026-11-22"
+		}
+	}
+}

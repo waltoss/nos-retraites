@@ -14,12 +14,15 @@ import validation from "../data/references/validation.json" with {
 import {
 	BAREMES_FRANCE,
 	buildCompte,
+	CHAMP_PRIVE,
 	computePension,
 	createRng,
+	detail,
 	generateCarriere,
 	graineIndividu,
 	HYPOTHESES,
 	type Hypotheses,
+	pensionDuChamp,
 } from "../packages/engine/src/index.ts";
 
 const b = BAREMES_FRANCE;
@@ -84,15 +87,18 @@ export function mesurer(h: Hypotheses, generation = GENERATION): Mesure[] {
 		);
 		const p = computePension(carriere, b, { compte: buildCompte(carriere, b) });
 		// Champ Drees : retraités de droit direct. Sans aucun droit, on n'est pas dans le champ.
-		if (p.mensuelleBrute <= 0) continue;
+		if (pensionDuChamp(CHAMP_PRIVE, p) <= 0) continue;
 		const g = groupes[carriere.sexe === "F" ? "femmes" : "hommes"];
-		g.pensions.push(p.mensuelleBrute);
+		g.pensions.push(pensionDuChamp(CHAMP_PRIVE, p));
 		// La cible de la Drees porte sur tous les régimes.
 		g.cotisee.push(
-			(p.cnav.trimestresCotises + p.cnav.trimestresAutresRegimes) / 4,
+			(detail(p, "cnav").trimestresCotises +
+				detail(p, "cnav").trimestresAutresRegimes) /
+				4,
 		);
-		g.validee.push(p.cnav.trimestresValides / 4);
-		if (p.cnav.trimestresValides >= p.cnav.dureeRequise) g.complete++;
+		g.validee.push(detail(p, "cnav").trimestresValides / 4);
+		if (detail(p, "cnav").trimestresValides >= detail(p, "cnav").dureeRequise)
+			g.complete++;
 		g.age += p.liquidation.age / 4;
 	}
 	const mesures: Mesure[] = [];
@@ -202,7 +208,14 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 			b,
 		);
 		const a = carriere.annees.find((x) => x.annee === ANNEE_SALAIRES);
-		if (!a || a.salaireBrut <= 0 || !a.moisEmploi || a.alternance) continue;
+		if (
+			!a ||
+			a.affiliation !== "prive" ||
+			a.salaireBrut <= 0 ||
+			!a.moisEmploi ||
+			a.alternance
+		)
+			continue;
 		groupes[carriere.sexe === "F" ? "femmes" : "hommes"].push(
 			(a.salaireBrut * 12) / a.moisEmploi / (a.quotite ?? 1) / smic,
 		);

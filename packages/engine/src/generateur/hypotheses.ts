@@ -1,4 +1,5 @@
 import donnees from "./hypotheses.data.json" with { type: "json" };
+import type { HypothesesIndependants } from "./hypothesesIndependants.ts";
 
 /**
  * Hypothèses du générateur de carrières.
@@ -9,6 +10,8 @@ import donnees from "./hypotheses.data.json" with { type: "json" };
  * est posé à la main.
  */
 export interface Hypotheses {
+	/** Artisans et commerçants ; absent, les hypothèses de `hypothesesIndependants.data.json`. */
+	independants?: HypothesesIndependants;
 	/** Part de femmes dans une génération. */
 	partFemmes: number;
 	/** Âge d'entrée dans la vie active : moyenne, écart-type, effet du rang de salaire (années par écart-type). */

@@ -22,6 +22,7 @@ import {
 	BAREMES_FRANCE as B,
 	buildComptes,
 	computePensions,
+	detail,
 	GENERATIONS_PONDEREES,
 	generatePopulation,
 	type Pension,
@@ -97,7 +98,12 @@ population.forEach((i, k) => {
 	const g = compte[c.sexe === "F" ? "femmes" : "hommes"];
 	plus(g.n, age);
 	if (!Number.isNaN(r.pensionParIndividu[k] as number)) plus(g.r, age);
-	else if (c.annees.some((a) => a.annee === ANNEE && a.salaireBrut > 0))
+	else if (
+		c.annees.some(
+			(a) =>
+				a.annee === ANNEE && a.affiliation === "prive" && a.salaireBrut > 0,
+		)
+	)
 		plus(g.c, age);
 });
 /** Taux lissé sur cinq âges. */
@@ -330,7 +336,7 @@ const recoupement = [
 	{
 		nom: "Pensions complémentaires versées",
 		unite: "milliards",
-		modele: masse((p) => p.agircArrco.pensionAnnuelle) / 1e9,
+		modele: masse((p) => detail(p, "agircArrco").pensionAnnuelle) / 1e9,
 		cible:
 			(aa.effectifs * aa.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
 			1e9,
@@ -340,7 +346,7 @@ const recoupement = [
 	{
 		nom: "Pensions de base versées",
 		unite: "milliards",
-		modele: masse((p) => p.cnav.pensionAnnuelle) / 1e9,
+		modele: masse((p) => detail(p, "cnav").pensionAnnuelle) / 1e9,
 		cible:
 			(rg.effectifs * rg.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
 			1e9,

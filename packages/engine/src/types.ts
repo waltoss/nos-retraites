@@ -9,9 +9,45 @@ export type Etat =
 	| "inactivite"
 	| "retraite";
 
+/**
+ * Affiliation : le statut sous lequel une année est travaillée, qui ouvre des droits dans un ou
+ * plusieurs régimes (`prive` : régime général et Agirc-Arrco). `autre` : un régime que le modèle
+ * ne simule pas, dont l'année ne compte que pour la durée tous régimes.
+ */
+export type AffiliationId =
+	| "prive"
+	| "sre"
+	| "cnracl"
+	| "militaire"
+	| "artisan"
+	| "commercant"
+	| "autre"
+	| (string & {});
+
+/** Les deux métiers d'indépendant que le modèle simule : même régime, histoires différentes. */
+export type MetierIndependant = "artisan" | "commercant";
+
+/** Vrai pour une année d'artisan ou de commerçant. */
+export function estIndependant(a: { affiliation: AffiliationId }): boolean {
+	return a.affiliation === "artisan" || a.affiliation === "commercant";
+}
+
+/** Régime : la caisse qui verse une pension et à laquelle une politique peut s'adresser. */
+export type RegimeId =
+	| "cnav"
+	| "agircArrco"
+	| "sre"
+	| "cnracl"
+	| "militaire"
+	| "ssi"
+	| "rci"
+	| (string & {});
+
 /** Une année de carrière. L'individu est supposé né un 1er janvier : l'année civile et l'âge coïncident. */
-export interface AnneeCarriere {
+export type AnneeCarriere = {
 	annee: number;
+	/** Affiliation de l'année : elle vaut aussi pour les mois hors emploi, validés par le même régime. */
+	affiliation: AffiliationId;
 	/** État où l'individu a passé le plus de mois dans l'année. */
 	etat: Etat;
 	/** Salaire brut perçu dans l'année, en euros courants. */
@@ -26,22 +62,40 @@ export interface AnneeCarriere {
 	/** Quotité de travail quand elle est inférieure à un temps plein. */
 	quotite?: number;
 	/**
-	 * Année travaillée dans un autre régime (fonction publique, indépendants, agriculture) :
-	 * elle compte pour la durée tous régimes, sans salaire porté au compte ni points.
-	 */
-	autreRegime?: boolean;
-	/**
-	 * Primes de l'année, comprises dans le salaire brut. Leur présence marque une année de fonctionnaire :
-	 * le reste du salaire est le traitement, seule base de la pension de la fonction publique.
+	 * Année de fonctionnaire : primes de l'année, comprises dans le salaire brut. Le reste du salaire
+	 * est le traitement, seule base de la pension de la fonction publique.
 	 */
 	primes?: number;
 	/** Année d'apprentissage ou d'alternance, avant l'entrée dans la vie active : un petit salaire, des droits entiers. */
 	alternance?: boolean;
 	/** Année validée au titre de l'AVPF : 4 trimestres et un salaire au SMIC portés au compte. */
 	avpf?: boolean;
+};
+
+/**
+ * Profil : les penchants d'un individu, tirés une fois entre 0 et 1 et identiques dans tous les
+ * scénarios. Ce ne sont pas des comportements : une décision compare un penchant à un seuil que
+ * les hypothèses et les politiques déplacent (voir `decisions.ts`).
+ */
+export type Profil = {
+	/** Santé : sous la part des inaptes, taux plein dès l'âge légal faute d'emploi et de durée. */
+	sante: number;
+	/** Attachement au travail : bas, départ avec une décote ; haut, poursuite après le taux plein. */
+	attachementTravail: number;
+	/** Ampleur de ce choix : trimestres de décote acceptés, ou durée de la poursuite d'activité. */
+	ampleur: number;
+};
+
+/** Profil de départ tiré d'un seul nombre entre 0 et 1 : trois penchants indépendants. */
+export function profilDepuis(u: number): Profil {
+	return {
+		sante: u % 1,
+		attachementTravail: (u * 7919) % 1,
+		ampleur: (u * 104729) % 1,
+	};
 }
 
-export interface Carriere {
+export type Carriere = {
 	anneeNaissance: number;
 	sexe: Sexe;
 	/** Années de naissance des enfants. */
@@ -49,19 +103,19 @@ export interface Carriere {
 	cadre: boolean;
 	/** Années successives, de l'entrée dans la vie active jusqu'à la fin de l'horizon simulé. */
 	annees: AnneeCarriere[];
+	/** Penchants de l'individu. Absent, il part dès le taux plein. */
+	profil?: Profil;
 	/**
-	 * Tirage entre 0 et 1 propre à l'individu, qui fixe son comportement de départ
-	 * (inaptitude, départ avec décote, poursuite d'activité). Absent, il part dès le taux plein.
+	 * Ce qu'il faut savoir d'un fonctionnaire pour calculer sa pension. Le régime est celui de ses
+	 * années de fonctionnaire (`affiliation`) ; il est répété ici pour classer la carrière entière.
 	 */
-	tirageDepart?: number;
-	/** Présent, la carrière relève de la fonction publique : les années sans primes sont celles d'un autre régime. */
 	fonctionPublique?: StatutFonctionnaire;
-}
+};
 
 export type RegimeFonctionPublique = "sre" | "cnracl" | "militaire";
 export type CategorieFonctionnaire = "sedentaire" | "actif" | "superActif";
 
-export interface StatutFonctionnaire {
+export type StatutFonctionnaire = {
 	/** SRE pour les civils de l'État, CNRACL pour les collectivités et les hôpitaux, militaire pour les armées et la gendarmerie. */
 	regime: RegimeFonctionPublique;
 	categorie: CategorieFonctionnaire;
@@ -74,24 +128,24 @@ export interface StatutFonctionnaire {
 	ageRadiation?: number;
 	/** Militaire : trimestres de bonification pour campagnes et services aériens ou sous-marins. */
 	bonifications?: number;
-}
+};
 
-export interface Individu {
+export type Individu = {
 	id: number;
 	poids: number;
 	carriere: Carriere;
-}
+};
 
 /** Âge exprimé en trimestres entiers (4 × années + trimestres). */
 export type AgeTrimestres = number;
 
-export interface Liquidation {
+export type Liquidation = {
 	age: AgeTrimestres;
 	/** Année civile du départ. */
 	annee: number;
-}
+};
 
-export interface DetailCnav {
+export type DetailCnav = {
 	salaireAnnuelMoyen: number;
 	trimestresValides: number;
 	trimestresCotises: number;
@@ -109,17 +163,17 @@ export interface DetailCnav {
 	motif?: "carriereLongue" | "inaptitude";
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
-}
+};
 
-export interface DetailAgircArrco {
+export type DetailAgircArrco = {
 	points: number;
 	coefficientAnticipation: number;
 	majorationEnfants: number;
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
-}
+};
 
-export interface DetailFonctionPublique {
+export type DetailFonctionPublique = {
 	/** Traitement annuel de référence, en euros de l'année de référence : celui des six derniers mois, ou la moyenne des meilleures années d'un scénario. */
 	traitementDeReference: number;
 	/** Durée de services, en trimestres. */
@@ -140,16 +194,81 @@ export interface DetailFonctionPublique {
 	rafp: number;
 	/** Pension annuelle brute du régime, hors retraite additionnelle, en euros de l'année de référence. */
 	pensionAnnuelle: number;
-}
+};
 
-export interface Pension {
-	liquidation: Liquidation;
+export type DetailRci = {
+	points: number;
+	/** Part de la pension servie quand la retraite de base n'est pas au taux plein. */
+	coefficientAbattement: number;
+	/** Vrai quand trop peu de points donnent un capital versé une fois au lieu d'une pension. */
+	versementUnique: boolean;
+	/** Pension annuelle brute, en euros de l'année de référence. */
+	pensionAnnuelle: number;
+};
+
+/** Ce que tout régime dit de la pension qu'il verse. */
+export type DetailRegime = {
+	/** Pension annuelle brute versée par le régime, en euros de l'année de référence. */
+	pensionAnnuelle: number;
+};
+
+/** Le détail propre à chaque régime connu ; un régime ajouté au modèle donne au moins un `DetailRegime`. */
+export type DetailsConnus = {
 	cnav: DetailCnav;
 	agircArrco: DetailAgircArrco;
-	/** Présent pour une carrière de fonctionnaire ; les deux autres détails sont alors vides. */
-	fonctionPublique?: DetailFonctionPublique;
+	sre: DetailFonctionPublique;
+	cnracl: DetailFonctionPublique;
+	militaire: DetailFonctionPublique;
+	/** Retraite de base des indépendants, calculée comme celle du régime général. */
+	ssi: DetailCnav;
+	rci: DetailRci;
+};
+
+export type DetailsParRegime = Partial<DetailsConnus> &
+	Record<string, DetailRegime | undefined>;
+
+/**
+ * Durée et taux tels que les voit l'affiliation principale, celle qui décide du départ :
+ * ce qui se compare d'un régime à l'autre.
+ */
+export type Duree = {
+	/** Durée d'assurance tous régimes, en trimestres. */
+	trimestresValides: number;
+	dureeRequise: number;
+	trimestresDecote: number;
+	trimestresSurcote: number;
+	/** Vrai quand un minimum de pension a relevé la pension de base. */
+	minimumApplique: boolean;
+	/** Motif du départ quand ce n'est pas le cas général. */
+	motif?: "carriereLongue" | "inaptitude" | "invalidite";
+};
+
+export type Pension = {
+	liquidation: Liquidation;
+	/** Affiliation qui a décidé du départ : celle où l'individu a le plus travaillé. */
+	affiliation: AffiliationId;
+	duree: Duree;
+	/** Une pension par régime où l'individu a acquis des droits. */
+	parRegime: DetailsParRegime;
 	/** Pension mensuelle brute totale, en euros de l'année de référence. */
 	mensuelleBrute: number;
+};
+
+/** Détail d'un régime dans une pension ; une erreur si l'individu n'y a acquis aucun droit. */
+export function detail<K extends keyof DetailsConnus>(
+	p: Pension,
+	regime: K,
+): DetailsConnus[K] {
+	const d = p.parRegime[regime];
+	if (!d) throw new Error(`Pas de pension du régime ${regime}`);
+	return d as DetailsConnus[K];
+}
+
+/** Détail de la fonction publique, quel que soit le régime (État, collectivités et hôpitaux, militaires). */
+export function detailFonctionPublique(
+	p: Pension,
+): DetailFonctionPublique | undefined {
+	return p.parRegime.sre ?? p.parRegime.cnracl ?? p.parRegime.militaire;
 }
 
 /** Mois de l'année passés dans chaque état. */

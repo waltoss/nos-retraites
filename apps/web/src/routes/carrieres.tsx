@@ -1,6 +1,9 @@
 import {
 	BAREMES_FRANCE,
 	type Carriere,
+	detail,
+	detailFonctionPublique,
+	estIndependant,
 	moisParEtat,
 	type Pension,
 } from "@nos-retraites/engine";
@@ -321,16 +324,20 @@ const duree = (mois: number) =>
 	mois >= 12 ? pluriel(Math.round(mois / 12), "an") : `${mois} mois`;
 
 function recit(c: Carriere, ageDepart: number): string {
+	const regime = c.fonctionPublique?.regime;
 	if (c.fonctionPublique?.regime === "militaire") {
-		const entree = c.annees.find((a) => a.primes !== undefined);
+		const entree = c.annees.find((a) => a.affiliation === regime);
 		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;
 		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Engagée" : "Engagé"} à ${ageEntree} ans, quitte l'armée à ${c.fonctionPublique.ageRadiation} ans avec une pension versée tout de suite. La suite de sa vie active, dans le civil, n'est pas simulée.`;
 	}
 	if (c.fonctionPublique) {
-		const entree = c.annees.find((a) => a.primes !== undefined);
+		const entree = c.annees.find((a) => a.affiliation === regime);
 		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;
 		const avantEntree = c.annees.filter(
-			(a) => a.autreRegime && a.annee < (entree?.annee ?? 0),
+			(a) =>
+				a.affiliation === "autre" &&
+				a.etat === "emploi" &&
+				a.annee < (entree?.annee ?? 0),
 		).length;
 		const categorie =
 			c.fonctionPublique.categorie === "sedentaire" || ageEntree > 40
@@ -350,7 +357,11 @@ function recit(c: Carriere, ageDepart: number): string {
 		mois.inactivite += 12 - m.emploi - m.chomage - m.maladie;
 	}
 	const debut = (avant[0]?.annee ?? c.anneeNaissance) - c.anneeNaissance;
-	const morceaux = [`${duree(mois.emploi)} en emploi`];
+	const metier = avant.find(estIndependant)?.affiliation;
+	const anneesIndependant = avant.filter(estIndependant).length;
+	const morceaux = [
+		`${duree(mois.emploi)} en emploi${metier ? `, dont ${pluriel(anneesIndependant, "an")} comme ${metier === "artisan" ? "artisan" : "commerçant"}` : ""}`,
+	];
 	if (mois.chomage) morceaux.push(`${duree(mois.chomage)} au chômage`);
 	if (mois.maladie)
 		morceaux.push(`${duree(mois.maladie)} en maladie ou maternité`);
@@ -365,44 +376,51 @@ interface Ligne {
 	fort?: boolean;
 }
 
-const LIGNES: { titre: string; lignes: Ligne[] }[] = [
+interface Bloc {
+	titre: string;
+	lignes: Ligne[];
+	/** Absent, le bloc s'affiche toujours. */
+	si?: (p: Pension) => boolean;
+}
+
+const LIGNES: Bloc[] = [
 	{
 		titre: "Le départ",
 		lignes: [
 			{
 				nom: "Âge de départ",
 				valeur: (p) =>
-					`${ageEnClair(p.liquidation.age)}${p.cnav.motif === "carriereLongue" ? ", carrière longue" : p.cnav.motif === "inaptitude" ? ", inaptitude" : ""}`,
+					`${ageEnClair(p.liquidation.age)}${detail(p, "cnav").motif === "carriereLongue" ? ", carrière longue" : detail(p, "cnav").motif === "inaptitude" ? ", inaptitude" : ""}`,
 			},
 			{
 				nom: "Trimestres cotisés",
 				aide: "par le travail dans le privé",
-				valeur: (p) => entier(p.cnav.trimestresCotises),
+				valeur: (p) => entier(detail(p, "cnav").trimestresCotises),
 			},
 			{
 				nom: "Trimestres dans d'autres régimes",
 				aide: "fonction publique, indépendants, agriculture",
-				valeur: (p) => entier(p.cnav.trimestresAutresRegimes),
+				valeur: (p) => entier(detail(p, "cnav").trimestresAutresRegimes),
 			},
 			{
 				nom: "Trimestres assimilés",
 				aide: "chômage, maladie, maternité",
 				valeur: (p) =>
 					entier(
-						p.cnav.trimestresValides -
-							p.cnav.trimestresCotises -
-							p.cnav.trimestresAutresRegimes -
-							p.cnav.trimestresMda,
+						detail(p, "cnav").trimestresValides -
+							detail(p, "cnav").trimestresCotises -
+							detail(p, "cnav").trimestresAutresRegimes -
+							detail(p, "cnav").trimestresMda,
 					),
 			},
 			{
 				nom: "Trimestres pour enfants",
-				valeur: (p) => entier(p.cnav.trimestresMda),
+				valeur: (p) => entier(detail(p, "cnav").trimestresMda),
 			},
 			{
 				nom: "Durée validée sur durée requise",
 				valeur: (p) =>
-					`${entier(p.cnav.trimestresValides)} sur ${entier(p.cnav.dureeRequise)}`,
+					`${entier(detail(p, "cnav").trimestresValides)} sur ${entier(detail(p, "cnav").dureeRequise)}`,
 			},
 		],
 	},
@@ -412,34 +430,35 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 			{
 				nom: "Salaire annuel moyen",
 				aide: "meilleures années, plafonnées et revalorisées",
-				valeur: (p) => euros(p.cnav.salaireAnnuelMoyen),
+				valeur: (p) => euros(detail(p, "cnav").salaireAnnuelMoyen),
 			},
 			{
 				nom: "Taux",
 				aide: "après décote éventuelle",
 				valeur: (p) =>
-					`${decimal(p.cnav.tauxLiquidation * 100)} %${p.cnav.trimestresDecote ? ` (${p.cnav.trimestresDecote} trimestres manquants)` : ""}`,
+					`${decimal(detail(p, "cnav").tauxLiquidation * 100)} %${detail(p, "cnav").trimestresDecote ? ` (${detail(p, "cnav").trimestresDecote} trimestres manquants)` : ""}`,
 			},
 			{
 				nom: "Part de carrière validée",
 				aide: "proratisation",
-				valeur: (p) => `${entier(p.cnav.proratisation * 100)} %`,
+				valeur: (p) => `${entier(detail(p, "cnav").proratisation * 100)} %`,
 			},
 			{
 				nom: "Minimum contributif",
-				valeur: (p) => (p.cnav.minimumContributifApplique ? "appliqué" : "non"),
+				valeur: (p) =>
+					detail(p, "cnav").minimumContributifApplique ? "appliqué" : "non",
 			},
 			{
 				nom: "Majoration pour enfants",
 				valeur: (p) =>
-					p.cnav.majorationEnfants
-						? `+${entier(p.cnav.majorationEnfants * 100)} %`
+					detail(p, "cnav").majorationEnfants
+						? `+${entier(detail(p, "cnav").majorationEnfants * 100)} %`
 						: "aucune",
 			},
 			{
 				nom: "Pension de base",
 				aide: "par mois",
-				valeur: (p) => euros(p.cnav.pensionAnnuelle / 12),
+				valeur: (p) => euros(detail(p, "cnav").pensionAnnuelle / 12),
 				fort: true,
 			},
 		],
@@ -447,18 +466,50 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 	{
 		titre: "La pension complémentaire",
 		lignes: [
-			{ nom: "Points acquis", valeur: (p) => entier(p.agircArrco.points) },
+			{
+				nom: "Points acquis",
+				valeur: (p) => entier(detail(p, "agircArrco").points),
+			},
 			{
 				nom: "Minoration pour départ anticipé",
 				valeur: (p) =>
-					p.agircArrco.coefficientAnticipation < 1
-						? `−${decimal((1 - p.agircArrco.coefficientAnticipation) * 100)} %`
+					detail(p, "agircArrco").coefficientAnticipation < 1
+						? `−${decimal((1 - detail(p, "agircArrco").coefficientAnticipation) * 100)} %`
 						: "aucune",
 			},
 			{
 				nom: "Pension complémentaire",
 				aide: "par mois",
-				valeur: (p) => euros(p.agircArrco.pensionAnnuelle / 12),
+				valeur: (p) => euros(detail(p, "agircArrco").pensionAnnuelle / 12),
+				fort: true,
+			},
+		],
+	},
+	{
+		titre: "Les années d'artisan ou de commerçant",
+		si: (p) => p.parRegime.ssi !== undefined,
+		lignes: [
+			{
+				nom: "Trimestres comme indépendant",
+				valeur: (p) => entier(p.parRegime.ssi?.trimestresCotises ?? 0),
+			},
+			{
+				nom: "Retraite de base des indépendants",
+				aide: "par mois, calculée comme au régime général",
+				valeur: (p) => euros((p.parRegime.ssi?.pensionAnnuelle ?? 0) / 12),
+				fort: true,
+			},
+			{
+				nom: "Points de retraite complémentaire",
+				valeur: (p) => entier(p.parRegime.rci?.points ?? 0),
+			},
+			{
+				nom: "Retraite complémentaire des indépendants",
+				aide: "par mois ; un capital versé une fois sous 40 points",
+				valeur: (p) =>
+					p.parRegime.rci?.versementUnique
+						? "capital"
+						: euros((p.parRegime.rci?.pensionAnnuelle ?? 0) / 12),
 				fort: true,
 			},
 		],
@@ -476,7 +527,7 @@ const LIGNES: { titre: string; lignes: Ligne[] }[] = [
 	},
 ];
 
-const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
+const LIGNES_PUBLIC: Bloc[] = [
 	{
 		titre: "Le départ",
 		lignes: [
@@ -487,18 +538,18 @@ const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
 			{
 				nom: "Trimestres de services",
 				aide: "dans la fonction publique",
-				valeur: (p) => entier(p.fonctionPublique?.services ?? 0),
+				valeur: (p) => entier(detailFonctionPublique(p)?.services ?? 0),
 			},
 			{
 				nom: "Bonifications",
 				aide: "pour enfants",
-				valeur: (p) => entier(p.fonctionPublique?.bonifications ?? 0),
+				valeur: (p) => entier(detailFonctionPublique(p)?.bonifications ?? 0),
 			},
 			{
 				nom: "Durée tous régimes sur durée requise",
 				aide: "avec les années passées ailleurs",
 				valeur: (p) =>
-					`${entier(p.fonctionPublique?.trimestresValides ?? 0)} sur ${entier(p.fonctionPublique?.dureeRequise ?? 0)}`,
+					`${entier(detailFonctionPublique(p)?.trimestresValides ?? 0)} sur ${entier(detailFonctionPublique(p)?.dureeRequise ?? 0)}`,
 			},
 		],
 	},
@@ -509,18 +560,18 @@ const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
 				nom: "Traitement de référence",
 				aide: "par mois, sans les primes sauf si votre scénario les compte",
 				valeur: (p) =>
-					euros((p.fonctionPublique?.traitementDeReference ?? 0) / 12),
+					euros((detailFonctionPublique(p)?.traitementDeReference ?? 0) / 12),
 			},
 			{
 				nom: "Taux",
 				aide: "75 % × services et bonifications sur durée requise",
 				valeur: (p) =>
-					`${decimal((p.fonctionPublique?.tauxLiquidation ?? 0) * 100)} %`,
+					`${decimal((detailFonctionPublique(p)?.tauxLiquidation ?? 0) * 100)} %`,
 			},
 			{
 				nom: "Décote ou surcote",
 				valeur: (p) => {
-					const d = p.fonctionPublique;
+					const d = detailFonctionPublique(p);
 					if (d?.trimestresDecote)
 						return `décote, ${d.trimestresDecote} trimestres manquants`;
 					if (d?.trimestresSurcote)
@@ -531,19 +582,22 @@ const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
 			{
 				nom: "Minimum garanti",
 				valeur: (p) =>
-					p.fonctionPublique?.minimumGarantiApplique ? "appliqué" : "non",
+					detailFonctionPublique(p)?.minimumGarantiApplique
+						? "appliqué"
+						: "non",
 			},
 			{
 				nom: "Majoration pour enfants",
-				valeur: (p) =>
-					p.fonctionPublique?.majorationEnfants
-						? `+${entier(p.fonctionPublique.majorationEnfants * 100)} %`
-						: "aucune",
+				valeur: (p) => {
+					const majoration = detailFonctionPublique(p)?.majorationEnfants;
+					return majoration ? `+${entier(majoration * 100)} %` : "aucune";
+				},
 			},
 			{
 				nom: "Pension de fonctionnaire",
 				aide: "par mois",
-				valeur: (p) => euros((p.fonctionPublique?.pensionAnnuelle ?? 0) / 12),
+				valeur: (p) =>
+					euros((detailFonctionPublique(p)?.pensionAnnuelle ?? 0) / 12),
 				fort: true,
 			},
 		],
@@ -554,10 +608,10 @@ const LIGNES_PUBLIC: { titre: string; lignes: Ligne[] }[] = [
 			{
 				nom: "Rente",
 				aide: "par mois ; un capital versé une fois quand les points sont trop peu nombreux",
-				valeur: (p) =>
-					p.fonctionPublique?.rafp
-						? euros(p.fonctionPublique.rafp / 12)
-						: "capital",
+				valeur: (p) => {
+					const rafp = detailFonctionPublique(p)?.rafp;
+					return rafp ? euros(rafp / 12) : "capital";
+				},
 				fort: true,
 			},
 		],
@@ -639,30 +693,32 @@ function Fiche({
 						<th>{compare ? "Votre scénario" : "Loi actuelle"}</th>
 					</tr>
 				</thead>
-				{lignes.map((bloc) => (
-					<tbody key={bloc.titre}>
-						<tr className="groupe">
-							<th colSpan={compare ? 3 : 2}>{bloc.titre}</th>
-						</tr>
-						{bloc.lignes.map((l) => {
-							const a = l.valeur(reference.pension);
-							const b = l.valeur(scenario.pension);
-							return (
-								<tr
-									key={l.nom}
-									className={`${l.fort ? "fort" : ""}${compare && a !== b ? " change" : ""}`}
-								>
-									<th>
-										{l.nom}
-										{l.aide && <small>{l.aide}</small>}
-									</th>
-									{compare && <td className="num">{a}</td>}
-									<td className="num">{b}</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				))}
+				{lignes
+					.filter((bloc) => !bloc.si || bloc.si(scenario.pension))
+					.map((bloc) => (
+						<tbody key={bloc.titre}>
+							<tr className="groupe">
+								<th colSpan={compare ? 3 : 2}>{bloc.titre}</th>
+							</tr>
+							{bloc.lignes.map((l) => {
+								const a = l.valeur(reference.pension);
+								const b = l.valeur(scenario.pension);
+								return (
+									<tr
+										key={l.nom}
+										className={`${l.fort ? "fort" : ""}${compare && a !== b ? " change" : ""}`}
+									>
+										<th>
+											{l.nom}
+											{l.aide && <small>{l.aide}</small>}
+										</th>
+										{compare && <td className="num">{a}</td>}
+										<td className="num">{b}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					))}
 			</table>
 			<p className="reserve">
 				<Icon name="attention" size={16} /> Montants bruts en euros de 2026. Le

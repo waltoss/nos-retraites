@@ -18,6 +18,7 @@ import {
 	CADRAGE_COR,
 	CHAMP_PUBLIC,
 	computePensions,
+	detailFonctionPublique,
 	generatePopulationPublique,
 	type Pension,
 	PYRAMIDES_PROJETEES,
@@ -127,7 +128,7 @@ const moyenne = (v: Vue[], f: (x: Vue) => number) => {
 const part = (v: Vue[], f: (x: Vue) => boolean) =>
 	moyenne(v, (x) => (f(x) ? 1 : 0));
 const detail = (x: Vue) => {
-	const d = x.pension.fonctionPublique;
+	const d = detailFonctionPublique(x.pension);
 	if (!d) throw new Error("Pension hors fonction publique");
 	return d;
 };

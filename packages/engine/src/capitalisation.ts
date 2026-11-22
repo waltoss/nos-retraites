@@ -1,5 +1,5 @@
 import data from "./capitalisation.data.json" with { type: "json" };
-import type { Pyramide } from "./ponderation.ts";
+import { anneeDuChamp, type Pyramide, pensionDuChamp } from "./ponderation.ts";
 import {
 	type Preparation,
 	type PyramidesProjetees,
@@ -121,7 +121,9 @@ export function projeterCapitalisation(
 	const salaire = (k: number, annee: number) => {
 		const carriere = (population[k] as Individu).carriere;
 		const premiere = carriere.annees[0]?.annee ?? annee + 1;
-		return carriere.annees[annee - premiere]?.salaireBrut ?? 0;
+		const a = carriere.annees[annee - premiere];
+		// Seuls les salaires du champ versent : un salarié du privé devenu artisan ne verse plus.
+		return a && anneeDuChamp(options.champ, a) ? a.salaireBrut : 0;
 	};
 	/** Le compte d'un individu une année de plus : il rapporte, puis reçoit le versement de l'année. */
 	const avancer = (capital: number, k: number, annee: number) =>
@@ -148,7 +150,7 @@ export function projeterCapitalisation(
 		}
 		g.n++;
 		g.rente += (rentes[k] as number) / 12;
-		g.pension += p.mensuelleBrute;
+		g.pension += pensionDuChamp(options.champ, p);
 	}
 
 	const comptes = new Float64Array(n);

@@ -193,11 +193,45 @@ export interface BaremeFonctionPublique {
 	};
 }
 
+/**
+ * Artisans et commerçants : une retraite de base calculée comme au régime général (ses règles
+ * sont celles de `cnav`) et une complémentaire en points, le RCI.
+ */
+export type BaremeIndependants = {
+	/**
+	 * Points acquis sur une année de revenu, exprimés en points du RCI (les points des régimes
+	 * des artisans et des commerçants d'avant 2013 sont convertis).
+	 */
+	pointsAnnee(
+		annee: number,
+		revenu: number,
+		pass: number,
+		metier: "artisan" | "commercant",
+	): number;
+	/** Valeur de service du point pour l'année de référence, en euros. */
+	valeurDeServiceDuPoint: number;
+	/** Part de la pension servie selon le nombre de trimestres manquants pour le taux plein (0 à 20). */
+	coefficientAbattement(trimestresManquants: number): number;
+	/** En dessous de ce nombre de points, un capital versé une fois tient lieu de pension. */
+	seuilVersementUnique: number;
+	/** Taux de cotisation de l'année de référence. */
+	cotisation: {
+		/** Retraite de base, sur le revenu sous le plafond puis sur tout le revenu. */
+		basePlafonne: number;
+		baseDeplafonne: number;
+		/** Complémentaire, jusqu'à 1 PASS puis au-delà. */
+		complementaireTranche1: number;
+		complementaireTranche2: number;
+		plafondTranche2EnPass: number;
+	};
+};
+
 export interface Baremes {
 	anneeReference: number;
 	cnav: BaremeCnav;
 	agircArrco: BaremeAgircArrco;
 	fonctionPublique?: BaremeFonctionPublique;
+	independants?: BaremeIndependants;
 }
 
 const BORNES = new WeakMap<object, { min: number; max: number }>();

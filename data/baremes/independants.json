@@ -1,0 +1,3223 @@
+{
+  "avertissements": [
+    "Champ : travailleurs independants relevant de l'article L. 631-1 CSS (artisans, industriels et commercants, et professions liberales non reglementees depuis leur rattachement), hors micro-entrepreneurs (taux forfaitaires sur le chiffre d'affaires, non releves ici), hors professions liberales reglementees et hors exploitants agricoles. Les baremes d'outre-mer ne sont pas repris.",
+    "Sources primaires reellement ouvertes le 2026-11-22 (PDF lus avec pdftotext -layout, pages HTML converties en texte, sans outil de reformulation) : circulaires Cnav 2020-16, 2020-42, 2021-36, 2022-37, 2023-33, 2024-36, 2025-31 (valeurs du RCI), 2025-29 (revalorisation 2026), 2025-33 (Smic 2026), 2026-01 (plafond 2026), 2024-24 et 2022-32 (assiette minimale), 2017-27 (Lura) ; circulaire RSI 2013/004 du 17/01/2013 (mise en oeuvre du RCI) ; urssaf.fr (taux 2026, page de la reforme de l'assiette) ; decret n 2024-688 du 5 juillet 2024 (copie archivee de Legifrance du 2025-04-02) ; fiche RCI du COR (juin 2024) ; depliant de l'Assurance retraite sur le RCI (02/2025) ; reponse ministerielle a la question ecrite n 57133 (Assemblee nationale, 1992).",
+    "Legifrance refuse la lecture automatique (403). Les articles du code de la securite sociale ont ete lus dans l'edition consolidee du 2026-11-20 publiee par codes.droit.org (construite a partir des API Legifrance) : c'est une reproduction, pas le site officiel. Le decret 2024-688 a ete lu sur web.archive.org. La loi n 72-554 du 3 juillet 1972, la loi n 2014-40 (art. 43), les decrets 2016-1188, 2017-735 et 2017-737 et l'arrete du 9 fevrier 2012 (reglement du RCI) n'ont PAS ete lus directement : ils sont cites d'apres les circulaires, le code et la reponse ministerielle.",
+    "secu-independants.fr renvoie une redirection sans contenu a la lecture automatique : aucune page de ce site n'a ete lue. Les baremes legislation.cnav.fr cites par l'IPP (rci_valeur_point_2013_2019.pdf, etc.) n'existent plus (404, y compris sur web.archive.org).",
+    "RCI 2013-2019 : valeurs de service, valeurs d'achat et plafond RCI repris des baremes IPP (source secondaire), sans document primaire, sauf le revenu de reference au 01/01/2013 (17,088 EUR, circulaire RSI 2013/004). Sur 2020-2023 (valeurs de point) et 2021-2025 (plafond), les baremes IPP concordent exactement avec les circulaires Cnav (controle fait par script).",
+    "Desaccord releve : l'IPP date du 01/01/2013 une valeur d'achat de 17,309 EUR, alors que la circulaire RSI 2013/004 donne 17,088 EUR au 01/01/2013. 17,309 = 1,177 / 0,068 correspond a la valeur de service du 01/04/2013 : la valeur IPP est donc presque surement celle du 01/04/2013 (deduction, non lue). Anomalie IPP : valeur de service RCI de 1,178 EUR au 01/10/2015 alors que les points NRCO de meme valeur sont a 1,177 EUR dans la meme ligne.",
+    "Taux du RCI a partir de 2025 : le decret 2024-688 (art. 3 et 6) porte les taux a 8,1 % jusqu'au PASS et 9,1 % du PASS a 4 PASS pour les periodes courant a compter du 1er janvier 2025, et supprime le plafond specifique du RCI de l'article D. 635-7. L'Urssaf ecrit que ces taux s'appliquent 'a compter de la declaration de vos revenus 2025, en 2026' : les appels provisionnels de 2025 ont ete faits a 7 % / 8 % (depliant Assurance retraite 02/2025, bareme IPP 2025). Les circulaires Cnav 2024-36 et 2025-31 publient pourtant encore un 'plafond de cotisation RCI' (43 891 EUR en 2025, 44 286 EUR en 2026) en citant D. 635-7 : son usage apres la reforme n'est pas explique dans les sources lues. DOUTEUX, a trancher avant de coder.",
+    "Reglement du RCI : seule sa presentation de 2013 par la circulaire RSI 2013/004 a ete lue (age, taux plein, coefficients d'abattement, versement forfaitaire unique). Le reglement en vigueur en 2026 n'a pas ete lu : les coefficients d'abattement et le seuil de 40 points peuvent avoir change (la circulaire note que le conseil d'administration peut modifier les coefficients). L'acquisition de points en cumul emploi-retraite integral 'a compter de 2025' est signalee par le COR mais sa regle n'a pas ete lue. Majoration pour enfants au RCI : aucune mention dans les sources lues (ni dans la circulaire RSI 2013/004, 3 047 lignes, ni dans le depliant) ; absence non confirmee par le reglement.",
+    "Taux de rendement du RCI : 6,8 % lu (2013, 2020) ; 6,4 % en 2024 et 6,2 % en 2025 lus dans la fiche du COR ; 2021-2023 et 2026 calcules ici (valeur de service / valeur d'achat), signales 'calcule'.",
+    "Retraite de base, taux de cotisation : serie 1973-2017 reprise des baremes IPP (secondaire) ; 17,15 % et 0,72 % lus a l'article D. 633-3 CSS (edition du 2026-11-20) et sur urssaf.fr ; 0,60 % lu sur urssaf.fr ('Actuel'). L'IPP note que jusqu'en 2013 le taux est le total des taux du regime general.",
+    "Assiette minimale de la retraite de base : lue pour 2016-2026 (11,5 % du PASS puis 450 Smic horaires). Avant 2016 : non trouvee dans une source ouverte (null).",
+    "Avant 2013 (complementaires des artisans et des commercants) et avant 1973 (regimes de base en points) : series des baremes IPP, source secondaire, non recoupees. Anomalies : point de base ORGANIC au 01/04/2011 donne a 8,8124 EUR par l'IPP (valeur identique a celle de la CANCAVA, incoherente avec la serie) : mis a null ; point RCO artisans au 01/01/2001 libelle '0,2847 FRF' (les valeurs voisines, 1,83 FRF en 2000 et 0,2845 EUR en 2002, indiquent un montant en euros) : monnaie signalee douteuse ; valeurs ORGANIC d'avant 1960 libellees 'AFRF' mais d'un ordre de grandeur de nouveaux francs. Pas de serie pour le taux du regime complementaire des artisans en 2011-2012 ni des commercants apres 2005 autre que 6,5 % (l'IPP ne donne pas de ligne entre 2010 et 2013). Regles de calcul des points de base d'avant 1973 (classes de cotisation) : non lues.",
+    "Cles : 'dateConsultation' comme dans agirc-arrco.json. Taux en pourcent. Les valeurs calculees ou deduites portent une note ; tout le reste est une transcription."
+  ],
+  "rciValeurDeServiceDuPoint": {
+    "valeurs": {
+      "pointsRci": {
+        "libelle": "Points cotises au RCI depuis le 1er janvier 2013 ; meme valeur pour les points NRCO (commercants, 2004-2012), les points RCO des artisans acquis a compter de 1997, les points RC (ancien regime des conjoints de commercants) et CMP",
+        "monnaie": "euros",
+        "unite": "euros par point et par an",
+        "serie": [
+          {
+            "annee": 2013,
+            "dateEffet": "2013-01-01",
+            "valeur": 1.162,
+            "origine": "Deduit : valeur du point NRCO au 31/12/2012 (circulaire RSI 2013/004, 'Coefficient de conversion = 0,32284 / 1,162') ; coherent avec le revenu de reference de 17,088 EUR au 01/01/2013 et le rendement de 6,8 %"
+          },
+          {
+            "annee": 2013,
+            "dateEffet": "2013-04-01",
+            "valeur": 1.177,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 1.178,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 1.187,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 1.191,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 1.203,
+            "origine": "Circulaire Cnav 2020-16 du 10/03/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_16_10032020.pdf"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 1.208,
+            "origine": "Circulaire Cnav 2020-42 du 23/12/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_42_23122020.pdf"
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 1.221,
+            "origine": "Circulaire Cnav 2021-36 du 21/12/2021",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2021_36_21122021.pdf"
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 1.28,
+            "origine": "Circulaire Cnav 2022-37 du 20/12/2022",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_37_20122022.pdf"
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 1.327,
+            "origine": "Circulaire Cnav 2023-33 du 28/12/2023",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_33_28122023.pdf"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 1.335,
+            "origine": "Circulaire Cnav 2024-36 du 19/12/2024",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_36_19122024.pdf"
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 1.347,
+            "origine": "Circulaire Cnav 2025-31 du 22/12/2025",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf"
+          }
+        ],
+        "note": "2013-04-01 a 2019 : baremes IPP (secondaire). 'Pas de revalorisation en octobre 2018 et janvier 2019' (note IPP, la ligne IPP du 01/01/2019 porte pourtant 1,191 contre 1,187 au 01/10/2017 : a verifier). 2020-2026 : circulaires Cnav (primaire).",
+        "citations": [
+          "Circulaire Cnav 2025-31 : 'Point RCI cotise 1,347 EUR' (valeur au 1er janvier 2026)",
+          "Circulaire Cnav 2024-36 : 'Point RCI cotise 1,335 EUR' (valeur au 1er janvier 2025)"
+        ]
+      },
+      "pointsRcoArtisans1979a1996": {
+        "libelle": "Points cotises par les artisans du 1er janvier 1979 au 31 decembre 1996 (RCO)",
+        "monnaie": "euros",
+        "serie": [
+          {
+            "annee": 2013,
+            "dateEffet": "2013-04-01",
+            "valeur": 1.124,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 1.124,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 1.13,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 1.132,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 1.138,
+            "origine": "Circulaire Cnav 2020-16 du 10/03/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_16_10032020.pdf"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 1.14,
+            "origine": "Circulaire Cnav 2020-42 du 23/12/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_42_23122020.pdf"
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 1.146,
+            "origine": "Circulaire Cnav 2021-36 du 21/12/2021",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2021_36_21122021.pdf"
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 1.174,
+            "origine": "Circulaire Cnav 2022-37 du 20/12/2022",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_37_20122022.pdf"
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 1.196,
+            "origine": "Circulaire Cnav 2023-33 du 28/12/2023",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_33_28122023.pdf"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 1.2,
+            "origine": "Circulaire Cnav 2024-36 du 19/12/2024",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_36_19122024.pdf"
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 1.205,
+            "origine": "Circulaire Cnav 2025-31 du 22/12/2025",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf"
+          }
+        ],
+        "note": "Revalorises a 50 % du taux (circulaire Cnav 2020-16 : '50 % du taux s'applique, soit 0,5 %'). Valeurs exprimees en points RCI (apres conversion par 0,2778)."
+      },
+      "pointsRcoReconstitutionDeCarriere": {
+        "libelle": "Points de reconstitution de carriere des artisans pour les periodes anterieures au 1er janvier 1979",
+        "monnaie": "euros",
+        "serie": [
+          {
+            "annee": 2013,
+            "dateEffet": "2013-04-01",
+            "valeur": 1.107,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 1.107,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 1.111,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 1.112,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 1.116,
+            "origine": "Circulaire Cnav 2020-16 du 10/03/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_16_10032020.pdf"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 1.117,
+            "origine": "Circulaire Cnav 2020-42 du 23/12/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_42_23122020.pdf"
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 1.121,
+            "origine": "Circulaire Cnav 2021-36 du 21/12/2021",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2021_36_21122021.pdf"
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 1.139,
+            "origine": "Circulaire Cnav 2022-37 du 20/12/2022",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_37_20122022.pdf"
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 1.153,
+            "origine": "Circulaire Cnav 2023-33 du 28/12/2023",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_33_28122023.pdf"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 1.155,
+            "origine": "Circulaire Cnav 2024-36 du 19/12/2024",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_36_19122024.pdf"
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 1.158,
+            "origine": "Circulaire Cnav 2025-31 du 22/12/2025",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf"
+          }
+        ],
+        "note": "Revalorises a 33 % du taux (circulaire Cnav 2020-16 : 's'applique 33 % du taux, soit 0,333 %')."
+      },
+      "regleDeRevalorisation": "Taux fixe par decision du CPSTI (article 48 du reglement du RCI), sans pouvoir exceder le coefficient annuel de revalorisation des pensions de l'article L. 161-23-1 CSS (article D. 635-8 CSS). Taux lus : 1 % au 01/01/2020, 0,4 % au 01/01/2021, 1,1 % au 01/01/2022, 4,8 % au 01/01/2023."
+    },
+    "source": "Circulaires Cnav annuelles 'Revalorisation des valeurs du RCI' (2020-2026) ; baremes IPP (2013-2019, secondaire) ; circulaire RSI 2013/004",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf",
+    "urlsComplementaires": [
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.pt_rci/table",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "rciValeurDAchatDuPoint": {
+    "valeurs": {
+      "revenuDeReference": {
+        "libelle": "Revenu de reference du RCI : montant de cotisation qui donne droit a un point (valeur d'achat ou d'acquisition)",
+        "monnaie": "euros",
+        "serie": [
+          {
+            "annee": 2013,
+            "dateEffet": "2013-01-01",
+            "valeur": 17.088,
+            "origine": "Circulaire RSI 2013/004 du 17/01/2013",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf"
+          },
+          {
+            "annee": 2013,
+            "dateEffet": "2013-04-01",
+            "valeur": 17.309,
+            "origine": "Baremes IPP (secondaire)",
+            "note": "Date d'effet donnee au 01/01/2013 par l'IPP ; corrigee ici au 01/04/2013 par deduction (1,177 / 0,068 = 17,309), voir avertissements"
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 17.324,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 17.456,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 17.515,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 17.691,
+            "origine": "Circulaire Cnav 2020-16 du 10/03/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_16_10032020.pdf"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 17.765,
+            "origine": "Circulaire Cnav 2020-42 du 23/12/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_42_23122020.pdf"
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 17.956,
+            "origine": "Circulaire Cnav 2021-36 du 21/12/2021",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2021_36_21122021.pdf"
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 19.394,
+            "origine": "Circulaire Cnav 2022-37 du 20/12/2022",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_37_20122022.pdf"
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 20.734,
+            "origine": "Circulaire Cnav 2023-33 du 28/12/2023",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_33_28122023.pdf"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 21.532,
+            "origine": "Circulaire Cnav 2024-36 du 19/12/2024",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_36_19122024.pdf"
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 21.726,
+            "origine": "Circulaire Cnav 2025-31 du 22/12/2025",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf"
+          }
+        ],
+        "citations": [
+          "Circulaire RSI 2013/004 : 'Le revenu de reference correspond au montant de la cotisation qui donne droit, au titre de l'annee en cause, a l'inscription d'un point de retraite au compte (fixe a 17,088 EUR au 01/01/2013).'",
+          "Circulaire Cnav 2025-31 : 'Revenu de reference-Valeur d'achat du point RCI 21,726 EUR' (valeur au 1er janvier 2026)",
+          "Circulaire Cnav 2020-16 : '1,203 / 0,068 = 17,69117 arrondis a 17, 691 EUR'"
+        ]
+      },
+      "tauxDeRendement": {
+        "definition": "Valeur de service du point / valeur d'achat du point (fiche COR : 'un taux de 6,8% equivaut a 6,8 euros de pension annuelle acquis pour 100 euros de cotisations versees')",
+        "formule": "valeur d'achat = plus haute valeur de service du point / taux de rendement (article 51 du reglement du RCI), arrondie a 3 decimales",
+        "serie": [
+          {
+            "annee": 2013,
+            "valeurEnPourcent": 6.8,
+            "origine": "lu, circulaire RSI 2013/004"
+          },
+          {
+            "annee": 2020,
+            "valeurEnPourcent": 6.8,
+            "origine": "lu, circulaire Cnav 2020-16"
+          },
+          {
+            "annee": 2021,
+            "valeurEnPourcent": 6.8,
+            "origine": "calcule (1,208 / 17,765)"
+          },
+          {
+            "annee": 2022,
+            "valeurEnPourcent": 6.8,
+            "origine": "lu, fiche COR RCI (juin 2024) ; calcul 1,221 / 17,956 = 6,80"
+          },
+          {
+            "annee": 2023,
+            "valeurEnPourcent": 6.6,
+            "origine": "calcule (1,280 / 19,394)"
+          },
+          {
+            "annee": 2024,
+            "valeurEnPourcent": 6.4,
+            "origine": "lu, fiche COR RCI (juin 2024)"
+          },
+          {
+            "annee": 2025,
+            "valeurEnPourcent": 6.2,
+            "origine": "lu, fiche COR RCI (juin 2024) ; calcul 1,335 / 21,532 = 6,20"
+          },
+          {
+            "annee": 2026,
+            "valeurEnPourcent": 6.2,
+            "origine": "calcule (1,347 / 21,726)"
+          }
+        ],
+        "citation": "Fiche COR RCI : 'L'assemblee generale du CPSTI a vote en decembre 2022 une baisse progressive du taux de rendement du regime, le faisant passer de 6,8% en 2022 a 6,2 % en 2025. Il est ainsi de 6,4 % en 2024. Les valeurs d'achat et de service s'elevent respectivement a 20,734 et 1,327 euros au 01/01/2024.'",
+        "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf"
+      }
+    },
+    "source": "Circulaires Cnav annuelles (2020-2026) ; circulaire RSI 2013/004 ; baremes IPP (2013-2019, secondaire) ; fiche RCI du COR (juin 2024)",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf",
+    "urlsComplementaires": [
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.salref_rci/table",
+      "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "rciTauxCotisation": {
+    "valeurs": {
+      "avantReforme": {
+        "periode": "du 2013-01-01 aux cotisations provisionnelles de 2025",
+        "tranches": [
+          {
+            "tranche": "tranche1",
+            "assiette": "revenu dans la limite du plafond RCI",
+            "tauxEnPourcent": 7
+          },
+          {
+            "tranche": "tranche2",
+            "assiette": "revenu compris entre le plafond RCI et 4 PASS",
+            "tauxEnPourcent": 8
+          }
+        ],
+        "citations": [
+          "Circulaire RSI 2013/004 : 'Le taux de cotisation du Regime Complementaire des Independants est de 7% a partir du 1 er janvier 2013 pour les revenus inferieurs a un plafond RCI. Pour les revenus compris entre le plafond RCI et 4 fois ce plafond, le taux de la cotisation passe a 8%' ; tableau : 'revenus compris entre un plafond RCI et quatre plafonds securite sociale 8%'",
+          "Depliant Assurance retraite (ref. 252070, 02/2025) : '7 % de la part de revenu inferieure au plafond RCI', '8 % de la part de revenu comprise entre le plafond RCI et 4 fois le plafond annuel de la Securite sociale', '43 891 EUR en 2025', '188 400 EUR en 2025'"
+        ],
+        "note": "La phrase de la circulaire RSI dit '4 fois ce plafond' mais son tableau et sa remarque precisent que la limite haute est 4 fois le plafond de la securite sociale."
+      },
+      "plafondRci": {
+        "libelle": "Plafond specifique du RCI (limite entre les deux tranches jusqu'a la reforme)",
+        "monnaie": "euros",
+        "serie": [
+          {
+            "annee": 2013,
+            "dateEffet": "2013-01-01",
+            "valeur": 37032,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2014,
+            "dateEffet": "2014-01-01",
+            "valeur": 37513,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2016,
+            "dateEffet": "2016-01-01",
+            "valeur": 37546,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2018,
+            "dateEffet": "2018-01-01",
+            "valeur": 37846,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 37960,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "valeur": 38340,
+            "origine": "Baremes IPP (secondaire)"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "valeur": 38493,
+            "origine": "Circulaire Cnav 2020-42 du 23/12/2020",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2020_42_23122020.pdf"
+          },
+          {
+            "annee": 2022,
+            "dateEffet": "2022-01-01",
+            "valeur": 38916,
+            "origine": "Circulaire Cnav 2021-36 du 21/12/2021",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2021_36_21122021.pdf"
+          },
+          {
+            "annee": 2023,
+            "dateEffet": "2023-01-01",
+            "valeur": 40784,
+            "origine": "Circulaire Cnav 2022-37 du 20/12/2022",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_37_20122022.pdf"
+          },
+          {
+            "annee": 2024,
+            "dateEffet": "2024-01-01",
+            "valeur": 42946,
+            "origine": "Circulaire Cnav 2023-33 du 28/12/2023",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2023_33_28122023.pdf"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 43891,
+            "origine": "Circulaire Cnav 2024-36 du 19/12/2024",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_36_19122024.pdf"
+          },
+          {
+            "annee": 2026,
+            "dateEffet": "2026-01-01",
+            "valeur": 44286,
+            "origine": "Circulaire Cnav 2025-31 du 22/12/2025",
+            "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_31_22122025.pdf"
+          }
+        ],
+        "regle": "Egal au PASS en 2013, puis revalorise par le plus petit des coefficients de revalorisation du revenu de reference et des pensions (ancien 4e alinea de l'article D. 635-7 CSS, cite par les circulaires Cnav).",
+        "citation": "Circulaire RSI 2013/004 : 'la limite d'assiette qui departage les deux taux de cotisations (7% et 8%) est fixee pour l'annee 2013 au plafond de la securite sociale et sera indexe sur l'evolution de la valeur du revenu de reference (dans la limite du coefficient annuel de revalorisation des pensions)'",
+        "note": "Annees absentes de la table IPP (2015, 2017) : l'IPP ne donne une ligne qu'aux changements ; non verifie. 2013-2020 : IPP (secondaire, 'Reference legislative fixant le plafond specifique des independants introuvable') ; 2021-2026 : circulaires Cnav. Les valeurs 2025 et 2026 sont publiees apres la suppression du plafond specifique dans D. 635-7 : usage a eclaircir (voir avertissements)."
+      },
+      "apresReforme": {
+        "periode": "cotisations dues au titre des periodes courant a compter du 2025-01-01 (appliquees a la regularisation des revenus 2025, a partir d'avril 2026)",
+        "tranches": [
+          {
+            "tranche": "tranche1",
+            "assiette": "part de l'assiette de cotisations n'excedant pas le PASS",
+            "tauxEnPourcent": 8.1
+          },
+          {
+            "tranche": "tranche2",
+            "assiette": "part de l'assiette excedant le PASS, dans la limite de 4 PASS",
+            "tauxEnPourcent": 9.1
+          }
+        ],
+        "plafonds2026": {
+          "passAnnuel": 48060,
+          "quatrePassAnnuel": 192240
+        },
+        "citations": [
+          "Article D. 635-7 CSS (edition du 2026-11-20) : '1° 8,1 % pour la part de l'assiette de cotisations n'excedant pas le plafond annuel prevu au premier alinea de l'article L. 241-3 ; 2° 9,1 % pour la part de l'assiette de cotisations excedant le seuil fixe au 1°, dans la limite de de quatre fois le plafond annuel prevu au premier alinea de l'article L. 241-3.'",
+          "Decret 2024-688, art. 3 : 'b) Les deux premieres phrases du quatrieme alinea sont supprimees. II.-Les modalites de determination des taux prevues par l'article D. 635-9 ne sont pas applicables pour la cotisation annuelle due en 2025.' ; art. 6 : 's'appliquent au calcul des cotisations et des contributions dues par les travailleurs independants non agricoles [...] au titre des periodes courant a compter du 1er janvier 2025.'",
+          "urssaf.fr, taux 2026 : 'Revenus dans la limite de 48 060 EUR (1plafond annuel de la Securite sociale - Pass) | 8,10 %' ; 'Part du revenus compris entre 48 060 EUR et 192 240 EUR (entre 1 et 4 Pass) | 9,10 %'",
+          "urssaf.fr, reforme : 'Actuel | Nouveau (a compter de la declaration de vos revenus 2025, en 2026) | Revenus dans la limite de 1 plafond de retraite complementaire des independants (PRCI) : 7 % | Dans la limite de 1 Pass : 8,1 % | Part du revenu comprise entre 1 PRCI et 4 Pass : 8 % | Part comprise entre 1 Pass et 4 Pass : 9,1 %'"
+        ]
+      },
+      "reformeDeLAssiette": {
+        "texte": "Article 18 de la loi n 2023-1250 du 26 decembre 2023 (LFSS 2024) ; decret n 2024-688 du 5 juillet 2024",
+        "regle": "Assiette unique pour les cotisations et la CSG-CRDS : revenu brut (chiffre d'affaires moins charges hors cotisations sociales) diminue d'un abattement forfaitaire de 26 %. Avant la reforme : revenu net des cotisations sociales.",
+        "abattementForfaitaireEnPourcent": 26,
+        "citation": "urssaf.fr : 'Une seule assiette pour les cotisations sociales et la CSG-CRDS : le revenu brut abattu de 26 %' ; 'jusqu'a maintenant, les cotisations sociales etaient calculees sur la base du revenu fiscal majore des exonerations fiscales. Il s'agissait d'un revenu net des cotisations sociales.' ; 'Cette reforme sera mise en oeuvre en 2026, lorsque seront connus les revenus reels percus en 2025'",
+        "url": "https://www.urssaf.fr/accueil/independant/comprendre-payer-cotisations/reforme-cotisations-independants.html",
+        "note": "Les articles L. 131-6 et L. 136-3 CSS n'ont pas ete lus. La rupture d'assiette en 2025 change le sens d'un meme taux : a traiter dans le moteur."
+      },
+      "assietteMinimale": {
+        "valeur": null,
+        "regle": "Aucune assiette minimale au RCI",
+        "citation": "Circulaire Cnav 2024-24 : 'aucune assiette minimale ne s'applique en matiere de retraite complementaire (RCI) et d'allocations familiales.'",
+        "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_24_26072024.pdf"
+      },
+      "exonerations": "Le titulaire d'une pension d'invalidite du regime de l'article L. 632-1 est exonere de cotisation au RCI (article D. 635-2 CSS) et recoit des points gratuits (voir rciCalculDesPoints). Aides familiaux : assiette egale au tiers du PASS, ou au revenu du chef d'entreprise s'il est inferieur (article D. 635-7)."
+    },
+    "source": "Article D. 635-7 CSS ; decret n 2024-688 du 5 juillet 2024 ; urssaf.fr ; circulaire RSI 2013/004 ; circulaires Cnav ; baremes IPP (plafond 2013-2020, secondaire)",
+    "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-ac-plnr.html",
+    "urlsComplementaires": [
+      "https://web.archive.org/web/20250402203142/https://www.legifrance.gouv.fr/jorf/id/JORFTEXT000049888566",
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf",
+      "https://www.lassuranceretraite.fr/portail-info/files/live/sites/pub/files/PDF/retraite-complementaire-ti.pdf",
+      "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/prelevements_sociaux.cotisations_taxes_independants_artisans_commercants.ret_comp_ac/table"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "rciCalculDesPoints": {
+    "valeurs": {
+      "formule": "points cotises de l'annee N = cotisations RCI versees dans l'annee N / revenu de reference applicable l'annee N, arrondi a l'entier le plus proche",
+      "arrondi": "entier le plus proche (arrondi comptable)",
+      "dateArretDuCompte": "dernier jour du trimestre civil precedant la date d'entree en jouissance de la pension ; les cotisations versees apres ne donnent pas de droits (sauf retraite progressive)",
+      "pointsGratuitsInvalidite": "Points attribues pour chaque mensualite de pension d'invalidite : quotient (a deux decimales) des points acquis par cotisations RCI par le nombre de mois civils entiers correspondants (regle lue en partie seulement ; details dans la circulaire, annexe 1, point 2.2)",
+      "cumulEmploiRetraite": {
+        "regle": null,
+        "note": "Fiche COR (juin 2024) : 'L'Assemblee generale du CPSTI a decide de permettre l'acquisition de nouveaux droits a la retraite complementaire dans le cadre du cumul emploi-retraite integral a compter de 2025.' Regle non lue."
+      },
+      "citation": "Circulaire RSI 2013/004, annexe 1, 2.1 : 'Point cotises de l'annee N (3) = Cotisations RCI versee dans l'annee N (1) / revenu de reference applicable l'annee N (2)' ; '(3) le resultat de cette operation est arrondi a l'entier le plus proche'"
+    },
+    "note": "Etat du reglement en 2013. Le code confirme le principe : 'Le montant annuel de la pension individuelle de droit direct servie par ces regimes est obtenu par le produit du nombre total de points porte au compte de l'interesse par la valeur de service du point' (article L. 635-1 CSS).",
+    "source": "Circulaire RSI 2013/004 du 17/01/2013 (reglement annexe a l'arrete du 9 fevrier 2012, art. 9) ; article L. 635-1 CSS",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf",
+    "dateConsultation": "2026-11-22"
+  },
+  "rciLiquidation": {
+    "valeurs": {
+      "formule": "pension annuelle = somme, par nature de points, de : nombre de points x coefficient d'abattement eventuel x valeur de service de ces points (arrondi a la deuxieme decimale)",
+      "age": "Meme condition d'age que la retraite de base (age legal selon la generation, memes departs anticipes pour carriere longue ou handicap) ; le reglement (art. 11) renvoie a l'article L. 161-17-2 CSS",
+      "conditions": [
+        "demande",
+        "avoir liquide auparavant ou en meme temps la ou les retraites de base des independants : la retraite du RCI 'ne peut etre attribuee avant la (ou les) retraite(s) de base du RSI ou independamment'",
+        "cessation d'activite, sauf cumul emploi-retraite (art. 27 du reglement)"
+      ],
+      "tauxPlein": "Aucun abattement a partir de l'age legal si la retraite de base est liquidee a taux plein (par la duree d'assurance ou par categorie : inaptitude, etc.), ou a l'age de la retraite anticipee pour carriere longue ou handicap si les conditions en sont remplies dans le regime de base",
+      "minoration": {
+        "regle": "Sinon, chaque categorie de points subit un abattement fonction du plus petit de deux nombres : trimestres d'assurance manquants pour la duree du taux plein de la generation ; trimestres civils manquants pour atteindre l'age du taux plein automatique",
+        "coefficients": [
+          {
+            "trimestresManquants": 20,
+            "abattementEnPourcent": 22.0,
+            "coefficient": 0.78
+          },
+          {
+            "trimestresManquants": 19,
+            "abattementEnPourcent": 20.75,
+            "coefficient": 0.7925
+          },
+          {
+            "trimestresManquants": 18,
+            "abattementEnPourcent": 19.5,
+            "coefficient": 0.805
+          },
+          {
+            "trimestresManquants": 17,
+            "abattementEnPourcent": 18.25,
+            "coefficient": 0.8175
+          },
+          {
+            "trimestresManquants": 16,
+            "abattementEnPourcent": 17.0,
+            "coefficient": 0.83
+          },
+          {
+            "trimestresManquants": 15,
+            "abattementEnPourcent": 15.75,
+            "coefficient": 0.8425
+          },
+          {
+            "trimestresManquants": 14,
+            "abattementEnPourcent": 14.5,
+            "coefficient": 0.855
+          },
+          {
+            "trimestresManquants": 13,
+            "abattementEnPourcent": 13.25,
+            "coefficient": 0.8675
+          },
+          {
+            "trimestresManquants": 12,
+            "abattementEnPourcent": 12.0,
+            "coefficient": 0.88
+          },
+          {
+            "trimestresManquants": 11,
+            "abattementEnPourcent": 11.0,
+            "coefficient": 0.89
+          },
+          {
+            "trimestresManquants": 10,
+            "abattementEnPourcent": 10.0,
+            "coefficient": 0.9
+          },
+          {
+            "trimestresManquants": 9,
+            "abattementEnPourcent": 9.0,
+            "coefficient": 0.91
+          },
+          {
+            "trimestresManquants": 8,
+            "abattementEnPourcent": 8.0,
+            "coefficient": 0.92
+          },
+          {
+            "trimestresManquants": 7,
+            "abattementEnPourcent": 7.0,
+            "coefficient": 0.93
+          },
+          {
+            "trimestresManquants": 6,
+            "abattementEnPourcent": 6.0,
+            "coefficient": 0.94
+          },
+          {
+            "trimestresManquants": 5,
+            "abattementEnPourcent": 5.0,
+            "coefficient": 0.95
+          },
+          {
+            "trimestresManquants": 4,
+            "abattementEnPourcent": 4.0,
+            "coefficient": 0.96
+          },
+          {
+            "trimestresManquants": 3,
+            "abattementEnPourcent": 3.0,
+            "coefficient": 0.97
+          },
+          {
+            "trimestresManquants": 2,
+            "abattementEnPourcent": 2.0,
+            "coefficient": 0.98
+          },
+          {
+            "trimestresManquants": 1,
+            "abattementEnPourcent": 1.0,
+            "coefficient": 0.99
+          }
+        ],
+        "lecture": "1 point par trimestre du 1er au 12e trimestre manquant, 1,25 point par trimestre du 13e au 20e (constate sur le tableau). Maximum 20 trimestres, comme la decote du regime de base.",
+        "arrondi": "le nombre de points apres abattement est arrondi a l'entier le plus proche",
+        "caractere": "Les coefficients 'peuvent etre modifies par le conseil d'administration de la caisse nationale du RSI pour tenir compte notamment de l'evolution de l'esperance de vie, mais toute modification est sans effet sur les pensions deja liquidees'",
+        "etat": "annexe 2 du reglement du RCI tel que presente en janvier 2013 ; version en vigueur en 2026 non lue",
+        "citation": "Circulaire RSI 2013/004, annexe 2, 1.2 : 'Trimestres manquants / Taux d'abattement / Taux de service : 20 22.00% 78.00% ; 19 20.75% 79.25% ; [...] 12 12.00% 88.00% ; 11 11.00% 89.00% ; [...] 1 1.00% 99.00%'"
+      },
+      "confirmation2025": "Assurance retraite (page RCI et depliant 02/2025) : la retraite complementaire est 'reduite dans le cas ou la retraite de base a ete obtenue a taux minore, selon des coefficients d'abattement qui sont specifiques au regime complementaire' ; '*Si vous ne beneficiez pas d'une retraite de base a taux plein, votre RCI sera egalement minoree.'",
+      "majorations": {
+        "enfants": null,
+        "surcote": null,
+        "note": "Aucune majoration pour enfants ni surcote propre au RCI n'apparait dans les sources lues (circulaire RSI 2013/004, depliant et page de l'Assurance retraite) ; a confirmer dans le reglement, non lu.",
+        "conjointDeCommercant": "Seul complement lu : la majoration pour conjoint issue de l'ancien regime des conjoints de commercants (droits 1973-2003, points 'RC'), devenue un droit personnel du titulaire dans le RCI ; taux d'abattement de 25 % a 50 % selon la duree d'assurance arretee au 31/12/2003 (25 % jusqu'a 60 trimestres, + 0,25 point par trimestre jusqu'a 160 trimestres)."
+      },
+      "versementForfaitaireUnique": {
+        "seuilEnPoints": 40,
+        "montant": "nombre de points x derniere valeur connue du revenu de reference",
+        "citation": "Circulaire RSI 2013/004 : 'lorsque le nombre total des points complementaires [...] est inferieur a 40 points' ; 'Son montant est egal au produit du nombre de points de retraite en cause par la derniere valeur connue du revenu de reference.'",
+        "etat": "2013, non verifie pour 2026"
+      },
+      "reversion": "Pension de reversion au conjoint survivant sans abattement, sous condition de ressources : plafond de 2 PASS (96 120 EUR par an au 01/01/2026, circulaire Cnav 2026-01, article 17 du reglement). Taux de reversion non releve."
+    },
+    "source": "Circulaire RSI 2013/004 du 17/01/2013, annexe 2 'Les droits personnels' (reglement du RCI, art. 11 a 13, 39, 40, annexe 2) ; Assurance retraite, page et depliant 'Retraite complementaire' des travailleurs independants ; circulaire Cnav 2026-01",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf",
+    "urlsComplementaires": [
+      "https://www.lassuranceretraite.fr/portail-info/sites/pub/hors-menu/annexe/travailleurs-independants/retraite-complementaire.html",
+      "https://www.lassuranceretraite.fr/portail-info/files/live/sites/pub/files/PDF/retraite-complementaire-ti.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_01_05012026.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "rciPilotage": {
+    "valeurs": {
+      "gestion": "Regime pilote par le Conseil de la protection sociale des travailleurs independants (CPSTI) ; prestations servies par l'Assurance retraite (article L. 635-4-1 CSS) ; cotisations recouvrees par l'Urssaf",
+      "equilibre": "'L'equilibre financier du regime est assure par ses seules ressources' (article L. 635-1 CSS)",
+      "reglesDeSolvabilite": [
+        "Deliberation tous les six ans sur les regles d'evolution du revenu de reference et de la valeur de service, bilan d'etape a trois ans (article D. 635-9 CSS)",
+        "Le delai previsionnel d'epuisement des reserves ne peut etre inferieur a l'esperance de vie residuelle de la generation qui atteint l'age legal (D. 635-9, 1°)",
+        "Le rapport entre les cotisations de l'annee suivante et la valeur actuelle probable des prestations futures qui en decoulent doit etre superieur a 1 (D. 635-9, 2°)"
+      ],
+      "plafondDeRevalorisation": "La revalorisation de la valeur de service ne peut exceder le coefficient annuel de revalorisation des pensions de l'article L. 161-23-1 (article D. 635-8 CSS)",
+      "regimesRepris": "Creation le 1er janvier 2013 par fusion du regime complementaire des artisans (RCO, 1979) et de celui des commercants (NRCO, 2004) ; droits du regime complementaire des entrepreneurs du batiment (RCEBTP) convertis en points RCI au 1er janvier 2023 (fiche COR)"
+    },
+    "source": "Code de la securite sociale, edition consolidee du 2026-11-20 (codes.droit.org, produite a partir des API Legifrance ; Legifrance refuse la lecture automatique) : articles L. 635-1, L. 635-4-1, D. 635-8, D. 635-9 ; fiche RCI du COR (juin 2024)",
+    "url": "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+    "urlsComplementaires": [
+      "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseTauxCotisation": {
+    "valeurs": {
+      "partPlafonnee": {
+        "libelle": "Taux sur le revenu dans la limite du PASS (artisans et commercants : taux identiques sur toute la serie)",
+        "unite": "pourcent",
+        "serie": [
+          {
+            "annee": 1973,
+            "dateEffet": "1973-01-01",
+            "valeur": 8.75,
+            "reference": "Loi 72-554 du 03/07/1972"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-01-01",
+            "valeur": 10.25,
+            "reference": "Décret 73-1209 du 29/12/1973"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-01-01",
+            "valeur": 10.75,
+            "reference": "Décret 75-1273 du 29/12/1975"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-10-01",
+            "valeur": 11.15,
+            "reference": "Décret 76-894 du 29/09/1976"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-01-01",
+            "valeur": 12.9,
+            "reference": "Décret 78-1213 du 26/12/1978"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-01-01",
+            "valeur": 13.9,
+            "reference": "Décret 83-1198 du 30/12/1983"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-08-01",
+            "valeur": 14.6,
+            "reference": "Décret 86-876 du 29/07/1986"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-07-01",
+            "valeur": 14.8,
+            "reference": "Décret 87-453 du 29/06/1987"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-01-01",
+            "valeur": 15.8,
+            "reference": "Décret 88-1234 du 30/12/1988"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-02-01",
+            "valeur": 16.35,
+            "reference": "Décret 91-91 du 23/01/1991"
+          },
+          {
+            "annee": 2004,
+            "dateEffet": "2004-07-01",
+            "valeur": 16.45,
+            "reference": "Décret 2004-858 du 24/08/2004"
+          },
+          {
+            "annee": 2006,
+            "dateEffet": "2006-01-01",
+            "valeur": 16.65,
+            "reference": "Décret 2005-1657 du 26/12/2005, art. 1"
+          },
+          {
+            "annee": 2012,
+            "dateEffet": "2012-11-01",
+            "valeur": 16.85,
+            "reference": "Décret 2012-847 du 02/07/2012, art. 5"
+          },
+          {
+            "annee": 2014,
+            "dateEffet": "2014-01-01",
+            "valeur": 16.95,
+            "reference": "Décret 2012-847 du 02/07/2012, art. 5Décret 2013-1290 du 27/12/2013"
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-01-01",
+            "valeur": 17.05,
+            "reference": "Décret 2012-847 du 02/07/2012, art. 5"
+          },
+          {
+            "annee": 2016,
+            "dateEffet": "2016-01-01",
+            "valeur": 17.15,
+            "reference": "Décret 2014-1531 du 17/12/2014, art. 4Décret 2015-1856 du 30/12/2015, art. 10-II"
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-01-01",
+            "valeur": 17.15,
+            "reference": "Article D633-3 du Code de la sécurité socialeDécret 2015-1856 du 30/12/2015, art. 7"
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 17.15,
+            "reference": "Article D633-3 du Code de la sécurité socialeDécret n° 2024-688 du 5 juillet 2024, art. 3"
+          }
+        ]
+      },
+      "partDeplafonnee": {
+        "libelle": "Taux sur la totalite du revenu (s'ajoute au taux plafonne sous le PASS)",
+        "unite": "pourcent",
+        "serie": [
+          {
+            "annee": 2014,
+            "dateEffet": "2014-01-01",
+            "valeur": 0.2
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-01-01",
+            "valeur": 0.35
+          },
+          {
+            "annee": 2016,
+            "dateEffet": "2016-01-01",
+            "valeur": 0.5
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-01-01",
+            "valeur": 0.6
+          },
+          {
+            "annee": 2025,
+            "dateEffet": "2025-01-01",
+            "valeur": 0.72
+          }
+        ],
+        "note": "Cotisation deplafonnee creee par la LFSS 2014 (loi 2013-1203, art. 10). 0,72 % : periodes courant a compter du 01/01/2025 (decret 2024-688), applique a la regularisation de 2026 ; les appels de 2025 ont ete faits a 0,60 % (urssaf.fr : 'Actuel 17,75 % (17,15 + 0,60)')."
+      },
+      "tauxSousPlafond2026EnPourcent": 17.87,
+      "tauxAuDessusDuPlafond2026EnPourcent": 0.72,
+      "assiette": "Revenu d'activite de l'article L. 131-6 CSS ; depuis la reforme : revenu brut abattu de 26 % (voir rciTauxCotisation.reformeDeLAssiette)",
+      "citations": [
+        "Article D. 633-3 CSS (edition du 2026-11-20) : 'I.-Le taux des cotisations assises sur l'assiette de cotisations dans la limite du plafond est fixe a 17,15 %. II.-Le taux des cotisations assises sur la totalite de l'assiette de cotisations est fixe a 0,72 %.'",
+        "urssaf.fr, taux 2026 : 'Revenus dans la limite de 48 060 EUR (1 plafond annuel de la Securite sociale - Pass) | 17,87 %' ; 'Part des revenus superieure a 48 060 EUR (1 Pass) | 0,72 %'",
+        "urssaf.fr, reforme : 'Revenus dans la limite de 1 Pass | 17,75 % (17,15 + 0,60) | 17,87 % (17,15 + 0,72)'"
+      ],
+      "note": "Serie 1973-2017 : baremes IPP (secondaire), une ligne par changement ; l'IPP precise : 'Jusqu'en 2013, le taux est egal au total des taux de cotisation vieillesse du regime general (employeur et salarie, plafonnes et deplafonnes).' L'article L. 633-1 CSS dit encore que la somme des taux est egale a celle du regime general, alors que le regime general est a 17,96 % en 2026 (cnav.json) contre 17,87 % ici : ecart non explique dans les sources lues."
+    },
+    "source": "Article D. 633-3 CSS ; urssaf.fr (taux 2026 et page de la reforme) ; baremes IPP (historique, secondaire)",
+    "url": "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-ac-plnr.html",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://www.urssaf.fr/accueil/independant/comprendre-payer-cotisations/reforme-cotisations-independants.html",
+      "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/prelevements_sociaux.cotisations_taxes_independants_artisans_commercants.ret_ac/table"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseAssietteMinimale": {
+    "valeurs": {
+      "regles": [
+        {
+          "periode": "avant 2016",
+          "regle": null,
+          "note": "non trouvee dans une source ouverte"
+        },
+        {
+          "periode": "2016-2021",
+          "regle": "11,5 % du PASS",
+          "partDuPassEnPourcent": 11.5
+        },
+        {
+          "periode": "2022",
+          "regle": "assiette derogatoire de 4 758 EUR (decret n 2022-1438 du 16 novembre 2022), au lieu de 11,5 % du PASS (4 731 EUR)",
+          "montantEnEuros": 4758
+        },
+        {
+          "periode": "depuis 2023",
+          "regle": "450 fois le Smic horaire en vigueur le 1er janvier de l'annee (decret n 2023-1352 du 29 decembre 2023, article D. 633-2 CSS), pour une affiliation d'au moins 90 jours dans l'annee",
+          "heuresDeSmic": 450
+        }
+      ],
+      "serie": [
+        {
+          "annee": 2020,
+          "dateEffet": "2020-01-01",
+          "valeur": 4731,
+          "origine": "Circulaire Cnav 2022-32 : 'Assiette minimale en 2020 : 11,5% X 41 136 = 4 731 EUR'"
+        },
+        {
+          "annee": 2021,
+          "dateEffet": "2021-01-01",
+          "valeur": 4731,
+          "origine": "Circulaire Cnav 2022-32 : 'Assiette minimale en 2021 : 11,5% X 41 136 = 4 731 EUR'"
+        },
+        {
+          "annee": 2022,
+          "dateEffet": "2022-01-01",
+          "valeur": 4758,
+          "origine": "Circulaire Cnav 2022-32 (assiette derogatoire) : '4 758 x 17,75% = 844,54 EUR arrondi a 845 EUR'"
+        },
+        {
+          "annee": 2023,
+          "dateEffet": "2023-01-01",
+          "valeur": 5072,
+          "origine": "Circulaire Cnav 2024-24 : '450 X 11,27 = 5 071,5 arrondis a 5 072 EUR'"
+        },
+        {
+          "annee": 2024,
+          "dateEffet": "2024-01-01",
+          "valeur": 5243,
+          "origine": "Circulaire Cnav 2024-24 : '450 X 11,65 = 5 242,5 arrondis a 5 243 EUR'"
+        },
+        {
+          "annee": 2025,
+          "dateEffet": "2025-01-01",
+          "valeur": 5346,
+          "origine": "Circulaire Cnav 2025-33, tableau du point 2.11"
+        },
+        {
+          "annee": 2026,
+          "dateEffet": "2026-01-01",
+          "valeur": 5409,
+          "origine": "Circulaire Cnav 2025-33, tableau du point 2.11 ; urssaf.fr : '5 409 EUR (450 x Smic horaire) | 17,87 % | 967 EUR'"
+        }
+      ],
+      "cotisationMinimale2026EnEuros": 967,
+      "exceptions": "Ne s'applique pas aux micro-entrepreneurs (sauf option), ni aux beneficiaires du RSA ou de la prime d'activite (sauf demande), ni aux activites accessoires saisonnieres : cotisations sur le revenu reel",
+      "citations": [
+        "Article D. 633-2 CSS : 'La cotisation annuelle ne peut etre calculee sur une assiette inferieure a 450 fois le montant horaire du salaire minimum de croissance en vigueur le 1er janvier de l'annee consideree'",
+        "Circulaire Cnav 2025-33, 2.11 : 'Depuis 2016, l'assiette minimale fixee a 11,5 % du plafond annuel de la Securite sociale permettait de valider 3 trimestres par an.' ; 'Au titre de l'annee 2023 5072EUR / 2024 5243EUR / 2025 5346EUR / 2026 5409EUR'"
+      ]
+    },
+    "source": "Circulaires Cnav 2025-33 du 23/12/2025, 2024-24 du 26/07/2024, 2022-32 du 05/12/2022 ; article D. 633-2 CSS ; urssaf.fr",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+    "urlsComplementaires": [
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_24_26072024.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_32_05122022.pdf",
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://www.urssaf.fr/accueil/outils-documentation/taux-baremes/taux-cotisations-ac-plnr.html"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseValidationDesTrimestres": {
+    "valeurs": {
+      "regle": "Comme au regime general (article R. 351-9 CSS, rendu applicable par D. 634-1) : autant de trimestres que le revenu cotise de l'annee represente de fois 150 Smic horaires (200 de 1972 a 2013), dans la limite de 4 par annee civile. Pour un independant, le revenu cotise se deduit de la cotisation payee : revenu cotise = cotisation de retraite de base / taux.",
+      "heuresDeSmicParTrimestre": [
+        {
+          "periode": "1972-2013",
+          "heures": 200
+        },
+        {
+          "periode": "depuis 2014",
+          "heures": 150
+        }
+      ],
+      "maximumParAn": 4,
+      "seuils2026": {
+        "revenuCotiseEnEuros": {
+          "1": 1803,
+          "2": 3606,
+          "3": 5409,
+          "4": 7212
+        },
+        "cotisationEnEuros": {
+          "1": 322,
+          "2": 644,
+          "3": 967,
+          "4": 1289
+        }
+      },
+      "effetDeLaCotisationMinimale": "La cotisation calculee sur l'assiette minimale valide 3 trimestres par an (depuis 2016 ; 2 trimestres seulement auraient ete valides en 2022 sans l'assiette derogatoire). Si le compte est arrete en cours d'annee (depart a la retraite), le nombre de trimestres est limite par la date d'arret du compte.",
+      "trimestresParAffiliation": "Sur demande et sous conditions (duree minimale d'affiliation, cotisations a jour, versement d'une cotisation), validation d'un trimestre par periode de 90 jours d'affiliation quand moins de 4 trimestres sont valides (article L. 634-2-1 II CSS) ; ces trimestres ne comptent pas pour la retraite anticipee carriere longue. Parametres fixes par decret : non releves.",
+      "rachat": "Versement complementaire de cotisations pour valider l'annee entiere (L. 634-2-1 I, D. 634-2-1) : non detaille.",
+      "seuilsHistoriques": "Voir cnav.json (validationTrimestre, smicHoraire) : memes seuils de revenu.",
+      "citations": [
+        "Circulaire Cnav 2025-33, 2.2 : 'le salaire ou revenu cotise a retenir en 2026 est de : 1 803 euros pour la validation d'un trimestre ; 3 606 euros [...] ; 5 409 euros [...] ; 7212 euros pour la validation de quatre trimestres. Ainsi, concernant les travailleurs independants, le montant de cotisations a retenir en 2026 est de : 322 euros pour la validation d'un trimestre ; 644 euros pour la validation de deux trimestres ; 967 euros pour la validation de trois trimestres ; 1 289 euros pour la validation de quatre trimestres.'",
+        "Circulaire Cnav 2022-32, exemple 2020 : 'Cotisation calculee a partir de l'assiette minimale : 4 731 X 17,75% = 839,75 EUR arrondi a 840 EUR ; Revenu cotise : 840 / 17,75% = 4 732,39 EUR ; Valeur d'un trimestre en 2020 : 150x10,15 = 1 522,50 EUR ; Nombre de trimestres valides en 2020 : 4 732,39/ 1522,50 = 3,10 trimestres arrondis a 3 trimestres'",
+        "Circulaire Cnav 2024-24, 2 : 'Lorsque le travailleur independant non agricole s'acquitte des cotisations de retraite de base calculees a partir de l'assiette minimale, cela lui permet de valider trois trimestres d'assurance par annee civile.'"
+      ]
+    },
+    "source": "Circulaires Cnav 2025-33, 2024-24, 2022-32 ; articles R. 351-9, L. 634-2-1, D. 634-1, D. 634-2-1 CSS",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_33_23122025.pdf",
+    "urlsComplementaires": [
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2024_24_26072024.pdf",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2022_32_05122022.pdf",
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseCalculDeLaPension": {
+    "valeurs": {
+      "regle": "Pour les periodes posterieures au 31 decembre 1972, la pension de base est calculee, liquidee et servie comme au regime general (taux, decote, surcote, duree d'assurance, minimum contributif : voir cnav.json), le 'salaire annuel de base' etant remplace par le 'revenu annuel moyen'.",
+      "revenuAnnuelMoyen": "Determine comme le salaire annuel moyen (article R. 351-29), sur les revenus cotises posterieurs au 31 decembre 1972 (article D. 634-3 CSS) ; 25 meilleures annees pour les pensions prenant effet apres le 31/12/2012 (note IPP sur l'ancien article R. 634-1-1 ; avant, de 10 annees pour les generations d'avant 1934 a 25 pour celles d'apres 1953).",
+      "coefficientsDeRevalorisation": "Ceux du regime general : 'Ces coefficients de revalorisation s'appliquent aux revenus des travailleurs independants a compter de 1973.' (circulaire Cnav 2025-29)",
+      "minimumContributif": "Attribue au titre des periodes posterieures au 31 decembre 1972 (article D. 634-6 CSS)",
+      "citation": "Article L. 634-2 CSS : 'les prestations d'assurance vieillesse de base dont beneficient les travailleurs independants mentionnes a l'article L. 631-1 sont calculees, liquidees et servies dans les conditions definies aux chapitres Ier a V et VIII du titre V du livre III [...]. Pour l'application du premier alinea du present article, les mots : \" salaire annuel de base \" sont remplaces par les mots : \" revenu annuel moyen \".'"
+    },
+    "source": "Code de la securite sociale, edition consolidee du 2026-11-20 (codes.droit.org, produite a partir des API Legifrance ; Legifrance refuse la lecture automatique) : articles L. 634-2, D. 634-1, D. 634-3, D. 634-6 ; baremes IPP (nombre d'annees du RAM, secondaire) ; circulaire Cnav 2025-29",
+    "url": "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+    "urlsComplementaires": [
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.ram/table",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseAlignement1973": {
+    "valeurs": {
+      "dateEffet": "1973-01-01",
+      "texte": "Loi n 72-554 du 3 juillet 1972 (texte non lu directement ; reference lue dans une reponse ministerielle et dans les baremes IPP)",
+      "regle": "A compter du 1er janvier 1973, les regimes d'assurance vieillesse des artisans et des industriels et commercants sont alignes sur le regime general : memes cotisations, memes prestations. Les droits d'avant 1973 restent calcules et servis selon les regles en vigueur au 31 decembre 1972 (regime en points, article L. 634-3 CSS).",
+      "tauxDeCotisation1973EnPourcent": 8.75,
+      "integrationAuRegimeGeneral": "Depuis janvier 2020, les independants sont affilies au regime general pour leur retraite de base (fiche COR) ; les articles L. 631-1 et suivants du CSS sont issus de la loi n 2017-1836 du 30 decembre 2017 (art. 15), non lue.",
+      "citations": [
+        "Reponse ministerielle a la question ecrite n 57133 (AN, 9e legislature, question publiee le 27 avril 1992) : 'La loi no 72-554 du 3 juillet 1972 a aligne les regimes d'assurance vieillesse des artisans, des industriels et des commercants sur le regime general de la securite sociale a compter du 1er janvier 1973. Les assures cotisent selon les memes modalites que dans le regime general et, en contrepartie, obtiennent les memes avantages.'",
+        "Article D. 634-1 CSS : 'Sont applicables, en matiere d'assurance vieillesse, aux travailleurs independants mentionnes a l'article L. 631-1, et ce pour les periodes posterieures au 31 decembre 1972, les dispositions reglementaires des chapitres 1er a 5 et 8 du titre V du livre III'",
+        "Fiche COR RCI : 'Depuis janvier 2020, les travailleurs independants (artisans, commercants et professions liberales) sont affilies au regime general pour leur retraite de base a l'exception des professions liberales reglementees.'"
+      ]
+    },
+    "source": "Assemblee nationale, question ecrite n 57133 (reponse ministerielle, 1992) ; articles L. 634-3 et D. 634-1 CSS ; baremes IPP (taux 1973, secondaire)",
+    "url": "https://www.assemblee-nationale.fr/dyn/9/questions/QANR5L9QE57133.pdf",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseLiquidationUnique": {
+    "valeurs": {
+      "sigle": "Lura",
+      "dateEffet": "2017-07-01",
+      "referenceLegale": "Article L. 173-1-2 CSS, cree par l'article 43 de la loi n 2014-40 du 20 janvier 2014 ; articles R. 173-4-4 et R. 173-4-4-1 CSS (decrets n 2016-1188 du 1er septembre 2016 et n 2017-735 du 3 mai 2017) ; entree en vigueur fixee par l'article 4 du decret n 2017-737 du 3 mai 2017",
+      "regimesConcernes": [
+        "regime general",
+        "regime des salaries agricoles",
+        "regime des independants (ex-RSI)"
+      ],
+      "champ": "Assures nes a compter du 1er janvier 1953, pour les retraites prenant effet a compter du 1er juillet 2017, ayant releve d'au moins deux de ces regimes",
+      "regle": "Une seule pension de base, calculee et servie par un seul regime, qui en supporte toute la charge, selon ses propres regles de liquidation.",
+      "totalisation": [
+        "revenus et salaires cotises additionnes par annee civile, ecretes au plafond annuel de la securite sociale de l'annee",
+        "trimestres additionnes, dans la limite de 4 par annee civile",
+        "revenu annuel moyen sur les 25 meilleures annees de l'ensemble (nombre d'annees non proratise)",
+        "duree de proratisation : ensemble des trimestres valides dans les trois regimes"
+      ],
+      "regimeCompetent": {
+        "principe": "le regime auquel l'assure a ete affilie en dernier lieu",
+        "affiliationsSimultanees": "celui qui prend en charge les frais de sante",
+        "derogations": [
+          "regime general lorsque l'assure independant justifie de periodes d'assurance ou d'activite independante anterieures au 1er janvier 1973 (regime en points), peut pretendre a une pension pour inaptitude substituee a une pension d'invalidite des independants, ou 'demande le service d'une fraction de sa pension en application de l'article L. 161-22-1-5' (R. 173-4-4, 3° a, version 2026 ; en 2017 cette derogation designait le RSI)",
+          "regime general ou salaries agricoles en cas de retraite pour incapacite permanente",
+          "salaries agricoles en cas de carriere de non-salarie agricole"
+        ]
+      },
+      "avantLura": "Pour les pensions prenant effet avant le 1er juillet 2017 ou les assures nes avant 1953 : une pension par regime aligne, chacune calculee sur ses propres revenus (deduction du champ ci-dessus ; regles de calcul des polypensionnes d'avant Lura non lues).",
+      "citations": [
+        "Article L. 173-1-2 CSS : 'I. - Lorsqu'un assure releve ou a releve successivement, alternativement ou simultanement du regime general de securite sociale, du regime des salaries agricoles et du regime social des independants et demande a liquider l'un de ses droits a pension de vieillesse aupres d'un des regimes concernes, il est repute avoir demande a liquider l'ensemble de ses pensions de droit direct aupres desdits regimes.' ; 'II. - La pension est calculee, en fonction des parametres prevus au I, par un seul des regimes concernes, en fonction de ses modalites et regles de liquidation.' ; 'III bis. - Le present article est applicable aux assures nes a compter du 1er janvier 1953.'",
+        "Article R. 173-4-4 CSS : 'Le regime competent pour liquider la pension dans les conditions definies a l'article L. 173-1-2 est : 1° Le regime auquel l'assure a ete affilie en dernier lieu'",
+        "Circulaire Cnav 2017-27 : 'L'article 4 du decret n° 2017-737 du 3 mai 2017 a fixe l'entree en vigueur de la Lura au 1er juillet 2017.' ; 'La somme des salaires et revenus ne peut pas exceder le montant du plafond annuel de securite sociale en vigueur au cours de l'annee consideree.'"
+      ]
+    },
+    "source": "Articles L. 173-1-2 et R. 173-4-4 CSS (edition du 2026-11-20) ; circulaire Cnav 2017-27 du 21 juillet 2017",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2017_27_21072017.pdf",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "complementairesAvant2013": {
+    "valeurs": {
+      "artisans": {
+        "regime": "Regime complementaire obligatoire des artisans (RCO), en points, obligatoire depuis le 1er janvier 1979 (COR : 'RCO, cree en 1979') ; l'IPP date du decret 78-351 du 14 mars 1978 l'institution du regime et donne un taux des le 01/01/1978",
+        "tauxCotisation": {
+          "unite": "pourcent",
+          "assietteJusquA3Pass": [
+            {
+              "annee": 1978,
+              "dateEffet": "1978-01-01",
+              "valeur": 4.4,
+              "reference": "Décret 78-351 du 14/03/1978"
+            },
+            {
+              "annee": 1985,
+              "dateEffet": "1985-01-01",
+              "valeur": 4.5,
+              "reference": "Décret 84-1064 du 30/11/1984"
+            },
+            {
+              "annee": 1997,
+              "dateEffet": "1997-01-01",
+              "valeur": 4.9,
+              "reference": "Décret 97-166 du 24/02/1997 - art. 2"
+            }
+          ],
+          "assietteJusquA4Pass": [
+            {
+              "annee": 1998,
+              "dateEffet": "1998-01-01",
+              "valeur": 5.3,
+              "reference": "Décret 97-166 du 24/02/1997 - art. 2"
+            },
+            {
+              "annee": 1999,
+              "dateEffet": "1999-01-01",
+              "valeur": 5.7,
+              "reference": "Décret 97-166 du 24/02/1997 - art. 2"
+            },
+            {
+              "annee": 2000,
+              "dateEffet": "2000-01-01",
+              "valeur": 6.0,
+              "reference": "Décret 97-166 du 24/02/1997 - art. 2"
+            },
+            {
+              "annee": 2003,
+              "dateEffet": "2003-01-01",
+              "valeur": 6.2,
+              "reference": "Décret 2003-1025 du 28/10/2003 - art. 1"
+            },
+            {
+              "annee": 2004,
+              "dateEffet": "2004-01-01",
+              "valeur": 6.7,
+              "reference": "Loi 2003-775 du 21/08/2003 - art. 88Décret 2004-848 du 23/08/2004 - art. 1"
+            },
+            {
+              "annee": 2004,
+              "dateEffet": "2004-07-01",
+              "valeur": 6.7,
+              "reference": "Décret 2004-848 du 23/08/2004 - art. 1"
+            },
+            {
+              "annee": 2005,
+              "dateEffet": "2005-01-01",
+              "valeur": 7.0,
+              "reference": "Décret 2005-272 du 23/03/2005Décret 2004-848 du 23/08/2004 - art. 1"
+            }
+          ],
+          "sousLePass": [
+            {
+              "annee": 2008,
+              "dateEffet": "2008-01-01",
+              "valeur": 7.0,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)Décret 2008-22 du 7/01/2008"
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-01-01",
+              "valeur": 7.1,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-01-01",
+              "valeur": 7.2,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            }
+          ],
+          "entre1Et4Pass": [
+            {
+              "annee": 2008,
+              "dateEffet": "2008-01-01",
+              "valeur": 7.0,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)Décret 2008-22 du 7/01/2008"
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-01-01",
+              "valeur": 7.5,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-01-01",
+              "valeur": 7.6,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            }
+          ],
+          "note": "Colonnes de la table IPP : 'Taux sous 3 PSS' (1978-1997), 'Taux sous 4 PSS' (1998-2007), puis 'Taux sous 1 PSS' et 'Taux entre 1 et 4 PSS' (2008-2010). Pas de ligne 2011-2012 : le taux de 2010 est repute inchange par la source, non verifie."
+        },
+        "valeurDeServiceDuPoint": {
+          "avant2009": [
+            {
+              "annee": 1980,
+              "dateEffet": "1980-01-01",
+              "valeur": 0.728,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1980,
+              "dateEffet": "1980-07-01",
+              "valeur": 0.786,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1981,
+              "dateEffet": "1981-01-01",
+              "valeur": 0.836,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1981,
+              "dateEffet": "1981-07-01",
+              "valeur": 0.88,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1982,
+              "dateEffet": "1982-01-01",
+              "valeur": 0.94,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1982,
+              "dateEffet": "1982-07-01",
+              "valeur": 0.996,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1983,
+              "dateEffet": "1983-01-01",
+              "valeur": 1.043,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1983,
+              "dateEffet": "1983-07-01",
+              "valeur": 1.085,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1984,
+              "dateEffet": "1984-01-01",
+              "valeur": 1.134,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1984,
+              "dateEffet": "1984-07-01",
+              "valeur": 1.196,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1985,
+              "dateEffet": "1985-01-01",
+              "valeur": 1.232,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1985,
+              "dateEffet": "1985-07-01",
+              "valeur": 1.266,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1986,
+              "dateEffet": "1986-01-01",
+              "valeur": 1.282,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1986,
+              "dateEffet": "1986-07-01",
+              "valeur": 1.296,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1987,
+              "dateEffet": "1987-01-01",
+              "valeur": 1.322,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1987,
+              "dateEffet": "1987-07-01",
+              "valeur": 1.346,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1988,
+              "dateEffet": "1988-01-01",
+              "valeur": 1.382,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1988,
+              "dateEffet": "1988-07-01",
+              "valeur": 1.408,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1989,
+              "dateEffet": "1989-01-01",
+              "valeur": 1.43,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1989,
+              "dateEffet": "1989-07-01",
+              "valeur": 1.466,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1990,
+              "dateEffet": "1990-01-01",
+              "valeur": 1.498,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1990,
+              "dateEffet": "1990-07-01",
+              "valeur": 1.536,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1991,
+              "dateEffet": "1991-01-01",
+              "valeur": 1.568,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1991,
+              "dateEffet": "1991-07-01",
+              "valeur": 1.598,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1992,
+              "dateEffet": "1992-01-01",
+              "valeur": 1.624,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1992,
+              "dateEffet": "1992-07-01",
+              "valeur": 1.652,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1993,
+              "dateEffet": "1993-01-01",
+              "valeur": 1.674,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1993,
+              "dateEffet": "1993-07-01",
+              "valeur": 1.694,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1994,
+              "dateEffet": "1994-01-01",
+              "valeur": 1.71,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1995,
+              "dateEffet": "1995-01-01",
+              "valeur": 1.73,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1996,
+              "dateEffet": "1996-07-01",
+              "valeur": 1.761,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1997,
+              "dateEffet": "1997-01-01",
+              "valeur": 1.803,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1999,
+              "dateEffet": "1999-01-01",
+              "valeur": 1.8084,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 2000,
+              "dateEffet": "2000-01-01",
+              "valeur": 1.83,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 2001,
+              "dateEffet": "2001-01-01",
+              "valeur": 0.2847,
+              "monnaie": "francs",
+              "note": "monnaie douteuse dans la source ('FRF') : l'ordre de grandeur est celui d'un montant en euros"
+            },
+            {
+              "annee": 2002,
+              "dateEffet": "2002-01-01",
+              "valeur": 0.2845
+            },
+            {
+              "annee": 2002,
+              "dateEffet": "2002-07-01",
+              "valeur": 0.2873
+            },
+            {
+              "annee": 2003,
+              "dateEffet": "2003-01-01",
+              "valeur": 0.28728
+            },
+            {
+              "annee": 2006,
+              "dateEffet": "2006-01-01",
+              "valeur": 0.29012
+            },
+            {
+              "annee": 2007,
+              "dateEffet": "2007-01-01",
+              "valeur": 0.29259
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-01-01",
+              "valeur": 0.29331
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-09-01",
+              "valeur": 0.2977
+            }
+          ],
+          "pointsAcquisAvant1979": [
+            {
+              "annee": 2009,
+              "dateEffet": "2009-04-01",
+              "valeur": 0.30045
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-04-01",
+              "valeur": 0.30163
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-04-01",
+              "valeur": 0.30372
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-04-01",
+              "valeur": 0.30582
+            }
+          ],
+          "pointsAcquis1979a1996": [
+            {
+              "annee": 2009,
+              "dateEffet": "2009-04-01",
+              "valeur": 0.30186
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-04-01",
+              "valeur": 0.30367
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-04-01",
+              "valeur": 0.30686
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-04-01",
+              "valeur": 0.31008
+            }
+          ],
+          "pointsAcquis1997a2012": [
+            {
+              "annee": 2009,
+              "dateEffet": "2009-04-01",
+              "valeur": 0.30603
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-04-01",
+              "valeur": 0.3097
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-04-01",
+              "valeur": 0.3162
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-04-01",
+              "valeur": 0.32284
+            }
+          ],
+          "note": "Points RCO d'avant conversion. 'A partir de 2009, la valeur du point est differenciee selon l'annee d'acquisition du points.' (note IPP). Sources de l'IPP : capital.fr et rsi.fr."
+        },
+        "valeurDAchatDuPoint": {
+          "serie": [
+            {
+              "annee": 1979,
+              "dateEffet": "1979-01-01",
+              "valeur": 5.86,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1980,
+              "dateEffet": "1980-01-01",
+              "valeur": 6.58,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1981,
+              "dateEffet": "1981-01-01",
+              "valeur": 7.46,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1982,
+              "dateEffet": "1982-01-01",
+              "valeur": 8.41,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1983,
+              "dateEffet": "1983-01-01",
+              "valeur": 9.25,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1984,
+              "dateEffet": "1984-01-01",
+              "valeur": 10.13,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1985,
+              "dateEffet": "1985-01-01",
+              "valeur": 10.86,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1986,
+              "dateEffet": "1986-01-01",
+              "valeur": 11.21,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1987,
+              "dateEffet": "1987-01-01",
+              "valeur": 11.6,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1988,
+              "dateEffet": "1988-01-01",
+              "valeur": 12.13,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1989,
+              "dateEffet": "1989-01-01",
+              "valeur": 12.59,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1990,
+              "dateEffet": "1990-01-01",
+              "valeur": 13.19,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1991,
+              "dateEffet": "1991-01-01",
+              "valeur": 13.77,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1992,
+              "dateEffet": "1992-01-01",
+              "valeur": 14.24,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1993,
+              "dateEffet": "1993-01-01",
+              "valeur": 14.64,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1994,
+              "dateEffet": "1994-01-01",
+              "valeur": 14.87,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1995,
+              "dateEffet": "1995-01-01",
+              "valeur": 15.04,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1996,
+              "dateEffet": "1996-01-01",
+              "valeur": 15.38,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1998,
+              "dateEffet": "1998-01-01",
+              "valeur": 17.46,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 1999,
+              "dateEffet": "1999-01-01",
+              "valeur": 20.36,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 2000,
+              "dateEffet": "2000-01-01",
+              "valeur": 21.53,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 2001,
+              "dateEffet": "2001-01-01",
+              "valeur": 22.23,
+              "monnaie": "francs"
+            },
+            {
+              "annee": 2002,
+              "dateEffet": "2002-01-01",
+              "valeur": 3.382
+            },
+            {
+              "annee": 2003,
+              "dateEffet": "2003-01-01",
+              "valeur": 3.731
+            },
+            {
+              "annee": 2004,
+              "dateEffet": "2004-01-01",
+              "valeur": 3.882
+            },
+            {
+              "annee": 2005,
+              "dateEffet": "2005-01-01",
+              "valeur": 4.104
+            },
+            {
+              "annee": 2006,
+              "dateEffet": "2006-01-01",
+              "valeur": 4.145
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-09-01",
+              "valeur": 4.207
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-04-01",
+              "valeur": 4.324
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-01-01",
+              "valeur": 4.692
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-04-01",
+              "valeur": 4.79053
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-04-01",
+              "valeur": 4.89113
+            }
+          ],
+          "note": "Revenu de reference RCO d'avant conversion. Sources de l'IPP : capital.fr et rsi.fr."
+        }
+      },
+      "commercants": {
+        "regime": "Nouveau regime complementaire obligatoire des industriels et commercants (NRCO), en points, obligatoire depuis le 1er janvier 2004 (loi n 2003-775 du 21 aout 2003, art. 88, cite par l'IPP) ; avant, regime complementaire facultatif et regime des conjoints de commercants (1973-2003), ferme au 31/12/2003",
+        "tauxCotisation": {
+          "unite": "pourcent",
+          "assietteJusquA3Pass": [
+            {
+              "annee": 2004,
+              "dateEffet": "2004-01-01",
+              "valeur": 3.5,
+              "reference": "Loi 2003-775 du 21/08/2003 - art. 88Décret 2004-848 du 23/08/2004 - art. 1"
+            },
+            {
+              "annee": 2004,
+              "dateEffet": "2004-07-01",
+              "valeur": 4.5,
+              "reference": "Décret 2004-848 du 23/08/2004 - art. 1"
+            },
+            {
+              "annee": 2005,
+              "dateEffet": "2005-01-01",
+              "valeur": 6.5,
+              "reference": "Décret 2005-272 du 23/03/2005Décret 2004-848 du 23/08/2004 - art. 1"
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-01-01",
+              "valeur": 6.5,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)Décret 2008-22 du 7/01/2008"
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-01-01",
+              "valeur": 6.5,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-01-01",
+              "valeur": 6.5,
+              "reference": "Décret 2007-1900 du 26/12/2007 - art. 1 (V)"
+            }
+          ],
+          "note": "'Pour les industriels et commercants, taux de 3,5% sous 3 PSS pour le 1er semestre 2004, et 4,5% sous 3 PSS pour le 2eme semestre 2004' (note IPP)"
+        },
+        "valeurDeServiceDuPoint": {
+          "serie": [
+            {
+              "annee": 2004,
+              "dateEffet": "2004-01-01",
+              "valeur": 1.0
+            },
+            {
+              "annee": 2005,
+              "dateEffet": "2005-01-01",
+              "valeur": 1.016
+            },
+            {
+              "annee": 2006,
+              "dateEffet": "2006-01-01",
+              "valeur": 1.036
+            },
+            {
+              "annee": 2007,
+              "dateEffet": "2007-01-01",
+              "valeur": 1.055
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-01-01",
+              "valeur": 1.067
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-01-01",
+              "valeur": 1.102
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-01-01",
+              "valeur": 1.11
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-01-01",
+              "valeur": 1.138
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-01-01",
+              "valeur": 1.162
+            }
+          ],
+          "note": "Sources de l'IPP : capital.fr et rsi.fr."
+        },
+        "valeurDAchatDuPoint": {
+          "serie": [
+            {
+              "annee": 2004,
+              "dateEffet": "2004-01-01",
+              "valeur": 13.89
+            },
+            {
+              "annee": 2005,
+              "dateEffet": "2005-01-01",
+              "valeur": 14.112
+            },
+            {
+              "annee": 2006,
+              "dateEffet": "2006-01-01",
+              "valeur": 14.389
+            },
+            {
+              "annee": 2007,
+              "dateEffet": "2007-01-01",
+              "valeur": 14.648
+            },
+            {
+              "annee": 2008,
+              "dateEffet": "2008-12-01",
+              "valeur": 14.809
+            },
+            {
+              "annee": 2009,
+              "dateEffet": "2009-04-01",
+              "valeur": 15.3
+            },
+            {
+              "annee": 2010,
+              "dateEffet": "2010-04-01",
+              "valeur": 15.483
+            },
+            {
+              "annee": 2011,
+              "dateEffet": "2011-04-01",
+              "valeur": 15.808
+            },
+            {
+              "annee": 2012,
+              "dateEffet": "2012-04-01",
+              "valeur": 16.14
+            }
+          ],
+          "note": "Source de l'IPP : bareme legislation.cnav.fr (disparu)."
+        }
+      },
+      "repriseDansLeRci": {
+        "dateEffet": "2013-01-01",
+        "principe": "Tous les points acquis ou a acquerir au titre des periodes anterieures au 1er janvier 2013 sont repris dans le RCI (art. 7 et 8 du reglement)",
+        "commercants": "points NRCO reportes sans conversion (1 point NRCO = 1 point RCI)",
+        "artisans": "points RCO multiplies par le coefficient de conversion, annee civile par annee civile, resultat arrondi a l'entier le plus proche",
+        "coefficientDeConversionRco": 0.2778,
+        "formule": "valeur la plus haute du point cotise RCO au 31/12/2012 (0,32284 EUR) / valeur du point NRCO au 31/12/2012 (1,162 EUR) = 0,277831325, arrondi a 0,2778",
+        "revenusDeReferenceRcoConvertis": "revenu de reference RCO de l'annee / 0,2778 (5 decimales), pour les cotisations d'avant 2013 payees apres",
+        "valeursDeServiceApresReprise": "trois valeurs : points de reconstitution de carriere RCO (avant 1979) ; points RCO acquis de 1979 a 1996 ; tous les autres (RCI, RCO depuis 1997, NRCO, conjoints de commercants) : voir rciValeurDeServiceDuPoint",
+        "conjointsDeCommercants": "droits 1973-2003 de l'ancien regime des conjoints convertis en points 'RC' : pension fictive figee au 31/12/2003 divisee par la valeur du point NRCO au 31/12/2003 (1 EUR)",
+        "nonRepris": "points gratuits pour mere de famille du RCO, non millesimes : non pris en compte pour les pensions prenant effet a compter du 1er janvier 2013",
+        "entrepreneursDuBatiment": "droits du RCEBTP convertis en points RCI au 1er janvier 2023 (fiche COR ; regle de conversion non lue)",
+        "citation": "Circulaire RSI 2013/004, annexe 1, 1.1.1.1.2 : 'Coefficient de conversion = 0,32284 / 1,162 = 0.277831325 arrondi a 0,2778' ; 1.2.1.1 : 'Sont reportes au credit du compte de points RCI de l'assure, sans operation de conversion, les points acquis au titre des cotisations versees dans le regime complementaire obligatoire d'assurance vieillesse des professions industrielles et commerciales (NRCO)'",
+        "source": "Circulaire RSI 2013/004 du 17/01/2013",
+        "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf"
+      }
+    },
+    "note": "Series de taux et de valeurs de point : baremes IPP, source secondaire non recoupee. Regle de reprise : circulaire RSI (primaire).",
+    "source": "Baremes IPP (secondaire) ; circulaire RSI 2013/004 ; fiche RCI du COR",
+    "url": "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/",
+    "urlsComplementaires": [
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.pt_rc_art/table",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.pt_rc_com/table",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.salref_rc_art/table",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.salref_rc_com/table",
+      "https://www.ipp.eu/baremes-ipp/prelevements-sociaux/prelevements_sociaux.cotisations_taxes_independants_artisans_commercants.ret_comp_ac/table",
+      "https://legislation.lassuranceretraite.fr/Pdf/circulaire_rsi_2013_004_17012013.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "baseAvant1973": {
+    "valeurs": {
+      "regle": "Avant 1973, les regimes de base des artisans (CANCAVA) et des industriels et commercants (ORGANIC) fonctionnaient en points. Ces droits restent calcules, liquides et servis selon les regles en vigueur au 31 decembre 1972 : pension = nombre de points x valeur du point, la valeur du point suivant les coefficients de revalorisation des pensions (article L. 634-3 CSS).",
+      "valeurDuPoint2026": {
+        "dateEffet": "2026-01-01",
+        "monnaie": "euros",
+        "unite": "euros par point et par an",
+        "commercants": 14.84302,
+        "commercantsRachatGlobal": 13.86835,
+        "artisans": 10.7637,
+        "artisansParMois": 0.89697,
+        "cotisationRegularisationAideFamilialArtisan": 102.44,
+        "coefficientDeRevalorisation": 1.009,
+        "citation": "Circulaire Cnav 2025-29, 14 : 'Point de retraite RVB commercant : Sa valeur est portee au 1er janvier 2026 a 14,84302 euros par an.' ; 'Point de retraite de base RVB artisan : Sa valeur est portee au 1er janvier 2026 a 10,7637 euros par an et a 0,89697 euro par mois.'",
+        "source": "Circulaire Cnav 2025-29 du 22/12/2025",
+        "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf"
+      },
+      "baseDeCalculDesPointsCommercantsApres1973": {
+        "regle": "5 % du plafond annuel de la securite sociale",
+        "valeur2026EnEuros": 2403,
+        "citation": "Circulaire Cnav 2026-01, 10 : 'Base de calcul des points de retraite vieillesse de base (RVB) posterieurs a 1973 pour les commercants [...] Cette valeur correspond a 5 % du plafond annuel de la securite sociale soit 2 403 euros au 1er janvier 2026.'",
+        "note": "Usage exact non explique dans la circulaire (renvoi au decret 73-937 du 2 octobre 1973 et au decret 66-248 du 31 mars 1966, non lus).",
+        "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2026_01_05012026.pdf"
+      },
+      "valeurDuPointArtisansCancava": {
+        "serie": [
+          {
+            "annee": 1973,
+            "dateEffet": "1973-01-01",
+            "valeur": 7.13,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-01-01",
+            "valeur": 8.21,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-07-01",
+            "valeur": 8.76,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-01-01",
+            "valeur": 12.0,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-07-01",
+            "valeur": 13.34,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-01-01",
+            "valeur": 14.89,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-07-01",
+            "valeur": 16.18,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-01-01",
+            "valeur": 17.51,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-07-01",
+            "valeur": 18.28,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-01-01",
+            "valeur": 19.47,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-07-01",
+            "valeur": 20.25,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-01-01",
+            "valeur": 21.34,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-07-01",
+            "valeur": 22.7,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-01-01",
+            "valeur": 24.22,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-07-01",
+            "valeur": 25.72,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-01-01",
+            "valeur": 27.44,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-07-01",
+            "valeur": 29.47,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-01-01",
+            "valeur": 30.65,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-07-01",
+            "valeur": 31.88,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-01-01",
+            "valeur": 32.45,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-07-01",
+            "valeur": 33.16,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-01-01",
+            "valeur": 34.29,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-07-01",
+            "valeur": 35.25,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-01-01",
+            "valeur": 35.71,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-01-01",
+            "valeur": 36.54,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-07-01",
+            "valeur": 36.9,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-01-01",
+            "valeur": 37.86,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-07-01",
+            "valeur": 38.35,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-01-01",
+            "valeur": 38.85,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-07-01",
+            "valeur": 39.32,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-01-01",
+            "valeur": 40.17,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-07-01",
+            "valeur": 40.69,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-01-01",
+            "valeur": 41.382,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-07-01",
+            "valeur": 41.713,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-01-01",
+            "valeur": 42.13,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-07-01",
+            "valeur": 42.888,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1993,
+            "dateEffet": "1993-01-01",
+            "valeur": 43.446,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1994,
+            "dateEffet": "1994-01-01",
+            "valeur": 44.315,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-01-01",
+            "valeur": 44.847,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-07-01",
+            "valeur": 45.071,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1996,
+            "dateEffet": "1996-01-01",
+            "valeur": 45.972,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1997,
+            "dateEffet": "1997-01-01",
+            "valeur": 46.524,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1998,
+            "dateEffet": "1998-01-01",
+            "valeur": 47.036,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1999,
+            "dateEffet": "1999-01-01",
+            "valeur": 47.6004,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2000,
+            "dateEffet": "2000-01-01",
+            "valeur": 47.838,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2001,
+            "dateEffet": "2001-01-01",
+            "valeur": 48.8904,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2002,
+            "dateEffet": "2002-01-01",
+            "valeur": 7.6171
+          },
+          {
+            "annee": 2003,
+            "dateEffet": "2003-01-01",
+            "valeur": 7.7313
+          },
+          {
+            "annee": 2003,
+            "dateEffet": "2003-07-01",
+            "valeur": 7.8627
+          },
+          {
+            "annee": 2005,
+            "dateEffet": "2005-01-01",
+            "valeur": 8.0199
+          },
+          {
+            "annee": 2006,
+            "dateEffet": "2006-01-01",
+            "valeur": 8.1642
+          },
+          {
+            "annee": 2007,
+            "dateEffet": "2007-01-01",
+            "valeur": 8.3111
+          },
+          {
+            "annee": 2008,
+            "dateEffet": "2008-01-01",
+            "valeur": 8.4025
+          },
+          {
+            "annee": 2008,
+            "dateEffet": "2008-09-01",
+            "valeur": 8.4697
+          },
+          {
+            "annee": 2009,
+            "dateEffet": "2009-04-01",
+            "valeur": 8.5543
+          },
+          {
+            "annee": 2010,
+            "dateEffet": "2010-04-01",
+            "valeur": 8.6312
+          },
+          {
+            "annee": 2011,
+            "dateEffet": "2011-04-01",
+            "valeur": 8.8124
+          },
+          {
+            "annee": 2012,
+            "dateEffet": "2012-04-01",
+            "valeur": 8.9974
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 9.1234
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 9.1963
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 9.2238
+          }
+        ],
+        "note": "Valeur annuelle. Baremes IPP (secondaire ; 'Sources : Documentation CANCAVA et RSI'), 1973-2019."
+      },
+      "valeurDuPointCommercantsOrganic": {
+        "pointsAcquisParCotisations": [
+          {
+            "annee": 1949,
+            "dateEffet": "1949-10-01",
+            "valeur": 2.5,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1951,
+            "dateEffet": "1951-07-01",
+            "valeur": 2.8,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1952,
+            "dateEffet": "1952-10-01",
+            "valeur": 3.05,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1955,
+            "dateEffet": "1955-01-01",
+            "valeur": 3.5,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1956,
+            "dateEffet": "1956-10-01",
+            "valeur": 3.85,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1958,
+            "dateEffet": "1958-07-01",
+            "valeur": 4.1,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1960,
+            "dateEffet": "1960-10-01",
+            "valeur": 4.76,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1963,
+            "dateEffet": "1963-01-01",
+            "valeur": 5.5,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1966,
+            "dateEffet": "1966-07-01",
+            "valeur": 6.8,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1967,
+            "dateEffet": "1967-10-01",
+            "valeur": 6.96,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1968,
+            "dateEffet": "1968-10-01",
+            "valeur": 7.16,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1970,
+            "dateEffet": "1970-04-01",
+            "valeur": 7.72,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1971,
+            "dateEffet": "1971-04-01",
+            "valeur": 8.12,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1972,
+            "dateEffet": "1972-04-01",
+            "valeur": 8.56,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1972,
+            "dateEffet": "1972-10-01",
+            "valeur": 9.84,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-01-01",
+            "valeur": 11.34,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-07-01",
+            "valeur": 12.1,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-01-01",
+            "valeur": 13.22,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-07-01",
+            "valeur": 14.9,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-01-01",
+            "valeur": 16.58,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-07-01",
+            "valeur": 18.44,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1977,
+            "dateEffet": "1977-01-01",
+            "valeur": 20.58,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1977,
+            "dateEffet": "1977-07-01",
+            "valeur": 22.37,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-01-01",
+            "valeur": 24.2,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-07-01",
+            "valeur": 25.26,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-01-01",
+            "valeur": 26.9,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-07-01",
+            "valeur": 27.98,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-01-01",
+            "valeur": 29.49,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-07-01",
+            "valeur": 31.37,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-01-01",
+            "valeur": 33.38,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-07-01",
+            "valeur": 35.55,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-01-01",
+            "valeur": 37.94,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-07-01",
+            "valeur": 40.74,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-01-01",
+            "valeur": 42.37,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-07-01",
+            "valeur": 44.06,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-01-01",
+            "valeur": 44.85,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-07-01",
+            "valeur": 45.84,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-01-01",
+            "valeur": 47.4,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-07-01",
+            "valeur": 48.73,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-01-01",
+            "valeur": 49.36,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-07-01",
+            "valeur": 49.61,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-01-01",
+            "valeur": 50.5,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-07-01",
+            "valeur": 51.0,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-01-01",
+            "valeur": 52.33,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-07-01",
+            "valeur": 53.0,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-01-01",
+            "valeur": 53.69,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-07-01",
+            "valeur": 54.33,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-01-01",
+            "valeur": 55.5,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-07-01",
+            "valeur": 56.22,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-01-01",
+            "valeur": 57.18,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-07-01",
+            "valeur": 57.64,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-01-01",
+            "valeur": 58.22,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-07-01",
+            "valeur": 59.27,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1993,
+            "dateEffet": "1993-01-01",
+            "valeur": 60.04,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1994,
+            "dateEffet": "1994-01-01",
+            "valeur": 61.24,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-01-01",
+            "valeur": 61.97,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-07-01",
+            "valeur": 62.27,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1996,
+            "dateEffet": "1996-01-01",
+            "valeur": 63.51,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1997,
+            "dateEffet": "1997-01-01",
+            "valeur": 64.27,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1998,
+            "dateEffet": "1998-01-01",
+            "valeur": 64.97,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1999,
+            "dateEffet": "1999-01-01",
+            "valeur": 65.74,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2000,
+            "dateEffet": "2000-01-01",
+            "valeur": 66.06,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2001,
+            "dateEffet": "2001-01-01",
+            "valeur": 67.51,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2002,
+            "dateEffet": "2002-01-01",
+            "valeur": 10.51
+          },
+          {
+            "annee": 2003,
+            "dateEffet": "2003-01-01",
+            "valeur": 10.66
+          },
+          {
+            "annee": 2004,
+            "dateEffet": "2004-01-01",
+            "valeur": 10.84122
+          },
+          {
+            "annee": 2005,
+            "dateEffet": "2005-01-01",
+            "valeur": 11.05804
+          },
+          {
+            "annee": 2006,
+            "dateEffet": "2006-01-01",
+            "valeur": 11.25708
+          },
+          {
+            "annee": 2007,
+            "dateEffet": "2007-01-01",
+            "valeur": 11.45971
+          },
+          {
+            "annee": 2008,
+            "dateEffet": "2008-01-01",
+            "valeur": 11.58577
+          },
+          {
+            "annee": 2008,
+            "dateEffet": "2008-09-01",
+            "valeur": 11.67846
+          },
+          {
+            "annee": 2009,
+            "dateEffet": "2009-04-01",
+            "valeur": 11.90139
+          },
+          {
+            "annee": 2011,
+            "dateEffet": "2011-04-01",
+            "valeur": null,
+            "note": "8,8124 EUR dans la source : valeur de la CANCAVA recopiee par erreur, mise a null"
+          },
+          {
+            "annee": 2012,
+            "dateEffet": "2012-04-01",
+            "valeur": 12.4048
+          },
+          {
+            "annee": 2015,
+            "dateEffet": "2015-10-01",
+            "valeur": 12.58032
+          },
+          {
+            "annee": 2017,
+            "dateEffet": "2017-10-01",
+            "valeur": 12.68096
+          },
+          {
+            "annee": 2019,
+            "dateEffet": "2019-01-01",
+            "valeur": 12.719
+          }
+        ],
+        "pointsAcquisParRachatGlobal": [
+          {
+            "annee": 1949,
+            "dateEffet": "1949-10-01",
+            "valeur": 2.5,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1951,
+            "dateEffet": "1951-07-01",
+            "valeur": 2.8,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1952,
+            "dateEffet": "1952-10-01",
+            "valeur": 3.05,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1955,
+            "dateEffet": "1955-01-01",
+            "valeur": 3.5,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1956,
+            "dateEffet": "1956-10-01",
+            "valeur": 3.85,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1958,
+            "dateEffet": "1958-07-01",
+            "valeur": 4.1,
+            "monnaie": "anciens francs (libelle de la source)"
+          },
+          {
+            "annee": 1960,
+            "dateEffet": "1960-10-01",
+            "valeur": 4.76,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1963,
+            "dateEffet": "1963-01-01",
+            "valeur": 5.5,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1966,
+            "dateEffet": "1966-07-01",
+            "valeur": 6.4,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1967,
+            "dateEffet": "1967-10-01",
+            "valeur": 6.56,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1968,
+            "dateEffet": "1968-10-01",
+            "valeur": 6.76,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1970,
+            "dateEffet": "1970-04-01",
+            "valeur": 7.28,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1971,
+            "dateEffet": "1971-04-01",
+            "valeur": 7.64,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1972,
+            "dateEffet": "1972-04-01",
+            "valeur": 8.04,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1972,
+            "dateEffet": "1972-10-01",
+            "valeur": 9.24,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-01-01",
+            "valeur": 10.64,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1974,
+            "dateEffet": "1974-07-01",
+            "valeur": 11.34,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-01-01",
+            "valeur": 12.38,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1975,
+            "dateEffet": "1975-07-01",
+            "valeur": 13.94,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-01-01",
+            "valeur": 15.5,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1976,
+            "dateEffet": "1976-07-01",
+            "valeur": 17.24,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1977,
+            "dateEffet": "1977-01-01",
+            "valeur": 19.24,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1977,
+            "dateEffet": "1977-07-01",
+            "valeur": 20.91,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-01-01",
+            "valeur": 22.62,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1978,
+            "dateEffet": "1978-07-01",
+            "valeur": 23.62,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-01-01",
+            "valeur": 25.16,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1979,
+            "dateEffet": "1979-07-01",
+            "valeur": 26.16,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-01-01",
+            "valeur": 27.57,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1980,
+            "dateEffet": "1980-07-01",
+            "valeur": 29.33,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-01-01",
+            "valeur": 31.3,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1981,
+            "dateEffet": "1981-07-01",
+            "valeur": 33.24,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-01-01",
+            "valeur": 35.46,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1982,
+            "dateEffet": "1982-07-01",
+            "valeur": 38.08,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-01-01",
+            "valeur": 39.6,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1983,
+            "dateEffet": "1983-07-01",
+            "valeur": 41.18,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-01-01",
+            "valeur": 41.92,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1984,
+            "dateEffet": "1984-07-01",
+            "valeur": 42.84,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-01-01",
+            "valeur": 44.3,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1985,
+            "dateEffet": "1985-07-01",
+            "valeur": 45.54,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-01-01",
+            "valeur": 46.13,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1986,
+            "dateEffet": "1986-07-01",
+            "valeur": 46.36,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-01-01",
+            "valeur": 47.19,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1987,
+            "dateEffet": "1987-07-01",
+            "valeur": 47.66,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-01-01",
+            "valeur": 48.9,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1988,
+            "dateEffet": "1988-07-01",
+            "valeur": 49.53,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-01-01",
+            "valeur": 50.17,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1989,
+            "dateEffet": "1989-07-01",
+            "valeur": 50.77,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-01-01",
+            "valeur": 51.86,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1990,
+            "dateEffet": "1990-07-01",
+            "valeur": 52.53,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-01-01",
+            "valeur": 53.42,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1991,
+            "dateEffet": "1991-07-01",
+            "valeur": 53.85,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-01-01",
+            "valeur": 54.39,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1992,
+            "dateEffet": "1992-07-01",
+            "valeur": 55.37,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1993,
+            "dateEffet": "1993-01-01",
+            "valeur": 56.09,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1994,
+            "dateEffet": "1994-01-01",
+            "valeur": 57.21,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-01-01",
+            "valeur": 57.89,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1995,
+            "dateEffet": "1995-07-01",
+            "valeur": 58.17,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1996,
+            "dateEffet": "1996-01-01",
+            "valeur": 59.33,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1997,
+            "dateEffet": "1997-01-01",
+            "valeur": 60.04,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1998,
+            "dateEffet": "1998-01-01",
+            "valeur": 60.7,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 1999,
+            "dateEffet": "1999-01-01",
+            "valeur": 61.42,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2000,
+            "dateEffet": "2000-01-01",
+            "valeur": 61.72,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2001,
+            "dateEffet": "2001-01-01",
+            "valeur": 63.07,
+            "monnaie": "francs"
+          },
+          {
+            "annee": 2002,
+            "dateEffet": "2002-01-01",
+            "valeur": 9.82
+          },
+          {
+            "annee": 2003,
+            "dateEffet": "2003-01-01",
+            "valeur": 9.96
+          },
+          {
+            "annee": 2004,
+            "dateEffet": "2004-01-01",
+            "valeur": 10.12932
+          },
+          {
+            "annee": 2005,
+            "dateEffet": "2005-01-01",
+            "valeur": 10.33191
+          },
+          {
+            "annee": 2006,
+            "dateEffet": "2006-01-01",
+            "valeur": 10.51788
+          },
+          {
+            "annee": 2007,
+            "dateEffet": "2007-01-01",
+            "valeur": 10.7072
+          }
+        ],
+        "note": "Baremes IPP (secondaire), 1949-2019. Unites d'avant 1960 incertaines."
+      },
+      "valeurDuPoint2020et2021": {
+        "serie": [
+          {
+            "annee": 2020,
+            "dateEffet": "2020-01-01",
+            "artisans": 9.316,
+            "commercants": 12.84619,
+            "note": "valeur pour un total de retraites inferieur ou egal a 2 000 EUR par mois ; revalorisation differenciee en 2020 : 9,2514 et 12,75715 au-dessus de 2 014 EUR"
+          },
+          {
+            "annee": 2021,
+            "dateEffet": "2021-01-01",
+            "artisans": 9.3532,
+            "commercants": 12.89757
+          }
+        ],
+        "note": "Baremes IPP, table 'Regime social des independants : valeur du point retraite de base' (secondaire). 2022-2025 : non releves."
+      },
+      "rattrapage": "Revalorisations supplementaires de la valeur des points 'de 31 p 100 entre 1972 et 1977' (reponse ministerielle a la question n 57133)",
+      "acquisitionDesPoints": null,
+      "citations": [
+        "Article L. 634-3 CSS : 'Les prestations afferentes aux periodes d'assurance ou d'activite professionnelle non salariee ou periodes assimilees anterieures au 1er janvier 1973 demeurent calculees, liquidees et servies dans les conditions definies par les dispositions legislatives et reglementaires en vigueur au 31 decembre 1972, sous reserve d'adaptation par decret. Les coefficients de revalorisation mentionnes a l'article L. 161-25 sont applicables aux prestations contributives mentionnees au present article.'",
+        "Circulaire Cnav 2017-27 : 'Avant 1973, les regimes de base des commercants et industriels (ex AVA et ORGANIC) n'etaient pas des regimes alignes sur le regime de retraite de base des salaries et fonctionnaient en points.'",
+        "Reponse ministerielle n 57133 : 'l'existence entre 1949 et 1973 d'un regime de base en points beaucoup plus modeste que le regime en annuites actuel et dans lequel les interesses avaient largement choisi la classe minimum'"
+      ]
+    },
+    "note": "Regles d'acquisition des points d'avant 1973 (classes de cotisation, reconstitution de carriere) : non lues (null).",
+    "source": "Article L. 634-3 CSS ; circulaires Cnav 2025-29, 2026-01, 2017-27 ; reponse ministerielle n 57133 ; baremes IPP (series, secondaire)",
+    "url": "https://legislation.lassuranceretraite.fr/Pdf/circulaire_cnav_2025_29_22122025.pdf",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.pt_cancava/table",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.pt_organic/table",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.independants.rsi_vp/table",
+      "https://www.assemblee-nationale.fr/dyn/9/questions/QANR5L9QE57133.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  }
+}

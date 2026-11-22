@@ -1,5 +1,5 @@
 import type { Baremes } from "./baremes/types.ts";
-import { buildCompte, type CompteCarriere } from "./compte.ts";
+import type { CompteCarriere } from "./compte.ts";
 import { generateCarriere } from "./generateur/carriere.ts";
 import { generateCarriereFonctionPublique } from "./generateur/fonctionPublique.ts";
 import {
@@ -13,14 +13,25 @@ import {
 	type HypothesesPubliques,
 } from "./generateur/hypothesesPubliques.ts";
 import {
-	appliquerRegles,
-	computeCotisations,
+	buildCompte,
 	computePension,
+	cotisationsAnnee,
+} from "./liquidation.ts";
+import {
+	anneeDuChamp,
+	type Champ,
+	dureeDuChamp,
+	type Pyramide,
+	pensionDuChamp,
+	ponderer,
+} from "./ponderation.ts";
+import { CHAMP_PRIVE, PYRAMIDE_FRANCE } from "./population/france.ts";
+import {
+	baremesPour,
 	type ReglesScenario,
 	reglesGeneration,
-} from "./liquidation.ts";
-import { type Champ, type Pyramide, ponderer } from "./ponderation.ts";
-import { CHAMP_PRIVE, PYRAMIDE_FRANCE } from "./population/france.ts";
+	reglesPour,
+} from "./regles.ts";
 import { createRng, graineIndividu } from "./rng.ts";
 import { type Histogramme, histogramme, type Resume, resume } from "./stats.ts";
 import type { Individu, Pension } from "./types.ts";
@@ -185,9 +196,11 @@ export function runSimulation(
 	b: Baremes,
 	regles: ReglesScenario = {},
 	comptes?: CompteCarriere[],
+	/** Ce qui compte comme un cotisant et comme une pension : par défaut, les salariés du privé. */
+	champ: Champ = CHAMP_PRIVE,
 ): Resultat {
 	const debut = performance.now();
-	const be = appliquerRegles(b, regles);
+	const propres = regles.parAffiliation || regles.parGeneration;
 	const annee = b.anneeReference;
 	const cotisations: number[] = [];
 	const poidsCotisations: number[] = [];
@@ -214,7 +227,15 @@ export function runSimulation(
 		const c = individu.carriere;
 		const w = individu.poids;
 		const age = annee - c.anneeNaissance;
-		const g = reglesGeneration(c.anneeNaissance, b, regles);
+		let compte = comptes?.[i];
+		// Les règles de l'individu : celles du scénario, ou celles de sa génération et de son affiliation.
+		let r = regles;
+		if (propres) {
+			compte ??= buildCompte(c, b);
+			r = reglesPour(regles, c.anneeNaissance, compte.affiliation);
+		}
+		const be = baremesPour(b, r);
+		const g = reglesGeneration(c.anneeNaissance, b, r);
 		let pension: Pension | null = null;
 		// Inutile de calculer la pension de ceux qui n'atteignent dans l'année ni l'âge légal ni un âge de départ anticipé.
 		const premierAge = Math.min(
@@ -223,8 +244,8 @@ export function runSimulation(
 		);
 		if ((age + 1) * 4 > premierAge) {
 			const p = computePension(c, be, {
-				regles,
-				compte: comptes?.[i] ?? buildCompte(c, b),
+				regles: r,
+				compte: compte ?? buildCompte(c, b),
 			});
 			if (p.liquidation.annee <= annee) pension = p;
 		}
@@ -232,18 +253,20 @@ export function runSimulation(
 		if (sexagenaire) sexagenaires += w;
 		if (pension) {
 			if (sexagenaire) sexagenairesRetraites += w;
-			pensions.push(pension.mensuelleBrute);
+			const mensuelle = pensionDuChamp(champ, pension);
+			pensions.push(mensuelle);
 			poidsPensions.push(w);
-			pensionParIndividu[i] = pension.mensuelleBrute;
-			parSexe[c.sexe].valeurs.push(pension.mensuelleBrute);
+			pensionParIndividu[i] = mensuelle;
+			parSexe[c.sexe].valeurs.push(mensuelle);
 			parSexe[c.sexe].poids.push(w);
 			ages[c.sexe] += (pension.liquidation.age / 4) * w;
-			if (pension.cnav.minimumContributifApplique) minimum += w;
-			if (pension.cnav.trimestresDecote > 0) decote += w;
-			if (pension.cnav.trimestresSurcote > 0) surcote += w;
+			const duree = dureeDuChamp(champ, pension);
+			if (duree.minimumApplique) minimum += w;
+			if (duree.trimestresDecote > 0) decote += w;
+			if (duree.trimestresSurcote > 0) surcote += w;
 			if (
 				pension.liquidation.age >= g.ageTauxPleinAutomatique &&
-				pension.cnav.trimestresValides < g.dureeRequise
+				duree.trimestresValides < g.dureeRequise
 			)
 				parAge += w;
 			continue;
@@ -252,8 +275,9 @@ export function runSimulation(
 			c.annees[
 				age - (c.annees[0] ? c.annees[0].annee - c.anneeNaissance : age)
 			];
-		if (a && a.salaireBrut > 0) {
-			cotisations.push(computeCotisations(a.salaireBrut, be));
+		if (a && a.salaireBrut > 0 && anneeDuChamp(champ, a)) {
+			const cotisation = cotisationsAnnee(a, be);
+			cotisations.push(cotisation.base + cotisation.complementaire);
 			poidsCotisations.push(w);
 		} else {
 			autres += w;

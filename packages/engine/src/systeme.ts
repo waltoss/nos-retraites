@@ -87,18 +87,23 @@ export function computeSysteme(
 			fonctionPublique?.reference.annees[i]?.pensions ?? 0;
 		const publicScenario =
 			fonctionPublique?.scenario.annees[i]?.pensions ?? publicReference;
+		// Les autres régimes simulés avec le privé (artisans et commerçants) sortent eux aussi du bloc.
 		const residuelDepenses = Math.max(
 			0,
-			c.depenses - r.pensions - publicReference,
+			c.depenses - r.pensions - r.autres.pensions - publicReference,
 		);
 		// Sans la répartition par groupe de régimes, tout le bloc suit les règles communes.
 		const residuelAlignes = Math.min(
 			residuelDepenses,
-			Math.max(0, (c.depensesAlignes ?? 0) - r.pensionsBase),
+			Math.max(
+				0,
+				(c.depensesAlignes ?? 0) - r.pensionsBase - r.autres.pensionsBase,
+			),
 		);
 		const depenses =
 			c.depenses +
 			(s.pensions - r.pensions) +
+			(s.autres.pensions - r.autres.pensions) +
 			(publicScenario - publicReference) +
 			residuelAlignes * (rapport(s.pensionsBase, r.pensionsBase) - 1) +
 			(residuelDepenses - residuelAlignes) *
@@ -106,11 +111,12 @@ export function computeSysteme(
 		const cotisationsReference = cadrage.partCotisations * c.ressources;
 		const residuelCotisations = Math.max(
 			0,
-			cotisationsReference - r.cotisations,
+			cotisationsReference - r.cotisations - r.autres.cotisations,
 		);
 		const cotisations =
 			cotisationsReference +
 			(s.cotisations - r.cotisations) +
+			(s.autres.cotisations - r.autres.cotisations) +
 			residuelCotisations * (rapport(u.cotisationsBase, r.cotisationsBase) - 1);
 		// Les autres ressources (CSG, impôts affectés) et le PIB suivent la masse des salaires :
 		// plus de monde au travail, c'est aussi plus d'impôts et plus de richesse produite.

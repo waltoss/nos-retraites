@@ -39,6 +39,8 @@ const paliers = { F: palier(parts.F), H: palier(parts.H) };
  */
 export const CHAMP_PRIVE: Champ = {
 	nom: "Salariés du privé",
+	affiliations: ["prive"],
+	regimes: ["cnav", "agircArrco"],
 	part: (age, sexe, annee = data.annee) => {
 		const v = parts[sexe];
 		const borne = (a: number) => v[Math.max(0, Math.min(v.length - 1, a))] ?? 0;

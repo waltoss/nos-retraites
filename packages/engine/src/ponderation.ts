@@ -1,4 +1,11 @@
-import type { Carriere, Individu, Sexe } from "./types.ts";
+import type {
+	Carriere,
+	DetailCnav,
+	Duree,
+	Individu,
+	Pension,
+	Sexe,
+} from "./types.ts";
 
 /** Population réelle par sexe et âge révolu, une année donnée. Le dernier âge regroupe les plus âgés. */
 export interface Pyramide {
@@ -21,6 +28,55 @@ export interface Champ {
 	 * réelle est partagée (le régime d'un fonctionnaire) ; absent, rien.
 	 */
 	cellule?(carriere: Carriere): string;
+	/**
+	 * Affiliations dont une année travaillée fait un cotisant du champ ; absent, toutes celles du
+	 * modèle. Un salarié du privé qui a été artisan n'est pas compté parmi les cotisants du privé
+	 * ces années-là.
+	 */
+	affiliations?: readonly string[];
+	/** Régimes dont les pensions sont celles du champ ; absent, tous. */
+	regimes?: readonly string[];
+}
+
+/** Vrai quand une année relève du champ. */
+export function anneeDuChamp(
+	champ: Champ,
+	annee: { affiliation: string },
+): boolean {
+	return !champ.affiliations || champ.affiliations.includes(annee.affiliation);
+}
+
+/**
+ * Durée et taux vus du régime de base du champ. Pour un salarié du privé qui a surtout été artisan,
+ * c'est le régime général qui répond, pas le régime qui a décidé de son départ.
+ */
+export function dureeDuChamp(champ: Champ, p: Pension): Duree {
+	for (const id of champ.regimes ?? []) {
+		const d = p.parRegime[id] as Partial<DetailCnav> | undefined;
+		if (
+			d?.trimestresValides !== undefined &&
+			d.dureeRequise !== undefined &&
+			d.trimestresDecote !== undefined &&
+			d.trimestresSurcote !== undefined
+		)
+			return {
+				trimestresValides: d.trimestresValides,
+				dureeRequise: d.dureeRequise,
+				trimestresDecote: d.trimestresDecote,
+				trimestresSurcote: d.trimestresSurcote,
+				minimumApplique: d.minimumContributifApplique ?? false,
+			};
+	}
+	return p.duree;
+}
+
+/** Pension mensuelle brute versée par les régimes du champ, à la liquidation. */
+export function pensionDuChamp(champ: Champ, p: Pension): number {
+	if (!champ.regimes) return p.mensuelleBrute;
+	let annuelle = 0;
+	for (const id of champ.regimes)
+		annuelle += p.parRegime[id]?.pensionAnnuelle ?? 0;
+	return annuelle / 12;
 }
 
 /**
