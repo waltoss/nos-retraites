@@ -56,7 +56,7 @@ export const REGIMES: Record<
 > = {
 	cnav: {
 		label: "Régime général",
-		court: "Régime général",
+		court: "Cnav",
 		aide: "Assurance retraite (Cnav)",
 	},
 	agircArrco: { label: "Agirc-Arrco", court: "Agirc-Arrco" },
@@ -69,7 +69,7 @@ export const REGIMES: Record<
 	militaire: { label: "Pensions militaires de l'État", court: "Armées" },
 	ssi: {
 		label: "Sécurité sociale des indépendants",
-		court: "Indépendants",
+		court: "SSI",
 		aide: "retraite de base des artisans et commerçants",
 	},
 	rci: {

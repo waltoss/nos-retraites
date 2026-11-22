@@ -242,7 +242,10 @@ function Carrieres() {
 									<small>
 										{habillage(p).metier ?? "a peu travaillé en France"}
 									</small>
-									<small className="caisses">
+									<small
+										className="caisses"
+										title={`Régimes qui lui versent une pension : ${p.regimes.map((r) => REGIMES[r]?.label ?? r).join(", ")}`}
+									>
 										{p.regimes.map((r) => REGIMES[r]?.court ?? r).join(" · ")}
 									</small>
 									{p.represente !== null && (

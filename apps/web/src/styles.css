@@ -270,7 +270,6 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 .legende i { width: 12px; height: 12px; border-radius: 3px; }
 .calcul td { text-align: right; white-space: nowrap; }
 .calcul thead th:not(:first-child) { text-align: right; }
-.portrait .qui small.caisses { white-space: normal; }
 .regimes { margin-bottom: 20px; }
 .regimes td.part { position: relative; min-width: 96px; }
 .regimes td.part i { position: absolute; left: 14px; bottom: 6px; height: 3px; max-width: calc(100% - 28px); border-radius: 2px; background: var(--retraites); }
