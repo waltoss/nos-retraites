@@ -1,0 +1,246 @@
+{
+  "avertissements": [
+    "Champ : retraite de base des salaries agricoles (regime des assurances sociales agricoles, gere par les caisses de MSA) et leur retraite complementaire. Ce fichier ne contient aucun bareme propre : la conclusion des textes lus est que le regime applique les regles et les parametres du regime general (data/baremes/cnav.json) et de l'Agirc-Arrco (data/baremes/agirc-arrco.json). Il releve les renvois de textes qui le prouvent, les exceptions, et ce qui change pour un calcul (regime qui liquide, Lura).",
+    "Sources reellement ouvertes le 2026-11-22 (PDF telecharges avec curl et lus avec pdftotext -layout, sans outil de reformulation) : code rural et de la peche maritime et code de la securite sociale, editions consolidees du 2026-11-20 publiees par codes.droit.org ; fiche du COR sur la MSA salaries (projections de juin 2024) ; Drees, Les retraites et les retraites, edition 2026 ; CCMSA, tableau de bord des retraites des salaries agricoles au 31 decembre 2025 et bilan demographique et financier 2025 ; Senat, rapport general n 43 (1962-1963), annexe 37 ; mention d'information de la MSA sur le recouvrement de la cotisation Agirc-Arrco.",
+    "Legifrance refuse la lecture automatique (403). Les articles des codes ont ete lus dans la reproduction de codes.droit.org (construite a partir des API Legifrance) : ce n'est pas le site officiel. Chaque article est donne dans sa version en vigueur a l'edition du 2026-11-20 ; les versions anterieures n'ont pas ete lues.",
+    "Date de l'alignement : aucun texte lu ne donne la date a partir de laquelle la pension de base des salaries agricoles se calcule comme celle du regime general. Lus seulement : le transfert de la charge financiere au regime general a compter du 1er janvier 1963 et un 'alignement progressif des prestations' annonce dans la loi de finances pour 1963 (rapport du Senat) ; la mention 'en 1973' du glossaire de la Drees, qui vise tous les regimes alignes sans distinguer la MSA salaries ; le renvoi actuel de l'article L. 742-3 du code rural au titre V du livre III du code de la securite sociale. Ne pas coder de date d'alignement a partir de ce fichier (voir nonLu).",
+    "Taux de cotisation : seul le renvoi en vigueur (article D. 741-35 du code rural vers l'article D. 242-4 du code de la securite sociale) et les taux au 1er janvier 2026 ont ete lus. La serie historique des taux propres aux salaries agricoles, s'ils ont differe de ceux du regime general, n'a pas ete lue.",
+    "Coquilles relevees dans la fiche du COR : 'les assures de la MSA salaries nes a compter du 1er septembre 2023 sont concernes par le decalage de l'age d'ouverture des droits' (la reforme vise les assures nes a compter du 1er septembre 1961, lu dans une reponse ministerielle ; la fiche ecrit 2023) et le titre '2. La situation financiere du RCI' dans la fiche de la MSA salaries.",
+    "Date d'effet de la Lura : 1er juillet 2017 selon la MSA, le COR et l'encadre de la Drees ; la meme edition de la Drees ecrit ailleurs 'A compter du 1er janvier 2017' (notes des fiches 6 et 7) et 'Au 1er juin 2017' (fiche 15, note 8). Le texte du decret d'application (n 2016-1188) n'a pas ete lu.",
+    "Cles : 'dateConsultation' comme dans agirc-arrco.json et independants.json. Taux en pourcent. Aucune valeur calculee dans ce fichier : tout nombre figure dans la citation qui l'accompagne."
+  ],
+  "alignementSurLeRegimeGeneral": {
+    "valeurs": {
+      "conclusion": "Les caisses de MSA servent aux salaries agricoles les prestations de vieillesse prevues par le code de la securite sociale : le titre V du livre III de ce code (assurance vieillesse du regime general : age, duree d'assurance, taux, decote, surcote, salaire annuel moyen, minimum contributif, majorations) s'applique au regime des assurances sociales agricoles, partie legislative et parties reglementaires, a deux exceptions pres.",
+      "memesFormuleEtParametres": true,
+      "renvoiLegislatif": {
+        "article": "L. 742-3 du code rural et de la peche maritime (version issue de la loi n 2023-270 du 14 avril 2023, art. 26)",
+        "citation": "Les caisses de mutualité sociale agricole servent aux salariés agricoles et à leurs ayants droit en cas de maladie, de maternité, d'invalidité, de vieillesse, de veuvage et de décès, les prestations prévues par le code de la sécurité sociale. A cet effet, sont applicables au régime des assurances sociales agricoles : 1° [...] les dispositions suivantes du livre III du code de la sécurité sociale : articles L. 311-5, chapitres III, IV et V du titre Ier, titre II à l'exception de l'article L. 321-3 et du chapitre V, titres III et IV, titre V à l'exception du 7° de l'article L. 351-3 et du chapitre VII, titre VI, titre VII, article L. 383-1. [...] Pour l'application de ces dispositions, la référence au régime général est remplacée par la référence au régime des assurances sociales agricoles et les caisses de mutualité sociale agricole sont substituées aux caisses primaires d'assurance maladie et aux caisses d'assurance retraite et de la santé au travail."
+      },
+      "renvoisReglementaires": [
+        {
+          "article": "R. 742-2 du code rural et de la peche maritime (decret n 2021-1496 du 17 novembre 2021)",
+          "citation": "Sont applicables aux bénéficiaires mentionnés à l'article L. 742-3 [...] 1° Les dispositions suivantes du livre III du code de la sécurité sociale (deuxième partie : Décrets en Conseil d'Etat) : [...] d) Le titre V, à l'exception des articles R. 351-37-1, R. 351-37-2 et du chapitre 7"
+        },
+        {
+          "article": "D. 742-3 du code rural et de la peche maritime (decret n 2005-368 du 19 avril 2005)",
+          "citation": "Sont applicables aux bénéficiaires mentionnés à l'article L. 742-3 [...] 1° Les dispositions suivantes du livre III du code de la sécurité sociale (troisième partie : Décrets) : [...] d) Le titre V, à l'exception du chapitre 7"
+        }
+      ],
+      "exceptions": [
+        {
+          "objet": "7° de l'article L. 351-3 du code de la securite sociale : periodes d'inscription sur la liste des sportifs de haut niveau, non prises en compte au regime des salaries agricoles",
+          "citation": "7° Dans des conditions et limites d'âge, de ressources et de nombre total de trimestres validés à ce titre, fixées par le décret prévu au présent article, et sans condition d'affiliation préalable, les périodes n'ayant pas donné lieu à validation à un autre titre dans un régime de base pendant lesquelles une personne a été inscrite en tant que sportif de haut niveau"
+        },
+        {
+          "objet": "Chapitre VII du titre V du livre III du code de la securite sociale : regime applicable dans les departements du Haut-Rhin, du Bas-Rhin et de la Moselle",
+          "citation": "Chapitre 7 : Régime applicable dans les départements du Haut-Rhin, du Bas-Rhin et de la Moselle (L. 357-1)"
+        },
+        {
+          "objet": "Articles R. 351-37-1 et R. 351-37-2 du code de la securite sociale, exclus par l'article R. 742-2 du code rural",
+          "note": "Contenu de ces deux articles non lu."
+        }
+      ],
+      "confirmations": [
+        {
+          "source": "COR, fiche 'Le regime de retraite de base des salaries agricoles (MSA salaries)', projections de juin 2024, page 1",
+          "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+          "citation": "Les salariés agricoles relèvent, pour leur retraite de base, de la Mutualité Sociale Agricole (MSA), avec des règles de calcul alignées sur celles du régime général. Ils relèvent également de l'Agirc-Arrco pour leur retraite complémentaire."
+        },
+        {
+          "source": "Drees, Les retraites et les retraites, edition 2026, glossaire, pages 308 (entree 'MSA') et 310 (entree 'Regimes alignes')",
+          "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+          "citation": "On distingue le régime MSA salariés, qui fait partie des régimes dits alignés, du régime MSA non-salariés. | Régimes alignés : régimes ayant choisi, en 1973, de se rapprocher du régime général en adoptant les mêmes règles pour le calcul des droits à la retraite. Les régimes alignés regroupent le régime général des salariés, la SSI et le régime agricole pour les salariés agricoles (MSA salariés)."
+        }
+      ],
+      "depuisQuand": {
+        "valeur": null,
+        "elementsLus": [
+          {
+            "source": "Senat, rapport general n 43 (session extraordinaire 1962-1963) sur le projet de loi de finances pour 1963, annexe n 37 (prestations sociales agricoles), pages 3 et 4",
+            "url": "https://www.senat.fr/rap/1962-1963/i1962_1963_0043_37.pdf",
+            "citation": "l'article 9 de ce texte a apporté différentes modifications aux régimes sociaux agricoles dont la plus importante est le transfert — à compter du 1er janvier 1963 — au régime général de la Sécurité sociale de la charge financière du régime des salariés agricoles. [...] la gestion du régime des salariés agricoles continuerait à être assurée, comme par le passé, par les caisses de la Mutualité sociale agricole. [...] alignement progressif des prestations servies aux salariés agricoles sur celles en vigueur dans le régime général de Sécurité sociale"
+          },
+          {
+            "source": "CCMSA, Regime des salaries agricoles, bilan demographique et financier en 2025 (juin 2026), encadre 'Dispositif', page 12",
+            "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+            "citation": "Depuis 1963, la loi de finances a mis à la charge de la branche maladie (Cnam) et de la branche retraite (Cnav) du régime général, les éventuels déficits respectifs des branches maladie et retraite du régime des salariés agricoles."
+          },
+          {
+            "source": "Drees, Les retraites et les retraites, edition 2026, glossaire, page 310",
+            "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+            "citation": "Régimes alignés : régimes ayant choisi, en 1973, de se rapprocher du régime général en adoptant les mêmes règles pour le calcul des droits à la retraite.",
+            "note": "Seule date lue pour l'alignement, donnee pour l'ensemble des regimes alignes sans distinguer la MSA salaries. 1973 est la date d'effet de l'alignement des artisans et des commercants (loi n 72-554 du 3 juillet 1972, citee dans data/baremes/independants.json) : il n'est pas etabli par cette phrase que l'alignement des salaries agricoles date de la meme annee."
+          }
+        ],
+        "note": "Trois elements lus, aucun ne tranche : transfert financier au 1er janvier 1963 et alignement 'progressif' des prestations (Senat, 1963) ; 'en 1973' pour l'ensemble des regimes alignes (glossaire de la Drees). La date a laquelle le calcul de la pension est devenu identique n'a pas ete lue dans un texte. Pour les generations simulees (1930 et suivantes, liquidations a partir de 1990 environ), l'hypothese de regles identiques repose sur le droit en vigueur et non sur une date lue."
+      }
+    },
+    "source": "Code rural et de la peche maritime, articles L. 742-3, R. 742-2, D. 742-3 ; code de la securite sociale, article L. 351-3 (editions consolidees du 2026-11-20, codes.droit.org)",
+    "url": "https://codes.droit.org/PDF/Code%20rural%20et%20de%20la%20p%C3%AAche%20maritime.pdf",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+      "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+      "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+      "https://www.senat.fr/rap/1962-1963/i1962_1963_0043_37.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "cotisations": {
+    "valeurs": {
+      "regle": "Le taux de la cotisation d'assurance vieillesse des salaries agricoles est celui du regime general (renvoi a l'article D. 242-4 du code de la securite sociale) ; la part plafonnee est assise sur les revenus d'activite dans la limite du plafond de la securite sociale (article L. 241-3 du code de la securite sociale), la part deplafonnee sur la totalite.",
+      "memesTauxQueLeRegimeGeneral": true,
+      "memePlafondQueLeRegimeGeneral": true,
+      "renvoi": {
+        "article": "D. 741-35, II, du code rural et de la peche maritime (decret n 2017-1891 du 30 decembre 2017)",
+        "citation": "II.-Pour les salariés des professions agricoles mentionnés à l'article L. 722-20 du présent code, le taux de la cotisation affectée à la couverture des prestations légales de l'assurance vieillesse est fixé selon les dispositions prévues à l'article D. 242-4 du code de la sécurité sociale ; toutefois, pour les assurés mentionnés à l'article 19 de la loi n° 49-1111 du 2 août 1949 majorant les indemnités dues au titre des accidents du travail, le taux de cette cotisation est fixé à 15,80 % du montant de la rente perçue par l'assuré dans la limite du plafond prévu à l'article L. 241-3 du code de la sécurité sociale."
+      },
+      "assiette": {
+        "article": "L. 741-9, II, du code rural et de la peche maritime (loi n 2023-1250 du 26 decembre 2023)",
+        "citation": "II.-Pour l'assurance vieillesse et veuvage : 1° Par une cotisation assise : a) Sur les revenus d'activité perçus par les assurés dans la limite du plafond défini à l'article L. 241-3 du code de la sécurité sociale, à la charge des employeurs et des assurés ; b) Sur la totalité des revenus d'activité perçus par les assurés, à la charge des employeurs et des salariés"
+      },
+      "tauxAu2026-01-01": {
+        "article": "D. 242-4 du code de la securite sociale (decret n 2025-1446 du 31 decembre 2025)",
+        "partPlafonnee": {
+          "employeurEnPourcent": 8.55,
+          "salarieEnPourcent": 6.9
+        },
+        "totaliteDeLaRemuneration": {
+          "employeurEnPourcent": 2.11,
+          "salarieEnPourcent": 0.4
+        },
+        "citation": "Le taux de la cotisation des assurances vieillesse et veuvage est fixé comme indiqué dans le tableau suivant : Rémunérations versées | SUR LA PART de la rémunération dans la limite du plafond prévu au premier alinéa de l'article L. 241-3 : Employeur, Salarié | SUR LA TOTALITÉ de la rémunération : Employeur, Salarié | A compter du 1er janvier 2026 : 8,55 % | 6,9 % | 2,11 % | 0,40 %"
+      },
+      "serieHistorique": null,
+      "note": "A recouper avec les taux du regime general deja presents dans data/baremes/cnav.json. Seule la ligne en vigueur de l'article D. 242-4 figure dans le code consolide. Les exonerations propres a l'agriculture (travailleurs occasionnels, article L. 741-16 du code rural) portent sur les cotisations patronales et n'ont pas ete relevees : leur effet sur les droits n'a pas ete lu."
+    },
+    "source": "Code rural et de la peche maritime, articles D. 741-35 et L. 741-9 ; code de la securite sociale, article D. 242-4 (editions consolidees du 2026-11-20, codes.droit.org)",
+    "url": "https://codes.droit.org/PDF/Code%20rural%20et%20de%20la%20p%C3%AAche%20maritime.pdf",
+    "urlsComplementaires": [
+      "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "liquidationUnique": {
+    "valeurs": {
+      "applicable": true,
+      "regimesConcernes": [
+        "regime general",
+        "regime des salaries agricoles",
+        "regime des independants (integre au regime general depuis 2020)"
+      ],
+      "generations": "assures nes a compter du 1er janvier 1953",
+      "dateEffet": "2017-07-01",
+      "dateEffetOrigine": "MSA (tableau de bord et bilan 2025), COR, encadre 1 de la fiche 1 de la Drees ; le decret d'application n'a pas ete lu et la Drees donne deux autres dates ailleurs (voir avertissements)",
+      "calcul": "Les remunerations soumises a cotisation, les periodes d'assurance et les salaires et revenus annuels des regimes concernes sont additionnes annee par annee ; la somme des salaires ne peut exceder le plafond de la securite sociale de l'annee ; quatre trimestres au plus par an ; un seul regime calcule et sert la pension selon ses regles et en supporte la charge.",
+      "regimeCompetent": [
+        "le regime auquel l'assure a ete affilie en dernier lieu",
+        "en cas d'affiliations simultanees, le regime qui prend en charge les frais de sante",
+        "par derogation, dans certains cas : le regime general (activite independante anterieure a 1973, inaptitude des independants, retraite progressive), le regime general ou celui des salaries agricoles (retraite pour incapacite permanente), le regime des salaries agricoles lorsque l'assure justifie d'une duree d'assurance ouvrant droit a pension au regime des non-salaries agricoles et a releve d'un autre regime aligne"
+      ],
+      "consequencePourLaSimulation": "Pour un assure ne en 1953 ou apres et passe par la MSA salaries et le regime general, il n'y a plus deux pensions de base proratisees mais une seule, calculee sur l'ensemble de la carrière des regimes alignes et versee par le dernier regime d'affiliation. Les pensions moyennes servies par la MSA salaries ne sont donc pas comparables avant et apres 2017, et les effectifs de nouveaux retraites du regime chutent (voir data/references/salaries-agricoles.json).",
+      "citations": [
+        "Article L. 173-1-2 du code de la sécurité sociale : 'I. - Lorsqu'un assuré relève ou a relevé successivement, alternativement ou simultanément du régime général de sécurité sociale, du régime des salariés agricoles et du régime social des indépendants et demande à liquider l'un de ses droits à pension de vieillesse auprès d'un des régimes concernés, il est réputé avoir demandé à liquider l'ensemble de ses pensions de droit direct auprès desdits régimes. [...] 3° Les salaires et revenus annuels de base de chacun des régimes, sans que leur somme puisse excéder le montant du plafond annuel défini au premier alinéa de l'article L. 241-3 en vigueur au cours de chaque année considérée. Le nombre de trimestres validés qui résulte de la somme des périodes mentionnées aux 1° et 2° du présent I ne peut être supérieur à quatre par an. II. - La pension est calculée, en fonction des paramètres prévus au I, par un seul des régimes concernés, en fonction de ses modalités et règles de liquidation. [...] III. - Le régime qui a calculé et qui sert la pension en supporte intégralement la charge. [...] III bis. - Le présent article est applicable aux assurés nés à compter du 1er janvier 1953.'",
+        "Article R. 173-4-4 du code de la sécurité sociale : 'Le régime compétent pour liquider la pension dans les conditions définies à l'article L. 173-1-2 est : 1° Le régime auquel l'assuré a été affilié en dernier lieu ; 2° Par dérogation au 1°, en cas d'affiliations simultanées à au moins deux des régimes mentionnés à l'article L. 173-1-2, celui de ces régimes qui prend en charge les frais de santé mentionnés à l'article L. 160-8 ; 3° Par dérogation au 1° et au 2° [...] c) Le régime des salariés agricoles, lorsque l'assuré a été ou est affilié à ce régime, s'il justifie d'une durée d'assurance ouvrant droit à une pension de retraite au régime des non-salariés agricoles [...] et qu'il a relevé au cours de sa carrière d'au moins un des autres régimes mentionnés à l'article L. 173-1-2 du présent code.'",
+        "CCMSA, tableau de bord au 31 décembre 2025, page 7 : 'Depuis l'entrée en vigueur au 1er juillet 2017 de la Lura, la pension d'un assuré affilié à plusieurs des régimes concernés par la mesure (successivement, alternativement ou simultanément) sera calculée comme si l'assuré n'avait relevé que d'un seul régime. [...] Le régime pris en considération sera le dernier régime d'affiliation de l'assuré.'",
+        "CCMSA, bilan démographique et financier 2025, page 2 : 'Dispositif institué par l'article 43 de la loi sur les retraites du 20 janvier 2014 [...] Cette liquidation unique est effective dans les régimes alignés depuis le 1er juillet 2017 pour les assurés nés à partir du 1er janvier 1953.'",
+        "Drees, édition 2026, encadré 1 de la fiche 1, page 27 : 'un seul de ces régimes verse la pension de retraite. Ce régime est le dernier régime d'affiliation des assurés, sauf exceptions (la SSI pour les assurés qui ont été affiliés au RSI avant 1973, et la MSA pour les anciens assurés exploitants agricoles). La Lura ne concerne que les assurés nés à partir de 1953 et liquidant leurs droits à partir du 1er juillet 2017.'"
+      ]
+    },
+    "source": "Code de la securite sociale, articles L. 173-1-2 (version issue de la loi n 2025-199 du 28 fevrier 2025) et R. 173-4-4 (decret n 2025-1409 du 30 decembre 2025), edition consolidee du 2026-11-20 (codes.droit.org) ; CCMSA ; Drees",
+    "url": "https://codes.droit.org/PDF/Code%20de%20la%20s%C3%A9curit%C3%A9%20sociale.pdf",
+    "urlsComplementaires": [
+      "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+      "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+      "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "retraiteComplementaire": {
+    "valeurs": {
+      "regime": "Agirc-Arrco",
+      "memesReglesQueLesSalariesDuPrive": true,
+      "recouvrement": "La MSA recouvre la cotisation Agirc-Arrco des entreprises du secteur agricole pour le compte de l'Agirc-Arrco.",
+      "citations": [
+        "COR, fiche MSA salariés (juin 2024), page 1 : 'Ils relèvent également de l'Agirc-Arrco pour leur retraite complémentaire.'",
+        "MSA, mention d'information RGPD 'Recouvrement de la cotisation retraite complémentaire obligatoire pour le compte de l'AGIRC-ARRCO' : 'la gestion des opérations liées au recouvrement de la cotisation retraite complémentaire Agirc-Arrco pour les entreprises du secteur agricole'"
+      ],
+      "note": "Aucun texte de l'Agirc-Arrco (accord national interprofessionnel du 17 novembre 2017, champ d'application) n'a ete lu sur ce point. Les anciennes institutions agricoles (Camarca, CCPMA, groupe Agrica) et la conversion de leurs droits n'ont pas ete lues : une eventuelle difference de taux contractuels ou de droits anciens n'est pas exclue."
+    },
+    "source": "COR, fiche MSA salaries (projections de juin 2024) ; MSA, mention d'information sur le recouvrement de la cotisation Agirc-Arrco",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "urlsComplementaires": [
+      "https://ardechedromeloire.msa.fr/lfp/documents/98800/83726081/2024-665+MentionInfo"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "financement": {
+    "valeurs": {
+      "integrationFinanciere": "Les deficits ou excedents de la branche retraite du regime des salaries agricoles sont pris en charge par le regime general (Cnav). Le regime recoit aussi la compensation demographique vieillesse.",
+      "consequencePourLaSimulation": "Le solde propre du regime n'a pas de sens isole : ses pensions et ses cotisations s'ajoutent a celles du regime general.",
+      "citations": [
+        "COR, fiche MSA salariés (juin 2024), page 3 : 'La MSA salariés est équilibrée par intégration financière depuis 2017 : ses excédents ou déficits sont reversés ou pris en charge par la Cnav.'",
+        "CCMSA, bilan 2025, page 12 : 'Depuis 1963, la loi de finances a mis à la charge de la branche maladie (Cnam) et de la branche retraite (Cnav) du régime général, les éventuels déficits respectifs des branches maladie et retraite du régime des salariés agricoles.'"
+      ],
+      "note": "Les deux sources datent differemment l'integration financiere (1963 pour la MSA, 2017 pour le COR, qui vise la fin de l'affectation de taxes sur les tabacs et alcools). Non tranche."
+    },
+    "source": "COR, fiche MSA salaries (projections de juin 2024) ; CCMSA, bilan demographique et financier du regime des salaries agricoles en 2025",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "urlsComplementaires": [
+      "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "definitionsDeLaMsa": {
+    "valeurs": {
+      "carriereCompleteAuSensDesStatistiquesMsa": {
+        "trimestres": 150,
+        "citation": "Ici, il s'agit d'individus qui ont accompli au moins 37,5 années, soit 150 trimestres au régime des salariés agricoles. Ils n'ont pas forcément une carrière au taux plein. Les retraités en Lura [...] sont exclus des retraités ayant accompli une carrière complète au régime des salariés agricoles.",
+        "note": "Definition statistique, pas une regle de droit. Sert a lire les cibles de data/references/salaries-agricoles.json."
+      },
+      "bonificationPourEnfants": {
+        "tauxEnPourcent": 10,
+        "citation": "Avantage complémentaire égal à 10 % de l'avantage de base, lorsque le titulaire a eu ou élevé au moins trois enfants."
+      },
+      "versementForfaitaireUnique": {
+        "multipleDuMontantAnnuel": 15,
+        "seuil": null,
+        "citation": "Si le montant annuel de la retraite personnelle, y compris les avantages complémentaires, est inférieur à un certain montant, la retraite n'est pas servie mensuellement. Elle est payée en un versement forfaitaire unique (VFU) égal à 15 fois le montant annuel de la retraite.",
+        "note": "Montant du seuil non donne par la source."
+      }
+    },
+    "source": "CCMSA, tableau de bord 'Les retraites du regime des salaries agricoles au 31 decembre 2025' (juin 2026), pages 6 et 7 (definitions et methodologie)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+    "dateConsultation": "2026-11-22"
+  },
+  "nonLu": [
+    {
+      "quoi": "Date a partir de laquelle la pension de base des salaries agricoles est calculee selon les regles du regime general (et etapes de l'alignement 'progressif' annonce en 1963)",
+      "ouProbablement": "Loi de finances pour 1963 (n 63-156 du 23 fevrier 1963, article 9) et ses decrets d'application sur Legifrance ; historique de l'article 1024 puis 1038 de l'ancien code rural ; legislation.lassuranceretraite.fr ; histoire de la MSA (ccmsa)"
+    },
+    {
+      "quoi": "Serie historique des taux de cotisation vieillesse des salaries agricoles et de leur plafond, si differents de ceux du regime general (avant le renvoi de l'article D. 741-35)",
+      "ouProbablement": "Baremes IPP (prelevements sociaux, regime agricole) ; anciens decrets sur Legifrance ; guides de la MSA"
+    },
+    {
+      "quoi": "Decret n 2016-1188 du 1er septembre 2016 (mise en oeuvre de la Lura, date d'effet) et circulaire Cnav 2017-27",
+      "ouProbablement": "Legifrance (lecture automatique refusee) ; legislation.lassuranceretraite.fr"
+    },
+    {
+      "quoi": "Articles R. 351-37-1 et R. 351-37-2 du code de la securite sociale, exclus pour les salaries agricoles",
+      "ouProbablement": "Code de la securite sociale (present dans le PDF de codes.droit.org, non recherche)"
+    },
+    {
+      "quoi": "Champ d'application de l'Agirc-Arrco pour les salaries agricoles, taux contractuels propres aux anciennes institutions agricoles (Camarca, CCPMA), conversion des droits anciens",
+      "ouProbablement": "Accord national interprofessionnel du 17 novembre 2017 (agirc-arrco.fr) ; circulaires Agirc-Arrco ; groupe Agrica"
+    },
+    {
+      "quoi": "Seuil du versement forfaitaire unique et regles propres a l'agriculture pour la validation de trimestres (salaires forfaitaires, travailleurs occasionnels, apprentis)",
+      "ouProbablement": "Article L. 351-9 et D. 351-1-? du code de la securite sociale ; msa.fr"
+    },
+    {
+      "quoi": "Regime local des salaries agricoles d'Alsace-Moselle (chapitre VII exclu du renvoi)",
+      "ouProbablement": "Code rural, articles L. 761-1 et suivants"
+    }
+  ]
+}

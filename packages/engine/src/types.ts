@@ -21,11 +21,20 @@ export type AffiliationId =
 	| "militaire"
 	| "artisan"
 	| "commercant"
+	| "salarieAgricole"
 	| "autre"
 	| (string & {});
 
 /** Les deux métiers d'indépendant que le modèle simule : même régime, histoires différentes. */
 export type MetierIndependant = "artisan" | "commercant";
+
+/**
+ * Vrai pour une année de salarié du privé, agriculture comprise : même calcul de la retraite de
+ * base (liquidation unique des régimes alignés) et même complémentaire, seule la caisse change.
+ */
+export function estSalarie(a: { affiliation: AffiliationId }): boolean {
+	return a.affiliation === "prive" || a.affiliation === "salarieAgricole";
+}
 
 /** Vrai pour une année d'artisan ou de commerçant. */
 export function estIndependant(a: { affiliation: AffiliationId }): boolean {

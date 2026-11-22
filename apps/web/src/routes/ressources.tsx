@@ -1,9 +1,14 @@
 import {
 	type AnneeSysteme,
 	ASSIETTES,
+	cadrerFlux,
+	fluxComplementaire,
 	POSTES_RESSOURCES,
+	type Projection,
 	type ProjectionCapitalisation,
+	projeterReserve,
 	RENDEMENTS_CAPITALISATION,
+	RESERVE_AGIRC_ARRCO,
 	SOURCE_RESSOURCES,
 	SOURCES_CAPITALISATION,
 } from "@nos-retraites/engine";
@@ -18,6 +23,7 @@ import { useScenario } from "../scenario";
 export const Route = createFileRoute("/ressources")({ component: Ressources });
 
 interface Donnees {
+	projection: { reference: Projection; courant: Projection };
 	systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
 	capitalisation: ProjectionCapitalisation | null;
 	anneeEffet: number;
@@ -70,6 +76,7 @@ function Ressources() {
 			demander({ type: "projection", scenario }).then((r) => {
 				if (actif)
 					setDonnees({
+						projection: { reference: r.reference, courant: r.courant },
 						systeme: r.systeme,
 						capitalisation: r.capitalisation,
 						anneeEffet: r.anneeEffet,
@@ -170,6 +177,12 @@ function Ressources() {
 							)}
 							<Hypotheses />
 						</section>
+						<Reserve
+							projection={donnees.projection}
+							annee={annee}
+							anneeEffet={donnees.anneeEffet}
+							modifies={modifies}
+						/>
 					</>
 				) : (
 					<div className="histo attente" style={{ height: 420 }} />
@@ -529,5 +542,188 @@ function Hypotheses() {
 				</li>
 			</ul>
 		</>
+	);
+}
+
+const RENDEMENTS_RESERVE = [
+	{ valeur: 0, label: "0 %", base: "aucun produit financier" },
+	{
+		valeur: RESERVE_AGIRC_ARRCO.rendement,
+		label: `${decimal(RESERVE_AGIRC_ARRCO.rendement * 100)} %`,
+		base: "l'hypothèse que le régime retient pour ses propres projections",
+	},
+	{
+		valeur: RENDEMENTS_CAPITALISATION.bas.valeur,
+		label: `${decimal(RENDEMENTS_CAPITALISATION.bas.valeur * 100)} %`,
+		base: "ce qu'a rapporté le Fonds de réserve pour les retraites sur vingt ans",
+	},
+];
+const mois = (y: number) => `${decimal(y)} mois`;
+
+/** La réserve de l'Agirc-Arrco le long de la projection : ce qu'elle rapporte, quand elle s'épuise. */
+function Reserve({
+	projection,
+	annee,
+	anneeEffet,
+	modifies,
+}: {
+	projection: { reference: Projection; courant: Projection };
+	annee: number;
+	anneeEffet: number;
+	modifies: number;
+}) {
+	const [rendement, setRendement] = useState(RESERVE_AGIRC_ARRCO.rendement);
+	const h = RESERVE_AGIRC_ARRCO;
+	const flux = {
+		reference: fluxComplementaire(projection.reference.annees),
+		courant: fluxComplementaire(projection.courant.annees),
+	};
+	const vivre = (f: typeof flux.reference) =>
+		projeterReserve(cadrerFlux(flux.reference, f, h.chargesSurRessources), {
+			...h,
+			rendement,
+		});
+	const reference = vivre(flux.reference);
+	const courant = vivre(flux.courant);
+	const a = courant.find((x) => x.annee === annee) ?? courant[0];
+	const sous = (serie: typeof courant) =>
+		serie.find((x) => x.moisDeCharges < h.plancherMois)?.annee;
+	const vide = (serie: typeof courant) =>
+		serie.find((x) => x.manque > 0)?.annee;
+	const serie = (
+		s: typeof courant,
+		f: (x: (typeof courant)[number]) => number,
+	) => s.map((x) => ({ x: x.annee, y: f(x) }));
+	const constat = (s: typeof courant) =>
+		vide(s)
+			? `passe sous ${h.plancherMois} mois de pensions en ${sous(s)} et est vide en ${vide(s)}`
+			: sous(s)
+				? `passe sous ${h.plancherMois} mois de pensions en ${sous(s)}, sans se vider avant ${s.at(-1)?.annee}`
+				: `reste au-dessus de ${h.plancherMois} mois de pensions jusqu'en ${s.at(-1)?.annee}`;
+	if (!a) return null;
+	return (
+		<section className="bloc">
+			<h2>La réserve de l'Agirc-Arrco</h2>
+			<p className="sub">
+				La retraite complémentaire du privé n'a pas le droit d'emprunter. Les
+				années d'excédent, elle met de côté et place ; les années de déficit,
+				elle puise dans cette réserve. Fin {h.annee}, elle avait{" "}
+				{milliards(md(h.initiale))} d'euros, soit{" "}
+				{decimal((h.initiale / h.charges) * 12)} mois de dépenses. Ses
+				gestionnaires se donnent pour règle de ne jamais descendre sous{" "}
+				{h.plancherMois} mois sur {h.horizonAnnees} ans.
+			</p>
+			<div className="filtres">
+				<fieldset>
+					<legend>Rendement des placements, par an au-dessus des prix</legend>
+					{RENDEMENTS_RESERVE.map((r) => (
+						<button
+							type="button"
+							key={r.label}
+							title={r.base}
+							className={r.valeur === rendement ? "puce actif" : "puce"}
+							onClick={() => setRendement(r.valeur)}
+						>
+							{r.label}
+						</button>
+					))}
+				</fieldset>
+			</div>
+			<div className="faits">
+				<div className="fait">
+					<strong className="num">{milliards(md(a.reserve))}</strong>
+					<span>
+						de réserve fin {annee}, soit {mois(a.moisDeCharges)} de dépenses
+					</span>
+				</div>
+				<div className="fait">
+					<strong className="num">
+						{signe(md(a.soldeTechnique))} milliards
+					</strong>
+					<span>
+						de solde technique en {annee} : ressources moins dépenses, avant les
+						placements
+					</span>
+				</div>
+				<div className="fait">
+					<strong className="num">
+						{signe(md(a.produitsFinanciers))} milliards
+					</strong>
+					<span>rapportés par les placements en {annee}</span>
+				</div>
+			</div>
+			<div className="courbes">
+				<Courbe
+					titre="Réserve, en mois de dépenses"
+					aide={`La règle du régime : au moins ${h.plancherMois} mois.`}
+					reference={serie(reference, (x) => x.moisDeCharges)}
+					courant={serie(courant, (x) => x.moisDeCharges)}
+					couleur="var(--ink)"
+					format={mois}
+					depuisZero
+					anneeEffet={anneeEffet}
+				/>
+				<Courbe
+					titre="Solde technique"
+					aide="Ressources moins dépenses, avant les placements."
+					reference={serie(reference, (x) => md(x.soldeTechnique))}
+					courant={serie(courant, (x) => md(x.soldeTechnique))}
+					couleur="var(--besoin)"
+					format={(y) => `${signe(y)} milliards`}
+					depuisZero
+					anneeEffet={anneeEffet}
+				/>
+				<Courbe
+					titre="Ce que rapportent les placements"
+					aide="Rendement choisi × réserve de l'année précédente."
+					reference={serie(reference.slice(1), (x) => md(x.produitsFinanciers))}
+					courant={serie(courant.slice(1), (x) => md(x.produitsFinanciers))}
+					couleur="var(--cotisants)"
+					format={(y) => `${decimal(y)} milliards`}
+					depuisZero
+					anneeEffet={anneeEffet}
+				/>
+			</div>
+			<p className="reserve">
+				Avec la loi actuelle, la réserve {constat(reference)}.
+				{modifies > 0 && ` Avec votre scénario, elle ${constat(courant)}.`} En
+				euros de 2026.
+			</p>
+			<h3>Comment c'est calculé</h3>
+			<ul className="limites">
+				<li>
+					Point de départ : les comptes {h.annee} du régime (
+					<a href={h.sources.reserve.url}>{h.sources.reserve.titre}</a>).
+				</li>
+				<li>
+					Avec la loi actuelle, le rapport des dépenses aux ressources suit
+					celui que le COR projette pour l'Agirc-Arrco (
+					<a href={h.sources.cadrage.url}>rapport de juin 2026, figure 2.7</a>
+					). Laissé à lui-même, le modèle fait monter les pensions
+					complémentaires bien plus vite : il part de pensions trop basses
+					aujourd'hui. Seul l'écart entre votre scénario et la loi actuelle
+					vient du modèle.
+				</li>
+				<li>
+					Le rendement est le même chaque année. Celui de{" "}
+					{decimal(h.rendement * 100)} % est l'hypothèse des partenaires sociaux
+					(<a href={h.sources.rendement.url}>accord de 2023</a>) ; le rendement
+					constaté varie beaucoup d'une année à l'autre.
+				</li>
+				<li>
+					Les gestionnaires ne réagissent pas : en vrai, ils ajustent la valeur
+					du point ou les cotisations pour tenir leur règle (
+					<a href={h.sources.regle.url}>accord de 2017, article 25</a>). Ici la
+					réserve se vide, puis l'argent manque.
+				</li>
+				<li>
+					Seule l'Agirc-Arrco est suivie. Les autres réserves du système
+					(indépendants, professions libérales, Ircantec, Fonds de réserve pour
+					les retraites) ne sont pas encore simulées, et les produits des
+					placements n'entrent pas dans le besoin de financement affiché
+					ailleurs sur le site.
+				</li>
+			</ul>
+		</section>
 	);
 }

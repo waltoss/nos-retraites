@@ -8,6 +8,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import backtest from "../backtest.json";
 import calage from "../calage.json";
 import { Icon, type IconName } from "../components/Icons";
+import { Parcours } from "../components/Parcours";
 import { ageEnClair, decimal, entier, euros } from "../format";
 import politiques from "../politiques.json";
 import recoupement from "../recoupement.json";
@@ -743,6 +744,16 @@ function Modele() {
 					<Icon name="fleche" size={18} />
 				</Link>
 			</p>
+
+			<section className="bloc">
+				<h2>Une vie dans le modèle</h2>
+				<p className="sub">
+					Le modèle suit chaque personne année après année : ce qu'elle gagne,
+					ce qu'elle cotise et à quel régime, les droits qu'elle acquiert, puis
+					la pension que chaque régime lui verse.
+				</p>
+				<Parcours />
+			</section>
 
 			<section className="bloc">
 				<h2>Cinq étapes</h2>

@@ -1,0 +1,93 @@
+{
+	"date": "2026-11-22",
+	"note": "Dérivé de data/references/reserves.json par scripts/build-reserves.ts. Montants en euros.",
+	"agircArrco": {
+		"annee": 2025,
+		"initiale": 91200000000,
+		"ressources": 103340000000,
+		"charges": 103011000000,
+		"rendement": 0.01,
+		"plancherMois": 6,
+		"horizonAnnees": 15,
+		"chargesSurRessources": {
+			"2025": 0.118472,
+			"2026": 0.118237,
+			"2027": 0.119881,
+			"2028": 0.120432,
+			"2029": 0.120695,
+			"2030": 0.120818,
+			"2031": 0.120854,
+			"2032": 0.120413,
+			"2033": 0.119512,
+			"2034": 0.119102,
+			"2035": 0.118866,
+			"2036": 0.118519,
+			"2037": 0.118355,
+			"2038": 0.118187,
+			"2039": 0.118275,
+			"2040": 0.118123,
+			"2041": 0.118113,
+			"2042": 0.118214,
+			"2043": 0.118376,
+			"2044": 0.118548,
+			"2045": 0.118684,
+			"2046": 0.118868,
+			"2047": 0.119086,
+			"2048": 0.119605,
+			"2049": 0.120355,
+			"2050": 0.120874,
+			"2051": 0.121255,
+			"2052": 0.12156,
+			"2053": 0.121831,
+			"2054": 0.121999,
+			"2055": 0.122109,
+			"2056": 0.122224,
+			"2057": 0.122277,
+			"2058": 0.122264,
+			"2059": 0.122176,
+			"2060": 0.122176,
+			"2061": 0.122172,
+			"2062": 0.1222,
+			"2063": 0.122104,
+			"2064": 0.122022,
+			"2065": 0.122114,
+			"2066": 0.122416,
+			"2067": 0.12275,
+			"2068": 0.122994,
+			"2069": 0.123221,
+			"2070": 0.123439
+		},
+		"sources": {
+			"reserve": {
+				"titre": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+				"url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+				"date": "2026-06"
+			},
+			"ressources": {
+				"titre": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+				"url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+				"date": "2026-06"
+			},
+			"charges": {
+				"titre": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+				"url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+				"date": "2026-06"
+			},
+			"rendement": {
+				"titre": "Accord national interprofessionnel du 5 octobre 2023 sur la retraite complémentaire Agirc-Arrco",
+				"url": "https://www.agirc-arrco.fr/storage/2023/10/ANI_Agirc-Arrco_05102023.pdf",
+				"date": "2023-10-05"
+			},
+			"cadrage": {
+				"titre": "COR, rapport annuel de juin 2026, Figure 2.7 - Les déterminants de l’évolution de la masse des pensions des régimes dans le scénario de référence",
+				"url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+				"date": "2026-06"
+			},
+			"regle": {
+				"titre": "Accord national interprofessionnel du 17 novembre 2017 instituant le régime Agirc-Arrco de retraite complémentaire (circulaire Agirc-Arrco 2018-9-DC du 19 décembre 2018)",
+				"url": "https://www.agirc-arrco.fr/storage/2024/09/201809dc_ANI_du_17_novembre_2017.pdf",
+				"date": "2017-11-17"
+			}
+		}
+	}
+}

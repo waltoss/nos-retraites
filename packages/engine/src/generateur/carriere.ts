@@ -15,6 +15,10 @@ import {
 	HYPOTHESES_INDEPENDANTS,
 	revenuRelatif,
 } from "./hypothesesIndependants.ts";
+import {
+	HYPOTHESES_SALARIES_AGRICOLES,
+	partSalariesAgricoles,
+} from "./hypothesesSalariesAgricoles.ts";
 import salaireMoyen from "./salaireMoyen.data.json" with { type: "json" };
 import tempsPartielData from "./tempsPartiel.data.json" with { type: "json" };
 
@@ -205,6 +209,21 @@ export function generateCarriere(
 		ailleursDabord
 			? age >= ageEntree + anneesAilleurs - anneesIndependant
 			: age < 62 - anneesAilleurs + anneesIndependant;
+
+	// Salarié agricole : une période de la vie de salarié relève de la MSA. Rien d'autre ne change.
+	const ha = h.salariesAgricoles ?? HYPOTHESES_SALARIES_AGRICOLES;
+	const agricole =
+		derive(27644.437) < partSalariesAgricoles(ha, sexe, anneeNaissance);
+	const anneesAgricole = Math.max(
+		1,
+		Math.round(2 * ha.dureeMoyenne * derive(60013.229)),
+	);
+	const debutAgricole = Math.round(
+		ageEntree +
+			derive(86028.121) * Math.max(0, 62 - anneesAgricole - ageEntree),
+	);
+	const enAgricole = (age: number) =>
+		agricole && age >= debutAgricole && age < debutAgricole + anneesAgricole;
 
 	const annees: AnneeCarriere[] = [];
 	let periode: Periode | null = null;
@@ -417,7 +436,9 @@ export function generateCarriere(
 		const ligne: AnneeCarriere = {
 			annee,
 			affiliation: !autreRegime
-				? "prive"
+				? enAgricole(age)
+					? "salarieAgricole"
+					: "prive"
 				: enIndependant(age)
 					? metier
 					: "autre",

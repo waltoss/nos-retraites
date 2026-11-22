@@ -1,0 +1,621 @@
+{
+ "meta": {
+  "objet": "Ordres de grandeur observes pour regler et valider une affiliation Ircantec : cotisants, assiettes, retraites de droit direct par sexe, pensions moyennes, durees de cotisation, nouveaux retraites et capitaux uniques, masses financieres, reserves.",
+  "methode": "Valeurs lues le 2026-11-22 dans les sources indiquees : PDF telecharges (curl) et convertis avec pdftotext -layout, puis lus en texte. Aucune valeur citee de memoire ni estimee. Tout nombre des blocs figure dans la citation recopiee, sauf mention « calcule ».",
+  "conventions": "Chaque bloc porte source, url, date (de lecture), annee (des donnees), fiabilite, citation, champ et unite. « page » est le rang de la page dans le fichier PDF (et non le folio imprime, qui differe d'une ou deux unites). Montants en euros courants.",
+  "date": "2026-11-22",
+  "plan": {
+   "population": "cotisants, assiettes, structure par employeur, durees de cotisation",
+   "cibles": "retraites et pensions, nouveaux retraites, masses financieres et reserves, projections du COR"
+  },
+  "limites": [
+   "L'Ircantec compte des allocations, pas des personnes : un affilie salarie et elu, ou titulaire d'un droit direct et d'une reversion, est compte autant de fois (glossaire du rapport). Les « allocataires » sont les seuls beneficiaires d'une rente : les capitaux uniques (moins de 300 points, 57 % des departs de 2025) n'y figurent pas, ni chez la Drees.",
+   "Les « cotisants » sont tous les affilies declares dans l'annee, quelle que soit la duree d'activite : effectif annuel, bien superieur a un effectif present a une date. Les elus locaux (6,4 % des cotisants de 2024) et les praticiens hospitaliers y sont inclus.",
+   "Les pensions moyennes de l'Ircantec sont annuelles, majorations comprises ; celles de la Drees sont mensuelles, hors majoration pour trois enfants. Les pensions par sexe du rapport d'activite portent sur l'ensemble des allocataires (droits directs et derives) : la pension de droit direct par sexe n'a pas ete lue.",
+   "Part d'une generation ayant ete affiliee a l'Ircantec : non publiee dans le texte du panorama de la Drees (voir nonLu)."
+  ]
+ },
+ "population": {
+  "cotisants": {
+   "effectifs2024": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "affilies ayant cotise dans l'annee ; euros ; %",
+    "champ": "Ensemble des affilies declares dans l'annee par leur employeur (salaries et elus). Les donnees de cotisants les plus recentes du rapport 2025 sont celles de 2024.",
+    "citation": "En 2024, 3 248 300 affilies ont cotise a l'Ircantec, soit une hausse de 1,4 % par rapport a 2023 [...] les assiettes de cotisations declarees augmentent de 6,5 % pour atteindre 58,8 milliards d'euros, soit une assiette moyenne par affilie de 18 110 EUR (+ 5,0 % par rapport a 2023). | En 2024, 3 248 300 affilies ont cotise a l'Ircantec (dont 64,6 % de femmes) | 66,4 % de femmes et 33,6 % d'hommes parmi les cotisants salaries | elus locaux [...] La part des femmes est de 38,9 %.",
+    "page": "65, 64 et 7",
+    "cotisants": 3248300,
+    "partDesFemmesPourcent": 64.6,
+    "partDesFemmesParmiLesSalariesPourcent": 66.4,
+    "partDesFemmesParmiLesElusPourcent": 38.9,
+    "assietteTotaleMilliards": 58.8,
+    "assietteMoyenneParAffilie": 18110,
+    "ageMoyenDesSalaries": {
+     "hommes": "38 ans et 5 mois ou 38 ans",
+     "femmes": "38 ans et 5 mois ou 38 ans",
+     "note": "la pyramide donne « 38 ans et 5 mois » d'un cote et « 38 ans » de l'autre ; le texte extrait ne dit pas quel cote est celui des femmes"
+    }
+   },
+   "effectifs2023": {
+    "source": "Ircantec, rapport d'activite 2024 (publie en juin 2025), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_30-06-25.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "affilies ayant cotise dans l'annee ; euros ; %",
+    "champ": "Idem, annee 2023.",
+    "citation": "En 2023, 3 204 400 affilies ont cotise a l'Ircantec (dont 64,7 % de femmes). Cet effectif est en hausse de 0,7 % par rapport a 2022. | 3,20 millions d'actifs cotisants en 2023 | 17 200 euros d'assiette moyenne",
+    "page": "32 et 4",
+    "cotisants": 3204400,
+    "partDesFemmesPourcent": 64.7,
+    "assietteMoyenneParAffilie": 17200
+   },
+   "evolutionSur15Ans": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": "2009-2024",
+    "unite": "%",
+    "champ": "Effectif cotisant annuel.",
+    "citation": "Entre 2009 et 2024, l'effectif cotisant (entendu comme l'ensemble des personnes ayant verse des cotisations au cours de l'annee civile) a augmente de 18,8 %, soit une moyenne de 1,2 % par an. [...] une annee 2022 qui a connu une augmentation exceptionnelle de 4,9 % de l'effectif cotisant.",
+    "page": "64",
+    "hausse2009a2024Pourcent": 18.8,
+    "hausseMoyenneAnnuellePourcent": 1.2,
+    "hausse2022Pourcent": 4.9,
+    "note": "La serie annuelle 2009-2024 n'existe que sous forme de graphique (valeurs non lisibles dans le texte). Par calcul a partir des evolutions lues : 2022 = 3 204 400 / 1,007, soit environ 3,18 millions (calcule)."
+   },
+   "repartitionParEmployeur2024": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "% des cotisants ; % des assiettes",
+    "champ": "Cotisants de 2024 par famille d'employeurs.",
+    "citation": "Repartition des cotisants par famille d'employeurs : Etat 30,4% ; Collectivites territoriales (salaries) 36,6% ; Collectivites territoriale (elus) 6,4% ; Collectivites hospitalieres 20,3% ; Autres employeurs 6,3% | Repartition des assiettes de cotisation : Etat 26,3% ; Collectivites territoriales (salaries) 28,5% ; (elus) 3,7% ; Collectivites hospitalieres 29,1% ; Autres employeurs 12,4% | En 2024, 53 800 employeurs ont declare des cotisants",
+    "page": "66",
+    "cotisantsPourcent": {
+     "etat": 30.4,
+     "territorialeSalaries": 36.6,
+     "territorialeElus": 6.4,
+     "hospitaliere": 20.3,
+     "autres": 6.3
+    },
+    "assiettesPourcent": {
+     "etat": 26.3,
+     "territorialeSalaries": 28.5,
+     "territorialeElus": 3.7,
+     "hospitaliere": 29.1,
+     "autres": 12.4
+    },
+    "employeurs": 53800,
+    "note": "Etiquettes d'un graphique circulaire : l'appariement etiquette-valeur suit la disposition du texte extrait (les cinq parts de chaque graphique somment a 100)."
+   },
+   "profilDesSalaries": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "texte",
+    "champ": "Cotisants salaries (hors elus).",
+    "citation": "les salaries sont jeunes du fait d'un turnover tres important sur des periodes courtes et majoritairement de debut de carriere avec pres de la moitie d'entre eux ages de 35 ans au plus. | les elus locaux sont ages en moyenne de 59 ans et 4 mois.",
+    "page": "65"
+   },
+   "rapportDemographique": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "cotisants pour un allocataire",
+    "champ": "Cotisants de l'annee rapportes aux allocataires (rentes).",
+    "citation": "1,4 cotisant pour 1 retraite en 2024 | Entre 2009 et 2013, le rapport demographique du regime est reste relativement stable, a un niveau proche de 1,5. Entre 2015 et 2020, ce rapport baisse continument jusqu'a un niveau de 1,35 puis repart legerement a la hausse et atteint 1,37 en 2024.",
+    "page": "7 et 64",
+    "valeur2024": 1.37,
+    "valeur2023": 1.38,
+    "citation2023": "Rapport d'activite 2024, PDF p. 32 : 'En 2023, il est a nouveau en baisse a 1,38.'"
+   },
+   "projectionCor": {
+    "source": "COR, fiche « Institution de retraite complementaire des agents non titulaires de l'Etat et des collectivites publiques (Ircantec) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2070,
+    "unite": "millions de cotisants",
+    "champ": "Scenario de reference du COR, juin 2024.",
+    "citation": "En projection, l'effectif cotisant resterait stable les premieres annees, avant de diminuer legerement pour atteindre 3,1 millions a l'horizon 2070",
+    "page": "6",
+    "cotisants2070Millions": 3.1
+   }
+  },
+  "dureeDeCotisation": {
+   "stockFin2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "annees et mois",
+    "champ": "Allocataires (rentes) au 31 decembre 2025.",
+    "citation": "La duree moyenne de cotisation dans le regime est de 10 ans et 4 mois. Elle est relativement homogene entre hommes et femmes et augmente logiquement avec la periodicite de paiement : de 4 ans et 9 mois pour les beneficiaires d'une allocation annuelle a 9 ans et 3 mois pour les beneficiaires d'une allocation trimestrielle, et enfin 21 ans et 10 mois pour les beneficiaires d'allocation mensuelle. Presque deux tiers des pensionnes ont cotise 10 ans ou moins et un peu plus de 6 % des allocataires ont totalise au moins 30 ans de services a l'Ircantec. | leur duree moyenne de cotisation est plus longue que les salaries : 14 ans et 2 mois [...] contre 9 ans et 11 mois pour les salaries.",
+    "page": "68 et 67",
+    "ensembleEnMois": 124,
+    "allocationAnnuelleEnMois": 57,
+    "allocationTrimestrielleEnMois": 111,
+    "allocationMensuelleEnMois": 262,
+    "elusEnMois": 170,
+    "salariesEnMois": 119,
+    "note": "Durees converties en mois (calcul trivial a partir des « ans et mois » lus). Fin 2024 : 10 ans et 3 mois (rapport d'activite 2024, PDF p. 34)."
+   },
+   "nouveauxRetraites2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "annees et mois",
+    "champ": "Nouveaux retraites de droit direct de 2025, hors capitaux uniques ; et capitaux uniques.",
+    "citation": "la duree de carriere moyenne des nouveaux retraites de droit direct hors capitaux uniques est de 10 ans (avec 9 ans et 5 mois pour les hommes, et 10 ans et 4 mois pour les femmes), la moitie d'entre eux a une duree inferieure a 6 ans et 5 mois. | departs en capital unique, dont la duree d'affiliation au regime est limitee a 1 an et 2 mois",
+    "page": "71 et 70",
+    "horsCapitauxUniquesEnMois": {
+     "ensemble": 120,
+     "hommes": 113,
+     "femmes": 124,
+     "mediane": 77
+    },
+    "capitauxUniquesEnMois": 14
+   }
+  }
+ },
+ "cibles": {
+  "retraitesEtPensions": {
+   "allocatairesFin2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "allocations en paiement au 31 decembre 2025 ; points ; euros par an",
+    "champ": "Allocataires du regime (rentes de droit direct et de droit derive, salaries et elus), hors capitaux uniques.",
+    "citation": "En 2025 2 413 200 retraites ont percu une allocation du regime, soit une augmentation de 2,0 % par rapport a 2024. | Les allocataires de droit direct, au nombre de 2 165 300, representent 89,7 % de l'ensemble des allocataires, dont 62,7 % de femmes (contre 82,1 % pour les allocataires de droit derive). [...] respectivement 3 476 points (soit une pension annuelle de 1 931 EUR) et 2 217 points (1 232 EUR). | Pyramide des ages des allocataires de droit direct : Effectifs = 806 900 [...] Effectifs = 1 358 400 | droit derive : Effectifs = 44 300 [...] Effectifs = 203 500",
+    "page": "67 et 68",
+    "allocataires": 2413200,
+    "droitDirect": {
+     "ensemble": 2165300,
+     "hommes": 806900,
+     "femmes": 1358400,
+     "partDesFemmesPourcent": 62.7,
+     "pointsMoyens": 3476,
+     "pensionAnnuelleMoyenne": 1931
+    },
+    "droitDerive": {
+     "hommes": 44300,
+     "femmes": 203500,
+     "partDesFemmesPourcent": 82.1,
+     "pointsMoyens": 2217,
+     "pensionAnnuelleMoyenne": 1232
+    },
+    "ageMoyenDroitDirect": "74 ans et 5 mois",
+    "note": "Hommes / femmes de la pyramide : attribution d'apres les parts lues (1 358 400 / 2 165 300 = 62,7 % de femmes : calcul de controle)."
+   },
+   "pensionParSexeFin2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "points ; euros par an",
+    "champ": "ENSEMBLE des allocataires (droits directs et derives confondus).",
+    "citation": "Les femmes representent pres des deux tiers des allocataires du regime. Elles beneficient en moyenne de 2 774 points contre 4 399 points pour les hommes, correspondant a une pension moyenne annuelle respective de 1 541 EUR et 2 444 EUR. | Les elus representent pres de 8 % des allocataires (198 400) et comptent 38 % de femmes. Ils ont en moyenne acquis 2 036 points, soit une pension moyenne annuelle de 1 131 EUR, des montants bien plus faibles que ceux des salaries avec 3 464 points pour une pension annuelle de 1 925 EUR. | En 2025, le nombre de points moyen par retraite est de 3 347 (soit 1 859 EUR de pension annuelle)",
+    "page": "67 et 69",
+    "femmes": {
+     "pointsMoyens": 2774,
+     "pensionAnnuelleMoyenne": 1541
+    },
+    "hommes": {
+     "pointsMoyens": 4399,
+     "pensionAnnuelleMoyenne": 2444
+    },
+    "ensemble": {
+     "pointsMoyens": 3347,
+     "pensionAnnuelleMoyenne": 1859
+    },
+    "elus": {
+     "effectif": 198400,
+     "pointsMoyens": 2036,
+     "pensionAnnuelleMoyenne": 1131
+    },
+    "salaries": {
+     "pointsMoyens": 3464,
+     "pensionAnnuelleMoyenne": 1925
+    }
+   },
+   "parPeriodiciteFin2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "allocataires ; euros par an",
+    "champ": "Allocataires par sexe et periodicite de paiement (graphiques).",
+    "citation": "Annuel 42 % ; Trimestriel 35 % ; Mensuel 23 % | Effectif : 360 200, 658 400 (annuel) ; 292 400, 537 900 (trimestriel) ; 198 700, 365 600 (mensuel) | Pension moyenne annuelle : 291, 278 (annuel) ; 810, 839 (trimestriel) ; 8 750, 4 848 (mensuel)",
+    "page": "67",
+    "partsPourcent": {
+     "annuel": 42,
+     "trimestriel": 35,
+     "mensuel": 23
+    },
+    "effectifs": {
+     "annuel": {
+      "hommes": 360200,
+      "femmes": 658400
+     },
+     "trimestriel": {
+      "hommes": 292400,
+      "femmes": 537900
+     },
+     "mensuel": {
+      "hommes": 198700,
+      "femmes": 365600
+     }
+    },
+    "pensionAnnuelleMoyenne": {
+     "annuel": {
+      "hommes": 291,
+      "femmes": 278
+     },
+     "trimestriel": {
+      "hommes": 810,
+      "femmes": 839
+     },
+     "mensuel": {
+      "hommes": 8750,
+      "femmes": 4848
+     }
+    },
+    "note": "Valeurs d'etiquettes de graphiques : l'attribution hommes (plus petit effectif) / femmes suit l'ordre de la legende « Hommes Femmes » et la part des femmes ; a verifier a l'oeil sur le PDF."
+   },
+   "concentrationFin2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "points ; euros par an ; %",
+    "champ": "Allocataires fin 2025.",
+    "citation": "Un allocataire sur deux a acquis moins de 1 000 points (soit 556 EUR de pension annuelle) ; ils percoivent ainsi 7,7 % des allocations versees aux pensionnes du regime. En revanche, un allocataire sur cinq detient au moins 3 000 points, soit une retraite au moins egale a 1 667 EUR par an [...] ; ils percoivent les trois quarts des allocations [...]. La moitie des points payes est detenue par moins de 5 % des allocataires [...]. Ces 119 000 allocataires ont acquis au moins 12 042 points (6 690 EUR de pension annuelle).",
+    "page": "69",
+    "medianeEnPoints": 1000
+   },
+   "allocatairesFin2024": {
+    "source": "Ircantec, rapport d'activite 2024 (publie en juin 2025), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_30-06-25.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "allocations en paiement au 31 decembre 2024 ; points ; euros par an",
+    "champ": "Idem, fin 2024.",
+    "citation": "passant de 2 326 400 a 2 365 300 | Les allocataires de droit direct, au nombre de 2 115 900, representent 89,5 % de l'ensemble des allocataires, dont 62,4 % de femmes (contre 82,7 % pour les allocataires de droit derive). [...] respectivement 3 449 points (soit une pension annuelle de 1 875 EUR) et 2 160 points (1 174 EUR). | moyenne de 2 735 points contre 4 366 points pour les hommes, correspondant a une pension moyenne annuelle respective de 1 487 EUR et 2 373 EUR. | Effectifs = 794 800 [...] Effectifs = 1 321 100",
+    "page": "32, 33 et 34",
+    "allocataires": 2365300,
+    "allocatairesFin2023": 2326400,
+    "droitDirect": {
+     "ensemble": 2115900,
+     "hommes": 794800,
+     "femmes": 1321100,
+     "partDesFemmesPourcent": 62.4,
+     "pointsMoyens": 3449,
+     "pensionAnnuelleMoyenne": 1875
+    },
+    "droitDerive": {
+     "pointsMoyens": 2160,
+     "pensionAnnuelleMoyenne": 1174
+    },
+    "ensembleDesAllocataires": {
+     "femmes": {
+      "pointsMoyens": 2735,
+      "pensionAnnuelleMoyenne": 1487
+     },
+     "hommes": {
+      "pointsMoyens": 4366,
+      "pensionAnnuelleMoyenne": 2373
+     }
+    }
+   },
+   "dreesFin2024": {
+    "source": "Drees, « Les retraites et les retraites », edition 2026 (EACR, EIR, modele ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "milliers de retraites ; % ; euros bruts par mois",
+    "champ": "Retraites de l'Ircantec residant en France ou a l'etranger, vivants au 31 decembre 2024, hors versements forfaitaires uniques ; pension de droit direct hors majoration pour trois enfants ou plus.",
+    "citation": "Tableau 1 (effectifs fin 2024) : Ircantec 2 318 | 2 109 | 108 | 250 | 209 (ensemble | droit direct | dont nouveaux en 2024 | droit derive | dont derive servi seul) ; Tableau 2 (droit direct) : Ircantec 2 109 | 62 | 38 | nd | 2,1 | 9,7 | 25,8 | 12 (effectifs | part des femmes | part des hommes | polypensionnes | evolution 2023-2024 | 2020-2024 | 2014-2024 | part de l'ensemble tous regimes) ; Montant brut mensuel moyen : Ircantec 149 | 5,0 | 2,9 | 12,6 | -37 (euros | evolution en euros constants 2023-2024 | 2020-2024 | 2014-2024 | ecart femmes/hommes en %) ; Droit derive : Ircantec 206 | 43 | 250 | 209",
+    "page": "10, 24, 59 et 38",
+    "retraitesMilliers": 2318,
+    "droitDirectMilliers": 2109,
+    "partDesFemmesPourcent": 62,
+    "droitDeriveMilliers": {
+     "ensemble": 250,
+     "femmes": 206,
+     "hommes": 43,
+     "serviSeul": 209
+    },
+    "pensionMensuelleMoyenneDroitDirect": 149,
+    "ecartFemmesHommesPourcent": -37,
+    "partDesRetraitesTousRegimesPourcent": 12
+   },
+   "dreesFin2023": {
+    "source": "Drees, « Les retraites et les retraites », edition 2025 (EACR, EIR, modele ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/303673.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "milliers de retraites ; euros bruts par mois",
+    "champ": "Idem, fin 2023.",
+    "citation": "Ircantec 2 278 | 2 066 | 115 | 252 | 212 ; Ircantec 2 066 | 62 | 38 | nd | 2,7 | 5,1 | 27,3 | 12 ; Ircantec 140 | 0,1 | 1,9 | 10,5 | -38",
+    "page": "10, 25 et 57",
+    "retraitesMilliers": 2278,
+    "droitDirectMilliers": 2066,
+    "partDesFemmesPourcent": 62,
+    "pensionMensuelleMoyenneDroitDirect": 140,
+    "ecartFemmesHommesPourcent": -38
+   },
+   "corFin2023": {
+    "source": "COR, fiche « Institution de retraite complementaire des agents non titulaires de l'Etat et des collectivites publiques (Ircantec) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "millions de retraites",
+    "champ": "Retraites de l'Ircantec.",
+    "citation": "Ces derniers s'elevent a 2 millions en 2023 | l'effectif des pensionnes de droit direct a l'horizon 2070 est nettement moins eleve (5,5 millions dans les projections 2024, contre 6,5 millions dans les projections 2017) | Le rapport demographique corrige chuterait en projection, passant de 14,0 en 2023 a 5,5 en 2070.",
+    "page": "3, 4 et 2",
+    "retraitesMillions": 2,
+    "droitDirect2070Millions": 5.5,
+    "note": "Rapport demographique corrige du COR : cotisants de toute l'economie rapportes aux retraites du regime ; ce n'est pas le ratio cotisants / allocataires de l'Ircantec."
+   }
+  },
+  "nouveauxRetraites": {
+   "flux2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "nouveaux retraites ; points ; %",
+    "champ": "Affilies faisant liquider leurs droits dans l'annee, quel que soit le nombre de points (capitaux uniques compris).",
+    "citation": "En 2025, 284 800 nouveaux retraites ont fait valoir leurs droits au regime, en augmentation de 11,9 % par rapport a 2024. [...] Parmi ces nouveaux retraites, 57,3 % (163 100) ont percu un capital unique, contre 56,2 % en 2024 [...]. Quant aux 121 700 nouveaux retraites percevant une pension sous forme de rente, 47 % beneficient d'une allocation annuelle, 32 % d'une allocation trimestrielle, et 21 % d'une allocation mensuelle. | le nombre de points moyens des nouveaux retraites a baisse de 5,6 % passant de 1 591 points en 2024 a 1 501 points en 2025. | Les hommes ont un nombre de points moyen de 1 819 [...] Les femmes totalisent, quant a elles, 1 305 points en moyenne | les nouveaux retraites ayant acquis moins de 300 points (versement d'un capital unique) ne totalisent que 2,8 % de l'ensemble des points liquides.",
+    "page": "70",
+    "nouveauxRetraites": 284800,
+    "capitauxUniques": 163100,
+    "partEnCapitalUniquePourcent": 57.3,
+    "rentes": 121700,
+    "pointsMoyens": {
+     "ensemble": 1501,
+     "hommes": 1819,
+     "femmes": 1305
+    },
+    "partDesPointsLiquidesEnCapitalUniquePourcent": 2.8,
+    "graphiqueParSexeEtPeriodicite": {
+     "citation": "Capital Unique 64 200, 98 900 ; Annuel 21 300, 35 800 ; Trimestriel 13 400, 25 800 ; Mensuel 9 600, 15 800",
+     "note": "etiquettes de graphique ; ordre hommes puis femmes d'apres la legende, a verifier a l'oeil"
+    }
+   },
+   "droitDirectHorsCapitauxUniques2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "nouveaux retraites ; points ; euros par an ; ages",
+    "champ": "Nouveaux retraites de droit direct percevant une rente (300 points et plus).",
+    "citation": "Hors capitaux uniques, le nombre de nouveaux retraites percevant une pension de droit direct s'eleve a 118 500, en augmentation de 9,5 % par rapport a 2024. | L'age moyen de ces nouveaux allocataires de droit direct est de 64 ans et 7 mois. [...] age moyen de depart a 65 ans pour les premiers et 64 ans et 5 mois pour les secondes. | En 2025, les nouveaux retraites de droit direct totalisent 3 462 points en moyenne (soit 1 923 EUR de pension annuelle) [...]. En moyenne, les hommes disposent de 4 425 points contre 2 910 points pour les femmes. | les ages les plus frequents de depart a la retraite se situent en 2025 a 63 ans avec 28 % des departs contre 18 % a 62 ans.",
+    "page": "71",
+    "effectif": 118500,
+    "ageMoyen": {
+     "ensemble": "64 ans et 7 mois",
+     "hommes": "65 ans",
+     "femmes": "64 ans et 5 mois"
+    },
+    "pointsMoyens": {
+     "ensemble": 3462,
+     "hommes": 4425,
+     "femmes": 2910
+    },
+    "pensionAnnuelleMoyenne": 1923
+   },
+   "flux2024": {
+    "source": "Ircantec, rapport d'activite 2024 (publie en juin 2025), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_30-06-25.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "nouveaux retraites ; %",
+    "champ": "Idem flux2025, annee 2024.",
+    "citation": "En 2024, 254 500 nouveaux retraites ont fait valoir leurs droits au regime | Parmi ces nouveaux retraites, 56,2 % (143 100) ont percu un capital unique, contre 55,1 % en 2023. Quant aux 111 400 nouveaux retraites",
+    "page": "35",
+    "nouveauxRetraites": 254500,
+    "capitauxUniques": 143100,
+    "partEnCapitalUniquePourcent": 56.2,
+    "partEnCapitalUnique2023Pourcent": 55.1,
+    "rentes": 111400
+   },
+   "dreesSerie2010a2024": {
+    "source": "Drees, « Les retraites et les retraites », edition 2026 (EACR, EIR, modele ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": "2010-2024",
+    "unite": "milliers de nouveaux retraites de droit direct ; euros bruts par mois",
+    "champ": "Retraites ayant percu pour la premiere fois une pension de droit direct de l'Ircantec dans l'annee, hors versements forfaitaires uniques.",
+    "citation": "Ircantec 85 74 74 91 113 82 86 95 102 98 126 106 112 115 108 | 37 | -5,8 (2010 a 2024 | proportion d'hommes en 2024 | evolution 2023-2024) ; Pension des nouveaux retraites fin 2024 : Ircantec 162 | 6,3 | -33,0 | 9 (montant mensuel | evolution 2023-2024 en euros constants | ecart femmes/hommes | ecart avec l'ensemble des retraites)",
+    "page": "34 et 76",
+    "serieMilliers": {
+     "2010": 85,
+     "2011": 74,
+     "2012": 74,
+     "2013": 91,
+     "2014": 113,
+     "2015": 82,
+     "2016": 86,
+     "2017": 95,
+     "2018": 102,
+     "2019": 98,
+     "2020": 126,
+     "2021": 106,
+     "2022": 112,
+     "2023": 115,
+     "2024": 108
+    },
+    "partDesHommes2024Pourcent": 37,
+    "pensionMensuelleMoyenneDesNouveaux2024": 162,
+    "ecartFemmesHommesPourcent": -33.0
+   },
+   "nonRecours": {
+    "source": "COR, fiche « Institution de retraite complementaire des agents non titulaires de l'Etat et des collectivites publiques (Ircantec) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2022,
+    "unite": "%",
+    "champ": "Ircantec.",
+    "citation": "L'age conjoncturel, situe autour de 66,5 ans entre 2010 et 2023 [...] s'explique par un taux de non-recours eleve a l'Ircantec. Ainsi, la ou dans un regime de base, le taux de retraite s'approche de 100 % a 69 ans, celui-ci s'eleve seulement a 60 % a l'Ircantec en 2022. | La part des departs en capital unique, de l'ordre de 57 % en 2023, serait de moins de 50 % a l'horizon 2070.",
+    "page": "4 et 3",
+    "tauxDeRetraiteA69AnsPourcent": 60,
+    "partEnCapitalUnique2023SelonLeCorPourcent": 57
+   }
+  },
+  "massesFinancieres": {
+   "exercice2025": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "milliards d'euros",
+    "champ": "Comptes de l'Ircantec, exercice 2025.",
+    "citation": "Les charges techniques de l'Ircantec s'elevent a 4,697 milliards d'euros en 2025 (+6,9 % par rapport a 2024), essentiellement constituees du versement des prestations de retraite a hauteur de 4,569 Md EUR (+6 %). Ces charges sont couvertes par 5,378 Md EUR de produits techniques (+3,4 % par rapport a 2024), correspondant pour l'essentiel a 4,911 Md EUR de cotisations normales (+2,6 %), auxquelles s'ajoutent 395 M EUR de produits de compensations, ainsi que 27 M EUR de cotisations retroactives. | 4,797 Md EUR de cotisations normales encaissees en 2025 (+0,3 % par rapport a 2024) | paiements d'allocations pour un montant brut total verse de 4,553 Md EUR en hausse de 5,69 % par rapport a 2024 | un resultat de 1,08 Md EUR",
+    "page": "35, 23, 25 et 34",
+    "prestationsDeRetraiteMilliards": 4.569,
+    "chargesTechniquesMilliards": 4.697,
+    "cotisationsNormalesComptabiliseesMilliards": 4.911,
+    "cotisationsNormalesEncaisseesMilliards": 4.797,
+    "allocationsBrutesVerseesMilliards": 4.553,
+    "produitsTechniquesMilliards": 5.378,
+    "resultatMilliards": 1.08
+   },
+   "exercice2024": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "unite": "millions de personnes ; milliards d'euros",
+    "champ": "Tableau « Comparaison avec les principaux regimes de retraite », ligne Ircantec, annee 2024 (source : rapport d'activite 2024).",
+    "citation": "Ircantec 3,25 | 4,79 | 2,12 | 0,25 | 4,31 | 64 ans et 9 mois (cotisants en millions | cotisations en Md EUR | beneficiaires de droits directs en millions | droits derives | prestations en Md EUR | age moyen)",
+    "page": "62",
+    "cotisantsMillions": 3.25,
+    "cotisationsMilliards": 4.79,
+    "droitsDirectsMillions": 2.12,
+    "droitsDerivesMillions": 0.25,
+    "prestationsMilliards": 4.31,
+    "complement": "Rapport d'activite 2024, PDF p. 11 : '4,782 milliards d'euros de cotisations normales encaissees en 2024'"
+   },
+   "exercice2023": {
+    "source": "Ircantec, rapport d'activite 2024 (publie en juin 2025), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_30-06-25.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "millions de personnes ; milliards d'euros",
+    "champ": "Meme tableau dans le rapport d'activite 2024, ligne Ircantec, annee 2023.",
+    "citation": "Ircantec 3,18 | 4,35 | 2,07 | 0,25 | 3,97 | 64 ans et 1 mois",
+    "page": "31",
+    "cotisantsMillions": 3.18,
+    "cotisationsMilliards": 4.35,
+    "droitsDirectsMillions": 2.07,
+    "droitsDerivesMillions": 0.25,
+    "prestationsMilliards": 3.97,
+    "note": "3,18 millions de cotisants ici contre 3 204 400 dans le texte du meme rapport : voir desaccordsEntreSources."
+   },
+   "cor2023": {
+    "source": "COR, fiche « Institution de retraite complementaire des agents non titulaires de l'Etat et des collectivites publiques (Ircantec) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "unite": "milliards d'euros ; % du PIB",
+    "champ": "Depenses de retraite de l'Ircantec.",
+    "citation": "Les depenses de retraite de l'Ircantec atteignent 0,15 % du PIB en 2023, soit 4,2 milliards d'euros, dont 3,7 Mds EUR verses pour les pensions de droits directs et 0,3 Md EUR pour les pensions de droits derives. | L'evolution des ressources reflete essentiellement celle des cotisations, qui representent 92 % des ressources totales entre 2010 et 2022",
+    "page": "2 et 6",
+    "depensesMilliards": 4.2,
+    "droitsDirectsMilliards": 3.7,
+    "droitsDerivesMilliards": 0.3,
+    "depensesPourcentDuPib": 0.15
+   },
+   "reserves": {
+    "source": "Ircantec, rapport d'activite 2025 (publie en juin 2026), annexes statistiques",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "unite": "milliards d'euros",
+    "champ": "Portefeuille de reserves de l'Ircantec en valeur de marche ; reserves techniques au bilan.",
+    "citation": "Le portefeuille de reserves a fin 2025 s'eleve a 18,6 Md EUR. | Total Reserves Ircantec 18 630 100 % 17 186 100 % | Le passif du bilan inclut principalement 14,826 Md EUR de reserves techniques du regime | La performance du portefeuille des reserves ressort a +4,91% en 2025.",
+    "page": "39, 41, 35 et 44",
+    "portefeuilleFin2025Milliards": 18.63,
+    "portefeuilleFin2024Milliards": 17.186,
+    "reservesTechniquesAuBilanMilliards": 14.826,
+    "performance2025Pourcent": 4.91,
+    "projectionCor": "Fiche COR, p. 8 : le solde devient negatif 'a partir de 2030 environ dans le scenario de reference, et l'epuisement des reserves surviendrait un peu apres 2050'."
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  "Retraites de droit direct fin 2024 : 2 109 milliers selon la Drees (personnes, hors versements forfaitaires uniques) contre 2 115 900 allocations selon l'Ircantec (un affilie salarie et elu compte deux fois). Ecart de 0,3 %, coherent avec la difference de definition.",
+  "Pension moyenne de droit direct fin 2024 : 149 EUR par mois selon la Drees (hors majoration pour trois enfants), soit 1 788 EUR par an (calcule), contre 1 875 EUR par an selon l'Ircantec (majorations comprises, allocations et non personnes). Ecart de 5 % non explique en detail.",
+  "Part des departs en capital unique en 2023 : « de l'ordre de 57 % » selon la fiche du COR, 55,1 % selon le rapport d'activite 2024 de l'Ircantec (57,3 % est la valeur de 2025).",
+  "Cotisants 2023 : 3 204 400 dans le texte du rapport d'activite 2024, 3,18 millions dans le tableau de comparaison du meme rapport (qui cite le rapport de l'annee precedente).",
+  "Cotisations : « encaissees » (4,797 Md EUR en 2025, 4,782 en 2024) et « comptabilisees » au compte de resultat (4,911 Md EUR en 2025) different ; le tableau de comparaison (4,79 pour 2024, 4,35 pour 2023) suit les encaissements.",
+  "Prestations 2025 : 4,569 Md EUR (compte de resultat, retraites et capitaux), 4,553 Md EUR (allocations brutes payees), « 4,57 » en chiffre cle ; 2024 : 4,31 Md EUR au tableau de comparaison alors que le rapport 2024 affiche « 4,24 milliards d'euros de retraites » en chiffre cle (lu en page 4, libelle tronque).",
+  "Nouveaux retraites 2024 : 108 milliers selon la Drees (premiere pension de droit direct en rente) ; l'Ircantec compte 254 500 liquidations dont 143 100 capitaux uniques et 111 400 rentes (droits directs et derives). Coherent une fois les capitaux uniques retires.",
+  "Cotisants 2024 : « 3,24 millions d'actifs cotisants en 2024 » en chiffre cle (PDF p. 7) contre 3 248 300 et « 3,25 millions » dans les annexes du meme rapport (p. 65).",
+  "Rapport d'activite 2025, p. 71 : « la part des departs a la retraite avant 62 ans [...] represente, en 2024, 7,8 % des departs (contre 8,6 % en 2024 et 9,2 % en 2023) » : la premiere annee est une coquille de la source pour 2025."
+ ],
+ "nonLu": [
+  {
+   "quoi": "Part d'une generation (1953, 1955 ou 1957) ayant acquis des droits a l'Ircantec, et part des polypensionnes parmi ses retraites (« nd » dans le tableau de la Drees)",
+   "ou": "Drees, EIR 2020 et fichiers Excel associes aux fiches du panorama (data.drees.solidarites-sante.gouv.fr) ; annuaire du GIP Union Retraite"
+  },
+  {
+   "quoi": "Pension moyenne de DROIT DIRECT par sexe (l'Ircantec ne publie par sexe que l'ensemble des allocataires ; la Drees ne donne que l'ecart de -37 %)",
+   "ou": "Fichier Excel de la fiche 05 du panorama Drees ; recueil statistique de la Caisse des Depots"
+  },
+  {
+   "quoi": "Serie annuelle des cotisants et des allocataires 2009-2024 (graphique sans valeurs dans le rapport)",
+   "ou": "Rapports d'activite anterieurs ; politiques-sociales.caissedesdepots.fr (Questions Politiques Sociales) ; jeux « Actifs et cotisants IRCANTEC » de data.gouv.fr (fichiers sur retraitesolidarite.caissedesdepots.fr, erreur 503 le 2026-11-22 ; jeux d'opendata.caissedesdepots.fr dates de 2023, non lus)"
+  },
+  {
+   "quoi": "Distribution des durees de cotisation et des points par tranche et par sexe (IRC_RET_05_trpts_durcot_sex.csv, IRC_NvRET_05_DP_age_sex.csv)",
+   "ou": "data.gouv.fr, jeux « Retraites IRCANTEC » et « Nouveaux retraites IRCANTEC » (serveur en erreur 503)"
+  },
+  {
+   "quoi": "Cotisants par sexe en effectifs et cotisants de 2025",
+   "ou": "Rapport d'activite 2026 (a paraitre mi-2027)"
+  },
+  {
+   "quoi": "Fiche Ircantec du COR pour les projections de 2025 ou 2026 (seule la fiche de juin 2024 a ete trouvee)",
+   "ou": "cor-retraites.fr, rapports annuels de juin 2025 et juin 2026"
+  },
+  {
+   "quoi": "Rapport d'activite 2024, pages de chiffres cles : seuls quelques nombres ont ete releves (mise en page sur plusieurs colonnes, lignes tronquees a l'extraction)",
+   "ou": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_30-06-25.pdf"
+  }
+ ]
+}

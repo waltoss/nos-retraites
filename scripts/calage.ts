@@ -18,6 +18,7 @@ import {
 	computePension,
 	createRng,
 	detail,
+	estSalarie,
 	generateCarriere,
 	graineIndividu,
 	HYPOTHESES,
@@ -210,7 +211,7 @@ export function mesurerSalaires(h: Hypotheses): Mesure[] {
 		const a = carriere.annees.find((x) => x.annee === ANNEE_SALAIRES);
 		if (
 			!a ||
-			a.affiliation !== "prive" ||
+			!estSalarie(a) ||
 			a.salaireBrut <= 0 ||
 			!a.moisEmploi ||
 			a.alternance

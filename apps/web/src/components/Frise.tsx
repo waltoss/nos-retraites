@@ -8,6 +8,7 @@ import {
 } from "@nos-retraites/engine";
 import { type PointerEvent, useState } from "react";
 import { euros } from "../format";
+import { AFFILIATIONS, affiliationDe, statutDe } from "../regimes";
 import { cadrer } from "./Histogram";
 
 export const ETATS: Record<Etat, { label: string; couleur: string }> = {
@@ -125,17 +126,22 @@ export function Frise({
 			</div>,
 		);
 	}
+	// Sous les barres, une bande dit sous quel statut chaque année a été travaillée.
+	const bande = [];
+	const statuts = new Set<string>();
+	for (let age = AGE_DEBUT; age < AGE_FIN; age++) {
+		const { a, mois } = lire(age);
+		const statut = a && mois && mois.emploi > 0 ? affiliationDe(a) : undefined;
+		if (statut) statuts.add(statut.label);
+		bande.push(<i key={age} style={{ background: statut?.couleur }} />);
+	}
 	const vise = survol === null ? null : lire(survol);
 	const libelle = (etat: Etat) =>
-		etat === "emploi" && vise?.a && ailleurs(vise.a)
-			? "en emploi dans un autre régime"
-			: etat === "emploi" && vise?.a?.affiliation === "artisan"
-				? "artisan"
-				: etat === "emploi" && vise?.a?.affiliation === "commercant"
-					? "commerçant"
-					: etat === "emploi" && vise?.a?.alternance
-						? "en apprentissage ou en alternance"
-						: ETATS[etat].label;
+		etat === "emploi" && vise?.a?.alternance
+			? "en apprentissage ou en alternance"
+			: etat === "emploi" && vise?.a
+				? statutDe(vise.a, carriere.sexe)
+				: ETATS[etat].label;
 	const detailMois = vise?.mois
 		? (Object.entries(vise.mois) as [Etat, number][])
 				.filter(([, n]) => n > 0)
@@ -202,12 +208,29 @@ export function Frise({
 				)}
 				<div className="frise-depart" style={{ left: position(ageDepart) }} />
 			</div>
+			<div className="frise-affiliations" aria-hidden="true">
+				{bande}
+			</div>
 			<div className="frise-axe num">
 				{[20, 30, 40, 50, 60].map((age) => (
 					<span key={age} style={{ left: position(age * 4) }}>
 						{age} ans
 					</span>
 				))}
+			</div>
+			<div className="legende affiliations">
+				{Object.values(AFFILIATIONS)
+					.filter(
+						(s, k, tous) =>
+							statuts.has(s.label) &&
+							tous.findIndex((t) => t.label === s.label) === k,
+					)
+					.map((s) => (
+						<span key={s.label}>
+							<i style={{ background: s.couleur }} />
+							{s.label}
+						</span>
+					))}
 			</div>
 			<figcaption className="legende">
 				{(Object.keys(ETATS) as Etat[]).map((e) => (

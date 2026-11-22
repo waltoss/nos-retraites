@@ -1,0 +1,2874 @@
+{
+ "meta": {
+  "objet": "Réserves financières des régimes de retraite français et ce qu'elles rapportent : Agirc-Arrco (série 2015-2025), RCI, Fonds de réserve pour les retraites, autres régimes, traitement par le COR. Sert à modéliser une réserve qui se remplit, rapporte et se vide.",
+  "methode": "Valeurs lues le 2026-11-22 dans les sources indiquées : PDF téléchargés (curl) et convertis avec pdftotext -layout, puis lus en texte ; trois tableaux insérés en image dans des communiqués (résultats 2017-2018 et 2021-2022 de l'Agirc-Arrco, performances annuelles du FRR) ont été lus sur un rendu de la page (pdftoppm). Aucune valeur citée de mémoire, tirée d'un extrait de moteur de recherche ni estimée. Aucun calcul : pas de somme, de ratio ni de conversion d'unité ; chaque valeur garde l'unité de sa source.",
+  "conventions": "Chaque valeur porte source, url, date (de publication du document, au mois ou au jour quand il est connu), page (numéro de page du PDF, compté par pdftotext ; pageImprimee quand le numéro imprimé diffère et a été relevé) et, si utile, citation (phrase ou ligne lue), champ, avertissement. « urlLue » est donnée quand l'adresse d'origine ne répond plus (404) et qu'une copie archivée (web.archive.org) a été lue. Montants en euros courants.",
+  "dateLecture": "2026-11-22",
+  "definitions": {
+   "reserveTechniqueDeFinancement": "Agirc-Arrco : réserve de moyen-long terme, distincte de la réserve de fonds de roulement (trésorerie, environ deux mois d'activité, rendement à peu près nul). C'est elle que visent la « règle d'or » et les chiffres « en valeur de marché » des communiqués. Le COR additionne les deux dans son tableau (113,6 Md€ fin 2025 contre 92,1).",
+   "resultatTechnique": "Agirc-Arrco : ressources moins charges, hors résultats financier et exceptionnel.",
+   "resultatFinancier": "Résultat comptable : seules les plus-values réalisées (cessions) et les provisions y entrent, pas les plus-values latentes. Il ne mesure donc pas le rendement de l'année (exemple : 2021, résultat financier 576 M€ pour une performance de 6,95 % et +3 596 M€ de plus-values latentes ; 2020, 1 147 M€ pour une performance de 0,99 %, à cause des cessions faites pour payer les pensions)."
+  },
+  "limites": [
+   "La valeur de marché de la réserve de financement varie avec les marchés autant qu'avec les soldes : l'écart d'une année à l'autre n'est pas égal à résultat technique + résultat financier (plus-values latentes, variation du fonds de roulement, écrêtement des réserves de gestion).",
+   "Rendement annuel de la réserve Agirc-Arrco lu pour 2017, 2020, 2021, 2024 et 2025 seulement, et sur des périmètres qui ne sont pas garantis identiques (« taux de rendement nominal » en 2017, « performance de gestion de la strate moyen terme » en 2020-2021, « performance financière » en 2024-2025).",
+   "Avant 2019, Agirc et Arrco étaient deux régimes ; les périmètres de ressources (AGFF comprise ou non) changent d'un document à l'autre."
+  ]
+ },
+ "agircArrco": {
+  "serie": [
+   {
+    "annee": 2015,
+    "champ": "Agirc et Arrco publiés séparément (avant la fusion de 2019) ; aucun total n'est publié dans le communiqué, hormis le déficit global.",
+    "resultatGlobal": {
+     "valeur": -3.02,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+     "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+     "date": "2016-03-23",
+     "page": 1,
+     "citation": "Les régimes Agirc et Arrco enregistrent un déficit global de 3,02 milliards d'euros en 2015 contre 3,15 milliards en 2014."
+    },
+    "agirc": {
+     "ressources": {
+      "valeur": 19.647,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "charges": {
+      "valeur": 24.343,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatTechniqueAvantTransferts": {
+      "valeur": -4.696,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatTechniqueApresTransferts": {
+      "valeur": -2.523,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3,
+      "champ": "après transfert Arrco vers Agirc (1,225) et contribution d'équilibre de l'AGFF (0,948)"
+     },
+     "produitsFinanciers": {
+      "valeur": 1.001,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatExceptionnel": {
+      "valeur": 0.035,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatGlobal": {
+      "valeur": -1.487,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     }
+    },
+    "arrco": {
+     "ressources": {
+      "valeur": 42.088,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "charges": {
+      "valeur": 47.107,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatTechniqueAvantTransferts": {
+      "valeur": -5.019,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatTechniqueApresTransferts": {
+      "valeur": -2.559,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3,
+      "champ": "après transfert Arrco vers Agirc (-1,225) et contribution d'équilibre de l'AGFF (3,685)"
+     },
+     "produitsFinanciers": {
+      "valeur": 0.947,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatExceptionnel": {
+      "valeur": 0.08,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     },
+     "resultatGlobal": {
+      "valeur": -1.532,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « Résultats 2015 des régimes de retraite complémentaire Agirc et Arrco »",
+      "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "urlLue": "http://web.archive.org/web/20160509075231/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2016/CP_20160323_Resultats_Agirc_et_Arrco_2015.pdf",
+      "date": "2016-03-23",
+      "page": 3
+     }
+    },
+    "avertissements": [
+     "Réserves fin 2015 non lues (voir nonLu).",
+     "Les ressources et charges excluent l'AGFF, dont la contribution d'équilibre apparaît en transfert."
+    ]
+   },
+   {
+    "annee": 2016,
+    "champ": "Ensemble Agirc et Arrco (hors AGFF pour les ressources ; la contribution de l'AGFF est un transfert).",
+    "ressources": {
+     "valeur": 63678,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats, en légère amélioration… » (résultats 2016)",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "urlLue": "http://web.archive.org/web/20170420174003/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "date": "2017-03-16",
+     "page": 2,
+     "champ": "hors contribution d'équilibre de l'AGFF (5 445)"
+    },
+    "charges": {
+     "valeur": 73418,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats, en légère amélioration… » (résultats 2016)",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "urlLue": "http://web.archive.org/web/20170420174003/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "date": "2017-03-16",
+     "page": 2
+    },
+    "cotisationsDesEntreprises": {
+     "valeur": 71443,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "graphique « Évolution des cotisations », barre 2016 ; périmètre du régime unifié (AGFF comprise), différent du communiqué de 2017"
+    },
+    "allocations": {
+     "valeur": 76692,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "graphique « Évolution des allocations », barre 2016"
+    },
+    "resultatTechnique": {
+     "valeur": -4295,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats, en légère amélioration… » (résultats 2016)",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "urlLue": "http://web.archive.org/web/20170420174003/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "date": "2017-03-16",
+     "page": 2,
+     "champ": "résultat technique après transferts ; chiffre de mars 2017"
+    },
+    "resultatTechniqueRevise": {
+     "valeur": -4.195,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats en amélioration en 2017 » (comptes consolidés 2017)",
+     "url": "https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "urlLue": "http://web.archive.org/web/20200903101656/https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "date": "2018-07-02",
+     "page": 1,
+     "citation": "passe de - 4,195 milliards d'euros en 2016 à - 2,908 milliards d'euros en 2017"
+    },
+    "resultatFinancier": {
+     "valeur": 1986,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats, en légère amélioration… » (résultats 2016)",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "urlLue": "http://web.archive.org/web/20170420174003/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "date": "2017-03-16",
+     "page": 2,
+     "champ": "ligne « Résultat financier (Produits financiers + Résultat exceptionnel) » ; le résultat exceptionnel (73) est donné sur la ligne suivante"
+    },
+    "resultatGlobal": {
+     "valeur": -2236,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats, en légère amélioration… » (résultats 2016)",
+     "url": "http://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "urlLue": "http://web.archive.org/web/20170420174003/http://www.agirc-arrco.fr:80/fileadmin/agircarrco/documents/presse/presse_2017/CP_Resultats_Agirc_et_Arrco_2016.pdf",
+     "date": "2017-03-16",
+     "page": 2
+    },
+    "resultatGlobalRevise": {
+     "valeur": -2.134,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats en amélioration en 2017 » (comptes consolidés 2017)",
+     "url": "https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "urlLue": "http://web.archive.org/web/20200903101656/https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "date": "2018-07-02",
+     "page": 1,
+     "citation": "le déficit global des régimes Agirc et Arrco s'élève à –569 millions d'euros contre -2,134 milliards d'euros en 2016"
+    },
+    "reserves": {
+     "reservesTechniquesTotalesValeurComptable": {
+      "valeur": 70795,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     },
+     "reserveDeFondsDeRoulementValeurComptable": {
+      "valeur": 10158,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     },
+     "reserveTechniqueDeFinancementValeurComptable": {
+      "valeur": 60637,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     }
+    },
+    "avertissements": [
+     "Valeur de marché de la réserve de financement fin 2016 non lue ; seule la valeur comptable l'a été."
+    ]
+   },
+   {
+    "annee": 2017,
+    "champ": "Ensemble Agirc et Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 73327,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+     "date": "2018-07-11",
+     "page": 3,
+     "avertissement": "73 628 dans le rapport d'activité 2020 (p. 54, barre 2017)"
+    },
+    "contributionsDesTiers": {
+     "valeur": 3791,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+     "date": "2018-07-11",
+     "page": 3
+    },
+    "totalRessources": {
+     "valeur": 77118,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+     "date": "2018-07-11",
+     "page": 3,
+     "avertissement": "77,5 Md€ dans le communiqué du 27 juin 2019"
+    },
+    "allocations": {
+     "valeur": 77858,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+     "date": "2018-07-11",
+     "page": 3
+    },
+    "totalCharges": {
+     "valeur": 80.4,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "champ": "tableau « Résultats des opérations de retraite » (image), colonne 2017"
+    },
+    "resultatTechnique": {
+     "valeur": -2.908,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats en amélioration en 2017 » (comptes consolidés 2017)",
+     "url": "https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "urlLue": "http://web.archive.org/web/20200903101656/https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "date": "2018-07-02",
+     "page": 1
+    },
+    "resultatFinancier": {
+     "valeur": 1.4,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "champ": "tableau (image), colonne 2017 ; le communiqué du 2 juillet 2018 dit : « Le déficit technique a été réduit de 1,4 milliard d'euros par l'imputation des produits financiers »"
+    },
+    "resultatExceptionnel": {
+     "valeur": 0.9,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "champ": "dont nue-propriété de logements de la Foncière Logement, 840 M€"
+    },
+    "resultatGlobal": {
+     "valeur": -0.569,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Des résultats en amélioration en 2017 » (comptes consolidés 2017)",
+     "url": "https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "urlLue": "http://web.archive.org/web/20200903101656/https://www.agirc-arrco.fr/fileadmin/agircarrco/documents/presse/presse_2018/CP__20180702_AgircArrco_Resultats_consolides.pdf",
+     "date": "2018-07-02",
+     "page": 1,
+     "citation": "Le déficit s'élève à 569 millions d'euros contre 2,1 milliards d'euros en 2016."
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 62498,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 6,
+      "champ": "portefeuilles de valeurs mobilières en représentation de la réserve technique de financement au 31 décembre 2017 : strate moyen-long terme 55 397, strate court terme 7 101"
+     },
+     "portefeuilleValeurComptable": {
+      "valeur": 53280,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 6,
+      "champ": "même portefeuille, valeur comptable (strate moyen-long terme 46 265, court terme 7 015)"
+     },
+     "reservesTechniquesTotalesValeurComptable": {
+      "valeur": 70793,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     },
+     "reserveDeFondsDeRoulementValeurComptable": {
+      "valeur": 11348,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     },
+     "reserveTechniqueDeFinancementValeurComptable": {
+      "valeur": 59445,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 4
+     },
+     "enMoisDAllocations": {
+      "valeur": 9.2,
+      "unite": "mois d'allocations",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 3,
+      "citation": "La réserve technique de financement : 9,2 mois d'allocations"
+     }
+    },
+    "rendement": {
+     "nominal": {
+      "valeur": 3.5,
+      "unite": "% par an",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 9,
+      "citation": "Taux de rendement nominal annuel 2017 : 3,50%"
+     },
+     "nominalAnnualiseSur5Ans": {
+      "valeur": 4.94,
+      "unite": "% par an, 2013-2017",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 9
+     },
+     "reelAnnualiseSur5Ans": {
+      "valeur": 4.53,
+      "unite": "% par an, 2013-2017",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 9
+     },
+     "fondsDeRoulement": {
+      "source": "Agirc-Arrco (direction financière, P. Goubeault), « Provisionnement et politique de placement : exemple de l'Agirc-Arrco », COR, séance du 11 juillet 2018, document n° 7 (doc-4312)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4312.pdf",
+      "date": "2018-06",
+      "page": 5,
+      "citation": "Le rendement financier des fonds mobilisés pour la trésorerie a donc été pratiquement de 0% en 2017."
+     }
+    },
+    "compositionStrateMoyenLongTerme": {
+     "pocheTaux": {
+      "valeur": 66.3,
+      "unite": "% de la strate moyen-long terme (36 717 M€ sur 55 397)",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 7
+     },
+     "pocheActions": {
+      "valeur": 33.7,
+      "unite": "% de la strate moyen-long terme (18 680 M€)",
+      "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+      "date": "2018-07-11",
+      "page": 7
+     }
+    }
+   },
+   {
+    "annee": 2018,
+    "champ": "Ensemble Agirc et Arrco, résultats combinés (juin 2019).",
+    "totalRessources": {
+     "valeur": 79.7,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "champ": "tableau (image), colonne 2018"
+    },
+    "totalCharges": {
+     "valeur": 81.7,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2
+    },
+    "cotisationsDesEntreprises": {
+     "valeur": 75851,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "graphique, barre 2018"
+    },
+    "allocations": {
+     "valeur": 79427,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "graphique, barre 2018"
+    },
+    "resultatTechnique": {
+     "valeur": -2,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "avertissement": "-1,9 Md€ dans les résultats provisoires du 15 mars 2019 et dans le communiqué du 12 mars 2020"
+    },
+    "resultatFinancier": {
+     "valeur": 0.5,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2
+    },
+    "resultatExceptionnel": {
+     "valeur": 0.1,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2
+    },
+    "resultatGlobal": {
+     "valeur": -1.4,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+     "date": "2019-06-27",
+     "page": 2,
+     "avertissement": "-1,8 Md€ dans les résultats provisoires du 15 mars 2019"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 60.6,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, communiqué de presse « L'Agirc-Arrco sur la voie de l'équilibre financier » (résultats combinés 2018)",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+      "urlLue": "http://web.archive.org/web/20240626170256/https://www.agirc-arrco.fr/wp-content/uploads/2021/10/20190627_Resultats-consolides_Agirc-Arrco.pdf",
+      "date": "2019-06-27",
+      "page": 1,
+      "citation": "Le total des réserves de financement disponibles détenues par l'ensemble Agirc-Arrco s'élève à 60,6 milliards d'euros (en valeur de marché, au 31 décembre 2018)",
+      "avertissement": "59,6 Md€ dans les résultats provisoires du 15 mars 2019"
+     }
+    },
+    "avertissements": [
+     "Rendement 2018 non lu (rapport d'activité 2018 : copie archivée tronquée)."
+    ]
+   },
+   {
+    "annee": 2019,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 79.581,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "contributionsDesTiers": {
+     "valeur": 3.647,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »",
+     "champ": "Unédic, État"
+    },
+    "totalRessources": {
+     "valeur": 83.337,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "allocations": {
+     "valeur": 81.227,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1.873,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "totalCharges": {
+     "valeur": 83.1,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatTechnique": {
+     "valeur": 0.237,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatFinancier": {
+     "valeur": 0.674,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatGlobal": {
+     "valeur": 0.966,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "majorationsDeRetardEtProduitsDivers": {
+     "valeur": 0.109,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatExceptionnel": {
+     "valeur": 0.055,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+     "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+     "date": "2020-07",
+     "page": "volet « Renseignements financiers »"
+    },
+    "produitsFinanciersDeLaReserveTechnique": {
+     "valeur": 681,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 56,
+     "champ": "colonne 2019 ; dont 173 de reprises sur provisions ; fonds de roulement : -7"
+    },
+    "plusValuesLatentes": {
+     "valeur": 10131,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 56,
+     "champ": "au 31 décembre 2019"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 65.5,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, dépliant « Chiffres clés », renseignements financiers 2019",
+      "url": "https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+      "urlLue": "http://web.archive.org/web/20210303142351/https://rapportactivite.agirc-arrco.fr/medias/uploads/2020/05/agirc-arrco-depliant_web_2.pdf",
+      "date": "2020-07",
+      "page": "volet « Renseignements financiers »",
+      "citation": "Réserve de financement — Portefeuille de valeurs mobilières (en valeur de marché) 65,5",
+      "avertissement": "« 65 milliards d'euros » dans le communiqué provisoire du 12 mars 2020"
+     }
+    },
+    "avertissements": [
+     "Résultats provisoires du 12 mars 2020 : résultat technique 489 M€, résultat global 1,2 Md€ ; les chiffres retenus ici sont ceux du dépliant de juillet 2020.",
+     "Rendement 2019 non lu."
+    ]
+   },
+   {
+    "annee": 2020,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 75864,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "y compris 5 186 de compensations d'exonérations"
+    },
+    "contributionsDesTiers": {
+     "valeur": 4225,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54,
+     "champ": "Unédic et État"
+    },
+    "allocations": {
+     "valeur": 82791,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1802,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54
+    },
+    "chargesDiverses": {
+     "valeur": 806,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 54
+    },
+    "resultatTechnique": {
+     "valeur": -5310,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 55,
+     "avertissement": "-6 Md€ dans les résultats provisoires du 16 mars 2021"
+    },
+    "resultatFinancier": {
+     "valeur": 1147,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 56,
+     "champ": "dont réserve technique 1 153 (produits 1 092, reprises de provisions 61) et fonds de roulement -6"
+    },
+    "resultatExceptionnel": {
+     "valeur": 41,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 55
+    },
+    "resultatGlobal": {
+     "valeur": -4122,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 55,
+     "avertissement": "-4,8 Md€ dans les résultats provisoires du 16 mars 2021"
+    },
+    "plusValuesLatentes": {
+     "valeur": 9629,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2020",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+     "date": "2021",
+     "page": 56,
+     "champ": "au 31 décembre 2020"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 61660,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, rapport d'activité 2020",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+      "date": "2021",
+      "page": 55,
+      "citation": "Au 31 décembre 2020, le portefeuille de valeurs mobilières, en valeur de marché, s'élève à 61 660 millions d'euros."
+     }
+    },
+    "rendement": {
+     "performanceStrateMoyenTerme": {
+      "valeur": 0.99,
+      "unite": "% sur l'année",
+      "source": "Agirc-Arrco, rapport d'activité 2020",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+      "date": "2021",
+      "page": 57,
+      "citation": "la performance de gestion de la strate moyen terme en représentation de la réserve technique de financement est de +0,99 %"
+     }
+    },
+    "compositionStrateMoyenLongTerme": {
+     "obligations": {
+      "valeur": 67.5,
+      "unite": "%",
+      "source": "Agirc-Arrco, rapport d'activité 2020",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+      "date": "2021",
+      "page": 57
+     },
+     "actions": {
+      "valeur": 32.5,
+      "unite": "%",
+      "source": "Agirc-Arrco, rapport d'activité 2020",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2021/11/AGIRC-ARRCO_RA_2020.pdf",
+      "date": "2021",
+      "page": 57
+     }
+    }
+   },
+   {
+    "annee": 2021,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 83756,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 48,
+     "champ": "y compris 6 133 de compensations d'exonérations"
+    },
+    "contributionsDesTiers": {
+     "valeur": 4562,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 48,
+     "champ": "Unédic et État"
+    },
+    "totalRessources": {
+     "valeur": 88.3,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Résultats 2022 : l'Agirc-Arrco confirme sa robustesse »",
+     "url": "https://www.agirc-arrco.fr/storage/2022/11/20230329_CP_Resultats-Agirc-Arrco-2022-1.pdf",
+     "urlLue": "http://web.archive.org/web/20250519105914/https://www.agirc-arrco.fr/storage/2022/11/20230329_CP_Resultats-Agirc-Arrco-2022-1.pdf",
+     "date": "2023-03-29",
+     "page": 2,
+     "champ": "tableau (image), colonne 2021"
+    },
+    "allocations": {
+     "valeur": 83853,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 48
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1735,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 48
+    },
+    "chargesDiverses": {
+     "valeur": 742,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 48
+    },
+    "totalCharges": {
+     "valeur": 86.3,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, communiqué de presse « Résultats 2022 : l'Agirc-Arrco confirme sa robustesse »",
+     "url": "https://www.agirc-arrco.fr/storage/2022/11/20230329_CP_Resultats-Agirc-Arrco-2022-1.pdf",
+     "urlLue": "http://web.archive.org/web/20250519105914/https://www.agirc-arrco.fr/storage/2022/11/20230329_CP_Resultats-Agirc-Arrco-2022-1.pdf",
+     "date": "2023-03-29",
+     "page": 2,
+     "champ": "tableau (image), colonne 2021"
+    },
+    "resultatTechnique": {
+     "valeur": 1988,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 49
+    },
+    "resultatFinancier": {
+     "valeur": 576,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 50,
+     "champ": "dont réserve technique 587 (produits 661, dotations aux provisions -74) et fonds de roulement -11"
+    },
+    "resultatExceptionnel": {
+     "valeur": 51,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 49
+    },
+    "resultatGlobal": {
+     "valeur": 2615,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 49
+    },
+    "plusValuesLatentes": {
+     "valeur": 13225,
+     "unite": "millions d'euros courants",
+     "source": "Agirc-Arrco, rapport d'activité 2021",
+     "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+     "date": "2022-06",
+     "page": 50,
+     "champ": "au 31 décembre 2021 ; +3 596 sur l'année"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 68007,
+      "unite": "millions d'euros courants",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 49,
+      "citation": "Au 31 décembre 2021, le portefeuille de valeurs mobilières, en valeur de marché, s'élève à 68 007 millions d'euros."
+     }
+    },
+    "rendement": {
+     "performanceStrateMoyenTerme": {
+      "valeur": 6.95,
+      "unite": "% sur l'année",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 51,
+      "citation": "la performance de gestion de la strate moyen terme en représentation de la réserve technique de financement est de 6,95 % (contre 5,98 % pour l'indice stratégique composé à hauteur de 70 % de produits de taux et 30 % d'actions)"
+     },
+     "indiceStrategique": {
+      "valeur": 5.98,
+      "unite": "% sur l'année",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 51
+     },
+     "fondsDeTresorerie": {
+      "valeur": -0.47,
+      "unite": "% (taux de rendement moyen du fonds de trésorerie, encours moyen 2 045 M€)",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 51
+     }
+    },
+    "compositionReserveDeFinancement": {
+     "obligations": {
+      "valeur": 68.1,
+      "unite": "%",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 51
+     },
+     "actions": {
+      "valeur": 31.9,
+      "unite": "%",
+      "source": "Agirc-Arrco, rapport d'activité 2021",
+      "url": "https://www.agirc-arrco.fr/storage/2022/06/220613_Rapport_Activite_2021.pdf",
+      "date": "2022-06",
+      "page": 51
+     }
+    }
+   },
+   {
+    "annee": 2022,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 90.354,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "contributionsDesTiers": {
+     "valeur": 3.484,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »",
+     "champ": "Unédic, État"
+    },
+    "totalRessources": {
+     "valeur": 93.838,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "allocations": {
+     "valeur": 86.511,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1.655,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "totalCharges": {
+     "valeur": 88.252,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatTechnique": {
+     "valeur": 5.586,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatFinancier": {
+     "valeur": -0.446,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatGlobal": {
+     "valeur": 5.14,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "chargesDiverses": {
+     "valeur": 0.086,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+     "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+     "date": "2023-10",
+     "page": "volet « Renseignements financiers »"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 67.7,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, dépliant « Chiffres clés 2022 », renseignements financiers 2022",
+      "url": "https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+      "urlLue": "http://web.archive.org/web/20240224181539/https://www.agirc-arrco.fr/wp-content/uploads/2023/06/Depliant-chiffres-cles_V3-18102023.pdf",
+      "date": "2023-10",
+      "page": "volet « Renseignements financiers »",
+      "citation": "Réserve de financement — Portefeuille de valeurs mobilières (en valeur de marché) 67,7",
+      "avertissement": "« 68 milliards d'euros » dans le communiqué du 29 mars 2023"
+     }
+    },
+    "avertissements": [
+     "Rendement 2022 non lu ; le communiqué dit seulement : « Le résultat financier est légèrement négatif, -0,5 milliard d'euros, du fait d'une baisse généralisée des marchés »."
+    ]
+   },
+   {
+    "annee": 2023,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 94.964,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "contributionsDesTiers": {
+     "valeur": 3.829,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »",
+     "champ": "Unédic, État"
+    },
+    "totalRessources": {
+     "valeur": 98.793,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "allocations": {
+     "valeur": 92.415,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1.669,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "totalCharges": {
+     "valeur": 94.524,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatTechnique": {
+     "valeur": 4.269,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatFinancier": {
+     "valeur": 1.72,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatGlobal": {
+     "valeur": 5.989,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "chargesDiverses": {
+     "valeur": 0.44,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+     "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+     "date": "2024-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 78.5,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, dépliant « Chiffres clés 2023 », renseignements financiers 2023",
+      "url": "https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+      "urlLue": "http://web.archive.org/web/20250508174859/https://www.agirc-arrco.fr/storage/2024/06/Depliant-chiffres-cles_2023.pdf",
+      "date": "2024-06",
+      "page": "volet « Renseignements financiers »",
+      "citation": "Réserve de financement — Portefeuille de valeurs mobilières (en valeur de marché) 78,5"
+     },
+     "enPartDePib": {
+      "valeur": 2.8,
+      "unite": "% du PIB (soit 79 Md€)",
+      "source": "COR, fiche « Le régime de retraite complémentaire des salariés du privé (Agirc-Arrco) », projections de juin 2024",
+      "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_AGIRC_ARRCO_vf.pdf",
+      "date": "2024-07",
+      "page": 9,
+      "citation": "En valeur de marché, les réserves sont évaluées à 2,8 % du PIB (soit 79 Mds€) fin 2023"
+     }
+    },
+    "avertissements": [
+     "Rendement 2023 non lu."
+    ]
+   },
+   {
+    "annee": 2024,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 97.385,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "contributionsDesTiers": {
+     "valeur": 4.04,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »",
+     "champ": "Unédic, État"
+    },
+    "totalRessources": {
+     "valeur": 101.425,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "allocations": {
+     "valeur": 98.118,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1.736,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "totalCharges": {
+     "valeur": 99.867,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatTechnique": {
+     "valeur": 1.558,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatFinancier": {
+     "valeur": 3.035,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatGlobal": {
+     "valeur": 4.593,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "chargesDiverses": {
+     "valeur": 0.013,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+     "date": "2025-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 85.6,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, dépliant « Chiffres clés 2024 », renseignements financiers 2024",
+      "url": "https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+      "urlLue": "http://web.archive.org/web/20250703051013/https://www.agirc-arrco.fr/storage/2025/04/Depliant_chiffres-cles_2024.pdf",
+      "date": "2025-06",
+      "page": "volet « Renseignements financiers »",
+      "citation": "Réserve de financement — Portefeuille de valeurs mobilières (en valeur de marché) 85,6",
+      "avertissement": "86,5 Md€ selon le COR (note du 18 décembre 2025, p. 5 et 6, et rapport de juin 2026, p. 98 imprimée)"
+     },
+     "reservesTotalesAvecFondsDeRoulementSelonLeCor": {
+      "valeur": 108.3,
+      "unite": "milliards d'euros courants",
+      "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+      "date": "2025-12-18",
+      "page": 6,
+      "citation": "Pour l'Agirc-Arrco, les réserves techniques de financement représentent 86,5 Mds€, sur un total de réserves de 108,3 Mds€ fin 2024.",
+      "enMoisDePrestations": 13
+     }
+    },
+    "rendement": {
+     "performanceFinanciere": {
+      "valeur": 6.11,
+      "unite": "% sur l'année",
+      "source": "Agirc-Arrco, présentation de la conférence de presse du 27 mars 2025",
+      "url": "https://www.agirc-arrco.fr/storage/2025/03/20250327_Presentation_Conference-de-presse.pdf",
+      "date": "2025-03-27",
+      "page": 11,
+      "citation": "+ 6,11% Performance financière",
+      "champ": "diapositive « Une gestion des réserves sur le long terme » ; périmètre exact de la performance non précisé"
+     }
+    }
+   },
+   {
+    "annee": 2025,
+    "champ": "Régime unifié Agirc-Arrco.",
+    "cotisationsDesEntreprises": {
+     "valeur": 99.337,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "contributionsDesTiers": {
+     "valeur": 4.003,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »",
+     "champ": "Unédic, État"
+    },
+    "totalRessources": {
+     "valeur": 103.34,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "allocations": {
+     "valeur": 100.953,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "dotationsGestionEtActionSociale": {
+     "valeur": 1.725,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "totalCharges": {
+     "valeur": 103.011,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatTechnique": {
+     "valeur": 0.329,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatFinancier": {
+     "valeur": 1.111,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "resultatGlobal": {
+     "valeur": 1.44,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "chargesDiverses": {
+     "valeur": 0.333,
+     "unite": "milliards d'euros courants",
+     "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+     "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+     "date": "2026-06",
+     "page": "volet « Renseignements financiers »"
+    },
+    "reserves": {
+     "reserveTechniqueDeFinancementValeurDeMarche": {
+      "valeur": 91.2,
+      "unite": "milliards d'euros courants",
+      "source": "Agirc-Arrco, dépliant « Chiffres clés 2025 », renseignements financiers 2025",
+      "url": "https://www.agirc-arrco.fr/storage/2025/04/Chiffres-cles_2025.pdf",
+      "date": "2026-06",
+      "page": "volet « Renseignements financiers »",
+      "citation": "Réserve de financement — Portefeuille de valeurs mobilières (en valeur de marché) 91,2",
+      "avertissement": "92,1 Md€ selon le COR (rapport de juin 2026, p. 98 et 100 imprimées)"
+     },
+     "reservesTotalesAvecFondsDeRoulementSelonLeCor": {
+      "valeur": 113.6,
+      "unite": "milliards d'euros courants",
+      "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+      "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+      "date": "2026-06",
+      "page": 102,
+      "citation": "Pour l'Agirc-Arrco, les réserves techniques de financement représentent 92,1 Md€, sur un total de réserves de 113,6 Md€ fin 2025.",
+      "enMoisDePrestations": 14,
+      "pageImprimee": 100
+     }
+    },
+    "rendement": {
+     "performanceFinanciere": {
+      "valeur": 5.92,
+      "unite": "% sur l'année",
+      "source": "Agirc-Arrco, présentation de la conférence de presse du 31 mars 2026",
+      "url": "https://www.agirc-arrco.fr/storage/20260331_Presentation_Conference-de-presse.pdf",
+      "date": "2026-03-31",
+      "page": 8,
+      "citation": "+ 5,92 % Performance financière",
+      "champ": "diapositive « Une bonne année de performance financière » ; périmètre exact non précisé"
+     }
+    }
+   }
+  ],
+  "regleDePilotage": {
+   "resume": "Réserves au moins égales à six mois de prestations, à tout moment, sur un horizon de projection de quinze ans ; orientations fixées tous les quatre ans par accord, ajustement annuel par le conseil d'administration.",
+   "texteFondateur": {
+    "source": "Accord national interprofessionnel du 17 novembre 2017 instituant le régime Agirc-Arrco de retraite complémentaire (circulaire Agirc-Arrco 2018-9-DC du 19 décembre 2018)",
+    "url": "https://www.agirc-arrco.fr/storage/2024/09/201809dc_ANI_du_17_novembre_2017.pdf",
+    "urlLue": "http://web.archive.org/web/20250517042049/https://www.agirc-arrco.fr/storage/2024/09/201809dc_ANI_du_17_novembre_2017.pdf",
+    "date": "2017-11-17",
+    "page": 24,
+    "citation": "Article 25. Pilotage stratégique. Les orientations stratégiques du pilotage sont définies tous les quatre ans par accord entre les organisations d'employeurs et de salariés représentatives au niveau national et interprofessionnel. […] Une fois ce cadre posé, elles peuvent déterminer notamment : des critères de soutenabilité appréciés sur une durée de quinze ans, tels que : - le niveau des réserves de financement dans le respect d'un ratio de sécurité selon lequel le régime doit disposer, à tout moment, d'une réserve équivalant à six mois de prestations ; - l'évolution du rapport de charges",
+    "article": "article 25 (pilotage stratégique) ; articles 26 (pilotage tactique) et 29 (devoir d'alerte) non recopiés"
+   },
+   "accord2019": {
+    "source": "Accord national interprofessionnel du 10 mai 2019 sur la retraite complémentaire Agirc-Arrco",
+    "url": "https://www.agirc-arrco.fr/storage/2021/11/Accord_national_interprofessionnel_10052019.pdf",
+    "urlLue": "http://web.archive.org/web/20250517101940/https://www.agirc-arrco.fr/storage/2021/11/Accord_national_interprofessionnel_10052019.pdf",
+    "date": "2019-05-10",
+    "page": "2-3",
+    "citation": "Cet accord s'inscrit dans le respect de la règle du maintien d'un niveau de réserves au moins égal à 6 mois de prestations jusqu'en 2033 inclus, conformément aux projections figurant en annexe 1. […] 6.1. Le Conseil d'Administration veille à ce que : […] b) les réserves techniques du régime ne se situent jamais en deçà de 6 mois de prestations dans la période courant jusqu'à fin 2033",
+    "horizon": 2033
+   },
+   "accord2023": {
+    "source": "Accord national interprofessionnel du 5 octobre 2023 sur la retraite complémentaire Agirc-Arrco",
+    "url": "https://www.agirc-arrco.fr/storage/2023/10/ANI_Agirc-Arrco_05102023.pdf",
+    "date": "2023-10-05",
+    "page": 2,
+    "citation": "Cet accord s'inscrit dans le respect de la règle du maintien d'un niveau de réserves au moins égal à 6 mois de prestations jusqu'en 2037 inclus, conformément aux projections figurant en annexe 1. […] 1.4. Devoir d'alerte. En application de l'article 29 de l'ANI du 17 novembre 2017, si le niveau des réserves techniques projeté ne peut plus être d'au moins 6 mois de prestations sur la période courant jusqu'à fin 2037 inclus dans le respect des marges données au Conseil d'administration pour la fixation des paramètres de l'année en cours, ce dernier exerce son devoir d'alerte",
+    "horizon": 2037,
+    "periode": "2023-2026"
+   },
+   "formulationDuRegime": {
+    "source": "Agirc-Arrco, communiqué de presse « Des résultats positifs pour la retraite complémentaire » (résultats 2023)",
+    "url": "https://www.agirc-arrco.fr/storage/2024/03/Resultats-Agirc-Arrco-2023.pdf",
+    "date": "2024-03",
+    "page": 2,
+    "citation": "Les partenaires sociaux se sont fixés comme règle d'or de disposer, à tout moment sur 15 ans glissants, d'une réserve équivalente à au moins 6 mois d'allocations annuelles."
+   },
+   "ecretement": {
+    "source": "Accord national interprofessionnel du 5 octobre 2023 sur la retraite complémentaire Agirc-Arrco",
+    "url": "https://www.agirc-arrco.fr/storage/2023/10/ANI_Agirc-Arrco_05102023.pdf",
+    "date": "2023-10-05",
+    "page": 6,
+    "citation": "Article 8. Écrêtement des réserves. […] Chaque année, en janvier, le Conseil d'administration veille à ce que les réserves disponibles des fonds de gestion administrative et d'action sociale constatées au 31 décembre de l'année précédente, qui excèdent 6 mois de dépenses de ladite année, soient affectées aux réserves techniques du régime."
+   },
+   "avertissements": [
+    "Le COR attribue la règle à « l'accord national interprofessionnel de 2015 » (note du 18 décembre 2025, p. 8) ; le texte lu ici est l'article 25 de l'accord du 17 novembre 2017. L'accord du 30 octobre 2015 n'a pas été ouvert."
+   ]
+  },
+  "hypotheseDeRendementEnProjection": {
+   "valeur": 1,
+   "unite": "% par an en termes réels (net d'inflation)",
+   "source": "Accord national interprofessionnel du 5 octobre 2023 sur la retraite complémentaire Agirc-Arrco",
+   "url": "https://www.agirc-arrco.fr/storage/2023/10/ANI_Agirc-Arrco_05102023.pdf",
+   "date": "2023-10-05",
+   "page": 2,
+   "citation": "Un taux de rendement financier des placements égal à +1% par an en termes réels.",
+   "article": "article 1.1, paramètres de projections de la période 2023-2026",
+   "confirmation": {
+    "source": "Agirc-Arrco, « Simulations de différentes modalités d'indexation de la valeur du point Agirc-Arrco : quels effets sur le niveau des réserves à long terme ? », présentation au COR, séance du 18 décembre 2025",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/2.COR%2018%20d%C3%A9cembre%202025%20-%20V2.pdf",
+    "date": "2025-12-18",
+    "page": 7,
+    "citation": "Rendement financier: 1%/an net d'inflation"
+   }
+  },
+  "allocationStrategique": {
+   "actions": {
+    "valeur": 30,
+    "unite": "% (référence stratégique de la strate moyen-long terme)",
+    "source": "Agirc-Arrco (direction financière, P. Goubeault), « Provisionnement et politique de placement : exemple de l'Agirc-Arrco », COR, séance du 11 juillet 2018, document n° 7 (doc-4312)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4312.pdf",
+    "date": "2018-06",
+    "page": 7,
+    "citation": "l'orientation stratégique, 30% actions et 70% produits de taux, retenue par les commissions financières de l'Agirc et de l'Arrco, est une référence"
+   },
+   "produitsDeTaux": {
+    "valeur": 70,
+    "unite": "%",
+    "source": "Agirc-Arrco (direction financière, P. Goubeault), « Provisionnement et politique de placement : exemple de l'Agirc-Arrco », COR, séance du 11 juillet 2018, document n° 7 (doc-4312)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4312.pdf",
+    "date": "2018-06",
+    "page": 7
+   },
+   "confirmation2025": {
+    "source": "Agirc-Arrco, « Simulations de différentes modalités d'indexation de la valeur du point Agirc-Arrco : quels effets sur le niveau des réserves à long terme ? », présentation au COR, séance du 18 décembre 2025",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/2.COR%2018%20d%C3%A9cembre%202025%20-%20V2.pdf",
+    "date": "2025-12-18",
+    "page": 3,
+    "citation": "70% obligations, 30% actions ; 90% d'émetteurs européens"
+   },
+   "confirmation2026": {
+    "source": "Agirc-Arrco, présentation de la conférence de presse du 31 mars 2026",
+    "url": "https://www.agirc-arrco.fr/storage/20260331_Presentation_Conference-de-presse.pdf",
+    "date": "2026-03-31",
+    "page": 16,
+    "citation": "Des réserves investies à 90% en Europe et à hauteur de 70% en obligations et 30% en actions"
+   },
+   "horizonDeLaStrateMoyenLongTerme": {
+    "source": "Agirc-Arrco (direction financière, P. Goubeault), « Provisionnement et politique de placement : exemple de l'Agirc-Arrco », COR, séance du 11 juillet 2018, document n° 7 (doc-4312)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4312.pdf",
+    "date": "2018-06",
+    "page": 6,
+    "citation": "la construction du portefeuille est faite implicitement par référence à une durée (par convention de l'ordre de 8 à 10 ans)"
+   },
+   "compositionsObservees": "Voir serie : 33,7 % d'actions fin 2017, 32,5 % fin 2020, 31,9 % fin 2021."
+  },
+  "mobilisationPassee": {
+   "prelevements2009a2017": {
+    "valeur": 36.8,
+    "unite": "milliards d'euros courants",
+    "source": "Agirc-Arrco (direction financière, P. Goubeault), « Provisionnement et politique de placement : exemple de l'Agirc-Arrco », COR, séance du 11 juillet 2018, document n° 7 (doc-4312)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4312.pdf",
+    "date": "2018-06",
+    "page": 9,
+    "citation": "des sommes très importantes ont été prélevées sur la réserve technique de financement pour assurer le paiement des allocations. Ces prélèvements ont atteint un montant global de 36,8 Md€."
+   },
+   "portefeuilleFin2007": {
+    "valeur": 59224,
+    "unite": "millions d'euros courants",
+    "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+    "date": "2018-07-11",
+    "page": 10,
+    "champ": "portefeuille de la réserve technique de financement, valeur de marché, 31 décembre 2007"
+   },
+   "valorisation2007a2017": {
+    "valeur": 21275,
+    "unite": "millions d'euros courants",
+    "source": "Agirc-Arrco, « Réserves techniques de l'Agirc-Arrco », diaporama présenté au COR, séance du 11 juillet 2018 (doc-4317)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4317.pdf",
+    "date": "2018-07-11",
+    "page": 10,
+    "champ": "« Valorisation de la réserve et autres mouvements », 2007-2017 ; s'y ajoutent la mensualisation (15 179) et l'écrêtement des réserves de gestion et d'action sociale (1 960)"
+   },
+   "crises": {
+    "source": "Agirc-Arrco, « Simulations de différentes modalités d'indexation de la valeur du point Agirc-Arrco : quels effets sur le niveau des réserves à long terme ? », présentation au COR, séance du 18 décembre 2025",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/2.COR%2018%20d%C3%A9cembre%202025%20-%20V2.pdf",
+    "date": "2025-12-18",
+    "page": 3,
+    "citation": "Plus de 40 Md€ de réserves mobilisées pour garantir le paiement des retraites complémentaires à la suite des crises de 2008, 2011 et 2020"
+   }
+  },
+  "droitsFuturs": {
+   "source": "Agirc-Arrco, communiqué de presse « Le régime Agirc-Arrco à l'équilibre » (résultats 2025)",
+   "url": "https://www.agirc-arrco.fr/storage/20260331_CP_Resultats-Agirc-Arrco-2025.pdf",
+   "date": "2026-03-31",
+   "page": 1,
+   "citation": "Elles représentent ainsi environ 2,5% des 3 500 milliards d'euros de droits futurs, calculés comme la somme des engagements portés par le régime sur les 40 prochaines années"
+  }
+ },
+ "rci": {
+  "champ": "Régime complémentaire des indépendants (artisans et commerçants), piloté par le CPSTI. Voir aussi independants.json (cibles.reservesDuRci), dont les valeurs 2023-2025 sont reprises ici après relecture des mêmes documents.",
+  "serie": [
+   {
+    "annee": 2016,
+    "reserves": {
+     "valeur": 16.4,
+     "unite": "milliards d'euros courants",
+     "source": "COR (secrétariat général), « La gestion financière des régimes complémentaires de retraite obligatoire gérés en répartition », séance du 11 juillet 2018, document n° 6 (doc-4311)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4311.pdf",
+     "date": "2018-07-11",
+     "page": 5,
+     "citation": "le régime complémentaire des indépendants (16,4 milliards d'euros)",
+     "champ": "fin 2016 ; convention de valorisation non précisée dans la phrase ; « 9 années » de prestations"
+    }
+   },
+   {
+    "annee": 2023,
+    "reservesComptables": {
+     "valeur": 15216.3,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 37,
+     "champ": "poste « Réserves » du bilan, colonne 2023 ; valeur comptable"
+    },
+    "resultatNet": {
+     "valeur": 742.6,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "produitsFinanciers": {
+     "valeur": 177.6,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "chargesFinancieres": {
+     "valeur": 20.2,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "cotisations": {
+     "valeur": 2808.0,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38,
+     "champ": "« Cotisations, impôts et produits affectés »"
+    },
+    "prestations": {
+     "valeur": 2409.8,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38,
+     "champ": "« Prestations sociales »"
+    },
+    "enPartDePib": {
+     "valeur": 0.7,
+     "unite": "% du PIB",
+     "source": "COR, fiche « Régime complémentaire des indépendants (RCI) », projections de juin 2024",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RCI_0.pdf",
+     "date": "2024-07",
+     "page": 7,
+     "citation": "La réserve financière du RCI s'élève à 0,7 % du PIB en 2023 et représente 816 % des prestations servies. Elle continuerait à progresser jusqu'en 2040 puis se réduirait pour s'éteindre au-delà de 2070"
+    }
+   },
+   {
+    "annee": 2024,
+    "reservesValeurDeMarcheSelonLeCor": {
+     "valeur": 21.2,
+     "unite": "milliards d'euros courants",
+     "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+     "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+     "date": "2025-12-18",
+     "page": 6,
+     "enMoisDePrestations": 99
+    },
+    "reservesComptables": {
+     "valeur": 15959.0,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 37,
+     "champ": "poste « Réserves » du bilan ; total des fonds propres 16 788 ; immobilisations financières nettes 13 416,9 ; trésorerie active 2 874,4"
+    },
+    "resultatNet": {
+     "valeur": 730.7,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "produitsFinanciers": {
+     "valeur": 141.2,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "chargesFinancieres": {
+     "valeur": 8.2,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "cotisations": {
+     "valeur": 3013.2,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "prestations": {
+     "valeur": 2556.6,
+     "unite": "millions d'euros courants",
+     "source": "Cour des comptes, « Certification des comptes du CPSTI, exercice 2024 », annexes (états financiers résumés)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/298779.pdf",
+     "date": "2025-05",
+     "page": 38
+    },
+    "avertissements": [
+     "Les produits financiers du compte de résultat ne contiennent pas les cessions de titres, passées en « produits de gestion courante » (660,4 en 2024, 1 979,7 en 2023, face à 567,0 et 1 966,3 de charges de gestion courante) : ils ne mesurent pas le rendement."
+    ]
+   },
+   {
+    "annee": 2025,
+    "reservesValeurDeMarche": {
+     "valeur": 23428,
+     "unite": "millions d'euros courants",
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+     "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+     "date": "2026",
+     "page": 41,
+     "citation": "Total 23 428 100,0 % 10,6 %",
+     "champ": "actifs de placement du régime complémentaire vieillesse au 31/12/2025 (tableau « Structure et évolution des réserves », page imprimée 44) ; le COR donne 23,4 Md€ et 107 mois de prestations"
+    },
+    "structure": {
+     "immobilier": {
+      "valeur": 10.1,
+      "unite": "% (2 364 M€)",
+      "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+      "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+      "date": "2026",
+      "page": 41
+     },
+     "actions": {
+      "valeur": 34.3,
+      "unite": "% (8 032 M€)",
+      "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+      "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+      "date": "2026",
+      "page": 41
+     },
+     "obligationsTaux": {
+      "valeur": 41.3,
+      "unite": "% (9 667 M€)",
+      "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+      "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+      "date": "2026",
+      "page": 41
+     },
+     "monetaire": {
+      "valeur": 14.4,
+      "unite": "% (3 365 M€)",
+      "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+      "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+      "date": "2026",
+      "page": 41
+     }
+    },
+    "excedentTechnique": {
+     "valeur": 669,
+     "unite": "millions d'euros courants",
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+     "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+     "date": "2026",
+     "page": 42,
+     "champ": "tableau « Décomposition de la variation des réserves », ligne RCI ; 3,2 %"
+    },
+    "performanceFinanciere": {
+     "valeur": 1585,
+     "unite": "millions d'euros courants",
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+     "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+     "date": "2026",
+     "page": 42,
+     "champ": "ligne RCI"
+    },
+    "rendement": {
+     "valeur": 7.5,
+     "unite": "% sur l'année",
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+     "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+     "date": "2026",
+     "page": 42,
+     "champ": "performance financière du RCI en 2025"
+    },
+    "excedentDuRegime": {
+     "valeur": 1.25,
+     "unite": "milliards d'euros courants",
+     "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+     "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+     "date": "2026",
+     "page": 43,
+     "citation": "1,4 Md€ d'excédent des régimes autonomes (1,25 Md€ pour le RCI et 159,8 M€ pour le RID)"
+    },
+    "avertissements": [
+     "Dans le tableau de décomposition, la variation d'actif du RCI est de 2 254 M€ et « 7,4 % », alors que le tableau de structure donne +10,6 % : incohérence interne à la source."
+    ]
+   }
+  ],
+  "rendementHistorique": {
+   "depuisLaCreationBrut": {
+    "valeur": 3.4,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42,
+    "citation": "Les performances financières cumulées depuis la création des régimes sont de 3,4 % par an pour le RCI et 2,9 % pour le RID."
+   },
+   "depuisLaCreationNetDInflation": {
+    "valeur": 1.9,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42,
+    "champ": "graphique « Rendement historique du RCI »"
+   },
+   "cinqAnsBrut": {
+    "valeur": 3.4,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42,
+    "citation": "Sur les cinq dernières années, la performance s'établit, en moyenne annuelle, à 3,4 % pour le RCI et à 2,2 % pour le RID soit respectivement 0,5 % et -0,7 % nets de l'inflation."
+   },
+   "cinqAnsNetDInflation": {
+    "valeur": 0.5,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42
+   },
+   "troisAnsBrut": {
+    "valeur": 6.1,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42,
+    "champ": "graphique",
+    "avertissement": "attribution brut/net lue sur la position des étiquettes dans le texte extrait du graphique (4,3 % et 6,1 %), non confirmée par une phrase"
+   },
+   "troisAnsNetDInflation": {
+    "valeur": 4.3,
+    "unite": "% par an",
+    "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+    "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+    "date": "2026",
+    "page": 42,
+    "champ": "graphique",
+    "avertissement": "idem"
+   }
+  },
+  "regleDePilotage": {
+   "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+   "date": "2025-12-18",
+   "page": 8,
+   "citation": "Le pilotage du RCI […] s'appuie également sur deux règles de gestion. D'une part, le délai prévisionnel d'épuisement des réserves doit être au moins égal à l'espérance de vie résiduelle de la génération atteignant l'âge légal de la retraite (soit 2049 pour la génération née en 1958 et ayant 62 ans en 2020). D'autre part, le taux de couverture des engagements liés aux cotisations annuelles par ces mêmes cotisations doit permettre de s'assurer que le régime ne crée pas de droits qu'il ne pourrait honorer plus tard. Selon des travaux réalisés fin 2020, un solde technique négatif est attendu dès 2025, les réserves étant épuisées à partir de 2063 dans l'hypothèse la plus prudente."
+  },
+  "regleSelonLeCpsti": {
+   "source": "CPSTI, « Les travailleurs indépendants et leur protection sociale en chiffres », édition 2026, données 2025, version synthétique",
+   "url": "https://www.urssaf.org/files/Statistiques/Nos-etudes-et-analyses/Travailleurs%20ind%c3%a9pendants/Nationale/2026/CPSTI-Chiffres-essentiels-2026-donnees-2025-version%20synth%c3%a9tique.pdf",
+   "date": "2026",
+   "page": 41,
+   "citation": "La durée de vie des réserves doit être au minimum égale à la durée moyenne de perception des prestations pour les nouveaux bénéficiaires soit environ 10 ans pour les invalides et près de 30 ans pour les retraités."
+  }
+ },
+ "frr": {
+  "actifNet": [
+   {
+    "annee": 2016,
+    "valeur": 36.004,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2016",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2025/10/FRR_RA_2016-FR-PP.pdf",
+    "date": "2017",
+    "page": 17,
+    "citation": "l'actif du FRR a atteint au 31 décembre 36,004 milliards d'euros"
+   },
+   {
+    "annee": 2017,
+    "valeur": 36.4,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2017",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2017-FR.pdf",
+    "date": "2018",
+    "page": 16,
+    "citation": "l'actif du FRR a atteint, au 31 décembre, 36,4 milliards d'euros"
+   },
+   {
+    "annee": 2018,
+    "valeur": 32.6,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2018",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2018-FR-3.pdf",
+    "date": "2019",
+    "page": 5,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2018 »"
+   },
+   {
+    "annee": 2019,
+    "valeur": 33.7,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2019",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2019-FR-3.pdf",
+    "date": "2020",
+    "page": 3,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2019 »"
+   },
+   {
+    "annee": 2020,
+    "valeur": 26.3,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2020",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2020-FR-2.pdf",
+    "date": "2021",
+    "page": 5,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2020 » ; après restitution de la soulte CNIEG (environ 5 Md€) en 2020"
+   },
+   {
+    "annee": 2021,
+    "valeur": 26.0,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2021",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2021-FR.pdf",
+    "date": "2022",
+    "page": 4,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2021 »"
+   },
+   {
+    "annee": 2022,
+    "valeur": 21.3,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2022",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2022-FR.pdf",
+    "date": "2023",
+    "page": 7,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2022 »"
+   },
+   {
+    "annee": 2023,
+    "valeur": 21.2,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2023",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2023-FR.pdf",
+    "date": "2024",
+    "page": 8,
+    "champ": "chiffres clés, « Montant des actifs du FRR au 31/12/2023 »",
+    "avertissement": "le rapport 2024 (p. 109) dit que les actifs financiers « s'élevaient à 20,8 Md€ » en 2023 (périmètre comptable : valeurs mobilières et disponibilités)"
+   },
+   {
+    "annee": 2024,
+    "valeur": 20.4,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2024",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2025/10/FRR-RA2024-FR-2.pdf",
+    "date": "2025",
+    "page": 7,
+    "citation": "son actif net s'élève à 20,4 Md€ fin 2024 en valeur de marché"
+   },
+   {
+    "annee": 2025,
+    "valeur": 20.7,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 7,
+    "citation": "son actif net s'établit à 20,7 Md€ fin 2025 après 20,4 Md€ fin 2024",
+    "enPartDePib": "0,7 % du PIB selon le COR (rapport de juin 2026)"
+   }
+  ],
+  "performanceAnnuelleNette": {
+   "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+   "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+   "date": "2026-07",
+   "page": 5,
+   "champ": "graphique « Performance annuelle nette du FRR (en %) », lu sur le rendu de la page ; nette de frais",
+   "unite": "% par an",
+   "valeurs": {
+    "2010": 4.2,
+    "2011": 0.4,
+    "2012": 10.5,
+    "2013": 5.0,
+    "2014": 8.7,
+    "2015": 3.1,
+    "2016": 5.0,
+    "2017": 7.2,
+    "2018": -5.2,
+    "2019": 9.7,
+    "2020": 1.0,
+    "2021": 7.0,
+    "2022": -10.0,
+    "2023": 9.7,
+    "2024": 6.5,
+    "2025": 9.1
+   },
+   "precisions": "Lues à deux décimales dans les rapports annuels : 4,97 % en 2016, 7,16 % en 2017, -5,16 % en 2018, 9,66 % en 2019 et 2023, 1,01 % en 2020, 6,46 % en 2024."
+  },
+  "performanceAnnualisee": {
+   "depuisFin2010": {
+    "valeur": 4.4,
+    "unite": "% par an, nette de frais, de fin 2010 à fin 2025",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 4,
+    "citation": "la performance annualisée depuis la mise en place des versements à la Cades fin 2010 est désormais de 4,4 % soit 304 points au-dessus du coût moyen de la dette française sur la période"
+   },
+   "depuisFin2010A2020": {
+    "valeur": 4.49,
+    "unite": "% par an, de décembre 2010 à fin 2020",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2020",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2020-FR-2.pdf",
+    "date": "2021",
+    "page": 5
+   },
+   "depuisJuin2004A2020": {
+    "valeur": 3.9,
+    "unite": "% par an, de juin 2004 à fin 2020",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2020",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2020-FR-2.pdf",
+    "date": "2021",
+    "page": 5
+   },
+   "depuisJuin2004A2019": {
+    "valeur": 4.1,
+    "unite": "% par an, de juin 2004 à fin 2019",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2019",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/02/FRR-RA2019-FR-3.pdf",
+    "date": "2020",
+    "page": 3
+   },
+   "avertissement": "Performance annualisée depuis l'origine (2004) non lue dans le rapport 2025, qui ne donne que la série depuis fin 2010."
+  },
+  "versementsALaCades": {
+   "de2011a2024": {
+    "valeur": 2.1,
+    "unite": "milliards d'euros par an",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 5,
+    "citation": "le FRR verse 2,1 milliards d'euros chaque année jusqu'en 2024 puis 1,45 milliard d'euros de 2025 à 2033 à la Cades"
+   },
+   "de2025a2033": {
+    "valeur": 1.45,
+    "unite": "milliards d'euros par an",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 5
+   },
+   "baseLegale": {
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "La loi n°2020-992 du 7 août 2020 relative à la dette sociale et à l'autonomie a prolongé l'amortissement de 2025 à 2033 de la dette sociale par la Cades et prévoit un versement annuel de 1,45 Md€ du FRR à la Cades de 2025 à 2033.",
+    "pageImprimee": 99,
+    "avertissement": "Loi citée d'après le COR ; le texte de la loi n'a pas été ouvert sur Légifrance."
+   },
+   "cumulVerse2011a2024": {
+    "valeur": 30,
+    "unite": "milliards d'euros courants",
+    "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+    "date": "2025-12-18",
+    "page": 7,
+    "citation": "Le FRR a versé 30 Md€ au total à la Cades entre 2011 et 2024, un montant correspondant à l'ensemble des dotations qu'il a reçues."
+   },
+   "restitueAuDelaDesDotations": {
+    "valeur": 3.6,
+    "unite": "milliards d'euros courants",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 19,
+    "citation": "Le FRR a désormais restitué l'intégralité des sommes qui lui avaient été allouées (environ 32 Md€), et versé 3,6 Md€ au-delà de ce montant."
+   },
+   "soulteCnieg": {
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 19,
+    "citation": "la situation patrimoniale du FRR a été modifiée en 2020 par la restitution immédiate de la soulte CNIEG (environ 5 Md€) et par l'ajout de 9 versements annuels de 1,45 Md€ au passif du FRR, de 2025 à 2033"
+   }
+  },
+  "horizon": {
+   "legal": 2033,
+   "apres2033": {
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 29,
+    "citation": "assurer les paiements à la Cades : 1,45 Md€ de 2025 à 2033. L'horizon d'investissement ayant été repoussé au-delà de 2033, les travaux de l'allocation stratégique permettent de sécuriser d'éventuels paiements récurrents du FRR vers la sphère sociale de l'ordre de 500 M€/an à compter de 2034.",
+    "avertissement": "Hypothèse de travail du FRR pour son allocation, pas une disposition légale."
+   },
+   "vocation": {
+    "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+    "date": "2025-12-18",
+    "page": 4,
+    "citation": "Le FRR ne détient plus, aujourd'hui, de réserves destinées à financer des pensions de retraite dans le futur.",
+    "complement": "Objectif initial rappelé par la même note : 150 milliards d'euros de réserves à l'horizon 2020, pour l'équilibre du régime général et des régimes alignés entre 2020 et 2040."
+   }
+  },
+  "allocation": {
+   "actionsNonCouvertes": {
+    "valeur": 48,
+    "unite": "% de l'allocation stratégique fin 2025 (45,4 % dans le portefeuille)",
+    "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+    "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+    "date": "2026-07",
+    "page": 32,
+    "citation": "une augmentation progressive de 15 points du poids des actions non couvertes sur les 2 dernières années, de 33 % à fin décembre 2023 à 48 % fin 2025 (et 45,4 % dans le portefeuille)"
+   }
+  },
+  "coutMoyenDeLaDetteFrancaise2025": {
+   "valeur": 3.2,
+   "unite": "%",
+   "source": "Fonds de réserve pour les retraites, rapport annuel 2025",
+   "url": "https://www.fondsdereserve.fr/wp-content/uploads/2026/07/FRR-Rapport-Annuel-2025-PAGE.pdf",
+   "date": "2026-07",
+   "page": 20,
+   "citation": "un contexte d'augmentation du coût moyen de la dette française, s'établissant à 3,2 % en 2025"
+  }
+ },
+ "autresRegimes": {
+  "tableauDuCorFin2025": {
+   "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+   "date": "2026-06",
+   "page": 102,
+   "champ": "Tableau 2.3 « Montants des réserves financières (en valeur de marché) au sein du système de retraite par répartition au 31 décembre 2025 » ; réserves de moyen-long terme et fonds de roulement confondus ; source : données des régimes",
+   "pageImprimee": 100,
+   "unite": "milliards d'euros ; mois de prestations ; variation par rapport à 2024 en %",
+   "lignes": [
+    {
+     "regime": "CNAVPL (base)",
+     "reserves": 4.1,
+     "moisDePrestations": 19,
+     "variation": 18.9
+    },
+    {
+     "regime": "CNBF (base)",
+     "reserves": 1.2,
+     "moisDePrestations": 56,
+     "variation": -2.7
+    },
+    {
+     "regime": "Sous-total régimes de base",
+     "reserves": 5.3
+    },
+    {
+     "regime": "CNRACL",
+     "reserves": 0.0,
+     "variation": 0.0
+    },
+    {
+     "regime": "CRPCEN",
+     "reserves": 2.3,
+     "moisDePrestations": 27,
+     "variation": 3.4
+    },
+    {
+     "regime": "Banque de France",
+     "reserves": 13.4,
+     "moisDePrestations": 277,
+     "variation": -2.1
+    },
+    {
+     "regime": "Sous-total régimes spéciaux",
+     "reserves": 15.7
+    },
+    {
+     "regime": "Agirc-Arrco",
+     "reserves": 113.6,
+     "moisDePrestations": 14,
+     "variation": 4.9
+    },
+    {
+     "regime": "Ircantec",
+     "reserves": 19.2,
+     "moisDePrestations": 50,
+     "variation": 8.1
+    },
+    {
+     "regime": "RCI",
+     "reserves": 23.4,
+     "moisDePrestations": 107,
+     "variation": 10.6
+    },
+    {
+     "regime": "CNAVPL complémentaire (dix sections)",
+     "reserves": 39.0,
+     "moisDePrestations": 71,
+     "variation": 2.2
+    },
+    {
+     "regime": "CNBF complémentaire",
+     "reserves": 2.2,
+     "moisDePrestations": 85,
+     "variation": -7.4
+    },
+    {
+     "regime": "CRPNPAC",
+     "reserves": 5.1,
+     "moisDePrestations": 70,
+     "variation": -0.3
+    },
+    {
+     "regime": "MSA complémentaire (valeur comptable)",
+     "reserves": 0.4,
+     "moisDePrestations": 4,
+     "variation": 14.2
+    },
+    {
+     "regime": "Sous-total régimes complémentaires",
+     "reserves": 202.9,
+     "variation": 5.0
+    },
+    {
+     "regime": "Total des réserves",
+     "reserves": 223.9,
+     "variation": 4.7
+    },
+    {
+     "regime": "FRR",
+     "reserves": 20.7,
+     "variation": 1.5
+    }
+   ]
+  },
+  "tableauDuCorFin2024": {
+   "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+   "date": "2025-12-18",
+   "page": 6,
+   "champ": "Tableau 1, même définition, au 31 décembre 2024",
+   "unite": "milliards d'euros ; mois de prestations",
+   "lignes": [
+    {
+     "regime": "CNAVPL (base)",
+     "reserves": 3.4,
+     "moisDePrestations": 17
+    },
+    {
+     "regime": "CNBF (base)",
+     "reserves": 1.2,
+     "moisDePrestations": 61
+    },
+    {
+     "regime": "Sous-total régimes de base",
+     "reserves": 4.7
+    },
+    {
+     "regime": "CNRACL",
+     "reserves": 0.0
+    },
+    {
+     "regime": "CRPCEN",
+     "reserves": 2.2,
+     "moisDePrestations": 27
+    },
+    {
+     "regime": "Banque de France",
+     "reserves": 13.7,
+     "moisDePrestations": 289
+    },
+    {
+     "regime": "Sous-total régimes spéciaux",
+     "reserves": 15.9
+    },
+    {
+     "regime": "Agirc-Arrco",
+     "reserves": 108.3,
+     "moisDePrestations": 13
+    },
+    {
+     "regime": "Ircantec",
+     "reserves": 17.7,
+     "moisDePrestations": 49
+    },
+    {
+     "regime": "RCI",
+     "reserves": 21.2,
+     "moisDePrestations": 99
+    },
+    {
+     "regime": "CNAVPL complémentaire (dix sections)",
+     "reserves": 38.2,
+     "moisDePrestations": 73
+    },
+    {
+     "regime": "CNBF complémentaire",
+     "reserves": 2.4,
+     "moisDePrestations": 97
+    },
+    {
+     "regime": "CRPNPAC",
+     "reserves": 5.1,
+     "moisDePrestations": 77
+    },
+    {
+     "regime": "MSA complémentaire (valeur comptable)",
+     "reserves": 0.4,
+     "moisDePrestations": 4
+    },
+    {
+     "regime": "Sous-total régimes complémentaires",
+     "reserves": 193.2
+    },
+    {
+     "regime": "Total des réserves",
+     "reserves": 213.8
+    }
+   ]
+  },
+  "ircantec": {
+   "reservesFin2025": {
+    "valeur": 18.6,
+    "unite": "milliards d'euros courants",
+    "source": "Ircantec, actualité « Résultats 2025 : l'Ircantec, un régime solide et performant » (page web)",
+    "url": "https://www.ircantec.retraites.fr/nous-connaitre/actualite/resultats-2025-lircantec-un-regime-solide-et-performant",
+    "date": "2026-06-25",
+    "citation": "Pour 2025, le régime dispose notamment d'un compte de résultat excédentaire de 1,1 Md€, avec un portefeuille de réserves s'élevant à 18,6 Md€ en valeur de marché.",
+    "avertissement": "19,2 Md€ dans le tableau du COR (fonds de roulement compris)"
+   },
+   "resultat2025": {
+    "valeur": 1.1,
+    "unite": "milliards d'euros courants",
+    "source": "Ircantec, actualité « Résultats 2025 : l'Ircantec, un régime solide et performant » (page web)",
+    "url": "https://www.ircantec.retraites.fr/nous-connaitre/actualite/resultats-2025-lircantec-un-regime-solide-et-performant",
+    "date": "2026-06-25"
+   },
+   "reservesFin2024": {
+    "valeur": 17.2,
+    "unite": "milliards d'euros courants",
+    "source": "Ircantec, rapport d'activité 2024 (édition juin 2025)",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_ACC.pdf",
+    "date": "2025-06",
+    "page": 38,
+    "citation": "Le portefeuille de réserves à fin 2024 s'élève à 17,2 Md€.",
+    "avertissement": "17 186 M€ p. 45 ; 17,7 Md€ dans le tableau du COR"
+   },
+   "excedentFinancier2024": {
+    "valeur": 594,
+    "unite": "millions d'euros courants",
+    "source": "Ircantec, rapport d'activité 2024 (édition juin 2025)",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_ACC.pdf",
+    "date": "2025-06",
+    "page": 33,
+    "citation": "L'excédent financier s'élève à 594 millions d'euros contre 485 millions d'euros en 2023."
+   },
+   "rendementFin2022AFin2024": {
+    "valeur": 7.87,
+    "unite": "% par an",
+    "source": "Ircantec, rapport d'activité 2024 (édition juin 2025)",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_ACC.pdf",
+    "date": "2025-06",
+    "page": 38,
+    "citation": "Sur la période fin décembre 2022 – fin décembre 2024, le portefeuille des réserves de l'Ircantec a délivré une performance annualisée de +7,87%."
+   },
+   "rendementAttenduDeLAllocationCible": {
+    "valeur": 3.34,
+    "unite": "% par an sur longue période",
+    "source": "Ircantec, rapport d'activité 2024 (édition juin 2025)",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2024_Ircantec_ACC.pdf",
+    "date": "2025-06",
+    "page": 38,
+    "citation": "Les hypothèses de rendement par classe d'actifs de cette allocation cible tendent vers un rendement annualisé de +3,34% sur longue période."
+   },
+   "regleDePilotage": {
+    "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+    "date": "2025-12-18",
+    "page": 8,
+    "citation": "Pour l'Ircantec, par exemple, les règles prudentielles ont comme objectif de disposer, à l'échéance de 20 ans, d'un montant de réserves équivalent à une année et demi de prestations et d'assurer ses engagements à l'horizon de 30 ans."
+   }
+  },
+  "carmf": {
+   "reservesDuRegimeComplementaireAu1erJanvier2026": {
+    "valeur": 4994,
+    "unite": "millions d'euros courants",
+    "source": "CARMF, rapport d'activité 2025",
+    "url": "https://carmf.fr/doc/documents/rapport/rapport-activite-2025.pdf",
+    "date": "2026",
+    "page": 30,
+    "champ": "graphique « Réserves du régime complémentaire en millions d'euros au 1er janvier de chaque année (valeur de marché) », dernière barre (2026) ; régime complémentaire des médecins libéraux",
+    "avertissement": "valeurs du graphique rattachées aux années par leur position dans le texte extrait : 5 583 (2016), 5 721, 5 745, 5 752, 5 753, 6 230 (2021), 6 100, 6 270, 5 722 (2024), 5 300 (2025), 4 994 (2026)"
+   },
+   "reservesComptablesAu31Decembre2025": {
+    "valeur": 4625070,
+    "unite": "milliers d'euros, avant affectation du résultat 2025",
+    "source": "CARMF, bilan et compte de résultat au 31 décembre 2025",
+    "url": "https://www.carmf.fr/doc/documents/bilan/bilan2025.pdf",
+    "date": "2026",
+    "page": 8,
+    "champ": "tableau des capitaux propres, régime complémentaire ; résultat 2025 : -388 668 ; projet au 01.01.2026 : 4 236 402. Trois régimes (complémentaire, ASV, invalidité-décès) : 5 899 486, résultat -449 313"
+   },
+   "resultatFinancier2025": {
+    "valeur": 312.1,
+    "unite": "millions d'euros courants",
+    "source": "CARMF, bilan et compte de résultat au 31 décembre 2025",
+    "url": "https://www.carmf.fr/doc/documents/bilan/bilan2025.pdf",
+    "date": "2026",
+    "page": 9,
+    "citation": "le résultat net financier, en excédent de 312,1 M€ en 2025",
+    "champ": "ensemble des régimes de la CARMF ; plus-values réalisées 229,1 M€"
+   }
+  },
+  "cipav": {
+   "reservesAu15Novembre2024": {
+    "valeur": 10,
+    "unite": "milliards d'euros courants",
+    "source": "Cipav, rapport d'activité 2024",
+    "url": "https://www.lacipav.fr/sites/default/files/2025-12/Rapport%20d%27activit%C3%A9%202024%20-%20La%20Cipav%20v3.pdf",
+    "date": "2025-12",
+    "page": 25,
+    "citation": "Au 15 novembre 2024, les réserves globales s'élevaient à 10 milliards d'euros, contre 8 milliards fin 2022 […] une performance financière globale de +8,5 % depuis le début de l'année 2024.",
+    "champ": "réserves globales de la caisse, tous régimes"
+   },
+   "allocation": {
+    "source": "Cipav, rapport d'activité 2024",
+    "url": "https://www.lacipav.fr/sites/default/files/2025-12/Rapport%20d%27activit%C3%A9%202024%20-%20La%20Cipav%20v3.pdf",
+    "date": "2025-12",
+    "page": 25,
+    "citation": "46 % d'actions, 34 % d'obligations, 15 % en immobilier, 5 % en actifs non cotés"
+   }
+  },
+  "rafp": {
+   "champ": "Retraite additionnelle de la fonction publique : régime en capitalisation, hors réserves de la répartition.",
+   "provisionsTechniquesFin2025": {
+    "valeur": 36903,
+    "unite": "millions d'euros courants",
+    "source": "ERAFP, rapport annuel 2025 de la retraite additionnelle de la fonction publique",
+    "url": "https://media.rafp.fr/s3fs-public/2026-06/RAFP-RA2025-V6_0.pdf",
+    "date": "2026-06",
+    "page": 40,
+    "champ": "bilan, ligne « Provisions techniques » : 35 390 en 2024, 36 903 en 2025, +4,3 % ; le COR donne 36,9 Md€"
+   },
+   "actifValeurComptableFin2025": {
+    "valeur": 44.7,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 103,
+    "citation": "l'actif financier du régime de la retraite additionnelle de la fonction publique (RAFP) s'élève à 44,7 Md€ en valeur comptable – soit une couverture de 121 % de ses engagements estimés à 36,9 Md€",
+    "pageImprimee": 101,
+    "avertissement": "dans le rapport de l'ERAFP (p. 39), 44,7 Md€ est le total du bilan"
+   },
+   "actifValeurDeMarcheFin2025": {
+    "valeur": 53.6,
+    "unite": "milliards d'euros courants",
+    "source": "ERAFP, rapport annuel 2025 de la retraite additionnelle de la fonction publique",
+    "url": "https://media.rafp.fr/s3fs-public/2026-06/RAFP-RA2025-V6_0.pdf",
+    "date": "2026-06",
+    "page": 5,
+    "champ": "actif net en valeur économique au 31 décembre 2025 ; couverture de 146 % selon le COR"
+   },
+   "tauxDeRendementInterneDepuis2006": {
+    "valeur": 4.7,
+    "unite": "% par an, de 2006 à fin 2025",
+    "source": "ERAFP, rapport annuel 2025 de la retraite additionnelle de la fonction publique",
+    "url": "https://media.rafp.fr/s3fs-public/2026-06/RAFP-RA2025-V6_0.pdf",
+    "date": "2026-06",
+    "page": 50,
+    "citation": "Le TRI global depuis 2006 s'élève à 4,7 % à fin"
+   },
+   "tauxDeRendementInterne2025": {
+    "valeur": 8.6,
+    "unite": "% sur l'année",
+    "source": "ERAFP, rapport annuel 2025 de la retraite additionnelle de la fonction publique",
+    "url": "https://media.rafp.fr/s3fs-public/2026-06/RAFP-RA2025-V6_0.pdf",
+    "date": "2026-06",
+    "page": 5
+   },
+   "rendementTechnique2025": {
+    "valeur": 3.89,
+    "unite": "% (valeur de service sur valeur d'achat du point)",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 103,
+    "citation": "Le rendement technique du régime (rapport de la valeur de service sur la valeur d'achat du point) s'élève à 3,89 % en 2025.",
+    "pageImprimee": 101
+   }
+  },
+  "cavp": {
+   "champ": "Régime en capitalisation de la Caisse d'assurance vieillesse des pharmaciens.",
+   "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+   "date": "2026-06",
+   "page": 103,
+   "citation": "RAFP 36,9 44,7 53,6 ; CAVP 5,6 6,4 7,6 ; Total 42,5 51,1 61,2 (provisions ; actif en valeur comptable ; actif en valeur de marché, en milliards d'euros)",
+   "pageImprimee": 101,
+   "provisions": 5.6,
+   "actifValeurComptable": 6.4,
+   "actifValeurDeMarche": 7.6,
+   "unite": "milliards d'euros courants"
+  },
+  "cnracl": {
+   "reserves": {
+    "valeur": 0.0,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "la CNRACL qui ne dispose plus de réserves depuis 2020 et dont la dette est désormais également reprise par la Cades",
+    "pageImprimee": 99
+   },
+   "besoinDeFinancement2025": {
+    "valeur": -2.1,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 94,
+    "citation": "La CNRACL connaissait une situation moins dégradée avec un besoin de financement de l'ordre de - 2,1 Md€.",
+    "pageImprimee": 92,
+    "champ": "solde 2025 hors charges et produits financiers"
+   }
+  },
+  "fonctionPubliqueDeLEtat": {
+   "soldeCumuleDuCasPensionsFin2025": {
+    "valeur": 2.1,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "un indicateur dénommé « solde cumulé » qui doit rester positif à tout instant – et qui atteignait 2,1 Md€ fin 2025 [prévision du PLF-PAP 2026]. Ce solde cumulé relève d'une convention comptable, il n'est pas pris en compte dans le total des réserves.",
+    "pageImprimee": 99
+   },
+   "soldeCumuleDuCasPensionsFin2024": {
+    "valeur": 4.3,
+    "unite": "milliards d'euros courants",
+    "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+    "date": "2025-12-18",
+    "page": 7
+   }
+  },
+  "sansReserve": {
+   "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+   "date": "2026-06",
+   "page": 101,
+   "citation": "certains régimes ne disposent d'aucune réserve financière. C'est le cas de la Cnav dont les besoins de financement (et ceux du FSV) ont été repris par la Cades […], ainsi que des régimes qui disposent de ressources venant, en dernier ressort, assurer leur équilibre financier, tels que les régimes de la SNCF et de la RATP.",
+   "pageImprimee": 99
+  },
+  "cadreReglementaire": {
+   "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+   "date": "2025-12-18",
+   "page": 9,
+   "citation": "au moins 34 % des réserves doivent être investies en obligations et la part des investissements immobiliers ne peuvent pas dépasser 20 %. […] Au 30 juin 2020, les régimes vieillesse dans leur ensemble avaient investi leurs réserves à hauteur de 33 % dans des actifs risqués (actions et non coté) et à près de 60 % dans des actifs non risqués (obligations ou monétaire)",
+   "champ": "régimes relevant du code de la sécurité sociale ; l'Agirc-Arrco, l'Ircantec, l'ERAFP, la MSA et la Banque de France ont une réglementation propre"
+  }
+ },
+ "cor": {
+  "situationPatrimonialeFin2025": {
+   "reservesDesRegimesEnRepartition": {
+    "valeur": 223.9,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 100,
+    "citation": "la valeur de marché de l'ensemble des actifs admis en représentation des réserves constituées au sein des régimes de retraite par répartition représente 223,9 Md€, soit 7,5 % du PIB, contre 213,8 Md€ fin 2024 (7,3 % du PIB). Près de 91 % de ces réserves sont détenues par les régimes complémentaires, dont 52 % par l'Agirc-Arrco.",
+    "pageImprimee": 98,
+    "enPartDePib": 7.5
+   },
+   "reservesAvecFrr": {
+    "valeur": 244.6,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "les réserves totales du système de retraite en répartition s'élèvent à 244,6 Md€, soit 8,2 % du PIB en 2025 (contre 234,2 Md€ fin 2024)",
+    "pageImprimee": 99,
+    "enPartDePib": 8.2
+   },
+   "detteRetraitePorteeParLaCades": {
+    "valeur": 29.3,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "La part imputable à la branche retraite de la dette restant à rembourser par la Cades est estimée à 29,3 Md€ (soit 1,0 % du PIB) fin 2025. La charge financière […] peut être estimée, en 2025, à 0,7 milliard d'euros soit un taux d'intérêt nominal apparent de la dette retraite de 2,5 %.",
+    "pageImprimee": 99,
+    "tauxDInteretApparent": "2,5 %"
+   },
+   "situationPatrimonialeNette": {
+    "valeur": 215.4,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 101,
+    "citation": "la situation patrimoniale nette du système de retraite obligatoire en répartition s'élèverait ainsi à 215,4 Md€, soit 7,2 % du PIB, à fin 2025",
+    "pageImprimee": 99,
+    "enPartDePib": 7.2
+   },
+   "detailParRegime": "Voir autresRegimes.tableauDuCorFin2025 (le COR ne publie le détail par régime qu'en milliards d'euros et en mois de prestations, pas en part de PIB)."
+  },
+  "produitsFinanciers2025": {
+   "montant": {
+    "valeur": 5.6,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 89,
+    "citation": "Produits financiers 5,6 1,3%",
+    "champ": "Tableau 2.2 « Structure des ressources du système de retraite en 2025 (y compris produits financiers) » ; total des ressources 422,2",
+    "pageImprimee": 87
+   },
+   "soldeHorsProduitsFinanciers": {
+    "valeur": -5.1,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 93,
+    "citation": "En 2025, le système de retraite était déficitaire de 5,1 milliards d'euros en ne tenant pas compte des charges et produits financiers, ce qui représente - 0,2 % du PIB. En les réintégrant, le système de retraite reste en déficit, de l'ordre de 1,3 milliard d'euros, soit - 0,04% du PIB.",
+    "pageImprimee": 91
+   },
+   "soldeAvecProduitsFinanciers": {
+    "valeur": -1.3,
+    "unite": "milliards d'euros courants",
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 93,
+    "pageImprimee": 91
+   }
+  },
+  "hypotheseDeRendementEnProjection": {
+   "rapport2026": {
+    "source": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+    "date": "2026-06",
+    "page": 66,
+    "citation": "Sur longue période (en rétrospectif et en projection), le solde analysé est un solde élargi, comprenant l'intégralité des ressources […] et dépenses […], mais hors produits financiers (pour les régimes ayant des réserves) et charges financières (pour les régimes endettés). Seule la dernière année observée (2025) fait l'objet d'une analyse complémentaire comprenant les charges et produits financiers.",
+    "pageImprimee": 64,
+    "conclusion": "Le rapport annuel 2026 ne projette pas les réserves et ne pose donc pas d'hypothèse de rendement ; il précise (p. 97 du PDF) : « Les prévisions de solde technique de ces régimes n'intègrent pas les rendements financiers des réserves. »"
+   },
+   "conventionDe2017": {
+    "source": "COR (secrétariat général), « La gestion financière des régimes complémentaires de retraite obligatoire gérés en répartition », séance du 11 juillet 2018, document n° 6 (doc-4311)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4311.pdf",
+    "date": "2018-07-11",
+    "page": 6,
+    "citation": "Le taux de rendement des placements financiers (lorsque les régimes ont des excédents cumulés) ou le taux débiteur (lorsque les régimes ont des déficits cumulés) est égal au progrès de productivité qui définit chaque scénario économique ; autrement dit, les rendements financiers (ou les charges financières) augmentent au même rythme que le salaire moyen par tête.",
+    "champ": "projections de réserves du SG-COR de novembre 2017 (scénarios 1 %, 1,3 %, 1,5 %, 1,8 %)"
+   },
+   "fiches2024": "Les fiches par régime de juin 2024 projettent les réserves en part de PIB (Agirc-Arrco : 2,8 % fin 2023, 3,2 % en 2035, 17,6 % en 2070 à règles inchangées ; RCI : 0,7 % en 2023, extinction au-delà de 2070) ; l'hypothèse de rendement qui y est retenue n'a pas été trouvée dans le texte des fiches (voir nonLu).",
+   "regimeAgircArrco": "Voir agircArrco.hypotheseDeRendementEnProjection : 1 % par an en termes réels."
+  },
+  "rendementsHistoriquesCites": {
+   "source": "COR, séance plénière du 18 décembre 2025 « Répartition, réserves et capitalisation », document n° 2, « Constituer des réserves dans un système de retraite par répartition » (secrétariat général du COR)",
+   "url": "https://www.cor-retraites.fr/sites/default/files/2025-12/Doc_02_Note_r%C3%A9serves.pdf",
+   "date": "2025-12-18",
+   "page": 10,
+   "citation": "Bons du Trésor 0,96% ; Obligations 2,97% ; Actions 6,01% ; Immobilier 9,68% ; PIB en volume 3,2% (après 1950) | 2,24% ; 6,96% ; 9,61% ; 5,78% ; 1,9% (après 1980)",
+   "champ": "Tableau « Taux de rendement réels annuels moyens des actifs sans risque et risqués en France » ; source citée : Jordà et al. (2019), The Rate of Return on Everything, 1870–2015 ; PIB : calculs COR. Rendements bruts de frais.",
+   "unite": "% réel par an",
+   "apres1950": {
+    "bonsDuTresor": 0.96,
+    "obligations": 2.97,
+    "actions": 6.01,
+    "immobilier": 9.68,
+    "croissanceDuPibEnVolume": 3.2
+   },
+   "apres1980": {
+    "bonsDuTresor": 2.24,
+    "obligations": 6.96,
+    "actions": 9.61,
+    "immobilier": 5.78,
+    "croissanceDuPibEnVolume": 1.9
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  {
+   "grandeur": "Réserve technique de financement de l'Agirc-Arrco, fin 2025",
+   "explication": "91,2 Md€ selon l'Agirc-Arrco (communiqué du 31 mars 2026, dépliant de juin 2026) ; 92,1 Md€ selon le COR (rapport de juin 2026, texte et note du tableau 2.3). Chiffres inversés ; l'un des deux documents comporte probablement une coquille. Non tranché ; la série retient le chiffre du régime."
+  },
+  {
+   "grandeur": "Réserve technique de financement de l'Agirc-Arrco, fin 2024",
+   "explication": "85,6 Md€ selon l'Agirc-Arrco (communiqué du 27 mars 2025, dépliant de juin 2025) ; 86,5 Md€ selon le COR (note du 18 décembre 2025 et rapport de juin 2026). Même inversion de chiffres que pour 2025."
+  },
+  {
+   "grandeur": "Réserves de l'Agirc-Arrco : deux définitions",
+   "explication": "Réserve de financement seule (91,2 Md€ fin 2025, environ 11 mois de prestations selon le COR) ou avec le fonds de roulement (113,6 Md€, 14 mois, tableau du COR). La règle des six mois porte sur les « réserves de financement » dans l'accord de 2017 et sur les « réserves techniques » dans les accords de 2019 et 2023 ; le COR compare 13 mois (fonds de roulement compris) au seuil de six mois."
+  },
+  {
+   "grandeur": "Résultats provisoires et définitifs de l'Agirc-Arrco",
+   "explication": "2018 : réserves 59,6 puis 60,6 Md€, résultat technique -1,9 puis -2, résultat global -1,8 puis -1,4. 2019 : résultat technique 489 M€ puis 237 M€, global 1,2 Md€ puis 0,966. 2020 : résultat technique -6 Md€ puis -5,310, global -4,8 puis -4,122. 2016 : résultat technique -4 295 M€ (mars 2017) puis -4,195 Md€ (juillet 2018), global -2 236 puis -2,134. La série retient les chiffres définitifs."
+  },
+  {
+   "grandeur": "Cotisations Agirc-Arrco 2017",
+   "explication": "73 327 M€ (diaporama au COR, juillet 2018) ; 73 628 M€ (rapport d'activité 2020, graphique). Total des ressources 2017 : 77 118 M€ (diaporama) contre 77,5 Md€ (communiqué de juin 2019)."
+  },
+  {
+   "grandeur": "Résultat technique et « cotisations » dans les présentations Agirc-Arrco",
+   "explication": "Les diapositives de conférence de presse appellent « Cotisations » le total des ressources (103,3 Md€ en 2025), contributions de l'Unédic et de l'État comprises ; les cotisations des entreprises sont de 99,337 Md€."
+  },
+  {
+   "grandeur": "Origine de la règle des six mois",
+   "explication": "Accord de 2015 selon le COR (note du 18 décembre 2025) ; article 25 de l'accord du 17 novembre 2017 dans le texte lu. Le rapport 2024 du COR (fiche Agirc-Arrco) parle de « 50 % des allocations »."
+  },
+  {
+   "grandeur": "Réserves de l'Ircantec",
+   "explication": "Fin 2025 : 18,6 Md€ (Ircantec, valeur de marché du portefeuille) contre 19,2 Md€ (COR). Fin 2024 : 17,2 Md€ contre 17,7 Md€. Écart cohérent avec l'inclusion du fonds de roulement par le COR, non vérifié."
+  },
+  {
+   "grandeur": "Réserves du RCI",
+   "explication": "Fin 2024 : 21,2 Md€ en valeur de marché (COR) contre 15 959 M€ de réserves comptables et 16 788 M€ de fonds propres (Cour des comptes). Fin 2025 : 23 428 M€ (CPSTI), 23,4 Md€ (COR). Variation 2025 du RCI : +10,6 % dans un tableau du CPSTI, « 7,4 % » dans l'autre."
+  },
+  {
+   "grandeur": "Actif du FRR fin 2023",
+   "explication": "21,2 Md€ (chiffres clés du rapport 2023) contre 20,8 Md€ d'actifs financiers au bilan (rapport 2024, p. 109)."
+  },
+  {
+   "grandeur": "Sommes reçues par le FRR",
+   "explication": "« 30 Md€ […] correspondant à l'ensemble des dotations qu'il a reçues » (COR, décembre 2025) ; « environ 32 Md€ » (rapport annuel 2025 du FRR)."
+  }
+ ],
+ "nonLu": [
+  {
+   "recherche": "Réserves Agirc et Arrco fin 2015 (valeur de marché et comptable)",
+   "ouProbablement": "Rapports d'activité 2015 de l'Agirc et de l'Arrco ; rapport annuel du COR de juin 2016 ; le communiqué du 23 mars 2016 n'en dit rien."
+  },
+  {
+   "recherche": "Valeur de marché de la réserve de financement Agirc-Arrco fin 2016",
+   "ouProbablement": "Rapport d'activité 2016 (non archivé à l'adresse trouvée) ; le communiqué de juillet 2018 dit seulement « 62,5 milliards d'euros en légère diminution par rapport à 2016 »."
+  },
+  {
+   "recherche": "Rendement (performance) de la réserve Agirc-Arrco en 2015, 2016, 2018, 2019, 2022, 2023",
+   "ouProbablement": "Rapports d'activité 2018, 2019, 2022, 2023 et 2024, rubrique « Rendement du portefeuille titres ». Le rapport 2018 n'existe sur web.archive.org qu'en copie tronquée (1 Mo) ; les rapports 2022 à 2024 n'ont pas été trouvés sur le site ni dans l'index de l'archive."
+  },
+  {
+   "recherche": "Résultat technique Agirc + Arrco 2015 en un seul chiffre",
+   "ouProbablement": "Publié par régime seulement (-2,523 et -2,559 Md€ après transferts) ; la somme n'a pas été faite."
+  },
+  {
+   "recherche": "Texte de l'accord du 30 octobre 2015 (première mention éventuelle d'un seuil de réserves)",
+   "ouProbablement": "https://www.agirc-arrco.fr/storage/2021/10/Accord-Agirc-Arrco_20151030.pdf (copie archivée repérée, non ouverte)."
+  },
+  {
+   "recherche": "Articles 26 et 29 de l'accord du 17 novembre 2017 (pilotage tactique, devoir d'alerte), texte exact",
+   "ouProbablement": "Même PDF que l'article 25, pages 24-25 ; repérés dans le sommaire, non recopiés."
+  },
+  {
+   "recherche": "RCI : réserves en valeur de marché, performance financière et excédent technique par année de 2013 à 2024",
+   "ouProbablement": "Éditions annuelles de « Les travailleurs indépendants et leur protection sociale en chiffres » (CPSTI, auparavant « L'essentiel du RSI en chiffres »), tableaux « Structure et évolution des réserves » et « Décomposition de la variation ». Les copies de statistiques-recherche.lassuranceretraite.fr répondent 503 (protection anti-robot) et ne sont pas archivées ; les éditions 2024 et 2025 n'ont pas été trouvées sur urssaf.org. Des extraits de moteur de recherche donnent 19,3 Md€ fin 2022 et 19,4 Md€ fin 2021 (RCI et RID réunis) : non lus, non retenus."
+  },
+  {
+   "recherche": "FRR : performance annualisée depuis l'origine (2004) à fin 2025 ; actif net 2011-2015",
+   "ouProbablement": "Rapports annuels 2011 à 2015 du FRR (non listés sur la page des publications) ; le rapport 2025 ne donne que le graphique sans étiquettes avant 2025."
+  },
+  {
+   "recherche": "Loi n° 2020-992 du 7 août 2020 et article L. 135-6 du code de la sécurité sociale (versements du FRR à la Cades), texte exact",
+   "ouProbablement": "Légifrance ; cité ici d'après le COR et le FRR."
+  },
+  {
+   "recherche": "Hypothèse de rendement des réserves dans les fiches par régime du COR de juin 2024 (Agirc-Arrco, RCI, Ircantec)",
+   "ouProbablement": "Annexe méthodologique du rapport 2024 du COR ; recherche par mots-clés dans les fiches Agirc-Arrco et RCI sans résultat."
+  },
+  {
+   "recherche": "Réserves en part de PIB par régime",
+   "ouProbablement": "Non publié par le COR dans le rapport 2026 (seulement le total : 7,5 % du PIB, et le FRR : 0,7 %)."
+  },
+  {
+   "recherche": "CARPIMKO : réserves et rendement",
+   "ouProbablement": "Rapport annuel de la CARPIMKO ; aucun document trouvé."
+  },
+  {
+   "recherche": "Cipav : réserves fin 2025, par régime",
+   "ouProbablement": "Rapport d'activité 2025 de la Cipav (non trouvé) ; seul le rapport 2024 a été lu."
+  },
+  {
+   "recherche": "CNAVPL : réserves par section professionnelle (hors CARMF et Cipav)",
+   "ouProbablement": "Rapports des sections ; rapport d'information du Sénat n° 747 (2020-2021) sur les réserves des régimes de retraite, cité par le COR, non ouvert ; Cour des comptes, rapport public annuel 2022, non ouvert."
+  },
+  {
+   "recherche": "CNBF, CRPCEN, Banque de France, CRPNPAC : rendement des réserves",
+   "ouProbablement": "Rapports annuels de chaque caisse ; seuls les montants du tableau du COR ont été lus."
+  },
+  {
+   "recherche": "Ircantec : résultat financier 2025 et allocation d'actifs 2025",
+   "ouProbablement": "Rapport d'activité 2025 de l'Ircantec (lié depuis la page d'actualité du 25 juin 2026, non téléchargé) ; la page web donne « + 482 M€ » et « 681 M€ » sans que les intitulés aient pu être rattachés avec certitude."
+  }
+ ]
+}

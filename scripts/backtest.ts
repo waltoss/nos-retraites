@@ -24,6 +24,7 @@ import {
 	CHAMP_PRIVE,
 	computePensions,
 	detail,
+	estSalarie,
 	generatePopulation,
 	moisParEtat,
 	type Pension,
@@ -260,8 +261,7 @@ for (const [sexe, cle] of SEXES) {
 			for (const a of c.annees) {
 				if (a.annee >= x.pension.liquidation.annee) break;
 				const mois = moisParEtat(a).emploi;
-				if (mois === 0 || a.salaireBrut <= 0 || a.affiliation !== "prive")
-					continue;
+				if (mois === 0 || a.salaireBrut <= 0 || !estSalarie(a)) continue;
 				const pass = valeur(B.cnav.pass, a.annee);
 				const plein = (a.salaireBrut * 12) / mois;
 				const points =

@@ -23,6 +23,7 @@ import {
 	buildComptes,
 	computePensions,
 	detail,
+	estSalarie,
 	GENERATIONS_PONDEREES,
 	generatePopulation,
 	type Pension,
@@ -100,8 +101,7 @@ population.forEach((i, k) => {
 	if (!Number.isNaN(r.pensionParIndividu[k] as number)) plus(g.r, age);
 	else if (
 		c.annees.some(
-			(a) =>
-				a.annee === ANNEE && a.affiliation === "prive" && a.salaireBrut > 0,
+			(a) => a.annee === ANNEE && estSalarie(a) && a.salaireBrut > 0,
 		)
 	)
 		plus(g.c, age);

@@ -13,6 +13,8 @@ import { DECISIONS } from "./decisions.ts";
 export const MODELE: Modele = {
 	affiliations: {
 		prive: PRIVE,
+		// Régime aligné, liquidation unique et même complémentaire : le module du privé, une autre caisse.
+		salarieAgricole: PRIVE,
 		sre: affiliationFonctionPublique("sre"),
 		cnracl: affiliationFonctionPublique("cnracl"),
 		militaire: affiliationFonctionPublique("militaire"),

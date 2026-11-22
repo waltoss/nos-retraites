@@ -15,6 +15,7 @@ import {
 	detailFonctionPublique,
 	type EcartDecile,
 	estIndependant,
+	estSalarie,
 	type Facteurs,
 	generatePopulation,
 	generatePopulationPublique,
@@ -40,6 +41,7 @@ import {
 	valeur,
 } from "@nos-retraites/engine";
 import { ANNEE_EFFET, type ScenarioMoteur } from "./leviers";
+import { regimesVerseurs } from "./regimes";
 
 export type ResultatLeger = Omit<
 	Resultat,
@@ -104,6 +106,8 @@ export interface ResumePortrait {
 	/** Salaire moyen à temps plein sur la carrière, en part du plafond. */
 	niveauSalaire: number;
 	anneesEmploi: number;
+	/** Régimes qui lui versent une pension ou un capital, avec la loi actuelle. */
+	regimes: string[];
 	/** Pour un fonctionnaire : son régime, sa catégorie et le poids de ses primes dans son traitement. */
 	fonctionPublique?: StatutFonctionnaire & { partPrimes: number };
 }
@@ -173,6 +177,7 @@ export type Requete =
 			champ?: ChampSimule;
 	  }
 	| { type: "projection"; id: number; scenario: ScenarioMoteur }
+	| { type: "exemples"; id: number; scenario: ScenarioMoteur }
 	| { type: "moi"; id: number; scenario: ScenarioMoteur; profil: ProfilMoi };
 
 export type Reponse =
@@ -198,6 +203,7 @@ export type Reponse =
 			total: number;
 	  }
 	| { type: "portrait"; id: number; detail: DetailPortrait }
+	| { type: "exemples"; id: number; exemples: Exemple[] }
 	| { type: "moi"; id: number; resultat: ResultatMoi | null }
 	| {
 			type: "projection";
@@ -560,6 +566,7 @@ function portraits(
 			poids,
 			represente: null,
 			...profil(c, r.liquidation.annee),
+			regimes: regimesVerseurs(r),
 			...(c.fonctionPublique
 				? {
 						fonctionPublique: {
@@ -613,6 +620,84 @@ function portraits(
 		portraits: pris.map((p) => ({ ...p, represente: part })),
 		total,
 	};
+}
+
+/** Une vie choisie pour montrer le calcul pas à pas : son portrait et tout son détail. */
+export interface Exemple {
+	resume: ResumePortrait;
+	detail: DetailPortrait;
+}
+
+/**
+ * Deux vies du privé pour montrer le calcul : une carrière de salarié sans autre régime, et une
+ * carrière passée en partie comme artisan ou commerçant. Chacune est la plus proche de la pension
+ * médiane de ses semblables, parmi les générations qui viennent de partir.
+ */
+function exemples(s: ScenarioMoteur): Exemple[] {
+	const reference = vue(scene(DROIT));
+	const courant = vue(scene(s));
+	// Par type de carrière, les candidats et leurs années peu lisibles : sans emploi ou hors du modèle.
+	const groupes: { i: number; creux: number }[][] = [[], []];
+	reference.population.forEach((individu, i) => {
+		const c = individu.carriere;
+		const p = reference.pensions[i] as Pension;
+		if (c.anneeNaissance < 1958 || c.anneeNaissance > 1962) return;
+		if ((reference.poids[i] as number) === 0) return;
+		let prive = 0;
+		let independant = 0;
+		let creux = 0;
+		for (const a of c.annees) {
+			if (a.annee >= p.liquidation.annee) break;
+			if (moisParEtat(a).emploi === 0) creux++;
+			else if (estIndependant(a)) independant++;
+			else if (estSalarie(a)) prive++;
+			else creux++;
+		}
+		if (p.parRegime.rci?.versementUnique) return;
+		if (independant === 0 && prive >= 38) groupes[0]?.push({ i, creux });
+		else if (independant >= 10 && prive >= 10) groupes[1]?.push({ i, creux });
+	});
+	const choisis: Exemple[] = [];
+	for (const candidats of groupes) {
+		// Une vie lisible : le moins de creux qui laisse assez de candidats.
+		let groupe: number[] = [];
+		for (const seuil of [4, 8, 12, 20, 99]) {
+			groupe = candidats.filter((c) => c.creux <= seuil).map((c) => c.i);
+			if (groupe.length >= 5) break;
+		}
+		const tri = [...groupe].sort(
+			(x, y) =>
+				(reference.pensions[x] as Pension).mensuelleBrute -
+				(reference.pensions[y] as Pension).mensuelleBrute,
+		);
+		const i = tri[Math.floor(tri.length / 2)];
+		if (i === undefined) continue;
+		const c = (reference.population[i] as Individu).carriere;
+		const r = reference.pensions[i] as Pension;
+		const p = courant.pensions[i] as Pension;
+		choisis.push({
+			resume: {
+				id: i,
+				sexe: c.sexe,
+				anneeNaissance: c.anneeNaissance,
+				enfants: c.enfants.length,
+				cadre: c.cadre,
+				reference: { mensuelle: r.mensuelleBrute, age: r.liquidation.age },
+				scenario: { mensuelle: p.mensuelleBrute, age: p.liquidation.age },
+				poids: reference.poids[i] as number,
+				represente: null,
+				...profil(c, r.liquidation.annee),
+				regimes: regimesVerseurs(r),
+			},
+			detail: {
+				id: i,
+				champ: "prive",
+				reference: detail(scene(DROIT), i),
+				scenario: detail(scene(s), i),
+			},
+		});
+	}
+	return choisis;
 }
 
 function detail(sc: Scene, i: number, champ?: ChampSimule) {
@@ -785,6 +870,9 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				capitalisation: capitalisation(m.scenario),
 				anneeEffet: ANNEE_EFFET,
 			});
+			break;
+		case "exemples":
+			envoyer({ type: "exemples", id: m.id, exemples: exemples(m.scenario) });
 			break;
 		case "moi":
 			envoyer({ type: "moi", id: m.id, resultat: moi(m.scenario, m.profil) });

@@ -39,7 +39,7 @@ const paliers = { F: palier(parts.F), H: palier(parts.H) };
  */
 export const CHAMP_PRIVE: Champ = {
 	nom: "Salariés du privé",
-	affiliations: ["prive"],
+	affiliations: ["prive", "salarieAgricole"],
 	regimes: ["cnav", "agircArrco"],
 	part: (age, sexe, annee = data.annee) => {
 		const v = parts[sexe];

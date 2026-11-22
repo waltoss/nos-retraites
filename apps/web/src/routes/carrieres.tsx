@@ -27,6 +27,7 @@ import {
 	personnes,
 } from "../format";
 import { persona } from "../personas";
+import { REGIMES, regimesDe } from "../regimes";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/carrieres")({ component: Carrieres });
@@ -241,6 +242,9 @@ function Carrieres() {
 									<small>
 										{habillage(p).metier ?? "a peu travaillé en France"}
 									</small>
+									<small className="caisses">
+										{p.regimes.map((r) => REGIMES[r]?.court ?? r).join(" · ")}
+									</small>
 									{p.represente !== null && (
 										<small
 											className="represente"
@@ -287,10 +291,10 @@ function Carrieres() {
 					{liste && (
 						<p className="reserve">
 							{entier(liste.portraits.length)} carrières, de la plus petite
-							pension à la plus grande. Sous chaque métier, le nombre de
-							personnes dans une situation voisine ; sous la pension, l'âge de
-							départ. Chacune tient lieu d'une part égale des{" "}
-							{personnes(liste.total)}{" "}
+							pension à la plus grande. Sous chaque métier, les régimes qui lui
+							versent une pension, puis le nombre de personnes dans une
+							situation voisine ; sous la pension, l'âge de départ. Chacune
+							tient lieu d'une part égale des {personnes(liste.total)}{" "}
 							{filtre.champ === "public"
 								? "de fonctionnaires et anciens fonctionnaires"
 								: "de salariés et anciens salariés du privé"}{" "}
@@ -685,6 +689,7 @@ function Fiche({
 						{ageEnClair(reference.pension.liquidation.age)}).
 					</p>
 				)}
+			<Regimes carriere={c} pension={scenario.pension} />
 			<table className="table calcul">
 				<thead>
 					<tr>
@@ -726,5 +731,76 @@ function Fiche({
 				s'il part avec une décote, au taux plein, ou un peu après.
 			</p>
 		</>
+	);
+}
+
+/** À quelles caisses cette personne a cotisé, et ce que chacune lui verse. */
+function Regimes({
+	carriere,
+	pension,
+}: {
+	carriere: Carriere;
+	pension: Pension;
+}) {
+	const { lignes, anneesNonSimulees } = regimesDe(carriere, pension);
+	const total = pension.mensuelleBrute * 12;
+	return (
+		<table className="table calcul regimes">
+			<thead>
+				<tr>
+					<th>Ses régimes de retraite</th>
+					<th>Années cotisées</th>
+					<th>Pension par mois</th>
+					<th>Part</th>
+				</tr>
+			</thead>
+			<tbody>
+				{lignes.map((l) => (
+					<tr key={l.id}>
+						<th>
+							{l.label}
+							{l.aide && <small>{l.aide}</small>}
+						</th>
+						<td className="num">{entier(l.annees)}</td>
+						<td className="num">
+							{l.jointe
+								? "avec le régime général"
+								: l.capital
+									? "capital"
+									: euros(l.pensionAnnuelle / 12)}
+						</td>
+						<td className="num part">
+							{total > 0 && !l.capital && !l.jointe && (
+								<>
+									<i
+										style={{
+											width: `${Math.round((l.pensionAnnuelle / total) * 100)}%`,
+										}}
+									/>
+									{entier((l.pensionAnnuelle / total) * 100)} %
+								</>
+							)}
+						</td>
+					</tr>
+				))}
+				{anneesNonSimulees >= 0.5 && (
+					<tr className="non-simule">
+						<th>
+							Autres régimes
+							<small>
+								{carriere.fonctionPublique
+									? "secteur privé, autres régimes"
+									: "fonction publique, agriculture, professions libérales…"}{" "}
+								: non simulés pour cette personne, leurs années comptent
+								seulement pour la durée
+							</small>
+						</th>
+						<td className="num">{entier(anneesNonSimulees)}</td>
+						<td className="num">non calculée</td>
+						<td />
+					</tr>
+				)}
+			</tbody>
+		</table>
 	);
 }

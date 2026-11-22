@@ -1,0 +1,1541 @@
+{
+ "meta": {
+  "objet": "Panorama des régimes de retraite français : cotisants, retraités de droit direct et pensions versées par régime, dernière année disponible, pour classer les régimes à simuler ensuite.",
+  "methode": "Valeurs lues le 2026-11-22 dans les documents indiqués : PDF téléchargés (curl), convertis avec pdftotext -layout et lus en texte ; aucune valeur citée de mémoire. Chaque bloc porte source, url, date (de lecture), annee (des données), page et citation (ligne de tableau ou phrase lue, colonnes dans l'ordre du document). Seuls calculs : conversion des millions en milliards (valeurMilliards) et tri du classement. Une valeur non lue vaut null et est décrite dans « nonLu ».",
+  "date": "2026-11-22",
+  "sourcePrincipale": "Pour les régimes de base, une seule source homogène : le rapport d'octobre 2026 de la Commission des comptes de la sécurité sociale (comptes 2025). Tableau 5 de la fiche 2.5 pour les prestations ; fiches 4.1, 4.5 et 4.8 à 4.15 pour les effectifs. Les numéros de page sont ceux imprimés (page du PDF = page imprimée + 2).",
+  "limites": [
+   "Pensions : « prestations légales brutes » de la branche vieillesse, droits propres ET droits dérivés (réversion). Les droits propres seuls sont donnés quand la fiche du régime les détaille (régime général, MSA, SRE, CNRACL, SNCF, CNIEG, CNAVPL).",
+   "Retraités de droit direct : lus seulement pour les régimes qui ont une fiche propre dans le rapport CCSS (moyenne annuelle 2025) et pour les grands régimes du panorama Drees (fin 2024). Pour FSPOEIE, RATP, mines, Enim, CRPCEN, Banque de France, CNBF et Cavimac, la source ne donne que les « bénéficiaires vieillesse » (droit direct et réversion confondus) : retraitesDroitDirect vaut null.",
+   "Le panorama Drees 2026 ne détaille pas les régimes spéciaux ni les professions libérales (lignes groupées : 663 milliers et 493 milliers de retraités de droit direct fin 2024). Son tableau par régime en personnes physiques (CNIEG, SNCF, RATP, CRPCEN) date de l'EIR 2020 et porte sur les résidents en France.",
+   "Régimes complémentaires : pas de source homogène et récente. Les chiffres viennent des fiches par régime du COR (juin 2024, données 2022-2023) et ne sont PAS comparables au classement des régimes de base (année et définition différentes). Rien n'a été lu pour les régimes complémentaires des sections de la CNAVPL, de la CNBF, pour le RCO agricole (pensions) ni pour la CRPNPAC (pensions).",
+   "Les effectifs des fiches par régime du rapport CCSS sont des moyennes annuelles ; ceux de la fiche 4.1 et de la fiche 4.15 sont dits « en 2025 » ou « en fin d'année » : de petits écarts existent entre fiches du même rapport (voir desaccordsEntreSources).",
+   "CNIEG : les prestations comprennent la part adossée au régime général et à l'Agirc-Arrco ; les ajouter aux pensions du régime général ne fait pas de double compte dans le tableau 5 (le régime général exclut cette part), mais un salarié des IEG simulé « comme au privé » en couvrirait déjà une partie."
+  ]
+ },
+ "regimes": [
+  {
+   "id": "regimeGeneral",
+   "libelle": "Régime général (Cnav), salariés et indépendants (ex-RSI/SSI)",
+   "etage": "base",
+   "dejaSimule": true,
+   "cotisants": {
+    "source": "PLACSS 2025, annexe 1, « Rapport d'évaluation des politiques de sécurité sociale – Retraites » (édition 2026), indicateur de cadrage, tableau 1 (source CCSS)",
+    "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "p. 27, tableau 1 « Effectifs, cotisations et prestations en 2025 dans les régimes vieillesse de base »",
+    "citation": "Régime général (2) - salariés / Régime général (2) - indépendants : 21,9 | 15,4 | 114,0 | 167,4 (colonnes : Cotisants (en millions) | Bénéficiaires (en millions) | Cotisations reçues (en Md€) | Prestations légales servies (en Md€))",
+    "unite": "millions",
+    "valeurMillions": 21.9,
+    "beneficiairesMillions": 15.4,
+    "cotisationsRecuesMilliards": 114.0
+   },
+   "retraitesDroitDirect": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+    "annee": 2024,
+    "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+    "citation": "Régime général2 : 15 441 | 14 745 | 648 | 2 847 | 696 (colonnes : Ensemble droit direct ou dérivé | droit direct | dont nouveaux retraités en 2024 | droit dérivé | dont droit dérivé servi seul)",
+    "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+    "valeurMilliers": 14745
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Régime général (salariés et non-salariés) : 160 931 | 167 405 | 4,0 | 172 190 | 2,9 | 57% | 178 855 | 3,9 (colonnes : 2024 | 2025 | % | 2026 (p) | % | Structure | 2027 (p) | %)",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 167405,
+    "valeurMilliards": 167.405,
+    "valeur2024Millions": 160931,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 153138,
+    "citationDroitsPropres": "fiche 4.5, tableau 1 « Évolution des charges et produits nets de la CNAV », p. 175 : Droits propres 146 956 | 153 138 | 4,2 (2024 pro forma | 2025 | %)"
+   }
+  },
+  {
+   "id": "agircArrco",
+   "libelle": "Agirc-Arrco (complémentaire des salariés du privé)",
+   "etage": "complementaire",
+   "dejaSimule": true,
+   "cotisants": {
+    "source": "COR, fiche « Agirc-Arrco », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_AGIRC_ARRCO_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2022,
+    "page": "présentation du régime",
+    "citation": "Au 31 décembre 2022, il comptait 19,9 millions de cotisants actifs (et 26,3 millions avaient obtenu des points en 2022, qu'ils soient ou non cotisants au 31 décembre), 18,6 millions d'assurés ayant des droits mais n'ayant pas cotisé à l'Agirc-Arrco en 2022 et 13,5 millions de retraités (droits directs ou dérivés).",
+    "unite": "millions de cotisants actifs au 31 décembre 2022",
+    "valeurMillions": 19.9
+   },
+   "retraitesDroitDirect": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+    "annee": 2024,
+    "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+    "citation": "Agirc-Arrco3 : 13 898 | 12 796 | 610 | 2 997 | 1 102",
+    "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+    "valeurMilliers": 12796
+   },
+   "pensions": {
+    "source": "COR, fiche « Agirc-Arrco », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_AGIRC_ARRCO_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "partie « Évolution des dépenses du régime et de leurs déterminants »",
+    "citation": "En 2023, les dépenses de retraite de l'Agirc-Arrco se sont élevées à 91,2 milliards d'euros, soit 3,3 % du PIB.",
+    "unite": "milliards d'euros",
+    "champ": "dépenses de retraite du régime (droits directs et dérivés ; le détail n'est pas donné dans la phrase lue)",
+    "valeurMilliards": 91.2
+   }
+  },
+  {
+   "id": "msaSalaries",
+   "libelle": "Salariés agricoles (MSA salariés), régime de base aligné",
+   "etage": "base",
+   "enCours": true,
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.8, tableau 1 « Données générales – branche vieillesse du régime agricole des salariés », p. 187",
+    "citation": "Cotisants vieillesse : 766 966 | 1,1 | 780 553 | 1,8 | 787 419 | 0,9 | 798 194 | 1,4 (2024 | % | 2025 | % | 2026 (p) | % | 2027 (p) | %)",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 780553,
+    "valeur2024": 766966,
+    "autreValeur": {
+     "valeur": 787298,
+     "citation": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF) : CCMSA salariés 2 157 692 | 31 341 | 787 298 | 1 955 146 | 1 100 991 (bénéficiaires vieillesse | bénéficiaires invalidité | cotisants | maladie-AT bénéficiaires | cotisants)",
+     "note": "valeur différente (787 298) dans la fiche 4.1 du même rapport ; elle est proche de la prévision 2026 de la fiche 4.8 (787 419)"
+    }
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.8, tableau 1, p. 187",
+    "citation": "Vieillesse droit direct : 1 563 441 | -1,9 | 1 536 348 | -1,7 ; Vieillesse droit dérivé : 505 169 | -2,1 | 494 456 | -2,1 ; Vieillesse droit direct et droit dérivé : 130 626 | -2,6 | 126 888 | -2,9 (2024 | % | 2025 | %)",
+    "unite": "effectifs en moyenne annuelle",
+    "droitDirectSeul": 1536348,
+    "droitDeriveSeul": 494456,
+    "droitDirectEtDroitDerive": 126888,
+    "note": "Trois catégories exclusives dans la source (lecture déduite de l'intitulé, non expliquée dans le tableau). Drees, fin 2024 : 1 679 milliers de retraités de droit direct.",
+    "dreesFin2024": {
+     "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+     "annee": 2024,
+     "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+     "citation": "MSA salariés : 2 185 | 1 679 | 43 | 634 | 506",
+     "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+     "valeurMilliers": 1679
+    }
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Salariés du régime agricole : 7 340 | 7 607 | 3,6 | 7 811 | 2,7 | 3% | 8 062 | 3,2",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 7607,
+    "valeurMilliards": 7.607,
+    "valeur2024Millions": 7340,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 6700,
+    "droitsDerives2025Millions": 906,
+    "citationDroitsPropres": "fiche 4.8, tableau 2, p. 187 : Droits propres 6 423 | 8,8 | 6 700 | 4,3 ; Droits dérivés 915 | 1,5 | 906 | -1,0"
+   }
+  },
+  {
+   "id": "msaNonSalaries",
+   "libelle": "Exploitants agricoles (MSA non-salariés), régime de base",
+   "etage": "base",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.9, tableau 1 « Données générales du risque vieillesse du régime de base », p. 189",
+    "citation": "Cotisants vieillesse : 420 847 | -2,0 | 412 451 | -2,0 | 403 979 | -2,1 | 396 023 | -2,0",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 412451
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.9, tableau 1, p. 189",
+    "citation": "Vieillesse droit direct : 816 041 | -2,6 | 796 852 | -2,4 ; Vieillesse droit dérivé : 90 168 | -2,0 | 88 178 | -2,2 ; Vieillesse droit direct et droit dérivé : 232 746 | -4,8 | 221 073 | -5,0",
+    "unite": "effectifs en moyenne annuelle",
+    "droitDirectSeul": 796852,
+    "droitDeriveSeul": 88178,
+    "droitDirectEtDroitDerive": 221073,
+    "dreesFin2024": {
+     "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+     "annee": 2024,
+     "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+     "citation": "MSA non-salariés : 1 112 | 1 023 | 30 | 311 | 89",
+     "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+     "valeurMilliers": 1023
+    }
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Exploitants agricoles : 6 774 | 6 698 | -1,1 | 6 573 | -1,9 | 2% | 6 513 | -0,9",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 6698,
+    "valeurMilliards": 6.698,
+    "valeur2024Millions": 6774,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 5746,
+    "citationDroitsPropres": "fiche 4.9, tableau 2, p. 189 : Droits propres 5 795 | 2,2 | 5 746 | -0,9 ; Droits dérivés et divers 978 | 0,1 | 953 | -2,6"
+   }
+  },
+  {
+   "id": "msaNonSalariesRco",
+   "libelle": "Retraite complémentaire obligatoire des non-salariés agricoles (RCO)",
+   "etage": "complementaire",
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "pensions": null,
+   "elementsLus": {
+    "source": "COR, fiche « MSA non-salariés (base et RCO) », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_MSANSA_RCO_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "section sur les ressources du RCO",
+    "citation": "En 2023, les ressources du régime RCO s'élèvent à près de 0,04 % du PIB (soit 1,1 milliard d'euros 2023). | Les dépenses totales du RCO évoluent comme la masse des pensions de droit direct, qui représentent une part prépondérante des dépenses du régime (80 % en 2023 et 77 % en 2070).",
+    "ressourcesMilliards": 1.1,
+    "note": "Ce sont des RESSOURCES, pas des pensions versées. Pension moyenne de droit direct du RCO fin 2024 : 137 euros bruts par mois (Drees 2026, tableau 2 « Montant brut mensuel moyen de la pension de droit direct », p. 58 : « MSA non-salariés complémentaire 137 »)."
+   }
+  },
+  {
+   "id": "sre",
+   "libelle": "Fonctionnaires civils et militaires de l'État (SRE, CAS Pensions)",
+   "etage": "base (régime intégré)",
+   "dejaSimule": true,
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.10, tableau 1 « Données générales du risque vieillesse », p. 191",
+    "citation": "Cotisants vieillesse : 1 968 835 | 1 955 788 | -0,7 | 1 948 677 | -0,4 | 1 942 018 | -0,3 (2024 | 2025 | % | 2026 (p) | % | 2027 (p) | %)",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 1955788
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.10, tableau 1, p. 191",
+    "citation": "Bénéficiaires vieillesse : 2 276 819 | 2 284 818 | 0,4 ; Vieillesse droit direct : 1 933 315 | 1 941 388 | 0,4 ; Vieillesse droit dérivé : 343 504 | 343 430 | 0,0",
+    "unite": "effectifs en moyenne annuelle",
+    "valeur": 1941388,
+    "droitDerive": 343430,
+    "dreesFin2024": {
+     "civils": {
+      "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+      "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+      "annee": 2024,
+      "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+      "citation": "FPE civils1 : 1 853 | 1 641 | 45 | 318 | 211",
+      "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+      "valeurMilliers": 1641
+     },
+     "militaires": {
+      "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+      "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+      "annee": 2024,
+      "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+      "citation": "FPE militaires1 : 509 | 377 | 10 | 135 | 132",
+      "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+      "valeurMilliers": 377
+     }
+    },
+    "note": "La fiche 4.1 (p. 155) donne 2 277 973 bénéficiaires vieillesse et 254 973 bénéficiaires invalidité pour le SRE, contre 2 284 818 bénéficiaires vieillesse dans la fiche 4.10."
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Fonctionnaires de l'État : 62 950 | 64 482 | 2,4 | 65 184 | 1,1 | 21% | 66 214 | 1,6",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 64482,
+    "valeurMilliards": 64.482,
+    "valeur2024Millions": 62950,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 56619,
+    "droitsDerives2025Millions": 4726,
+    "citationDroitsPropres": "fiche 4.10, tableau 2, p. 191 : Droits propres 55 243 | 56 619 | 2,5 ; Droits dérivés 4 601 | 4 726 | 2,7",
+    "note": "La somme des droits propres et dérivés lus (fiche 4.10) est inférieure aux prestations légales brutes du tableau 5 : le tableau 5 comprend d'autres prestations (non détaillées ici, non lues)."
+   }
+  },
+  {
+   "id": "cnracl",
+   "libelle": "Fonctionnaires territoriaux et hospitaliers (CNRACL)",
+   "etage": "base (régime intégré)",
+   "dejaSimule": true,
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.11, tableau 1 « Données générales de la branche vieillesse de la CNRACL », p. 193",
+    "citation": "Cotisants vieillesse : 2 151 694 | 2 145 774 | -0,3 | 2 146 274 | 0,0 | 2 146 774 | 0,0",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 2145774
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.11, tableau 1, p. 193",
+    "citation": "Bénéficiaires vieillesse : 1 352 056 | 1 396 350 | 3,3 ; Vieillesse droit direct (dont cumul d'un droit dérivé) : 1 273 479 | 1 315 490 | 3,3 ; Vieillesse droit dérivé seul : 78 577 | 80 860 | 2,9",
+    "unite": "effectifs en moyenne annuelle",
+    "valeur": 1315490,
+    "dreesFin2024": {
+     "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+     "annee": 2024,
+     "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+     "citation": "CNRACL1 : 1 540 | 1 393 | 63 | 196 | 147",
+     "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+     "valeurMilliers": 1393
+    }
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Fonction publique territoriale et hospitalière : 27 546 | 28 787 | 4,5 | 29 871 | 3,8 | 10% | 31 371 | 5,0",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 28787,
+    "valeurMilliards": 28.787,
+    "valeur2024Millions": 27546,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 25269,
+    "droitsDerives2025Millions": 1078,
+    "citationDroitsPropres": "fiche 4.11, tableau 2, p. 193 : Droits propres 24 142 | 25 269 | 4,7 ; Droits dérivés 1 019 | 1 078 | 5,7"
+   }
+  },
+  {
+   "id": "fspoeie",
+   "libelle": "Ouvriers des établissements industriels de l'État (FSPOEIE)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "FSPOEIE : 79 062 | 10 106 | 15 613 (bénéficiaires vieillesse | bénéficiaires invalidité | cotisants)",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 15613
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "FSPOEIE : 79 062 | 10 106 | 15 613 (bénéficiaires vieillesse | bénéficiaires invalidité | cotisants)",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 79062,
+    "beneficiairesInvalidite": 10106
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Ouvriers de l'Etat : 2 015 | 2 037 | 1,0 | 2 030 | -0,3 | 1% | 2 045 | 0,8",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 2037,
+    "valeurMilliards": 2.037,
+    "valeur2024Millions": 2015,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   },
+   "fiche415": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.15, tableau 1 « Charges nettes, soldes et effectifs des autres régimes vieillesse de base en 2025 », p. 200 (page 202 du PDF)",
+    "citation": "FSPOEIE : 2 044 | 13 | 89 168 | 15 613 (charges nettes M€ | solde M€ | bénéficiaires | cotisants)",
+    "chargesNettesMillions": 2044,
+    "note": "89 168 = 79 062 + 10 106 : les « bénéficiaires » de la fiche 4.15 additionnent vieillesse et invalidité (rapprochement fait ici)."
+   }
+  },
+  {
+   "id": "cnieg",
+   "libelle": "Industries électriques et gazières (CNIEG)",
+   "etage": "base (régime spécial intégré, adossé au régime général et à l'Agirc-Arrco)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.13, tableau 1 « Données générales du risque vieillesse de la CNIEG », p. 197",
+    "citation": "Cotisants vieillesse : 133 091 | 128 863 | -3,2 | 126 916 | -1,5 | 123 810 | -2,4",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 128863
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.13, tableau 1, p. 197",
+    "citation": "Bénéficiaires vieillesse : 182 396 | 181 877 | -0,3 ; Vieillesse droit direct : 142 959 | 142 599 | -0,3 ; Vieillesse droit dérivé : 39 437 | 39 278 | -0,4",
+    "unite": "effectifs en moyenne annuelle",
+    "valeur": 142599,
+    "droitDerive": 39278
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "CNIEG : 5 906 | 6 041 | 2,3 | 6 121 | 1,3 | 2% | 6 217 | 1,6",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 6041,
+    "valeurMilliards": 6.041,
+    "valeur2024Millions": 5906,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 5344,
+    "droitsDerives2025Millions": 670,
+    "citationDroitsPropres": "fiche 4.13, tableau 2, p. 197 : Droits propres 5 223 | 5 344 | 2,3 ; Droits dérivés 658 | 670 | 1,9",
+    "note": "Total des pensions versées par la CNIEG, y compris la part financée par le régime général et l'Agirc-Arrco au titre de l'adossement (REPSS, p. 27 : « Les prestations du régime général excluent les pensions prises en charge pour le régime des industries électriques et gazières (IEG) dans le cadre de l'adossement puisqu'elles sont déjà comptabilisées dans les prestations de retraite versées par la CNIEG. »)"
+   }
+  },
+  {
+   "id": "sncf",
+   "libelle": "Agents de la SNCF (CPRPF, régime fermé aux nouveaux embauchés depuis 2020)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.12, tableau 1 « Données générales », p. 195",
+    "citation": "Cotisants vieillesse : 108 877 | -3,3 | 105 581 | -3,0 | 102 414 | -3,0 | 98 829 | -3,5",
+    "unite": "cotisants vieillesse, moyenne annuelle",
+    "valeur": 105581,
+    "autreValeur": {
+     "valeur": 105610,
+     "citation": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF) : Régime spécial des agents de la SNCF 221 713 | [invalidité vide] | 105 610 | 377 492 | 104 713"
+    }
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.12, tableau 1, p. 195",
+    "citation": "Vieillesse droit direct : 158 985 | -1,9 | 155 791 | -2,0 ; Vieillesse droit dérivé : 64 794 | -2,9 | 62 900 | -2,9 ; Vieillesse de droit direct et dérivé : 2 965 | -2,0 | 2 888 | -2,6",
+    "unite": "effectifs en moyenne annuelle",
+    "droitDirectSeul": 155791,
+    "droitDeriveSeul": 62900,
+    "droitDirectEtDroitDerive": 2888
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "SNCF : 5 556 | 5 582 | 0,5 | 5 537 | -0,8 | 2% | 5 539 | 0,0",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 5582,
+    "valeurMilliards": 5.582,
+    "valeur2024Millions": 5556,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 4737,
+    "droitsDerives2025Millions": 829,
+    "citationDroitsPropres": "fiche 4.12, tableau 2, p. 195 : Droits propres 4 708 | 3,7 | 4 737 | 0,6 ; Droits dérivés 832 | 2,6 | 829 | -0,3"
+   }
+  },
+  {
+   "id": "ratp",
+   "libelle": "Agents de la RATP (CRP RATP)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Régime spécial des agents de la RATP : 51 606 | 262 | 34 840 | 103 478 | 40 429",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 34840
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Régime spécial des agents de la RATP : 51 606 | 262 | 34 840 | 103 478 | 40 429",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 51606,
+    "beneficiairesInvalidite": 262
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "RATP : 1 379 | 1 417 | 2,8 | 1 440 | 1,6 | 0% | 1 479 | 2,7",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 1417,
+    "valeurMilliards": 1.417,
+    "valeur2024Millions": 1379,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   },
+   "droitDirectFin2020Drees": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+    "annee": 2020,
+    "page": "tableau 2 « Nombre de retraités de droit direct d'un régime de base, en personnes physiques et en EQCC », p. 111",
+    "citation": "RATP : 8 | 30 | 38 | 6 | 0,1 | 26 | 0,4 | 31 | 0,2 (femmes | hommes | ensemble en milliers, puis EQCC)",
+    "valeurMilliers": 38,
+    "champ": "retraités de droit direct résidant en France fin 2020 (EIR 2020)"
+   }
+  },
+  {
+   "id": "mines",
+   "libelle": "Mines (CANSSM, régime fermé)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Mines - CANSSM : 168 362 | 42 | 586 | 64 986 | 563",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 586
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Mines - CANSSM : 168 362 | 42 | 586 | 64 986 | 563",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 168362,
+    "beneficiairesInvalidite": 42
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Mines : 1 082 | 1 039 | -4,0 | 986 | -5,1 | 0% | 948 | -3,9",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 1039,
+    "valeurMilliards": 1.039,
+    "valeur2024Millions": 1082,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   }
+  },
+  {
+   "id": "enim",
+   "libelle": "Marins (Enim)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Établissement national des invalides de la marine - ENIM : 100 752 | 6 444 | 30 402 | 84 618 | 30 900",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 30402
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Établissement national des invalides de la marine - ENIM : 100 752 | 6 444 | 30 402 | 84 618 | 30 900",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 100752,
+    "beneficiairesInvalidite": 6444
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Marins : 1 043 | 1 047 | 0,4 | 1 045 | -0,2 | 0% | 1 046 | 0,1",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 1047,
+    "valeurMilliards": 1.047,
+    "valeur2024Millions": 1043,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   }
+  },
+  {
+   "id": "crpcen",
+   "libelle": "Clercs et employés de notaires (CRPCEN)",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "CRPCEN : 82 130 | 1 003 | 50 000 | 79 062 | 57 733",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 50000
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "CRPCEN : 82 130 | 1 003 | 50 000 | 79 062 | 57 733",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 82130,
+    "beneficiairesInvalidite": 1003
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "CRPCEN : 981 | 1 007 | 2,6 | 1 024 | 1,7 | 0% | 1 045 | 2,1",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 1007,
+    "valeurMilliards": 1.007,
+    "valeur2024Millions": 981,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   },
+   "droitDirectFin2020Drees": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+    "annee": 2020,
+    "page": "tableau 2 « Nombre de retraités de droit direct d'un régime de base, en personnes physiques et en EQCC », p. 111",
+    "citation": "CRPCEN : 54 | 14 | 68 | 23 | 0,3 | 6 | 0,1 | 29 | 0,2",
+    "valeurMilliers": 68,
+    "champ": "retraités de droit direct résidant en France fin 2020 (EIR 2020)"
+   },
+   "note": "Le nombre de cotisants (50 000) est manifestement arrondi dans la source."
+  },
+  {
+   "id": "banqueDeFrance",
+   "libelle": "Personnel titulaire de la Banque de France",
+   "etage": "base (régime spécial intégré)",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Banque de France : 17 047 | 513 | 6 125",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 6125
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Banque de France : 17 047 | 513 | 6 125",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 17047,
+    "beneficiairesInvalidite": 513
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Banque de France : 568 | 579 | 2,0 | 584 | 0,9 | 0% | 597 | 2,2",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 579,
+    "valeurMilliards": 0.579,
+    "valeur2024Millions": 568,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   }
+  },
+  {
+   "id": "cnavplBase",
+   "libelle": "Professions libérales, régime de base (CNAVPL, dix sections)",
+   "etage": "base",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.14, tableau 1 « CNAVPL - Données générales », p. 199",
+    "citation": "Cotisants vieillesse (professions libérales classiques) : 680 693 | 683 700 | 0,4 ; Cotisants vieillesse (micro-entrepreneurs) : 189 031 | 183 942 | -2,7 (2024 | 2025 | %)",
+    "classiques": 683700,
+    "microEntrepreneurs": 183942,
+    "autreValeur": {
+     "valeur": 869693,
+     "citation": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF) : CNAVPL 543 147 | [invalidité vide] | 869 693"
+    }
+   },
+   "retraitesDroitDirect": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.14, tableau 1, p. 199",
+    "citation": "Vieillesse droit direct : 460 992 | 487 086 | 5,7 ; Vieillesse droit dérivé : 54 654 | 56 061 | 2,6",
+    "valeur": 487086,
+    "droitDerive": 56061,
+    "dreesFin2024": {
+     "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+     "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+     "annee": 2024,
+     "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+     "citation": "Professions libérales5 : 578 | 493 | 40 | 92 | 85",
+     "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+     "valeurMilliers": 493,
+     "champ": "CNAVPL ET CNBF ensemble"
+    }
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "CNAVPL (régime de base) : 2 398 | 2 567 | 7,0 | 2 732 | 6,4 | 1% | 2 933 | 7,4",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 2567,
+    "valeurMilliards": 2.567,
+    "valeur2024Millions": 2398,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)",
+    "droitsPropres2025Millions": 2426,
+    "droitsDerives2025Millions": 141,
+    "citationDroitsPropres": "fiche 4.14, tableau 2, p. 199 : Droits propres 2 263 | 2 426 | 7,2 ; Droits dérivés 136 | 141 | 4,1"
+   },
+   "parSection": {
+    "source": "CNAVPL, « Recueil statistique de l'assurance vieillesse des professions libérales », édition 2025",
+    "url": "https://www.cnavpl.fr/wp-content/uploads/2026/04/Recueil-2025_VersionWEB.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "page": "p. 33 (cotisants et allocataires, exercice 2025) ; p. 16 (ventilation des prestations du régime de base émises en 2024, en milliers d'euros)",
+    "unite": "cotisants réels et allocataires titulaires réels (droit direct) du régime de BASE, exercice 2025 ; prestations de base émises en 2024, total (titulaires + conjoints), en milliers d'euros",
+    "citation": "p. 33 : CPRN 12 210 | 5 554 ; CAVOM 3 923 | 3 115 ; CARMF 125 952 | 96 065 ; CARCDSF 49 572 | 26 749 ; CAVP 27 586 | 29 829 ; CARPIMKO 253 961 | 89 356 ; CARPV 11 771 | 4 992 ; CAVAMAC 11 777 | 25 573 ; CAVEC 15 223 | 12 275 ; CIPAV 168 613 | 131 349 ; Ens. Profession libérale 680 588 | 424 857 ; Micro-entrepreneurs 183 942 | 55 713 ; Conjoints collaborateurs 2 051 | 6 488 ; Total CNAVPL 866 581 | 487 058 (cotisants réels (A) | allocataires titulaires réels (B)). p. 16, colonne Total : CPRN 49 484 ; CAVOM 27 435 ; CARMF 765 330 ; CARCDSF 226 321 ; CAVP 200 875 ; CARPIMKO 498 655 ; CARPV 40 911 ; CAVAMAC 113 775 ; CAVEC 87 797 ; CIPAV 377 549 ; total 2 388 133",
+    "sections": [
+     {
+      "section": "CARPIMKO",
+      "profession": "auxiliaires médicaux",
+      "cotisants2025": 253961,
+      "allocatairesTitulaires2025": 89356,
+      "prestationsDeBase2024MilliersEuros": 498655
+     },
+     {
+      "section": "CIPAV",
+      "profession": "caisse interprofessionnelle (hors micro-entrepreneurs, comptés à part dans le tableau)",
+      "cotisants2025": 168613,
+      "allocatairesTitulaires2025": 131349,
+      "prestationsDeBase2024MilliersEuros": 377549
+     },
+     {
+      "section": "CARMF",
+      "profession": "médecins",
+      "cotisants2025": 125952,
+      "allocatairesTitulaires2025": 96065,
+      "prestationsDeBase2024MilliersEuros": 765330
+     },
+     {
+      "section": "CARCDSF",
+      "profession": "chirurgiens-dentistes et sages-femmes",
+      "cotisants2025": 49572,
+      "allocatairesTitulaires2025": 26749,
+      "prestationsDeBase2024MilliersEuros": 226321
+     },
+     {
+      "section": "CAVP",
+      "profession": "pharmaciens",
+      "cotisants2025": 27586,
+      "allocatairesTitulaires2025": 29829,
+      "prestationsDeBase2024MilliersEuros": 200875
+     },
+     {
+      "section": "CAVEC",
+      "profession": "experts-comptables",
+      "cotisants2025": 15223,
+      "allocatairesTitulaires2025": 12275,
+      "prestationsDeBase2024MilliersEuros": 87797
+     },
+     {
+      "section": "CPRN",
+      "profession": "notaires",
+      "cotisants2025": 12210,
+      "allocatairesTitulaires2025": 5554,
+      "prestationsDeBase2024MilliersEuros": 49484
+     },
+     {
+      "section": "CAVAMAC",
+      "profession": "agents généraux d'assurance",
+      "cotisants2025": 11777,
+      "allocatairesTitulaires2025": 25573,
+      "prestationsDeBase2024MilliersEuros": 113775
+     },
+     {
+      "section": "CARPV",
+      "profession": "vétérinaires",
+      "cotisants2025": 11771,
+      "allocatairesTitulaires2025": 4992,
+      "prestationsDeBase2024MilliersEuros": 40911
+     },
+     {
+      "section": "CAVOM",
+      "profession": "officiers ministériels",
+      "cotisants2025": 3923,
+      "allocatairesTitulaires2025": 3115,
+      "prestationsDeBase2024MilliersEuros": 27435
+     }
+    ],
+    "autresLignes": {
+     "microEntrepreneurs": {
+      "cotisants2025": 183942,
+      "allocatairesTitulaires2025": 55713
+     },
+     "conjointsCollaborateurs": {
+      "cotisants2025": 2051,
+      "allocatairesTitulaires2025": 6488
+     },
+     "totalCnavpl": {
+      "cotisants2025": 866581,
+      "allocatairesTitulaires2025": 487058,
+      "prestationsDeBase2024MilliersEuros": 2388133
+     }
+    },
+    "note": "Régime de BASE seulement : les pensions complémentaires de chaque section (souvent plus élevées que la pension de base) ne figurent pas dans ce recueil. Les libellés de profession viennent de la fiche CNAVPL du COR (note 1). Les prestations par section sont celles de 2024, les effectifs ceux de 2025."
+   }
+  },
+  {
+   "id": "cnavplComplementaires",
+   "libelle": "Régimes complémentaires des sections de la CNAVPL (CARMF, CIPAV, CARPIMKO, CARCDSF, CAVP, CAVEC, CAVAMAC, CPRN, CARPV, CAVOM) et prestations complémentaires vieillesse (PCV) des professions de santé",
+   "etage": "complementaire",
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "pensions": null,
+   "note": "Aucun effectif ni masse de pensions lus : la fiche du COR (Fiche_CNAVPL_V2.pdf) ne donne les résultats qu'en graphiques et en part de PIB ; voir nonLu."
+  },
+  {
+   "id": "cnbf",
+   "libelle": "Avocats, régime de base (CNBF)",
+   "etage": "base",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Caisse nationale des barreaux français - CNBF : 21 558 | [invalidité vide] | 79 787",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 79787
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "Caisse nationale des barreaux français - CNBF : 21 558 | [invalidité vide] | 79 787",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 21558,
+    "beneficiairesInvalidite": null
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "CNBF : 243 | 259 | 6,5 | 277 | 7,1 | 0% | 297 | 7,0",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 259,
+    "valeurMilliards": 0.259,
+    "valeur2024Millions": 243,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   },
+   "fiche415": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.15, tableau 1 « Charges nettes, soldes et effectifs des autres régimes vieillesse de base en 2025 », p. 200 (page 202 du PDF)",
+    "citation": "CNBF : 380 | 136 | 21 558 | 79 787 (charges nettes M€ | solde M€ | bénéficiaires | cotisants)",
+    "chargesNettesMillions": 380,
+    "note": "La CNBF sert aussi une retraite complémentaire, non comprise ici (voir nonLu)."
+   }
+  },
+  {
+   "id": "cavimac",
+   "libelle": "Ministres des cultes et membres des congrégations (Cavimac)",
+   "etage": "base",
+   "cotisants": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "CAVIMAC : 30 746 | 74 | 17 610 | 39 182 | 16 759",
+    "unite": "cotisants de la branche vieillesse et invalidité",
+    "valeur": 17610
+   },
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "CAVIMAC : 30 746 | 74 | 17 610 | 39 182 | 16 759",
+    "unite": "bénéficiaires vieillesse (droit direct ET droit dérivé, non distingués dans la source)",
+    "valeur": 30746,
+    "beneficiairesInvalidite": 74
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "CAVIMAC : 143 | 138 | -3,4 | 139 | 0,9 | 0% | 142 | 1,7",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 138,
+    "valeurMilliards": 0.138,
+    "valeur2024Millions": 143,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   }
+  },
+  {
+   "id": "autresRegimesSpeciaux",
+   "libelle": "Autres régimes spéciaux de base (Assemblée nationale, Sénat, ex-Seita, Opéra de Paris, Comédie-Française, sapeurs-pompiers volontaires, régies ferroviaires d'outre-mer, etc.)",
+   "etage": "base (régimes spéciaux)",
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "Autres régimes spéciaux* : 441 | 446 | 1,0 | 452 | 1,2 | 0% | 460 | 1,7 (* Dont Opéra de Paris, Comédie française, l'Assemblée nationale, les Sapeurs-pompiers volontaires, etc.)",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 446,
+    "valeurMilliards": 0.446,
+    "valeur2024Millions": 441,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   },
+   "detail": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.15, tableau 1 « Charges nettes, soldes et effectifs des autres régimes vieillesse de base en 2025 », p. 200 (page 202 du PDF)",
+    "unite": "charges nettes en millions d'euros (toutes charges, pas seulement les pensions) ; bénéficiaires (vieillesse et invalidité) et cotisants en fin d'année",
+    "citation": "Assemblée nationale 143 | 0 | 3 331 | 3 795 ; Ex-SEITA 132 | 0,0 | 6 131 ; Sénat 119 | 39,3 | 2 004 | 4 142 ; CROP (Opéra national de Paris) 40 | 0,4 | 1 989 | 1 787 ; RISP (sapeurs-pompiers volontaires) 12 | 0,3 | 1 581 ; CRPCF (Comédie Française) 8 | -0,02 | 458 | 352 ; CRRFOM 0,7 | 0 | 34 ; PREF HR 0,02 | -0,02 | 1 ; CRCFE 0,02 | -0,02 | 2 (charges nettes M€ | solde M€ | bénéficiaires | cotisants)",
+    "regimes": [
+     {
+      "regime": "Assemblée nationale",
+      "chargesNettesMillions": 143,
+      "beneficiaires": 3331,
+      "cotisants": 3795
+     },
+     {
+      "regime": "Ex-Seita (Altadis)",
+      "chargesNettesMillions": 132,
+      "beneficiaires": 6131,
+      "cotisants": null
+     },
+     {
+      "regime": "Sénat",
+      "chargesNettesMillions": 119,
+      "beneficiaires": 2004,
+      "cotisants": 4142
+     },
+     {
+      "regime": "Opéra national de Paris (CROP)",
+      "chargesNettesMillions": 40,
+      "beneficiaires": 1989,
+      "cotisants": 1787
+     },
+     {
+      "regime": "Sapeurs-pompiers volontaires (RISP)",
+      "chargesNettesMillions": 12,
+      "beneficiaires": 1581,
+      "cotisants": null
+     },
+     {
+      "regime": "Comédie-Française (CRPCF)",
+      "chargesNettesMillions": 8,
+      "beneficiaires": 458,
+      "cotisants": 352
+     },
+     {
+      "regime": "Régies ferroviaires d'outre-mer (CRRFOM)",
+      "chargesNettesMillions": 0.7,
+      "beneficiaires": 34,
+      "cotisants": null
+     }
+    ],
+    "note": "Dans la fiche 4.1 (p. 155) les effectifs de l'Assemblée nationale et du Sénat sont « nd » ; ils sont donnés dans la fiche 4.15 (p. 200). Le nombre de cotisants du Sénat (4 142) est identique à la valeur de la ligne « Rentes accidents du travail de la mairie de Paris » de la fiche 4.1 : possible erreur de la source, à vérifier."
+   }
+  },
+  {
+   "id": "saspa",
+   "libelle": "Service de l'allocation de solidarité aux personnes âgées (Saspa) — minimum vieillesse, pas un régime de retraite contributif",
+   "etage": "hors champ (solidarité)",
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "beneficiairesVieillesse": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+    "citation": "SASPA : 64 764",
+    "valeur": 64764
+   },
+   "pensions": {
+    "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+    "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+    "citation": "SASPA : 714 | 731 | 2,4 | 735 | 0,6 | 0% | 750 | 1,9",
+    "unite": "millions d'euros",
+    "champ": "prestations légales brutes de la branche vieillesse du régime de base : droits propres ET droits dérivés (réversion)",
+    "valeurMillions": 731,
+    "valeurMilliards": 0.731,
+    "valeur2024Millions": 714,
+    "noteMilliards": "conversion en milliards = valeur en millions / 1000 (calcul)"
+   }
+  },
+  {
+   "id": "ircantec",
+   "libelle": "Ircantec (complémentaire des agents non titulaires de la fonction publique)",
+   "etage": "complementaire",
+   "enCours": true,
+   "cotisants": null,
+   "retraitesDroitDirect": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+    "annee": 2024,
+    "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+    "citation": "Ircantec : 2 318 | 2 109 | 108 | 250 | 209",
+    "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+    "valeurMilliers": 2109,
+    "autreValeur": {
+     "citation": "COR, fiche Ircantec (juin 2024) : « Ces derniers s'élèvent à 2 millions en 2023 » (effectifs de retraités)",
+     "valeurMillions2023": 2
+    }
+   },
+   "pensions": {
+    "source": "COR, fiche « Ircantec », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "section 2.1.1",
+    "citation": "Les dépenses de retraite de l'Ircantec atteignent 0,15 % du PIB en 2023, soit 4,2 milliards d'euros, dont 3,7 Mds€ versés pour les pensions de droits directs et 0,3 Md€ pour les pensions de droits dérivés.",
+    "unite": "milliards d'euros",
+    "champ": "dépenses de retraite du régime en 2023",
+    "valeurMilliards": 4.2,
+    "droitsDirectsMilliards": 3.7,
+    "droitsDerivesMilliards": 0.3
+   },
+   "note": "Cotisants : la fiche du COR ne donne en texte que la projection (« 3,1 millions à l'horizon 2070 ») ; le niveau observé est dans un graphique. Voir data/references/ircantec.json (en cours)."
+  },
+  {
+   "id": "rafp",
+   "libelle": "Retraite additionnelle de la fonction publique (RAFP, régime en capitalisation)",
+   "etage": "additionnel",
+   "cotisants": {
+    "source": "COR, fiche « RAFP », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RAFP_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2022,
+    "page": "partie « Évolution des ressources et de leurs déterminants »",
+    "citation": "L'effectif cotisant est proche de 5 millions en 2022",
+    "unite": "millions (ordre de grandeur donné par la source)",
+    "valeurMillions": 5
+   },
+   "retraitesDroitDirect": {
+    "source": "COR, fiche « RAFP », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RAFP_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "partie « Évolution des dépenses du régime et de leurs déterminants »",
+    "citation": "Les retraités de droit direct sont encore peu nombreux aujourd'hui (environ 600 000 bénéficiaires en 2023).",
+    "valeur": 600000,
+    "note": "ordre de grandeur ; d'après une note de la fiche, rentiers vivants au 31/12 augmentés des pensionnés ayant perçu un capital dans l'année"
+   },
+   "pensions": {
+    "source": "COR, fiche « RAFP », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_RAFP_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "partie « Évolution des dépenses du régime et de leurs déterminants »",
+    "citation": "Les dépenses totales du RAFP atteignent 0,02 % du PIB en 2023, soit 0,5 milliards d'euros, dont 93 % de pensions de droit direct.",
+    "unite": "milliards d'euros",
+    "champ": "dépenses totales du régime (rentes et capitaux)",
+    "valeurMilliards": 0.5,
+    "cotisationsMilliards": 2.1,
+    "citationCotisations": "Les ressources du régime hors produits financiers, qui correspondent strictement aux cotisations, représentent moins de 0,10 % du PIB, soit 2,1 milliards d'euros en 2023."
+   }
+  },
+  {
+   "id": "rci",
+   "libelle": "Régime complémentaire des indépendants (RCI)",
+   "etage": "complementaire",
+   "dejaSimule": true,
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "pensions": null,
+   "renvoi": "data/references/independants.json (cibles.retraitesEtPensions : 1 222 864 droits directs fin 2025, 2,5 Md€ de prestations légales en 2024 ; cotisants : 1,7 million en 2023). Valeurs non relues pour ce fichier."
+  },
+  {
+   "id": "ssiBase",
+   "libelle": "Retraite de base des indépendants (ex-RSI/SSI), intégrée au régime général",
+   "etage": "base",
+   "dejaSimule": true,
+   "cotisants": null,
+   "retraitesDroitDirect": null,
+   "pensions": null,
+   "renvoi": "Comptée dans la ligne « Régime général » de toutes les sources lues ici ; voir data/references/independants.json."
+  },
+  {
+   "id": "crpnpac",
+   "libelle": "Personnel navigant de l'aviation civile (CRPNPAC), régime complémentaire",
+   "etage": "complementaire",
+   "cotisants": {
+    "source": "COR, fiche « CRPNPAC », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_CRPNPAC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "présentation du régime",
+    "citation": "En 2023, il comptait un peu moins de 20 000 retraités pour environ 35 000 cotisants.",
+    "valeur": 35000,
+    "note": "ordre de grandeur"
+   },
+   "retraitesDroitDirect": null,
+   "retraites": {
+    "source": "COR, fiche « CRPNPAC », compléments du rapport annuel 2024 (projections de juin 2024)",
+    "url": "https://www.cor-retraites.fr/sites/default/files/2024-07/Fiche_CRPNPAC_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": "présentation du régime",
+    "citation": "En 2023, il comptait un peu moins de 20 000 retraités pour environ 35 000 cotisants.",
+    "valeur": 20000,
+    "note": "« un peu moins de 20 000 » ; droit direct et dérivé non distingués"
+   },
+   "pensions": null
+  }
+ ],
+ "classement": {
+  "nature": "CALCUL : tri décroissant des prestations légales brutes 2025 lues au tableau 5 de la fiche 2.5 du rapport CCSS d'octobre 2026 (p. 111), pour les régimes de BASE non encore simulés (hors régime général, SRE, CNRACL ; hors Saspa). Les valeurs sont lues, l'ordre est déduit.",
+  "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+  "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+  "date": "2026-11-22",
+  "annee": 2025,
+  "unite": "millions d'euros",
+  "regimesDeBase": [
+   {
+    "id": "msaSalaries",
+    "libelle": "Salariés agricoles (MSA salariés), régime de base aligné",
+    "prestationsLegalesBrutes2025Millions": 7607,
+    "enCours": true,
+    "rang": 1
+   },
+   {
+    "id": "msaNonSalaries",
+    "libelle": "Exploitants agricoles (MSA non-salariés), régime de base",
+    "prestationsLegalesBrutes2025Millions": 6698,
+    "enCours": false,
+    "rang": 2
+   },
+   {
+    "id": "cnieg",
+    "libelle": "Industries électriques et gazières (CNIEG)",
+    "prestationsLegalesBrutes2025Millions": 6041,
+    "enCours": false,
+    "rang": 3
+   },
+   {
+    "id": "sncf",
+    "libelle": "Agents de la SNCF (CPRPF, régime fermé aux nouveaux embauchés depuis 2020)",
+    "prestationsLegalesBrutes2025Millions": 5582,
+    "enCours": false,
+    "rang": 4
+   },
+   {
+    "id": "cnavplBase",
+    "libelle": "Professions libérales, régime de base (CNAVPL, dix sections)",
+    "prestationsLegalesBrutes2025Millions": 2567,
+    "enCours": false,
+    "rang": 5
+   },
+   {
+    "id": "fspoeie",
+    "libelle": "Ouvriers des établissements industriels de l'État (FSPOEIE)",
+    "prestationsLegalesBrutes2025Millions": 2037,
+    "enCours": false,
+    "rang": 6
+   },
+   {
+    "id": "ratp",
+    "libelle": "Agents de la RATP (CRP RATP)",
+    "prestationsLegalesBrutes2025Millions": 1417,
+    "enCours": false,
+    "rang": 7
+   },
+   {
+    "id": "enim",
+    "libelle": "Marins (Enim)",
+    "prestationsLegalesBrutes2025Millions": 1047,
+    "enCours": false,
+    "rang": 8
+   },
+   {
+    "id": "mines",
+    "libelle": "Mines (CANSSM, régime fermé)",
+    "prestationsLegalesBrutes2025Millions": 1039,
+    "enCours": false,
+    "rang": 9
+   },
+   {
+    "id": "crpcen",
+    "libelle": "Clercs et employés de notaires (CRPCEN)",
+    "prestationsLegalesBrutes2025Millions": 1007,
+    "enCours": false,
+    "rang": 10
+   },
+   {
+    "id": "banqueDeFrance",
+    "libelle": "Personnel titulaire de la Banque de France",
+    "prestationsLegalesBrutes2025Millions": 579,
+    "enCours": false,
+    "rang": 11
+   },
+   {
+    "id": "autresRegimesSpeciaux",
+    "libelle": "Autres régimes spéciaux de base (Assemblée nationale, Sénat, ex-Seita, Opéra de Paris, Comédie-Française, sapeurs-pompiers volontaires, régies ferroviaires d'outre-mer, etc.)",
+    "prestationsLegalesBrutes2025Millions": 446,
+    "enCours": false,
+    "rang": 12
+   },
+   {
+    "id": "cnbf",
+    "libelle": "Avocats, régime de base (CNBF)",
+    "prestationsLegalesBrutes2025Millions": 259,
+    "enCours": false,
+    "rang": 13
+   },
+   {
+    "id": "cavimac",
+    "libelle": "Ministres des cultes et membres des congrégations (Cavimac)",
+    "prestationsLegalesBrutes2025Millions": 138,
+    "enCours": false,
+    "rang": 14
+   }
+  ],
+  "regimesComplementairesHorsClassement": [
+   {
+    "id": "ircantec",
+    "enCours": true,
+    "valeurMilliards": 4.2,
+    "annee": 2023,
+    "source": "COR, fiche Ircantec (juin 2024)"
+   },
+   {
+    "id": "rafp",
+    "valeurMilliards": 0.5,
+    "annee": 2023,
+    "source": "COR, fiche RAFP (juin 2024)"
+   },
+   {
+    "id": "msaNonSalariesRco",
+    "valeurMilliards": null,
+    "note": "ressources de 1,1 Md€ en 2023 (COR) ; pensions non lues"
+   },
+   {
+    "id": "cnavplComplementaires",
+    "valeurMilliards": null,
+    "note": "non lu ; probablement plusieurs milliards d'euros au total (supposition, à vérifier) — c'est la principale inconnue du classement"
+   },
+   {
+    "id": "crpnpac",
+    "valeurMilliards": null,
+    "note": "non lu"
+   }
+  ],
+  "lecture": "Après les salariés agricoles (en cours), les plus gros régimes de base non simulés sont les exploitants agricoles, la CNIEG et la SNCF (5,6 à 6,7 Md€ chacun), puis la CNAVPL de base (2,6 Md€, en forte hausse, et dont les complémentaires ne sont pas comptées), le FSPOEIE (2,0 Md€), la RATP (1,4 Md€), les marins, les mines et la CRPCEN (environ 1 Md€ chacun), la Banque de France (0,6 Md€), la CNBF (0,3 Md€) et la Cavimac (0,1 Md€)."
+ },
+ "totaux": {
+  "ensembleDesRegimesDeBase": {
+   "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+   "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire",
+   "annee": 2025,
+   "page": "fiche 2.5, tableau 5 « Prestations légales brutes des régimes de base », p. 111 (page 113 du PDF)",
+   "citation": "Ensemble des régimes de base : 288 010 | 297 871 | 3,4 | 304 730 | 2,3 | [structure] | 314 513 | 3,2 ; Régimes alignés 168 271 | 175 013 ; Régimes de la fonction publique 92 512 | 95 306 ; Régimes spéciaux 16 955 | 17 159 ; Autres régimes de base 10 272 | 10 394",
+   "valeurMillions": 297871,
+   "regimesAlignes": 175013,
+   "regimesDeLaFonctionPublique": 95306,
+   "regimesSpeciaux": 17159,
+   "autresRegimesDeBase": 10394
+  },
+  "effectifsHorsRegimeGeneral": {
+   "source": "Commission des comptes de la sécurité sociale, « Les comptes de la sécurité sociale », rapport d'octobre 2026 (DSS)",
+   "url": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS-octobre-2026_assemble_VDEF.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire",
+   "annee": 2025,
+   "page": "fiche 4.1, tableau 1 « Effectifs de bénéficiaires et de cotisants des régimes de base hors régime général en 2025 », p. 155 (page 157 du PDF)",
+   "citation": "Total autres régimes : 8 509 456 | 640 329 | 6 642 579 | 6 647 400 | 4 282 080 ; CNAV yc MSA salariés : 15 088 000",
+   "beneficiairesVieillesseAutresRegimes": 8509456,
+   "cotisantsAutresRegimes": 6642579,
+   "beneficiairesCnavYComprisMsaSalaries": 15088000
+  },
+  "tousRegimesDrees": {
+   "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR, modèle ANCETRE)",
+   "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire (copie du rapport déposée sur vie-publique.fr)",
+   "annee": 2024,
+   "page": "Vue d'ensemble, tableau 1 « Effectifs de retraités dans les principaux régimes au 31 décembre 2024 », p. 9",
+   "citation": "Retraités résidant en France ou à l'étranger (tous régimes confondus) : 18 184 | 17 298 | 718 | 4 407 | 886 ; Régimes spéciaux4 : 934 | 663 | 18 | 285 | 271 ; Professions libérales5 : 578 | 493 | 40 | 92 | 85",
+   "unite": "milliers de retraités de droit direct au 31 décembre 2024, résidant en France ou à l'étranger",
+   "valeurMilliers": 17298,
+   "regimesSpeciauxMilliers": 663,
+   "professionsLiberalesMilliers": 493
+  },
+  "repss2025": {
+   "source": "PLACSS 2025, annexe 1, « Rapport d'évaluation des politiques de sécurité sociale – Retraites » (édition 2026), indicateur de cadrage, tableau 1 (source CCSS)",
+   "url": "https://www.assemblee-nationale.fr/dyn/contenu/visualisation/1113003/file/PLACSS%202025%20Annexe%201%20-%20REPSS%20Retraites%202026.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire",
+   "annee": 2025,
+   "page": "p. 27, tableau 1",
+   "citation": "Total Tous régimes de base : 28,6 | 23,9 | 171,7 | 297,8 (cotisants en millions | bénéficiaires en millions | cotisations reçues en Md€ | prestations légales servies en Md€) ; Régime des salariés agricoles 0,8 | 2,2 | 3,6 | 7,6 ; Régime des exploitants agricoles 0,4 | 1,1 | 1,4 | 6,7 ; CNAVPL 0,9 | 0,5 | 3,0 | 2,6 ; CNBF 0,1 | 0,0 | 0,3 | 0,3 ; SRE 2,0 | 2,3 | 14,6 | 64,4 ; CANSSM 0,0 | 0,2 | 0,0 | 1,0 ; CNRACL 2,2 | 1,4 | 27,0 | 28,8 ; FSPOEIE 0,0 | 0,1 | 0,3 | 2,0 ; SNCF 0,1 | 0,2 | 2,1 | 5,6 ; RATP 0,0 | 0,1 | 0,5 | 1,4 ; CNIEG 0,1 | 0,2 | 3,5 | 6,0 ; ENIM 0,0 | 0,1 | 0,1 | 1,0 ; CRPCEN 0,1 | 0,1 | 1,0 | 1,0 ; Banque de France 0,0 | 0,0 | 0,1 | 0,6 ; Autres régimes 0,0 | 0,0 | 0,1 | 0,4 ; SASPA - | 0,1 | - | 0,7",
+   "note": "Même origine (CCSS, comptes 2025) mais arrondi au dixième : sert de recoupement et donne les COTISATIONS reçues par régime, en Md€.",
+   "cotisationsRecuesMilliards": {
+    "regimeGeneral": 114.0,
+    "msaSalaries": 3.6,
+    "msaNonSalaries": 1.4,
+    "cnavpl": 3.0,
+    "cnbf": 0.3,
+    "sre": 14.6,
+    "cnracl": 27.0,
+    "fspoeie": 0.3,
+    "sncf": 2.1,
+    "ratp": 0.5,
+    "cnieg": 3.5,
+    "enim": 0.1,
+    "crpcen": 1.0,
+    "banqueDeFrance": 0.1,
+    "cavimac": 0.1,
+    "mines": 0.0,
+    "tousRegimesDeBase": 171.7
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  "Cotisants des salariés agricoles en 2025 : 780 553 (CCSS, fiche 4.8, moyenne annuelle) contre 787 298 (CCSS, fiche 4.1).",
+  "SRE, bénéficiaires vieillesse 2025 : 2 284 818 (fiche 4.10) contre 2 277 973 (fiche 4.1).",
+  "FSPOEIE : 79 062 bénéficiaires vieillesse (fiche 4.1) contre 89 168 « bénéficiaires » (fiche 4.15, qui ajoute les 10 106 bénéficiaires d'invalidité) ; même convention pour l'Enim (100 752 contre 107 196), la RATP (51 606 contre 51 948), la CRPCEN (82 130 contre 83 133), la Banque de France (17 047 contre 17 560) et la Cavimac (30 746 contre 30 820).",
+  "Mines : 168 362 bénéficiaires vieillesse et 42 d'invalidité (fiche 4.1) contre 168 404 (fiche 4.15) ; charges nettes de 1 075 M€ (fiche 4.15) contre 1 039 M€ de prestations légales brutes (tableau 5) : les charges nettes comprennent d'autres postes.",
+  "Banque de France : 579 M€ de prestations (tableau 5) contre 711 M€ de charges nettes (fiche 4.15) ; CNBF : 259 M€ contre 380 M€ ; écart non expliqué dans les passages lus (transferts de compensation, gestion).",
+  "CNAVPL, cotisants 2025 : 683 700 classiques + 183 942 micro-entrepreneurs (CCSS, fiche 4.14) ; 869 693 (CCSS, fiche 4.1) ; 866 581 cotisants réels (recueil CNAVPL, p. 33) ; 0,9 million (REPSS). Allocataires de droit direct : 487 086 (CCSS, moyenne annuelle) contre 487 058 (recueil CNAVPL).",
+  "MSA salariés, retraités de droit direct : 1 679 milliers fin 2024 (Drees, EACR) ; le rapport CCSS donne pour 2024 1 563 441 « droit direct » et 130 626 « droit direct et droit dérivé » en moyenne annuelle (les deux catégories semblent exclusives).",
+  "CNRACL, droit direct : 1 393 milliers fin 2024 (Drees) contre 1 273 479 en moyenne 2024 (CCSS) ; SRE : 1 641 + 377 milliers (Drees, civils et militaires) contre 1 933 315 (CCSS). Champs différents (la Drees compte à part les pensions d'invalidité avant l'âge légal ; voir son annexe 3), non réconciliés ici.",
+  "Ircantec, retraités de droit direct : 2 109 milliers fin 2024 (Drees) ; « 2 millions en 2023 » (COR)."
+ ],
+ "nonLu": [
+  {
+   "quoi": "Régimes complémentaires des dix sections de la CNAVPL et prestations complémentaires vieillesse (PCV) : cotisants, retraités, pensions versées, par section",
+   "ou": "Rapports annuels de chaque section (CARMF, CIPAV, CARPIMKO, CARCDSF, CAVP, CAVEC, CAVAMAC, CPRN, CARPV, CAVOM) ; le recueil statistique de la CNAVPL ne couvre que le régime de base ; la fiche CNAVPL du COR (2025-02, Fiche_CNAVPL_V2.pdf) ne donne que des graphiques consolidés."
+  },
+  {
+   "quoi": "CNBF : retraite complémentaire (pensions, effectifs) et retraités de droit direct du régime de base",
+   "ou": "Rapport d'activité de la CNBF ; fiche CNBF du COR (Fiche_CNBF_vf.pdf, téléchargée : ne donne en texte que « le nombre total de retraités est passé d'environ 11 000 à 19 000 » sur 2000-2022)."
+  },
+  {
+   "quoi": "RCO des non-salariés agricoles : cotisants, retraités de droit direct, pensions versées",
+   "ou": "CCMSA, chiffres utiles et tableaux de bord des retraites ; fiche MSA non-salariés du COR (graphiques)."
+  },
+  {
+   "quoi": "CRPNPAC : pensions versées",
+   "ou": "Rapport annuel de la CRPNPAC ; le COR indique que ses comptes sont intégrés à ses projections."
+  },
+  {
+   "quoi": "Ircantec : nombre de cotisants (niveau observé)",
+   "ou": "Rapport annuel et chiffres clés de l'Ircantec (voir data/references/ircantec.json, en cours)."
+  },
+  {
+   "quoi": "Agirc-Arrco : pensions 2024-2025 et cotisants 2024-2025 (seules les valeurs 2022-2023 de la fiche du COR ont été lues)",
+   "ou": "Rapport d'activité et chiffres clés de l'Agirc-Arrco ; rapport annuel du COR de juin 2026 (tableaux par groupe de régimes, non dépouillés)."
+  },
+  {
+   "quoi": "Retraités de DROIT DIRECT de la RATP, du FSPOEIE, des mines, de l'Enim, de la CRPCEN, de la Banque de France, de la Cavimac, de l'Assemblée nationale, du Sénat, de l'Opéra et de la Comédie-Française (dernière année)",
+   "ou": "Fichiers Excel associés aux fiches du panorama de la Drees (data.drees.solidarites-sante.gouv.fr, EACR) ; rapports annuels des caisses ; fiches par régime du COR (2024-07, téléchargées mais non dépouillées pour ces régimes : BDF, CANSSM, CRPCEN, Enim, FSPOEIE, RATP)."
+  },
+  {
+   "quoi": "SRE : séparation civils / militaires des cotisants et des pensions versées",
+   "ou": "Rapport sur les pensions de retraite de la fonction publique (jaune budgétaire) ; déjà couvert par data/references/fonction-publique.json."
+  },
+  {
+   "quoi": "Régime général : nombre de cotisants plus précis que 21,9 millions, et part des indépendants",
+   "ou": "Rapport CCSS, fiche 4.5 (pas d'effectifs dans les tableaux lus) ; statistiques de la Cnav."
+  },
+  {
+   "quoi": "Tableaux de données de l'EACR par régime (open data Drees)",
+   "ou": "https://data.drees.solidarites-sante.gouv.fr — non tenté."
+  },
+  {
+   "quoi": "Rapport de mai 2026 de la CCSS (téléchargé, mêmes tableaux pour 2025 provisoire) et rapport annuel du COR de juin 2026 : non dépouillés au-delà d'une recherche de mots",
+   "ou": "https://www.securite-sociale.fr/files/live/sites/SSFR/files/medias/CCSS/2026/CCSS%20mai%202026_assembl%C3%A9_V2.pdf ; https://www.cor-retraites.fr/sites/default/files/2026-06/RA_2026_def.pdf"
+  }
+ ]
+}

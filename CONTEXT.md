@@ -15,6 +15,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Assiette** : ce qu'un poste de ressources suit dans un scénario (masse des salaires, masse des pensions) ; une fonction du moteur par assiette.
 - **Ressource nouvelle** : ressource hors cotisations qu'un scénario ajoute ou retire, décrite par un objet de données et calculée par la fonction de son type.
 - **Capitalisation** : mode de financement où chacun accumule un compte, placé, qui paie sa propre rente ; ici un étage en plus de la répartition.
+- **Réserve** : ce qu'un régime par répartition a mis de côté les années d'excédent et placé ; il y puise les années de déficit. Ne pas confondre avec la capitalisation : la réserve appartient au régime, pas aux individus.
+- **Solde technique** : ressources d'un régime moins ses charges, avant les produits de ses placements.
+- **Produits financiers** : ce que les placements de la réserve rapportent dans l'année.
 - **Versement** : somme portée chaque année sur le compte de capitalisation d'un individu, en part de son salaire brut.
 - **Rendement réel** : ce que le fonds rapporte par an au-dessus des prix, net de frais ; hypothèse en fourchette basse, centrale, haute.
 - **Rente** : revenu viager tiré du compte de capitalisation au départ, en plus de la pension.
@@ -47,7 +50,8 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 ## Les règles
 
 - **Régime** : caisse qui verse une pension selon ses propres règles (Cnav, Agirc-Arrco, SRE, CNRACL). Une politique peut s'adresser à un seul régime.
-- **Affiliation** : statut sous lequel une année est travaillée (`prive`, `sre`, `cnracl`, `militaire`), qui ouvre des droits dans un ou plusieurs régimes ; un module du moteur. `autre` désigne un régime que le modèle ne simule pas : l'année ne compte que pour la durée tous régimes.
+- **Salarié agricole** : salarié du privé dont l'employeur relève de la MSA. Régime aligné sur le régime général, liquidation unique depuis 2017, même complémentaire : `salarieAgricole` est une affiliation qui partage le module du privé. Ils sont dans la population du privé depuis toujours (elle est pondérée sur les cotisants de l'Agirc-Arrco).
+- **Affiliation** : statut sous lequel une année est travaillée (`prive`, `salarieAgricole`, `sre`, `cnracl`, `militaire`, `artisan`, `commercant`), qui ouvre des droits dans un ou plusieurs régimes ; un module du moteur. `autre` désigne un régime que le modèle ne simule pas : l'année ne compte que pour la durée tous régimes.
 - **Affiliation principale** : celle où l'individu a le plus travaillé ; elle décide de son départ, et ses règles propres s'appliquent à lui.
 - **Étage** : place d'un régime, base, complémentaire, ou intégré quand il tient lieu des deux (fonction publique).
 - **Modèle** : les affiliations simulées, leurs régimes et les décisions des individus (`MODELE`). Ajouter un régime, c'est y ajouter une entrée.

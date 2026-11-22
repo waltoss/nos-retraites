@@ -14,7 +14,7 @@ import { HYPOTHESES } from "../generateur/hypotheses.ts";
 import { computeAgircArrco } from "../regimes/agircArrco.ts";
 import { computeCnav } from "../regimes/cnav.ts";
 import { avanceDebut, avecAvance, reglesGeneration } from "../regles.ts";
-import { type Carriere, moisParEtat } from "../types.ts";
+import { type Carriere, estSalarie, moisParEtat } from "../types.ts";
 
 const ID = "prive";
 
@@ -59,7 +59,7 @@ function buildComptePrive(carriere: Carriere, b: Baremes): CompteCarriere {
 		let salairePorte = 0;
 		let points = 0;
 		let autres = 0;
-		if (a.affiliation !== ID) autres = Math.min(4, Math.floor(mois.emploi / 3));
+		if (!estSalarie(a)) autres = Math.min(4, Math.floor(mois.emploi / 3));
 		else if (mois.emploi > 0 && a.salaireBrut > 0) {
 			const seuil =
 				b.cnav.heuresSmicParTrimestre(a.annee) *

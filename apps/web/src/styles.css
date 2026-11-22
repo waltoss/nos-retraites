@@ -270,6 +270,15 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 .legende i { width: 12px; height: 12px; border-radius: 3px; }
 .calcul td { text-align: right; white-space: nowrap; }
 .calcul thead th:not(:first-child) { text-align: right; }
+.portrait .qui small.caisses { white-space: normal; }
+.regimes { margin-bottom: 20px; }
+.regimes td.part { position: relative; min-width: 96px; }
+.regimes td.part i { position: absolute; left: 14px; bottom: 6px; height: 3px; max-width: calc(100% - 28px); border-radius: 2px; background: var(--retraites); }
+.regimes tr.non-simule > * { color: var(--muted); }
+.frise-affiliations { display: flex; gap: 2px; height: 6px; margin-top: 3px; }
+.frise-affiliations i { flex: 1; border-radius: 2px; }
+.legende.affiliations { margin-top: 4px; }
+.legende.affiliations i { height: 6px; }
 
 /* Modèle */
 .etapes { list-style: none; counter-reset: etape; padding: 0; margin: 20px 0 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
@@ -514,3 +523,50 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 @media (max-width: 560px) { .personnes { grid-template-columns: 1fr; } .personne dl { grid-template-columns: 1fr 1fr; } .personne dl .apres { grid-column: 1 / -1; } }
 .moi-saisie fieldset.statut { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 8px; }
 .moi-saisie fieldset.statut legend { width: 100%; }
+
+/* Parcours : une vie dans le modèle */
+.parcours { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 24px; margin-top: 20px; }
+.parcours-tete { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 24px; margin-bottom: 16px; }
+.parcours-choix, .parcours-commandes { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.parcours-commandes input { width: 180px; accent-color: var(--ink); }
+.parcours-commandes span { min-width: 96px; color: var(--muted); font-size: 14px; }
+.parcours .recit { min-height: 5.4em; font-size: 19px; max-width: 72ch; }
+.scene { display: grid; grid-template-columns: 170px minmax(0, 1fr) 170px; gap: 0; align-items: stretch; }
+.acteur { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; text-align: center; padding: 16px 10px; border-radius: 14px; background: var(--paper); border: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.acteur strong { font-family: var(--display); font-weight: 650; font-size: 18px; color: var(--ink); margin-top: 6px; line-height: 1.2; }
+.acteur .montant { margin-top: 6px; font-weight: 600; color: var(--ink); }
+.acteur.autres .ic { color: var(--retraites-text); }
+.scene.retraite .acteur.autres .ic { color: var(--cotisants); }
+.caisses { display: flex; flex-direction: column; justify-content: center; gap: 10px; }
+.caisse { display: grid; grid-template-columns: minmax(40px, 1fr) minmax(0, 260px) minmax(40px, 1fr); align-items: center; }
+.caisse-carte { display: grid; gap: 2px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--line); background: var(--card); transition: border-color 0.3s, opacity 0.3s; opacity: 0.6; }
+.caisse.actif .caisse-carte { border-color: var(--ink); opacity: 1; }
+.caisse-carte strong { font-size: 15px; line-height: 1.25; }
+.caisse-carte small { font-size: 12px; color: var(--muted); }
+.caisse-carte .droits { font-family: var(--display); font-weight: 650; font-size: 20px; }
+.caisse-carte .mouvement { font-size: 13px; color: var(--muted); }
+.jauge { display: block; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
+.jauge i { display: block; height: 100%; background: var(--cotisants); transition: width 0.4s linear; }
+.flux { position: relative; height: 2px; background: var(--line); overflow: hidden; height: 10px; background: linear-gradient(var(--line), var(--line)) center / 100% 2px no-repeat; }
+.flux i { position: absolute; top: 1px; left: -8px; width: 8px; height: 8px; border-radius: 50%; background: var(--cotisants); opacity: 0; }
+.caisse.actif .flux i { opacity: 1; animation: flux 1.2s linear infinite; }
+.caisse.actif .flux i:nth-child(2) { animation-delay: 0.4s; }
+.caisse.actif .flux i:nth-child(3) { animation-delay: 0.8s; }
+.scene.retraite .flux i { background: var(--retraites); animation-direction: reverse; }
+@keyframes flux { from { left: -8px; } to { left: 100%; } }
+@media (prefers-reduced-motion: reduce) { .caisse.actif .flux i { animation: none; left: 45%; } .caisse.actif .flux i:nth-child(n+2) { display: none; } }
+.parcours-vie { display: flex; align-items: flex-end; gap: 2px; height: 64px; margin: 20px 0 4px; border-bottom: 1px solid var(--line); }
+.parcours-vie button { flex: 1; height: 100%; display: flex; align-items: flex-end; padding: 0; border: 0; background: none; cursor: pointer; }
+.parcours-vie i { display: block; width: 100%; border-radius: 2px; transition: opacity 0.3s; }
+.parcours-vie button.ici i { outline: 2px solid var(--ink); outline-offset: 1px; }
+.parcours .table { margin-top: 16px; }
+@media (max-width: 760px) {
+	.parcours { padding: 16px; }
+	.scene { grid-template-columns: 1fr; gap: 10px; }
+	.caisse { grid-template-columns: 1fr; }
+	.caisse .flux { display: none; }
+	.acteur { flex-direction: row; flex-wrap: wrap; gap: 4px 10px; padding: 10px; }
+	.acteur strong { margin-top: 0; }
+	.parcours .recit { min-height: 8em; font-size: 17px; }
+	.parcours-commandes input { width: 120px; }
+}

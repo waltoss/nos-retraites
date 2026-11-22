@@ -1,0 +1,3658 @@
+{
+  "avertissements": [
+    "Champ : Ircantec, regime complementaire obligatoire par points des agents non titulaires de l'Etat et des collectivites publiques (contractuels des trois fonctions publiques, titulaires territoriaux ou hospitaliers a moins de 28 heures hebdomadaires, praticiens hospitaliers, elus locaux, autres employeurs publics), selon la fiche du COR. Les regles propres aux elus locaux, aux praticiens hospitaliers et aux PU-PH / MCU-PH ne sont pas reprises (seuls les taux PU-PH affiches sur la page des parametres sont cites).",
+    "Sources primaires reellement ouvertes le 2026-11-22 (curl ; PDF lus avec pdftotext -layout ; pages HTML converties en texte par un script local, sans outil de reformulation) : ircantec.retraites.fr (pages « Les parametres utilises par l'Ircantec » et « Valeur du point », rapports d'activite 2025 et 2024) ; baseircantec.retraites.fr, base de connaissance reglementaire de l'Ircantec (annexe 0801 « Evolution des taux theoriques et du salaire de reference », versions du 14/12/2023 et du 26/02/2026 ; annexe 0404 « Evolution des taux de cotisations » ; annexe « Retraite a taux reduit - taux de minoration » 2026 ; fiches sur le calcul des points, la periodicite, le montant, la revalorisation, la surcote, la majoration pour enfants, la bonification parentale, l'age du taux plein, les points de majoration forfaitaire, les points maladie) ; fiche Ircantec du COR (projections de juin 2024).",
+    "Textes NON lus directement : decret n 70-1277 du 23 decembre 1970, arrete du 30 decembre 1970 modifie, decret n 2008-996 et arrete du 23 septembre 2008, arrete du 29 mars 2018, texte portant le pourcentage d'appel a 127 % en 2026 (Legifrance refuse la lecture automatique). Toutes les regles viennent de la base de connaissance de l'Ircantec, qui cite les articles de l'arrete (art. 9 bis, 10, 15 bis, 16, 18, 25).",
+    "Serie du salaire de reference et des taux theoriques : annexe 0801 de l'Ircantec, lue de 1935 a 2026 (primaire ; les annees d'avant 1971 sont celles des regimes anterieurs IPACTE et IGRANTE, fusionnes dans l'Ircantec). Les 14 valeurs 2013-2026 concordent avec la page des parametres du site (controle par script). La version du 14/12/2023 et celle du 26/02/2026 ne different que par l'ajout de 2025 et 2026.",
+    "Serie de la valeur du point : PRIMAIRE du 2011-04-01 au 2026-01-01 (page « Valeur du point » du site, 16 lignes ; la fiche « Revalorisation » de la base de connaissance redonne 2015-2026 a l'identique). AVANT le 2011-04-01 : baremes IPP (secondaire, « Baremes fournis par l'Ircantec »), 114 lignes de 1949 a 2011-01-01, non recoupees. Sur 2011-04-01 a 2026 les valeurs IPP sont identiques aux valeurs primaires (controle par script). Le document « Evolution des valeurs du point Ircantec » annonce par la base de connaissance a un lien vide.",
+    "Anomalies des baremes IPP : les valeurs du point d'avant 2002 sont libellees FRF ou AFRF mais forment une serie continue avec les valeurs en euros de 2002 (0,39118 « FRF » au 01/07/2001, 0,39776 EUR au 01/01/2002) : il s'agit presque surement de valeurs converties en euros (deduction, non lue). La colonne « taux de surcote par trimestre apres l'age d'annulation de la decote » de l'IPP porte 7,5 % alors que la base de l'Ircantec donne 0,75 % par trimestre : erreur d'unite de l'IPP, la valeur retenue est 0,75 %.",
+    "Anomalies de l'annexe 0801 : l'annee 1950 porte un taux theorique employeur de 0,75 en tranche A alors que toutes les annees voisines portent 1,5 (transcrit tel quel, probablement une coquille de la source) ; l'annee 2023 est ecrite « 5.329 » (point au lieu de virgule).",
+    "Pourcentage d'appel : 125 % jusqu'en 2025 (rapport d'activite 2025 : « Le pourcentage d'appel reste inchange a 125 % » ; glossaire : « Pour l'annee 2025, il est de 125 % ») ; 127 % a compter du 1er janvier 2026 (base de connaissance, fiche mise a jour le 06/01/2026). Les taux d'appel 2026 affiches (2,84 / 4,27 / 7,06 / 12,75) sont coherents avec 127 % (5,60 x 1,27 = 7,112 ; 15,60 x 1,27 = 19,812 : calcul). Le rendement reel de 7,75 % est lu pour 2017-2025 ; pour 2026 il n'a pas ete lu (0,56053 / (5,787 x 1,27) = 7,63 % : calcule, non lu).",
+    "Age legal et duree d'assurance : la base de connaissance (fiche du 31/08/2026) decrit un reamenagement par la « LFSS pour 2026 » de la reforme de 2023 (age legal et duree requis par generation a partir de 1964, pour les pensions prenant effet a compter du 1er septembre 2026). Les deux colonnes (avant / apres) sont transcrites telles que lues ; la loi elle-meme n'a pas ete lue. A rapprocher du bareme du regime general du depot avant de coder.",
+    "Coefficients de minoration : lus dans l'annexe 2026 pour 12 groupes de generations (1955 a 1969) ; la colonne des coefficients par age est strictement identique dans les 12 tableaux (controle par script). La regle « on compare le taux selon l'age et le taux selon la duree d'assurance, le plus avantageux est applique » est lue ; la lecture de la colonne « duree d'assurance » comme un nombre de trimestres manquants par rapport a la duree requise est une interpretation du tableau (non ecrite dans la source).",
+    "Cles : 'dateConsultation' comme dans agirc-arrco.json et independants.json. Taux en pourcent. Les valeurs calculees ou deduites portent une note ; tout le reste est une transcription."
+  ],
+  "salaireDeReferenceEtTauxTheoriques": {
+    "valeurs": {
+      "definition": "Salaire de reference : prix d'achat d'un point, « qui se deduit de la valeur de service du point et du rendement reel du regime au 1er janvier de chaque annee ». Taux theoriques : servent uniquement a calculer les points.",
+      "unites": {
+        "taux": "pourcent du salaire de la tranche",
+        "salaireDeReferenceFrancs": "francs (colonne « Salaire de reference en Francs » ; deux colonnes Tr A / Tr B jusqu'en 1946)",
+        "salaireDeReferenceEuros": "euros (colonne « Salaire de reference en Euros (6,55957) » : conversion des francs par la source de 1947 a 2000, euros ensuite)"
+      },
+      "serie": [
+        {
+          "annee": 1935,
+          "anneeFin": 1937,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.038,
+            "trancheB": 0.04
+          }
+        },
+        {
+          "annee": 1938,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.043,
+            "trancheB": 0.045
+          }
+        },
+        {
+          "annee": 1939,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.045,
+            "trancheB": 0.055
+          }
+        },
+        {
+          "annee": 1940,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.047,
+            "trancheB": 0.06
+          }
+        },
+        {
+          "annee": 1941,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.05,
+            "trancheB": 0.07
+          }
+        },
+        {
+          "annee": 1942,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.056,
+            "trancheB": 0.07
+          }
+        },
+        {
+          "annee": 1943,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.062,
+            "trancheB": 0.08
+          }
+        },
+        {
+          "annee": 1944,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.07,
+            "trancheB": 0.08
+          }
+        },
+        {
+          "annee": 1945,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.1,
+            "trancheB": 0.12
+          }
+        },
+        {
+          "annee": 1946,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": {
+            "trancheA": 0.18,
+            "trancheB": 0.2
+          }
+        },
+        {
+          "annee": 1947,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.26,
+          "salaireDeReferenceEuros": 0.04
+        },
+        {
+          "annee": 1948,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.37,
+          "salaireDeReferenceEuros": 0.056
+        },
+        {
+          "annee": 1949,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.42,
+          "salaireDeReferenceEuros": 0.064
+        },
+        {
+          "annee": 1950,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 0.75
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.52,
+          "salaireDeReferenceEuros": 0.079
+        },
+        {
+          "annee": 1951,
+          "anneeFin": 1953,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.63,
+          "salaireDeReferenceEuros": 0.096
+        },
+        {
+          "annee": 1954,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.65,
+          "salaireDeReferenceEuros": 0.099
+        },
+        {
+          "annee": 1955,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.74,
+          "salaireDeReferenceEuros": 0.113
+        },
+        {
+          "annee": 1956,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.8,
+          "salaireDeReferenceEuros": 0.122
+        },
+        {
+          "annee": 1957,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 0.97,
+          "salaireDeReferenceEuros": 0.148
+        },
+        {
+          "annee": 1958,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 1.16,
+          "salaireDeReferenceEuros": 0.177
+        },
+        {
+          "annee": 1959,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0
+          },
+          "salaireDeReferenceFrancs": 1.25,
+          "salaireDeReferenceEuros": 0.191
+        },
+        {
+          "annee": 1960,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.29,
+          "salaireDeReferenceEuros": 0.197
+        },
+        {
+          "annee": 1961,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.36,
+          "salaireDeReferenceEuros": 0.207
+        },
+        {
+          "annee": 1962,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.49,
+          "salaireDeReferenceEuros": 0.227
+        },
+        {
+          "annee": 1963,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.64,
+          "salaireDeReferenceEuros": 0.25
+        },
+        {
+          "annee": 1964,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.74,
+          "salaireDeReferenceEuros": 0.265
+        },
+        {
+          "annee": 1965,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.82,
+          "salaireDeReferenceEuros": 0.277
+        },
+        {
+          "annee": 1966,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.89,
+          "salaireDeReferenceEuros": 0.288
+        },
+        {
+          "annee": 1967,
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5
+          },
+          "salaireDeReferenceFrancs": 1.97,
+          "salaireDeReferenceEuros": 0.3
+        },
+        {
+          "annee": 1968,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 2.26,
+          "salaireDeReferenceEuros": 0.345
+        },
+        {
+          "annee": 1969,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 2.42,
+          "salaireDeReferenceEuros": 0.369
+        },
+        {
+          "annee": 1970,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 2.59,
+          "salaireDeReferenceEuros": 0.395
+        },
+        {
+          "annee": 1971,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 2.76,
+          "salaireDeReferenceEuros": 0.421
+        },
+        {
+          "annee": 1972,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 2.98,
+          "salaireDeReferenceEuros": 0.454
+        },
+        {
+          "annee": 1973,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 3.25,
+          "salaireDeReferenceEuros": 0.495
+        },
+        {
+          "annee": 1974,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 3.71,
+          "salaireDeReferenceEuros": 0.566
+        },
+        {
+          "annee": 1975,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 4.21,
+          "salaireDeReferenceEuros": 0.642
+        },
+        {
+          "annee": 1976,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 4.86,
+          "salaireDeReferenceEuros": 0.741
+        },
+        {
+          "annee": 1977,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 5.41,
+          "salaireDeReferenceEuros": 0.825
+        },
+        {
+          "annee": 1978,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 5.92,
+          "salaireDeReferenceEuros": 0.902
+        },
+        {
+          "annee": 1979,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 6.59,
+          "salaireDeReferenceEuros": 1.005
+        },
+        {
+          "annee": 1980,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 7.43,
+          "salaireDeReferenceEuros": 1.133
+        },
+        {
+          "annee": 1981,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 8.37,
+          "salaireDeReferenceEuros": 1.276
+        },
+        {
+          "annee": 1982,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 9.64,
+          "salaireDeReferenceEuros": 1.47
+        },
+        {
+          "annee": 1983,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 10.65,
+          "salaireDeReferenceEuros": 1.624
+        },
+        {
+          "annee": 1984,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 11.4,
+          "salaireDeReferenceEuros": 1.738
+        },
+        {
+          "annee": 1985,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 11.97,
+          "salaireDeReferenceEuros": 1.825
+        },
+        {
+          "annee": 1986,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 12.37,
+          "salaireDeReferenceEuros": 1.886
+        },
+        {
+          "annee": 1987,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 12.49,
+          "salaireDeReferenceEuros": 1.904
+        },
+        {
+          "annee": 1988,
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25
+          },
+          "salaireDeReferenceFrancs": 12.73,
+          "salaireDeReferenceEuros": 1.941
+        },
+        {
+          "annee": 1989,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 13.14,
+          "salaireDeReferenceEuros": 2.003
+        },
+        {
+          "annee": 1990,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 13.53,
+          "salaireDeReferenceEuros": 2.063
+        },
+        {
+          "annee": 1991,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 13.82,
+          "salaireDeReferenceEuros": 2.107
+        },
+        {
+          "annee": 1992,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 14.25,
+          "salaireDeReferenceEuros": 2.172
+        },
+        {
+          "annee": 1993,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 14.68,
+          "salaireDeReferenceEuros": 2.238
+        },
+        {
+          "annee": 1994,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 14.88,
+          "salaireDeReferenceEuros": 2.268
+        },
+        {
+          "annee": 1995,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 15.18,
+          "salaireDeReferenceEuros": 2.314
+        },
+        {
+          "annee": 1996,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 15.47,
+          "salaireDeReferenceEuros": 2.358
+        },
+        {
+          "annee": 1997,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 15.53,
+          "salaireDeReferenceEuros": 2.368
+        },
+        {
+          "annee": 1998,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 15.74,
+          "salaireDeReferenceEuros": 2.4
+        },
+        {
+          "annee": 1999,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 16.08,
+          "salaireDeReferenceEuros": 2.451
+        },
+        {
+          "annee": 2000,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceFrancs": 16.42,
+          "salaireDeReferenceEuros": 2.503
+        },
+        {
+          "annee": 2001,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.552
+        },
+        {
+          "annee": 2002,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.64
+        },
+        {
+          "annee": 2003,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.664
+        },
+        {
+          "annee": 2004,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.709
+        },
+        {
+          "annee": 2005,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.763
+        },
+        {
+          "annee": 2006,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.813
+        },
+        {
+          "annee": 2007,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.864
+        },
+        {
+          "annee": 2008,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 2.896
+        },
+        {
+          "annee": 2009,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 3.126
+        },
+        {
+          "annee": 2010,
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24
+          },
+          "salaireDeReferenceEuros": 3.345
+        },
+        {
+          "annee": 2011,
+          "trancheA": {
+            "agent": 1.82,
+            "employeur": 2.73
+          },
+          "trancheB": {
+            "agent": 4.8,
+            "employeur": 9.28
+          },
+          "salaireDeReferenceEuros": 3.617
+        },
+        {
+          "annee": 2012,
+          "trancheA": {
+            "agent": 1.88,
+            "employeur": 2.82
+          },
+          "trancheB": {
+            "agent": 4.88,
+            "employeur": 9.36
+          },
+          "salaireDeReferenceEuros": 3.904
+        },
+        {
+          "annee": 2013,
+          "trancheA": {
+            "agent": 1.96,
+            "employeur": 2.94
+          },
+          "trancheB": {
+            "agent": 4.98,
+            "employeur": 9.46
+          },
+          "salaireDeReferenceEuros": 4.172
+        },
+        {
+          "annee": 2014,
+          "trancheA": {
+            "agent": 2.028,
+            "employeur": 3.042
+          },
+          "trancheB": {
+            "agent": 5.1,
+            "employeur": 9.58
+          },
+          "salaireDeReferenceEuros": 4.415
+        },
+        {
+          "annee": 2015,
+          "trancheA": {
+            "agent": 2.112,
+            "employeur": 3.168
+          },
+          "trancheB": {
+            "agent": 5.26,
+            "employeur": 9.74
+          },
+          "salaireDeReferenceEuros": 4.616
+        },
+        {
+          "annee": 2016,
+          "trancheA": {
+            "agent": 2.176,
+            "employeur": 3.264
+          },
+          "trancheB": {
+            "agent": 5.4,
+            "employeur": 9.88
+          },
+          "salaireDeReferenceEuros": 4.766
+        },
+        {
+          "annee": 2017,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 4.904
+        },
+        {
+          "annee": 2018,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 4.943
+        },
+        {
+          "annee": 2019,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 4.958
+        },
+        {
+          "annee": 2020,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.008
+        },
+        {
+          "annee": 2021,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.028
+        },
+        {
+          "annee": 2022,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.083
+        },
+        {
+          "annee": 2023,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.329
+        },
+        {
+          "annee": 2024,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.611
+        },
+        {
+          "annee": 2025,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.735
+        },
+        {
+          "annee": 2026,
+          "trancheA": {
+            "agent": 2.24,
+            "employeur": 3.36
+          },
+          "trancheB": {
+            "agent": 5.56,
+            "employeur": 10.04
+          },
+          "salaireDeReferenceEuros": 5.787
+        }
+      ],
+      "dateDeFixation": "A compter de 2018, fixe au 1er janvier de chaque annee. Jusqu'au 31 decembre 2017, fixe au 1er avril avec effet au 1er janvier. Avant le 1er janvier 2009, evoluait comme les pensions du regime general.",
+      "note": "« anneeFin » : la source regroupe 1935 a 1937 et 1951 a 1953 sur une ligne. 1950 : employeur tranche A 0,75 tel que lu (coquille probable, voir avertissements)."
+    },
+    "citations": [
+      "Annexe 0801 (version 26/02/2026) : ' 2025 2,24 3,36 5,56 10,04 5,735' ; ' 2026 2,24 3,36 5,56 10,04 5,787' ; ' 2010 1,8 2,7 4,76 9,24 3,345' ; ' 1971 1,4 2,1 4,25 8,25 2,76 0,421'",
+      "Base de connaissance, « Determination du nombre de points » (03/03/2026) : 'La valeur du salaire de reference est fixee a 5,787 euros au 1er janvier 2026.' ; 'Jusqu'au 31 decembre 2017, le salaire de reference etait fixe au 1er avril de chaque annee avec effet au 1er janvier de chaque annee.' ; 'Anterieurement au 1er janvier 2009, le salaire de reference evoluait chaque annee dans les memes proportions que les pensions du regime general'",
+      "Page des parametres : 'A compter de 2018, le salaire de reference est fixe au 1er janvier de chaque annee.' ; '2026 | 5,787 EUR', '2025 | 5,735 EUR', '2024 | 5,611 EUR', '2013 | 4,172 EUR'"
+    ],
+    "source": "Ircantec, annexe 0801 « Evolution des taux theoriques et du salaire de reference Ircantec », version du 26/02/2026 (3 pages) ; page « Les parametres utilises par l'Ircantec »",
+    "url": "https://baseircantec.retraites.fr/sites/default/files/2026-03/anx0801_externe%20tx%20th%C3%A9oriques_sal%20ref2026.pdf",
+    "urlsComplementaires": [
+      "https://www.ircantec.retraites.fr/employeur/parametres-utilises-ircantec",
+      "https://baseircantec.retraites.fr/sites/default/files/2023-12/anx0801_externe_tx_theoriques_sal_ref2024_0.pdf",
+      "https://baseircantec.retraites.fr/carriere/constitution-des-droits/determination-du-nombre-de-points-mode-de-calcul"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "tauxDAppel": {
+    "valeurs": {
+      "definition": "Taux d'appel = taux theorique x pourcentage d'appel ; ils servent a calculer les cotisations reellement dues. Seuls les taux theoriques donnent des points.",
+      "pourcentageDAppel": [
+        {
+          "periode": "jusqu'en 2025 (lu pour 2010 a 2025)",
+          "valeurEnPourcent": 125
+        },
+        {
+          "periode": "a compter du 2026-01-01",
+          "valeurEnPourcent": 127
+        }
+      ],
+      "depuis2011": [
+        {
+          "annee": 2024,
+          "dateEffet": "2024-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2023,
+          "dateEffet": "2023-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2022,
+          "dateEffet": "2022-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2021,
+          "dateEffet": "2021-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2020,
+          "dateEffet": "2020-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2019,
+          "dateEffet": "2019-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2018,
+          "dateEffet": "2018-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2017,
+          "dateEffet": "2017-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.24,
+              "employeur": 3.36,
+              "total": 5.6
+            },
+            "trancheB": {
+              "agent": 5.56,
+              "employeur": 10.04,
+              "total": 15.6
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.8,
+              "employeur": 4.2,
+              "total": 7.0
+            },
+            "trancheB": {
+              "agent": 6.95,
+              "employeur": 12.55,
+              "total": 19.5
+            }
+          }
+        },
+        {
+          "annee": 2016,
+          "dateEffet": "2016-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.176,
+              "employeur": 3.264,
+              "total": 5.44
+            },
+            "trancheB": {
+              "agent": 5.4,
+              "employeur": 9.88,
+              "total": 15.28
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.72,
+              "employeur": 4.08,
+              "total": 6.8
+            },
+            "trancheB": {
+              "agent": 6.75,
+              "employeur": 12.35,
+              "total": 19.1
+            }
+          }
+        },
+        {
+          "annee": 2015,
+          "dateEffet": "2015-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.112,
+              "employeur": 3.168,
+              "total": 5.28
+            },
+            "trancheB": {
+              "agent": 5.26,
+              "employeur": 9.74,
+              "total": 15.0
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.64,
+              "employeur": 3.96,
+              "total": 6.6
+            },
+            "trancheB": {
+              "agent": 6.58,
+              "employeur": 12.18,
+              "total": 18.76
+            }
+          }
+        },
+        {
+          "annee": 2014,
+          "dateEffet": "2014-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 2.028,
+              "employeur": 3.042,
+              "total": 5.07
+            },
+            "trancheB": {
+              "agent": 5.1,
+              "employeur": 9.58,
+              "total": 14.68
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.54,
+              "employeur": 3.8,
+              "total": 6.34
+            },
+            "trancheB": {
+              "agent": 6.38,
+              "employeur": 11.98,
+              "total": 18.36
+            }
+          }
+        },
+        {
+          "annee": 2013,
+          "dateEffet": "2013-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 1.96,
+              "employeur": 2.94,
+              "total": 4.9
+            },
+            "trancheB": {
+              "agent": 4.98,
+              "employeur": 9.46,
+              "total": 14.44
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.45,
+              "employeur": 3.68,
+              "total": 6.13
+            },
+            "trancheB": {
+              "agent": 6.23,
+              "employeur": 11.83,
+              "total": 18.06
+            }
+          }
+        },
+        {
+          "annee": 2012,
+          "dateEffet": "2012-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 1.88,
+              "employeur": 2.82,
+              "total": 4.7
+            },
+            "trancheB": {
+              "agent": 4.88,
+              "employeur": 9.36,
+              "total": 14.24
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.35,
+              "employeur": 3.53,
+              "total": 5.88
+            },
+            "trancheB": {
+              "agent": 6.1,
+              "employeur": 11.7,
+              "total": 17.8
+            }
+          }
+        },
+        {
+          "annee": 2011,
+          "dateEffet": "2011-01-01",
+          "theorique": {
+            "trancheA": {
+              "agent": 1.82,
+              "employeur": 2.73,
+              "total": 4.55
+            },
+            "trancheB": {
+              "agent": 4.8,
+              "employeur": 9.28,
+              "total": 14.08
+            }
+          },
+          "appel": {
+            "trancheA": {
+              "agent": 2.28,
+              "employeur": 3.41,
+              "total": 5.69
+            },
+            "trancheB": {
+              "agent": 6.0,
+              "employeur": 11.6,
+              "total": 17.6
+            }
+          }
+        }
+      ],
+      "pageDesParametres2014a2026": [
+        {
+          "annee": 2026,
+          "trancheA": {
+            "agent": 2.84,
+            "employeur": 4.27
+          },
+          "trancheB": {
+            "agent": 7.06,
+            "employeur": 12.75
+          }
+        },
+        {
+          "annee": 2025,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2024,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2023,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2022,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2021,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2020,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2019,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2018,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2017,
+          "trancheA": {
+            "agent": 2.8,
+            "employeur": 4.2
+          },
+          "trancheB": {
+            "agent": 6.95,
+            "employeur": 12.55
+          }
+        },
+        {
+          "annee": 2016,
+          "trancheA": {
+            "agent": 2.72,
+            "employeur": 4.08
+          },
+          "trancheB": {
+            "agent": 6.75,
+            "employeur": 12.35
+          }
+        },
+        {
+          "annee": 2015,
+          "trancheA": {
+            "agent": 2.64,
+            "employeur": 3.96
+          },
+          "trancheB": {
+            "agent": 6.58,
+            "employeur": 12.18
+          }
+        },
+        {
+          "annee": 2014,
+          "trancheA": {
+            "agent": 2.54,
+            "employeur": 3.8
+          },
+          "trancheB": {
+            "agent": 6.38,
+            "employeur": 11.98
+          }
+        }
+      ],
+      "avant2011": [
+        {
+          "dateEffet": "1992-01-01",
+          "ref": "12 - Arrêté du 30 décembre 1991 (JO du 3 janvier 1992, p. 120)",
+          "appel": {
+            "trancheA": {
+              "agent": 2.25,
+              "employeur": 3.38,
+              "total": 5.63
+            },
+            "trancheB": {
+              "agent": 5.95,
+              "employeur": 11.55,
+              "total": 17.5
+            }
+          }
+        },
+        {
+          "dateEffet": "1991-04-01",
+          "ref": "11 - Arrêté du 28 mars 1991 (JO du 30 mars 1991, p. 4374)",
+          "appel": {
+            "trancheA": {
+              "agent": 2.16,
+              "employeur": 3.24,
+              "total": 5.4
+            },
+            "trancheB": {
+              "agent": 5.71,
+              "employeur": 11.09,
+              "total": 16.8
+            }
+          }
+        },
+        {
+          "dateEffet": "1989-01-01",
+          "ref": "10B - Taux d'appel : arrêté du 30 décembre 1988 (JO du 3 janvier 1989)",
+          "appel": {
+            "trancheA": {
+              "agent": 1.96,
+              "employeur": 2.94,
+              "total": 4.9
+            },
+            "trancheB": {
+              "agent": 5.19,
+              "employeur": 10.07,
+              "total": 15.26
+            }
+          }
+        },
+        {
+          "dateEffet": "1988-01-01",
+          "ref": "9 - Arrêté du 17 décembre 1987 (JO du 26 décembre 1987, p. 15178)",
+          "appel": {
+            "trancheA": {
+              "agent": 1.4,
+              "employeur": 2.1,
+              "total": 3.5
+            },
+            "trancheB": {
+              "agent": 4.25,
+              "employeur": 8.25,
+              "total": 12.5
+            }
+          }
+        },
+        {
+          "dateEffet": "1983-01-01",
+          "ref": "8 - Arrêté du 21 décembre 1982 (JO du 29 décembre 1982, p. 3912)",
+          "appel": {
+            "trancheA": {
+              "agent": 1.12,
+              "employeur": 1.68,
+              "total": 2.8
+            },
+            "trancheB": {
+              "agent": 3.4,
+              "employeur": 6.6,
+              "total": 10.0
+            }
+          }
+        },
+        {
+          "dateEffet": "1971-01-01",
+          "ref": "7B - Taux d'appel : arrêté du 14 janvier 1971 (JO du 19 janvier 1971, p. 653)",
+          "appel": {
+            "trancheA": {
+              "agent": 0.84,
+              "employeur": 1.26,
+              "total": 2.1
+            },
+            "trancheB": {
+              "agent": 2.55,
+              "employeur": 4.95,
+              "total": 7.5
+            }
+          }
+        },
+        {
+          "dateEffet": "1963-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 1.0,
+              "employeur": 1.5,
+              "total": 2.5
+            },
+            "trancheB": {
+              "agent": 1.85,
+              "employeur": 4.85,
+              "total": 6.7
+            }
+          }
+        },
+        {
+          "dateEffet": "1960-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 1.0,
+              "employeur": 1.5,
+              "total": 2.5
+            },
+            "trancheB": {
+              "agent": 1.25,
+              "employeur": 3.25,
+              "total": 4.5
+            }
+          }
+        },
+        {
+          "dateEffet": "1959-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 0.5,
+              "employeur": 0.75,
+              "total": 1.25
+            },
+            "trancheB": {
+              "agent": 1.0,
+              "employeur": 3.0,
+              "total": 4.0
+            }
+          }
+        },
+        {
+          "dateEffet": "1954-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 0.5,
+              "employeur": 0.75,
+              "total": 1.25
+            },
+            "trancheB": {
+              "agent": 0.5,
+              "employeur": 1.5,
+              "total": 2.0
+            }
+          }
+        },
+        {
+          "dateEffet": "1949-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 0.5,
+              "employeur": 0.75,
+              "total": 1.25
+            },
+            "trancheB": {
+              "agent": 2.0,
+              "employeur": 6.0,
+              "total": 8.0
+            }
+          }
+        },
+        {
+          "dateEffet": "1925-01-01",
+          "appel": {
+            "trancheA": {
+              "agent": 0.5,
+              "employeur": 0.75,
+              "total": 1.25
+            },
+            "trancheB": {
+              "agent": 1.0,
+              "employeur": 3.0,
+              "total": 4.0
+            }
+          }
+        }
+      ],
+      "tauxTheoriquesAvant2011SelonLAnnexe0404": [
+        {
+          "periode": "a compter du 1989-01-01",
+          "ref": "10A - Taux theoriques : decret n 88-1248 du 30 decembre 1988",
+          "trancheA": {
+            "agent": 1.8,
+            "employeur": 2.7,
+            "total": 4.5
+          },
+          "trancheB": {
+            "agent": 4.76,
+            "employeur": 9.24,
+            "total": 14.0
+          }
+        },
+        {
+          "periode": "a compter du 1971-01-01",
+          "ref": "7A - Taux theoriques : decret n 70-1277 du 23 decembre 1970",
+          "trancheA": {
+            "agent": 1.4,
+            "employeur": 2.1,
+            "total": 3.5
+          },
+          "trancheB": {
+            "agent": 4.25,
+            "employeur": 8.25,
+            "total": 12.5
+          }
+        },
+        {
+          "periode": "lignes 1960 et 1963",
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5,
+            "total": 2.5
+          },
+          "trancheB": {
+            "agent": 2.5,
+            "employeur": 6.5,
+            "total": 9.0
+          }
+        },
+        {
+          "periode": "lignes 1925 a 1959",
+          "trancheA": {
+            "agent": 1.0,
+            "employeur": 1.5,
+            "total": 2.5
+          },
+          "trancheB": {
+            "agent": 2.0,
+            "employeur": 6.0,
+            "total": 8.0
+          }
+        }
+      ],
+      "tranches": "Tranche A : au plus egale au plafond de la Securite sociale ; tranche B : au-dessus du plafond, plafonnee a 8 plafonds (fiche COR). Le plafond de la tranche A est proratise sur la periode d'emploi (base de connaissance).",
+      "puPhEtMcuPh": {
+        "note": "Taux specifiques sur toute la remuneration, sans tranche",
+        "appel": [
+          {
+            "periode": "depuis le 2026-01-01",
+            "agent": 5.29,
+            "employeur": 9.65
+          },
+          {
+            "periode": "du 2024-09-01 au 2025-12-31",
+            "agent": 5.21,
+            "employeur": 9.5
+          }
+        ],
+        "theorique": {
+          "agent": 4.168,
+          "employeur": 7.6
+        }
+      },
+      "note": "« depuis2011 » : annexe 0404 (lignes 2011 a 2024, taux theoriques et d'appel, agent / employeur / total). « pageDesParametres2014a2026 » : page du site, seule source lue pour 2025 et 2026. « avant2011 » : lignes de l'annexe 0404, taux d'appel seulement, par date d'effet. Dans l'annexe 0404 les taux theoriques d'avant 2011 sont donnes par blocs de dates (cellules fusionnees) : le rattachement aux periodes ci-dessus suit la mise en page du PDF et concorde avec l'annexe 0801."
+    },
+    "citations": [
+      "Annexe 0404 : ' 13 01/01/2017 2,24 3,36 5,60 5,56 10,04 15,60 2,80 4,20 7,00 6,95 12,55 19,50' ; ' 13 01/01/2011 1,82 2,73 4,55 4,80 9,28 14,08 2,28 3,41 5,69 6,00 11,60 17,60' ; ' 12 01/01/1992 2,25 3,38 5,63 5,95 11,55 17,50' ; '13 - l'article 5 du decret n 2008-996 du 23 septembre 2008'",
+      "Page des parametres : '2026 | 2,84 % | 4,27 % | 7,06 % | 12,75 %' ; '2025 | 2,80 % | 4,20 % | 6,95 % | 12,55 %' (taux d'appel : tranche A agent, tranche A employeur, tranche B agent, tranche B employeur)",
+      "Base de connaissance, « Taux theorique et taux d'appel de cotisations » (06/01/2026) : 'A compter du 1er janvier 2011, les taux evoluent chaque annee jusqu'au 1er janvier 2017.' ; 'A compter du 1er janvier 2026, le taux d'appel des cotisations est porte a 127%.'",
+      "Rapport d'activite 2025, PDF p. 63 : 'entre 2010 et 2017, les taux theoriques de cotisation pour la tranche A sont passes de 4,5 % a 5,6 %. Pour la tranche B, le taux a evolue de 14 % a 15,6 %. Le pourcentage d'appel reste inchange a 125 %.'",
+      "Fiche COR : 'tranche A : au plus egale au plafond de la Securite sociale ; tranche B : au-dessus du plafond de la Securite sociale, plafonnee a 8 plafonds'"
+    ],
+    "source": "Ircantec, annexe 0404 « Evolution des taux de cotisations » ; page « Les parametres utilises par l'Ircantec » ; base de connaissance ; rapport d'activite 2025 ; fiche Ircantec du COR (juin 2024)",
+    "url": "https://baseircantec.retraites.fr/sites/default/files/2024-04/anx0404.tauxdecotisation%20-%20externe.pdf",
+    "urlsComplementaires": [
+      "https://www.ircantec.retraites.fr/employeur/parametres-utilises-ircantec",
+      "https://baseircantec.retraites.fr/cotisations-declarations/cotisations-ircantec/taux-theorique-et-taux-dappel-de-cotisations",
+      "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+      "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "valeurDuPoint": {
+    "valeurs": {
+      "libelle": "Valeur de service du point Ircantec",
+      "unite": "euros par point et par an",
+      "serie": [
+        {
+          "annee": 1949,
+          "dateEffet": "1949-01-01",
+          "valeur": 0.00915,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1950,
+          "dateEffet": "1950-01-01",
+          "valeur": 0.00915,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1950,
+          "dateEffet": "1950-07-01",
+          "valeur": 0.0122,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1951,
+          "dateEffet": "1951-01-01",
+          "valeur": 0.01372,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1951,
+          "dateEffet": "1951-07-01",
+          "valeur": 0.01677,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1952,
+          "dateEffet": "1952-01-01",
+          "valeur": 0.01829,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1952,
+          "dateEffet": "1952-07-01",
+          "valeur": 0.01906,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1954,
+          "dateEffet": "1954-01-01",
+          "valeur": 0.01906,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1955,
+          "dateEffet": "1955-01-01",
+          "valeur": 0.01906,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1955,
+          "dateEffet": "1955-07-01",
+          "valeur": 0.01982,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1956,
+          "dateEffet": "1956-01-01",
+          "valeur": 0.02134,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1957,
+          "dateEffet": "1957-01-01",
+          "valeur": 0.02287,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1958,
+          "dateEffet": "1958-01-01",
+          "valeur": 0.02515,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1958,
+          "dateEffet": "1958-07-01",
+          "valeur": 0.02744,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1959,
+          "dateEffet": "1959-01-01",
+          "valeur": 0.02897,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1959,
+          "dateEffet": "1959-07-01",
+          "valeur": 0.03049,
+          "monnaieSelonIpp": "AFRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1960,
+          "dateEffet": "1960-01-01",
+          "valeur": 0.03201,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1960,
+          "dateEffet": "1960-07-01",
+          "valeur": 0.03354,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1961,
+          "dateEffet": "1961-01-01",
+          "valeur": 0.03354,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1962,
+          "dateEffet": "1962-01-01",
+          "valeur": 0.03354,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1962,
+          "dateEffet": "1962-07-01",
+          "valeur": 0.03506,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1963,
+          "dateEffet": "1963-01-01",
+          "valeur": 0.03659,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1963,
+          "dateEffet": "1963-07-01",
+          "valeur": 0.03887,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1964,
+          "dateEffet": "1964-01-01",
+          "valeur": 0.04116,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1964,
+          "dateEffet": "1964-07-01",
+          "valeur": 0.04269,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1965,
+          "dateEffet": "1965-01-01",
+          "valeur": 0.04345,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1965,
+          "dateEffet": "1965-07-01",
+          "valeur": 0.04573,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1966,
+          "dateEffet": "1966-01-01",
+          "valeur": 0.04634,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1966,
+          "dateEffet": "1966-07-01",
+          "valeur": 0.04665,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1967,
+          "dateEffet": "1967-01-01",
+          "valeur": 0.04787,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1967,
+          "dateEffet": "1967-07-01",
+          "valeur": 0.04878,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1968,
+          "dateEffet": "1968-01-01",
+          "valeur": 0.05122,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1968,
+          "dateEffet": "1968-07-01",
+          "valeur": 0.05214,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1969,
+          "dateEffet": "1969-01-01",
+          "valeur": 0.05473,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1969,
+          "dateEffet": "1969-07-01",
+          "valeur": 0.05564,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1970,
+          "dateEffet": "1970-01-01",
+          "valeur": 0.05885,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1970,
+          "dateEffet": "1970-07-01",
+          "valeur": 0.05976,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1971,
+          "dateEffet": "1971-01-01",
+          "valeur": 0.06235,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1971,
+          "dateEffet": "1971-07-01",
+          "valeur": 0.06449,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1972,
+          "dateEffet": "1972-01-01",
+          "valeur": 0.06708,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1972,
+          "dateEffet": "1972-07-01",
+          "valeur": 0.06982,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1973,
+          "dateEffet": "1973-01-01",
+          "valeur": 0.07363,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1973,
+          "dateEffet": "1973-07-01",
+          "valeur": 0.07577,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1974,
+          "dateEffet": "1974-01-01",
+          "valeur": 0.08232,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1974,
+          "dateEffet": "1974-07-01",
+          "valeur": 0.08812,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1975,
+          "dateEffet": "1975-01-01",
+          "valeur": 0.09299,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1975,
+          "dateEffet": "1975-07-01",
+          "valeur": 0.10046,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1976,
+          "dateEffet": "1976-01-01",
+          "valeur": 0.10915,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1976,
+          "dateEffet": "1976-07-01",
+          "valeur": 0.11403,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1977,
+          "dateEffet": "1977-01-01",
+          "valeur": 0.12165,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1977,
+          "dateEffet": "1977-07-01",
+          "valeur": 0.12699,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1978,
+          "dateEffet": "1978-01-01",
+          "valeur": 0.13294,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1978,
+          "dateEffet": "1978-07-01",
+          "valeur": 0.13919,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1979,
+          "dateEffet": "1979-01-01",
+          "valeur": 0.14864,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1979,
+          "dateEffet": "1979-07-01",
+          "valeur": 0.15428,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1980,
+          "dateEffet": "1980-01-01",
+          "valeur": 0.16541,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1980,
+          "dateEffet": "1980-07-01",
+          "valeur": 0.17623,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1981,
+          "dateEffet": "1981-01-01",
+          "valeur": 0.18721,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1981,
+          "dateEffet": "1981-07-01",
+          "valeur": 0.19788,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1982,
+          "dateEffet": "1982-01-01",
+          "valeur": 0.21495,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1982,
+          "dateEffet": "1982-07-01",
+          "valeur": 0.22837,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1983,
+          "dateEffet": "1983-01-01",
+          "valeur": 0.23874,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1983,
+          "dateEffet": "1983-07-01",
+          "valeur": 0.25093,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1984,
+          "dateEffet": "1984-01-01",
+          "valeur": 0.25932,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1984,
+          "dateEffet": "1984-07-01",
+          "valeur": 0.26496,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1985,
+          "dateEffet": "1985-01-01",
+          "valeur": 0.27182,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1985,
+          "dateEffet": "1985-07-01",
+          "valeur": 0.27868,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1986,
+          "dateEffet": "1986-01-01",
+          "valeur": 0.28416,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1986,
+          "dateEffet": "1986-07-01",
+          "valeur": 0.28477,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1987,
+          "dateEffet": "1987-01-01",
+          "valeur": 0.28508,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1987,
+          "dateEffet": "1987-07-01",
+          "valeur": 0.28935,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1988,
+          "dateEffet": "1988-01-01",
+          "valeur": 0.29133,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1988,
+          "dateEffet": "1988-07-01",
+          "valeur": 0.29423,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1989,
+          "dateEffet": "1989-01-01",
+          "valeur": 0.30017,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1989,
+          "dateEffet": "1989-07-01",
+          "valeur": 0.30414,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1990,
+          "dateEffet": "1990-01-01",
+          "valeur": 0.30856,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1990,
+          "dateEffet": "1990-07-01",
+          "valeur": 0.31374,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1991,
+          "dateEffet": "1991-01-01",
+          "valeur": 0.31648,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1991,
+          "dateEffet": "1991-07-01",
+          "valeur": 0.31923,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1992,
+          "dateEffet": "1992-01-01",
+          "valeur": 0.32609,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1992,
+          "dateEffet": "1992-07-01",
+          "valeur": 0.32944,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1993,
+          "dateEffet": "1993-01-01",
+          "valeur": 0.33585,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1993,
+          "dateEffet": "1993-07-01",
+          "valeur": 0.33966,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1994,
+          "dateEffet": "1994-01-01",
+          "valeur": 0.34133,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1994,
+          "dateEffet": "1994-07-01",
+          "valeur": 0.34362,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1995,
+          "dateEffet": "1995-01-01",
+          "valeur": 0.34728,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1995,
+          "dateEffet": "1995-07-01",
+          "valeur": 0.3517,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1996,
+          "dateEffet": "1996-01-01",
+          "valeur": 0.35582,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1996,
+          "dateEffet": "1996-07-01",
+          "valeur": 0.35658,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1997,
+          "dateEffet": "1997-01-01",
+          "valeur": 0.35688,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1997,
+          "dateEffet": "1997-07-01",
+          "valeur": 0.35841,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1998,
+          "dateEffet": "1998-01-01",
+          "valeur": 0.36024,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1998,
+          "dateEffet": "1998-07-01",
+          "valeur": 0.36466,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1999,
+          "dateEffet": "1999-01-01",
+          "valeur": 0.36771,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 1999,
+          "dateEffet": "1999-07-01",
+          "valeur": 0.37289,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2000,
+          "dateEffet": "2000-01-01",
+          "valeur": 0.37746,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2000,
+          "dateEffet": "2000-07-01",
+          "valeur": 0.37899,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2001,
+          "dateEffet": "2001-01-01",
+          "valeur": 0.38021,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2001,
+          "dateEffet": "2001-07-01",
+          "valeur": 0.39118,
+          "monnaieSelonIpp": "FRF",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2002,
+          "dateEffet": "2002-01-01",
+          "valeur": 0.39776,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2002,
+          "dateEffet": "2002-07-01",
+          "valeur": 0.40021,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2003,
+          "dateEffet": "2003-01-01",
+          "valeur": 0.40208,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2003,
+          "dateEffet": "2003-07-01",
+          "valeur": 0.40301,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2004,
+          "dateEffet": "2004-01-01",
+          "valeur": 0.40939,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2005,
+          "dateEffet": "2005-01-01",
+          "valeur": 0.41758,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2006,
+          "dateEffet": "2006-01-01",
+          "valeur": 0.4251,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2007,
+          "dateEffet": "2007-01-01",
+          "valeur": 0.43275,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2008,
+          "dateEffet": "2008-01-01",
+          "valeur": 0.43751,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2008,
+          "dateEffet": "2008-09-01",
+          "valeur": 0.44101,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2009,
+          "dateEffet": "2009-01-01",
+          "valeur": 0.44101,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2009,
+          "dateEffet": "2009-04-01",
+          "valeur": 0.44542,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2010,
+          "dateEffet": "2010-01-01",
+          "valeur": 0.44542,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2010,
+          "dateEffet": "2010-04-01",
+          "valeur": 0.44943,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2011,
+          "dateEffet": "2011-01-01",
+          "valeur": 0.44943,
+          "monnaieSelonIpp": "€",
+          "origine": "Baremes IPP (secondaire)"
+        },
+        {
+          "annee": 2011,
+          "dateEffet": "2011-04-01",
+          "dateFin": "2012-03-31",
+          "valeur": 0.45887,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2012,
+          "dateEffet": "2012-04-01",
+          "dateFin": "2013-03-31",
+          "valeur": 0.46851,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2013,
+          "dateEffet": "2013-04-01",
+          "dateFin": "2014-09-30",
+          "valeur": 0.4746,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2014,
+          "dateEffet": "2014-10-01",
+          "dateFin": "2015-09-30",
+          "valeur": 0.4746,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2015,
+          "dateEffet": "2015-10-01",
+          "dateFin": "2016-09-30",
+          "valeur": 0.47507,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2016,
+          "dateEffet": "2016-10-01",
+          "dateFin": "2017-09-30",
+          "valeur": 0.47507,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2017,
+          "dateEffet": "2017-10-01",
+          "dateFin": "2018-12-31",
+          "valeur": 0.47887,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2019,
+          "dateEffet": "2019-01-01",
+          "dateFin": "2019-12-31",
+          "valeur": 0.48031,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2020,
+          "dateEffet": "2020-01-01",
+          "dateFin": "2020-12-31",
+          "valeur": 0.48511,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2021,
+          "dateEffet": "2021-01-01",
+          "dateFin": "2021-12-31",
+          "valeur": 0.48705,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2022,
+          "dateEffet": "2022-01-01",
+          "dateFin": "2022-06-30",
+          "valeur": 0.49241,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2022,
+          "dateEffet": "2022-07-01",
+          "dateFin": "2022-12-31",
+          "valeur": 0.51211,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2023,
+          "dateEffet": "2023-01-01",
+          "dateFin": "2023-12-31",
+          "valeur": 0.51621,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2024,
+          "dateEffet": "2024-01-01",
+          "dateFin": "2024-12-31",
+          "valeur": 0.54357,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2025,
+          "dateEffet": "2025-01-01",
+          "dateFin": "2025-12-31",
+          "valeur": 0.55553,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        },
+        {
+          "annee": 2026,
+          "dateEffet": "2026-01-01",
+          "dateFin": "2026-12-31",
+          "valeur": 0.56053,
+          "origine": "Site Ircantec, page « Valeur du point » (primaire)"
+        }
+      ],
+      "regleDeRevalorisation": "Depuis 2018, revalorisee au 1er janvier, dans les memes conditions que les pensions de vieillesse du regime general (indice des prix hors tabac). De 2014 au 31 decembre 2017 : au 1er octobre. Auparavant au 1er avril (dates lues dans la serie). Revalorisation anticipee au 1er juillet 2022.",
+      "note": "Lignes « Baremes IPP (secondaire) » : du 1949-01-01 au 2011-01-01 ; « monnaieSelonIpp » reproduit le libelle de l'IPP, douteux avant 2002 (voir avertissements). Lignes « Site Ircantec » : primaire, avec la date de fin de validite donnee par la page."
+    },
+    "citations": [
+      "Page « Valeur du point » : 'La valeur du point Ircantec est fixee a 0,56053 EUR (*) a compter du 1er janvier 2026.' ; 'du 01/01/2025 au 31/12/2025 | 0,55553 EUR' ; 'du 01/07/2022 au 31/12/2022 | 0,51211 EUR' ; 'du 01/04/2011 au 31/03/2012 | 0,45887 EUR'",
+      "Base de connaissance, « Revalorisation du montant de la retraite » (17/02/2026) : 'La valeur du point est revalorisee au 1er janvier de chaque annee.(art. 9 bis arrete du 30 decembre 1970 modifie).' ; 'Au 1er juillet 2022, la valeur de service du point Ircantec est fixee a 0,51211 euro par anticipation de la revalorisation attendue au 1er janvier 2023' ; 'De 2014 jusqu'au 31 decembre 2017, les pensions versees par l'Ircantec ont ete revalorisees chaque annee au 1er octobre.'",
+      "Rapport d'activite 2025, PDF p. 63 : 'Au 1er janvier 2025, la valeur du point de l'Ircantec a ete augmentee de 2,2 %, pour etre fixee a 0,55553 EUR.'"
+    ],
+    "source": "Ircantec, page « Valeur du point » (2011-2026) et base de connaissance ; baremes IPP (1949-2011, secondaire)",
+    "url": "https://www.ircantec.retraites.fr/retraite/valeur-point",
+    "urlsComplementaires": [
+      "https://baseircantec.retraites.fr/etre-a-la-retraite/paiement/revalorisation-du-montant-de-la-retraite",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_public.regimes_complementaires.ircantec/table",
+      "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "rendement": {
+    "valeurs": {
+      "definition": "Rendement reel : rapport entre la valeur du point et le salaire de reference multiplie par le pourcentage d'appel (glossaire du rapport d'activite 2025).",
+      "serie": [
+        {
+          "periode": "2017 a 2025",
+          "valeurEnPourcent": 7.75,
+          "origine": "lu, rapport d'activite 2025 et fiche COR"
+        },
+        {
+          "periode": "2026",
+          "valeurEnPourcent": null,
+          "origine": "non lu ; 0,56053 / (5,787 x 1,27) = 7,63 % (calcule)"
+        }
+      ],
+      "pilotage": "Depuis 2018, le conseil d'administration fixe, dans un plan quadriennal, les regles d'evolution des valeurs d'acquisition et de service du point et peut proposer au Gouvernement une evolution des taux de cotisation (fiche COR)."
+    },
+    "citations": [
+      "Rapport d'activite 2025, PDF p. 63 : 'Le rendement reel du regime, fixe pour l'annee 2017 a 7,75 % par les textes de la reforme parametrique du regime de 2008, a ete conserve sur la periode 2018-2025 par deliberations du Conseil d'administration, dans le cadre des deux premiers plans quadriennaux.'",
+      "Fiche COR, p. 1 : 'Il est fixe a 7,75 % en 2024 et est stable depuis 2017. En 2024, la valeur d'acquisition du point est fixee a 5,611 EUR et la valeur de service a 0,54357 EUR.' ; note 1 : 'Il s'agit ici du rendement reel du regime (rendement theorique auquel est applique le taux d'appel de 125 %).'"
+    ],
+    "source": "Ircantec, rapport d'activite 2025 ; COR, fiche Ircantec (juin 2024)",
+    "url": "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf",
+    "urlsComplementaires": [
+      "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_IRCANTEC_vf.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "calculDesPoints": {
+    "valeurs": {
+      "formule": "points de la tranche = assiette de la tranche x taux theorique total de la tranche / salaire de reference de l'annee",
+      "exempleDeLaSource": {
+        "annee": 2019,
+        "salaireAnnuel": 50000,
+        "trancheA": "40524 x 5,60 % / 4,958 = 458 points",
+        "trancheB": "9476 x 15,60 % / 4,958 = 298 points"
+      },
+      "arrondi": "non lu (l'exemple donne 458 pour 457,7 et 298 pour 298,2 : arrondi au plus proche compatible, deduction)",
+      "plafondTrancheA": "Proratise a la duree d'emploi dans l'annee ; il doit en general etre atteint pour acquerir des points en tranche B, sauf temps partiel et employeurs multiples.",
+      "pointsGratuits": {
+        "maladie": "Points gratuits pour maladie, maternite, accident du travail : il faut percevoir les indemnites pendant au moins 30 jours consecutifs ; points calcules sur la partie de traitement non versee du fait de l'arret.",
+        "chomage": null,
+        "invalidite": null,
+        "note": "Chomage, invalidite, service militaire : fiches existantes dans la base de connaissance, non lues en detail (voir nonLu). Le glossaire du rapport d'activite enumere les points non contributifs : 'bonifications meres de famille et bonification parentale, maladie, invalidite, chomage, periodes de guerre et de service militaire, majoration pour enfants, cessation anticipee d'activite'."
+      },
+      "majorationsForfaitairesHistoriques": {
+        "note": "Majorations du stock de points decidees lors de relevements de taux ; utiles pour reconstituer des comptes anciens.",
+        "duree": "A compter du 1er octobre 1972 : 10 points par annee d'activite a temps complet anterieure (5 points a temps partiel, moins de 36 heures par semaine).",
+        "serie": [
+          {
+            "dateEffet": "1975-01-01",
+            "majorationEnPourcent": 3,
+            "base": "points acquis au 31/12/1974"
+          },
+          {
+            "dateEffet": "1977-01-01",
+            "majorationEnPourcent": 0.5668,
+            "base": "points acquis au 31/12/1976"
+          },
+          {
+            "dateEffet": "1979-01-01",
+            "majorationEnPourcent": 0.7,
+            "base": "points acquis au 31/12/1978"
+          },
+          {
+            "dateEffet": "1980-01-01",
+            "majorationEnPourcent": 0.86,
+            "base": "points acquis au 31/12/1979"
+          },
+          {
+            "dateEffet": "1981-01-01",
+            "majorationEnPourcent": 0.6158,
+            "base": "points acquis au 31/12/1980"
+          },
+          {
+            "dateEffet": "1982-01-01",
+            "majorationEnPourcent": 0.63,
+            "base": "points acquis au 31/12/1981"
+          },
+          {
+            "dateEffet": "1983-01-01",
+            "majorationEnPourcent": 0.43,
+            "base": "points acquis au 31/12/1982"
+          },
+          {
+            "dateEffet": "1984-01-01",
+            "majorationEnPourcent": 0.37,
+            "base": "points acquis au 31/12/1983"
+          }
+        ],
+        "etat": "liste lue jusqu'a 1984 ; la fiche peut contenir des lignes posterieures non affichees dans l'extrait lu"
+      }
+    },
+    "citations": [
+      "Base de connaissance, « Determination du nombre de points - Mode de calcul » : 'Les points Ircantec sont calcules annuellement sur la base de trois parametres : (article 10 de l'arrete du 30 decembre 1970)' ; 'Nombre de points TrA : 40524 x 5,60 % ============ = 458 points 4,958' ; 'En regle generale, le plafond de l'Assiette de cotisation Tr A doit etre atteint pour pouvoir acquerir des points en Tr B.'",
+      "Rapport d'activite 2025, PDF p. 63 : 'CALCUL DES POINTS DE RETRAITE : Assiette de cotisation x Taux theorique de cotisation / Salaire de reference de l'annee'",
+      "Base de connaissance, « Points gratuits maladie - Conditions d'attribution » : 'Pour beneficier des points gratuits, il faut percevoir pendant au moins 30 jours consecutifs de date a date suivant l'arret de travail' ; « Regles de calcul » : 'Les points gratuits sont calcules sur la partie de traitement non versee a l'agent du fait de son arret de travail'",
+      "Base de connaissance, « Les points de majoration forfaitaire » : 'A compter du 1er janvier 1975, majoration de 3 % du total des points acquis au 31 decembre 1974.'"
+    ],
+    "source": "Ircantec, base de connaissance reglementaire (arrete du 30 decembre 1970 modifie, art. 10) ; rapport d'activite 2025",
+    "url": "https://baseircantec.retraites.fr/carriere/constitution-des-droits/determination-du-nombre-de-points-mode-de-calcul",
+    "urlsComplementaires": [
+      "https://baseircantec.retraites.fr/carriere/constitution-des-droits/les-points-de-majoration-forfaitaire",
+      "https://baseircantec.retraites.fr/carriere/interruption-dactivite/maladie/conditions-dattribution",
+      "https://baseircantec.retraites.fr/carriere/interruption-dactivite/maladie/regles-de-calcul-des-points",
+      "https://www.ircantec.retraites.fr/sites/default/files/RA_2025_Ircantec_2026.06.19_WEB_Pages.pdf"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "liquidation": {
+    "valeurs": {
+      "formule": "allocation annuelle = nombre total de points (y compris majorations) x valeur du point au moment du paiement, si le total atteint 300 points",
+      "seuilsDePeriodicite": {
+        "depuis2009": [
+          {
+            "points": "moins de 300",
+            "versement": "capital unique = points x salaire de reference de l'annee precedant la liquidation ; supprime tout droit a reversion"
+          },
+          {
+            "points": "300 a 999",
+            "versement": "allocation annuelle, a terme echu au 1er janvier"
+          },
+          {
+            "points": "1 000 a 2 999",
+            "versement": "allocation trimestrielle"
+          },
+          {
+            "points": "3 000 et plus",
+            "versement": "allocation mensuelle"
+          }
+        ],
+        "avantDecembre2008": [
+          {
+            "points": "moins de 100",
+            "versement": "capital unique"
+          },
+          {
+            "points": "100 a 499",
+            "versement": "allocation annuelle"
+          },
+          {
+            "points": "500 a 1 999",
+            "versement": "allocation trimestrielle"
+          },
+          {
+            "points": "2 000 et plus",
+            "versement": "allocation mensuelle"
+          }
+        ],
+        "seuilDuCapitalUniqueEnPoints": 300,
+        "dateDEffet": "demandes formulees a compter du 1er janvier 2009 (recues a compter du 1er decembre 2008)"
+      },
+      "ageDuTauxPleinSansConditionDeDuree": [
+        {
+          "generation": "nes avant le 1er juillet 1951",
+          "age": "65 ans"
+        },
+        {
+          "generation": "nes du 1er juillet au 31 decembre 1951",
+          "age": "65 ans et 4 mois"
+        },
+        {
+          "generation": "nes en 1952",
+          "age": "65 ans et 9 mois"
+        },
+        {
+          "generation": "nes en 1953",
+          "age": "66 ans et 2 mois"
+        },
+        {
+          "generation": "nes en 1954",
+          "age": "66 ans et 7 mois"
+        },
+        {
+          "generation": "nes a compter de 1955",
+          "age": "67 ans"
+        }
+      ],
+      "tauxPleinALAgeLegalSousConditionDeDuree": {
+        "regle": "Taux plein a l'age legal si la duree d'assurance tous regimes de base requise pour la generation est atteinte.",
+        "serie": [
+          {
+            "generation": "du 1er janvier 1958 au 31 decembre 1960",
+            "ageLegalAvantLfss2026": "62 ans",
+            "ageLegalApresLfss2026": "62 ans",
+            "trimestresAvantLfss2026": 167,
+            "trimestresApresLfss2026": 167
+          },
+          {
+            "generation": "du 1er janvier au 31 aout 1961",
+            "ageLegalAvantLfss2026": "62 ans",
+            "ageLegalApresLfss2026": "62 ans",
+            "trimestresAvantLfss2026": 168,
+            "trimestresApresLfss2026": 168
+          },
+          {
+            "generation": "du 1er septembre au 31 decembre 1961",
+            "ageLegalAvantLfss2026": "62 ans et 3 mois",
+            "ageLegalApresLfss2026": "62 ans et 3 mois",
+            "trimestresAvantLfss2026": 169,
+            "trimestresApresLfss2026": 169
+          },
+          {
+            "generation": "1962",
+            "ageLegalAvantLfss2026": "62 ans et 6 mois",
+            "ageLegalApresLfss2026": "62 ans et 6 mois",
+            "trimestresAvantLfss2026": 169,
+            "trimestresApresLfss2026": 169
+          },
+          {
+            "generation": "1963",
+            "ageLegalAvantLfss2026": "62 ans et 9 mois",
+            "ageLegalApresLfss2026": "62 ans et 9 mois",
+            "trimestresAvantLfss2026": 170,
+            "trimestresApresLfss2026": 170
+          },
+          {
+            "generation": "1964",
+            "ageLegalAvantLfss2026": "63 ans",
+            "ageLegalApresLfss2026": "62 ans et 9 mois",
+            "trimestresAvantLfss2026": 171,
+            "trimestresApresLfss2026": 170
+          },
+          {
+            "generation": "du 1er janvier au 31 mars 1965",
+            "ageLegalAvantLfss2026": "63 ans et 3 mois",
+            "ageLegalApresLfss2026": "62 ans et 9 mois",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 170
+          },
+          {
+            "generation": "du 1er avril au 31 decembre 1965",
+            "ageLegalAvantLfss2026": "63 ans et 3 mois",
+            "ageLegalApresLfss2026": "63 ans",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 171
+          },
+          {
+            "generation": "1966",
+            "ageLegalAvantLfss2026": "63 ans et 6 mois",
+            "ageLegalApresLfss2026": "63 ans et 3 mois",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 172
+          },
+          {
+            "generation": "1967",
+            "ageLegalAvantLfss2026": "63 ans et 9 mois",
+            "ageLegalApresLfss2026": "63 ans et 6 mois",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 172
+          },
+          {
+            "generation": "1968",
+            "ageLegalAvantLfss2026": "64 ans",
+            "ageLegalApresLfss2026": "63 ans et 9 mois",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 172
+          },
+          {
+            "generation": "a partir de 1969",
+            "ageLegalAvantLfss2026": "64 ans",
+            "ageLegalApresLfss2026": "64 ans",
+            "trimestresAvantLfss2026": 172,
+            "trimestresApresLfss2026": 172
+          }
+        ],
+        "note": "Colonnes « apres LFSS 2026 » applicables aux pensions prenant effet a compter du 1er septembre 2026, selon la fiche. Loi non lue."
+      },
+      "minoration": {
+        "regle": "Si aucune condition du taux plein n'est remplie, le total des points est reduit par un coefficient definitif. Depart possible au plus tot 10 ans avant l'age du taux plein (57 ans). Entre 57 ans et l'age legal : coefficient selon l'age seul. Entre l'age legal et 67 ans : on compare le coefficient selon l'age et le coefficient selon la duree d'assurance acquise dans les regimes de base ; le plus avantageux est applique.",
+        "coefficientsSelonLAge": [
+          {
+            "age": "67 ans",
+            "ageEnMois": 804,
+            "trimestresAvant67Ans": 0,
+            "coefficient": 1.0
+          },
+          {
+            "age": "66 ans et 9 mois",
+            "ageEnMois": 801,
+            "trimestresAvant67Ans": 1,
+            "coefficient": 0.99
+          },
+          {
+            "age": "66 ans et 6 mois",
+            "ageEnMois": 798,
+            "trimestresAvant67Ans": 2,
+            "coefficient": 0.98
+          },
+          {
+            "age": "66 ans et 3 mois",
+            "ageEnMois": 795,
+            "trimestresAvant67Ans": 3,
+            "coefficient": 0.97
+          },
+          {
+            "age": "66 ans",
+            "ageEnMois": 792,
+            "trimestresAvant67Ans": 4,
+            "coefficient": 0.96
+          },
+          {
+            "age": "65 ans et 9 mois",
+            "ageEnMois": 789,
+            "trimestresAvant67Ans": 5,
+            "coefficient": 0.95
+          },
+          {
+            "age": "65 ans et 6 mois",
+            "ageEnMois": 786,
+            "trimestresAvant67Ans": 6,
+            "coefficient": 0.94
+          },
+          {
+            "age": "65 ans et 3 mois",
+            "ageEnMois": 783,
+            "trimestresAvant67Ans": 7,
+            "coefficient": 0.93
+          },
+          {
+            "age": "65 ans",
+            "ageEnMois": 780,
+            "trimestresAvant67Ans": 8,
+            "coefficient": 0.92
+          },
+          {
+            "age": "64 ans et 9 mois",
+            "ageEnMois": 777,
+            "trimestresAvant67Ans": 9,
+            "coefficient": 0.91
+          },
+          {
+            "age": "64 ans et 6 mois",
+            "ageEnMois": 774,
+            "trimestresAvant67Ans": 10,
+            "coefficient": 0.9
+          },
+          {
+            "age": "64 ans et 3 mois",
+            "ageEnMois": 771,
+            "trimestresAvant67Ans": 11,
+            "coefficient": 0.89
+          },
+          {
+            "age": "64 ans",
+            "ageEnMois": 768,
+            "trimestresAvant67Ans": 12,
+            "coefficient": 0.88
+          },
+          {
+            "age": "63 ans et 9 mois",
+            "ageEnMois": 765,
+            "trimestresAvant67Ans": 13,
+            "coefficient": 0.8675
+          },
+          {
+            "age": "63 ans et 6 mois",
+            "ageEnMois": 762,
+            "trimestresAvant67Ans": 14,
+            "coefficient": 0.855
+          },
+          {
+            "age": "63 ans et 3 mois",
+            "ageEnMois": 759,
+            "trimestresAvant67Ans": 15,
+            "coefficient": 0.8425
+          },
+          {
+            "age": "63 ans",
+            "ageEnMois": 756,
+            "trimestresAvant67Ans": 16,
+            "coefficient": 0.83
+          },
+          {
+            "age": "62 ans et 9 mois",
+            "ageEnMois": 753,
+            "trimestresAvant67Ans": 17,
+            "coefficient": 0.8175
+          },
+          {
+            "age": "62 ans et 6 mois",
+            "ageEnMois": 750,
+            "trimestresAvant67Ans": 18,
+            "coefficient": 0.805
+          },
+          {
+            "age": "62 ans et 3 mois",
+            "ageEnMois": 747,
+            "trimestresAvant67Ans": 19,
+            "coefficient": 0.7925
+          },
+          {
+            "age": "62 ans",
+            "ageEnMois": 744,
+            "trimestresAvant67Ans": 20,
+            "coefficient": 0.78
+          },
+          {
+            "age": "61 ans et 9 mois",
+            "ageEnMois": 741,
+            "trimestresAvant67Ans": 21,
+            "coefficient": 0.7625
+          },
+          {
+            "age": "61 ans et 6 mois",
+            "ageEnMois": 738,
+            "trimestresAvant67Ans": 22,
+            "coefficient": 0.745
+          },
+          {
+            "age": "61 ans et 3 mois",
+            "ageEnMois": 735,
+            "trimestresAvant67Ans": 23,
+            "coefficient": 0.7275
+          },
+          {
+            "age": "61 ans",
+            "ageEnMois": 732,
+            "trimestresAvant67Ans": 24,
+            "coefficient": 0.71
+          },
+          {
+            "age": "60 ans et 9 mois",
+            "ageEnMois": 729,
+            "trimestresAvant67Ans": 25,
+            "coefficient": 0.6925
+          },
+          {
+            "age": "60 ans et 6 mois",
+            "ageEnMois": 726,
+            "trimestresAvant67Ans": 26,
+            "coefficient": 0.675
+          },
+          {
+            "age": "60 ans et 3 mois",
+            "ageEnMois": 723,
+            "trimestresAvant67Ans": 27,
+            "coefficient": 0.6575
+          },
+          {
+            "age": "60 ans",
+            "ageEnMois": 720,
+            "trimestresAvant67Ans": 28,
+            "coefficient": 0.64
+          },
+          {
+            "age": "59 ans et 9 mois",
+            "ageEnMois": 717,
+            "trimestresAvant67Ans": 29,
+            "coefficient": 0.6225
+          },
+          {
+            "age": "59 ans et 6 mois",
+            "ageEnMois": 714,
+            "trimestresAvant67Ans": 30,
+            "coefficient": 0.605
+          },
+          {
+            "age": "59 ans et 3 mois",
+            "ageEnMois": 711,
+            "trimestresAvant67Ans": 31,
+            "coefficient": 0.5875
+          },
+          {
+            "age": "59 ans",
+            "ageEnMois": 708,
+            "trimestresAvant67Ans": 32,
+            "coefficient": 0.57
+          },
+          {
+            "age": "58 ans et 9 mois",
+            "ageEnMois": 705,
+            "trimestresAvant67Ans": 33,
+            "coefficient": 0.5525
+          },
+          {
+            "age": "58 ans et 6 mois",
+            "ageEnMois": 702,
+            "trimestresAvant67Ans": 34,
+            "coefficient": 0.535
+          },
+          {
+            "age": "58 ans et 3 mois",
+            "ageEnMois": 699,
+            "trimestresAvant67Ans": 35,
+            "coefficient": 0.5175
+          },
+          {
+            "age": "58 ans",
+            "ageEnMois": 696,
+            "trimestresAvant67Ans": 36,
+            "coefficient": 0.5
+          },
+          {
+            "age": "57 ans et 9 mois",
+            "ageEnMois": 693,
+            "trimestresAvant67Ans": 37,
+            "coefficient": 0.4825
+          },
+          {
+            "age": "57 ans et 6 mois",
+            "ageEnMois": 690,
+            "trimestresAvant67Ans": 38,
+            "coefficient": 0.465
+          },
+          {
+            "age": "57 ans et 3 mois",
+            "ageEnMois": 687,
+            "trimestresAvant67Ans": 39,
+            "coefficient": 0.4475
+          },
+          {
+            "age": "57 ans",
+            "ageEnMois": 684,
+            "trimestresAvant67Ans": 40,
+            "coefficient": 0.43
+          }
+        ],
+        "lecture": "Constate sur le tableau : 1 point par trimestre du 1er au 12e trimestre avant 67 ans (0,88 a 64 ans), 1,25 point par trimestre du 13e au 20e (0,78 a 62 ans), 1,75 point par trimestre du 21e au 40e (0,43 a 57 ans). Les baremes IPP (secondaire) donnent les memes pas : 1 %, 1,25 %, 1,75 %, decote maximale 43 % (lue chez l'IPP comme « taux de decote maximal », alors que le coefficient minimal du tableau est 0,43, soit une decote maximale de 57 % : libelle IPP douteux).",
+        "dureeDAssuranceParGeneration": [
+          {
+            "generation": "nés du 1er janvier 1955 au 31 décembre 1957",
+            "dureeAuCoefficient1": 166,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans",
+            "dureeDeLaDerniereLigne": 146
+          },
+          {
+            "generation": "nés du 1er janvier 1958 au 31 décembre 1960",
+            "dureeAuCoefficient1": 167,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans",
+            "dureeDeLaDerniereLigne": 147
+          },
+          {
+            "generation": "nés du 1er janvier au 31 août 1961",
+            "dureeAuCoefficient1": 168,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans",
+            "dureeDeLaDerniereLigne": 148
+          },
+          {
+            "generation": "nés du 1er septembre au 31 décembre 1961",
+            "dureeAuCoefficient1": 169,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans et 3 mois",
+            "dureeDeLaDerniereLigne": 150
+          },
+          {
+            "generation": "nés en 1962",
+            "dureeAuCoefficient1": 169,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans et 6 mois",
+            "dureeDeLaDerniereLigne": 151
+          },
+          {
+            "generation": "nés en 1963",
+            "dureeAuCoefficient1": 170,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans et 9 mois",
+            "dureeDeLaDerniereLigne": 153
+          },
+          {
+            "generation": "nés en 1964 et au 1er trimestre 1965",
+            "dureeAuCoefficient1": 170,
+            "ageDeLaDerniereLigneAvecDuree": "62 ans et 9 mois",
+            "dureeDeLaDerniereLigne": 153
+          },
+          {
+            "generation": "nés du 1er avril au 31 décembre 1965",
+            "dureeAuCoefficient1": 171,
+            "ageDeLaDerniereLigneAvecDuree": "63 ans",
+            "dureeDeLaDerniereLigne": 155
+          },
+          {
+            "generation": "nés en 1966",
+            "dureeAuCoefficient1": 172,
+            "ageDeLaDerniereLigneAvecDuree": "63 ans et 3 mois",
+            "dureeDeLaDerniereLigne": 157
+          },
+          {
+            "generation": "nés en 1967",
+            "dureeAuCoefficient1": 172,
+            "ageDeLaDerniereLigneAvecDuree": "63 ans et 6 mois",
+            "dureeDeLaDerniereLigne": 158
+          },
+          {
+            "generation": "« née à compter de 1968 » (intitulé de la source)",
+            "dureeAuCoefficient1": 172,
+            "ageDeLaDerniereLigneAvecDuree": "63 ans et 9 mois",
+            "dureeDeLaDerniereLigne": 159
+          },
+          {
+            "generation": "« née à compter de 1969 » (intitulé de la source)",
+            "dureeAuCoefficient1": 172,
+            "ageDeLaDerniereLigneAvecDuree": "64 ans",
+            "dureeDeLaDerniereLigne": 160
+          }
+        ],
+        "lectureDeLaDuree": "Dans chaque tableau, la colonne « duree d'assurance » descend d'un trimestre par ligne a partir de la duree requise de la generation (coefficient 1) jusqu'a la ligne de l'age legal : un assure a qui il manque n trimestres d'assurance a le coefficient de la n-ieme ligne (interpretation du tableau, coherente avec la regle des complementaires ; non ecrite dans la source).",
+        "etat": "annexe 2026 de la base de connaissance (fiche « Retraite a taux reduit » du 31/08/2026)"
+      },
+      "surcote": {
+        "dateDEffet": "2010-01-01",
+        "surcote1": {
+          "tauxParTrimestreEnPourcent": 0.625,
+          "regle": "par trimestre d'assurance supplementaire ayant donne lieu a cotisation, accompli entre la date ou les conditions du taux plein sont reunies et la date d'entree en jouissance ou, au plus tard, l'age d'annulation de la decote (67 ans a compter de la generation 1955)"
+        },
+        "surcote2": {
+          "tauxParTrimestreEnPourcent": 0.75,
+          "regle": "par trimestre entier ecoule entre le 67e anniversaire et la date d'entree en jouissance"
+        },
+        "assiette": "nombre de points acquis a la demande de liquidation, y compris bonification parentale et majoration pour enfants ; les deux surcotes se calculent separement, les points de l'une n'entrent pas dans la base de l'autre",
+        "note": "Un trimestre equivaut a 90 jours. La surcote 1 est accordee meme si la derniere activite ne releve pas de l'Ircantec."
+      },
+      "majorationPourEnfants": {
+        "regle": "Majoration du total des points (apres majorations generales) pour l'agent qui a eu au moins trois enfants, ou les a eleves a sa charge au moins neuf ans avant leur seizieme anniversaire. Chacun des deux conjoints affilies peut y pretendre. Le droit peut s'ouvrir apres la liquidation.",
+        "bareme": [
+          {
+            "enfants": 3,
+            "majorationEnPourcent": 10
+          },
+          {
+            "enfants": 4,
+            "majorationEnPourcent": 15
+          },
+          {
+            "enfants": 5,
+            "majorationEnPourcent": 20
+          },
+          {
+            "enfants": 6,
+            "majorationEnPourcent": 25
+          },
+          {
+            "enfants": "7 et plus",
+            "majorationEnPourcent": 30
+          }
+        ]
+      },
+      "bonificationParentale": {
+        "dateDEffet": "1993-01-01",
+        "regle": "Bonification de points pour l'affilie qui a interrompu toute activite professionnelle pour elever un enfant (avant ses 18 ans) : par enfant, moyenne annuelle des points acquis sur l'ensemble des services, proratisee a la duree de l'interruption, dans la limite d'un an par enfant. Conditions : au moins un an de services pris en compte par le regime ; ne pas beneficier d'une bonification pour enfants d'un regime autre que le regime general ou agricole.",
+        "note": "La formule exacte par enfant est une image dans la page (non lue)."
+      },
+      "reversion": {
+        "tauxEnPourcent": 50,
+        "note": "« Compte tenu du taux de reversion de 50 % en vigueur dans le regime » (rapport d'activite 2025) ; conditions non relevees."
+      },
+      "retraitesAnticipeesATauxPlein": null
+    },
+    "citations": [
+      "Base de connaissance, « Periodicite » (02/05/2024) : 'inferieur a 300 points : Dans ce cas, il n'est pas verse d'allocation. L'interesse recoit, lors de la liquidation, un versement unique. Le montant de ce versement, appele egalement capital unique ou rachat, est egal au produit total des points de retraite par le salaire de reference de l'annee precedant la date de liquidation' ; 'superieur ou egal a 300 et inferieur a 1000 points : L'allocation est payable a terme echu au 1er janvier de chaque annee.' ; 'Le paiement de ce capital unique supprime tout droit a reversion au conjoint ou aux orphelins.'",
+      "Base de connaissance, « Montant de la retraite » : 'Pour les affiles totalisant au moins 300 points, le montant annuel de la retraite est calcule en multipliant le nombre total des points acquis, y compris les majorations, par la valeur du point Ircantec au moment de la liquidation des droits. (art. 18 arrete du 30 decembre 1970 modifie)'",
+      "Base de connaissance, « Retraite a taux reduit » (31/08/2026) : 'Le benefice de la liquidation anticipee de la retraite a taux reduit est ouvert au plus tot 10 ans avant l'age de la retraite a taux plein (67 ans pour les affilies nes a compter de 1955).' ; 'A ces deux parametres correspondent des taux d'anticipation qui sont compares entre eux. C'est le taux le plus avantageux qui est applique.'",
+      "Annexe « Retraite a taux reduit - taux de minoration » : '67 ans 166 1 ; 66 ans et 9 mois 165 0,99 ; [...] 64 ans 154 0,88 ; 63 ans et 9 mois 153 0,8675 ; [...] 62 ans 146 0,78 ; 61 ans et 9 mois 0,7625 ; [...] 57 ans 0,43' (generation 1955-1957)",
+      "Base de connaissance, « La surcote - Definition » (31/08/2026) : 'le nombre total des points acquis est majore de 0,625 % par trimestre d'assurance supplementaire ayant donne lieu a cotisation' ; 'le nombre de points acquis est majore de 0,75 % par trimestre entier ecoule entre le 67ieme anniversaire et la date d'entree en jouissance (DEJ) de la pension Ircantec' ; 'Le dispositif de la surcote entre en vigueur a compter du 1er janvier 2010.'",
+      "Base de connaissance, « La majoration pour enfants - Definition » (02/07/2025) : '10% pour 3 enfants ; 15% pour 4 enfants ; 20% pour 5 enfants ; 25% pour 6 enfants ; 30% pour 7 enfants et plus'",
+      "Base de connaissance, « La bonification parentale - Mode de calcul » : 'Pour chacun des enfants, le nombre de points attribue est egal a la moyenne annuelle des points acquis par l'agent pour l'ensemble de ses services, proratisee en fonction de la duree de l'interruption d'activite professionnelle.'",
+      "Base de connaissance, « Age normal de la retraite a taux plein » (13/08/2026) : '67 ans | pour les affilies nes a compter de 1955' ; « Age legal [...] sous condition de duree d'assurance » (31/08/2026) : '1964 | 63 ans | 62 ans et 9 mois | 171 | 170' ; 'A partir de 1969 | 64 ans | 64 ans | 172 | 172'"
+    ],
+    "source": "Ircantec, base de connaissance reglementaire (arrete du 30 decembre 1970 modifie, art. 15 bis, 16, 18, 25) et annexe 2026 des taux de minoration ; rapport d'activite 2025",
+    "url": "https://baseircantec.retraites.fr/demander-sa-retraite/les-conditions-douverture-du-droit-a-retraite/retraite-a-taux-reduit",
+    "urlsComplementaires": [
+      "https://baseircantec.retraites.fr/sites/default/files/2026-08/Tableaux%20tx%20de%20mino%20retraite%20%C3%A0%20tx%20r%C3%A9duit%202026.pdf",
+      "https://baseircantec.retraites.fr/etre-a-la-retraite/paiement/periodicite",
+      "https://baseircantec.retraites.fr/etre-a-la-retraite/paiement/montant-de-la-retraite",
+      "https://baseircantec.retraites.fr/carriere/constitution-des-droits/la-surcote/definition",
+      "https://baseircantec.retraites.fr/demander-sa-retraite/liquidation-de-la-retraite/les-droits-lies-aux-enfants/la-majoration-pour-enfants/definition",
+      "https://baseircantec.retraites.fr/demander-sa-retraite/liquidation-de-la-retraite/les-droits-lies-aux-enfants/la-bonification-parentale/mode-de-calcul",
+      "https://baseircantec.retraites.fr/demander-sa-retraite/les-conditions-douverture-du-droit-a-retraite/age-normal-de-la-retraite-a-taux-plein",
+      "https://baseircantec.retraites.fr/demander-sa-retraite/les-conditions-douverture-du-droit-a-retraite/age-legal-pour-beneficier-de-la-retraite-a-taux-plein-sous-condition-de-duree-dassurance",
+      "https://www.ipp.eu/baremes-ipp/regimes-de-retraites/retraites.secteur_public.regimes_complementaires.ircantec/table"
+    ],
+    "dateConsultation": "2026-11-22"
+  },
+  "nonLu": [
+    {
+      "quoi": "Decret n 70-1277 du 23 decembre 1970 et arrete du 30 decembre 1970 modifie (texte des articles 9 bis, 10, 15 bis, 16, 18, 25), decret et arrete du 23 septembre 2008, arrete du 29 mars 2018",
+      "ou": "Legifrance (refuse la lecture automatique) ; a lire a la main"
+    },
+    {
+      "quoi": "Texte portant le pourcentage d'appel a 127 % au 1er janvier 2026 et rendement reel vise pour 2026 et la suite (plan quadriennal 2026-2029)",
+      "ou": "Legifrance (arrete de fin 2025) ; deliberations du conseil d'administration ; rapport d'activite 2026 a paraitre"
+    },
+    {
+      "quoi": "Valeur du point avant le 1er avril 2011 dans un document de l'Ircantec (seule la serie IPP, secondaire, a ete lue)",
+      "ou": "Document « Evolution des valeurs du point Ircantec » de la base de connaissance (lien vide le 2026-11-22) ; jeu « Bareme IRCANTEC » de data.gouv.fr, fichier IRC_BAR_02_ValPt_SalRef.csv sur retraitesolidarite.caissedesdepots.fr (erreur 503 le 2026-11-22)"
+    },
+    {
+      "quoi": "Regle d'arrondi des points annuels",
+      "ou": "arrete du 30 decembre 1970, art. 10"
+    },
+    {
+      "quoi": "Points gratuits de chomage (conditions, assiette, calcul, avec ou sans prelevement), d'invalidite et de service militaire",
+      "ou": "baseircantec.retraites.fr/carriere/interruption-dactivite/chomage (sous-fiches) et /invalidite"
+    },
+    {
+      "quoi": "Retraites anticipees a taux plein (carriere longue, handicap, inaptitude, a 65 ans) : conditions propres a l'Ircantec",
+      "ou": "baseircantec.retraites.fr/demander-sa-retraite/les-conditions-douverture-du-droit-a-retraite/retraites-anticipees-a-taux-plein-dispositifs-particuliers"
+    },
+    {
+      "quoi": "Formule exacte de la bonification parentale (image) et majorations forfaitaires posterieures a 1984 s'il y en a",
+      "ou": "base de connaissance, fiches correspondantes"
+    },
+    {
+      "quoi": "Conditions et age de la reversion, regles des elus locaux et des praticiens hospitaliers, cumul emploi-retraite",
+      "ou": "base de connaissance, rubriques « En cas de deces » et « Carrieres specifiques »"
+    },
+    {
+      "quoi": "Limite haute de la tranche B avant la regle des 8 plafonds, et date de cette regle",
+      "ou": "base de connaissance, « Taux de cotisations et plafonds applicables - Derogations » ; arrete de 1970"
+    }
+  ]
+}

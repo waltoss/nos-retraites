@@ -1,0 +1,13 @@
+{
+	"note": "Qui passe une partie de sa vie de salarié du privé dans l'agriculture (MSA), et combien de temps. Paramètres libres, réglés à la main sur scripts/backtest-salaries-agricoles.ts : part et durée sur les retraités, recul sur les cotisants.",
+	"part": {
+		"F": 0.175,
+		"H": 0.24
+	},
+	"dureeMoyenne": 11.5,
+	"recul": {
+		"de": 1945,
+		"a": 1975,
+		"rapport": 0.8
+	}
+}

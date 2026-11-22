@@ -1,5 +1,6 @@
 import donnees from "./hypotheses.data.json" with { type: "json" };
 import type { HypothesesIndependants } from "./hypothesesIndependants.ts";
+import type { HypothesesSalariesAgricoles } from "./hypothesesSalariesAgricoles.ts";
 
 /**
  * Hypothèses du générateur de carrières.
@@ -12,6 +13,8 @@ import type { HypothesesIndependants } from "./hypothesesIndependants.ts";
 export interface Hypotheses {
 	/** Artisans et commerçants ; absent, les hypothèses de `hypothesesIndependants.data.json`. */
 	independants?: HypothesesIndependants;
+	/** Salariés agricoles ; absent, les hypothèses de `hypothesesSalariesAgricoles.data.json`. */
+	salariesAgricoles?: HypothesesSalariesAgricoles;
 	/** Part de femmes dans une génération. */
 	partFemmes: number;
 	/** Âge d'entrée dans la vie active : moyenne, écart-type, effet du rang de salaire (années par écart-type). */

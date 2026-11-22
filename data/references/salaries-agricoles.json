@@ -1,0 +1,1341 @@
+{
+ "meta": {
+  "objet": "Ordres de grandeur observés pour le régime de base des salariés agricoles (MSA salariés) : cotisants, durées validées, polypensionnés, retraités et pensions moyennes, flux, masses financières. Sert à régler la part des carrières du privé qui passent par l'agriculture (population) et à valider les pensions simulées (cibles).",
+  "methode": "Valeurs lues le 2026-11-22 dans les sources indiquées : PDF téléchargés (curl) et convertis avec pdftotext -layout, puis lus en texte. Aucune valeur citée de mémoire ni estimée. Aucun calcul : tout nombre figure tel quel dans la citation ou la ligne de tableau recopiée. Ce qui n'a pas été trouvé est dans « nonLu ».",
+  "conventions": "Chaque bloc porte source, url, date (de lecture), annee (des données), page (du PDF pour les documents de la MSA et du COR ; folio imprimé pour la Drees, le PDF ayant une page de plus), citation, champ et unite. Montants en euros courants. Les lignes de tableau recopiées gardent l'ordre des colonnes du document.",
+  "date": "2026-11-22",
+  "plan": {
+   "population": "cotisants, durée au régime, polypensionnés et polyaffiliés, âge de départ",
+   "cibles": "retraités et pensions (stock par sexe, carrières complètes, nouveaux retraités, générations), masses financières"
+  },
+  "limites": [
+   "Liquidation unique (Lura) : depuis le 1er juillet 2017, un assuré né en 1953 ou après et passé par plusieurs régimes alignés ne reçoit qu'une pension de base, du dernier régime. Les effectifs de la MSA salariés baissent et sa pension moyenne monte (elle porte alors sur toute la carrière des régimes alignés, pas sur la seule période agricole). Les pensions moyennes « tous retraités » mêlent donc des pensions de quelques trimestres agricoles et des pensions de carrière entière : elles ne valident pas un calcul par régime sans distinguer les deux populations.",
+   "Les statistiques de la MSA portent sur la France métropolitaine ; celles de la Drees sur les retraités résidant en France ou à l'étranger, hors versements forfaitaires uniques.",
+   "Les pensions moyennes de la MSA sont annuelles, brutes, et comprennent les avantages complémentaires (bonification pour enfants, etc.) et, selon la ligne, la réversion. Celles de la Drees sont mensuelles, brutes, de droit direct, hors majoration pour trois enfants.",
+   "« Carrière complète » au sens de la MSA : au moins 150 trimestres au régime des salariés agricoles, hors retraités en Lura. Les effectifs publiés de cette catégorie varient d'une édition à l'autre sans changement de définition annoncé (101 307 fin 2020, 67 937 fin 2022, 143 683 fin 2023) : série à ne pas utiliser en évolution.",
+   "La proportion de polypensionnés de la MSA change de niveau entre l'édition 2020 (94,2 %) et l'édition 2022 (80,0 %, « -14,1 pt ») : rupture non expliquée dans les pages lues.",
+   "Aucune source lue ne donne la part d'une génération ayant été affiliée au moins une fois à la MSA salariés, ni les cotisants par sexe."
+  ]
+ },
+ "population": {
+  "cotisants": {
+   "actifsCotisantsVieillesse": {
+    "unite": "personnes, dénombrement au 1er juillet",
+    "champ": "Régime des salariés agricoles, France métropolitaine. Tableau 1 de chaque bilan annuel, page 2.",
+    "serie": [
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2022 » (septembre 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/09/Bilan-financier-SA-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2022,
+      "page": 2,
+      "valeur": 743655,
+      "citation": "Actifs cotisants vieillesse 743 655 + 4,1"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/Bilan-demographique-et-financier-SA-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2023,
+      "page": 2,
+      "valeur": 754655,
+      "citation": "Actifs cotisants vieillesse 754 655 + 1,5"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2024 » (juin 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/06/Bilan-demographique-et-financier-SA-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2024,
+      "page": 2,
+      "valeur": 764922,
+      "citation": "Actifs cotisants vieillesse 764 922 + 0,9"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2025,
+      "page": 2,
+      "valeur": 787200,
+      "citation": "Actifs cotisants vieillesse 787 200 + 2,6 | - Actifs cotisants vieillesse : dénombrement au 1er juillet"
+     }
+    ]
+   },
+   "cotisantsAuSensDeLaCompensationDemographique2024": {
+    "source": "CCMSA, « Compensation démographique vieillesse » en 2024 (mars 2026)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/03/Compensation-demographique-2024.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 2,
+    "unite": "cotisants vieillesse",
+    "champ": "Cotisants retenus pour la compensation démographique entre régimes.",
+    "citation": "Régime général vieillesse 24 925 614 + 1,4 % 72,7 % ; Régime des salariés agricoles 815 093 - 1,5 % 2,4 % ; Dont actifs cotisants 766 966 + 1,1 % 2,2 % ; Dont cotisants chômeurs, stagiaires et apprentis 48 127 - 30,1 % 0,2 % (colonnes : effectifs 2024 | évolution par rapport à 2023 | structure)",
+    "ensemble": 815093,
+    "dontActifsCotisants": 766966,
+    "dontChomeursStagiairesEtApprentis": 48127,
+    "regimeGeneralVieillesse": 24925614,
+    "ratio": {
+     "citation": "Au régime des salariés agricoles, la population des cotisants atteint plus de 800 000 individus en 2024, en hausse de 23,6 % depuis 2000 [...] La population des retraités âgés d'au moins 65 ans représente près de 1,6 million de personnes en 2024 [...] Le ratio démographique s'établit à 2,0 retraités par cotisant, alors qu'il était de 2,2 en 2020.",
+     "retraitesParCotisant2024": 2.0,
+     "retraitesParCotisant2020": 2.2
+    }
+   },
+   "cotisantsSelonLeCor": {
+    "source": "COR, fiche « Le régime de retraite de base des salariés agricoles (MSA salariés) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": 4,
+    "unite": "personnes, moyenne annuelle",
+    "champ": "Cotisants du régime des salariés agricoles.",
+    "citation": "Entre 2015 et 2023, le nombre de cotisants salariés agricoles a augmenté de près de 12,3 %, soit une moyenne de 1,4 % par an, pour s'élever à 770 000 personnes en 2023. À partir de 2024, cette hausse tendancielle se poursuivrait à un rythme moins soutenu. À terme, le régime compterait près de 870 000 cotisants, soit une hausse de près de 13 % par rapport à 2023.",
+    "valeur2023": 770000,
+    "valeurATerme": 870000,
+    "hausse2015A2023Pourcent": 12.3
+   },
+   "previsionsMsa": {
+    "source": "CCMSA, « Régime des salariés agricoles, prévisions de financement 2025 à 2029 » (mars 2026)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/03/Previsions-SA-financement-2025-a-2029.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 2,
+    "unite": "personnes",
+    "champ": "Tableau 1 : réalisation 2024, prévisions 2025 à 2029 (établies avant les résultats 2025).",
+    "citation": "Bénéficiaires d'un avantage retraite 2 199 236 -2,0% | 2 161 600 -1,7% | 2 127 506 -1,6% | 2 097 999 -1,4% | 2 061 613 -1,7% | 2 025 173 -1,8% ; Actifs cotisants vieillesse 763 788 +0,7% | 771 726 +1,0% | 780 468 +1,1% | 786 923 +0,8% | 793 408 +0,8% | 799 871 +0,8% (colonnes : 2024 | 2025 | 2026 | 2027 | 2028 | 2029)",
+    "actifsCotisants": {
+     "2024": 763788,
+     "2025": 771726,
+     "2026": 780468,
+     "2027": 786923,
+     "2028": 793408,
+     "2029": 799871
+    },
+    "beneficiairesDUnAvantageRetraite": {
+     "2024": 2199236,
+     "2025": 2161600,
+     "2026": 2127506,
+     "2027": 2097999,
+     "2028": 2061613,
+     "2029": 2025173
+    }
+   },
+   "personnesAyantEuUnContratDansLAnnee": {
+    "source": "CCMSA, « Les chiffres utiles de la MSA », édition 2026",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/CU_2026_BAT-Web.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 10,
+    "unite": "personnes",
+    "champ": "Salariés agricoles ayant eu au moins un contrat dans l'année (emploi saisonnier compris).",
+    "citation": "la mesure du salariat peut se décliner selon le nombre de personnes bénéficiant d'au moins un contrat dans l'année. L'effectif total se situe au-delà de 1,8 million de personnes en 2024, en hausse de 1,1 % | Répartition des salariés agricoles selon le genre par tranche d'âge : 1 813 855 en 2024",
+    "valeur": 1813855,
+    "note": "Plus du double des actifs cotisants dénombrés au 1er juillet : beaucoup de contrats courts. C'est l'origine des durées validées faibles. La répartition par sexe et âge est un graphique dont les colonnes ne sont pas identifiables dans le texte extrait (non reprise)."
+   }
+  },
+  "dureeAuRegime": {
+   "trimestresMoyensDesRetraitesDeDroitsPersonnels": {
+    "unite": "trimestres validés au régime des salariés agricoles (pour les retraités en Lura : durée accomplie dans les trois régimes alignés)",
+    "champ": "Retraités de droits personnels du régime des salariés agricoles au 31 décembre, France métropolitaine. Tableaux 6 et 10 de chaque tableau de bord.",
+    "serie": [
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2020 » (février 2022)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2020,
+      "hommes": 43.1,
+      "femmes": 38.5,
+      "ensemble": 41.3,
+      "polypensionnes": 38.9,
+      "citation": "Nombre moyen de trimestres salariés 43,1 38,5 41,3 | Nombre moyen de trimestres salariés polypensionnés 38,9 ; Nombre moyen de trimestres tous salariés 41,3"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2022 » (juillet 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2022,
+      "page": 4,
+      "hommes": 46.1,
+      "femmes": 42.7,
+      "ensemble": 44.8,
+      "ayantValideDansUnAutreRegime": 36.3,
+      "citation": "Nombre moyen de trimestres salariés 46,1 42,7 44,8 | Nombre moyen de trimestres salariés ayant validés des trimestres dans un autre régime 36,3 ; Nombre moyen de trimestres tous salariés 44,8"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2023,
+      "page": 4,
+      "hommes": 47.6,
+      "femmes": 44.9,
+      "ensemble": 46.6,
+      "ayantValideDansUnAutreRegime": 37.0,
+      "citation": "Nombre moyen de trimestres salariés 47,6 44,9 46,6 | Nombre moyen de trimestres salariés ayant validés des trimestres dans un autre régime 37,0 ; Nombre moyen de trimestres tous salariés 46,6"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2024 » (septembre 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2024,
+      "page": 4,
+      "hommes": 49.1,
+      "femmes": 46.9,
+      "ensemble": 48.6,
+      "ensembleSelonLeTableau10": 48.2,
+      "ayantValideDansUnAutreRegime": 37.3,
+      "citation": "Nombre moyen de trimestres salariés 49,1 46,9 48,6 | Nombre moyen de trimestres salariés ayant validés des trimestres dans un autre régime 37,3 ; Nombre moyen de trimestres tous salariés 48,2",
+      "note": "Le tableau 6 donne 48,6 pour l'ensemble, le tableau 10 et le texte 48,2."
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2025,
+      "page": 4,
+      "hommes": 50.8,
+      "femmes": 49.1,
+      "ensemble": 50.1,
+      "ayantValideDansUnAutreRegime": 38.4,
+      "citation": "Nombre moyen de trimestres salariés 50,8 49,1 50,1 | Nombre moyen de trimestres salariés ayant validés des trimestres dans un autre régime 38,4 ; Nombre moyen de trimestres tous salariés 50,1"
+     }
+    ],
+    "note": "La hausse vient des pensionnés en Lura, dont la durée compte toute la carrière des régimes alignés. La valeur à viser pour une période agricole seule est plutôt celle des retraités ayant validé dans un autre régime (36 à 39 trimestres, soit 9 à 10 ans)."
+   },
+   "partDesPensionnesEnLura": {
+    "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": 2,
+    "unite": "% du stock de retraités",
+    "citation": "les pensionnés liquidant une retraite en Lura (SA et régimes alignés) représentent 12,4 % du stock de l'ensemble des retraités (10,7 % en 2024).",
+    "valeurs": {
+     "2023": 9.2,
+     "2024": 10.7,
+     "2025": 12.4
+    },
+    "citation2023": "TB au 31 décembre 2023 : « pensionnés liquidant une retraite en LURA (SA et régimes alignés) représentent 9,2 % du stock »"
+   },
+   "coefficientDeProratisationGeneration1953": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "page": 108,
+    "unite": "coefficient de proratisation moyen (durée validée dans le régime rapportée à la durée d'une carrière complète, borné à 1)",
+    "champ": "Génération née en 1953 résidant en France (EIR 2020). Fiche 11, tableau 1.",
+    "citation": "CNAV 0,73 0,72 0,73 ; MSA salariés 0,24 0,24 0,24 ; SSI base 0,26 0,34 0,32 ; Ensemble, tous régimes 0,90 0,96 0,93 (colonnes : Femmes | Hommes | Ensemble)",
+    "valeurs": {
+     "femmes": 0.24,
+     "hommes": 0.24,
+     "ensemble": 0.24
+    }
+   },
+   "effectifsEnEquivalentCarriereComplete": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "page": 111,
+    "unite": "milliers de retraités de droit direct ; part en %",
+    "champ": "Retraités de droit direct d'un régime de base résidant en France, vivants au 31 décembre 2020 (EIR 2020). Fiche 11, tableau 2.",
+    "citation": "MSA salariés 658 1 011 1 669 163 2,2 287 4,0 450 3,1 (colonnes : personnes physiques Femmes | Hommes | Ensemble ; EQCC Femmes niveau | part | Hommes niveau | part | Ensemble niveau | part) | La baisse la plus forte concerne la MSA salariés (-73 %), dont les effectifs de retraités passent de 1,6 million à 0,4 million.",
+    "personnesPhysiquesMilliers": {
+     "femmes": 658,
+     "hommes": 1011,
+     "ensemble": 1669
+    },
+    "equivalentCarriereCompleteMilliers": {
+     "femmes": 163,
+     "hommes": 287,
+     "ensemble": 450
+    },
+    "partDansLesEffectifsEnEqccPourcent": {
+     "femmes": 2.2,
+     "hommes": 4.0,
+     "ensemble": 3.1
+    }
+   }
+  },
+  "polypensionnesEtPolyaffilies": {
+   "partAyantValideDansUnAutreRegime": {
+    "unite": "% des retraités de droits personnels",
+    "champ": "Retraités de droits personnels du régime des salariés agricoles dont les trimestres agricoles sont inférieurs aux trimestres nécessaires à l'ouverture du droit. Tableau 5 de chaque tableau de bord.",
+    "serie": [
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2020 » (février 2022)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2020,
+      "hommes": 94.8,
+      "femmes": 93.3,
+      "ensemble": 94.2,
+      "citation": "Proportion 94,8 % 93,3 % 94,2 % 0,0 pt 0,1 pt 0,0 pt",
+      "note": "Intitulé de 2020 : « Proportion de polypensionnés parmi les droits personnels »."
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2022 » (juillet 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2022,
+      "page": 4,
+      "hommes": 80.9,
+      "femmes": 78.7,
+      "ensemble": 80.0,
+      "citation": "Proportion 80,9% 78,7% 80,0% -13,8pt -14,5pt -14,1pt"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2023,
+      "page": 4,
+      "hommes": 81.3,
+      "femmes": 79.0,
+      "ensemble": 80.4,
+      "citation": "Proportion 81,3% 79,0% 80,4% 0,4pt 0,2pt 0,3pt"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2024 » (septembre 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2024,
+      "page": 4,
+      "hommes": 81.2,
+      "femmes": 78.5,
+      "ensemble": 80.1,
+      "citation": "Proportion 81,2% 78,5% 80,1% -0,1pt -0,4pt -0,2pt"
+     },
+     {
+      "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2025,
+      "page": 4,
+      "hommes": 81.7,
+      "femmes": 79.2,
+      "ensemble": 80.7,
+      "citation": "Proportion 81,7% 79,2% 80,7% 0,5pt 0,7pt 0,6pt"
+     }
+    ]
+   },
+   "partDesPolypensionnesSelonLaDrees": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 23,
+    "unite": "% des retraités de droit direct du régime percevant une pension d'au moins deux régimes de base",
+    "champ": "Retraités de droit direct, résidant en France ou à l'étranger, fin 2024. Fiche 1, tableau 2.",
+    "citation": "MSA salariés 1 679 40 60 83 -1,9 -7,7 -12,7 10 (colonnes : effectifs en milliers | part des femmes % | part des hommes % | part des polypensionnés % | évolution 2023-2024 | 2020-2024 | 2014-2024 | effectifs de l'ensemble tous régimes en %) | [La part des polypensionnés] est très élevée à la MSA salariés (83 %) et non-salariés (78 %)",
+    "valeur": 83
+   },
+   "polyaffiliesSelonLaDrees": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 31,
+    "unite": "%",
+    "citation": "La SSI (avant son intégration au régime général en 2020) et la MSA salariés comptent environ 90 % de retraités polyaffiliés, ayant le plus souvent cotisé dans ces régimes pour des durées courtes et non nécessairement en fin de carrière.",
+    "valeurEnviron": 90
+   },
+   "polypensionnesSelonLeCor": {
+    "source": "COR, fiche « Le régime de retraite de base des salariés agricoles (MSA salariés) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": 1,
+    "citation": "La majorité des pensionnés du régime perçoit des retraites d'un faible montant au sein du régime car ils n'ont le plus souvent accompli qu'une petite partie de leur carrière en tant que salariés agricoles. Ainsi, 80% des pensionnés du régime sont polypensionnés en 2023.",
+    "valeur": 80
+   },
+   "regimeDeVersementDesLiquidantsLura": {
+    "source": "COR, fiche « Le régime de retraite de base des salariés agricoles (MSA salariés) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": "2017-2022",
+    "page": 3,
+    "citation": "Entre 2017 et 2022, parmi l'ensemble des nouveaux retraités LURA (MSA, RG et RSI), moins d'un affilié sur dix a pris sa retraite au régime des salariés agricoles."
+   },
+   "repartitionDesAffiliesGeneration1957": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2026,
+    "page": 124,
+    "unite": "% des affiliés de la génération 1957",
+    "champ": "Affiliés à un régime obligatoire de retraite français, nés en 1957 et vivants au 1er janvier 2026 (GIP Union Retraite). Fiche 13, tableau 1. « Salariés du secteur privé » regroupe le régime général et la MSA salariés.",
+    "citation": "Monoaffiliés — Salariés du secteur privé 49,7 39,6 44,8 | Polyaffiliés — Plusieurs régimes de salariés du secteur privé 10,9 11,7 11,3 ; Salariés du secteur privé + Non-salariés agricoles 2,8 3,8 3,3 ; [...] polyaffiliés à au moins deux régimes alignés 26,4 39,3 32,6 ; dont polyaffiliés uniquement à des régimes alignés 19,2 28,1 23,5 (colonnes : Femmes | Hommes | Ensemble)",
+    "plusieursRegimesDeSalariesDuSecteurPrive": {
+     "femmes": 10.9,
+     "hommes": 11.7,
+     "ensemble": 11.3
+    },
+    "salariesDuPriveEtNonSalariesAgricoles": {
+     "femmes": 2.8,
+     "hommes": 3.8,
+     "ensemble": 3.3
+    },
+    "polyaffiliesAAuMoinsDeuxRegimesAlignes": {
+     "femmes": 26.4,
+     "hommes": 39.3,
+     "ensemble": 32.6
+    },
+    "note": "La ligne « Plusieurs régimes de salariés du secteur privé » (régime général et MSA salariés, sans autre type de régime) est la seule mesure lue qui approche la part d'une génération passée par la MSA salariés ; c'est un minorant, puisque les affiliés à la MSA salariés qui ont aussi été fonctionnaires, indépendants, etc. sont comptés dans d'autres lignes. La part exacte n'est pas publiée dans les pages lues (voir nonLu)."
+   }
+  },
+  "ageDeDepartGeneration1953": {
+   "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+   "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire",
+   "annee": 2020,
+   "page": 153,
+   "unite": "années ; % ",
+   "champ": "Retraités nés en 1953 dont la MSA salariés est le régime principal (durée validée la plus importante). Fiche 16, tableau 2.",
+   "citation": "MSA salariés 62,2 62,7 0,0 0,1 9,6 22,2 31,3 5,4 13,9 15,9 1,7 2,4 (colonnes : âge moyen à la liquidation dans le régime principal | après neutralisation des départs avant l'AOD | moins de 55 | 55 | 56-59 | 60 | 61 | 62 | 63-65 | 66 | 67 ou plus | part parmi les retraités en %) ; Régime général 62,0 62,3 0,0 0,1 8,3 16,5 44,2 6,2 12,0 11,7 1,1 72,9",
+   "ageMoyen": 62.2,
+   "repartitionPourcent": {
+    "moinsDe55": 0.0,
+    "55": 0.1,
+    "56a59": 9.6,
+    "60": 22.2,
+    "61": 31.3,
+    "62": 5.4,
+    "63a65": 13.9,
+    "66": 15.9,
+    "67ouPlus": 1.7
+   },
+   "partParmiLesRetraitesPourcent": 2.4
+  }
+ },
+ "cibles": {
+  "retraitesStockMsa": {
+   "unite": "pensionnés en paiement au 31 décembre",
+   "champ": "Régime des salariés agricoles, France métropolitaine. Tableau 1 de chaque tableau de bord (page 3 à partir de l'édition 2022). Colonnes : Hommes | Femmes | Ensemble.",
+   "serie": [
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2020 » (février 2022)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2020,
+     "page": null,
+     "citation": "Droits personnels seuls 1 097 078 583 845 1 680 923 70,9 % ; Droits de réversion seuls 16 404 528 707 545 111 23,0 % ; Droits personnels et droits de réversion 16 657 128 202 144 859 6,1 % ; Ensemble 1 130 139 1 240 754 2 370 893 100 %",
+     "droitsPersonnelsSeuls": {
+      "hommes": 1097078,
+      "femmes": 583845,
+      "ensemble": 1680923
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 16404,
+      "femmes": 528707,
+      "ensemble": 545111
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 16657,
+      "femmes": 128202,
+      "ensemble": 144859
+     },
+     "ensemble": {
+      "hommes": 1130139,
+      "femmes": 1240754,
+      "ensemble": 2370893
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2022 » (juillet 2023)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2022,
+     "page": 3,
+     "citation": "Droits personnels seuls 1 037 432 573 605 1 611 037 71,0% ; Droits de réversion seuls 16 686 505 494 522 180 23,0% ; Droits personnels et droits de réversion 15 833 120 598 136 431 6,0% ; Ensemble 1 069 951 1 199 697 2 269 648 100%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 1037432,
+      "femmes": 573605,
+      "ensemble": 1611037
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 16686,
+      "femmes": 505494,
+      "ensemble": 522180
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 15833,
+      "femmes": 120598,
+      "ensemble": 136431
+     },
+     "ensemble": {
+      "hommes": 1069951,
+      "femmes": 1199697,
+      "ensemble": 2269648
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2023 » (juin 2024)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2023,
+     "page": 3,
+     "citation": "Droits personnels seuls 1 013 469 569 414 1 582 883 71,0% ; Droits de réversion seuls 17 094 497 135 514 229 23,1% ; Droits personnels et droits de réversion 15 597 117 368 132 965 6,0% ; Ensemble 1 046 160 1 183 917 2 230 077 100%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 1013469,
+      "femmes": 569414,
+      "ensemble": 1582883
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 17094,
+      "femmes": 497135,
+      "ensemble": 514229
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 15597,
+      "femmes": 117368,
+      "ensemble": 132965
+     },
+     "ensemble": {
+      "hommes": 1046160,
+      "femmes": 1183917,
+      "ensemble": 2230077
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2024 » (septembre 2025)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2024,
+     "page": 3,
+     "citation": "Droits personnels seuls 987 157 564 520 1 551 677 71,1% ; Droits de réversion seuls 17 092 484 255 501 347 23,0% ; Droits personnels et droits de réversion 15 293 114 071 129 364 5,9% ; Ensemble 1 019 542 1 162 846 2 182 388 100%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 987157,
+      "femmes": 564520,
+      "ensemble": 1551677
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 17092,
+      "femmes": 484255,
+      "ensemble": 501347
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 15293,
+      "femmes": 114071,
+      "ensemble": 129364
+     },
+     "ensemble": {
+      "hommes": 1019542,
+      "femmes": 1162846,
+      "ensemble": 2182388
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2025,
+     "page": 3,
+     "citation": "Droits personnels seuls 963 597 560 230 1 523 827 71,2% ; Droits de réversion seuls 17 361 473 082 490 443 22,9% ; Droits personnels et droits de réversion 15 069 110 292 125 361 5,9% ; Ensemble 996 027 1 143 604 2 139 631 100%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 963597,
+      "femmes": 560230,
+      "ensemble": 1523827
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 17361,
+      "femmes": 473082,
+      "ensemble": 490443
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 15069,
+      "femmes": 110292,
+      "ensemble": 125361
+     },
+     "ensemble": {
+      "hommes": 996027,
+      "femmes": 1143604,
+      "ensemble": 2139631
+     }
+    }
+   ],
+   "beneficiairesDeDroitsPersonnels2025": {
+    "citation": "Plus des trois quarts des retraités salariés agricoles (77,1 %) sont bénéficiaires de droits personnels, éventuellement assortis de droits de réversion, soit 1 649 188 personnes.",
+    "valeur": 1649188,
+    "page": 2
+   },
+   "note": "Le nombre de titulaires d'un droit direct est la somme des lignes « droits personnels seuls » et « droits personnels et droits de réversion » ; seule la valeur 2025 (1 649 188) est écrite par la source."
+  },
+  "pensionsMoyennesAnnuellesMsa": {
+   "unite": "euros bruts par an, droits personnels, droits de réversion et avantages complémentaires selon la ligne",
+   "champ": "Régime des salariés agricoles, France métropolitaine, pensionnés en paiement au 31 décembre. Tableau 3 de chaque tableau de bord. Colonnes : Hommes | Femmes | Ensemble. Pour les retraités en Lura, pension de toute la carrière des régimes alignés.",
+   "serie": [
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2020 » (février 2022)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2020,
+     "page": null,
+     "citation": "Droits personnels seuls 3 047€ 2 657 € 2 911 € 87,2 % ; Droits de réversion seuls 756 € 1 220 € 1 206 € 161,3 % ; Droits personnels et droits de réversion 3 864 € 3 446 € 3 494 € 89,2 % ; Ensemble 3 026 € 2 126 € 2 555 € 70,3 %",
+     "droitsPersonnelsSeuls": {
+      "hommes": 3047,
+      "femmes": 2657,
+      "ensemble": 2911
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 756,
+      "femmes": 1220,
+      "ensemble": 1206
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 3864,
+      "femmes": 3446,
+      "ensemble": 3494
+     },
+     "ensemble": {
+      "hommes": 3026,
+      "femmes": 2126,
+      "ensemble": 2555
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2022 » (juillet 2023)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2022,
+     "page": 3,
+     "citation": "Droits personnels seuls 3 504 € 3 151 € 3 378 € 89,9% ; Droits de réversion seuls 826 € 1 249 € 1 235 € 151,2% ; Droits personnels et droits de réversion 4 048 € 3 632 € 3 681 € 89,7% ; Ensemble 3 471 € 2 398 € 2 903 € 69,1%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 3504,
+      "femmes": 3151,
+      "ensemble": 3378
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 826,
+      "femmes": 1249,
+      "ensemble": 1235
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 4048,
+      "femmes": 3632,
+      "ensemble": 3681
+     },
+     "ensemble": {
+      "hommes": 3471,
+      "femmes": 2398,
+      "ensemble": 2903
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2023 » (juin 2024)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2023,
+     "page": 3,
+     "citation": "Droits personnels seuls 3 691 € 3 369 € 3 575 € 91,3% ; Droits de réversion seuls 843 € 1 242 € 1 229 € 147,4% ; Droits personnels et droits de réversion 4 070 € 3 670 € 3 717 € 90,2% ; Ensemble 3 650 € 2 506 € 3 043 € 68,6%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 3691,
+      "femmes": 3369,
+      "ensemble": 3575
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 843,
+      "femmes": 1242,
+      "ensemble": 1229
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 4070,
+      "femmes": 3670,
+      "ensemble": 3717
+     },
+     "ensemble": {
+      "hommes": 3650,
+      "femmes": 2506,
+      "ensemble": 3043
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2024 » (septembre 2025)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2024,
+     "page": 3,
+     "citation": "Droits personnels seuls 4 073 € 3 745 € 3 953 € 91,9% ; Droits de réversion seuls 906 € 1 294 € 1 281 € 142,8% ; Droits personnels et droits de réversion 4 386 € 3 924 € 3 979 € 89,5% ; Ensemble 4 024 € 2 742 € 3 341 € 68,1%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 4073,
+      "femmes": 3745,
+      "ensemble": 3953
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 906,
+      "femmes": 1294,
+      "ensemble": 1281
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 4386,
+      "femmes": 3924,
+      "ensemble": 3979
+     },
+     "ensemble": {
+      "hommes": 4024,
+      "femmes": 2742,
+      "ensemble": 3341
+     }
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2025,
+     "page": 3,
+     "citation": "Droits personnels seuls 4 332 € 4 021 € 4 217 € 92,8% ; Droits de réversion seuls 948 € 1 311 € 1 298 € 138,3% ; Droits personnels et droits de réversion 4 479 € 4 036 € 4 089 € 90,1% ; Ensemble 4 275 € 2 901 € 3 541 € 67,9%",
+     "droitsPersonnelsSeuls": {
+      "hommes": 4332,
+      "femmes": 4021,
+      "ensemble": 4217
+     },
+     "droitsDeReversionSeuls": {
+      "hommes": 948,
+      "femmes": 1311,
+      "ensemble": 1298
+     },
+     "droitsPersonnelsEtDroitsDeReversion": {
+      "hommes": 4479,
+      "femmes": 4036,
+      "ensemble": 4089
+     },
+     "ensemble": {
+      "hommes": 4275,
+      "femmes": 2901,
+      "ensemble": 3541
+     }
+    }
+   ],
+   "droitsPersonnelsSelonLeParcours": {
+    "champ": "Pension annuelle moyenne des droits personnels. Tableau 11 de chaque tableau de bord (page 5).",
+    "serie": [
+     {
+      "annee": 2020,
+      "polypensionnes": 2775,
+      "tousSalaries": 2957,
+      "citation": "Polypensionnés 2 775 € 4,9 % ; Tous salariés 2 957 € 5,3 %",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf"
+     },
+     {
+      "annee": 2022,
+      "ayantValideDansUnAutreRegime": 2668,
+      "tousSalaries": 3401,
+      "citation": "Salariés ayant validés des trimestres dans un autre régime 2 668 € 5,8% ; Tous salariés 3 401 € 9,8%",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf"
+     },
+     {
+      "annee": 2023,
+      "ayantValideDansUnAutreRegime": 2754,
+      "tousSalaries": 3585,
+      "citation": "Salariés ayant validés des trimestres dans un autre régime 2 754 € 3,2% ; Tous salariés 3 585 € 5,4%",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf"
+     },
+     {
+      "annee": 2024,
+      "ayantValideDansUnAutreRegime": 2962,
+      "tousSalaries": 3954,
+      "citation": "Salariés ayant validés des trimestres dans un autre régime 2 962 € 7,6% ; Tous salariés 3 954 € 10,3%",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf"
+     },
+     {
+      "annee": 2025,
+      "ayantValideDansUnAutreRegime": 3108,
+      "tousSalaries": 4206,
+      "citation": "Salariés ayant validés des trimestres dans un autre régime 3 108 € 4,9% ; Tous salariés 4 206 € 6,4% | texte, page 2 : « le montant moyen versé au titre de droits personnels (toutes durées de carrière salariées agricoles confondues) augmente de 6,4 % sur un an pour atteindre 4 217 € bruts, soit 351 € mensuels. Pour les seuls polypensionnés, la retraite annuelle moyenne est de 3 108 € bruts, soit 259 € mensuels. »",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+      "note": "Le tableau 11 donne 4 206 € pour « tous salariés », le texte et le tableau 3 donnent 4 217 €."
+     }
+    ],
+    "note": "Cible la plus proche d'une pension de base tirée de la seule période agricole : celle des retraités ayant validé dans un autre régime (3 108 € par an fin 2025 pour 38,4 trimestres en moyenne), elle-même tirée vers le haut par les pensionnés en Lura."
+   }
+  },
+  "carrieresCompletesMsa": {
+   "unite": "pensionnés ; euros bruts par an",
+   "champ": "Retraités ayant validé au moins 150 trimestres au régime des salariés agricoles, hors retraités en Lura ; pension de droits personnels, éventuellement assortie de droits de réversion, et avantages complémentaires. Tableaux 7 et 8. Colonnes : Hommes | Femmes | Ensemble.",
+   "serie": [
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2020 » (février 2022)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2021/10/TB-retraites-SA-T4-2020.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2020,
+     "effectifs": {
+      "hommes": 69545,
+      "femmes": 31762,
+      "ensemble": 101307
+     },
+     "pensionAnnuelleMoyenneEnsemble": 13533,
+     "citation": "Ensemble 69 545 31 762 101 307 100 % | Les retraités à carrière complète au régime des salariés agricoles perçoivent une pension annuelle moyenne de 13 533 [euros] | Ensemble 13 382 € 13 865 € 13 533 € 103,6 %",
+     "note": "Pension par sexe non reprise : les lignes du tableau 8 de cette édition sont incohérentes entre elles (ligne « Droits personnels seuls » : 13 418 € | 13 924 € | 13 924 €)."
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2022 » (juillet 2023)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2023/07/TB-Retraites-SA-T4-2022.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2022,
+     "page": 4,
+     "effectifs": {
+      "hommes": 45741,
+      "femmes": 22196,
+      "ensemble": 67937
+     },
+     "pensionAnnuelleMoyenne": {
+      "hommes": 14127,
+      "femmes": 14727,
+      "ensemble": 14323
+     },
+     "citation": "Ensemble 45 741 22 196 67 937 100% -1,9% -0,2% -1,4% | Ensemble 14 127 € 14 727 € 14 323 € 104,3%"
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2023 » (juin 2024)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/TB-Retraites-SA-T4-2023.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2023,
+     "page": 4,
+     "effectifs": {
+      "hommes": 85253,
+      "femmes": 58430,
+      "ensemble": 143683
+     },
+     "pensionAnnuelleMoyenne": {
+      "hommes": 14764,
+      "femmes": 13732,
+      "ensemble": 14344
+     },
+     "citation": "Ensemble 85 253 58 430 143 683 100% 6,1% 10,6% 7,9% | Ensemble 14 764 € 13 732 € 14 344 € 104,3% 4,5% 5,7% 4,9%",
+     "note": "Le rapport femmes/hommes imprimé (104,3 %) et les évolutions sont ceux de l'édition précédente : ils ne correspondent pas aux montants de la ligne. L'évolution imprimée des effectifs (+7,9 %) ne correspond pas à l'effectif publié un an plus tôt (67 937)."
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2024 » (septembre 2025)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2025/09/TB-Retraites-SA-T4-2024.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2024,
+     "page": 4,
+     "effectifs": {
+      "hommes": 89421,
+      "femmes": 63250,
+      "ensemble": 152671
+     },
+     "pensionAnnuelleMoyenne": {
+      "hommes": 15733,
+      "femmes": 14537,
+      "ensemble": 15237
+     },
+     "citation": "Ensemble 89 421 63 250 152 671 100% 4,9% 8,2% 6,3% | Ensemble 15 733 € 14 537 € 15 237 € 92,4% 6,6% 5,9% 6,2%"
+    },
+    {
+     "source": "CCMSA, direction des statistiques, tableau de bord « Les retraites du régime des salariés agricoles au 31 décembre 2025 » (juin 2026)",
+     "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/TB-Retraites-SA-T4-2025-1.pdf",
+     "date": "2026-11-22",
+     "fiabilite": "primaire",
+     "annee": 2025,
+     "page": 4,
+     "effectifs": {
+      "hommes": 93805,
+      "femmes": 68688,
+      "ensemble": 162493
+     },
+     "pensionAnnuelleMoyenne": {
+      "hommes": 16212,
+      "femmes": 14859,
+      "ensemble": 15640
+     },
+     "citation": "Ensemble 93 805 68 688 162 493 100% 4,9% 8,6% 6,4% | Ensemble 16 212 € 14 859 € 15 640 € 91,7% 3,0% 2,2% 2,6% | texte : « une pension annuelle moyenne de 15 640 euros bruts, soit 1 303 euros mensuels »"
+    }
+   ],
+   "note": "Meilleure cible pour valider la formule du régime général appliquée à une carrière entière de salarié agricole (salaires agricoles, 150 trimestres ou plus), sur les générations d'avant la Lura. Les effectifs ne forment pas une série fiable (voir meta.limites)."
+  },
+  "retraitesEtPensionsSelonLaDrees": {
+   "stockFin2024": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 9,
+    "unite": "milliers de retraités",
+    "champ": "Retraités résidant en France ou à l'étranger, vivants au 31 décembre 2024, hors versement forfaitaire unique. Vue d'ensemble, tableau 1 ; fiche 1, tableau 2 (page 23) ; fiche 3 (page 37).",
+    "citation": "MSA salariés 2 185 1 679 43 634 506 (colonnes : ensemble des retraités de droit direct ou dérivé | droit direct | dont nouveaux retraités en 2024 | droit dérivé | dont droit dérivé servi seul) | MSA salariés 1 679 40 60 83 -1,9 -7,7 -12,7 10 | MSA salariés 601 33 634 506 -2,4 -10,8 -15,2 14 (droit dérivé : femmes | hommes | ensemble | dont seule | évolutions | part)",
+    "ensembleMilliers": 2185,
+    "droitDirectMilliers": 1679,
+    "nouveauxRetraites2024Milliers": 43,
+    "droitDeriveMilliers": 634,
+    "droitDeriveServiSeulMilliers": 506,
+    "partDesFemmesParmiLesDroitsDirectsPourcent": 40,
+    "partDesHommesPourcent": 60,
+    "evolutionDesDroitsDirectsPourcent": {
+     "2023-2024": -1.9,
+     "2020-2024": -7.7,
+     "2014-2024": -12.7
+    },
+    "partDesRetraitesTousRegimesPourcent": 10
+   },
+   "pensionMensuelleMoyenneFin2024": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 58,
+    "unite": "euros bruts par mois, droit direct, hors majoration pour trois enfants ou plus",
+    "champ": "Retraités résidant en France ou à l'étranger. Fiche 5, tableau 2.",
+    "citation": "Régime général 777 4,4 1,2 2,8 -27 ; MSA salariés 301 9,1 18,1 31,9 -13 (colonnes : pension | évolution en euros constants 2023-2024 | 2020-2024 | 2014-2024 | écart entre la pension des femmes et celle des hommes en %)",
+    "valeur": 301,
+    "ecartFemmesHommesPourcent": -13,
+    "evolutionEnEurosConstantsPourcent": {
+     "2023-2024": 9.1,
+     "2020-2024": 18.1,
+     "2014-2024": 31.9
+    },
+    "note": "Pas de montant par sexe dans le tableau, seulement l'écart."
+   },
+   "selonLeRegimePrincipalFin2024": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 25,
+    "unite": "milliers de retraités ; euros bruts par mois tous régimes",
+    "champ": "Retraités de droit direct dont la MSA salariés est le régime principal (plus de la moitié de la carrière). Effectifs : fiche 1, tableau 3 (page 25). Pensions tous régimes, y compris majoration pour trois enfants : fiche 5, tableau 4 (page 60).",
+    "citation": "MSA salariés 210 2 290 4 500 3 (colonnes : Femmes effectifs | part | Hommes effectifs | part | Ensemble effectifs | part) | MSA salariés 1 430 1 920 1 720 1 860 2 190 2 070 (colonnes : tous retraités Femmes | Hommes | Ensemble ; carrières complètes Femmes | Hommes | Ensemble)",
+    "effectifsMilliers": {
+     "femmes": 210,
+     "hommes": 290,
+     "ensemble": 500
+    },
+    "pensionTousRegimes": {
+     "tousRetraites": {
+      "femmes": 1430,
+      "hommes": 1920,
+      "ensemble": 1720
+     },
+     "carrieresCompletes": {
+      "femmes": 1860,
+      "hommes": 2190,
+      "ensemble": 2070
+     }
+    },
+    "note": "Pension tous régimes (base et complémentaire), et non pension du seul régime agricole. Effectifs arrondis à la dizaine de milliers par la source."
+   },
+   "nouveauxRetraites": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 33,
+    "unite": "milliers de nouveaux retraités de droit direct ; % ; euros bruts par mois",
+    "champ": "Fiche 2, tableau 2 (effectifs) et graphique 1 (page 34) ; fiche 7, tableau 1 (page 75, pension).",
+    "citation": "MSA salariés 80 67 50 86 90 82 86 72 50 44 43 44 46 45 43 59 -3,5 (colonnes : 2010 à 2024 | proportion d'hommes en 2024 % | évolution 2023-2024 %) | En 2024, la part des nouvelles pensions versées au titre de la Lura est de 33 % au régime général et de 74 % à la MSA salariés | à la MSA salariés, cette part est plus élevée parmi les femmes que parmi les hommes (76 % contre 72 %) | MSA salariés 608 0,8 -4,4 102 (colonnes : montant mensuel | évolution 2023-2024 % | écart femmes/hommes % | écart entre la pension des liquidants et celle de l'ensemble des retraités %)",
+    "effectifsMilliers": {
+     "2010": 80,
+     "2011": 67,
+     "2012": 50,
+     "2013": 86,
+     "2014": 90,
+     "2015": 82,
+     "2016": 86,
+     "2017": 72,
+     "2018": 50,
+     "2019": 44,
+     "2020": 43,
+     "2021": 44,
+     "2022": 46,
+     "2023": 45,
+     "2024": 43
+    },
+    "proportionDHommes2024Pourcent": 59,
+    "partDesNouvellesPensionsEnLura2024Pourcent": {
+     "ensemble": 74,
+     "femmes": 76,
+     "hommes": 72
+    },
+    "pensionMensuelleMoyenneDesNouveauxRetraites2024": 608,
+    "ecartFemmesHommesPourcent": -4.4,
+    "ecartAvecLEnsembleDesRetraitesPourcent": 102,
+    "note": "Rupture en 2017 (Lura). La pension des nouveaux retraités est le double de celle du stock parce qu'elle porte, pour les trois quarts d'entre eux, sur toute la carrière des régimes alignés."
+   },
+   "pensionSelonLaGeneration": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2020,
+    "page": 67,
+    "unite": "euros bruts par mois, droit direct tous régimes, y compris majoration pour trois enfants",
+    "champ": "Retraités résidant en France dont la MSA salariés est le régime principal, vivants au 31 décembre 2020 (EIR 2020). Fiche 6, tableau 1.",
+    "citation": "MSA salariés 1 240 1 610 1 740 1 700 1 520 (colonnes : générations 1936 | 1942 | 1946 | 1950 | 1953) | S'agissant de la MSA salariés, la comparaison entre générations est biaisée à compter de la génération 1953, en raison de la liquidation unique des régimes alignés (Lura).",
+    "valeurs": {
+     "1936": 1240,
+     "1942": 1610,
+     "1946": 1740,
+     "1950": 1700,
+     "1953": 1520
+    }
+   },
+   "minimumContributif": {
+    "source": "Drees, « Les retraités et les retraites », édition 2026 (EACR 2024, EIR 2020, modèle ANCETRE, annuaire du GIP Union Retraite)",
+    "url": "https://www.vie-publique.fr/files/rapport/pdf/305111.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2024,
+    "page": 81,
+    "unite": "%",
+    "champ": "Fiche 8 : texte (page 81) et tableau 2 (page 84, génération 1953 résidant en France, selon le régime principal).",
+    "citation": "À la MSA salariés, la part des pensions servies en 2024 au titre du minimum contributif est de 36 %, soit un niveau légèrement supérieur à celui de 2023. Entre 2009 et 2011, la part des nouveaux retraités de la MSA salariés touchant le minimum contributif avoisinait quant à elle les 73 %. | MSA salariés 24 17 20 7 6 6 (colonnes : minimum dans le régime principal Femmes | Hommes | Ensemble ; minimum uniquement dans un régime non principal Femmes | Hommes | Ensemble)",
+    "partDesNouvellesPensions2024Pourcent": 36,
+    "partVers2009A2011Pourcent": 73,
+    "generation1953RegimePrincipal": {
+     "femmes": 24,
+     "hommes": 17,
+     "ensemble": 20
+    },
+    "generation1953AutreRegimeSeulement": {
+     "femmes": 7,
+     "hommes": 6,
+     "ensemble": 6
+    }
+   }
+  },
+  "retraitesSelonLeCor": {
+   "source": "COR, fiche « Le régime de retraite de base des salariés agricoles (MSA salariés) », projections de juin 2024",
+   "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+   "date": "2026-11-22",
+   "fiabilite": "primaire",
+   "annee": 2023,
+   "page": 1,
+   "unite": "millions de personnes",
+   "citation": "Le régime de retraite des salariés agricoles sert une pension à 2,2 millions de personnes en 2023, dont 1,8 million percevant un droit direct et 0,7 million un droit dérivé. | la part des femmes au sein des effectifs de retraités salariés agricoles de droits propres augmenterait passant de 39 % en 2023 à 50 % en 2070. | le nombre de nouveaux pensionnés se stabiliserait à environ 33 000 personnes par an.",
+   "ensembleMillions": 2.2,
+   "droitDirectMillions": 1.8,
+   "droitDeriveMillions": 0.7,
+   "partDesFemmes2023Pourcent": 39,
+   "partDesFemmes2070Pourcent": 50,
+   "nouveauxPensionnesParAnALongTerme": 33000,
+   "ratioDemographiqueCorrige": {
+    "citation": "le ratio démographique corrigé passerait de 14 en 2023 à 45 en 2070.",
+    "valeur2023": 14,
+    "valeur2070": 45,
+    "note": "Défini par le COR avec l'ensemble des cotisants de l'économie au numérateur (axe de la figure 2a : « Ensemble des cotisants par rapport aux retraités du régime ») : ce n'est pas le ratio cotisants sur retraités du régime."
+   }
+  },
+  "massesFinancieres": {
+   "prestationsDeRetraite": {
+    "unite": "millions d'euros",
+    "champ": "Prestations légales « Retraite, veuvage » du régime des salariés agricoles, métropole (droits propres et dérivés). Tableau 4 de chaque bilan.",
+    "serie": [
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2022 » (septembre 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/09/Bilan-financier-SA-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2022,
+      "page": 6,
+      "valeur": 6489.6,
+      "citation": "Retraite, veuvage 6 489,6 + 4,6 + 2,2"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/Bilan-demographique-et-financier-SA-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2023,
+      "page": 6,
+      "valeur": 6807.1,
+      "citation": "Retraite, veuvage 6 807,1 + 4,9 + 2,4"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2024 » (juin 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/06/Bilan-demographique-et-financier-SA-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2024,
+      "page": 7,
+      "valeur": 7339.9,
+      "citation": "Retraite, veuvage 7 339,9 + 7,9 + 3,9"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2025,
+      "page": 7,
+      "valeur": 7607.3,
+      "citation": "Retraite, veuvage 7 607,3 + 3,6 + 1,9 | En 2025, le régime des salariés agricoles a versé plus de 7,6 milliards d'euros aux bénéficiaires d'un avantage de retraite. [...] Cette évolution résulte de la revalorisation de 2,2 % des pensions ainsi que des effets de la Lura (+ 3,3 %)."
+     }
+    ]
+   },
+   "depensesDeLaBrancheRetraite2025": {
+    "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": 1,
+    "unite": "millions d'euros",
+    "citation": "Dépenses par branche (en millions d'€) : 7 974,9 Retraite",
+    "valeur": 7974.9
+   },
+   "partDesDroitsPropres2025": {
+    "source": "CCMSA, « Les chiffres utiles de la MSA », édition 2026",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/CU_2026_BAT-Web.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": 19,
+    "unite": "% ; milliards d'euros",
+    "citation": "Les dépenses réalisées au titre de la retraite (plus de 7,6 milliards d'euros) progressent de 3,6 % malgré la baisse du nombre de pensionnés (– 1,9 %). [...] Les prestations vieillesse liées aux droits propres représentent 88,1 % du montant total des dépenses de prestations légales. Leur montant s'élève à près de 6,7 milliards d'euros, en progression de 4,3 % en un an.",
+    "droitsPropresPourcent": 88.1,
+    "droitsPropresMilliards": 6.7,
+    "note": "Dans le contexte, « dépenses de prestations légales » désigne celles de la retraite."
+   },
+   "cotisationsDeRetraite": {
+    "unite": "millions d'euros",
+    "champ": "Tableau « Montants des cotisations employeurs du régime des salariés agricoles » de chaque bilan, ligne Retraite : cotisations émises ou déclarées au titre de la retraite, hors prises en charge par l'État et allègements généraux.",
+    "serie": [
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2022 » (septembre 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/09/Bilan-financier-SA-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2022,
+      "page": 9,
+      "valeur": 3132.4,
+      "citation": "Retraite 3 132,4 + 3,6 + 1,9"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/Bilan-demographique-et-financier-SA-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2023,
+      "page": 10,
+      "valeur": 3352.4,
+      "citation": "Retraite 3 352,4 + 7,0 + 3,7"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2024 » (juin 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/06/Bilan-demographique-et-financier-SA-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2024,
+      "page": 10,
+      "valeur": 3543.3,
+      "citation": "Retraite 3 543,3 + 5,7 + 3,0"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "annee": 2025,
+      "page": 10,
+      "valeur": 3647.7,
+      "citation": "Retraite 3 647,7 + 2,9 + 1,6 | Les cotisations émises ou déclarées au titre de la retraite s'élèvent à plus de 3,6 milliards en 2025 (soit 52,9 %)"
+     }
+    ],
+    "note": "DOUTEUX : le tableau s'intitule « cotisations employeurs » ; il n'est pas établi par les pages lues que la ligne Retraite comprend la part salariale. À vérifier avant d'en faire une cible."
+   },
+   "transfertDEquilibreDeLaCnav": {
+    "unite": "millions d'euros ; signe + : recette du régime agricole versée par le régime général",
+    "champ": "Tableau des transferts entre le régime général et le régime des salariés agricoles, ligne « Retraite – Intégration Cnav ».",
+    "serie": [
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2022 » (septembre 2023)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2023/09/Bilan-financier-SA-2022.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "page": 10,
+      "valeurs": {
+       "2021": -242.9,
+       "2022": -47.5
+      },
+      "citation": "Retraite – Intégration Cnav - 242,9 - 47,5"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2023 » (juin 2024)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2024/06/Bilan-demographique-et-financier-SA-2023.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "page": 11,
+      "valeurs": {
+       "2022": -47.5,
+       "2023": 146.2
+      },
+      "citation": "Retraite – Intégration Cnav - 47,5 + 146,2"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2024 » (juin 2025)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2025/06/Bilan-demographique-et-financier-SA-2024.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "page": 11,
+      "valeurs": {
+       "2023": 146.2,
+       "2024": 420.7
+      },
+      "citation": "Retraite – Intégration Cnav + 146,2 + 420,7"
+     },
+     {
+      "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+      "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+      "date": "2026-11-22",
+      "fiabilite": "primaire",
+      "page": 11,
+      "valeurs": {
+       "2024": 420.7,
+       "2025": 630.6
+      },
+      "citation": "Retraite – Intégration Cnav + 420,7 + 630,6 + 49,9 % | La branche retraite reste, quant à elle, déficitaire pour la troisième année consécutive, avec un solde négatif de 630,6 millions d'euros en 2025"
+     }
+    ]
+   },
+   "selonLeCor2023": {
+    "source": "COR, fiche « Le régime de retraite de base des salariés agricoles (MSA salariés) », projections de juin 2024",
+    "url": "https://cor-retraites.fr/sites/default/files/2024-07/Fiche_MSA_SA_vf.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2023,
+    "page": 1,
+    "unite": "milliards d'euros 2023 ; % du PIB ; % des dépenses ou des ressources",
+    "citation": "Les dépenses totales du régime s'élèvent à 0,25 % du PIB en 2023 (soit 7,1 milliards d'euros 2023) et sont principalement constituées de masses de pensions de droit direct (83 %) et de droit dérivé (13 %). | En 2023, les ressources du régime s'élèvent à 0,25 % du PIB (7,1 milliards d'euros). | transferts de compensation démographique qui représentent 35 % des ressources du régime en 2023 | La part de cotisations dans les ressources, qui s'élève à 46 % en 2023, devrait chuter en projection pour atteindre 25 % en 2070.",
+    "depensesTotalesMilliards": 7.1,
+    "depensesPourcentDuPib": 0.25,
+    "partDesPensionsDeDroitDirectPourcent": 83,
+    "partDesPensionsDeDroitDerivePourcent": 13,
+    "partDesCotisationsDansLesRessourcesPourcent": 46,
+    "partDeLaCompensationDemographiquePourcent": 35
+   },
+   "structureDesRecettesDuRegime2025": {
+    "source": "CCMSA, « Régime des salariés agricoles, bilan démographique et financier en 2025 » (juin 2026)",
+    "url": "https://statistiques.msa.fr/wp-content/uploads/2026/06/Bilan-demographique-et-financier-SA-2025.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "primaire",
+    "annee": 2025,
+    "page": 7,
+    "unite": "% des recettes du régime, toutes branches",
+    "citation": "En 2025, le régime des salariés agricoles est financé principalement par les cotisations sociales et la Contribution Sociale Généralisée (CSG), qui représentent près de la moitié des ressources (45,9 %). Les autres sources de financement proviennent des transferts du régime général (22,1 %), de la compensation démographique vieillesse (14,4 %), de produits divers (7,7 %), de la prise en charge de cotisations et prestations (6,7 %), des cotisations prises en charge par l'Etat (3,2 %)",
+    "note": "Toutes branches (maladie, ATMP, famille, retraite), pas la seule retraite."
+   }
+  }
+ },
+ "desaccordsEntreSources": [
+  {
+   "objet": "Actifs cotisants en 2024",
+   "valeurs": "764 922 (bilan 2024, juin 2025) ; 763 788 (prévisions 2025-2029, mars 2026, colonne « réalisation 2024 ») ; 766 966 (compensation démographique 2024, mars 2026) ; 815 093 en comptant chômeurs, stagiaires et apprentis",
+   "commentaire": "Trois valeurs de la MSA pour la même notion, à 0,4 % près ; dates d'arrêté ou champs non précisés."
+  },
+  {
+   "objet": "Cotisants en 2023",
+   "valeurs": "754 655 (bilan 2023, au 1er juillet) ; 770 000 (COR, moyenne annuelle)",
+   "commentaire": "Concepts différents (date ou moyenne annuelle)."
+  },
+  {
+   "objet": "Retraités de droit direct",
+   "valeurs": "Drees fin 2024 : 1 679 milliers (France et étranger) ; MSA fin 2024 : 1 551 677 droits personnels seuls et 129 364 droits personnels et de réversion (métropole) ; COR 2023 : 1,8 million",
+   "commentaire": "Ordres de grandeur concordants."
+  },
+  {
+   "objet": "Part des polypensionnés",
+   "valeurs": "MSA : 94,2 % fin 2020 puis 80,0 % fin 2022 (rupture) et 80,7 % fin 2025 ; Drees fin 2024 : 83 % de polypensionnés, « environ 90 % » de polyaffiliés ; COR 2023 : 80 %",
+   "commentaire": "Définitions différentes (trimestres validés ailleurs, pension d'un autre régime de base, affiliation). Avec la Lura, un polyaffilié des régimes alignés devient monopensionné."
+  },
+  {
+   "objet": "Effectifs à carrière complète au régime (MSA)",
+   "valeurs": "101 307 fin 2020 ; 67 937 fin 2022 ; 143 683 fin 2023 (évolution imprimée +7,9 %) ; 152 671 fin 2024 ; 162 493 fin 2025",
+   "commentaire": "Série incohérente pour une même définition affichée (150 trimestres, hors Lura)."
+  },
+  {
+   "objet": "Durée moyenne fin 2024 (MSA)",
+   "valeurs": "48,6 trimestres (tableau 6) ; 48,2 trimestres (tableau 10 et texte)",
+   "commentaire": "Même édition."
+  },
+  {
+   "objet": "Pension annuelle moyenne des droits personnels fin 2025 (MSA)",
+   "valeurs": "4 217 € (texte et tableau 3, « droits personnels seuls ») ; 4 206 € (tableau 11, « tous salariés »)",
+   "commentaire": "Le texte attribue 4 217 € à l'ensemble des droits personnels ; le tableau 3 donne ce montant à la seule ligne « droits personnels seuls »."
+  },
+  {
+   "objet": "Date d'effet de la Lura dans l'édition 2026 de la Drees",
+   "valeurs": "1er juillet 2017 (encadré 1 de la fiche 1, page 27) ; « À compter du 1er janvier 2017 » (notes des fiches 6 et 7, pages 68 et 75) ; « Au 1er juin 2017 » (fiche 15, note 8, page 150)",
+   "commentaire": "MSA et COR : 1er juillet 2017."
+  },
+  {
+   "objet": "Intégration financière au régime général",
+   "valeurs": "« Depuis 1963 » (MSA, bilan 2025) ; « depuis 2017 » (COR)",
+   "commentaire": "Non tranché ; voir data/baremes/salaries-agricoles.json."
+  }
+ ],
+ "nonLu": [
+  {
+   "quoi": "Part d'une génération (1953, 1955 ou autre) ayant été affiliée au moins une fois à la MSA salariés, et durée moyenne validée par ces affiliés",
+   "ouProbablement": "Drees, échantillon interrégimes de cotisants (EIC 2021) et de retraités (EIR 2020) : fichiers Excel associés aux fiches 11 et 13 du panorama, ou data.drees.solidarites-sante.gouv.fr ; Études et Résultats sur les polycotisants"
+  },
+  {
+   "quoi": "Cotisants par sexe et par âge (le graphique des Chiffres utiles 2026, page 10, n'est pas lisible en texte) ; cotisants avant 2022",
+   "ouProbablement": "CCMSA, Chiffres utiles (graphique), tableaux de bord de l'emploi salarié agricole (statistiques.msa.fr) ; COR, figure 5 de la fiche (graphique)"
+  },
+  {
+   "quoi": "Pension mensuelle moyenne de droit direct par sexe au sens de la Drees (seul l'écart de -13 % est publié dans le PDF) et série par année",
+   "ouProbablement": "Fichier Excel de la fiche 5 du panorama ; open data de la Drees (EACR)"
+  },
+  {
+   "quoi": "Tableau de bord au 31 décembre 2021 et éditions antérieures à 2020 (stock et pensions)",
+   "ouProbablement": "statistiques.msa.fr, rubrique retraite"
+  },
+  {
+   "quoi": "Masse des cotisations de retraite, parts patronale et salariale distinguées, et masse salariale plafonnée soumise à cotisation vieillesse",
+   "ouProbablement": "Rapport à la Commission des comptes de la sécurité sociale (fiche du régime des salariés agricoles) ; CCMSA, rapport « Charges et produits »"
+  },
+  {
+   "quoi": "Pension de base moyenne par génération versée par le régime (hors effet Lura), distribution des pensions et des durées",
+   "ouProbablement": "Drees, EIR 2020 ; CCMSA, études sur les retraités salariés agricoles"
+  },
+  {
+   "quoi": "Fiche du COR de juin 2025 ou 2026 sur la MSA salariés (seule celle de juin 2024 a été lue)",
+   "ouProbablement": "cor-retraites.fr, fiches par régime annexées au rapport annuel"
+  }
+ ]
+}
