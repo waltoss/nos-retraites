@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { ResultatLeger } from "../engine.worker";
 import { euros, milliards, personnes } from "../format";
+import { interetsLus, type Lecture, soldeLu, versementsEtat } from "../lecture";
 import {
 	LEVIER,
 	type LevierId,
@@ -45,10 +46,13 @@ export function Equation({
 	reference,
 	courant,
 	reglages,
+	lecture,
 }: {
 	reference: ResultatLeger;
 	courant: ResultatLeger;
 	reglages: Reglages;
+	/** Lecture du solde choisie sur la page : versements de l'État, intérêts. */
+	lecture: Lecture;
 }) {
 	const touches = new Set<Terme>();
 	for (const id of Object.keys(reglages) as LevierId[])
@@ -63,16 +67,28 @@ export function Equation({
 	);
 	const sys = courant.systeme;
 	const sysReference = reference.systeme;
+	const solde = soldeLu(sys, lecture);
+	const soldeReference = soldeLu(sysReference, lecture);
 	/** Écart de solde du système entier, en milliards : positif, il faut trouver moins d'argent. */
-	const effet = (sys.solde - sysReference.solde) / 1e9;
-	const besoin = Math.max(0, -sys.solde);
-	const excedent = Math.max(0, sys.solde);
-	const pleine = Math.max(sys.depenses, sys.ressources);
+	const effet = (solde - soldeReference) / 1e9;
+	const besoin = Math.max(0, -solde);
+	const excedent = Math.max(0, solde);
+	const autres =
+		sys.autresRessources - (lecture.horsEtat ? versementsEtat(sys) : 0);
+	// Des intérêts nets positifs sont une ressource ; négatifs, une dépense de plus.
+	const interets = interetsLus(sys, lecture);
+	const produits = Math.max(0, interets);
+	const charges = Math.max(0, -interets);
+	const depenses = sys.depenses + charges;
+	const pleine = Math.max(depenses, sys.cotisations + autres + produits);
 	const largeur = (x: number) => `${(x / pleine) * 100}%`;
 	const [survol, setSurvol] = useState<number | null>(null);
 	const segments = [
 		{ cle: "cot", nom: "Cotisations", montant: sys.cotisations },
-		{ cle: "autres", nom: "Autres ressources", montant: sys.autresRessources },
+		{ cle: "autres", nom: "Autres ressources", montant: autres },
+		...(produits > 0
+			? [{ cle: "interets", nom: "Intérêts des réserves", montant: produits }]
+			: []),
 		...(besoin > 0
 			? [{ cle: "besoin", nom: "Besoin de financement", montant: besoin }]
 			: []),
@@ -144,7 +160,9 @@ export function Equation({
 			<div className="systeme">
 				<h3>Tous régimes confondus, en {courant.anneeReference}</h3>
 				<p className="unit">
-					{milliards(sys.depenses)} de dépenses de retraite, à payer avec :
+					{milliards(sys.depenses)} de dépenses de retraite
+					{charges > 0 && `, plus ${milliards(charges)} d'intérêts de la dette`}
+					, à payer avec :
 				</p>
 				<div className="systeme-piste">
 					<div
@@ -174,8 +192,8 @@ export function Equation({
 							<strong>{vise.nom}</strong>
 							<span>{milliards(vise.montant)}</span>
 							<span className="avant">
-								{Math.round((vise.montant / sys.depenses) * 100)} % des dépenses
-								de retraite
+								{Math.round((vise.montant / depenses) * 100)} % des dépenses de
+								retraite
 							</span>
 						</div>
 					)}
@@ -186,10 +204,19 @@ export function Equation({
 						de cotisations
 					</li>
 					<li className="autres">
-						<strong className="num">{milliards(sys.autresRessources)}</strong>
-						d'autres ressources : CSG, impôts affectés, transferts, versements
-						de l'État à ses propres régimes
+						<strong className="num">{milliards(autres)}</strong>
+						{lecture.horsEtat
+							? "d'autres ressources : CSG, impôts affectés, transferts, sans les versements de l'État à ses propres régimes"
+							: "d'autres ressources : CSG, impôts affectés, transferts, versements de l'État à ses propres régimes"}
 					</li>
+					{lecture.interets && (
+						<li className="interets">
+							<strong className="num">{milliards(Math.abs(interets))}</strong>
+							{interets >= 0
+								? "d'intérêts : ce que rapportent les réserves des caisses, moins ce que coûte la dette"
+								: "d'intérêts de la dette, nets de ce que rapportent les réserves et comptés dans le besoin"}
+						</li>
+					)}
 					<li className="besoin">
 						<strong className="num">
 							{milliards(besoin > 0 ? besoin : excedent)}
@@ -198,7 +225,7 @@ export function Equation({
 							? "qui manquent : le besoin de financement"
 							: "d'excédent"}
 						, soit{" "}
-						{(Math.abs(sys.solde / sys.pib) * 100).toLocaleString("fr-FR", {
+						{(Math.abs(solde / sys.pib) * 100).toLocaleString("fr-FR", {
 							maximumFractionDigits: 1,
 						})}{" "}
 						% du PIB
@@ -212,7 +239,7 @@ export function Equation({
 					) : (
 						<>
 							Avec la loi actuelle, le solde serait de{" "}
-							{signe(sysReference.solde / 1e9)} milliards. Votre scénario{" "}
+							{signe(soldeReference / 1e9)} milliards. Votre scénario{" "}
 							{effet > 0 ? "l'améliore" : "le dégrade"} de{" "}
 							<strong className="num">
 								{Math.abs(effet).toLocaleString("fr-FR", {

@@ -1,6 +1,7 @@
 /// <reference lib="webworker" />
 import {
 	type AnneeSysteme,
+	ajouterInterets,
 	ajouterRessources,
 	appliquerCapitalisation,
 	BAREMES_FRANCE as B,
@@ -389,13 +390,16 @@ function capitalisation(s: ScenarioMoteur): ProjectionCapitalisation | null {
 	return p;
 }
 
-/** Le système entier d'un scénario complet : ses règles, puis ses ressources nouvelles et sa capitalisation. */
+/**
+ * Le système entier d'un scénario complet : ses règles, puis ses ressources nouvelles et sa
+ * capitalisation, enfin les intérêts que ses soldes successifs font rapporter ou coûter.
+ */
 function systemeDe(s: ScenarioMoteur): AnneeSysteme[] {
 	let annees = ajouterRessources(systeme(scene(s)), s.ressources);
 	const p = capitalisation(s);
 	if (p && s.capitalisation)
 		annees = appliquerCapitalisation(annees, p, s.capitalisation);
-	return annees;
+	return ajouterInterets(annees);
 }
 
 function cumulEquilibre(s: ScenarioMoteur): number {
@@ -926,7 +930,7 @@ self.onmessage = (e: MessageEvent<Requete>) => {
 				reference: trajectoires(scene(DROIT)),
 				courant: trajectoires(scene(m.scenario)),
 				systeme: {
-					reference: systeme(scene(DROIT)),
+					reference: systemeDe(DROIT),
 					courant: systemeDe(m.scenario),
 				},
 				capitalisation: capitalisation(m.scenario),

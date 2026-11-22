@@ -1,8 +1,14 @@
-import type { AnneeSysteme, Projection } from "@nos-retraites/engine";
-import { type PointerEvent, useEffect, useState } from "react";
+import {
+	type AnneeSysteme,
+	PATRIMOINE_SYSTEME,
+	type Projection,
+} from "@nos-retraites/engine";
+import { type PointerEvent, type ReactNode, useEffect, useState } from "react";
 import { decimal, entier, euros } from "../format";
+import { type Lecture, soldeLu } from "../lecture";
 import { useScenario } from "../scenario";
 import { cadrer } from "./Histogram";
+import { Info } from "./Info";
 
 interface Point {
 	x: number;
@@ -188,8 +194,58 @@ export function Courbe({
 const milliards = (y: number) =>
 	`${y > 0 ? "+" : y < 0 ? "−" : ""}${entier(Math.abs(y))} milliards`;
 
+/** Réserves moins dette de fin 2025, en milliards d'euros de 2026. */
+const PATRIMOINE_DEPART =
+	(PATRIMOINE_SYSTEME.reserves - PATRIMOINE_SYSTEME.dette) / 1e9;
+
+/** Un choix à deux positions de la lecture du solde. */
+function Choix({
+	legende,
+	actif,
+	sans,
+	avec,
+	onChoix,
+	children,
+}: {
+	legende: string;
+	actif: boolean;
+	sans: string;
+	avec: string;
+	onChoix: (actif: boolean) => void;
+	children?: ReactNode;
+}) {
+	return (
+		<fieldset className="choix-annee">
+			<legend>{legende}</legend>
+			<button
+				type="button"
+				className={actif ? "puce" : "puce actif"}
+				aria-pressed={!actif}
+				onClick={() => onChoix(false)}
+			>
+				{sans}
+			</button>
+			<button
+				type="button"
+				className={actif ? "puce actif" : "puce"}
+				aria-pressed={actif}
+				onClick={() => onChoix(true)}
+			>
+				{avec}
+			</button>
+			{children}
+		</fieldset>
+	);
+}
+
 /** Les trajectoires du système de 2026 à 2070, loi actuelle et scénario. */
-export function Trajectoires() {
+export function Trajectoires({
+	lecture,
+	onLecture,
+}: {
+	lecture: Lecture;
+	onLecture: (l: Lecture) => void;
+}) {
 	const { pret, demander, scenario, modifies } = useScenario();
 	const [donnees, setDonnees] = useState<{
 		reference: Projection;
@@ -197,7 +253,7 @@ export function Trajectoires() {
 		systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
 		anneeEffet: number;
 	} | null>(null);
-	const [horsEtat, setHorsEtat] = useState(false);
+	const { horsEtat } = lecture;
 
 	useEffect(() => {
 		if (!pret) return;
@@ -226,8 +282,9 @@ export function Trajectoires() {
 		p: Projection,
 		f: (a: Projection["annees"][number]) => number,
 	) => p.annees.map((a) => ({ x: a.annee, y: f(a) }));
-	// Solde du système entier, selon que les versements d'équilibre de l'État comptent ou non comme une ressource.
-	const solde = (a: AnneeSysteme) => (horsEtat ? a.soldeHorsEtat : a.solde);
+	// Solde du système entier, selon que les versements d'équilibre de l'État comptent ou non comme
+	// une ressource, et que les intérêts des réserves et de la dette y entrent ou non.
+	const solde = (a: AnneeSysteme) => soldeLu(a, lecture);
 	const soldes = (annees: AnneeSysteme[]) =>
 		annees.map((a) => ({ x: a.annee, y: solde(a) / 1e9 }));
 	const cumul = (annees: AnneeSysteme[]) =>
@@ -235,6 +292,13 @@ export function Trajectoires() {
 	const cumulReference = cumul(systeme.reference);
 	const cumulCourant = cumul(systeme.courant);
 	const derniere = systeme.courant.at(-1)?.annee ?? 2070;
+	const situationFinale = (annees: AnneeSysteme[]) => {
+		const s = annees.at(-1)?.situationPatrimoniale;
+		return s ? (horsEtat ? s.horsEtat : s.officiel) / 1e9 : 0;
+	};
+	const finale = situationFinale(
+		modifies > 0 ? systeme.courant : systeme.reference,
+	);
 	// Moyenne glissante sur cinq générations : chacune ne compte que quelques centaines de personnes simulées.
 	const generations = (p: Projection) =>
 		p.generations
@@ -255,25 +319,31 @@ export function Trajectoires() {
 			<div className="solde">
 				<div className="solde-tete">
 					<h3>Le solde du système de retraite, tous régimes</h3>
-					<fieldset className="choix-annee">
-						<legend>Lecture</legend>
-						<button
-							type="button"
-							className={horsEtat ? "puce" : "puce actif"}
-							aria-pressed={!horsEtat}
-							onClick={() => setHorsEtat(false)}
+					<div className="solde-lectures">
+						<Choix
+							legende="Lecture"
+							actif={horsEtat}
+							sans="Officielle"
+							avec="Sans versements de l'État"
+							onChoix={(v) => onLecture({ ...lecture, horsEtat: v })}
+						/>
+						<Choix
+							legende="Intérêts"
+							actif={lecture.interets}
+							sans="Sans"
+							avec="Avec"
+							onChoix={(v) => onLecture({ ...lecture, interets: v })}
 						>
-							Officielle
-						</button>
-						<button
-							type="button"
-							className={horsEtat ? "puce actif" : "puce"}
-							aria-pressed={horsEtat}
-							onClick={() => setHorsEtat(true)}
-						>
-							Sans les versements de l'État
-						</button>
-					</fieldset>
+							<Info label="Ce que changent les intérêts">
+								<strong>Avec</strong> : les réserves des caisses rapportent, la
+								dette coûte, et chaque déficit creuse la dette. Taux : la hausse
+								du salaire moyen au-dessus des prix (0,7 % à terme), comme le
+								COR.
+								<br />
+								<strong>Sans</strong> : la convention du COR.
+							</Info>
+						</Choix>
+					</div>
 				</div>
 				<p className="sub">
 					{horsEtat
@@ -297,7 +367,9 @@ export function Trajectoires() {
 							avec la loi actuelle
 						</small>
 						<strong className="num">
-							{entier(Math.abs(cumulReference))} milliards
+							{cumulReference >= 0
+								? `${entier(cumulReference)} milliards d'excédent`
+								: `${entier(Math.abs(cumulReference))} milliards`}
 						</strong>
 						{modifies > 0 && Math.abs(cumulCourant - cumulReference) >= 1 && (
 							<>
@@ -313,10 +385,22 @@ export function Trajectoires() {
 								</strong>
 							</>
 						)}
-						<p>
-							Somme des soldes annuels, en euros de 2026 et sans intérêts :
-							dette à lever, impôts, cotisations ou économies ailleurs.
-						</p>
+						{lecture.interets ? (
+							<p>
+								Somme des soldes annuels, intérêts compris, en euros de 2026.
+								Les réserves dépassaient la dette de {entier(PATRIMOINE_DEPART)}{" "}
+								milliards fin 2025 ; en {derniere}
+								{modifies > 0 ? ", avec votre scénario," : ""}{" "}
+								{finale >= 0
+									? `elles la dépasseraient de ${entier(finale)} milliards.`
+									: `la dette dépasserait les réserves de ${entier(Math.abs(finale))} milliards.`}
+							</p>
+						) : (
+							<p>
+								Somme des soldes annuels, en euros de 2026 et sans intérêts :
+								dette à lever, impôts, cotisations ou économies ailleurs.
+							</p>
+						)}
 					</div>
 				</div>
 			</div>

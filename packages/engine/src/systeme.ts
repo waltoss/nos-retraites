@@ -47,6 +47,13 @@ export interface AnneeSysteme {
 	solde: number;
 	/** Le même solde sans les contributions et subventions d'équilibre de l'État. */
 	soldeHorsEtat: number;
+	/**
+	 * Produits financiers moins charges financières de l'année, dans chaque lecture du solde
+	 * (`ajouterInterets`) : à ajouter au solde pour le lire avec intérêts.
+	 */
+	interets?: { officiel: number; horsEtat: number };
+	/** Réserves moins dette en fin d'année, intérêts compris, dans chaque lecture du solde. */
+	situationPatrimoniale?: { officiel: number; horsEtat: number };
 }
 
 /**

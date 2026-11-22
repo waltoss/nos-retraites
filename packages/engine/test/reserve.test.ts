@@ -1,8 +1,11 @@
 /** Mécanique d'une réserve : elle rapporte, se remplit par les excédents et se vide par les déficits. */
 import { describe, expect, test } from "bun:test";
 import {
+	type AnneeSysteme,
+	ajouterInterets,
 	cadrerFlux,
 	type FluxRegime,
+	PATRIMOINE_SYSTEME,
 	projeterReserve,
 } from "../src/index.ts";
 
@@ -69,5 +72,46 @@ describe("réserve d'un régime", () => {
 		expect((droit[1]?.pensions ?? 0) / 12).toBeCloseTo(0.55, 12);
 		const scenario = cadrerFlux(reference, flux([10, 12], [5, 8.1]), cadre);
 		expect((scenario[1]?.pensions ?? 0) / (droit[1]?.pensions ?? 1)).toBeCloseTo(0.9, 12);
+	});
+});
+
+/** Une année du système réduite à ses deux soldes. */
+const annee = (a: number, solde: number, soldeHorsEtat = solde) =>
+	({ annee: a, solde, soldeHorsEtat }) as AnneeSysteme;
+
+describe("intérêts du système entier", () => {
+	const h = { annee: 2025, reserves: 120, dette: 20, taux: { 2026: 0.02, 2027: 0.01 } };
+
+	test("la situation nette rapporte, puis le solde s'y ajoute", () => {
+		const r = ajouterInterets([annee(2026, -10), annee(2027, -10)], h);
+		expect(r[0]?.interets?.officiel).toBeCloseTo(2, 12);
+		expect(r[0]?.situationPatrimoniale?.officiel).toBeCloseTo(92, 12);
+		expect(r[1]?.interets?.officiel).toBeCloseTo(0.92, 12);
+		expect(r[1]?.situationPatrimoniale?.officiel).toBeCloseTo(82.92, 12);
+	});
+
+	test("une fois la situation nette négative, la dette coûte", () => {
+		const r = ajouterInterets([annee(2026, -200), annee(2027, 0)], h);
+		expect(r[1]?.interets?.officiel).toBeCloseTo(-0.98, 12);
+	});
+
+	test("sans les versements de l'État, la dette grossit plus vite", () => {
+		const r = ajouterInterets([annee(2026, 0, -50), annee(2027, 0, -50)], h);
+		expect(r[1]?.interets?.officiel).toBeCloseTo(1.02, 12);
+		expect(r[1]?.interets?.horsEtat).toBeCloseTo(0.52, 12);
+	});
+
+	test("au-delà de la série, le dernier taux connu continue", () => {
+		const r = ajouterInterets([annee(2026, 0), annee(2027, 0), annee(2028, 0)], h);
+		expect(r[2]?.interets?.officiel).toBeCloseTo(102 * 1.01 * 0.01, 12);
+	});
+
+	test("données : réserves et dette du COR fin 2025, taux défini jusqu'en 2070", () => {
+		// 244,6 et 29,3 milliards d'euros de 2025, passés en euros de 2026.
+		expect(PATRIMOINE_SYSTEME.reserves / 1e9).toBeGreaterThan(244.6);
+		expect(PATRIMOINE_SYSTEME.reserves / 1e9).toBeLessThan(244.6 * 1.03);
+		expect(PATRIMOINE_SYSTEME.dette / 1e9).toBeGreaterThan(29.3);
+		expect(PATRIMOINE_SYSTEME.dette / 1e9).toBeLessThan(29.3 * 1.03);
+		for (let a = 2026; a <= 2070; a++) expect(PATRIMOINE_SYSTEME.taux[a]).toBeNumber();
 	});
 });

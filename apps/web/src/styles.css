@@ -389,6 +389,16 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 .solde-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; }
 .solde-tete h3 { margin: 0; }
 .solde-tete .choix-annee { margin: 0; }
+.solde-lectures { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; }
+.solde-lectures .choix-annee { position: relative; }
+.info { display: inline-flex; }
+.info-bouton { width: 32px; height: 32px; padding: 0; border: 0; background: none; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+.info-bouton svg { display: block; }
+.info-bouton:hover, .info-bouton[aria-expanded="true"] { color: var(--ink); }
+/* Ancrée sur la ligne de choix, pas sur l'icône : elle part du bord gauche et reste dans l'écran. */
+.info-bulle { position: absolute; z-index: 6; top: calc(100% + 6px); left: 0; width: min(300px, calc(100vw - 40px)); padding: 10px 12px; border-radius: 10px; background: var(--ink); color: #fff; font-size: 13px; line-height: 1.4; box-shadow: 0 6px 18px rgba(29, 27, 24, 0.22); }
+.info-bulle[hidden] { display: none; }
+.systeme .interets { --c: #a9bb8f; }
 .solde .sub { margin: 8px 0 0; }
 .cumul strong + small { margin-top: 10px; }
 .groupe-resume { margin: 0; padding: 10px 20px; font-weight: 600; font-size: 14px; background: color-mix(in srgb, var(--cotisants) 9%, transparent); color: var(--ink); }

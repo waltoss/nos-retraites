@@ -18,11 +18,14 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Réserve** : ce qu'un régime par répartition a mis de côté les années d'excédent et placé ; il y puise les années de déficit. Ne pas confondre avec la capitalisation : la réserve appartient au régime, pas aux individus.
 - **Solde technique** : ressources d'un régime moins ses charges, avant les produits de ses placements.
 - **Produits financiers** : ce que les placements de la réserve rapportent dans l'année.
+- **Charges financières** : ce que la dette coûte dans l'année.
+- **Intérêts** : produits financiers moins charges financières du système entier, sur une année.
+- **Situation patrimoniale** : réserves moins dette du système entier, en fin d'année ; elle rapporte quand elle est positive et coûte quand elle est négative.
 - **Versement** : somme portée chaque année sur le compte de capitalisation d'un individu, en part de son salaire brut.
 - **Rendement réel** : ce que le fonds rapporte par an au-dessus des prix, net de frais ; hypothèse en fourchette basse, centrale, haute.
 - **Rente** : revenu viager tiré du compte de capitalisation au départ, en plus de la pension.
 - **Encours** : total des comptes des actifs et des réserves des rentes en cours.
-- **Solde** : ressources moins dépenses sur une année ; lecture officielle avec les versements d'équilibre de l'État en ressources, ou lecture sans eux.
+- **Solde** : ressources moins dépenses sur une année ; lecture officielle avec les versements d'équilibre de l'État en ressources, ou lecture sans eux ; sans intérêts, comme le COR dans ses projections, ou avec.
 - **Besoin de financement** : montant annuel qui manque pour fermer l'équation ; l'opposé du solde quand il est négatif.
 - **Dette cumulée** : somme des besoins de financement non comblés depuis l'année de base, avec ou sans intérêts.
 - **Financement** : répartition du besoin de financement entre pensions, cotisations, âge et dette, choisie par l'utilisateur.

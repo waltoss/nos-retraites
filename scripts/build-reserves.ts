@@ -70,6 +70,37 @@ ratio.valeurs.forEach((r: number, i: number) => {
 	);
 });
 
+// --- Système entier : situation patrimoniale et taux des intérêts ---
+// Choix, tous discutables :
+// - point de départ : la situation patrimoniale nette du COR fin 2025, réserves de tous les régimes
+//   et du FRR moins la dette retraite portée par la Cades ; le COR la publie consolidée, sans dire
+//   quel régime pourrait puiser dans la réserve d'un autre ;
+// - passée en euros de 2026 par l'indice des prix du COR, comme les barèmes ;
+// - taux réel des réserves comme de la dette : la croissance réelle du salaire moyen par tête du
+//   scénario de référence du COR (0,7 %), convention du SG-COR pour ses projections de réserves de 2017.
+const ANNEE_EUROS = 2026;
+const patrimoine = reserves.cor.situationPatrimonialeFin2025;
+const reservesSysteme: Chiffre = patrimoine.reservesAvecFrr;
+const detteSysteme: Chiffre = patrimoine.detteRetraitePorteeParLaCades;
+const convention =
+	reserves.cor.hypotheseDeRendementEnProjection.conventionDe2017;
+if (!/salaire moyen par tête/.test(convention.citation))
+	throw new Error(
+		"Convention du COR : la citation ne parle plus du salaire moyen par tête",
+	);
+const rmpt = JSON.parse(
+	await Bun.file(`${racine}data/references/salaires.json`).text(),
+).remunerationMoyenneParTete;
+const prix = rmpt.autresSeriesDuMemeFichier
+	.indicePrixConsommationYComprisTabac_sc0_7.valeurs as Record<string, number>;
+const versEuros = (prix[ANNEE_EUROS] as number) / (prix[ANNEE] as number);
+const croissanceReelle = rmpt.evolutionReelle_sc0_7 as Record<string, number>;
+const taux: Record<number, number> = {};
+for (const [a, v] of Object.entries(croissanceReelle))
+	if (Number(a) > ANNEE) taux[Number(a)] = v;
+if (!taux[2070])
+	throw new Error("Croissance réelle du salaire moyen : 2070 absent");
+
 const sortie = {
 	date: new Date().toISOString().slice(0, 10),
 	note: "Dérivé de data/references/reserves.json par scripts/build-reserves.ts. Montants en euros.",
@@ -100,6 +131,25 @@ const sortie = {
 			},
 		},
 	},
+	systeme: {
+		annee: ANNEE,
+		/** Réserves de tous les régimes et du FRR, en euros de 2026. */
+		reserves: Math.round(enEuros(reservesSysteme) * versEuros),
+		/** Dette retraite portée par la Cades, en euros de 2026. */
+		dette: Math.round(enEuros(detteSysteme) * versEuros),
+		/** Taux réel des réserves comme de la dette, par année. */
+		taux,
+		sources: {
+			reserves: cite(reservesSysteme),
+			dette: cite(detteSysteme),
+			taux: {
+				titre: convention.source,
+				url: convention.url,
+				date: convention.date,
+			},
+			croissance: { titre: rmpt.source, url: rmpt.url, date: rmpt.date },
+		},
+	},
 };
 if (!/six mois/.test(regle.resume) || !/quinze|15/.test(regle.resume))
 	throw new Error(
@@ -109,6 +159,9 @@ if (!/six mois/.test(regle.resume) || !/quinze|15/.test(regle.resume))
 await Bun.write(
 	`${racine}packages/engine/src/reserve.data.json`,
 	`${JSON.stringify(sortie, null, "\t")}\n`,
+);
+console.log(
+	`Système fin ${ANNEE}, en euros de ${ANNEE_EUROS} : réserves ${(sortie.systeme.reserves / 1e9).toFixed(1)} Md€, dette ${(sortie.systeme.dette / 1e9).toFixed(1)} ; taux réel ${taux[ANNEE + 1]} en ${ANNEE + 1}, ${taux[2070]} en 2070`,
 );
 console.log(
 	`Agirc-Arrco fin ${ANNEE} : réserve ${(sortie.agircArrco.initiale / 1e9).toFixed(1)} Md€, ressources ${(sortie.agircArrco.ressources / 1e9).toFixed(1)}, charges ${(sortie.agircArrco.charges / 1e9).toFixed(1)}, soit ${((sortie.agircArrco.initiale / sortie.agircArrco.charges) * 12).toFixed(1)} mois ; rendement réel ${sortie.agircArrco.rendement}`,

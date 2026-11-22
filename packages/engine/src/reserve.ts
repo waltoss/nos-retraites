@@ -1,5 +1,6 @@
 import type { AnneeProjetee } from "./projection.ts";
 import data from "./reserve.data.json" with { type: "json" };
+import type { AnneeSysteme } from "./systeme.ts";
 
 /**
  * La réserve d'un régime : ce qu'il a mis de côté les années d'excédent, placé, et où il puise les
@@ -140,3 +141,56 @@ export const RESERVE_AGIRC_ARRCO: HypothesesReserve & {
 		Source
 	>;
 } = data.agircArrco;
+
+/**
+ * Réserves et dette du système entier, et le taux réel qu'elles rapportent ou coûtent
+ * (data/references/reserves.json, scripts/build-reserves.ts).
+ */
+export const PATRIMOINE_SYSTEME: {
+	/** Année des stocks observés : la projection commence l'année suivante. */
+	annee: number;
+	/** Réserves de tous les régimes et du FRR en fin d'année, en euros de l'année de référence. */
+	reserves: number;
+	/** Dette retraite portée par la Cades en fin d'année, en euros de l'année de référence. */
+	dette: number;
+	/** Taux réel des réserves comme de la dette, par année : la croissance réelle du salaire moyen. */
+	taux: Readonly<Record<string, number>>;
+	sources: Record<"reserves" | "dette" | "taux" | "croissance", Source>;
+} = data.systeme;
+
+/**
+ * Ajoute à chaque année du système ses intérêts : la situation patrimoniale de la fin de l'année
+ * précédente rapporte (ou coûte, quand elle est négative) le taux de l'année, puis le solde de
+ * l'année et ces intérêts s'y ajoutent. Le besoin de financement part donc en dette, et cette dette
+ * coûte à son tour. Un taux unique pour les réserves et la dette : seule la situation nette compte,
+ * sans dire quel régime puise dans la réserve d'un autre. Calculé pour chaque lecture du solde.
+ */
+export function ajouterInterets(
+	annees: AnneeSysteme[],
+	h: Pick<
+		typeof PATRIMOINE_SYSTEME,
+		"annee" | "reserves" | "dette" | "taux"
+	> = PATRIMOINE_SYSTEME,
+): AnneeSysteme[] {
+	const depart = h.reserves - h.dette;
+	let officiel = depart;
+	let horsEtat = depart;
+	let taux = 0;
+	return annees.map((a) => {
+		taux = h.taux[a.annee] ?? taux;
+		const interets = { officiel: officiel * taux, horsEtat: horsEtat * taux };
+		// Une année déjà passée (avant la fin des stocks observés) ne porte pas d'intérêts projetés.
+		if (a.annee <= h.annee) {
+			interets.officiel = 0;
+			interets.horsEtat = 0;
+		} else {
+			officiel += a.solde + interets.officiel;
+			horsEtat += a.soldeHorsEtat + interets.horsEtat;
+		}
+		return {
+			...a,
+			interets,
+			situationPatrimoniale: { officiel, horsEtat },
+		};
+	});
+}

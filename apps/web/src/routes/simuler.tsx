@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { ChoixAnnee } from "../components/ChoixAnnee";
 import { Distributions } from "../components/Distributions";
 import { Equation } from "../components/Equation";
@@ -8,6 +9,7 @@ import { PanneauLeviers } from "../components/PanneauLeviers";
 import { Trajectoires } from "../components/Trajectoires";
 import type { ResultatLeger } from "../engine.worker";
 import { decimal, ecart, entier, euros } from "../format";
+import { LECTURE_OFFICIELLE, type Lecture } from "../lecture";
 import { useScenario } from "../scenario";
 
 export const Route = createFileRoute("/simuler")({ component: Simuler });
@@ -18,6 +20,8 @@ const annees = (n: number) => `${decimal(n)} ${n >= 2 ? "ans" : "an"}`;
 function Simuler() {
 	const { reference, courant, ecarts, reglages, modifies, annee } =
 		useScenario();
+	// Une seule lecture du solde pour toute la page : courbes, cumul et équilibre de l'année.
+	const [lecture, setLecture] = useState<Lecture>(LECTURE_OFFICIELLE);
 	return (
 		<main className="atelier">
 			<PanneauLeviers />
@@ -41,7 +45,7 @@ function Simuler() {
 								montants sont en euros de 2026. Le trait vertical marque 2028
 								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
 							</p>
-							<Trajectoires />
+							<Trajectoires lecture={lecture} onLecture={setLecture} />
 						</section>
 
 						<div className="detail-annee">
@@ -59,6 +63,7 @@ function Simuler() {
 								reference={reference}
 								courant={courant}
 								reglages={reglages}
+								lecture={lecture}
 							/>
 							<p className="reserve">
 								Les cases du haut ne portent que sur les salariés du privé :

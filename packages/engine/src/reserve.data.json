@@ -89,5 +89,79 @@
 				"date": "2017-11-17"
 			}
 		}
+	},
+	"systeme": {
+		"annee": 2025,
+		"reserves": 249174020000,
+		"dette": 29847910000,
+		"taux": {
+			"2026": -0.002,
+			"2027": 0.0048,
+			"2028": 0.0053,
+			"2029": 0.006,
+			"2030": 0.0079,
+			"2031": 0.0079,
+			"2032": 0.0078,
+			"2033": 0.0077,
+			"2034": 0.0075,
+			"2035": 0.0075,
+			"2036": 0.0074,
+			"2037": 0.0073,
+			"2038": 0.0072,
+			"2039": 0.0071,
+			"2040": 0.007,
+			"2041": 0.007,
+			"2042": 0.007,
+			"2043": 0.007,
+			"2044": 0.007,
+			"2045": 0.007,
+			"2046": 0.007,
+			"2047": 0.007,
+			"2048": 0.007,
+			"2049": 0.007,
+			"2050": 0.007,
+			"2051": 0.007,
+			"2052": 0.007,
+			"2053": 0.007,
+			"2054": 0.007,
+			"2055": 0.007,
+			"2056": 0.007,
+			"2057": 0.007,
+			"2058": 0.007,
+			"2059": 0.007,
+			"2060": 0.007,
+			"2061": 0.007,
+			"2062": 0.007,
+			"2063": 0.007,
+			"2064": 0.007,
+			"2065": 0.007,
+			"2066": 0.007,
+			"2067": 0.007,
+			"2068": 0.007,
+			"2069": 0.007,
+			"2070": 0.007
+		},
+		"sources": {
+			"reserves": {
+				"titre": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+				"url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+				"date": "2026-06"
+			},
+			"dette": {
+				"titre": "COR, rapport annuel « Évolutions et perspectives des retraites en France », juin 2026",
+				"url": "https://www.cor-retraites.fr/sites/default/files/2026-07/RA_2026_def_1.pdf",
+				"date": "2026-06"
+			},
+			"taux": {
+				"titre": "COR (secrétariat général), « La gestion financière des régimes complémentaires de retraite obligatoire gérés en répartition », séance du 11 juillet 2018, document n° 6 (doc-4311)",
+				"url": "https://www.cor-retraites.fr/sites/default/files/2019-06/doc-4311.pdf",
+				"date": "2018-07-11"
+			},
+			"croissance": {
+				"titre": "Conseil d'orientation des retraites, fichier d'hypothèses « hypo_Salaires_Prix_PIB_2026.xlsx » (hypothèses du rapport annuel de juin 2026 ; onglet INFO : « Date de mise à jour - 23 avril 2026 »), lié depuis la page du rapport annuel de juin 2026.",
+				"url": "https://www.cor-retraites.fr/sites/default/files/2026-10/hypo_Salaires_Prix_PIB_2026.xlsx",
+				"date": "2026-11-21"
+			}
+		}
 	}
 }
