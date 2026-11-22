@@ -16,6 +16,7 @@ import {
 } from "./ponderation.ts";
 import {
 	baremesPour,
+	ecreter,
 	type ReglesScenario,
 	reglesGeneration,
 	reglesPour,
@@ -142,6 +143,11 @@ export interface Preparation {
 	/** 1 pour qui a travaillé ou perçoit une pension hors du champ : les autres n'ont rien à y compter. */
 	horsChamp: Uint8Array;
 	avantReforme: Uint8Array;
+	/**
+	 * Part de la pension de chacun laissée par l'écrêtement du scénario, pour ceux qui sont partis
+	 * avant l'année d'effet : elle vaut à partir de cette année. Les autres la portent déjà dans leur pension.
+	 */
+	ecretes: Float64Array;
 	/** Individus simulés par génération et par sexe : le dénominateur des poids. */
 	simules: Map<string, number>;
 	/** Vingtième de pension de chacun dans sa génération et son sexe, avec le droit en vigueur. */
@@ -227,6 +233,7 @@ export function prepareProjection(
 	const reglesDe: ReglesScenario[] = new Array(n);
 	const baremesDe: Baremes[] = new Array(n);
 	const avantReforme = new Uint8Array(n);
+	const ecretes = new Float64Array(n).fill(1);
 	const simules = new Map<string, number>();
 	for (let k = 0; k < n; k++) {
 		const individu = population[k] as Individu;
@@ -240,6 +247,10 @@ export function prepareProjection(
 		let p = p0;
 		if (p0.liquidation.annee < anneeEffet) {
 			avantReforme[k] = 1;
+			// Jugé sur la pension à la liquidation, comme le seuil de la revalorisation.
+			if (r.ecretement && p0.mensuelleBrute > 0)
+				ecretes[k] =
+					ecreter(p0.mensuelleBrute, r.ecretement) / p0.mensuelleBrute;
 		} else if (!inchange) {
 			p = computePension(c, bek, { regles: r, compte: comptes[k], modele });
 			if (p.liquidation.annee < anneeEffet)
@@ -302,6 +313,7 @@ export function prepareProjection(
 		montantsAutres: rangerPensions(pensions, modele, (r) => !duChamp(r)),
 		horsChamp,
 		avantReforme,
+		ecretes,
 		simules,
 		vingtiemes,
 	};
@@ -339,6 +351,17 @@ export function indexation(
 	return (1 + ecart) ** Math.max(0, fin - debut + 1);
 }
 
+/**
+ * Ce que le scénario fait d'une pension après le départ, tous régimes confondus : la
+ * revalorisation et, pour une pension liquidée avant l'année d'effet, l'écrêtement depuis cette année.
+ */
+function suite(prep: Preparation, k: number, annee: number): number {
+	const i = indexation(prep, k, annee);
+	return prep.avantReforme[k] && annee >= prep.options.anneeEffet
+		? i * (prep.ecretes[k] as number)
+		: i;
+}
+
 /** Pensions annuelles d'un jeu de régimes versées à un individu une année donnée. */
 function verse(
 	prep: Preparation,
@@ -359,7 +382,7 @@ function verse(
 		total += pension * point * (services[m.rang] as number);
 	}
 	// Les pensions liquidées suivent les prix, plus ou moins l'écart choisi par le scénario.
-	return indexation(prep, k, annee) * total;
+	return suite(prep, k, annee) * total;
 }
 
 /**
@@ -447,7 +470,7 @@ function lecteur(prep: Preparation, annee: number) {
 		},
 		/** Part des régimes de base dans la pension annuelle versée cette année-là. */
 		pensionBase(k: number): number {
-			return indexation(prep, k, annee) * (prep.montants.bases[k] as number);
+			return suite(prep, k, annee) * (prep.montants.bases[k] as number);
 		},
 		/** Pension annuelle versée cette année-là, ou null si l'individu n'est pas encore parti. */
 		pensionAnnuelle(k: number): number | null {
@@ -486,7 +509,7 @@ function lecteur(prep: Preparation, annee: number) {
 		/** Part des régimes de base dans cette pension. */
 		pensionBaseHorsChamp(k: number): number {
 			return prep.horsChamp[k]
-				? indexation(prep, k, annee) * (prep.montantsAutres.bases[k] as number)
+				? suite(prep, k, annee) * (prep.montantsAutres.bases[k] as number)
 				: 0;
 		},
 		/** Cotisations de l'année, selon l'affiliation de l'individu cette année-là. */

@@ -92,6 +92,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Coefficient d'anticipation** : minoration définitive de la pension complémentaire en cas de départ sans le taux plein.
 - **Droits familiaux** : avantages de retraite liés aux enfants (trimestres supplémentaires, majoration de pension).
 - **Revalorisation** : règle d'évolution annuelle des pensions déjà liquidées (prix, salaires, gel). Dans un scénario : un écart aux prix, sa durée, et le seuil de pension en dessous duquel il ne s'applique pas.
+- **Écrêtement** : règle de scénario, absente du droit en vigueur, qui réduit la pension totale d'un individu, tous régimes simulés confondus : au-delà d'un seuil, seule une part de la pension est conservée, et un plafond borne le tout. Elle ne relève aucune pension.
 - **Suite de la pension** : ce que la première pension d'un individu devient d'année en année après son départ, en euros constants.
 - **Polypensionné** : retraité qui perçoit des pensions de plusieurs régimes de base.
 - **Taux de remplacement** : première pension divisée par le dernier revenu d'activité d'un individu.

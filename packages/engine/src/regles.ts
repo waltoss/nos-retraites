@@ -62,6 +62,11 @@ export type ReglesScenario = {
 	 * laquelle la pension suit les prix quel que soit l'écart choisi.
 	 */
 	revalorisationSeuil?: number;
+	/**
+	 * Écrêtement de la pension totale, tous régimes simulés confondus : à la liquidation pour ceux
+	 * qui partent avec ces règles, et sur les pensions en cours à partir de l'année d'effet.
+	 */
+	ecretement?: Ecretement;
 	/** Fonctionnaires : nombre de meilleures années de traitement retenues ; absent, les six derniers mois. */
 	anneesTraitement?: number;
 	/** Fonctionnaires : vrai, les primes entrent dans la base de la pension. */
@@ -86,6 +91,26 @@ export type ReglesScenario = {
 		regles: ReglesScenario;
 	}>;
 };
+
+/** Montants mensuels bruts, en euros de l'année de référence : ils suivent donc les prix. */
+export type Ecretement = {
+	/** Pension en dessous de laquelle rien ne change (0 par défaut). */
+	seuil?: number;
+	/** Part conservée de ce qui dépasse le seuil (1 par défaut : tout). */
+	partConservee?: number;
+	/** Pension maximale, appliquée en dernier ; absent, pas de plafond. */
+	plafond?: number;
+};
+
+/** Ce qu'un écrêtement laisse d'une pension mensuelle : jamais plus qu'elle. */
+export function ecreter(mensuelle: number, e: Ecretement | undefined): number {
+	if (!e) return mensuelle;
+	const seuil = Math.max(0, e.seuil ?? 0);
+	const part = Math.max(0, Math.min(1, e.partConservee ?? 1));
+	const reduite =
+		mensuelle > seuil ? seuil + part * (mensuelle - seuil) : mensuelle;
+	return Math.min(reduite, Math.max(0, e.plafond ?? Number.POSITIVE_INFINITY));
+}
 
 const RESOLUES = new WeakMap<ReglesScenario, Map<string, ReglesScenario>>();
 
@@ -148,7 +173,7 @@ export function baremesPour(b: Baremes, regles: ReglesScenario): Baremes {
 
 /**
  * Les règles d'un scénario qui valent pour tous les régimes : âge, durée, décote et surcote,
- * droits familiaux, revalorisation. Les autres (meilleures années, taux plein, minimum contributif,
+ * droits familiaux, revalorisation, écrêtement. Les autres (meilleures années, taux plein, minimum contributif,
  * valeur du point, taux de cotisation) sont propres au régime général ou à la complémentaire du privé.
  */
 export function reglesUniverselles(r: ReglesScenario): ReglesScenario {
@@ -168,6 +193,7 @@ export function reglesUniverselles(r: ReglesScenario): ReglesScenario {
 		"revalorisationReelle",
 		"revalorisationDuree",
 		"revalorisationSeuil",
+		"ecretement",
 	] as const;
 	for (const cle of communes)
 		if (r[cle] !== undefined) (u as Record<string, unknown>)[cle] = r[cle];

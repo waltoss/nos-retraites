@@ -16,16 +16,23 @@ import {
 	computePensions,
 	cumulJusqua,
 	detail,
+	ecreter,
 	generatePopulation,
 	generatePopulationPublique,
 	MODELE,
 	type Modele,
 	moisParEtat,
 	ouvrirCompte,
+	type Pension,
 	PYRAMIDES_PROJETEES,
+	pensionDuChamp,
+	pensionVersee,
 	prepareProjection,
 	projeter,
+	type ReglesScenario,
 	reglesGeneration,
+	reglesUniverselles,
+	runProjection,
 	SCENARIO_PUBLIC,
 	SCENARIO_REFERENCE,
 } from "../src/index.ts";
@@ -316,5 +323,95 @@ describe("règles propres à un régime ou à des générations", () => {
 				i.carriere.anneeNaissance >= 1980 ? partout[k] : reference[k],
 			);
 		});
+	});
+});
+
+describe("écrêtement des pensions", () => {
+	const population = generatePopulation(
+		{ ...SCENARIO_REFERENCE, taille: 2000 },
+		B,
+	);
+	const options = {
+		debut: 2026,
+		fin: 2050,
+		pyramides: PYRAMIDES_PROJETEES,
+		champ: CHAMP_PRIVE,
+		anneeEffet: 2028,
+	};
+	// Le cas discuté : rien sous 1 000 €, la moitié au-delà, jamais plus de 2 800 €.
+	const ecretement = { seuil: 1000, partConservee: 0.5, plafond: 2800 };
+
+	test("seuil, part conservée et plafond", () => {
+		expect(ecreter(800, ecretement)).toBe(800);
+		expect(ecreter(2000, ecretement)).toBe(1500);
+		expect(ecreter(9000, ecretement)).toBe(2800);
+		expect(ecreter(3000, { plafond: 2500 })).toBe(2500);
+		expect(ecreter(3000, undefined)).toBe(3000);
+		// Jamais un minimum : un plafond ou un seuil ne relève aucune pension.
+		expect(ecreter(500, { seuil: 1000, partConservee: 0 })).toBe(500);
+	});
+
+	test("la pension totale est écrêtée, chaque régime en porte sa part", () => {
+		const avant = computePensions(population, B, {});
+		const apres = computePensions(population, B, { ecretement });
+		let touches = 0;
+		avant.forEach((p, k) => {
+			const q = apres[k] as Pension;
+			expect(q.liquidation).toEqual(p.liquidation);
+			expect(q.mensuelleBrute).toBeCloseTo(
+				ecreter(p.mensuelleBrute, ecretement),
+				6,
+			);
+			if (p.mensuelleBrute <= 1000) return expect(q).toEqual(p);
+			touches++;
+			const somme = Object.values(q.parRegime).reduce(
+				(t, d) => t + (d?.pensionAnnuelle ?? 0),
+				0,
+			);
+			expect(somme / 12).toBeCloseTo(q.mensuelleBrute, 6);
+		});
+		expect(touches).toBeGreaterThan(population.length / 2);
+	});
+
+	test("les pensions en cours sont écrêtées à partir de l'année d'effet, pas avant", () => {
+		const reference = prepareProjection(population, B, {}, options);
+		const prep = prepareProjection(population, B, { ecretement }, options);
+		const k = reference.pensions.findIndex(
+			(p) => p.liquidation.annee === 2020 && p.mensuelleBrute > 2000,
+		);
+		const p = reference.pensions[k] as Pension;
+		expect(prep.pensions[k]).toEqual(p);
+		expect(pensionVersee(prep, k, 2027)).toBe(pensionVersee(reference, k, 2027));
+		const reste = ecreter(p.mensuelleBrute, ecretement) / p.mensuelleBrute;
+		expect(pensionVersee(prep, k, 2028)).toBeCloseTo(
+			(pensionVersee(reference, k, 2028) ?? 0) * reste,
+			6,
+		);
+		// Qui part après la réforme porte l'écrêtement dans sa première pension, une seule fois.
+		const tard = reference.pensions.findIndex(
+			(q) => q.liquidation.annee === 2035 && q.mensuelleBrute > 2000,
+		);
+		const q = prep.pensions[tard] as Pension;
+		expect(q.ecretement).toBeLessThan(1);
+		expect(pensionDuChamp(CHAMP_PRIVE, q) / 12 <= 2800 + 1e-6).toBe(true);
+	});
+
+	test("la dépense baisse dès l'année d'effet, et moins si les générations parties sont épargnées", () => {
+		const depenses = (regles: ReglesScenario) =>
+			runProjection(population, B, regles, options).annees;
+		const loi = depenses({});
+		const tous = depenses({ ecretement });
+		const futurs = depenses({
+			parGeneration: [{ de: 1970, regles: { ecretement } }],
+		});
+		const de = (a: typeof loi, annee: number) =>
+			a.find((x) => x.annee === annee)?.pensions ?? 0;
+		expect(de(tous, 2027)).toBe(de(loi, 2027));
+		expect(de(tous, 2028)).toBeLessThan(de(loi, 2028) * 0.9);
+		expect(de(futurs, 2028)).toBe(de(loi, 2028));
+		expect(de(futurs, 2050)).toBeLessThan(de(loi, 2050));
+		expect(de(futurs, 2050)).toBeGreaterThan(de(tous, 2050));
+		// Règle commune : les autres régimes la suivent dans le bloc résiduel.
+		expect(reglesUniverselles({ ecretement })).toEqual({ ecretement });
 	});
 });

@@ -3,6 +3,7 @@ import {
 	baremeGeneration,
 	type Capitalisation,
 	type Demographie,
+	type Ecretement,
 	type Facteurs,
 	HYPOTHESES,
 	NIVEAUX_DEMOGRAPHIE,
@@ -28,6 +29,9 @@ export type LevierId =
 	| "revalorisation"
 	| "revalorisationDuree"
 	| "revalorisationSeuil"
+	| "ecretementPlafond"
+	| "ecretementPart"
+	| "ecretementSeuil"
 	| "minimum"
 	| "trimestresEnfant"
 	| "majorationEnfants"
@@ -181,6 +185,8 @@ const FOURCHETTES = ["bas", "central", "haut"] as const;
 /** Première année d'application d'une réforme votée après l'élection de 2027. */
 export const ANNEE_EFFET = 2028;
 const SANS_LIMITE = 11;
+/** Position du curseur de la pension maximale qui veut dire « pas de plafond ». */
+const SANS_PLAFOND = 8000;
 /** Dernière porte des carrières longues du droit en vigueur : un début avant cet âge. */
 const DEBUT_SANS_AVANCE = Math.max(
 	...(baremeGeneration(BAREMES_FRANCE.cnav, 1975).carriereLongue ?? []).map(
@@ -354,6 +360,46 @@ export const LEVIERS: Levier[] = [
 				: `à partir de ${v.toLocaleString("fr-FR")} € par mois`,
 		termes: ["pension"],
 		aide: "Sert avec les deux réglages précédents. En dessous de ce montant brut, tous régimes simulés confondus, la pension continue de suivre les prix. Le modèle applique le seuil d'un coup, sans lissage, et ne connaît pas les pensions versées par d'autres régimes à la même personne.",
+	},
+	{
+		id: "ecretementPlafond",
+		groupe: "calcul",
+		label: "Pension maximale",
+		min: 1000,
+		max: SANS_PLAFOND,
+		pas: 100,
+		defaut: SANS_PLAFOND,
+		affiche: (v) =>
+			v >= SANS_PLAFOND ? "aucune" : `${v.toLocaleString("fr-FR")} € par mois`,
+		termes: ["pension"],
+		aide: "Aucune pension brute ne dépasse ce montant, toutes pensions simulées d'une même personne additionnées. Il n'existe rien de tel aujourd'hui : c'est un cas limite, pour voir ce qu'il rapporterait. Il touche les retraités actuels dès 2028 comme les futurs, et suit les prix, pas les salaires. Le modèle garde les mêmes carrières et les mêmes âges de départ, et ne dit rien de ce qu'un tel plafond changerait aux comportements ni de sa solidité en droit.",
+	},
+	{
+		id: "ecretementPart",
+		groupe: "calcul",
+		label: "Part conservée des pensions au-delà d'un seuil",
+		min: 0,
+		max: 100,
+		pas: 5,
+		defaut: 100,
+		affiche: (v) => (v === 100 ? "tout" : pourcent(v)),
+		termes: ["pension"],
+		aide: "Au-dessus du seuil réglé juste après, chaque euro de pension n'est versé qu'en partie : à 50 %, une pension de 2 000 € avec un seuil de 1 000 € passe à 1 500 €. Cas limite, absent du droit actuel, appliqué dès 2028 aux retraités actuels comme aux futurs. Pour une pension déjà versée, le calcul se fait sur son montant au départ.",
+	},
+	{
+		id: "ecretementSeuil",
+		groupe: "calcul",
+		label: "Seuil au-delà duquel la pension est réduite",
+		min: 0,
+		max: 4000,
+		pas: 100,
+		defaut: 0,
+		affiche: (v) =>
+			v === 0
+				? "dès le premier euro"
+				: `au-delà de ${v.toLocaleString("fr-FR")} € par mois`,
+		termes: ["pension"],
+		aide: "Sert avec le réglage précédent. En dessous de ce montant brut, toutes pensions simulées additionnées, rien ne change. Ce n'est pas un minimum : une pension plus basse n'est pas relevée, et le minimum vieillesse n'est pas dans le modèle.",
 	},
 	{
 		id: "minimum",
@@ -759,6 +805,15 @@ export function versScenario(r: Reglages): ScenarioMoteur {
 		if (r.revalorisationSeuil)
 			regles.revalorisationSeuil = r.revalorisationSeuil;
 	}
+	// Le seuil n'a de sens que si une part de ce qui le dépasse est retirée.
+	const ecretement: Ecretement = {};
+	if (r.ecretementPlafond !== undefined)
+		ecretement.plafond = r.ecretementPlafond;
+	if (r.ecretementPart !== undefined) {
+		ecretement.partConservee = r.ecretementPart / 100;
+		if (r.ecretementSeuil) ecretement.seuil = r.ecretementSeuil;
+	}
+	if (Object.keys(ecretement).length > 0) regles.ecretement = ecretement;
 	if (r.minimum !== undefined) regles.minimumContributif = r.minimum / 100;
 	if (r.trimestresEnfant !== undefined)
 		regles.mdaParEnfant = r.trimestresEnfant;

@@ -252,6 +252,8 @@ export type Pension = {
 	parRegime: DetailsParRegime;
 	/** Pension mensuelle brute totale, en euros de l'année de référence. */
 	mensuelleBrute: number;
+	/** Part de la pension laissée par l'écrêtement du scénario, déjà appliquée à tous les montants ; absent, 1. */
+	ecretement?: number;
 };
 
 /** Détail d'un régime dans une pension ; une erreur si l'individu n'y a acquis aucun droit. */

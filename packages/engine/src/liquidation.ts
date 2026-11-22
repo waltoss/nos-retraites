@@ -4,7 +4,7 @@ import type { Baremes } from "./baremes/types.ts";
 import type { CompteCarriere } from "./compte.ts";
 import type { ComportementDepart } from "./generateur/hypotheses.ts";
 import { MODELE } from "./modele.ts";
-import type { ReglesScenario } from "./regles.ts";
+import { ecreter, type ReglesScenario } from "./regles.ts";
 import {
 	type AffiliationId,
 	type AgeTrimestres,
@@ -163,12 +163,36 @@ export function computePension(
 		annuelle += l.annuelle;
 		parRegime = { ...parRegime, ...l.parRegime };
 	}
-	return {
+	const pension: Pension = {
 		liquidation: { age, annee: carriere.anneeNaissance + Math.floor(age / 4) },
 		affiliation: compte.affiliation,
 		duree: principale.duree,
 		parRegime,
 		mensuelleBrute: annuelle / 12,
+	};
+	return ecreterPension(pension, options.regles);
+}
+
+/**
+ * La même pension après l'écrêtement du scénario : il se juge sur le total, et chaque régime
+ * en porte sa part. Sans écrêtement, ou quand il ne retire rien, la pension est rendue telle quelle.
+ */
+export function ecreterPension(
+	pension: Pension,
+	regles: ReglesScenario | undefined,
+): Pension {
+	const e = regles?.ecretement;
+	if (!e || pension.mensuelleBrute <= 0) return pension;
+	const reste = ecreter(pension.mensuelleBrute, e) / pension.mensuelleBrute;
+	if (reste >= 1) return pension;
+	const parRegime: DetailsParRegime = {};
+	for (const [id, d] of Object.entries(pension.parRegime))
+		if (d) parRegime[id] = { ...d, pensionAnnuelle: d.pensionAnnuelle * reste };
+	return {
+		...pension,
+		parRegime,
+		mensuelleBrute: pension.mensuelleBrute * reste,
+		ecretement: reste,
 	};
 }
 
