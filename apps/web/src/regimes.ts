@@ -100,7 +100,7 @@ export const affiliationDe = (a: AnneeCarriere) =>
 export function statutDe(a: AnneeCarriere, sexe: "F" | "H"): string {
 	const court = affiliationDe(a)?.court ?? "";
 	return sexe === "F"
-		? court.replace(/^(salarié|commerçant|artisan)\b/, "$1e")
+		? court.replace(/^(salarié|commerçant|artisan)(?= |$)/, "$1e")
 		: court;
 }
 
