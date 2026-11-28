@@ -7,13 +7,14 @@ import {
 	buildComptes,
 	CHAMP_PRIVE,
 	computePensions,
+	departDuChamp,
 	detail,
-	generatePopulation,
+	generatePopulationEntiere,
 	pensionDuChamp,
 	SCENARIO_REFERENCE,
 } from "../packages/engine/src/index.ts";
 
-const population = generatePopulation(SCENARIO_REFERENCE, B);
+const population = generatePopulationEntiere(SCENARIO_REFERENCE, B);
 const pensions = computePensions(
 	population,
 	B,
@@ -40,13 +41,13 @@ for (const annee of annees.length ? annees : [2019, 2023, 2026, 2035, 2050]) {
 		// Seuls ceux qui ont des droits comptent comme nouveaux retraités.
 		if (
 			!p ||
-			p.liquidation.annee !== annee ||
+			departDuChamp(CHAMP_PRIVE, p).annee !== annee ||
 			pensionDuChamp(CHAMP_PRIVE, p) <= 0
 		)
 			return;
 		const w = individu.poids || 1;
 		t.n += w;
-		t.age += (w * p.liquidation.age) / 4;
+		t.age += (w * departDuChamp(CHAMP_PRIVE, p).age) / 4;
 		if (detail(p, "cnav").motif === "carriereLongue") t.longue += w;
 		if (detail(p, "cnav").motif === "inaptitude") t.inaptitude += w;
 		if (detail(p, "cnav").trimestresDecote > 0) {
@@ -57,7 +58,7 @@ for (const annee of annees.length ? annees : [2019, 2023, 2026, 2035, 2050]) {
 			t.surcote += w;
 			t.trimestresSurcote += w * detail(p, "cnav").trimestresSurcote;
 		}
-		const a = Math.floor(p.liquidation.age / 4);
+		const a = Math.floor(departDuChamp(CHAMP_PRIVE, p).age / 4);
 		if (a >= 67) t.tard += w;
 		parAge.set(a, (parAge.get(a) ?? 0) + w);
 	});

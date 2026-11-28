@@ -108,7 +108,7 @@ const anneeDOuverture = (k: number) => {
 };
 const retraite = (k: number, annee: number) =>
 	(pensions[k] as Pension).liquidation.annee <= annee &&
-	(pensions[k] as Pension).mensuelleBrute > 0 &&
+	(detailFonctionPublique(pensions[k] as Pension)?.pensionAnnuelle ?? 0) > 0 &&
 	(!invalide(k) || annee >= anneeDOuverture(k));
 const cotise = (k: number, annee: number) => {
 	const c = population[k]?.carriere;
@@ -160,7 +160,8 @@ function cibles(regime: Regime): Cible[] {
 					sexes: [sexe],
 					compte: (k) =>
 						(pensions[k] as Pension).liquidation.annee === annee &&
-						(pensions[k] as Pension).mensuelleBrute > 0 &&
+						(detailFonctionPublique(pensions[k] as Pension)?.pensionAnnuelle ??
+							0) > 0 &&
 						!invalide(k)
 							? { annee, age: ageEn(k, annee) }
 							: null,

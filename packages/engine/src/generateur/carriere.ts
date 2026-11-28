@@ -470,6 +470,34 @@ export function generateCarriere(
 	};
 }
 
+/**
+ * Salaire annuel d'un temps plein du privé à un âge et un rang donnés, sans l'aléa d'une année
+ * sur l'autre : les mêmes lois que `generateCarriere`, pour donner un salaire à des années du privé
+ * décrites ailleurs (celles d'un fonctionnaire avant son entrée en poste).
+ */
+export function salaireTendanciel(
+	age: number,
+	annee: number,
+	sexe: Sexe,
+	rang: number,
+	h: Hypotheses,
+	b: Baremes,
+): number {
+	const niveau =
+		interpole(h.profilSalaire, age) *
+		h.niveauSalaire *
+		Math.exp(
+			h.sigmaPermanent * rang +
+				h.queueSalaire.pente[sexe] * Math.max(0, rang - h.queueSalaire.seuil) +
+				h.penteRang * rang * (Math.min(age, 55) - 30),
+		) *
+		(sexe === "F" ? h.ecartSalaireFemmes * indiceEcart(annee) : 1);
+	return Math.max(
+		valeur(b.cnav.smicHoraire, annee) * h.heuresAnnuelles,
+		niveau * valeur(b.cnav.pass, annee) * indiceSalaire(annee),
+	);
+}
+
 /** Carrière type : emploi continu entre deux âges, à un salaire constant en part du PASS. */
 export function carriereType(
 	anneeNaissance: number,

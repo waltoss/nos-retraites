@@ -26,9 +26,10 @@ import {
 	type Carriere,
 	CHAMP_PRIVE,
 	computePensions,
+	departDuChamp,
 	detail,
 	estSalarie,
-	generatePopulation,
+	generatePopulationEntiere,
 	moisParEtat,
 	type Pension,
 	type Pyramide,
@@ -52,7 +53,7 @@ const lire = (serie: Serie, annee: number): number => {
 	return v;
 };
 
-const population = generatePopulation(SCENARIO_REFERENCE, B);
+const population = generatePopulationEntiere(SCENARIO_REFERENCE, B);
 const comptes = buildComptes(population, B);
 const pensions = computePensions(population, B, {}, comptes);
 const sansMinimum = computePensions(
@@ -122,8 +123,8 @@ const stock = (annee: number, depuis = 0): Retraite[] => {
 		const w = poids[k] as number;
 		if (
 			pensionDuChamp(CHAMP_PRIVE, p) > 0 &&
-			p.liquidation.annee <= annee &&
-			p.liquidation.annee >= depuis &&
+			departDuChamp(CHAMP_PRIVE, p).annee <= annee &&
+			departDuChamp(CHAMP_PRIVE, p).annee >= depuis &&
 			w > 0
 		)
 			v.push({ k, c: individu.carriere, p, poids: w });
@@ -344,7 +345,7 @@ console.log(
 function points(x: Retraite) {
 	const r = { tranche1: 0, auDela: 0, annees: 0, salaire: 0, sousPlafond: 0 };
 	for (const a of x.c.annees) {
-		if (a.annee >= x.p.liquidation.annee) break;
+		if (a.annee >= departDuChamp(CHAMP_PRIVE, x.p).annee) break;
 		const mois = moisParEtat(a).emploi;
 		if (mois === 0 || a.salaireBrut <= 0 || !estSalarie(a)) continue;
 		const pass = valeur(B.cnav.pass, a.annee);

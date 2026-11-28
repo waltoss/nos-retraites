@@ -1,12 +1,12 @@
 [
 	{
 		"nom": "Natalité à 1,70, en 2050",
-		"modele": 0.08,
+		"modele": 0.09,
 		"cible": 0.21
 	},
 	{
 		"nom": "Natalité à 1,70, en 2070",
-		"modele": 0.93,
+		"modele": 0.94,
 		"cible": 0.92
 	},
 	{
@@ -16,22 +16,22 @@
 	},
 	{
 		"nom": "Natalité à 1,20, en 2070",
-		"modele": -1,
+		"modele": -1.02,
 		"cible": -0.97
 	},
 	{
 		"nom": "Solde migratoire à 230 000, en 2050",
-		"modele": 0.52,
+		"modele": 0.53,
 		"cible": 0.64
 	},
 	{
 		"nom": "Solde migratoire à 230 000, en 2070",
-		"modele": 0.86,
+		"modele": 0.87,
 		"cible": 1.05
 	},
 	{
 		"nom": "Solde migratoire à 70 000, en 2050",
-		"modele": -0.57,
+		"modele": -0.58,
 		"cible": -0.64
 	},
 	{

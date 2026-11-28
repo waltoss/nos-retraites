@@ -4,6 +4,7 @@ import {
 	detail,
 	detailFonctionPublique,
 	estIndependant,
+	estSalarie,
 	moisParEtat,
 	type Pension,
 } from "@nos-retraites/engine";
@@ -335,7 +336,7 @@ function recit(c: Carriere, ageDepart: number): string {
 	if (c.fonctionPublique?.regime === "militaire") {
 		const entree = c.annees.find((a) => a.affiliation === regime);
 		const ageEntree = (entree?.annee ?? c.anneeNaissance) - c.anneeNaissance;
-		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Engagée" : "Engagé"} à ${ageEntree} ans, quitte l'armée à ${c.fonctionPublique.ageRadiation} ans avec une pension versée tout de suite. La suite de sa vie active, dans le civil, n'est pas simulée.`;
+		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Engagée" : "Engagé"} à ${ageEntree} ans, quitte l'armée à ${c.fonctionPublique.ageRadiation} ans avec une pension versée tout de suite.${avantLePrive(c, entree?.annee) > 0 ? ` Avant l'armée, ${pluriel(avantLePrive(c, entree?.annee), "an")} de ${c.sexe === "F" ? "salariée" : "salarié"} du privé.` : ""} La suite de sa vie active, dans le civil, n'est pas simulée.`;
 	}
 	if (c.fonctionPublique) {
 		const entree = c.annees.find((a) => a.affiliation === regime);
@@ -346,11 +347,20 @@ function recit(c: Carriere, ageDepart: number): string {
 				a.etat === "emploi" &&
 				a.annee < (entree?.annee ?? 0),
 		).length;
+		const prive = avantLePrive(c, entree?.annee);
+		const avant = [
+			prive > 0
+				? `${pluriel(prive, "an")} de ${c.sexe === "F" ? "salariée" : "salarié"} du privé`
+				: "",
+			avantEntree > 0
+				? `${pluriel(avantEntree, "an")} dans un autre régime`
+				: "",
+		].filter(Boolean);
 		const categorie =
 			c.fonctionPublique.categorie === "sedentaire" || ageEntree > 40
 				? ""
 				: " Son emploi est classé en catégorie active : départ possible plus tôt.";
-		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Entrée" : "Entré"} dans la fonction publique à ${ageEntree} ans${avantEntree > 0 ? `, après ${pluriel(avantEntree, "an")} dans un autre régime` : ""}, puis en poste sans interruption jusqu'au départ.${categorie}`;
+		return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. ${c.sexe === "F" ? "Entrée" : "Entré"} dans la fonction publique à ${ageEntree} ans${avant.length > 0 ? `, après ${avant.join(" et ")}` : ""}, puis en poste sans interruption jusqu'au départ.${categorie}`;
 	}
 	const avant = c.annees.filter(
 		(a) => a.annee - c.anneeNaissance < Math.floor(ageDepart / 4),
@@ -375,6 +385,12 @@ function recit(c: Carriere, ageDepart: number): string {
 	if (mois.inactivite) morceaux.push(`${duree(mois.inactivite)} sans activité`);
 	return `${c.sexe === "F" ? "Née" : "Né"} en ${c.anneeNaissance}, ${c.enfants.length === 0 ? "sans enfant" : pluriel(c.enfants.length, "enfant")}. Premier emploi à ${debut} ans. Avant son départ : ${morceaux.join(", ")}.`;
 }
+
+/** Années de salarié du privé d'un fonctionnaire avant son entrée en poste. */
+const avantLePrive = (c: Carriere, anneeEntree = 0) =>
+	c.annees.filter(
+		(a) => estSalarie(a) && a.salaireBrut > 0 && a.annee < anneeEntree,
+	).length;
 
 interface Ligne {
 	nom: string;
@@ -624,11 +640,41 @@ const LIGNES_PUBLIC: Bloc[] = [
 		],
 	},
 	{
+		titre: "Les pensions du privé",
+		si: (p) => p.parRegime.cnav !== undefined,
+		lignes: [
+			{
+				nom: "Versées à partir de",
+				aide: "à l'âge où le privé ouvre le droit, s'il est plus tardif que le départ de la fonction publique",
+				valeur: (p) =>
+					ageEnClair(p.parRegime.cnav?.liquidation?.age ?? p.liquidation.age),
+			},
+			{
+				nom: "Part de carrière au régime général",
+				aide: "trimestres de salarié sur la durée de référence ; les trimestres pour enfants sont accordés par la fonction publique",
+				valeur: (p) =>
+					`${decimal((p.parRegime.cnav?.proratisation ?? 0) * 100)} %`,
+			},
+			{
+				nom: "Régime général",
+				aide: "par mois",
+				valeur: (p) => euros((p.parRegime.cnav?.pensionAnnuelle ?? 0) / 12),
+			},
+			{
+				nom: "Agirc-Arrco",
+				aide: "par mois",
+				valeur: (p) =>
+					euros((p.parRegime.agircArrco?.pensionAnnuelle ?? 0) / 12),
+				fort: true,
+			},
+		],
+	},
+	{
 		titre: "Au total",
 		lignes: [
 			{
 				nom: "Pension brute",
-				aide: "par mois, hors pension du privé pour les années passées ailleurs",
+				aide: "par mois, tous régimes simulés, une fois toutes les pensions versées",
 				valeur: (p) => euros(p.mensuelleBrute),
 				fort: true,
 			},
@@ -792,8 +838,8 @@ function Regimes({
 							Autres régimes
 							<small>
 								{carriere.fonctionPublique
-									? "années dans le privé ou un autre régime : le modèle n'en connaît que la durée, pas la pension qu'elles donnent"
-									: "années hors du salariat privé (fonctionnaire, exploitant agricole, profession libérale…) : le modèle n'en connaît que la durée. Il sait calculer une pension de fonctionnaire, mais pas encore pour une carrière qui passe du privé au public"}
+									? "années dans un régime que le modèle ne simule pas (contractuel du public, par exemple) : il n'en connaît que la durée, pas la pension qu'elles donnent"
+									: "années hors du salariat privé (exploitant agricole, profession libérale, contractuel du public…) : le modèle n'en connaît que la durée, pas la pension qu'elles donnent"}
 							</small>
 						</th>
 						<td className="num">{entier(anneesNonSimulees)}</td>

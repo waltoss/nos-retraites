@@ -3,6 +3,7 @@ import type {
 	DetailCnav,
 	Duree,
 	Individu,
+	Liquidation,
 	Pension,
 	Sexe,
 } from "./types.ts";
@@ -36,6 +37,11 @@ export interface Champ {
 	affiliations?: readonly string[];
 	/** Régimes dont les pensions sont celles du champ ; absent, tous. */
 	regimes?: readonly string[];
+	/**
+	 * Affiliations et régimes simulés qui ont leur propre champ, projeté à part : ils ne sont pas
+	 * comptés dans les `autres` de celui-ci.
+	 */
+	aPart?: readonly string[];
 }
 
 /** Vrai quand une année relève du champ. */
@@ -44,6 +50,22 @@ export function anneeDuChamp(
 	annee: { affiliation: string },
 ): boolean {
 	return !champ.affiliations || champ.affiliations.includes(annee.affiliation);
+}
+
+/**
+ * Vrai pour qui relève du champ, parce qu'il a un compte sous une de ses affiliations. Les autres
+ * (un fonctionnaire jamais salarié, vu du privé) n'y sont ni cotisants ni retraités.
+ */
+export function releveDuChamp(
+	champ: Champ,
+	compte: { affiliation: string; autres?: { affiliation: string }[] },
+): boolean {
+	const retenues = champ.affiliations;
+	return (
+		!retenues ||
+		retenues.includes(compte.affiliation) ||
+		(compte.autres?.some((c) => retenues.includes(c.affiliation)) ?? false)
+	);
 }
 
 /**
@@ -68,6 +90,18 @@ export function dureeDuChamp(champ: Champ, p: Pension): Duree {
 			};
 	}
 	return p.duree;
+}
+
+/**
+ * Départ dans le champ : celui de la carrière, ou celui des régimes du champ quand ils liquident
+ * plus tard que l'affiliation principale.
+ */
+export function departDuChamp(champ: Champ, p: Pension): Liquidation {
+	for (const id of champ.regimes ?? []) {
+		const d = p.parRegime[id];
+		if (d?.liquidation && d.pensionAnnuelle > 0) return d.liquidation;
+	}
+	return p.liquidation;
 }
 
 /** Pension mensuelle brute versée par les régimes du champ, à la liquidation. */

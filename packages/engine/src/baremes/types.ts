@@ -257,17 +257,24 @@ export function valeur(serie: SerieAnnuelle, annee: number): number {
 	return serie[bornes.min] as number;
 }
 
+const BORNES_GENERATIONS = new WeakMap<object, { min: number; max: number }>();
+
 export function baremeGeneration(
 	b: BaremeCnav,
 	anneeNaissance: number,
 ): BaremeGeneration {
 	const g = b.parGeneration[anneeNaissance];
 	if (g) return g;
-	const annees = Object.keys(b.parGeneration).map(Number);
-	if (annees.length === 0) throw new Error("Barème par génération vide");
-	const borne =
-		anneeNaissance < Math.min(...annees)
-			? Math.min(...annees)
-			: Math.max(...annees);
-	return b.parGeneration[borne] as BaremeGeneration;
+	// Hors du barème : la génération connue la plus proche. Les bornes ne se cherchent qu'une fois,
+	// cette lecture revient à chaque individu et chaque année d'une projection.
+	let bornes = BORNES_GENERATIONS.get(b.parGeneration);
+	if (!bornes) {
+		const annees = Object.keys(b.parGeneration).map(Number);
+		if (annees.length === 0) throw new Error("Barème par génération vide");
+		bornes = { min: Math.min(...annees), max: Math.max(...annees) };
+		BORNES_GENERATIONS.set(b.parGeneration, bornes);
+	}
+	return b.parGeneration[
+		anneeNaissance < bornes.min ? bornes.min : bornes.max
+	] as BaremeGeneration;
 }

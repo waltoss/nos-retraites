@@ -27,6 +27,13 @@ export interface HypothesesPubliques {
 	entree: ParRegime<{ min: number; delaiMoyen: Points; max: number }>;
 	/** Part des années d'avant l'entrée qui valident quatre trimestres dans un autre régime. */
 	partValideeAvantEntree: number;
+	/**
+	 * Part des agents dont les années d'avant l'entrée sont des années de salarié du privé, avec un
+	 * salaire et des droits au régime général et à l'Agirc-Arrco. Pour les autres, ces années ne
+	 * comptent que pour la durée (services de contractuel validés, régime non simulé).
+	 * Réglée sur la part des retraités de chaque régime qui touchent aussi une pension du régime général.
+	 */
+	avantEntree: { partAuPrive: ParRegime<number> };
 	traitement: {
 		anneeDeNiveau: number;
 		/** Traitement annuel d'un agent médian au sommet du profil, l'année de niveau. */

@@ -10,7 +10,14 @@
  * - à partir de 68 ans, les retraités de droit direct de l'Agirc-Arrco par sexe et âge ;
  * - entre les deux, une interpolation linéaire.
  * Les effectifs par âge de fin 2024 sont appliqués tels quels aux mêmes âges en 2026.
- * À relancer après tout changement des hypothèses du générateur.
+ *
+ * La population est une : les fonctionnaires passés par le privé (seconde série d'individus, pesés
+ * par scripts/build-population-publique.ts) apportent leurs propres cotisants et retraités du
+ * privé. Pour ne compter personne deux fois, les individus du privé de même sexe, de même âge et
+ * de même durée au privé pèsent d'autant moins (`resteParDuree`) ; quand une tranche de durée n'y
+ * suffit pas, le surplus est pris sur la tranche suivante, puis sur tous.
+ *
+ * À relancer après tout changement des hypothèses du générateur, et après build-population-publique.
  */
 import reference from "../data/references/population.json" with {
 	type: "json",
@@ -21,15 +28,23 @@ import projections from "../data/references/projections.json" with {
 import {
 	BAREMES_FRANCE as B,
 	buildComptes,
+	CHAMP_PRIVE,
+	CHAMP_PUBLIC,
+	type Champ,
 	computePensions,
-	detail,
+	cotisationsAnnee,
+	departDuChamp,
 	estSalarie,
 	GENERATIONS_PONDEREES,
 	generatePopulation,
+	generatePopulationPublique,
+	type Individu,
 	type Pension,
 	ponderer,
 	runSimulation,
+	SCENARIO_PUBLIC,
 	SCENARIO_REFERENCE,
+	trancheDeDuree,
 } from "../packages/engine/src/index.ts";
 
 const ANNEE = B.anneeReference;
@@ -79,43 +94,137 @@ const population = generatePopulation(
 	B,
 );
 const r = runSimulation(population, B, {}, buildComptes(population, B));
-const compte = {
-	femmes: {
-		n: new Map<number, number>(),
-		c: new Map<number, number>(),
-		r: new Map<number, number>(),
-	},
-	hommes: {
-		n: new Map<number, number>(),
-		c: new Map<number, number>(),
-		r: new Map<number, number>(),
-	},
+/**
+ * Tranches de durée au privé, en années de salarié avant 62 ans : d'abord ceux qui ont aussi des
+ * années dans un régime non simulé, puis les autres. La dernière colonne : qui a été indépendant.
+ */
+const BORNES = [5, 10, 15, 20, 30];
+const DUREES = BORNES.length + 1;
+const NB = 2 * DUREES;
+const tranche = (i: Individu) => {
+	const t = trancheDeDuree(i.carriere, BORNES);
+	return t < 0 ? NB : t;
 };
-const plus = (m: Map<number, number>, k: number) =>
-	m.set(k, (m.get(k) ?? 0) + 1);
+/** Durée seule : un fonctionnaire est rapproché d'un individu du privé de même durée, quel qu'il soit. */
+const duree = (i: Individu) => tranche(i) % DUREES;
+/** Ordre de retrait pour une durée : ceux qui ont des années ailleurs, puis les autres, puis la durée suivante. */
+const ORDRE = Array.from({ length: NB }, (_, k) =>
+	k % 2 === 0 ? k / 2 : DUREES + (k - 1) / 2,
+);
+const table = () => ({
+	n: new Float64Array(AGE_MAX + 3),
+	c: Array.from({ length: NB + 1 }, () => new Float64Array(AGE_MAX + 3)),
+	r: Array.from({ length: NB + 1 }, () => new Float64Array(AGE_MAX + 3)),
+});
+const cotise = (i: Individu) =>
+	i.carriere.annees.some(
+		(a) => a.annee === ANNEE && estSalarie(a) && a.salaireBrut > 0,
+	);
+const compte = { femmes: table(), hommes: table() };
 population.forEach((i, k) => {
 	const c = i.carriere;
 	const age = ANNEE - c.anneeNaissance;
 	const g = compte[c.sexe === "F" ? "femmes" : "hommes"];
-	plus(g.n, age);
-	if (!Number.isNaN(r.pensionParIndividu[k] as number)) plus(g.r, age);
-	else if (
-		c.annees.some(
-			(a) => a.annee === ANNEE && estSalarie(a) && a.salaireBrut > 0,
-		)
-	)
-		plus(g.c, age);
+	(g.n[age] as number)++;
+	if (!Number.isNaN(r.pensionParIndividu[k] as number))
+		(g.r[tranche(i)] as Float64Array)[age]++;
+	else if (cotise(i)) (g.c[tranche(i)] as Float64Array)[age]++;
 });
-/** Taux lissé sur cinq âges. */
-const taux = (sexe: Cle, quoi: "c" | "r", age: number) => {
-	let n = 0;
-	let x = 0;
-	for (let a = age - 2; a <= age + 2; a++) {
-		n += compte[sexe].n.get(a) ?? 0;
-		x += compte[sexe][quoi].get(a) ?? 0;
-	}
-	return n ? x / n : 0;
+
+const reels = (sexe: Cle, age: number) =>
+	lire(pyramide[sexe] as Table, age, age === AGE_MAX);
+const pyramideDuMoteur = {
+	annee: ANNEE,
+	femmes: Array.from({ length: AGE_MAX + 1 }, (_, age) =>
+		age < AGE_MIN ? 0 : reels("femmes", age),
+	),
+	hommes: Array.from({ length: AGE_MAX + 1 }, (_, age) =>
+		age < AGE_MIN ? 0 : reels("hommes", age),
+	),
 };
+
+// Les fonctionnaires : ce qu'ils apportent de cotisants et de retraités de l'Agirc-Arrco, en personnes réelles.
+const publique = ponderer(
+	generatePopulationPublique(B, undefined, {
+		taille: 120000,
+		graine: SCENARIO_PUBLIC.graine,
+		generations: GENERATIONS_PONDEREES,
+	}),
+	pyramideDuMoteur,
+	CHAMP_PUBLIC,
+);
+const pensionsPubliques = computePensions(
+	publique,
+	B,
+	{},
+	buildComptes(publique, B),
+);
+const apport = { femmes: table(), hommes: table() };
+publique.forEach((i, k) => {
+	const c = i.carriere;
+	const age = ANNEE - c.anneeNaissance;
+	const g = apport[c.sexe === "F" ? "femmes" : "hommes"];
+	const p = pensionsPubliques[k] as Pension;
+	if (p.liquidation.annee <= ANNEE) {
+		if (
+			(p.parRegime.agircArrco?.pensionAnnuelle ?? 0) > 0 &&
+			departDuChamp(CHAMP_PRIVE, p).annee <= ANNEE
+		)
+			(g.r[duree(i)] as Float64Array)[age] += i.poids;
+	} else if (cotise(i)) (g.c[duree(i)] as Float64Array)[age] += i.poids;
+});
+
+/** Somme sur cinq âges autour d'un âge. */
+const autour = (v: Float64Array, age: number) => {
+	let x = 0;
+	for (let a = Math.max(0, age - 2); a <= age + 2; a++) x += v[a] ?? 0;
+	return x;
+};
+
+type Reglage = { part: number; reste: number[] };
+/**
+ * Part du privé et reste par tranche de durée à un âge, pour retrouver une cible de cotisants ou de
+ * retraités une fois comptés ceux que les fonctionnaires apportent.
+ */
+function regler(
+	sexe: Cle,
+	age: number,
+	quoi: "c" | "r",
+	cible: number,
+): Reglage {
+	const n = autour(compte[sexe].n, age);
+	const taux = compte[sexe][quoi].map((v) => (n ? autour(v, age) / n : 0));
+	const tous = taux.reduce((t, x) => t + x, 0);
+	const population = reels(sexe, age);
+	const reste = new Array<number>(NB).fill(1);
+	if (tous === 0 || population === 0) return { part: 0, reste };
+	const sansFonctionnaires = cible / population / tous;
+	let surplus = 0;
+	let apportes = 0;
+	for (const d of ORDRE) {
+		// Ce que les fonctionnaires de cette durée apportent se retire d'abord chez ceux qui ont des années ailleurs.
+		const apporte =
+			d < DUREES ? autour(apport[sexe][quoi][d] as Float64Array, age) / 5 : 0;
+		apportes += apporte;
+		const jumeaux = population * sansFonctionnaires * (taux[d] as number);
+		const aRetirer = apporte + surplus;
+		if (jumeaux <= 0) {
+			surplus = aRetirer;
+			continue;
+		}
+		reste[d] = Math.max(0, 1 - aRetirer / jumeaux);
+		surplus = Math.max(0, aRetirer - jumeaux);
+	}
+	const conserves =
+		(taux[NB] as number) +
+		reste.reduce((t, x, d) => t + x * (taux[d] as number), 0);
+	return {
+		part: conserves
+			? Math.max(0, cible - apportes) / population / conserves
+			: 0,
+		reste,
+	};
+}
 
 const sortie = {
 	annee: ANNEE,
@@ -140,34 +249,51 @@ const sortie = {
 	femmes: [] as number[],
 	hommes: [] as number[],
 	partPrive: { femmes: [] as number[], hommes: [] as number[] },
+	/**
+	 * Ce qu'il reste du poids d'un individu du privé, par âge puis par tranche de durée au privé,
+	 * une fois retirés ceux que les fonctionnaires passés par le privé représentent déjà.
+	 */
+	resteParDuree: {
+		bornes: BORNES,
+		femmes: [] as number[][],
+		hommes: [] as number[][],
+	},
 };
 
+let surplusTotal = 0;
 for (const sexe of SEXES) {
-	const part = (age: number): number => {
+	const reglage = (age: number): Reglage => {
 		const dernier = age === AGE_MAX;
-		const reels = lire(pyramide[sexe] as Table, age, dernier);
 		if (age <= AGE_FIN_COTISANTS)
-			return (
-				lire(cotisants[sexe] as Table, age, false) /
-				reels /
-				taux(sexe, "c", age)
-			);
+			return regler(sexe, age, "c", lire(cotisants[sexe] as Table, age, false));
 		if (age >= AGE_DEBUT_RETRAITES)
-			return (
-				lire((retraites[sexe] as { parAge: Table }).parAge, age, dernier) /
-				reels /
-				taux(sexe, "r", age)
+			return regler(
+				sexe,
+				age,
+				"r",
+				lire((retraites[sexe] as { parAge: Table }).parAge, age, dernier),
 			);
 		const t =
 			(age - AGE_FIN_COTISANTS) / (AGE_DEBUT_RETRAITES - AGE_FIN_COTISANTS);
-		return part(AGE_FIN_COTISANTS) * (1 - t) + part(AGE_DEBUT_RETRAITES) * t;
+		const x = reglage(AGE_FIN_COTISANTS);
+		const y = reglage(AGE_DEBUT_RETRAITES);
+		return {
+			part: x.part * (1 - t) + y.part * t,
+			reste: x.reste.map((v, d) => v * (1 - t) + (y.reste[d] as number) * t),
+		};
 	};
 	for (let age = AGE_MIN; age <= AGE_MAX; age++) {
-		sortie[sexe].push(lire(pyramide[sexe] as Table, age, age === AGE_MAX));
+		const x = reglage(age);
+		sortie[sexe].push(reels(sexe, age));
 		// Jamais plus que la population réelle : avant 24 ans le modèle manque d'emplois jeunes (apprentis, étudiants).
-		sortie.partPrive[sexe].push(Number(Math.min(1, part(age)).toFixed(4)));
+		sortie.partPrive[sexe].push(Number(Math.min(1, x.part).toFixed(4)));
+		sortie.resteParDuree[sexe].push(x.reste.map((v) => Number(v.toFixed(3))));
+		if (x.reste[NB - 1] === 0) surplusTotal++;
 	}
 }
+console.log(
+	`âges où toutes les tranches de durée sont épuisées (surplus pris sur tous) : ${surplusTotal} sur ${2 * (AGE_MAX - AGE_MIN + 1)}`,
+);
 
 await Bun.write(
 	new URL(
@@ -274,28 +400,55 @@ await Bun.write(
 	})}\n`,
 );
 
-// Recoupement : totaux pondérés du scénario de référence face aux chiffres publiés.
+// Recoupement : totaux pondérés de la population entière face aux chiffres publiés.
 const indice = (age: number) => Math.max(0, Math.min(AGE_MAX, age) - AGE_MIN);
-const ponderee = ponderer(
-	population,
-	{
-		annee: ANNEE,
-		femmes: [...new Array<number>(AGE_MIN).fill(0), ...sortie.femmes],
-		hommes: [...new Array<number>(AGE_MIN).fill(0), ...sortie.hommes],
+const champ: Champ = {
+	...CHAMP_PRIVE,
+	part: (age, sexe, annee, carriere) => {
+		if (carriere?.fonctionPublique)
+			return CHAMP_PUBLIC.part(age, sexe, annee, carriere);
+		const cle = sexe === "F" ? "femmes" : "hommes";
+		const t = carriere ? trancheDeDuree(carriere, BORNES) : -1;
+		return (
+			(sortie.partPrive[cle][indice(age)] ?? 0) *
+			(t < 0 ? 1 : (sortie.resteParDuree[cle][indice(age)]?.[t] ?? 1))
+		);
 	},
-	{
-		nom: "privé",
-		part: (age, sexe) =>
-			sortie.partPrive[sexe === "F" ? "femmes" : "hommes"][indice(age)] ?? 0,
-	},
-);
-const t = runSimulation(ponderee, B, {}, buildComptes(ponderee, B));
-// Base et complémentaire à part : la complémentaire se compare sur le même champ, pas la base.
-const pensions = computePensions(ponderee, B, {}, buildComptes(ponderee, B));
+};
+const ponderee = [
+	...ponderer(population, pyramideDuMoteur, champ),
+	...publique,
+];
+const pensions = [
+	...computePensions(population, B, {}, buildComptes(population, B)),
+	...pensionsPubliques,
+];
+const t = {
+	effectifs: { cotisants: 0, retraites: 0 },
+	masses: { cotisations: 0 },
+};
+ponderee.forEach((i, k) => {
+	const p = pensions[k] as Pension;
+	if (p.liquidation.annee <= ANNEE) {
+		if (
+			(p.parRegime.agircArrco?.pensionAnnuelle ?? 0) > 0 &&
+			departDuChamp(CHAMP_PRIVE, p).annee <= ANNEE
+		)
+			t.effectifs.retraites += i.poids;
+		return;
+	}
+	const a = i.carriere.annees.find((x) => x.annee === ANNEE);
+	if (!a || !estSalarie(a) || a.salaireBrut <= 0) return;
+	const c = cotisationsAnnee(a, B);
+	t.effectifs.cotisants += i.poids;
+	t.masses.cotisations += i.poids * (c.base + c.complementaire);
+});
 const masse = (f: (p: Pension) => number) =>
 	ponderee.reduce((total, individu, k) => {
 		const p = pensions[k] as Pension;
-		return p.liquidation.annee <= ANNEE ? total + individu.poids * f(p) : total;
+		return departDuChamp(CHAMP_PRIVE, p).annee <= ANNEE
+			? total + individu.poids * f(p)
+			: total;
 	}, 0);
 // Les montants publiés sont de fin 2024 : ramenés en euros de l'année de référence avec les prix du COR.
 const prix = projections.hypothesesEconomiquesCOR.prix.indice as {
@@ -336,7 +489,7 @@ const recoupement = [
 	{
 		nom: "Pensions complémentaires versées",
 		unite: "milliards",
-		modele: masse((p) => detail(p, "agircArrco").pensionAnnuelle) / 1e9,
+		modele: masse((p) => p.parRegime.agircArrco?.pensionAnnuelle ?? 0) / 1e9,
 		cible:
 			(aa.effectifs * aa.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
 			1e9,
@@ -346,7 +499,7 @@ const recoupement = [
 	{
 		nom: "Pensions de base versées",
 		unite: "milliards",
-		modele: masse((p) => detail(p, "cnav").pensionAnnuelle) / 1e9,
+		modele: masse((p) => p.parRegime.cnav?.pensionAnnuelle ?? 0) / 1e9,
 		cible:
 			(rg.effectifs * rg.avantagePrincipalDroitDirectMoyenM1 * 12 * enEuros) /
 			1e9,

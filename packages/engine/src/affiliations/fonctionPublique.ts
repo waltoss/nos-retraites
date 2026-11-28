@@ -22,6 +22,7 @@ import {
 } from "../regles.ts";
 import type { Carriere, RegimeFonctionPublique } from "../types.ts";
 
+const BORNES = new WeakMap<object, { min: number; max: number }>();
 const PREMIERES_ACTIVES = new WeakMap<ReglesScenario, Map<string, number>>();
 
 /**
@@ -45,11 +46,14 @@ export function reglesGenerationFonctionPublique(
 		g: number,
 	) => {
 		const table = fp.parGeneration[categorie];
-		const annees = Object.keys(table).map(Number);
-		const borne = Math.max(
-			Math.min(...annees),
-			Math.min(Math.max(...annees), g),
-		);
+		// Les bornes d'une table ne se cherchent qu'une fois : cette lecture revient à chaque départ.
+		let bornes = BORNES.get(table);
+		if (!bornes) {
+			const annees = Object.keys(table).map(Number);
+			bornes = { min: Math.min(...annees), max: Math.max(...annees) };
+			BORNES.set(table, bornes);
+		}
+		const borne = Math.max(bornes.min, Math.min(bornes.max, g));
 		return table[borne] as (typeof table)[number];
 	};
 	if (statut.regime === "militaire") {

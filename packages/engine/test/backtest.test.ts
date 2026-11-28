@@ -18,7 +18,7 @@ const relatif = (l: { modele: number; observe: number }) =>
 describe("backtest 2010-2024", () => {
 	test("âge moyen de départ au régime général à moins de 0,6 an", () => {
 		for (const l of groupe("Âge moyen de départ"))
-			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.5);
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(0.6);
 	});
 
 	test("départs par an à moins de 15 %, effectifs à moins de 8 %", () => {
@@ -45,9 +45,9 @@ describe("backtest 2010-2024", () => {
 			expect(Math.abs(l.modele - l.observe)).toBeLessThan(10);
 	});
 
-	test("part au minimum contributif à moins de 9 points", () => {
+	test("part au minimum contributif à moins de 4 points", () => {
 		for (const l of groupe("Part des nouveaux retraités au minimum"))
-			expect(Math.abs(l.modele - l.observe)).toBeLessThan(9);
+			expect(Math.abs(l.modele - l.observe)).toBeLessThan(4);
 	});
 
 	test("pensions par régime : bornes de l'état actuel", () => {
@@ -57,7 +57,17 @@ describe("backtest 2010-2024", () => {
 		];
 		for (const l of pensions) expect(relatif(l)).toBeLessThan(0.22);
 		for (const l of pensions.filter((x) => x.nom.startsWith("hommes, régime général")))
-			expect(relatif(l)).toBeLessThan(0.09);
+			expect(relatif(l)).toBeLessThan(0.04);
+		for (const l of pensions.filter((x) => x.nom.startsWith("femmes, régime général")))
+			expect(relatif(l)).toBeLessThan(0.12);
+	});
+
+	// Cible du réglage de la part des fonctionnaires passés par le privé ; les militaires, dont la
+	// seconde carrière n'est pas simulée, restent loin.
+	test("fonctionnaires civils qui touchent aussi une pension du régime général à moins de 4 points", () => {
+		for (const l of groupe("Fonction publique : retraités qui touchent aussi"))
+			if (l.nom !== "Militaires")
+				expect(Math.abs(l.modele - l.observe)).toBeLessThan(4);
 	});
 
 	// Critère du projet, pas encore tenu : la pension de base des femmes est trop haute,

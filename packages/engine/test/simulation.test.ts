@@ -6,6 +6,7 @@ import {
 	createRng,
 	generateCarriere,
 	generatePopulation,
+	generatePopulationEntiere,
 	HYPOTHESES,
 	runSimulation,
 } from "../src/index.ts";
@@ -122,7 +123,8 @@ describe("pondération", () => {
 				with: { type: "json" },
 			})
 		).default;
-		const population = generatePopulation(SCENARIO_REFERENCE, BAREMES_FRANCE);
+		// La population entière : les fonctionnaires passés par le privé y cotisent et en sont retraités.
+		const population = generatePopulationEntiere(SCENARIO_REFERENCE, BAREMES_FRANCE);
 		const r = runSimulation(population, BAREMES_FRANCE);
 		const cotisants = reference.agircArrco.cotisants.totaux.ensemble;
 		const retraites = reference.agircArrco.retraitesDroitDirect.totaux.ensemble.effectifs;

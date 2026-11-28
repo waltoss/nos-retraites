@@ -80,6 +80,17 @@
 		}
 	},
 	"partValideeAvantEntree": 0.9,
+	"avantEntree": {
+		"partAuPrive": {
+			"sre": 0.565,
+			"cnracl": 0.79,
+			"militaire": 1
+		},
+		"regle": "réglée à la main pour retrouver la part des retraités de 60 ans ou plus de chaque régime qui perçoivent aussi une pension du régime général : 43,7 % (civils de l'État), 73,7 % (CNRACL), 51,7 % (militaires) ; voir scripts/backtest-public.ts",
+		"source": "Rapport sur les pensions de retraite de la fonction publique, annexe au projet de loi de finances pour 2027, partie II, p. 44-46, source Drees, EIR 2020 (data/references/fonction-publique.json, population.entreeEtPolypensionnes.polypensionnes.eir2020)",
+		"url": "https://www2.assemblee-nationale.fr/static/17/Annexes-DL/PLF_2027/12-Jaune-2027-Pensions-de-retraite-fonction-publique.pdf",
+		"date": "2026-11-21"
+	},
 	"traitement": {
 		"anneeDeNiveau": 2024,
 		"niveau": {

@@ -20,10 +20,12 @@ import {
 import {
 	anneeDuChamp,
 	type Champ,
+	departDuChamp,
 	dureeDuChamp,
 	type Pyramide,
 	pensionDuChamp,
 	ponderer,
+	releveDuChamp,
 } from "./ponderation.ts";
 import { CHAMP_PRIVE, PYRAMIDE_FRANCE } from "./population/france.ts";
 import {
@@ -34,7 +36,7 @@ import {
 } from "./regles.ts";
 import { createRng, graineIndividu } from "./rng.ts";
 import { type Histogramme, histogramme, type Resume, resume } from "./stats.ts";
-import type { Individu, Pension } from "./types.ts";
+import type { Individu, Liquidation, Pension } from "./types.ts";
 
 export interface Scenario {
 	/** Nombre d'individus simulés. */
@@ -131,6 +133,30 @@ export function generatePopulationPublique(
 		});
 	}
 	return population;
+}
+
+/**
+ * La population entière du modèle : les salariés du privé puis les fonctionnaires, chacun compté
+ * une fois. Les poids viennent de `CHAMP_PRIVE` ou de `CHAMP_PUBLIC`, qui pèsent chacun de la même
+ * façon ; le champ choisi dit seulement quels régimes on regarde.
+ */
+export function generatePopulationEntiere(
+	scenario: Scenario,
+	b: Baremes,
+	publique: Individu[] = generatePopulationPublique(b),
+): Individu[] {
+	const prive = generatePopulation({ ...scenario, ponderation: undefined }, b);
+	const population = [
+		...prive,
+		...publique.map((i, k) => ({ ...i, id: prive.length + k })),
+	];
+	return scenario.ponderation
+		? ponderer(
+				population,
+				scenario.ponderation.pyramide,
+				scenario.ponderation.champ,
+			)
+		: population;
 }
 
 /** Comptes de carrière de la population : indépendants des règles du scénario, à calculer une seule fois. */
@@ -237,17 +263,19 @@ export function runSimulation(
 		const be = baremesPour(b, r);
 		const g = reglesGeneration(c.anneeNaissance, b, r);
 		let pension: Pension | null = null;
+		let depart: Liquidation | null = null;
 		// Inutile de calculer la pension de ceux qui n'atteignent dans l'année ni l'âge légal ni un âge de départ anticipé.
 		const premierAge = Math.min(
 			g.ageLegal,
 			...(g.carriereLongue ?? []).map((x) => x.age),
 		);
 		if ((age + 1) * 4 > premierAge) {
-			const p = computePension(c, be, {
-				regles: r,
-				compte: compte ?? buildCompte(c, b),
-			});
-			if (p.liquidation.annee <= annee) pension = p;
+			compte ??= buildCompte(c, b);
+			// Parti ou non, qui n'a pas de compte dans le champ n'y est pas retraité.
+			if (!releveDuChamp(champ, compte)) continue;
+			const p = computePension(c, be, { regles: r, compte });
+			depart = departDuChamp(champ, p);
+			if (depart.annee <= annee) pension = p;
 		}
 		const sexagenaire = age >= 60 && age < 70;
 		if (sexagenaire) sexagenaires += w;
@@ -259,13 +287,14 @@ export function runSimulation(
 			pensionParIndividu[i] = mensuelle;
 			parSexe[c.sexe].valeurs.push(mensuelle);
 			parSexe[c.sexe].poids.push(w);
-			ages[c.sexe] += (pension.liquidation.age / 4) * w;
+			const ageDepart = depart?.age ?? pension.liquidation.age;
+			ages[c.sexe] += (ageDepart / 4) * w;
 			const duree = dureeDuChamp(champ, pension);
 			if (duree.minimumApplique) minimum += w;
 			if (duree.trimestresDecote > 0) decote += w;
 			if (duree.trimestresSurcote > 0) surcote += w;
 			if (
-				pension.liquidation.age >= g.ageTauxPleinAutomatique &&
+				ageDepart >= g.ageTauxPleinAutomatique &&
 				duree.trimestresValides < g.dureeRequise
 			)
 				parAge += w;
@@ -279,7 +308,7 @@ export function runSimulation(
 			const cotisation = cotisationsAnnee(a, be);
 			cotisations.push(cotisation.base + cotisation.complementaire);
 			poidsCotisations.push(w);
-		} else {
+		} else if (releveDuChamp(champ, compte ?? buildCompte(c, b))) {
 			autres += w;
 		}
 	}

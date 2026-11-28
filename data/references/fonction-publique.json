@@ -1925,6 +1925,16 @@
     ]
    },
    "militaires": "Condition de 15 ans ramenée à 2 ans pour les militaires recrutés à compter du 1er janvier 2014 (article 42 de la loi du 20 janvier 2014).",
+   "majorationDeDureeDAssurancePourEnfants": {
+    "regle": "Quand un assuré a relevé du régime général et d'un régime spécial qui lui verse une pension selon ses propres règles, c'est le régime spécial qui accorde l'avantage de durée pour enfants ; le régime général ne l'accorde pas.",
+    "texte": "article R. 173-15 du code de la sécurité sociale, modifié en dernier lieu par le décret n° 2017-735",
+    "source": "Réponse ministérielle à la question écrite n° 758 (Assemblée nationale, 16e législature) ; Légifrance, code de la sécurité sociale, version au 3 décembre 2020",
+    "url": "https://www.legifrance.gouv.fr/codes/id/LEGISCTA000024083896/2020-12-03/",
+    "urlReponse": "https://questions.assemblee-nationale.fr/dyn/16/questions/QANR5L16QE758.pdf",
+    "date": "2026-11-22",
+    "fiabilite": "secondaire",
+    "nonLu": "Règle relevée dans les résultats d'une recherche, pas dans le texte intégral de l'article : à relire sur Légifrance dans sa version en vigueur."
+   },
    "validationDeServicesDeContractuel": "Fermée aux fonctionnaires titularisés à compter du 2 janvier 2013 ; les services de contractuel restent donc au régime général et à l'Ircantec, d'où des polypensionnés.",
    "consequencesPourLeCalcul": [
     "Au-delà de 2 ans de services, le fonctionnaire perçoit une pension de la fonction publique proratisée (services / durée requise) et, pour ses périodes dans le privé, une pension du régime général et de l'Agirc-Arrco calculées selon leurs règles propres.",

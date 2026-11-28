@@ -8,6 +8,8 @@ import {
 	type RegimeFonctionPublique,
 	type Sexe,
 } from "../types.ts";
+import { salaireTendanciel } from "./carriere.ts";
+import { HYPOTHESES, type Hypotheses } from "./hypotheses.ts";
 import type { HypothesesPubliques } from "./hypothesesPubliques.ts";
 import tempsPartielData from "./tempsPartielPublic.data.json" with {
 	type: "json",
@@ -58,7 +60,7 @@ export function indiceTraitement(
 }
 
 /**
- * Génère la carrière d'un fonctionnaire : quelques années dans un autre régime, puis un emploi
+ * Génère la carrière d'un fonctionnaire : quelques années dans le privé ou ailleurs, puis un emploi
  * continu dans la fonction publique jusqu'au départ. Le traitement suit l'âge et un rang permanent ;
  * les primes sont une part du traitement propre à l'individu.
  * Simplifications : ni temps partiel, ni interruption, ni invalidité, ni sortie de la fonction publique.
@@ -68,6 +70,8 @@ export function generateCarriereFonctionPublique(
 	rng: Rng,
 	h: HypothesesPubliques,
 	b: Baremes,
+	/** Hypothèses du privé : elles donnent leur salaire aux années de salarié d'avant l'entrée. */
+	prive: Hypotheses = HYPOTHESES,
 ): Carriere {
 	const tirageRegime = rng.next();
 	const regime: RegimeFonctionPublique =
@@ -182,6 +186,7 @@ export function generateCarriereFonctionPublique(
 			: (tempsPartielData[regime] as TempsPartiel)[sexe];
 	const aTempsPartiel =
 		tp !== null && derive(22801.763) < tp.part * h.tempsPartiel.facteur;
+	const passeParLePrive = derive(40503.719) < h.avantEntree.partAuPrive[regime];
 	const retard =
 		t.partAnciennete[regime] * Math.max(0, ageEntree - t.ageEntreeDeReference);
 	const annees: AnneeCarriere[] = [];
@@ -190,12 +195,15 @@ export function generateCarriereFonctionPublique(
 		const tirage = rng.next();
 		if (age < ageEntree) {
 			const valide = tirage < h.partValideeAvantEntree;
-			// Avant l'entrée : un autre régime, que le modèle ne simule pas.
+			// Avant l'entrée : salarié du privé, ou un régime que le modèle ne simule pas.
 			annees.push({
 				annee,
-				affiliation: "autre",
+				affiliation: passeParLePrive && valide ? "prive" : "autre",
 				etat: valide ? "emploi" : "inactivite",
-				salaireBrut: 0,
+				salaireBrut:
+					passeParLePrive && valide
+						? salaireTendanciel(age, annee, sexe, rang, prive, b)
+						: 0,
 				moisEmploi: valide ? 12 : 0,
 				moisChomage: 0,
 				moisMaladie: 0,

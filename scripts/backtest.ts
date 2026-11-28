@@ -23,9 +23,10 @@ import {
 	buildComptes,
 	CHAMP_PRIVE,
 	computePensions,
+	departDuChamp,
 	detail,
 	estSalarie,
-	generatePopulation,
+	generatePopulationEntiere,
 	moisParEtat,
 	type Pension,
 	type Pyramide,
@@ -47,7 +48,9 @@ export interface LigneBacktest {
 	observe: number;
 }
 
-const population = generatePopulation(SCENARIO_REFERENCE, B);
+// La population entière : les fonctionnaires passés par le privé sont aussi des retraités du
+// régime général et de l'Agirc-Arrco. Dans une génération, chacun compte pour son poids.
+const population = generatePopulationEntiere(SCENARIO_REFERENCE, B);
 const comptes = buildComptes(population, B);
 const pensions = computePensions(population, B, {}, comptes);
 /** Seuls ceux qui ont des droits comptent : c'est le champ des statistiques de retraités. */
@@ -56,26 +59,36 @@ const retraites = population
 	.filter((x) => pensionDuChamp(CHAMP_PRIVE, x.pension) > 0);
 const lignes: LigneBacktest[] = [];
 const moyenne = (v: number[]) => v.reduce((t, x) => t + x, 0) / v.length;
+const moyennePesee = (v: { valeur: number; poids: number }[]) =>
+	v.reduce((t, x) => t + x.valeur * x.poids, 0) /
+	v.reduce((t, x) => t + x.poids, 0);
 
 // 1. Âge conjoncturel de départ au régime général (Drees, EACR) : 50 ans plus la somme,
 // de 50 à 70 ans, des parts de chaque âge qui ne sont pas encore parties. La Drees regarde chaque
 // génération en fin d'année, à un âge moyen d'une demi-année au-dessus de son âge révolu ;
 // ici chacun est né un 1er janvier, on regarde donc la génération au milieu de son année d'âge.
 const parAnnee = validation.agesDepart.valeurs.regimeGeneral_CNAV.parAnnee;
-const ages = new Map<string, number[]>();
+const ages = new Map<string, { age: number; poids: number }[]>();
 for (const r of retraites) {
 	const c = r.individu.carriere;
 	const cle = `${c.sexe}${c.anneeNaissance}`;
 	const v = ages.get(cle) ?? [];
-	v.push(r.pension.liquidation.age);
+	v.push({
+		age: departDuChamp(CHAMP_PRIVE, r.pension).age,
+		poids: r.individu.poids,
+	});
 	ages.set(cle, v);
 }
 const ageConjoncturel = (annee: number, sexe: "F" | "H") => {
 	let age = 50;
 	for (let a = 50; a <= 70; a++) {
 		const v = ages.get(`${sexe}${annee - a}`) ?? [];
-		const partis = v.filter((q) => q <= 4 * a + 2).length;
-		age += v.length ? 1 - partis / v.length : 0;
+		const tous = v.reduce((t, q) => t + q.poids, 0);
+		const partis = v.reduce(
+			(t, q) => t + (q.age <= 4 * a + 2 ? q.poids : 0),
+			0,
+		);
+		age += tous ? 1 - partis / tous : 0;
 	}
 	return age;
 };
@@ -181,7 +194,7 @@ const stock = (annee: number) => {
 		.filter(
 			(x) =>
 				pensionDuChamp(CHAMP_PRIVE, x.pension) > 0 &&
-				x.pension.liquidation.annee <= annee &&
+				departDuChamp(CHAMP_PRIVE, x.pension).annee <= annee &&
 				x.individu.poids > 0,
 		);
 };
@@ -259,7 +272,7 @@ for (const [sexe, cle] of SEXES) {
 			let arrco = 0;
 			let total = 0;
 			for (const a of c.annees) {
-				if (a.annee >= x.pension.liquidation.annee) break;
+				if (a.annee >= departDuChamp(CHAMP_PRIVE, x.pension).annee) break;
 				const mois = moisParEtat(a).emploi;
 				if (mois === 0 || a.salaireBrut <= 0 || !estSalarie(a)) continue;
 				const pass = valeur(B.cnav.pass, a.annee);
@@ -312,8 +325,8 @@ for (const [sexe, cle] of SEXES) {
 const partants = (debut: number, fin: number) =>
 	retraites.filter(
 		(x) =>
-			x.pension.liquidation.annee >= debut &&
-			x.pension.liquidation.annee <= fin,
+			departDuChamp(CHAMP_PRIVE, x.pension).annee >= debut &&
+			departDuChamp(CHAMP_PRIVE, x.pension).annee <= fin,
 	);
 const moyenneObservee = (serie: Serie, debut: number, fin: number) => {
 	let total = 0;
@@ -387,14 +400,17 @@ for (const [sexe, cle] of SEXES)
 	lignes.push({
 		groupe: "Coefficient de proratisation au régime général, génération 1953",
 		nom: cle,
-		modele: moyenne(
+		modele: moyennePesee(
 			retraites
 				.filter(
 					(x) =>
 						x.individu.carriere.sexe === sexe &&
 						Math.abs(x.individu.carriere.anneeNaissance - 1953) <= 2,
 				)
-				.map((x) => detail(x.pension, "cnav").proratisation),
+				.map((x) => ({
+					valeur: detail(x.pension, "cnav").proratisation,
+					poids: x.individu.poids,
+				})),
 		),
 		observe: proratisation[cle],
 	});
@@ -456,9 +472,9 @@ population.forEach((individu, k) => {
 	if (sans.liquidation.age >= 61 * 4 || avec.liquidation.age < 61 * 4) return;
 	const a = c.annees[60 - ((c.annees[0]?.annee ?? 0) - c.anneeNaissance)];
 	const mois = a ? moisParEtat(a) : { emploi: 0, chomage: 0, maladie: 0 };
-	reportes.emploi += mois.emploi;
-	reportes.chomage += mois.chomage;
-	reportes.autres += 12 - mois.emploi - mois.chomage;
+	reportes.emploi += individu.poids * mois.emploi;
+	reportes.chomage += individu.poids * mois.chomage;
+	reportes.autres += individu.poids * (12 - mois.emploi - mois.chomage);
 });
 const totalReportes = reportes.emploi + reportes.chomage + reportes.autres;
 const totalObserve = -effet("retraite");

@@ -163,8 +163,15 @@ export function departAligne(
 					? undefined
 					: g.dureeProratisation - avance,
 		};
+	// L'âge d'une autre affiliation, plus bas que l'âge légal d'ici (un militaire, un fonctionnaire
+	// de catégorie active ou invalide) : ce régime attend, et décide lui-même de son départ.
+	const attend =
+		options.auPlusTot === true &&
+		options.motif === undefined &&
+		options.ageLiquidation !== undefined &&
+		options.ageLiquidation < g.ageLegal;
 	const depart: Depart =
-		options.ageLiquidation !== undefined
+		options.ageLiquidation !== undefined && !attend
 			? {
 					age: options.ageLiquidation,
 					...(options.motif ? { motif: options.motif } : {}),
@@ -192,7 +199,17 @@ function liquiderPrive(
 	const { depart, g } = departAligne(carriere, compte, b, options);
 	const age = depart.age;
 	const cumul = cumulJusqua(compte, age);
-	const cnav = computeCnav(carriere, compte, cumul, age, g, b.cnav);
+	// Affilié aussi à un régime spécial qui lui verse une pension : c'est ce régime qui accorde les
+	// trimestres pour enfants, pas le régime général (article R. 173-15 du code de la sécurité sociale).
+	const cnav = computeCnav(
+		carriere,
+		compte,
+		cumul,
+		age,
+		g,
+		b.cnav,
+		carriere.fonctionPublique === undefined,
+	);
 	const agircArrco = computeAgircArrco(
 		carriere,
 		cumul,
@@ -225,15 +242,34 @@ function liquiderPrive(
 						cnav.trimestresAutresRegimes) /
 					Math.max(1, auRegime)
 				: 0;
+		// Quand ces pensions sont déjà calculées, elles comptent pour ce qu'elles sont.
 		const total =
-			cnav.pensionAnnuelle + agircArrco.pensionAnnuelle + autresRegimes;
-		if (total > plafond)
+			cnav.pensionAnnuelle +
+			agircArrco.pensionAnnuelle +
+			Math.max(autresRegimes, options.dejaLiquide ?? 0);
+		if (total > plafond) {
 			cnav.pensionAnnuelle = Math.max(
 				sansMinimum,
 				cnav.pensionAnnuelle - (total - plafond),
 			);
+			// Entièrement écrêté, le minimum n'est plus versé : l'assuré n'en est pas bénéficiaire.
+			if (cnav.pensionAnnuelle <= sansMinimum)
+				cnav.minimumContributifApplique = false;
+		}
 	}
 
+	if (
+		options.ageLiquidation !== undefined &&
+		options.auPlusTot &&
+		age > options.ageLiquidation
+	) {
+		const liquidation = {
+			age,
+			annee: carriere.anneeNaissance + Math.floor(age / 4),
+		};
+		cnav.liquidation = liquidation;
+		agircArrco.liquidation = liquidation;
+	}
 	return {
 		age,
 		duree: {

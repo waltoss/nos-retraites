@@ -18,7 +18,7 @@ import {
 	estIndependant,
 	estSalarie,
 	type Facteurs,
-	generatePopulation,
+	generatePopulationEntiere,
 	generatePopulationPublique,
 	type Individu,
 	moisParEtat,
@@ -35,6 +35,7 @@ import {
 	pyramidesProjetees,
 	type RegimeFonctionPublique,
 	type Resultat,
+	rechamper,
 	reglesUniverselles,
 	SCENARIO_REFERENCE,
 	type StatutFonctionnaire,
@@ -81,7 +82,7 @@ export const SEUIL_PRIMES = 0.3;
 
 export type TrancheAge = "seniors" | "actifs" | "jeunes";
 
-/** Laquelle des deux populations simulées on regarde. */
+/** Qui l'on regarde dans la population : les salariés du privé ou les fonctionnaires. */
 export type ChampSimule = "prive" | "public";
 
 export interface FiltrePortraits {
@@ -240,6 +241,7 @@ interface Scene {
 
 let taille = SCENARIO_REFERENCE.taille;
 const mondes = new Map<string, Monde>();
+let publique: Individu[] | null = null;
 const scenes = new Map<string, Scene>();
 let pensionsReference: Pension[] | null = null;
 const DROIT: ScenarioMoteur = { regles: {}, facteurs: {}, demographie: {} };
@@ -249,9 +251,13 @@ function monde(facteurs: Facteurs): Monde {
 	const cle = JSON.stringify(facteurs);
 	let m = mondes.get(cle);
 	if (!m) {
-		const population = generatePopulation(
+		// Une seule population : les salariés du privé, que les facteurs d'emploi touchent, puis
+		// les fonctionnaires, les mêmes dans tous les scénarios.
+		publique ??= generatePopulationPublique(B);
+		const population = generatePopulationEntiere(
 			{ ...SCENARIO_REFERENCE, taille, facteurs, anneeEffet: ANNEE_EFFET },
 			B,
+			publique,
 		);
 		m = { population, comptes: buildComptes(population, B) };
 		if (mondes.size >= 4) {
@@ -318,34 +324,10 @@ function trajectoires(sc: Scene): Projection {
 	return sc.projection;
 }
 
-let mondePublic: (Monde & { pensions: Pension[] }) | null = null;
-
-/** Les fonctionnaires dans un scénario : même population pour tous, les facteurs d'emploi ne les touchent pas. */
+/** Les fonctionnaires dans un scénario : la même population, regardée dans leur champ. */
 function fonctionPublique(sc: Scene) {
 	if (!sc.fonctionPublique) {
-		if (!mondePublic) {
-			const population = generatePopulationPublique(B);
-			const comptes = buildComptes(population, B);
-			mondePublic = {
-				population,
-				comptes,
-				pensions: computePensions(population, B, {}, comptes),
-			};
-		}
-		const preparation = prepareProjection(
-			mondePublic.population,
-			B,
-			sc.scenario.regles,
-			{
-				debut: B.anneeReference,
-				fin: FIN_PROJECTION,
-				pyramides: pyramidesProjetees(sc.scenario.demographie),
-				champ: CHAMP_PUBLIC,
-				anneeEffet: ANNEE_EFFET,
-				comptes: mondePublic.comptes,
-				pensionsReference: mondePublic.pensions,
-			},
-		);
+		const preparation = rechamper(sc.preparation, CHAMP_PUBLIC);
 		sc.fonctionPublique = { preparation, projection: projeter(preparation) };
 	}
 	return sc.fonctionPublique;
@@ -425,10 +407,14 @@ function faitsFonctionPublique(
 		const p = preparation.pensions[k] as Pension;
 		if (Math.abs(p.liquidation.annee - annee) > 2) return;
 		const c = individu.carriere;
+		const d = detailFonctionPublique(p);
+		// La pension de fonctionnaire seule, retraite additionnelle comprise : celle du privé est comptée ailleurs.
+		const mensuelle = d ? (d.pensionAnnuelle + d.rafp) / 12 : 0;
 		if (
-			c.fonctionPublique?.regime === "militaire" ||
-			detailFonctionPublique(p)?.motif === "invalidite" ||
-			p.mensuelleBrute === 0
+			!c.fonctionPublique ||
+			c.fonctionPublique.regime === "militaire" ||
+			d?.motif === "invalidite" ||
+			mensuelle === 0
 		)
 			return;
 		ages.n += poids[k] as number;
@@ -439,7 +425,7 @@ function faitsFonctionPublique(
 		const part = derniere.primes / (derniere.salaireBrut - derniere.primes);
 		const g = part >= SEUIL_PRIMES ? groupes.beaucoup : groupes.peu;
 		g.n += poids[k] as number;
-		g.s += (poids[k] as number) * p.mensuelleBrute;
+		g.s += (poids[k] as number) * mensuelle;
 	});
 	return {
 		cotisants: a?.cotisants ?? 0,
@@ -506,26 +492,19 @@ const TRANCHES: Record<TrancheAge, [min: number, max: number]> = {
 	jeunes: [20, 39],
 };
 
-/** La population d'un champ dans un scénario : ses carrières, ses pensions, ses poids l'année de référence. */
+/**
+ * La population dans un scénario : ses carrières, ses pensions, ses poids l'année de référence.
+ * Elle est une ; `duChamp` dit qui est montré quand on regarde les salariés du privé ou les fonctionnaires.
+ */
 function vue(sc: Scene, champ: ChampSimule = "prive") {
-	if (champ === "public") {
-		const f = fonctionPublique(sc);
-		const m = mondePublic as Monde;
-		return {
-			population: m.population,
-			comptes: m.comptes,
-			pensions: f.preparation.pensions,
-			poids: poidsDeLAnnee(
-				f.preparation,
-				B.anneeReference,
-			) as ArrayLike<number>,
-		};
-	}
+	const fonctionnaires = champ === "public";
 	return {
 		population: sc.monde.population,
 		comptes: sc.monde.comptes,
 		pensions: sc.preparation.pensions,
 		poids: sc.monde.population.map((i) => i.poids) as ArrayLike<number>,
+		duChamp: (c: Carriere) =>
+			(c.fonctionPublique !== undefined) === fonctionnaires,
 	};
 }
 
@@ -554,6 +533,7 @@ function portraits(
 		const age = B.anneeReference - c.anneeNaissance;
 		const poids = reference.poids[i] as number;
 		if (age < ageMin || age > ageMax || poids === 0) continue;
+		if (!reference.duChamp(c)) continue;
 		if (filtre.sexe !== "tous" && c.sexe !== filtre.sexe) continue;
 		const r = reference.pensions[i] as Pension;
 		const p = courant.pensions[i] as Pension;
@@ -646,7 +626,7 @@ function exemples(s: ScenarioMoteur): Exemple[] {
 		const c = individu.carriere;
 		const p = reference.pensions[i] as Pension;
 		if (c.anneeNaissance < 1958 || c.anneeNaissance > 1962) return;
-		if ((reference.poids[i] as number) === 0) return;
+		if ((reference.poids[i] as number) === 0 || !reference.duChamp(c)) return;
 		let prive = 0;
 		let independant = 0;
 		let creux = 0;
@@ -795,7 +775,7 @@ function moi(s: ScenarioMoteur, profil: ProfilMoi): ResultatMoi | null {
 	const candidats: { i: number; salaire: number; distance: number }[] = [];
 	reference.population.forEach((individu, i) => {
 		const c = individu.carriere;
-		if (c.sexe !== profil.sexe) return;
+		if (c.sexe !== profil.sexe || !reference.duChamp(c)) return;
 		if (profil.regime && c.fonctionPublique?.regime !== profil.regime) return;
 		if (Math.abs(c.anneeNaissance - profil.anneeNaissance) > ecartMax) return;
 		const a = c.annees[B.anneeReference - (c.annees[0]?.annee ?? 0)];

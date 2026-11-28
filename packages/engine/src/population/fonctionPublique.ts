@@ -20,14 +20,21 @@ export function partFonctionPublique(
 	return v[i] ?? 0;
 }
 
+const REGIMES_PUBLICS = ["sre", "cnracl", "militaire"] as const;
+
 /**
  * Fonctionnaires civils de l'État, des collectivités et des hôpitaux, et leurs retraités.
+ * Seuls leurs années et leurs pensions de fonctionnaire sont du champ : ce qu'ils ont cotisé et
+ * perçoivent comme salariés du privé relève de `CHAMP_PRIVE`.
  * La part suit la génération à tout âge : qui entre dans la fonction publique y reste, puis en est
  * retraité. Réglée sur les cotisants et les retraités des deux régimes de 2010 à 2025
  * (scripts/build-population-publique.ts).
  */
 export const CHAMP_PUBLIC: Champ = {
 	nom: "Fonctionnaires",
+	affiliations: REGIMES_PUBLICS,
+	regimes: REGIMES_PUBLICS,
+	aPart: ["prive", "salarieAgricole", "cnav", "agircArrco"],
 	part: (age, sexe, annee = data.annee, carriere) => {
 		const regime = carriere?.fonctionPublique?.regime;
 		return regime ? partFonctionPublique(regime, sexe, annee - age) : 0;

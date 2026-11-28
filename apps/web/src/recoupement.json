@@ -2,35 +2,35 @@
 	{
 		"nom": "Cotisants",
 		"unite": "millions",
-		"modele": 20.17,
+		"modele": 20.09,
 		"cible": 20.06,
 		"source": "Agirc-Arrco, cotisants présents fin 2024"
 	},
 	{
 		"nom": "Retraités",
 		"unite": "millions",
-		"modele": 12.61,
+		"modele": 12.54,
 		"cible": 12.8,
 		"source": "Drees, retraités de droit direct de l'Agirc-Arrco fin 2024"
 	},
 	{
 		"nom": "Cotisations versées",
 		"unite": "milliards",
-		"modele": 210,
+		"modele": 209.9,
 		"cible": 217.3,
 		"source": "Cotisations 2025 du régime général (indépendants compris) et de l'Agirc-Arrco"
 	},
 	{
 		"nom": "Pensions complémentaires versées",
 		"unite": "milliards",
-		"modele": 72.26,
+		"modele": 72.14,
 		"cible": 85.61,
 		"source": "Drees, effectifs × pension moyenne de droit direct de l'Agirc-Arrco fin 2024, en euros de 2026"
 	},
 	{
 		"nom": "Pensions de base versées",
 		"unite": "milliards",
-		"modele": 128.6,
+		"modele": 127.5,
 		"cible": 141.4,
 		"source": "Drees, effectifs × pension moyenne de droit direct du régime général fin 2024, en euros de 2026, anciens indépendants compris"
 	}

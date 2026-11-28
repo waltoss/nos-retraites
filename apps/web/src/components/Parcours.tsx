@@ -214,7 +214,7 @@ export function Parcours() {
 		: p.statut && cotisations === 0
 			? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille ${carriere.fonctionPublique ? "hors de la fonction publique" : "hors du salariat privé"} : le modèle ne retient de cette année que sa durée, sans cotisation ni pension calculée.`
 			: p.statut
-				? carriere.fonctionPublique
+				? /^(fonctionnaire|militaire)/.test(p.statut.court)
 					? `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille comme ${p.statut.court}, pour ${euros(p.salaire)} de traitement et de primes. Une retenue est prise sur son traitement, et son employeur verse ce qu'il faut en plus pour payer les fonctionnaires retraités de ${p.annee}. En échange, ${pronom} acquiert des trimestres de services.`
 					: `En ${p.annee}, ${qui.prenom} a ${p.age} ans et travaille comme ${p.statut.court}. Sur ${euros(p.salaire)} de ${/^(artisan|commerçant)/.test(p.statut.court) ? "revenu" : "salaire brut"}, ${euros(cotisations)} de cotisations retraite partent vers ${caisses.length > 1 ? `${caisses.length} régimes` : "son régime"}, qui les reversent aussitôt aux retraités de ${p.annee}. En échange, ${pronom} acquiert des droits.`
 				: `En ${p.annee}, ${qui.prenom} a ${p.age} ans et ne travaille pas : aucune cotisation${p.assimiles > 0 ? `, mais ${entier(p.assimiles)} trimestre${p.assimiles > 1 ? "s lui sont comptés" : " lui est compté"} quand même (chômage, maladie ou maternité)` : ""}.`;

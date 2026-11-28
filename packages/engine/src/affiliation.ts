@@ -17,6 +17,13 @@ export type OptionsLiquidation = {
 	regles?: ReglesScenario;
 	/** Âge de départ imposé ; sinon l'affiliation le décide. */
 	ageLiquidation?: AgeTrimestres;
+	/**
+	 * Vrai quand l'âge imposé est celui d'une autre affiliation : un régime qui n'ouvre pas encore
+	 * de droit à cet âge liquide plus tard, à l'âge qu'il décide lui-même.
+	 */
+	auPlusTot?: boolean;
+	/** Pension annuelle des affiliations déjà liquidées : elle compte dans les plafonds tous régimes. */
+	dejaLiquide?: number;
 	/** Motif du départ imposé, quand une autre affiliation en a décidé : l'inaptitude vaut pour tous les régimes. */
 	motif?: "carriereLongue" | "inaptitude";
 	/** Comportement de départ ; il ne joue que pour les carrières qui portent un profil. */

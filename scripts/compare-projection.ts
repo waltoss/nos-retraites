@@ -15,7 +15,7 @@ import {
 	CHAMP_PRIVE,
 	computeSysteme,
 	type Demographie,
-	generatePopulation,
+	generatePopulationEntiere,
 	PYRAMIDES_PROJETEES,
 	pyramidesProjetees,
 	runProjection,
@@ -26,7 +26,7 @@ import {
 const cor =
 	reference.projectionsFinancieresCOR.cnavEtAgircArrco.determinantsFigure2_7
 		.rapportCotisantsRetraites["AGIRC-ARRCO"];
-const population = generatePopulation(SCENARIO_REFERENCE, B);
+const population = generatePopulationEntiere(SCENARIO_REFERENCE, B);
 const comptes = buildComptes(population, B);
 const projeter = (d: Demographie = {}) =>
 	runProjection(

@@ -172,6 +172,7 @@ export type DetailCnav = {
 	motif?: "carriereLongue" | "inaptitude";
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
+	liquidation?: Liquidation;
 };
 
 export type DetailAgircArrco = {
@@ -180,6 +181,7 @@ export type DetailAgircArrco = {
 	majorationEnfants: number;
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
+	liquidation?: Liquidation;
 };
 
 export type DetailFonctionPublique = {
@@ -203,6 +205,7 @@ export type DetailFonctionPublique = {
 	rafp: number;
 	/** Pension annuelle brute du régime, hors retraite additionnelle, en euros de l'année de référence. */
 	pensionAnnuelle: number;
+	liquidation?: Liquidation;
 };
 
 export type DetailRci = {
@@ -213,12 +216,18 @@ export type DetailRci = {
 	versementUnique: boolean;
 	/** Pension annuelle brute, en euros de l'année de référence. */
 	pensionAnnuelle: number;
+	liquidation?: Liquidation;
 };
 
 /** Ce que tout régime dit de la pension qu'il verse. */
 export type DetailRegime = {
 	/** Pension annuelle brute versée par le régime, en euros de l'année de référence. */
 	pensionAnnuelle: number;
+	/**
+	 * Départ dans ce régime quand il vient après celui de l'affiliation principale : un militaire
+	 * ou un fonctionnaire parti tôt ne touche sa pension du privé qu'à l'âge où le privé l'ouvre.
+	 */
+	liquidation?: Liquidation;
 };
 
 /** Le détail propre à chaque régime connu ; un régime ajouté au modèle donne au moins un `DetailRegime`. */

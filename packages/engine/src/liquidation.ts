@@ -121,8 +121,8 @@ export type OptionsPension = {
  * Calcule la pension d'une carrière, en euros de l'année de référence des barèmes.
  * Les barèmes doivent déjà porter les règles du scénario (voir appliquerRegles).
  *
- * L'affiliation principale décide de l'âge de départ ; les autres liquident au même âge.
- * Simplification : en réalité chaque régime peut se liquider à une date différente.
+ * L'affiliation principale décide de l'âge de départ ; les autres liquident au même âge, ou plus
+ * tard quand elles n'ouvrent pas encore de droit à cet âge (`liquidation` du détail du régime).
  */
 export function computePension(
 	carriere: Carriere,
@@ -151,6 +151,7 @@ export function computePension(
 	const impose = {
 		...liquidation,
 		ageLiquidation: age,
+		auPlusTot: true,
 		...(motif && motif !== "invalidite" ? { motif } : {}),
 	};
 	for (const autre of compte.autres ?? []) {
@@ -158,7 +159,7 @@ export function computePension(
 			carriere,
 			autre,
 			b,
-			impose,
+			{ ...impose, dejaLiquide: annuelle },
 		);
 		annuelle += l.annuelle;
 		parRegime = { ...parRegime, ...l.parRegime };

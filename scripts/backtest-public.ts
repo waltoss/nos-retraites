@@ -26,6 +26,7 @@ import {
 	poidsDeLAnnee,
 	prepareProjection,
 	projeter,
+	SURVIE_SELON_PENSION,
 } from "../packages/engine/src/index.ts";
 import type { LigneBacktest } from "./backtest.ts";
 
@@ -80,6 +81,7 @@ const preparation = prepareProjection(
 		anneeEffet: 2028,
 		comptes,
 		pensionsReference: pensions,
+		survie: SURVIE_SELON_PENSION,
 	},
 );
 
@@ -149,7 +151,7 @@ const retraites = (v: Vue[], annee: number) =>
 	v.filter(
 		(x) =>
 			x.pension.liquidation.annee <= annee &&
-			x.pension.mensuelleBrute > 0 &&
+			(detailFonctionPublique(x.pension)?.pensionAnnuelle ?? 0) > 0 &&
 			(!invalide(x) || annee >= anneeDOuverture(x)),
 	);
 const partisTous = (v: Vue[], de: number, a: number) =>
@@ -157,7 +159,7 @@ const partisTous = (v: Vue[], de: number, a: number) =>
 		(x) =>
 			x.pension.liquidation.annee >= de &&
 			x.pension.liquidation.annee <= a &&
-			x.pension.mensuelleBrute > 0,
+			(detailFonctionPublique(x.pension)?.pensionAnnuelle ?? 0) > 0,
 	);
 const partis = (v: Vue[], de: number, a: number) =>
 	partisTous(v, de, a).filter((x) => !invalide(x));
@@ -508,6 +510,7 @@ const avenir = projeter(
 			anneeEffet: 2028,
 			comptes,
 			pensionsReference: pensions,
+			survie: SURVIE_SELON_PENSION,
 		},
 	),
 );
@@ -521,6 +524,37 @@ for (const annee of [2040, 2055, 2070])
 		(100 * partDuPib(annee)) / partDuPib(B.anneeReference),
 		(100 * cor(annee)) / cor(B.anneeReference),
 	);
+
+// Polypensionnés : retraités de 60 ans ou plus qui touchent aussi une pension du régime général (Drees, EIR 2020).
+// C'est la cible du réglage de `avantEntree.partAuPrive`.
+const polypensionnes =
+	reference.population.entreeEtPolypensionnes.polypensionnes.eir2020
+		.partPercevantAussiUnePensionDuRegimeGeneral;
+for (const [regime, cle, nom] of [
+	["sre", "pensionnesCivilsDeLEtat", "État"],
+	["cnracl", "pensionnesCnracl", "CNRACL"],
+	["militaire", "pensionnesMilitaires", "Militaires"],
+] as const) {
+	let tous = 0;
+	let avec = 0;
+	for (const x of retraites(vue(2020, regime), 2020)) {
+		if (2020 - (population[x.k]?.carriere.anneeNaissance ?? 0) < 60) continue;
+		tous += x.poids;
+		const cnav = x.pension.parRegime.cnav;
+		if (
+			cnav &&
+			cnav.pensionAnnuelle > 0 &&
+			(cnav.liquidation?.annee ?? x.pension.liquidation.annee) <= 2020
+		)
+			avec += x.poids;
+	}
+	ajoute(
+		"Fonction publique : retraités qui touchent aussi une pension du régime général, en %, fin 2020",
+		nom,
+		(100 * avec) / tous,
+		polypensionnes[cle],
+	);
+}
 
 export const BACKTEST_PUBLIC = lignes;
 
