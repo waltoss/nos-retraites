@@ -50,6 +50,8 @@ const PATHS = {
 			<path d="M12 11v5.500M12 7.500v.300" />
 		</>
 	),
+	/** Une urne et son bulletin : les programmes de l'élection. */
+	urne: <path d="M4 12h16v8H4zM8 12V4h8v8M10.500 16h3M11 7.500h2" />,
 	loi: (
 		<path d="M12 4v16M7 20h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z" />
 	),

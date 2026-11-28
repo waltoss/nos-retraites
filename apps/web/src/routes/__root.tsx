@@ -75,7 +75,7 @@ const PAGES: {
 	label: string;
 	icone: IconName;
 }[] = [
-	{ to: "/scenarios", label: "Programmes", icone: "tableau" },
+	{ to: "/scenarios", label: "Programmes", icone: "urne" },
 	{ to: "/simuler", label: "Simuler", icone: "curseurs" },
 	{ to: "/moi", label: "Et moi ?", icone: "population" },
 	{ to: "/decisions", label: "Décisions", icone: "tableau" },
@@ -134,7 +134,10 @@ function Entete() {
 				>
 					<Icon name="retour" size={16} />
 					<span className="num">
-						{modifies} {modifies > 1 ? "réglages modifiés" : "réglage modifié"}
+						{modifies}
+						<span className="mots">
+							{modifies > 1 ? " réglages modifiés" : " réglage modifié"}
+						</span>
 					</span>
 				</button>
 			) : (

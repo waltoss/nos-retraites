@@ -3,7 +3,7 @@ import {
 	PATRIMOINE_SYSTEME,
 	type Projection,
 } from "@nos-retraites/engine";
-import { type PointerEvent, type ReactNode, useEffect, useState } from "react";
+import { type PointerEvent, useEffect, useState } from "react";
 import { decimal, entier, euros } from "../format";
 import { type Lecture, soldeLu } from "../lecture";
 import { useScenario } from "../scenario";
@@ -204,45 +204,6 @@ const PATRIMOINE_DEPART =
 	(PATRIMOINE_SYSTEME.reserves - PATRIMOINE_SYSTEME.dette) / 1e9;
 
 /** Un choix à deux positions de la lecture du solde. */
-function Choix({
-	legende,
-	actif,
-	sans,
-	avec,
-	onChoix,
-	children,
-}: {
-	legende: string;
-	actif: boolean;
-	sans: string;
-	avec: string;
-	onChoix: (actif: boolean) => void;
-	children?: ReactNode;
-}) {
-	return (
-		<fieldset className="choix-annee">
-			<legend>{legende}</legend>
-			<button
-				type="button"
-				className={actif ? "puce" : "puce actif"}
-				aria-pressed={!actif}
-				onClick={() => onChoix(false)}
-			>
-				{sans}
-			</button>
-			<button
-				type="button"
-				className={actif ? "puce actif" : "puce"}
-				aria-pressed={actif}
-				onClick={() => onChoix(true)}
-			>
-				{avec}
-			</button>
-			{children}
-		</fieldset>
-	);
-}
-
 /** Les trajectoires du système de 2026 à 2070, loi actuelle et scénario. */
 export function Trajectoires({
 	lecture,
@@ -292,6 +253,10 @@ export function Trajectoires({
 	const solde = (a: AnneeSysteme) => soldeLu(a, lecture);
 	const soldes = (annees: AnneeSysteme[]) =>
 		annees.map((a) => ({ x: a.annee, y: solde(a) / 1e9 }));
+	// Ce que les cotisations de l'année paient des dépenses, tous régimes : les versements de l'État
+	// sont rangés dans les autres ressources, donc cette part ne dépend pas de la lecture du solde.
+	const parts = (annees: AnneeSysteme[]) =>
+		annees.map((a) => ({ x: a.annee, y: (a.cotisations / a.depenses) * 100 }));
 	const cumul = (annees: AnneeSysteme[]) =>
 		annees.reduce((t, a) => t + solde(a), 0) / 1e9;
 	const cumulReference = cumul(systeme.reference);
@@ -325,40 +290,51 @@ export function Trajectoires({
 				<div className="solde-tete">
 					<h3>Solde des retraites, tous régimes</h3>
 					<div className="solde-lectures">
-						<Choix
-							legende="Lecture"
-							actif={horsEtat}
-							sans="Officielle"
-							avec="Sans versements de l'État"
-							onChoix={(v) => onLecture({ ...lecture, horsEtat: v })}
+						<fieldset className="choix-annee">
+							<legend>Lecture</legend>
+							<button
+								type="button"
+								className={horsEtat ? "puce" : "puce actif"}
+								aria-pressed={!horsEtat}
+								onClick={() => onLecture({ ...lecture, horsEtat: false })}
+							>
+								Officielle
+							</button>
+							<button
+								type="button"
+								className={horsEtat ? "puce actif" : "puce"}
+								aria-pressed={horsEtat}
+								aria-label="Sans versements de l'État"
+								onClick={() => onLecture({ ...lecture, horsEtat: true })}
+							>
+								<span className="long">Sans versements de l'État</span>
+								<span className="court">Hors État</span>
+							</button>
+						</fieldset>
+						<button
+							type="button"
+							className={lecture.interets ? "puce actif" : "puce"}
+							aria-pressed={lecture.interets}
+							onClick={() =>
+								onLecture({ ...lecture, interets: !lecture.interets })
+							}
 						>
-							<Info label="Ce que changent les versements de l'État">
-								<strong>Officielle</strong> : la lecture du Conseil
-								d'orientation des retraites. Les sommes que l'État verse pour
-								équilibrer les retraites de ses propres agents comptent comme
-								une ressource.
-								<br />
-								<strong>Sans versements de l'État</strong> : elles ne comptent
-								pas. Certains y voient le vrai déficit, d'autres une simple
-								cotisation d'employeur plus élevée qu'ailleurs.
-							</Info>
-						</Choix>
-						<Choix
-							legende="Intérêts"
-							actif={lecture.interets}
-							sans="Sans"
-							avec="Avec"
-							onChoix={(v) => onLecture({ ...lecture, interets: v })}
-						>
-							<Info label="Ce que changent les intérêts">
-								<strong>Avec</strong> : les réserves des caisses rapportent, la
-								dette coûte, et chaque déficit creuse la dette. Taux : la hausse
-								du salaire moyen au-dessus des prix (0,7 % à terme), comme le
-								COR.
-								<br />
-								<strong>Sans</strong> : la convention du COR.
-							</Info>
-						</Choix>
+							{lecture.interets ? "Avec intérêts" : "+ Intérêts"}
+						</button>
+						<Info label="Ce que changent ces deux choix">
+							<strong>Officielle</strong> : la lecture du Conseil d'orientation
+							des retraites. Les sommes que l'État verse pour équilibrer les
+							retraites de ses propres agents comptent comme une ressource.
+							<br />
+							<strong>Sans versements de l'État</strong> : elles ne comptent
+							pas. Certains y voient le vrai déficit, d'autres une simple
+							cotisation d'employeur plus élevée qu'ailleurs.
+							<br />
+							<strong>Intérêts</strong> : les réserves des caisses rapportent,
+							la dette coûte, et chaque déficit creuse la dette. Taux : la
+							hausse du salaire moyen au-dessus des prix (0,7 % à terme). Sans
+							eux, c'est la convention du COR.
+						</Info>
 					</div>
 				</div>
 				<div className="courbes deux">
@@ -419,6 +395,15 @@ export function Trajectoires({
 							)}
 						</div>
 					</div>
+					<Courbe
+						{...communs}
+						titre="Part des dépenses de retraite payée par les cotisations"
+						aide="Le reste vient d'impôts affectés, de versements de l'État et d'autres ressources, ou manque."
+						reference={parts(systeme.reference)}
+						courant={parts(systeme.courant)}
+						couleur="var(--besoin)"
+						format={(y) => `${entier(y)} %`}
+					/>
 				</div>
 			</div>
 
@@ -437,18 +422,6 @@ export function Trajectoires({
 							maximumFractionDigits: 2,
 						})
 					}
-				/>
-				<Courbe
-					{...communs}
-					titre="Pensions pour 100 euros de cotisations"
-					aide="Au-dessus de 100, les cotisations ne suffisent pas : le reste vient d'autres ressources."
-					reference={serie(
-						reference,
-						(a) => (a.pensions / a.cotisations) * 100,
-					)}
-					courant={serie(courant, (a) => (a.pensions / a.cotisations) * 100)}
-					couleur="var(--besoin)"
-					format={(y) => `${entier(y)} €`}
 				/>
 				<Courbe
 					{...communs}

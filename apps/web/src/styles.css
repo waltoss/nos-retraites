@@ -721,7 +721,6 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 	.solde { display: flex; flex-direction: column; }
 	.solde-tete { display: contents; }
 	.solde-tete h3 { font-size: 19px; }
-	.solde-lectures { order: 2; margin-top: 16px; }
 	.solde .courbes { gap: 10px; margin-top: 10px; }
 	.solde .courbe { padding: 12px 14px; gap: 6px; }
 	.cumul { padding: 10px 14px 14px; gap: 2px; }
@@ -735,3 +734,26 @@ ul.limites { margin: 8px 0 0; padding-left: 20px; max-width: 90ch; color: var(--
 .levier-tete .reserve { grid-row: 2; }
 .titre-page .titre-info + .sub { margin: 8px 0 0; font-size: 15px; }
 .titre-page + .rubrique { margin-top: 20px; }
+
+/* Lecture du solde : une seule ligne, au-dessus de la courbe qu'elle change. */
+.solde-lectures { position: relative; gap: 6px; }
+.solde-lectures .choix-annee { position: static; }
+.solde-lectures .court { display: none; }
+@media (max-width: 640px) {
+	.solde-lectures { flex-wrap: nowrap; margin-top: 8px; }
+	.solde-lectures .choix-annee { flex-wrap: nowrap; }
+	.solde-lectures .choix-annee legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); margin: 0; }
+	.solde-lectures .puce { height: 32px; padding: 0 11px; font-size: 13px; white-space: nowrap; }
+	.solde-lectures .long { display: none; }
+	.solde-lectures .court { display: inline; }
+	.solde-lectures .info { margin-left: auto; }
+}
+/* En-tête étroit : rien ne passe à la ligne à côté du nom du site. */
+@media (max-width: 420px) {
+	.indep { display: none; }
+	.etat-scenario .mots { display: none; }
+	.etat-scenario { padding: 0 10px; }
+}
+
+/* Décisions : une ligne pas encore calculée garde sa place. */
+.decisions .en-attente .attente { display: block; height: 10px; border-radius: 999px; background: linear-gradient(90deg, var(--paper), #e9e3d8, var(--paper)); background-size: 200% 100%; animation: attente 1.2s linear infinite; }

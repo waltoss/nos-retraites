@@ -113,18 +113,29 @@ function Decisions() {
 	const navigate = useNavigate();
 	const [donnees, setDonnees] = useState<{
 		reference: ResultatLeger;
-		resultats: ResultatLeger[];
+		/** Une case par décision, vide tant que le moteur ne l'a pas calculée. */
+		resultats: (ResultatLeger | undefined)[];
 	} | null>(null);
 
+	// Une demande par décision : le moteur les traite dans l'ordre et chaque ligne s'affiche dès
+	// qu'elle est calculée, au lieu d'attendre la dernière.
 	useEffect(() => {
 		if (!pret) return;
 		let actif = true;
-		demander({
-			type: "decisions",
-			scenarios: DECISIONS.map((d) => versScenario({ [d.levier]: d.valeur })),
-			annee,
-		}).then((r) => {
-			if (actif) setDonnees({ reference: r.reference, resultats: r.resultats });
+		setDonnees(null);
+		DECISIONS.forEach((d, i) => {
+			demander({
+				type: "decisions",
+				scenarios: [versScenario({ [d.levier]: d.valeur })],
+				annee,
+			}).then((r) => {
+				if (!actif) return;
+				setDonnees((avant) => {
+					const resultats = avant ? [...avant.resultats] : [];
+					resultats[i] = r.resultats[0];
+					return { reference: avant?.reference ?? r.reference, resultats };
+				});
+			});
 		});
 		return () => {
 			actif = false;
@@ -188,7 +199,18 @@ function Decisions() {
 									</tr>
 									{lignes.map(({ d, i }) => {
 										const r = donnees.resultats[i];
-										if (!r) return null;
+										if (!r)
+											return (
+												<tr key={d.label} className="en-attente">
+													<th>{d.label}</th>
+													<td className="agit">
+														<PastillesTermes termes={LEVIER[d.levier].termes} />
+													</td>
+													<td colSpan={COLONNES.length + 1}>
+														<span className="attente" />
+													</td>
+												</tr>
+											);
 										return (
 											<tr key={d.label}>
 												<th>{d.label}</th>
