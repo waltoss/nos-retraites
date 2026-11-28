@@ -37,3 +37,26 @@ export function ecart(
 	if (Math.abs(d) < seuil) return "";
 	return `${d > 0 ? "+" : "−"}${format(Math.abs(d))}`;
 }
+
+const MOIS = [
+	"janvier",
+	"février",
+	"mars",
+	"avril",
+	"mai",
+	"juin",
+	"juillet",
+	"août",
+	"septembre",
+	"octobre",
+	"novembre",
+	"décembre",
+];
+/** « 2026-11-22 » ou « 2026-11 » en clair, sans passer par le fuseau du navigateur. */
+export function dateEnClair(d: string) {
+	const [a, m, j] = d.split("-");
+	const mois = MOIS[Number(m) - 1] ?? "";
+	return j
+		? `${Number(j) === 1 ? "1er" : Number(j)} ${mois} ${a}`
+		: `${mois} ${a}`;
+}

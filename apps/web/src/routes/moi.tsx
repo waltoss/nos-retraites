@@ -4,8 +4,15 @@ import { Icon } from "../components/Icons";
 import type { ProfilMoi, ResultatMoi } from "../engine.worker";
 import { ageEnClair, entier, euros } from "../format";
 import { versScenario } from "../leviers";
+import { useOrdreProgrammes } from "../ordre";
 import { useScenario } from "../scenario";
-import { SCENARIOS } from "../scenarios";
+import {
+	attribution,
+	PISTES,
+	PROGRAMMES,
+	programmeDe,
+	SCENARIOS,
+} from "../scenarios";
 
 export const Route = createFileRoute("/moi")({ component: Moi });
 
@@ -27,6 +34,7 @@ const STATUTS: { id: Statut; label: string }[] = [
 
 function Moi() {
 	const { pret, demander, scenario, modifies } = useScenario();
+	const ordre = useOrdreProgrammes();
 	// Rien de ce qui est saisi ici ne part dans l'adresse de la page ni hors du navigateur.
 	const [naissance, setNaissance] = useState("");
 	const [sexe, setSexe] = useState<"F" | "H" | null>(null);
@@ -194,7 +202,7 @@ function Moi() {
 					</div>
 
 					<section>
-						<h2>Selon les grandes options</h2>
+						<h2>Selon les programmes de 2027 et les autres pistes</h2>
 						<p className="sub">
 							Pour les mêmes carrières : l'âge de départ et la première pension
 							du milieu, et l'écart moyen avec la loi actuelle. Une
@@ -213,11 +221,15 @@ function Moi() {
 									</tr>
 								</thead>
 								<tbody>
-									{SCENARIOS.map((s) => {
+									{[...(ordre ?? PROGRAMMES), ...PISTES].map((s) => {
 										const o = options[s.id];
+										const p = programmeDe(s.id);
 										return (
 											<tr key={s.id}>
-												<th>{s.titre}</th>
+												<th>
+													{s.titre}
+													{p && <small>D'après {attribution(p)}</small>}
+												</th>
 												<td>{o ? ageEnClair(o.scenario.age[1]) : "…"}</td>
 												<td className="ecart">{o ? mois(o.ecart.age) : ""}</td>
 												<td>{o ? euros(o.scenario.pension[1]) : "…"}</td>

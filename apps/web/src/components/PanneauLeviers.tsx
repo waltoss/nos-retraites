@@ -1,8 +1,28 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { GROUPES, type GroupeId, LEVIERS, type Levier } from "../leviers";
 import { useScenario } from "../scenario";
+import { Attribution, ChoixScenario } from "./ChoixScenario";
 import { Icon } from "./Icons";
 import { TermesEnClair } from "./Termes";
+
+/**
+ * Le plus long texte qu'un levier peut afficher : il réserve la largeur de la valeur, pour que
+ * l'intitulé ne change pas de ligne pendant un réglage.
+ */
+const PLUS_LONGS = new Map<string, string>();
+function plusLong(levier: Levier): string {
+	let texte = PLUS_LONGS.get(levier.id);
+	if (texte === undefined) {
+		texte = levier.defaut === null ? "Loi actuelle" : "";
+		const pas = Math.max(levier.pas, (levier.max - levier.min) / 2000);
+		for (let v = levier.min; v <= levier.max + 1e-9; v += pas) {
+			const t = levier.affiche(Math.round(v / levier.pas) * levier.pas);
+			if (t.length > texte.length) texte = t;
+		}
+		PLUS_LONGS.set(levier.id, texte);
+	}
+	return texte;
+}
 
 function CurseurLevier({ levier }: { levier: Levier }) {
 	const { reglages, regler } = useScenario();
@@ -21,6 +41,9 @@ function CurseurLevier({ levier }: { levier: Levier }) {
 			<div className="levier-tete">
 				<label htmlFor={id}>{levier.label}</label>
 				<output htmlFor={id} className="num">
+					<span className="reserve" aria-hidden="true">
+						{plusLong(levier)}
+					</span>
 					{texte}
 				</output>
 			</div>
@@ -68,14 +91,19 @@ export function PanneauLeviers() {
 	const touches = GROUPES.filter((g) =>
 		LEVIERS.some((l) => l.groupe === g.id && reglages[l.id] !== undefined),
 	).map((g) => g.id);
-	// Un groupe s'ouvre quand un de ses leviers est réglé, mais seul l'utilisateur le referme.
+	// Un groupe s'ouvre quand un de ses leviers vient d'être réglé, mais seul l'utilisateur le
+	// referme : un groupe déjà touché qu'il a refermé ne se rouvre pas quand il règle ailleurs.
 	const [ouverts, setOuverts] = useState<GroupeId[]>(() => ["age", ...touches]);
 	const cle = touches.join(" ");
+	const dejaTouches = useRef(cle);
 	useEffect(() => {
-		const ids = cle ? (cle.split(" ") as GroupeId[]) : [];
-		setOuverts((o) =>
-			ids.every((id) => o.includes(id)) ? o : [...new Set([...o, ...ids])],
+		const avant = dejaTouches.current.split(" ");
+		dejaTouches.current = cle;
+		const nouveaux = (cle ? (cle.split(" ") as GroupeId[]) : []).filter(
+			(id) => !avant.includes(id),
 		);
+		if (nouveaux.length > 0)
+			setOuverts((o) => [...new Set([...o, ...nouveaux])]);
 	}, [cle]);
 	return (
 		<aside className="panneau" aria-label="Leviers du scénario">
@@ -90,6 +118,11 @@ export function PanneauLeviers() {
 					<Icon name="retour" size={16} />
 					<span>Loi actuelle</span>
 				</button>
+			</div>
+			<div className="panneau-depart">
+				<label htmlFor="depart">Partir d'un programme ou d'une piste</label>
+				<ChoixScenario id="depart" loi="La loi actuelle" />
+				<Attribution />
 			</div>
 			{GROUPES.map((g) => {
 				const leviers = LEVIERS.filter((l) => l.groupe === g.id);

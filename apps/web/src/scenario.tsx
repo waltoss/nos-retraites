@@ -21,8 +21,7 @@ import {
 	type ScenarioMoteur,
 	versScenario,
 } from "./leviers";
-
-const TAILLE = 30000;
+import { TAILLE } from "./taille";
 
 type SansId<T> = T extends { id: number } ? Omit<T, "id"> : never;
 type Demande = SansId<Exclude<Requete, { type: "init" } | { type: "run" }>>;
@@ -42,6 +41,8 @@ interface Contexte {
 	courant: ResultatLeger | null;
 	ecarts: EcartDecile[] | null;
 	pret: boolean;
+	/** Vrai tant que les chiffres affichés ne sont pas encore ceux du scénario en cours. */
+	calcul: boolean;
 	demander: <T extends Demande>(demande: T) => Promise<ReponseDe<T["type"]>>;
 }
 
@@ -75,12 +76,22 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 	const worker = useRef<Worker | null>(null);
 	const compteur = useRef(0);
 	const dernierRun = useRef(0);
+	const [calcul, setCalcul] = useState(true);
+	// Un seul calcul à la fois : le moteur traite ses messages à la file, et un téléphone met
+	// plusieurs secondes par scénario. On ne garde que le dernier réglage demandé entre-temps.
+	const enVol = useRef(false);
+	const suivant = useRef<{ s: ScenarioMoteur; a: number } | null>(null);
 	const attentes = useRef(new Map<number, (r: Reponse) => void>());
 	const scenario = useMemo(() => versScenario(reglages), [reglages]);
 	const scenarioCourant = useRef(scenario);
 	scenarioCourant.current = scenario;
 
 	const lancer = useCallback((s: ScenarioMoteur, a: number) => {
+		if (enVol.current) {
+			suivant.current = { s, a };
+			return;
+		}
+		enVol.current = true;
 		compteur.current += 1;
 		dernierRun.current = compteur.current;
 		worker.current?.postMessage({
@@ -100,16 +111,20 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 			const m = e.data;
 			if (m.type === "ready") {
 				setPret(true);
-				lancer(scenarioCourant.current, anneeCourante.current);
 				return;
 			}
 			if (m.type === "result") {
-				if (m.id === dernierRun.current)
-					setResultat({
-						reference: m.reference,
-						courant: m.courant,
-						ecarts: m.ecarts,
-					});
+				if (m.id !== dernierRun.current) return;
+				enVol.current = false;
+				setResultat({
+					reference: m.reference,
+					courant: m.courant,
+					ecarts: m.ecarts,
+				});
+				const attendu = suivant.current;
+				suivant.current = null;
+				if (attendu) lancer(attendu.s, attendu.a);
+				else setCalcul(false);
 				return;
 			}
 			attentes.current.get(m.id)?.(m);
@@ -120,8 +135,12 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 	}, [lancer]);
 
 	// Chaque changement de scénario relance le calcul et met l'URL à jour, sans empiler l'historique.
+	// Un court délai : un curseur que l'on fait glisser ne lance pas un calcul à chaque cran.
 	useEffect(() => {
-		if (pret) lancer(scenario, annee);
+		if (!pret) return;
+		setCalcul(true);
+		const t = setTimeout(() => lancer(scenario, annee), 120);
+		return () => clearTimeout(t);
 	}, [scenario, annee, pret, lancer]);
 
 	useEffect(() => {
@@ -168,6 +187,7 @@ export function ScenarioProvider({ children }: { children: ReactNode }) {
 		courant: resultat?.courant ?? null,
 		ecarts: resultat?.ecarts ?? null,
 		pret,
+		calcul,
 		demander,
 	};
 	return (

@@ -75,7 +75,7 @@ const PAGES: {
 	label: string;
 	icone: IconName;
 }[] = [
-	{ to: "/scenarios", label: "Scénarios", icone: "tableau" },
+	{ to: "/scenarios", label: "Programmes", icone: "tableau" },
 	{ to: "/simuler", label: "Simuler", icone: "curseurs" },
 	{ to: "/moi", label: "Et moi ?", icone: "population" },
 	{ to: "/decisions", label: "Décisions", icone: "tableau" },
@@ -148,19 +148,16 @@ function Racine() {
 	return (
 		<ScenarioProvider>
 			<Entete />
-			<p className="bandeau">
-				<strong>Version de travail.</strong> Les règles de calcul sont celles de
-				la loi, mais la population simulée reste approximative : fiez-vous aux
-				écarts entre scénarios plus qu'aux montants.{" "}
-				<Link to="/modele" search={(s) => s}>
-					Ce que le modèle sait faire
-				</Link>
-			</p>
 			<Outlet />
 			<footer className="pied">
 				<p>
-					Ce site n'est pas un service public et ne remplace pas votre relevé de
-					carrière. Le code est libre :{" "}
+					Version de travail : les règles de calcul sont celles de la loi, la
+					population simulée reste approximative.{" "}
+					<Link to="/modele" search={(s) => s}>
+						Ce que le modèle sait faire
+					</Link>
+					. Ce site n'est pas un service public et ne remplace pas votre relevé
+					de carrière. Le code est libre :{" "}
 					<a href="https://github.com/waltoss/nos-retraites">
 						github.com/waltoss/nos-retraites
 					</a>

@@ -37,7 +37,7 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Cohorte** : effectif réel d'une génération par sexe, suivi d'année en année par la démographie.
 - **Poids** : nombre de personnes réelles qu'un individu représente : la population de son âge et de son sexe dans le champ, partagée entre les individus simulés de cette cellule.
 - **Pyramide** : population réelle par sexe et âge une année donnée, d'après l'Insee.
-- **Champ** : partie de la population réelle qu'une population simulée représente (les salariés du privé, les fonctionnaires civils), définie par une part à chaque âge ou à chaque génération. Il dit aussi quelles affiliations font un cotisant et quels régimes versent les pensions du champ ; ce que les mêmes individus cotisent et perçoivent ailleurs est compté à part (`autres`).
+- **Champ** : partie du système que l'on regarde dans la population (les salariés du privé, les fonctionnaires), et le poids de chacun, défini par une part à chaque âge ou à chaque génération. Il dit aussi quelles affiliations font un cotisant et quels régimes versent les pensions du champ ; ce que les mêmes individus cotisent et perçoivent ailleurs est compté à part (`autres`).
 - **Indépendant** : artisan ou commerçant, pendant une partie de sa vie active. Le modèle ne simule que ceux qui ont aussi été salariés du privé ; les deux métiers partagent un régime mais pas l'histoire de leur complémentaire.
 - **Auto-entrepreneur** : indépendant au régime simplifié créé en 2009, aux revenus bien plus faibles ; il fait baisser le revenu moyen des indépendants depuis cette date.
 - **Population synthétique** : ensemble des individus simulés, construit à partir d'agrégats publics et non de données personnelles.
@@ -102,6 +102,9 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Écrêtement** : règle de scénario, absente du droit en vigueur, qui réduit la pension totale d'un individu, tous régimes simulés confondus : au-delà d'un seuil, seule une part de la pension est conservée, et un plafond borne le tout. Elle ne relève aucune pension.
 - **Suite de la pension** : ce que la première pension d'un individu devient d'année en année après son départ, en euros constants.
 - **Polypensionné** : retraité qui perçoit des pensions de plusieurs régimes de base.
+- **Population entière** : les individus simulés du modèle, salariés du privé puis fonctionnaires, chacun compté une fois (`generatePopulationEntiere`). Un fonctionnaire passé par le privé y est une seule personne, avec ses pensions des deux côtés. Le champ regardé (`CHAMP_PRIVE`, `CHAMP_PUBLIC`) ne change pas les poids, seulement les régimes et les années comptés.
+- **Doublon** : individu du privé qui représente la même personne réelle qu'un fonctionnaire passé par le privé. Son poids est réduit d'autant (`resteParDuree`), à âge, sexe et durée au régime général comparables, de préférence parmi ceux qui ont des années dans un régime non simulé.
+- **Départ du champ** : date à laquelle un individu devient retraité d'un champ. C'est celle de sa carrière, sauf quand les régimes du champ liquident plus tard que son affiliation principale (`departDuChamp`) : un militaire parti à 45 ans n'est retraité du privé qu'à l'âge où le privé ouvre le droit.
 - **Taux de remplacement** : première pension divisée par le dernier revenu d'activité d'un individu.
 - **Euros constants** : montants exprimés au pouvoir d'achat de l'année de base ; seule unité affichée.
 
@@ -116,7 +119,11 @@ Un terme, une définition. L'identifiant de code est le terme sans accents (`dec
 - **Élasticité** : ampleur supposée de l'effet d'une politique sur un facteur, donnée en fourchette basse, centrale, haute, d'après des évaluations publiées (`data/references/elasticites.json`).
 - **Délai d'effet** : temps entre la mise en place d'une politique et son effet sur l'équation.
 - **Scénario** : jeu complet de valeurs de leviers et de financement, encodable dans une URL.
-- **Scénario type** : scénario tout fait qui représente une grande option du débat, sans nom de parti.
+- **Scénario type** : scénario tout fait qui représente une grande option du débat. Son titre dit la mesure, jamais un nom.
+- **Programme** : scénario type qui reprend les mesures chiffrées annoncées par un ou plusieurs candidats à la présidentielle de 2027, pour la part que le simulateur sait régler. Il porte son attribution : les candidats, ce qui est repris, ce qui est laissé de côté, les sources.
+- **Piste** : scénario type qui n'est le programme de personne.
+- **Nature d'une valeur reprise** : annonce (chiffre du candidat), secondaire (déclaration ou piste rapportée, absente d'un programme écrit), approche (annonce traduite en valeur de curseur) ou illustration (valeur choisie ici faute d'annonce, signalée à l'écran).
+- **Ordre tiré au sort** : ordre d'affichage des programmes, tiré une fois par appareil et gardé dans le navigateur, pour qu'aucun candidat ne soit en tête pour tout le monde.
 - **Scénario de référence** : scénario du droit en vigueur, auquel tous les autres sont comparés.
 - **Projection** : suite des années de l'année de référence à 2070, où l'on regarde chaque année qui cotise et qui perçoit, en euros constants.
 - **Année d'effet** : première année où les règles d'un scénario s'appliquent ; ceux qui sont partis avant gardent leur pension.

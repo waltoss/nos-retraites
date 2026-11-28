@@ -5,6 +5,7 @@ import { Distributions } from "../components/Distributions";
 import { Equation } from "../components/Equation";
 import { GainsPertes } from "../components/GainsPertes";
 import { Icon } from "../components/Icons";
+import { Info } from "../components/Info";
 import { PanneauLeviers } from "../components/PanneauLeviers";
 import { Trajectoires } from "../components/Trajectoires";
 import type { ResultatLeger } from "../engine.worker";
@@ -17,34 +18,89 @@ export const Route = createFileRoute("/simuler")({ component: Simuler });
 const points = (n: number) => `${entier(n)} ${n >= 2 ? "points" : "point"}`;
 const annees = (n: number) => `${decimal(n)} ${n >= 2 ? "ans" : "an"}`;
 
+/**
+ * Sur téléphone les résultats sont loin sous les curseurs : ce bandeau reste en bas de l'écran et
+ * dit tout de suite ce que le réglage change, ou que le calcul tourne. Un appui mène aux résultats.
+ */
+function Bilan() {
+	const { reference, courant, annee, calcul, modifies } = useScenario();
+	const md = courant ? courant.systeme.solde / 1e9 : null;
+	const loi = reference ? reference.systeme.solde / 1e9 : null;
+	const d = md !== null && loi !== null ? md - loi : 0;
+	return (
+		<a href="#solde" className="bilan" aria-live="polite">
+			{calcul && <span className="tourne" aria-hidden="true" />}
+			<span className="num">
+				{md === null ? (
+					"Calcul en cours…"
+				) : (
+					<>
+						<small>
+							En {annee}
+							{calcul ? ", calcul en cours…" : ""}
+						</small>
+						<strong>
+							{md < -0.5
+								? `manque ${entier(-md)} Md€`
+								: md > 0.5
+									? `excédent de ${entier(md)} Md€`
+									: "à l'équilibre"}
+						</strong>
+						{modifies > 0 && !calcul && (
+							<em className={d >= 0.5 ? "mieux" : d <= -0.5 ? "pire" : ""}>
+								{Math.abs(d) < 0.5
+									? "comme la loi actuelle"
+									: `${entier(Math.abs(d))} Md€ de ${d > 0 ? "moins" : "plus"} que la loi`}
+							</em>
+						)}
+					</>
+				)}
+			</span>
+			<span className="voir">
+				Résultats
+				<Icon name="fleche" size={16} />
+			</span>
+		</a>
+	);
+}
+
 function Simuler() {
-	const { reference, courant, ecarts, reglages, modifies, annee } =
+	const { reference, courant, ecarts, reglages, modifies, annee, calcul } =
 		useScenario();
 	// Une seule lecture du solde pour toute la page : courbes, cumul et équilibre de l'année.
 	const [lecture, setLecture] = useState<Lecture>(LECTURE_OFFICIELLE);
 	return (
 		<main className="atelier">
 			<PanneauLeviers />
-			<div className="etabli">
-				<div className="titre-page">
+			<Bilan />
+			<div className={calcul ? "etabli calcul" : "etabli"} id="resultats">
+				{calcul && (
+					<output className="en-calcul">
+						<span className="tourne" aria-hidden="true" />
+						Calcul en cours…
+					</output>
+				)}
+				<div className="titre-page titre-info">
 					<h1>Simuler</h1>
-					<p className="sub">
+					<Info label="Ce que montre cette page">
 						Votre scénario s'applique à partir de 2028, à ceux qui ne sont pas
 						encore partis à la retraite. Tout est comparé à ce que donnerait la
 						loi actuelle la même année.
-					</p>
+					</Info>
 				</div>
 
 				{reference && courant ? (
 					<>
 						<section className="bloc">
-							<h2>Dans le temps, jusqu'en 2070</h2>
-							<p className="sub">
-								La population suit les projections de l'Insee, les salaires
-								progressent de 0,7 % par an au-dessus des prix. Tous les
-								montants sont en euros de 2026. Le trait vertical marque 2028
-								{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
-							</p>
+							<div className="titre-info">
+								<h2>Dans le temps, jusqu'en 2070</h2>
+								<Info label="Les hypothèses de la projection">
+									La population suit les projections de l'Insee, les salaires
+									progressent de 0,7 % par an au-dessus des prix. Tous les
+									montants sont en euros de 2026. Le trait vertical marque 2028
+									{modifies > 0 ? ", le pointillé la loi actuelle" : ""}.
+								</Info>
+							</div>
 							<Trajectoires lecture={lecture} onLecture={setLecture} />
 						</section>
 
@@ -66,13 +122,13 @@ function Simuler() {
 								lecture={lecture}
 							/>
 							<p className="reserve">
-								Les cases du haut ne portent que sur les salariés du privé :
-								régime général et Agirc-Arrco, pensions de droit direct. Le
-								total tous régimes vient des projections du Conseil
-								d'orientation des retraites. Dans un scénario, les
-								fonctionnaires suivent leurs propres règles, simulées à part ;
-								les autres régimes suivent les règles communes à tous (âge,
-								durée, revalorisation).
+								Les cases du haut ne portent que sur le régime général et
+								l'Agirc-Arrco, pensions de droit direct : les salariés du privé,
+								et les fonctionnaires pour leurs années de salarié. Le total
+								tous régimes vient des projections du Conseil d'orientation des
+								retraites. Dans un scénario, les fonctionnaires suivent leurs
+								propres règles ; les autres régimes suivent les règles communes
+								à tous (âge, durée, revalorisation).
 							</p>
 						</section>
 
@@ -106,8 +162,9 @@ function Simuler() {
 							<p className="sub">
 								Agents de l'État, des collectivités et des hôpitaux, militaires
 								compris pour la pension moyenne. Leur pension se calcule sur le
-								traitement des six derniers mois, sans les primes. Ils sont
-								simulés à part et ne figurent pas dans les distributions
+								traitement des six derniers mois, sans les primes. Seule leur
+								pension de fonctionnaire est comptée ici ; celle qu'une partie
+								d'entre eux touche du privé est dans les distributions
 								ci-dessus.
 							</p>
 							<div className="faits">

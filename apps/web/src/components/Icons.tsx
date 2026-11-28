@@ -50,6 +50,9 @@ const PATHS = {
 			<path d="M12 11v5.500M12 7.500v.300" />
 		</>
 	),
+	loi: (
+		<path d="M12 4v16M7 20h10M5 7h14M5 7l-3 7a3 3 0 0 0 6 0zM19 7l-3 7a3 3 0 0 0 6 0z" />
+	),
 	attention: <path d="M12 4l9 16H3zM12 10v4.500M12 17.200v.300" />,
 } as const;
 

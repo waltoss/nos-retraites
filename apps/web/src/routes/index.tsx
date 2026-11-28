@@ -1,469 +1,240 @@
-import type { AnneeSysteme, Projection } from "@nos-retraites/engine";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Avatar } from "../components/Avatar";
-import { Distributions } from "../components/Distributions";
+import {
+	age,
+	cumul,
+	type Fige,
+	figeDe,
+	LOI,
+	solde,
+	trajectoire,
+} from "../accueil";
 import { Icon, type IconName } from "../components/Icons";
 import { Courbe } from "../components/Trajectoires";
-import type { ProfilMoi, ResultatMoi, SuitePension } from "../engine.worker";
-import { decimal, ecart, entier, euros } from "../format";
-import type { Reglages } from "../leviers";
+import { decimal, entier } from "../format";
+import { ANNEE_EFFET, type Reglages } from "../leviers";
+import { useOrdreProgrammes } from "../ordre";
 import { useScenario } from "../scenario";
-import { SCENARIOS } from "../scenarios";
+import { PISTES, PROGRAMMES, programmeDe } from "../scenarios";
 
 export const Route = createFileRoute("/")({ component: Home });
 
+/** L'année que l'accueil regarde : assez loin pour que les réformes aient pris effet. */
+const REPERE = 2050;
+
 const SUITES: {
-	to: "/scenarios" | "/simuler" | "/decisions" | "/carrieres" | "/modele";
+	to: "/decisions" | "/carrieres" | "/modele";
 	icone: IconName;
 	titre: string;
 	texte: string;
 }[] = [
 	{
-		to: "/simuler",
-		icone: "curseurs",
-		titre: "Tous les leviers",
-		texte:
-			"Durée, calcul de la pension, cotisations, emploi, natalité, migrations.",
-	},
-	{
 		to: "/decisions",
 		icone: "tableau",
-		titre: "Chaque décision, une par une",
-		texte:
-			"Le même tableau pour toutes : ce que chacune déplace, et de combien.",
+		titre: "Chaque mesure, une par une",
+		texte: "Ce que chacune déplace, et de combien.",
 	},
 	{
 		to: "/carrieres",
 		icone: "carriere",
 		titre: "Des vies, année par année",
-		texte:
-			"Ouvrez une carrière et suivez le calcul de sa pension ligne à ligne.",
+		texte: "Le calcul d'une pension, ligne à ligne.",
 	},
 	{
 		to: "/modele",
 		icone: "modele",
 		titre: "Sous le capot",
-		texte: "Les règles, leurs sources, ce qui est supposé et ce qui manque.",
+		texte: "Les règles, les sources, ce qui manque.",
 	},
 ];
 
-const REPERES = [2030, 2050, 2070];
-const milliards = (y: number) =>
-	`${y > 0 ? "+" : y < 0 ? "−" : ""}${entier(Math.abs(y))} milliards`;
-const LOI = "loi";
-const PERSONNALISE = "personnalise";
-const cle = (r: Reglages) =>
-	JSON.stringify(Object.entries(r).sort(([a], [b]) => a.localeCompare(b)));
+/** « manque 45 Md€ » ou « excédent de 12 Md€ ». */
+const manque = (md: number) =>
+	md < -0.5
+		? `manque ${entier(-md)} Md€`
+		: md > 0.5
+			? `excédent de ${entier(md)} Md€`
+			: "à l'équilibre";
 
-/** Trois personnes d'exemple, une par génération : le prénom n'est qu'un habillage. */
-const PERSONNES: (ProfilMoi & { id: number; prenom: string })[] = [
-	{
-		id: 11,
-		prenom: "Nathalie",
-		anneeNaissance: 1968,
-		sexe: "F",
-		salaireMensuel: 2400,
-	},
-	{
-		id: 23,
-		prenom: "Julien",
-		anneeNaissance: 1985,
-		sexe: "H",
-		salaireMensuel: 3000,
-	},
-	{
-		id: 37,
-		prenom: "Léa",
-		anneeNaissance: 2000,
-		sexe: "F",
-		salaireMensuel: 2200,
-	},
-];
-
-interface Projections {
-	reference: Projection;
-	courant: Projection;
-	systeme: { reference: AnneeSysteme[]; courant: AnneeSysteme[] };
-	anneeEffet: number;
-}
-
-/** Part de la première pension à partir de laquelle on montre ce qu'elle devient. */
-const SEUIL_SUITE = 0.02;
-
-/**
- * Ce que la pension devient après le départ, à mi-chemin et à 80 ans, en euros constants.
- * N'apparaît que si elle s'écarte de la première pension : la carte ne change pas pour les autres choix.
- */
-function Apres({ depart, suite }: { depart: number; suite: SuitePension }) {
-	const fin = suite.pensions.at(-1);
-	if (fin === undefined || depart <= 0) return null;
-	if (Math.abs(fin - depart) < SEUIL_SUITE * depart) return null;
-	const milieu = Math.floor((suite.pensions.length - 1) / 2);
-	const etapes = [milieu, suite.pensions.length - 1].filter(
-		(i, k, t) => i > 0 && t.indexOf(i) === k,
+/** Ce qu'il manque dans un scénario, en barre : la plus longue est le plus grand manque de la liste. */
+function Ligne({
+	nom,
+	parti,
+	titre,
+	fige,
+	echelle,
+	reglages,
+}: {
+	nom: string;
+	parti?: string;
+	titre: string;
+	fige: Fige;
+	echelle: number;
+	/** Les réglages du programme : la ligne ouvre alors Simuler sur eux. */
+	reglages?: Reglages;
+}) {
+	const { remplacer, setAnnee } = useScenario();
+	const md = solde(fige, REPERE);
+	const contenu = (
+		<>
+			<span className="qui">
+				<strong>{nom}</strong>
+				{parti && <small>{parti}</small>}
+			</span>
+			<span className="quoi">{titre}</span>
+			<span className="barre" aria-hidden="true">
+				<i
+					className={md > 0 ? "plus" : ""}
+					style={{ width: `${Math.max(2, (100 * Math.abs(md)) / echelle)}%` }}
+				/>
+			</span>
+			<span className="combien num">
+				<b>{manque(md)}</b>
+				<small>départ moyen à {decimal(age(fige, REPERE))} ans</small>
+			</span>
+			{reglages && <Icon name="fleche" size={18} />}
+		</>
 	);
-	return (
-		<div className="apres">
-			<dt>Puis, en euros d'aujourd'hui</dt>
-			{etapes.map((i) => (
-				<dd key={i} className="num">
-					{euros(suite.pensions[i] as number)}
-					<small> à {suite.ageDebut + i} ans</small>
-				</dd>
-			))}
-		</div>
+	return reglages ? (
+		<li>
+			<Link
+				to="/simuler"
+				// La même année que la liste : le chiffre retrouvé sur Simuler est celui qu'on a touché.
+				search={{ ...reglages, annee: REPERE } as never}
+				onClick={() => {
+					remplacer(reglages);
+					setAnnee(REPERE);
+				}}
+			>
+				{contenu}
+			</Link>
+		</li>
+	) : (
+		<li className="loi">
+			<div>{contenu}</div>
+		</li>
 	);
 }
 
 function Home() {
-	const {
-		reference,
-		courant,
-		reglages,
-		annee,
-		remplacer,
-		modifies,
-		pret,
-		demander,
-		scenario,
-	} = useScenario();
-	const [donnees, setDonnees] = useState<Projections | null>(null);
-	const [repere, setRepere] = useState(2050);
-	const [personnes, setPersonnes] = useState<(ResultatMoi | null)[]>([]);
-
-	useEffect(() => {
-		if (!pret) return;
-		let actif = true;
-		const t = setTimeout(async () => {
-			const r = await demander({ type: "projection", scenario });
-			if (!actif) return;
-			setDonnees({
-				reference: r.reference,
-				courant: r.courant,
-				systeme: r.systeme,
-				anneeEffet: r.anneeEffet,
-			});
-			const resultats: (ResultatMoi | null)[] = [];
-			for (const profil of PERSONNES) {
-				const m = await demander({
-					type: "moi",
-					scenario,
-					profil: {
-						anneeNaissance: profil.anneeNaissance,
-						sexe: profil.sexe,
-						salaireMensuel: profil.salaireMensuel,
-					},
-				});
-				if (!actif) return;
-				resultats.push(m.resultat);
-			}
-			setPersonnes(resultats);
-		}, 200);
-		return () => {
-			actif = false;
-			clearTimeout(t);
-		};
-	}, [pret, demander, scenario]);
-
-	const systeme = donnees?.systeme ?? null;
-	const cumul = (annees: AnneeSysteme[]) =>
-		annees.reduce((t, a) => t + a.solde, 0) / 1e9;
-	const choisi =
-		modifies === 0
-			? LOI
-			: (SCENARIOS.find((s) => cle(s.reglages) === cle(reglages))?.id ??
-				PERSONNALISE);
-
-	/** Les quatre grandeurs qu'un choix déplace, une année donnée. */
-	const lire = (p: Projection, s: AnneeSysteme[]) => {
-		const a = p.annees.find((x) => x.annee === repere);
-		const y = s.find((x) => x.annee === repere);
-		if (!a || !y) return null;
-		return {
-			age: a.ageMoyenDepart,
-			pension: (100 * a.pensionMoyenne * 12) / a.salaireMoyen,
-			cotisation: (100 * a.cotisations) / (a.cotisants * a.salaireMoyen),
-			solde: (100 * y.solde) / y.pib,
-			milliards: y.solde / 1e9,
-		};
-	};
-	const c = donnees ? lire(donnees.courant, donnees.systeme.courant) : null;
-	const r = donnees ? lire(donnees.reference, donnees.systeme.reference) : null;
-	const pointsDe = (n: number) =>
-		`${decimal(n)} ${n >= 2 ? "points" : "point"}`;
-	const ansDe = (n: number) => `${decimal(n)} ${n >= 2 ? "ans" : "an"}`;
-
+	const { modifies } = useScenario();
+	const ordre = useOrdreProgrammes();
+	const echelle = Math.max(
+		...[LOI, ...PROGRAMMES.map((s) => figeDe(s.id) ?? LOI)].map((f) =>
+			Math.abs(solde(f, REPERE)),
+		),
+	);
 	return (
-		<main className="wrap">
+		<main className="wrap accueil">
 			<section className="hero">
 				<img
 					src="/photos/generations.jpg"
 					alt="Dans un parc, un grand-père accompagne un enfant qui apprend à faire du vélo"
 				/>
-				<h1>Que laisse‑t‑on à ceux qui viennent après ?</h1>
-				<p className="lede">
-					Ceux qui travaillent paient la pension de ceux qui ont travaillé.
-					Chaque choix fait en 2027 déplace au moins une de ces quatre
-					grandeurs, pendant quarante ans. Aucune n'est la bonne à elle seule.
-				</p>
-				<div className="reperes">
-					{REPERES.map((a) => (
-						<button
-							type="button"
-							key={a}
-							className={a === repere ? "actif" : ""}
-							aria-pressed={a === repere}
-							onClick={() => setRepere(a)}
-						>
-							En {a}
-						</button>
-					))}
-				</div>
-				<div className="glass quatre" aria-live="polite">
-					<Chiffre
-						valeur={c ? `${decimal(c.age)} ans` : "…"}
-						ecart={c && r ? ecart(c.age, r.age, ansDe, 0.05) : ""}
-						legende="l'âge moyen de départ à la retraite"
-					/>
-					<Chiffre
-						valeur={c ? `${entier(c.pension)} %` : "…"}
-						ecart={c && r ? ecart(c.pension, r.pension, pointsDe, 0.5) : ""}
-						legende="du salaire brut moyen : la pension moyenne"
-					/>
-					<Chiffre
-						valeur={c ? `${entier(c.cotisation)} %` : "…"}
-						ecart={
-							c && r ? ecart(c.cotisation, r.cotisation, pointsDe, 0.1) : ""
-						}
-						legende="du salaire brut part en cotisations de retraite, employeur compris"
-					/>
-					<Chiffre
-						valeur={c ? `${decimal(Math.abs(c.solde))} %` : "…"}
-						// L'écart suit ce qui est affiché : ce qui manque, donc l'opposé du solde.
-						ecart={
-							c && r
-								? c.solde > 0
-									? ecart(c.solde, r.solde, pointsDe, 0.05)
-									: ecart(-c.solde, -r.solde, pointsDe, 0.05)
-								: ""
-						}
-						legende={
-							c
-								? c.solde > 0
-									? `de la richesse du pays en trop, environ ${entier(c.milliards)} milliards d'euros`
-									: `de la richesse du pays manque, environ ${entier(-c.milliards)} milliards d'euros`
-								: "de la richesse du pays"
-						}
-					/>
-				</div>
-				<p className="hero-note">
-					Âge, pension et cotisations : salariés du privé. Ce qui manque : tous
-					les régimes. Ordres de grandeur.
-				</p>
-			</section>
-
-			<div className="control choix">
-				<label htmlFor="option">
-					<span>Et si on choisissait</span>
-				</label>
-				<select
-					id="option"
-					value={choisi}
-					onChange={(e) => {
-						const s = SCENARIOS.find((x) => x.id === e.target.value);
-						remplacer(s ? s.reglages : {});
-					}}
-				>
-					<option value={LOI}>De ne rien changer à la loi</option>
-					{SCENARIOS.map((s) => (
-						<option key={s.id} value={s.id}>
-							{s.titre}
-						</option>
-					))}
-					{choisi === PERSONNALISE && (
-						<option value={PERSONNALISE}>Votre scénario</option>
-					)}
-				</select>
-				<Link to="/simuler" search={(p) => p} className="reset">
-					<Icon name="curseurs" size={18} />
-					<span>Régler moi-même</span>
-				</Link>
-			</div>
-
-			<section>
-				<h2>Trois générations, la même question</h2>
-				<p className="sub">
-					Ce que {choisi === LOI ? "la loi actuelle" : "ce choix"} donne à trois
-					salariés du privé. Les chiffres sont ceux des carrières simulées qui
-					leur ressemblent, pas une promesse.
-				</p>
-				<div className="personnes">
-					{PERSONNES.map((p, i) => {
-						const m = personnes[i];
-						return (
-							<Link key={p.id} to="/moi" search={(x) => x} className="personne">
-								<header>
-									<Avatar
-										id={p.id}
-										sexe={p.sexe}
-										age={2026 - p.anneeNaissance}
-										size={52}
-									/>
-									<div>
-										<strong>{p.prenom}</strong>
-										<small>
-											{p.sexe === "F" ? "née" : "né"} en {p.anneeNaissance},{" "}
-											{euros(p.salaireMensuel)} bruts par mois
-										</small>
-									</div>
-								</header>
-								{m ? (
-									<dl>
-										<div>
-											<dt>Départ à</dt>
-											<dd className="num">
-												<span className="age">
-													{Math.floor(m.scenario.age[1] / 4)} ans
-													{m.scenario.age[1] % 4 > 0 && (
-														<small> {(m.scenario.age[1] % 4) * 3} mois</small>
-													)}
-												</span>
-												{m.ecart.age !== 0 && (
-													<em>
-														{m.ecart.age > 0 ? "+" : "−"}
-														{Math.abs(m.ecart.age) * 3} mois
-													</em>
-												)}
-											</dd>
-										</div>
-										<div>
-											<dt>Pension</dt>
-											<dd className="num">
-												{euros(m.scenario.pension[1])}
-												{Math.abs(m.ecart.pension) >= 5 && (
-													<em>
-														{m.ecart.pension > 0 ? "+" : "−"}
-														{euros(Math.abs(m.ecart.pension))}
-													</em>
-												)}
-											</dd>
-										</div>
-										<Apres
-											depart={m.scenario.pension[1]}
-											suite={m.suite.scenario}
-										/>
-									</dl>
-								) : (
-									<div className="histo attente" style={{ height: 64 }} />
-								)}
-							</Link>
-						);
-					})}
-					<Link to="/moi" search={(x) => x} className="personne vous">
-						<header>
-							<span className="rond">
-								<Icon name="population" size={26} />
-							</span>
-							<div>
-								<strong>Et vous ?</strong>
-								<small>
-									Année de naissance, sexe, salaire : rien ne quitte votre
-									navigateur.
-								</small>
-							</div>
-						</header>
-						<span className="aller">
-							Voir ce que chaque choix vous ferait
-							<Icon name="fleche" size={16} />
-						</span>
-					</Link>
-				</div>
-			</section>
-
-			<section>
-				<h2>Ce qui manque, année après année</h2>
-				<p className="sub">
-					Une réforme s'applique par étapes à partir de 2028 et son effet se lit
-					sur quarante ans, pas sur un budget. Ce solde compte comme une
-					ressource ce que l'État verse pour les retraites de ses agents : sans
-					cela, il manquerait davantage.
-				</p>
-				{systeme ? (
-					<div className="courbes deux">
-						<Courbe
-							anneeEffet={donnees?.anneeEffet ?? 2028}
-							titre="Ressources moins dépenses de retraite, chaque année"
-							aide="En milliards d'euros de 2026, tous régimes. Sous zéro, il manque de l'argent."
-							reference={systeme.reference.map((a) => ({
-								x: a.annee,
-								y: a.solde / 1e9,
-							}))}
-							courant={systeme.courant.map((a) => ({
-								x: a.annee,
-								y: a.solde / 1e9,
-							}))}
-							couleur="var(--besoin)"
-							format={milliards}
-							depuisZero
-						/>
-						<div className="cumul">
-							<small>
-								Ce qu'il faut trouver d'ici 2070, avec la loi actuelle
-							</small>
-							<strong className="num">
-								{entier(Math.abs(cumul(systeme.reference)))} milliards
-							</strong>
-							{modifies > 0 &&
-								Math.abs(cumul(systeme.courant) - cumul(systeme.reference)) >=
-									1 && (
-									<>
-										<small>Avec ce choix</small>
-										<strong
-											className={
-												cumul(systeme.courant) >= cumul(systeme.reference)
-													? "num mieux"
-													: "num pire"
-											}
-										>
-											{cumul(systeme.courant) >= 0
-												? `${entier(cumul(systeme.courant))} milliards d'excédent`
-												: `${entier(Math.abs(cumul(systeme.courant)))} milliards`}
-										</strong>
-									</>
-								)}
-							<p>
-								Somme des soldes de chaque année, en euros de 2026 et sans
-								intérêts. Ce qui n'est pas trouvé aujourd'hui est laissé à ceux
-								qui travailleront demain : dette, impôts, cotisations ou
-								pensions plus basses.
-							</p>
-						</div>
+				<div className="hero-texte">
+					<h1>Retraites : que changerait chaque candidat de 2027 ?</h1>
+					<p className="manque">
+						Si rien ne change, il manquera{" "}
+						<strong className="num">
+							{entier(-solde(LOI, REPERE))} milliards d'euros
+						</strong>{" "}
+						par an en {REPERE}.
+					</p>
+					<div className="actions">
+						<a href="#programmes" className="bouton plein">
+							Comparer les programmes
+						</a>
+						<Link to="/simuler" search={(s) => s} className="bouton">
+							{modifies > 0 ? "Reprendre ma réforme" : "Créer ma réforme"}
+						</Link>
 					</div>
-				) : (
-					<div className="histo attente" style={{ height: 300 }} />
-				)}
+				</div>
+			</section>
+
+			<section id="programmes">
+				<h2>Ce qu'il manquerait en {REPERE}</h2>
+				<p className="sub">
+					Par an, pour tout le système de retraite. Ordre tiré au sort.
+				</p>
+				<ol className="candidats">
+					<Ligne
+						nom="Loi actuelle"
+						titre="64 ans, 43 années"
+						fige={LOI}
+						echelle={echelle}
+					/>
+					{ordre
+						? ordre.map((s) => {
+								const p = programmeDe(s.id);
+								const f = figeDe(s.id);
+								if (!p || !f) return null;
+								return (
+									<Ligne
+										key={s.id}
+										reglages={s.reglages}
+										nom={p.candidats.map((c) => c.nom).join(", ")}
+										parti={p.candidats.map((c) => c.parti).join(" · ")}
+										titre={s.titre}
+										fige={f}
+										echelle={echelle}
+									/>
+								);
+							})
+						: PROGRAMMES.map((s) => <li key={s.id} className="attente" />)}
+				</ol>
+				<p className="reserve">
+					Seules les mesures que le simulateur sait régler sont comptées : ce
+					n'est pas le chiffrage complet d'un programme. Touchez un candidat
+					pour voir ce qui est repris, ce qui ne l'est pas, et l'ajuster.
+				</p>
 				<p className="suite-lien">
-					<Link to="/scenarios" search={(p) => p}>
-						Comparer les {SCENARIOS.length} grandes options côte à côte
+					<Link to="/scenarios" search={(s) => s}>
+						Tout comparer, avec {PISTES.length} autres pistes
 						<Icon name="fleche" size={16} />
 					</Link>
 				</p>
 			</section>
 
+			<section className="portes">
+				<Link to="/simuler" search={(s) => s} className="porte sombre">
+					<Icon name="curseurs" size={24} />
+					<strong>
+						{modifies > 0
+							? "Reprendre ma réforme"
+							: "Et vous, que feriez-vous ?"}
+					</strong>
+					<span>Réglez l'âge, les pensions, les cotisations.</span>
+					<Icon name="fleche" size={18} />
+				</Link>
+				<Link to="/moi" search={(s) => s} className="porte">
+					<Icon name="population" size={24} />
+					<strong>Et ma retraite ?</strong>
+					<span>
+						Votre âge de départ et votre pension, programme par programme.
+					</span>
+					<Icon name="fleche" size={18} />
+				</Link>
+			</section>
+
 			<section>
-				<h2>Qui paie combien, qui touche combien en {annee}</h2>
+				<h2>Un trou qui se creuse</h2>
 				<p className="sub">
-					Plus une barre est haute, plus il y a de monde à ce niveau.
-					{modifies > 0 &&
-						" Le trait noir rappelle la situation avec la loi actuelle."}
+					Avec la loi actuelle, il manque {entier(-cumul(LOI))} milliards d'ici
+					2070.
 				</p>
-				<Distributions
-					reference={reference}
-					courant={courant}
-					compare={modifies > 0}
-					photos
-				/>
+				<div className="courbes">
+					<Courbe
+						anneeEffet={ANNEE_EFFET}
+						titre="Ressources moins dépenses de retraite, chaque année"
+						aide="En milliards d'euros de 2026, tous régimes. Sous zéro, il manque de l'argent."
+						reference={trajectoire(LOI)}
+						courant={trajectoire(LOI)}
+						couleur="var(--besoin)"
+						format={(y) =>
+							`${y > 0 ? "+" : y < 0 ? "−" : ""}${entier(Math.abs(y))} milliards`
+						}
+						depuisZero
+					/>
+				</div>
 			</section>
 
 			<section>
@@ -471,7 +242,7 @@ function Home() {
 				<div className="suites">
 					{SUITES.map((s) => (
 						<Link key={s.to} to={s.to} search={(p) => p} className="suite">
-							<Icon name={s.icone} size={26} />
+							<Icon name={s.icone} size={22} />
 							<strong>{s.titre}</strong>
 							<span>{s.texte}</span>
 							<Icon name="fleche" size={18} />
@@ -484,25 +255,13 @@ function Home() {
 				<Icon name="attention" />
 				<p>
 					<strong>Des ordres de grandeur, pas une prévision.</strong> Les
-					pensions sont calculées avec les vraies règles de 2026, sur des
-					carrières inventées, réglées pour ressembler aux salaires et aux
-					durées de carrière publiés. Les salariés du privé et les
-					fonctionnaires sont simulés ; le reste du système suit les projections
-					du Conseil d'orientation des retraites.
+					carrières sont simulées, pas observées : fiez-vous aux écarts entre
+					scénarios plus qu'aux montants.{" "}
+					<Link to="/modele" search={(s) => s}>
+						Ce que le modèle sait faire
+					</Link>
 				</p>
 			</aside>
 		</main>
-	);
-}
-
-function Chiffre(props: { valeur: string; ecart: string; legende: string }) {
-	return (
-		<div>
-			<div className="v num">
-				<span>{props.valeur}</span>
-				{props.ecart && <em>{props.ecart}</em>}
-			</div>
-			<div className="l">{props.legende}</div>
-		</div>
 	);
 }

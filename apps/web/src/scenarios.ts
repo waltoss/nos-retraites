@@ -1,11 +1,12 @@
-import type { Reglages } from "./leviers";
+import donnees from "../../../data/references/programmes-2027.json";
+import type { LevierId, Reglages } from "./leviers";
 
 /**
  * Scénarios tout faits : les grandes options du débat, décrites par leurs réglages.
- * Ils ne portent le nom d'aucun parti ni d'aucun candidat, et aucun n'est mis en avant.
- * Les six premiers reprennent les mesures chiffrées de programmes de la présidentielle de 2027,
- * dans la limite de ce que le simulateur sait régler : sources et mesures laissées de côté dans
- * data/references/programmes-2027.json.
+ * Le titre dit la mesure, jamais un nom. Ceux qui reprennent les mesures chiffrées d'un programme
+ * de la présidentielle de 2027 portent en plus leur attribution (`programme`), lue dans
+ * data/references/programmes-2027.json : qui l'annonce, ce qui est repris, ce qui est laissé de
+ * côté, les sources. Aucun n'est mis en avant : l'ordre des programmes est tiré au sort (ordre.ts).
  */
 export interface ScenarioType {
 	id: string;
@@ -13,6 +14,58 @@ export interface ScenarioType {
 	/** Ce que le scénario change, en une ou deux phrases. */
 	texte: string;
 	reglages: Reglages;
+}
+
+/**
+ * D'où vient la valeur d'un réglage : annoncée par le candidat, rapportée hors d'un programme écrit,
+ * approchée (annonce traduite en valeur de curseur) ou choisie ici faute d'annonce.
+ */
+export type Nature = "annonce" | "secondaire" | "approche" | "illustration";
+
+/** Ce qu'il faut savoir d'une valeur qui ne vient pas telle quelle du candidat. */
+export const NATURE: Record<Nature, string | null> = {
+	annonce: null,
+	secondaire: "hors programme écrit",
+	approche: "valeur approchée",
+	illustration: "valeur choisie ici, non annoncée",
+};
+
+export interface Programme {
+	candidats: { nom: string; parti: string; precision?: string }[];
+	repris: Partial<Record<LevierId, { texte: string; nature: Nature }>>;
+	laisseDeCote: string[];
+	sources: { titre: string; url: string; date: string }[];
+}
+
+/** Un candidat dont les annonces ne se traduisent en aucun scénario, et pourquoi. */
+export interface SansScenario {
+	nom: string;
+	parti: string;
+	raison: string;
+	url: string;
+}
+
+const PROGRAMME = donnees.scenarios as Record<string, Programme>;
+export const SANS_SCENARIO: SansScenario[] = donnees.sansScenario;
+export const DATE_PROGRAMMES: string = donnees.meta.dateConsultation;
+
+export const programmeDe = (id: string): Programme | undefined => PROGRAMME[id];
+
+/** « Raphaël Glucksmann et Marine Tondelier » : les noms seuls, pour une ligne d'attribution. */
+export function attribution(p: Programme): string {
+	const noms = p.candidats.map((c) => c.nom);
+	return noms.length > 1
+		? `${noms.slice(0, -1).join(", ")} et ${noms.at(-1)}`
+		: (noms[0] ?? "");
+}
+
+const cle = (r: Reglages) =>
+	JSON.stringify(Object.entries(r).sort(([a], [b]) => a.localeCompare(b)));
+
+/** Le scénario type dont les réglages sont exactement ceux-ci : un levier touché, et ce n'est plus lui. */
+export function scenarioDe(r: Reglages): ScenarioType | undefined {
+	const c = cle(r);
+	return SCENARIOS.find((s) => cle(s.reglages) === c);
 }
 
 export const SCENARIOS: ScenarioType[] = [
@@ -34,7 +87,7 @@ export const SCENARIOS: ScenarioType[] = [
 		id: "premier-emploi",
 		titre: "De 60 à 62 ans selon l'âge du premier emploi",
 		texte:
-			"L'âge légal est de 62 ans avec 42 années de cotisation, et baisse de six mois par année de début plus précoce, jusqu'à 60 ans et 40 années pour un début avant 20 ans. S'y ajoute un compte de retraite par capitalisation, payé par d'autres prélèvements que les cotisations de retraite : 1,5 % du salaire ici, d'après un montant annoncé peu précis.",
+			"L'âge légal est de 62 ans avec 42 années de cotisation, et baisse de six mois par année de début plus précoce, jusqu'à 60 ans et 40 années pour un début avant 20 ans. S'y ajoute un compte de retraite par capitalisation, payé par d'autres prélèvements que les cotisations de retraite : 12 milliards par an annoncés, soit 1,5 % du salaire ici.",
 		reglages: {
 			ageLegal: 248,
 			dureeRequise: 168,
@@ -81,6 +134,17 @@ export const SCENARIOS: ScenarioType[] = [
 		reglages: { revalorisation: -10 },
 	},
 	{
+		id: "hautes-pensions",
+		titre: "Réduire les hautes pensions",
+		texte:
+			"L'âge ne bouge pas. Au-dessus de 2 000 € brut par mois, la moitié de ce qui dépasse n'est plus versée, et aucune pension ne dépasse 4 500 €. Les retraités actuels sont touchés comme les futurs.",
+		reglages: {
+			ecretementPart: 50,
+			ecretementSeuil: 2000,
+			ecretementPlafond: 4500,
+		},
+	},
+	{
 		id: "cotisations",
 		titre: "Faire porter l'effort sur les cotisations",
 		texte:
@@ -118,3 +182,7 @@ export const SCENARIOS: ScenarioType[] = [
 		},
 	},
 ];
+
+/** Les scénarios tirés d'un programme de 2027, et les autres pistes du débat, attachées à personne. */
+export const PROGRAMMES = SCENARIOS.filter((s) => PROGRAMME[s.id]);
+export const PISTES = SCENARIOS.filter((s) => !PROGRAMME[s.id]);

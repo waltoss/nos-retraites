@@ -8,6 +8,7 @@ import { decimal, entier, euros } from "../format";
 import { type Lecture, soldeLu } from "../lecture";
 import { useScenario } from "../scenario";
 import { cadrer } from "./Histogram";
+import { Icon } from "./Icons";
 import { Info } from "./Info";
 
 interface Point {
@@ -194,6 +195,10 @@ export function Courbe({
 const milliards = (y: number) =>
 	`${y > 0 ? "+" : y < 0 ? "−" : ""}${entier(Math.abs(y))} milliards`;
 
+/** Un total sur la période : ce qu'il faut trouver, ou l'excédent. */
+const total = (md: number) =>
+	md >= 0 ? `${entier(md)} Md€ d'excédent` : `${entier(-md)} Md€`;
+
 /** Réserves moins dette de fin 2025, en milliards d'euros de 2026. */
 const PATRIMOINE_DEPART =
 	(PATRIMOINE_SYSTEME.reserves - PATRIMOINE_SYSTEME.dette) / 1e9;
@@ -316,9 +321,9 @@ export function Trajectoires({
 	const communs = { anneeEffet };
 	return (
 		<>
-			<div className="solde">
+			<div className="solde" id="solde">
 				<div className="solde-tete">
-					<h3>Le solde du système de retraite, tous régimes</h3>
+					<h3>Solde des retraites, tous régimes</h3>
 					<div className="solde-lectures">
 						<Choix
 							legende="Lecture"
@@ -326,7 +331,18 @@ export function Trajectoires({
 							sans="Officielle"
 							avec="Sans versements de l'État"
 							onChoix={(v) => onLecture({ ...lecture, horsEtat: v })}
-						/>
+						>
+							<Info label="Ce que changent les versements de l'État">
+								<strong>Officielle</strong> : la lecture du Conseil
+								d'orientation des retraites. Les sommes que l'État verse pour
+								équilibrer les retraites de ses propres agents comptent comme
+								une ressource.
+								<br />
+								<strong>Sans versements de l'État</strong> : elles ne comptent
+								pas. Certains y voient le vrai déficit, d'autres une simple
+								cotisation d'employeur plus élevée qu'ailleurs.
+							</Info>
+						</Choix>
 						<Choix
 							legende="Intérêts"
 							actif={lecture.interets}
@@ -345,11 +361,6 @@ export function Trajectoires({
 						</Choix>
 					</div>
 				</div>
-				<p className="sub">
-					{horsEtat
-						? "Ici les sommes que l'État verse pour équilibrer les retraites de ses propres agents ne comptent pas comme une ressource. Certains y voient le vrai déficit, d'autres une simple cotisation d'employeur plus élevée qu'ailleurs."
-						: "C'est la lecture du Conseil d'orientation des retraites : les sommes que l'État verse pour équilibrer les retraites de ses propres agents comptent comme une ressource."}
-				</p>
 				<div className="courbes deux">
 					<Courbe
 						{...communs}
@@ -362,45 +373,51 @@ export function Trajectoires({
 						depuisZero
 					/>
 					<div className="cumul">
-						<small>
-							Ce qu'il faut trouver de {systeme.courant[0]?.annee} à {derniere},
-							avec la loi actuelle
-						</small>
-						<strong className="num">
-							{cumulReference >= 0
-								? `${entier(cumulReference)} milliards d'excédent`
-								: `${entier(Math.abs(cumulReference))} milliards`}
-						</strong>
-						{modifies > 0 && Math.abs(cumulCourant - cumulReference) >= 1 && (
-							<>
-								<small>Avec votre scénario</small>
-								<strong
-									className={
-										cumulCourant >= cumulReference ? "num mieux" : "num pire"
-									}
-								>
-									{cumulCourant >= 0
-										? `${entier(cumulCourant)} milliards d'excédent`
-										: `${entier(Math.abs(cumulCourant))} milliards`}
-								</strong>
-							</>
-						)}
-						{lecture.interets ? (
-							<p>
-								Somme des soldes annuels, intérêts compris, en euros de 2026.
-								Les réserves dépassaient la dette de {entier(PATRIMOINE_DEPART)}{" "}
-								milliards fin 2025 ; en {derniere}
-								{modifies > 0 ? ", avec votre scénario," : ""}{" "}
-								{finale >= 0
-									? `elles la dépasseraient de ${entier(finale)} milliards.`
-									: `la dette dépasserait les réserves de ${entier(Math.abs(finale))} milliards.`}
-							</p>
-						) : (
-							<p>
-								Somme des soldes annuels, en euros de 2026 et sans intérêts :
-								dette à lever, impôts, cotisations ou économies ailleurs.
-							</p>
-						)}
+						<div className="cumul-tete">
+							<small>
+								À trouver de {systeme.courant[0]?.annee} à {derniere}
+							</small>
+							<Info label="Ce que compte ce total">
+								{lecture.interets ? (
+									<>
+										Somme des soldes annuels, intérêts compris, en euros de
+										2026. Les réserves dépassaient la dette de{" "}
+										{entier(PATRIMOINE_DEPART)} milliards fin 2025 ; en{" "}
+										{derniere}
+										{modifies > 0 ? ", avec votre scénario," : ""}{" "}
+										{finale >= 0
+											? `elles la dépasseraient de ${entier(finale)} milliards.`
+											: `la dette dépasserait les réserves de ${entier(Math.abs(finale))} milliards.`}
+									</>
+								) : (
+									"Somme des soldes annuels, en euros de 2026 et sans intérêts : dette à lever, impôts, cotisations ou économies ailleurs."
+								)}
+							</Info>
+						</div>
+						<div className="cumul-chiffres">
+							<div>
+								<small>
+									<Icon name="loi" size={16} />
+									Loi actuelle
+								</small>
+								<strong className="num">{total(cumulReference)}</strong>
+							</div>
+							{modifies > 0 && Math.abs(cumulCourant - cumulReference) >= 1 && (
+								<div>
+									<small>
+										<Icon name="curseurs" size={16} />
+										Votre scénario
+									</small>
+									<strong
+										className={
+											cumulCourant >= cumulReference ? "num mieux" : "num pire"
+										}
+									>
+										{total(cumulCourant)}
+									</strong>
+								</div>
+							)}
+						</div>
 					</div>
 				</div>
 			</div>
